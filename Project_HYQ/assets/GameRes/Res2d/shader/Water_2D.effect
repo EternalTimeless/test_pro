@@ -1,0 +1,135 @@
+CCEffect %{
+  techniques:
+  - passes:
+    - vert: vs:vert
+      frag: fs:frag
+      depthStencilState:
+        depthTest: false
+        depthWrite: false
+      blendState:
+        targets:
+        - blend: true
+      rasterizerState:
+        cullMode: back
+      properties:
+        iResolution: { value: [800, 600] , editor: { type: vec2 } }
+        scale: { value: 1.0, editor: { range: [0.0, 1000.0,0.01],slide: true } }
+}%
+
+CCProgram vs %{
+  precision highp float;
+  #include <cc-global>
+  #if USE_LOCAL
+    #include <cc-local>
+  #endif
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  // in vec4 a_color;
+
+  // out vec4 color;
+  out vec2 v_uv;
+
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+    #if USE_LOCAL
+      pos = cc_matWorld * pos;
+    #endif
+    pos = cc_matViewProj  * pos;
+    v_uv = a_texCoord;
+    // color = a_color;
+  
+    return  pos;
+  }
+}%
+
+
+
+
+CCProgram fs %{
+  precision highp float;
+
+  #include <cc-global>  
+  // #include <uniform_fs>
+
+  in vec2 v_uv;
+  uniform Constant {
+    vec2 iResolution;
+    float scale;
+  };
+
+  // uniform fs_uniforms {
+  //   vec4 iResolution;
+  // };
+    
+
+  // uniform vec4 iResolution;
+
+
+  vec2 f_hash2(in vec2 p) {
+    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+    return fract(sin(p) * 43758.5453);
+  }
+
+  float f_voronoi(in vec2 x, in float w, in float offset) {
+    vec2 n = floor(x);
+    vec2 f = fract(x);
+    float m = 8.0;
+    
+    for (int j = -2; j <= 2; j++) {
+      for (int i = -2; i <= 2; i++) {
+        vec2 g = vec2(float(i), float(j));
+        vec2 o = f_hash2(n + g);
+        
+        // 添加时间动画
+        o = vec2(offset + 0.3 * sin(cc_time.x + 6.2831 * o.x + x.x),
+                 offset + 0.3 * sin(cc_time.x + 6.2831 * o.y + x.y));
+        
+        float d = length(g - f + o);
+        float h = smoothstep(-1.0, 1.0, (m - d) / w);
+        
+        // 使用平滑过渡
+        m = mix(m, d, h) - (h * (1.0 - h) * w) / (1.0 + 3.0 * w);
+      }
+    }
+    
+    return m;
+  }
+
+  vec4 frag() {
+    // 调整UV坐标以适应屏幕
+    vec2 uv = (v_uv * iResolution.xy * 2.0 - iResolution.xy) / iResolution.y;
+    // vec2 uv = v_uv;
+    uv *= scale;
+    // 添加时间动画
+    uv.x += cc_time.x * 0.5;
+    uv.y += cc_time.x * 0.25;
+    
+    // 定义颜色
+    vec4 a = vec4(0.114, 0.635, 0.847, 1.0);  // 蓝色
+    vec4 b = vec4(1.0);                       // 白色
+    vec4 c = a * 0.8;                         // 深蓝色
+    
+    // 计算Voronoi噪声
+    float vNoise1 = f_voronoi(uv, 0.001, 0.5);
+    float sNoise1 = f_voronoi(uv, 0.4, 0.5);
+    float fVoronoi = smoothstep(0.0, 0.01, vNoise1 - sNoise1);
+    
+    // 计算偏移Voronoi噪声
+    float vNoise2 = f_voronoi(uv, 0.001, 0.43);
+    float sNoise2 = f_voronoi(uv, 0.4, 0.43);
+    float offsetVoronoi = smoothstep(0.0, 0.01, vNoise2 - sNoise2);
+    
+    // 创建波形效果
+    float pi = 3.14159274;
+    float wave = sin(pi * (uv.x+ uv.y + cc_time.x*0.001));
+    wave = (wave + 1.0) / 2.0;
+    
+    // 混合背景颜色
+    vec4 bgColor2 = mix(a, c, offsetVoronoi+  wave);
+    // return bgColor2;
+    // 最终混合
+    vec4 finalVoronoi = mix(bgColor2, b, fVoronoi);
+    
+    return finalVoronoi;
+  }
+}%

@@ -1,0 +1,476 @@
+{
+  "version": "1.0.0",
+  "description": "默认命名规则配置列表",
+  "defaultRules": [
+    {
+      "name": "标准游戏命名规则",
+      "normalTemplate": "{gameAbbr}{separator}{packageDate}{separator}{adName}{separator}{plannerAbbr}{separator}{companyPrefix}{separator}{platformName}{separator}ALL",
+      "tceTemplate": "{gameAbbr}{separator}{packageDate}{separator}{adName}TCE{separator}{plannerAbbr}{separator}{companyPrefix}{separator}{platformName}{separator}ALL",
+      "separator": "_",
+      "configItems": [
+        {
+          "key": "gameAbbr",
+          "label": "游戏名称缩写",
+          "value": "",
+          "required": true,
+          "description": "例如: MF, TH, LW"
+        },
+        {
+          "key": "packageDate",
+          "label": "打包日期",
+          "value": "",
+          "required": true,
+          "description": "YYYYMMDD格式"
+        },
+        {
+          "key": "adName",
+          "label": "试玩广告名称",
+          "value": "",
+          "required": true,
+          "description": "试玩广告的名称"
+        },
+        {
+          "key": "plannerAbbr",
+          "label": "策划名字缩写",
+          "value": "",
+          "required": true,
+          "description": "甲方策划名字缩写"
+        },
+        {
+          "key": "companyPrefix",
+          "label": "公司前缀",
+          "value": "RBN",
+          "required": false,
+          "description": "公司前缀标识"
+        },
+        {
+          "key": "platformName",
+          "label": "平台名称",
+          "value": "",
+          "required": true,
+          "description": "自动根据选择的平台生成"
+        }
+      ]
+    },
+    {
+      "name": "TH、TW、LW命名规则",
+      "normalTemplate": "{gameAbbr}{separator}{packageDate}{separator}{adName}{separator}{plannerAbbr}{separator}{companyPrefix}{separator}{platformName}{separator}ALL",
+      "tceTemplate": "{gameAbbr}{separator}{packageDate}{separator}{adName}TCE{separator}{plannerAbbr}{separator}{companyPrefix}{separator}{platformName}{separator}ALL",
+      "separator": "_",
+      "configItems": [
+        {
+          "key": "gameAbbr",
+          "label": "项目产品缩写",
+          "value": "TH",
+          "required": true,
+          "description": "项目产品缩写，例如: TH、TW、LW"
+        },
+        {
+          "key": "packageDate",
+          "label": "时间",
+          "value": "",
+          "required": true,
+          "description": "YYYYMMDD格式，例如: 20250314"
+        },
+        {
+          "key": "adName",
+          "label": "项目名",
+          "value": "",
+          "required": true,
+          "description": "项目名称，例如: 流沙拿铁去头试玩"
+        },
+        {
+          "key": "plannerAbbr",
+          "label": "创意人",
+          "value": "",
+          "required": true,
+          "description": "创意人缩写，例如: CJN"
+        },
+        {
+          "key": "companyPrefix",
+          "label": "公司前缀",
+          "value": "RBN",
+          "required": true,
+          "description": "公司前缀标识，固定为RBN"
+        },
+        {
+          "key": "platformName",
+          "label": "渠道名",
+          "value": "",
+          "required": true,
+          "description": "渠道名称，例如: Applovin"
+        }
+      ]
+    },
+    {
+      "name": "ZW命名规则",
+      "normalTemplate": "{gameAbbr}{separator}{packageDate}{separator}{adName}{separator}{plannerAbbr}{separator}{companyPrefix}{separator}{platformName}{separator}ALL",
+      "tceTemplate": "{gameAbbr}{separator}{packageDate}{separator}{adName}TCE{separator}{plannerAbbr}{separator}{companyPrefix}{separator}{platformName}{separator}ALL",
+      "separator": "_",
+      "configItems": [
+        {
+          "key": "gameAbbr",
+          "label": "项目产品缩写",
+          "value": "ZW",
+          "required": true,
+          "description": "项目产品缩写，固定为ZW"
+        },
+        {
+          "key": "packageDate",
+          "label": "时间",
+          "value": "",
+          "required": true,
+          "description": "YYYYMMDD格式，例如: 20250314"
+        },
+        {
+          "key": "adName",
+          "label": "项目名",
+          "value": "",
+          "required": true,
+          "description": "项目名称，例如: 流沙拿铁去头试玩"
+        },
+        {
+          "key": "plannerAbbr",
+          "label": "创意人",
+          "value": "",
+          "required": true,
+          "description": "创意人缩写，例如: CJN"
+        },
+        {
+          "key": "companyPrefix",
+          "label": "公司前缀",
+          "value": "RBN",
+          "required": true,
+          "description": "公司前缀标识，固定为RBN"
+        },
+        {
+          "key": "platformName",
+          "label": "渠道名",
+          "value": "",
+          "required": true,
+          "description": "渠道名称，例如: Applovin"
+        }
+      ]
+    },
+    {
+      "name": "FND命名规则",
+      "normalTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{companyPrefix}{separator}{platformName}{separator}{adName}",
+      "tceTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{companyPrefix}{separator}{platformName}{separator}{adName}TCE",
+      "separator": "_",
+      "configItems": [
+        {
+          "key": "gameAbbr",
+          "label": "项目缩写",
+          "value": "FND",
+          "required": true,
+          "description": "项目缩写，固定为FND"
+        },
+        {
+          "key": "serialNumber",
+          "label": "序号",
+          "value": "00002P01",
+          "required": true,
+          "description": "序号格式，02表示序号按顺序填02-11，例如: 00002P01"
+        },
+        {
+          "key": "language",
+          "label": "语言",
+          "value": "EN",
+          "required": true,
+          "description": "语言代码，例如: EN"
+        },
+        {
+          "key": "plannerAbbr",
+          "label": "创意人",
+          "value": "",
+          "required": true,
+          "description": "创意人名字缩写，例如: CJN"
+        },
+        {
+          "key": "packageDate",
+          "label": "日期",
+          "value": "",
+          "required": true,
+          "description": "YYYYMMDD格式，例如: 20250601"
+        },
+        {
+          "key": "companyPrefix",
+          "label": "公司前缀",
+          "value": "RBN",
+          "required": true,
+          "description": "公司前缀标识，固定为RBN"
+        },
+        {
+          "key": "platformName",
+          "label": "渠道",
+          "value": "",
+          "required": true,
+          "description": "渠道名称，例如: Applovin"
+        },
+        {
+          "key": "adName",
+          "label": "项目名",
+          "value": "",
+          "required": true,
+          "description": "项目名字，例如: 太空船舱"
+        }
+      ]
+    },
+    {
+      "name": "SLGL命名规则",
+      "normalTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{companyPrefix}{separator}{platformName}{separator}{adName}",
+      "tceTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{companyPrefix}{separator}{platformName}{separator}{adName}TCE",
+      "separator": "_",
+      "configItems": [
+        {
+          "key": "gameAbbr",
+          "label": "项目缩写",
+          "value": "SLGL",
+          "required": true,
+          "description": "项目缩写，固定为SLGL"
+        },
+        {
+          "key": "serialNumber",
+          "label": "序号",
+          "value": "00001P01",
+          "required": true,
+          "description": "序号格式，例如: 00001P01"
+        },
+        {
+          "key": "language",
+          "label": "语言",
+          "value": "EN",
+          "required": true,
+          "description": "语言代码，例如: EN"
+        },
+        {
+          "key": "plannerAbbr",
+          "label": "创意人",
+          "value": "",
+          "required": true,
+          "description": "创意人名字缩写，例如: CJN"
+        },
+        {
+          "key": "packageDate",
+          "label": "日期",
+          "value": "",
+          "required": true,
+          "description": "YYYYMMDD格式，例如: 20250702"
+        },
+        {
+          "key": "companyPrefix",
+          "label": "公司前缀",
+          "value": "RBN",
+          "required": true,
+          "description": "公司前缀标识，固定为RBN"
+        },
+        {
+          "key": "platformName",
+          "label": "渠道",
+          "value": "",
+          "required": true,
+          "description": "渠道名称，例如: Tiktok"
+        },
+        {
+          "key": "adName",
+          "label": "项目名",
+          "value": "",
+          "required": true,
+          "description": "项目名称，例如: 玉米浓汤"
+        }
+      ]
+    },
+    {
+      "name": "MO命名规则",
+      "normalTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{companyPrefix}{separator}{platformName}{separator}{adName}",
+      "tceTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{companyPrefix}{separator}{platformName}{separator}{adName}TCE",
+      "separator": "_",
+      "configItems": [
+        {
+          "key": "gameAbbr",
+          "label": "项目缩写",
+          "value": "MO",
+          "required": true,
+          "description": "项目缩写，固定为MO"
+        },
+        {
+          "key": "serialNumber",
+          "label": "序号",
+          "value": "00172P01",
+          "required": true,
+          "description": "序号格式，例如: 00172P01"
+        },
+        {
+          "key": "language",
+          "label": "语言",
+          "value": "EN",
+          "required": true,
+          "description": "语言代码，例如: EN"
+        },
+        {
+          "key": "plannerAbbr",
+          "label": "创意人",
+          "value": "",
+          "required": true,
+          "description": "创意人缩写，例如: LD"
+        },
+        {
+          "key": "packageDate",
+          "label": "日期",
+          "value": "",
+          "required": true,
+          "description": "YYYYMMDD格式，例如: 20251016"
+        },
+        {
+          "key": "companyPrefix",
+          "label": "公司前缀",
+          "value": "RBN",
+          "required": true,
+          "description": "公司前缀标识，固定为RBN"
+        },
+        {
+          "key": "platformName",
+          "label": "渠道",
+          "value": "",
+          "required": true,
+          "description": "渠道名称，例如: Unity"
+        },
+        {
+          "key": "adName",
+          "label": "项目名",
+          "value": "",
+          "required": true,
+          "description": "项目名称"
+        }
+      ]
+    },
+    {
+      "name": "SSD命名规则",
+      "normalTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{outsourcer}{separator}{platformName}{separator}{adName}",
+      "tceTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{outsourcer}{separator}{platformName}{separator}{adName}TCE",
+      "separator": "_",
+      "configItems": [
+        {
+          "key": "gameAbbr",
+          "label": "项目缩写",
+          "value": "SSD",
+          "required": true,
+          "description": "项目缩写，固定为SSD"
+        },
+        {
+          "key": "serialNumber",
+          "label": "序号",
+          "value": "00001P01",
+          "required": true,
+          "description": "序号格式，例如: 00001P01"
+        },
+        {
+          "key": "language",
+          "label": "语言",
+          "value": "EN",
+          "required": true,
+          "description": "语言代码，例如: EN、KR"
+        },
+        {
+          "key": "plannerAbbr",
+          "label": "创意人",
+          "value": "",
+          "required": true,
+          "description": "创意人缩写，例如: QZ"
+        },
+        {
+          "key": "packageDate",
+          "label": "日期",
+          "value": "",
+          "required": true,
+          "description": "YYYYMMDD格式，例如: 20250722"
+        },
+        {
+          "key": "outsourcer",
+          "label": "外包商",
+          "value": "RBN",
+          "required": true,
+          "description": "外包商标识，例如: SY 或 RBN"
+        },
+        {
+          "key": "platformName",
+          "label": "渠道",
+          "value": "",
+          "required": true,
+          "description": "渠道名称，例如: Moloco"
+        },
+        {
+          "key": "adName",
+          "label": "素材名称",
+          "value": "",
+          "required": true,
+          "description": "素材名称，例如: 泳圈杀鳄"
+        }
+      ]
+    },
+    {
+      "name": "WM命名规则",
+      "normalTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{companyPrefix}{separator}{platformName}{separator}{adName}",
+      "tceTemplate": "{gameAbbr}{separator}{serialNumber}{separator}{language}{separator}{plannerAbbr}{separator}{packageDate}{separator}{companyPrefix}{separator}{platformName}{separator}{adName}TCE",
+      "separator": "_",
+      "configItems": [
+        {
+          "key": "gameAbbr",
+          "label": "项目缩写",
+          "value": "WM",
+          "required": true,
+          "description": "项目缩写，固定为WM"
+        },
+        {
+          "key": "serialNumber",
+          "label": "序号",
+          "value": "00001P01",
+          "required": true,
+          "description": "序号格式，例如: 00001P01"
+        },
+        {
+          "key": "language",
+          "label": "语言",
+          "value": "EN",
+          "required": true,
+          "description": "语言代码，例如: EN"
+        },
+        {
+          "key": "plannerAbbr",
+          "label": "创意人",
+          "value": "",
+          "required": true,
+          "description": "创意人缩写，例如: QZ"
+        },
+        {
+          "key": "packageDate",
+          "label": "日期",
+          "value": "",
+          "required": true,
+          "description": "YYYYMMDD格式，例如: 20250722"
+        },
+        {
+          "key": "companyPrefix",
+          "label": "公司前缀",
+          "value": "RBN",
+          "required": true,
+          "description": "公司前缀标识，固定为RBN"
+        },
+        {
+          "key": "platformName",
+          "label": "渠道",
+          "value": "",
+          "required": true,
+          "description": "渠道名称，例如: Moloco"
+        },
+        {
+          "key": "adName",
+          "label": "素材名称",
+          "value": "",
+          "required": true,
+          "description": "素材名称，例如: 泳圈杀鳄"
+        }
+      ]
+    }
+  ]
+}

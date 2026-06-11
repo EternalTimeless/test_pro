@@ -1,0 +1,97 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "f70393d9-4fd6-45bf-b415-cdc08d88451c",
+  "files": [],
+  "subMetas": {
+    "035c0": {
+      "importer": "gltf-mesh",
+      "uuid": "f70393d9-4fd6-45bf-b415-cdc08d88451c@035c0",
+      "displayName": "",
+      "id": "035c0",
+      "name": "对象001.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 3563
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "34a8c": {
+      "importer": "gltf-mesh",
+      "uuid": "f70393d9-4fd6-45bf-b415-cdc08d88451c@34a8c",
+      "displayName": "",
+      "id": "34a8c",
+      "name": "3d66-Editable_mesh-21215417-003.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 41233
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "1bd6f": {
+      "importer": "gltf-scene",
+      "uuid": "f70393d9-4fd6-45bf-b415-cdc08d88451c@1bd6f",
+      "displayName": "",
+      "id": "1bd6f",
+      "name": "SM_songshu.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "f70393d9-4fd6-45bf-b415-cdc08d88451c@035c0",
+        "f70393d9-4fd6-45bf-b415-cdc08d88451c@34a8c"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "f70393d9-4fd6-45bf-b415-cdc08d88451c@1bd6f"
+      ]
+    }
+  }
+}

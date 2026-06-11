@@ -1,0 +1,258 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "52178f21-90f5-465d-8da5-fd3c00945051",
+  "files": [],
+  "subMetas": {
+    "7a79c": {
+      "importer": "gltf-mesh",
+      "uuid": "52178f21-90f5-465d-8da5-fd3c00945051@7a79c",
+      "displayName": "",
+      "id": "7a79c",
+      "name": "jinbi.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 256
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2deab": {
+      "importer": "gltf-material",
+      "uuid": "52178f21-90f5-465d-8da5-fd3c00945051@2deab",
+      "displayName": "",
+      "id": "2deab",
+      "name": "Default_Material.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f29e2": {
+      "importer": "gltf-scene",
+      "uuid": "52178f21-90f5-465d-8da5-fd3c00945051@f29e2",
+      "displayName": "",
+      "id": "f29e2",
+      "name": "jinbi.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "52178f21-90f5-465d-8da5-fd3c00945051@7a79c"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "52178f21-90f5-465d-8da5-fd3c00945051@2deab"
+      ],
+      "scenes": [
+        "52178f21-90f5-465d-8da5-fd3c00945051@f29e2"
+      ]
+    },
+    "materials": {
+      "52178f21-90f5-465d-8da5-fd3c00945051@2deab": {
+        "__type__": "cc.Material",
+        "_name": "",
+        "_objFlags": 0,
+        "__editorExtras__": {},
+        "_native": "",
+        "_effectAsset": {
+          "__uuid__": "a7612b54-35e3-4238-a1a9-4a7b54635839",
+          "__expectedType__": "cc.EffectAsset"
+        },
+        "_techIdx": 0,
+        "_defines": [
+          {
+            "USE_OUTLINE_PASS": true,
+            "USE_INSTANCING": true
+          },
+          {
+            "USE_INSTANCING": true,
+            "USE_NORMAL_MAP": true,
+            "USE_BASE_COLOR_MAP": true,
+            "USE_EMISSIVE_MAP": true,
+            "BASE_COLOR_MAP_AS_SHADE_MAP_1": true,
+            "BASE_COLOR_MAP_AS_SHADE_MAP_2": true
+          },
+          {},
+          {},
+          {},
+          {},
+          {}
+        ],
+        "_states": [
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          }
+        ],
+        "_props": [
+          {
+            "lineWidth": 20
+          },
+          {
+            "mainColor": {
+              "__type__": "cc.Color",
+              "r": 233,
+              "g": 167,
+              "b": 43,
+              "a": 255
+            },
+            "shadeColor1": {
+              "__type__": "cc.Color",
+              "r": 216,
+              "g": 154,
+              "b": 37,
+              "a": 255
+            },
+            "shadeColor2": {
+              "__type__": "cc.Color",
+              "r": 114,
+              "g": 113,
+              "b": 113,
+              "a": 255
+            },
+            "specular": {
+              "__type__": "cc.Color",
+              "r": 182,
+              "g": 182,
+              "b": 182,
+              "a": 0
+            },
+            "baseStep": 0.9,
+            "shadeStep": 0.6,
+            "shadeFeather": 0.1,
+            "shadowCover": 1,
+            "emissive": {
+              "__type__": "cc.Color",
+              "r": 3,
+              "g": 1,
+              "b": 0,
+              "a": 255
+            },
+            "normalStrength": 10,
+            "normalMap": {
+              "__uuid__": "cfb4e7a5-4715-428a-9eef-d80456926e4e@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            },
+            "mainTexture": {
+              "__uuid__": "3d5e917e-bb2b-4399-9ac0-52c727b1a5ef@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            },
+            "emissiveMap": {
+              "__uuid__": "3d5e917e-bb2b-4399-9ac0-52c727b1a5ef@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            }
+          },
+          {},
+          {},
+          {},
+          {},
+          {}
+        ]
+      }
+    }
+  }
+}

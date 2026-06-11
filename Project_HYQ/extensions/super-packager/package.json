@@ -1,0 +1,92 @@
+{
+    "name": "super-packager",
+    "version": "2.2.0",
+    "package_version": 2,
+    "type": "module",
+    "main": "./dist/browser.cjs",
+    "scripts": {
+        "dev": "npm run build -- --mode development",
+        "build": "vue-tsc -b && vite build"
+    },
+    "dependencies": {
+        "@element-plus/icons-vue": "^2.3.1",
+        "@types/adm-zip": "^0.5.7",
+        "@types/fs-extra": "^11.0.4",
+        "adm-zip": "^0.5.16",
+        "element-plus": "^2.8.6",
+        "fs-extra": "^11.3.0",
+        "vue": "^3.4.37"
+    },
+    "devDependencies": {
+        "@cocos-fe/vite-plugin-cocos-panel": "^1.0.3",
+        "@cocos/creator-types": "^3.8.6",
+        "@types/node": "^22.15.21",
+        "@vitejs/plugin-vue": "^5.2.2",
+        "@vue/tsconfig": "^0.7.0",
+        "rollup-plugin-node-externals": "^7.1.3",
+        "typescript": "^5.8.2",
+        "unplugin-auto-import": "^0.18.6",
+        "unplugin-vue-components": "^0.27.5",
+        "vite": "^5.4.1",
+        "vue-tsc": "^2.1.10"
+    },
+    "contributions": {
+        "menu": [
+            {
+                "path": "工具",
+                "label": "究极无敌打包工具2.2",
+                "message": "open"
+            },
+            {
+                "path": "i18n:menu.panel/super-packager",
+                "label": "send to panel",
+                "message": "increase"
+            }
+        ],
+        "messages": {
+            "open": {
+                "methods": [
+                    "open"
+                ]
+            },
+            "get-version": {
+                "methods": [
+                    "getVersion"
+                ]
+            },
+            "get-store-urls": {
+                "methods": [
+                    "getStoreUrls"
+                ]
+            },
+            "set-store-urls": {
+                "methods": [
+                    "setStoreUrls"
+                ]
+            },
+            "increase": {
+                "methods": [
+                    "default.increase"
+                ]
+            }
+        },
+        "asset-db": {
+            "mount": {
+                "path": "./package_assets",
+                "readonly": false
+            }
+        },
+        "builder": "./dist/builder.cjs"
+    },
+    "panels": {
+        "default": {
+            "main": "./dist/panel.cjs",
+            "size": {
+                "min-width": 500,
+                "min-height": 500,
+                "width": 800,
+                "height": 700
+            }
+        }
+    }
+}

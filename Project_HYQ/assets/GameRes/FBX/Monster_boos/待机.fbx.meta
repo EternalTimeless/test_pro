@@ -1,0 +1,160 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "52b069bf-3b39-46c8-948b-e59b39807e29",
+  "files": [
+    "__original-animation-0.bin"
+  ],
+  "subMetas": {
+    "d81b6": {
+      "importer": "gltf-mesh",
+      "uuid": "52b069bf-3b39-46c8-948b-e59b39807e29@d81b6",
+      "displayName": "",
+      "id": "d81b6",
+      "name": "SM_Zaombie_01.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1803
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "52b069bf-3b39-46c8-948b-e59b39807e29@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 23
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a96a6": {
+      "importer": "texture",
+      "uuid": "52b069bf-3b39-46c8-948b-e59b39807e29@a96a6",
+      "displayName": "",
+      "id": "a96a6",
+      "name": "贴图 #1.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/GameRes/FBX/Monster_boos/T_Zaombie_01_D.jpg"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "958b3": {
+      "importer": "gltf-material",
+      "uuid": "52b069bf-3b39-46c8-948b-e59b39807e29@958b3",
+      "displayName": "",
+      "id": "958b3",
+      "name": "Material #1.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "05ab7": {
+      "importer": "gltf-scene",
+      "uuid": "52b069bf-3b39-46c8-948b-e59b39807e29@05ab7",
+      "displayName": "",
+      "id": "05ab7",
+      "name": "待机.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "贴图 #1",
+        "uri": "db://assets/GameRes/FBX/Monster_boos/T_Zaombie_01_D.jpg"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 0.6666666865348816,
+        "fps": 30,
+        "splits": []
+      }
+    ],
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "52b069bf-3b39-46c8-948b-e59b39807e29@d81b6"
+      ],
+      "skeletons": [
+        "52b069bf-3b39-46c8-948b-e59b39807e29@438fe"
+      ],
+      "textures": [
+        "52b069bf-3b39-46c8-948b-e59b39807e29@a96a6"
+      ],
+      "materials": [
+        "52b069bf-3b39-46c8-948b-e59b39807e29@958b3"
+      ],
+      "scenes": [
+        "52b069bf-3b39-46c8-948b-e59b39807e29@05ab7"
+      ]
+    },
+    "meshCompress": {
+      "enable": true,
+      "compress": true,
+      "quantize": true
+    }
+  }
+}

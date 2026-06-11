@@ -1,0 +1,116 @@
+#app {
+    color: var(--color-normal-contrast-weakest); /* 设置应用文本颜色为弱对比度变量 */
+    margin: 20px auto; /* 设置上下外边距为20px，左右自动居中 */
+    width: 90%; /* 设置宽度为父容器的90% */
+    max-width: 800px; /* 设置最大宽度为800px */
+}
+
+.input-group {
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐项目 */
+    gap: 16px; /* 设置项目之间的间距为16px */
+    margin-top: 16px; /* 设置上外边距为16px */
+    padding: 8px; /* 设置内边距为8px */
+    border-radius: 4px; /* 设置圆角为4px */
+}
+
+.input-group:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* 悬停时背景色为白色5%透明度 */
+}
+
+.input-group ui-label {
+    min-width: 160px; /* 设置最小宽度为160px */
+    text-align: right; /* 文本右对齐 */
+}
+
+.input-group ui-input {
+    flex: 1; /* 占用剩余空间 */
+    min-width: 200px; /* 设置最小宽度为200px */
+}
+
+.file-group {
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐项目 */
+    gap: 16px; /* 设置项目之间的间距为16px */
+    margin-top: 16px; /* 设置上外边距为16px */
+    padding: 8px; /* 设置内边距为8px */
+    border-radius: 4px; /* 设置圆角为4px */
+}
+
+.file-group:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* 悬停时背景色为白色5%透明度 */
+}
+
+.file-group ui-label {
+    min-width: 160px; /* 设置最小宽度为160px */
+    text-align: right; /* 文本右对齐 */
+}
+
+.file-group ui-file {
+    flex: 1; /* 占用剩余空间 */
+    min-width: 200px; /* 设置最小宽度为200px */
+}
+
+h1 {
+    text-align: center; /* 文本居中对齐 */
+    margin-bottom: 24px; /* 设置下外边距为24px */
+    font-size: 24px; /* 设置字体大小为24px */
+}
+
+#package-btn {
+    display: block; /* 设置为块级元素 */
+    margin: 30px auto; /* 上下外边距30px，左右自动居中 */
+    min-width: 120px; /* 最小宽度为120px */
+    max-width: 200px; /* 最大宽度为200px */
+    width: 30%; /* 宽度为父容器的30% */
+    padding: 10px 20px; /* 上下内边距10px，左右内边距20px */
+    font-size: 16px; /* 字体大小为16px */
+    font-weight: bold; /* 字体粗细为粗体 */
+    border-radius: 4px; /* 圆角为4px */
+    text-align: center; /* 文本居中对齐 */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
+    height: 40px; /* 高度为40px */
+}
+
+.platforms-section {
+    margin-top: 24px; /* 上外边距为24px */
+    padding: 16px; /* 内边距为16px */
+    border-radius: 4px; /* 圆角为4px */
+    background-color: rgba(255, 255, 255, 0.03); /* 背景色为白色3%透明度 */
+}
+
+.platforms-title {
+    font-size: 16px; /* 字体大小为16px */
+    margin-bottom: 16px; /* 下外边距为16px */
+    text-align: center; /* 文本居中对齐 */
+    font-weight: bold; /* 字体粗细为粗体 */
+}
+
+.platforms-container {
+    display: grid; /* 使用网格布局 */
+    grid-template-columns: repeat(6, 1fr); /* 创建6列等宽网格 */
+    gap: 6px; /* 网格间距为6px */
+}
+
+.platform-item {
+    padding: 4px; /* 内边距为4px */
+}
+
+.platform-item:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* 悬停时背景色为白色5%透明度 */
+    border-radius: 4px; /* 圆角为4px */
+}
+
+@media (max-width: 750px) {
+    .platforms-container {
+        grid-template-columns: repeat(5, 1fr); /* 当屏幕宽度小于750px时，改为5列等宽网格 */
+    }
+}
+
+@media (max-width: 600px) {
+    .platforms-container {
+        grid-template-columns: repeat(4, 1fr); /* 当屏幕宽度小于600px时，改为4列等宽网格 */
+    }
+}

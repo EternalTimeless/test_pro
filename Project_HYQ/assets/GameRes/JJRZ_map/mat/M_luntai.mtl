@@ -1,0 +1,125 @@
+{
+  "__type__": "cc.Material",
+  "_name": "",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "678fa66a-152f-46a9-8e94-55c498a37c0c",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 0,
+  "_defines": [
+    {
+      "USE_INSTANCING": true
+    },
+    {
+      "USE_INSTANCING": true,
+      "USE_GLOW": true,
+      "USE_ALBEDO_MAP": true
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {},
+    {
+      "mainColor": {
+        "__type__": "cc.Color",
+        "r": 196,
+        "g": 207,
+        "b": 224,
+        "a": 255
+      },
+      "roughness": 0.571,
+      "metallic": 0.173,
+      "specularIntensity": 0.643,
+      "mainTexture": {
+        "__uuid__": "b7f12e03-7c47-46f2-ba4c-86ba9a484716@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "glowColor": {
+        "__type__": "cc.Color",
+        "r": 0,
+        "g": 111,
+        "b": 255,
+        "a": 255
+      },
+      "glowIntensity": 0.15,
+      "glowWidth": 0.8
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+}

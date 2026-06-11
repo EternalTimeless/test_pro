@@ -1,0 +1,78 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "da627ed9-8c8e-426a-bd05-62dea432735e",
+  "files": [],
+  "subMetas": {
+    "58da8": {
+      "importer": "gltf-mesh",
+      "uuid": "da627ed9-8c8e-426a-bd05-62dea432735e@58da8",
+      "displayName": "",
+      "id": "58da8",
+      "name": "Object10.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 50
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "9f435": {
+      "importer": "gltf-scene",
+      "uuid": "da627ed9-8c8e-426a-bd05-62dea432735e@9f435",
+      "displayName": "",
+      "id": "9f435",
+      "name": "SM_cao.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "da627ed9-8c8e-426a-bd05-62dea432735e@58da8"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "da627ed9-8c8e-426a-bd05-62dea432735e@9f435"
+      ]
+    }
+  }
+}

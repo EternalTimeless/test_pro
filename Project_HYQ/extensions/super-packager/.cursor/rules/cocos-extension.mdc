@@ -1,0 +1,136 @@
+---
+description: Cocos Creator 扩展开发规范和最佳实践
+---
+
+# Cocos Creator 扩展开发规范
+
+## 扩展结构概述
+
+### package.json 核心配置
+- `package_version: 2` - 使用最新的扩展格式（必填）
+- `main: "./dist/browser.cjs"` - Browser 端入口文件
+- `contributions` - 扩展功能定义
+  - `menu` - 定义主菜单项
+  - `messages` - 定义消息处理方法
+- `panels` - 面板配置和入口
+
+### 双端架构详解
+- **Browser 端**: [src/browser/index.ts](mdc:src/browser/index.ts) - 主进程，可访问完整的 Editor API
+- **Panel 端**: [src/panels/panel.ts](mdc:src/panels/panel.ts) - 渲染进程，UI 界面运行环境
+
+## Browser 端开发
+
+### 标准入口结构
+```typescript
+import { name } from '../../package.json' with { type: 'json' };
+
+export const methods = {
+    async open() {
+        Editor.Panel.open(name);
+    },
+    getVersion() {
+        return Editor.App.version;
+    },
+};
+
+export async function load() {
+    console.log(`load ${name}`);
+}
+
+export function unload() {
+    console.log(`unload ${name}`);
+}
+```
+
+### 消息系统
+- Browser 端通过 `methods` 导出的方法接收消息
+- 使用 `Editor.Message.send()` 发送消息
+- 消息路由通过 `package.json` 的 `contributions.messages` 定义
+
+### Editor API 访问
+- 完整的 Editor 对象可用（App、Panel、Message 等）
+- 可执行文件操作、项目管理等编辑器功能
+
+## Panel 端开发
+
+### Vue 3 + Element Plus 集成
+- 使用 `<script setup lang="ts">` 语法
+- Element Plus 组件自动导入（已配置 unplugin-auto-import）
+- 支持响应式数据和组合式 API
+
+### 面板通信模式
+```typescript
+// 向 Browser 端发送消息
+const version = await Editor.Message.request(name, 'get-version');
+
+// 面板间通信
+Editor.Panel.open('other-panel');
+```
+
+### UI 环境约束
+- 面板运行在隔离的渲染进程中
+- CSS 根选择器使用 `:host` 替代 `:root`
+- Element Plus 样式自动转换（Vite 插件处理）
+- `ui-` 前缀的标签被视为 Cocos UI 组件
+
+## 构建系统 (Vite)
+
+### 特殊构建要求
+```typescript
+// vite.config.ts 关键配置
+export default defineConfig(({ mode }) => {
+    const isDev = mode === 'development';
+    return {
+        build: {
+            lib: {
+                entry: {
+                    browser: './src/browser/index.ts',
+                    panel: './src/panels/panel.ts',
+                },
+                formats: ['cjs'],
+                fileName: (_, entryName) => `${entryName}.cjs`,
+            },
+            watch: isDev ? { include: ['./src/**/*'] } : null,
+        }
+    };
+});
+```
+
+### 依赖管理策略
+- `nodeExternals` 插件排除 Node.js 内置模块
+- 第三方依赖打包到构建产物（`deps: false`）
+- 开发依赖和 peer 依赖被排除
+
+### 关键插件配置
+- `@cocos-fe/vite-plugin-cocos-panel` - Cocos 面板专用插件
+- `unplugin-auto-import` - 自动导入 Element Plus
+- `unplugin-vue-components` - 组件自动导入
+
+## 开发调试
+
+### 开发环境
+```bash
+npm run dev   # 监听模式构建，文件变化自动重新构建
+npm run build # 生产构建
+```
+
+### Source Map 配置
+- Windows: 强制使用 `inline` 模式
+- 其他平台: 支持外部 source map 文件
+
+### 调试方法
+- Browser 端: 编辑器控制台查看日志
+- Panel 端: 面板右键 -> 开发者工具
+- 扩展重载: 扩展管理器中点击重载按钮
+
+## 常见问题
+
+### 构建相关
+- 必须使用 `vite build`，不能使用 `vite dev`
+- 输出格式必须为 `.cjs` 以供编辑器加载
+- TypeScript 版本需 ≥4.3 支持 `resolveJsonModule`
+
+### 通信相关
+- 面板到 Browser 使用 `Editor.Message.request()`
+- Browser 到面板通过消息系统触发
+- 消息名称必须在 `package.json` 中预先定义

@@ -1,0 +1,50 @@
+{
+  "__version__": "1.0.6",
+  "general": {
+    "designResolution": {
+      "width": 720,
+      "height": 1280,
+      "fitHeight": true,
+      "fitWidth": false
+    }
+  },
+  "custom_joint_texture_layouts": [],
+  "layer": [
+    {
+      "name": "EFFECT",
+      "value": 524288
+    }
+  ],
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "WALL"
+      },
+      {
+        "index": 2,
+        "name": "BUILD"
+      },
+      {
+        "index": 3,
+        "name": "PLAYER"
+      },
+      {
+        "index": 4,
+        "name": "ENEMY"
+      },
+      {
+        "index": 5,
+        "name": "ATTACK"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 1,
+      "1": 24,
+      "2": 8,
+      "3": 6,
+      "4": 34,
+      "5": 16
+    }
+  }
+}

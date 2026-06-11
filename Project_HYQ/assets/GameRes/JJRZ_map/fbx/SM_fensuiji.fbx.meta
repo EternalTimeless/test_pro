@@ -1,0 +1,78 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "7c12cd55-5390-4732-bcdb-fd27ad637777",
+  "files": [],
+  "subMetas": {
+    "36369": {
+      "importer": "gltf-scene",
+      "uuid": "7c12cd55-5390-4732-bcdb-fd27ad637777@36369",
+      "displayName": "",
+      "id": "36369",
+      "name": "SM_fensuiji.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7cd45": {
+      "importer": "gltf-mesh",
+      "uuid": "7c12cd55-5390-4732-bcdb-fd27ad637777@7cd45",
+      "displayName": "",
+      "id": "7cd45",
+      "name": "fensuiji.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 226
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "7c12cd55-5390-4732-bcdb-fd27ad637777@7cd45"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "7c12cd55-5390-4732-bcdb-fd27ad637777@36369"
+      ]
+    }
+  }
+}

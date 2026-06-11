@@ -1,0 +1,130 @@
+{
+  "__type__": "cc.Material",
+  "_name": "",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "2c9c2681-b8db-4786-bf04-0ca447710be4",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 0,
+  "_defines": [
+    {
+      "USE_INSTANCING": true
+    },
+    {
+      "USE_INSTANCING": true,
+      "USE_NORMAL_MAP": true,
+      "USE_BASE_COLOR_MAP": true,
+      "BASE_COLOR_MAP_AS_SHADE_MAP_1": true,
+      "BASE_COLOR_MAP_AS_SHADE_MAP_2": true
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {},
+    {
+      "mainColor": {
+        "__type__": "cc.Color",
+        "r": 204,
+        "g": 204,
+        "b": 204,
+        "a": 255
+      },
+      "specular": {
+        "__type__": "cc.Color",
+        "r": 15,
+        "g": 15,
+        "b": 15,
+        "a": 76
+      },
+      "baseFeather": 0.3,
+      "shadeStep": 4.3,
+      "shadeFeather": 3,
+      "normalMap": {
+        "__uuid__": "778bdaaa-3035-4917-bc3d-c446935e682a@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "mainTexture": {
+        "__uuid__": "c9024b4d-ade1-48ec-beed-9fc568fc7fa9@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "grayScaleFactor": 0
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+}

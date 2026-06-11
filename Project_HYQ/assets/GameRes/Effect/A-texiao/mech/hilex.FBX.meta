@@ -1,0 +1,78 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "068a5758-286d-4302-8c41-edc3f86f24c9",
+  "files": [],
+  "subMetas": {
+    "ba917": {
+      "importer": "gltf-mesh",
+      "uuid": "068a5758-286d-4302-8c41-edc3f86f24c9@ba917",
+      "displayName": "",
+      "id": "ba917",
+      "name": "Loft002.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 210
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "8b8ee": {
+      "importer": "gltf-scene",
+      "uuid": "068a5758-286d-4302-8c41-edc3f86f24c9@8b8ee",
+      "displayName": "",
+      "id": "8b8ee",
+      "name": "hilex.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "068a5758-286d-4302-8c41-edc3f86f24c9@ba917"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "068a5758-286d-4302-8c41-edc3f86f24c9@8b8ee"
+      ]
+    }
+  }
+}

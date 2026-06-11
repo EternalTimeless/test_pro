@@ -1,0 +1,78 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "bd1e91e4-1c8d-4703-8492-cf658e13e8e9",
+  "files": [],
+  "subMetas": {
+    "17065": {
+      "importer": "gltf-scene",
+      "uuid": "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@17065",
+      "displayName": "",
+      "id": "17065",
+      "name": "SM_qiao_01.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7a922": {
+      "importer": "gltf-mesh",
+      "uuid": "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@7a922",
+      "displayName": "",
+      "id": "7a922",
+      "name": "daqiao01_01.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 4
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@7a922"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@17065"
+      ]
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "f9c2dc52-d167-47a7-9c34-8d324da4b592",
+  "files": [],
+  "subMetas": {
+    "3f7d7": {
+      "importer": "gltf-mesh",
+      "uuid": "f9c2dc52-d167-47a7-9c34-8d324da4b592@3f7d7",
+      "displayName": "",
+      "id": "3f7d7",
+      "name": "boss_01.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1540
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "f9c2dc52-d167-47a7-9c34-8d324da4b592@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 22
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f81aa": {
+      "importer": "gltf-scene",
+      "uuid": "f9c2dc52-d167-47a7-9c34-8d324da4b592@f81aa",
+      "displayName": "",
+      "id": "f81aa",
+      "name": "boos_02_skin_1.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "f9c2dc52-d167-47a7-9c34-8d324da4b592@3f7d7"
+      ],
+      "skeletons": [
+        "f9c2dc52-d167-47a7-9c34-8d324da4b592@438fe"
+      ],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "f9c2dc52-d167-47a7-9c34-8d324da4b592@f81aa"
+      ]
+    }
+  }
+}

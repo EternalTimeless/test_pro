@@ -1,0 +1,102 @@
+{
+  "__type__": "cc.Material",
+  "_name": "",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "6b7e860b-8ba2-45ae-b130-63eea1f9e208",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 0,
+  "_defines": [
+    {
+      "USE_INSTANCING": true,
+      "USE_NORMAL_MAP": true,
+      "USE_ALBEDO_MAP": true,
+      "USE_OCCLUSION_MAP": true
+    },
+    {},
+    {},
+    {},
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {
+      "roughness": 0,
+      "normalStrength": 1.52,
+      "mainTexture": {
+        "__uuid__": "682cdf36-47ae-48dc-b227-72194cced6f7@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "normalMap": {
+        "__uuid__": "92fe8657-7118-4463-8cde-c1727e8106c4@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "occlusionMap": {
+        "__uuid__": "f4e3d46f-c81e-4775-9768-c726971a5909@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "grayScaleFactor": 0,
+      "flashRedColor": {
+        "__type__": "cc.Color",
+        "r": 0,
+        "g": 235,
+        "b": 255,
+        "a": 255
+      },
+      "flashRedEdgeRange": 2.07
+    },
+    {},
+    {},
+    {},
+    {}
+  ]
+}

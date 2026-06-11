@@ -1,0 +1,96 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "d242d589-d84a-48a2-914d-561fa6656270",
+  "files": [],
+  "subMetas": {
+    "1d338": {
+      "importer": "gltf-mesh",
+      "uuid": "d242d589-d84a-48a2-914d-561fa6656270@1d338",
+      "displayName": "",
+      "id": "1d338",
+      "name": "dimian.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 8
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "8d883": {
+      "importer": "gltf-material",
+      "uuid": "d242d589-d84a-48a2-914d-561fa6656270@8d883",
+      "displayName": "",
+      "id": "8d883",
+      "name": "lambert1.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b622f": {
+      "importer": "gltf-scene",
+      "uuid": "d242d589-d84a-48a2-914d-561fa6656270@b622f",
+      "displayName": "",
+      "id": "b622f",
+      "name": "dimian.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "d242d589-d84a-48a2-914d-561fa6656270@1d338"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "d242d589-d84a-48a2-914d-561fa6656270@8d883"
+      ],
+      "scenes": [
+        "d242d589-d84a-48a2-914d-561fa6656270@b622f"
+      ]
+    }
+  }
+}

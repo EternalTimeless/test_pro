@@ -1,0 +1,78 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "39329479-eb68-4f22-a894-27cf73acb855",
+  "files": [],
+  "subMetas": {
+    "46c84": {
+      "importer": "gltf-mesh",
+      "uuid": "39329479-eb68-4f22-a894-27cf73acb855@46c84",
+      "displayName": "",
+      "id": "46c84",
+      "name": "Box014.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 12
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "fff9d": {
+      "importer": "gltf-scene",
+      "uuid": "39329479-eb68-4f22-a894-27cf73acb855@fff9d",
+      "displayName": "",
+      "id": "fff9d",
+      "name": "SM_chuansongdai.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "39329479-eb68-4f22-a894-27cf73acb855@46c84"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "39329479-eb68-4f22-a894-27cf73acb855@fff9d"
+      ]
+    }
+  }
+}

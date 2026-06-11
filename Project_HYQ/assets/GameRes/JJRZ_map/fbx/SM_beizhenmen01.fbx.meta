@@ -1,0 +1,78 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "982fdbd7-08e1-41e7-9cc3-718cf0152d36",
+  "files": [],
+  "subMetas": {
+    "35625": {
+      "importer": "gltf-mesh",
+      "uuid": "982fdbd7-08e1-41e7-9cc3-718cf0152d36@35625",
+      "displayName": "",
+      "id": "35625",
+      "name": "beizhenmen01.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 106
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "ba9d2": {
+      "importer": "gltf-scene",
+      "uuid": "982fdbd7-08e1-41e7-9cc3-718cf0152d36@ba9d2",
+      "displayName": "",
+      "id": "ba9d2",
+      "name": "SM_beizhenmen01.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "982fdbd7-08e1-41e7-9cc3-718cf0152d36@35625"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "982fdbd7-08e1-41e7-9cc3-718cf0152d36@ba9d2"
+      ]
+    }
+  }
+}

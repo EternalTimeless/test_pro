@@ -1,0 +1,102 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "ca231c52-143a-4d1c-8ccf-e6685591c136",
+  "files": [],
+  "subMetas": {
+    "74148": {
+      "importer": "gltf-mesh",
+      "uuid": "ca231c52-143a-4d1c-8ccf-e6685591c136@74148",
+      "displayName": "",
+      "id": "74148",
+      "name": "SM_Slimed_Zombie_01.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1423
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "ca231c52-143a-4d1c-8ccf-e6685591c136@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 22
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a3cb8": {
+      "importer": "gltf-scene",
+      "uuid": "ca231c52-143a-4d1c-8ccf-e6685591c136@a3cb8",
+      "displayName": "",
+      "id": "a3cb8",
+      "name": "瘦丧尸.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "ca231c52-143a-4d1c-8ccf-e6685591c136@74148"
+      ],
+      "skeletons": [
+        "ca231c52-143a-4d1c-8ccf-e6685591c136@438fe"
+      ],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "ca231c52-143a-4d1c-8ccf-e6685591c136@a3cb8"
+      ]
+    },
+    "meshCompress": {
+      "enable": true,
+      "quantize": true,
+      "compress": true
+    }
+  }
+}

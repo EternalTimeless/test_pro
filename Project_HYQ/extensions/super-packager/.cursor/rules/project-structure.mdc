@@ -1,0 +1,36 @@
+---
+alwaysApply: true
+---
+
+# Super Packager 项目结构指南
+
+这是一个 Cocos Creator 扩展项目，使用 Vue 3 + TypeScript + Element Plus 开发。
+
+## 核心架构
+
+- **浏览器端入口**: [src/browser/index.ts](mdc:src/browser/index.ts) - Cocos Creator 编辑器中运行的代码
+- **面板端入口**: [src/panels/panel.ts](mdc:src/panels/panel.ts) - 扩展面板的主入口
+- **主 Vue 组件**: [src/panels/App.vue](mdc:src/panels/App.vue) - 面板的根组件
+
+## 构建配置
+
+- **Vite 配置**: [vite.config.ts](mdc:vite.config.ts) - 包含双入口构建配置（browser + panel）
+- **TypeScript 配置**: [tsconfig.app.json](mdc:tsconfig.app.json) - 应用相关的 TS 配置
+- **包配置**: [package.json](mdc:package.json) - 包含 Cocos Creator 扩展的 contributions 和 panels 配置
+
+## 国际化
+
+- **中文**: [i18n/zh.js](mdc:i18n/zh.js)
+- **英文**: [i18n/en.js](mdc:i18n/en.js)
+
+## 关键技术栈
+
+- Vue 3 (Composition API)
+- TypeScript (严格模式)
+- Element Plus (UI 组件库)
+- Vite (构建工具)
+- Unplugin Auto Import (自动导入)
+
+## 构建产物
+
+所有构建产物输出到 `dist/` 目录，生成 `.cjs` 格式文件供 Cocos Creator 加载。

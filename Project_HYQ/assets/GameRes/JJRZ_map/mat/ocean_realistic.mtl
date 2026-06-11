@@ -1,0 +1,83 @@
+{
+  "__type__": "cc.Material",
+  "_name": "",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "3bf1ec06-ed70-433e-aab6-22759ecc11c0",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 0,
+  "_defines": [
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {
+      "windAngle": 1.9,
+      "waveSize": 13,
+      "waveHeight": 5,
+      "waveSpeed": 0.74,
+      "waveRandomness": 1,
+      "choppiness": 0.16,
+      "detailStrength": 0.25,
+      "detailSpeed": 0.87,
+      "detailScale": 11.5,
+      "detailRandomness": 0,
+      "shallowColor": {
+        "__type__": "cc.Color",
+        "r": 7,
+        "g": 127,
+        "b": 156,
+        "a": 255
+      },
+      "deepColor": {
+        "__type__": "cc.Color",
+        "r": 0,
+        "g": 82,
+        "b": 102,
+        "a": 255
+      },
+      "absorptionDist": 0.7,
+      "smoothness": 0.45,
+      "reflectionStrength": 1.33,
+      "sssColor": {
+        "__type__": "cc.Color",
+        "r": 13,
+        "g": 109,
+        "b": 173,
+        "a": 255
+      },
+      "sssStrength": 0,
+      "specularIntensity": 1.74,
+      "foamColor": {
+        "__type__": "cc.Color",
+        "r": 124,
+        "g": 195,
+        "b": 235,
+        "a": 255
+      },
+      "foamScale": 2,
+      "fogColor": {
+        "__type__": "cc.Color",
+        "r": 179,
+        "g": 204,
+        "b": 228,
+        "a": 255
+      },
+      "fogDensity": 0.022,
+      "fogStart": 842
+    }
+  ]
+}

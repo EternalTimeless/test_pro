@@ -1,0 +1,96 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "956fcbd9-1c7c-429f-ac0a-12ef9ebf3e22",
+  "files": [],
+  "subMetas": {
+    "79e98": {
+      "importer": "gltf-mesh",
+      "uuid": "956fcbd9-1c7c-429f-ac0a-12ef9ebf3e22@79e98",
+      "displayName": "",
+      "id": "79e98",
+      "name": "groundedge_a_walk_layer.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 60
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e7549": {
+      "importer": "gltf-material",
+      "uuid": "956fcbd9-1c7c-429f-ac0a-12ef9ebf3e22@e7549",
+      "displayName": "",
+      "id": "e7549",
+      "name": "m_groundedge_a.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "0b0db": {
+      "importer": "gltf-scene",
+      "uuid": "956fcbd9-1c7c-429f-ac0a-12ef9ebf3e22@0b0db",
+      "displayName": "",
+      "id": "0b0db",
+      "name": "SM_stone_a.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "956fcbd9-1c7c-429f-ac0a-12ef9ebf3e22@79e98"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "956fcbd9-1c7c-429f-ac0a-12ef9ebf3e22@e7549"
+      ],
+      "scenes": [
+        "956fcbd9-1c7c-429f-ac0a-12ef9ebf3e22@0b0db"
+      ]
+    }
+  }
+}

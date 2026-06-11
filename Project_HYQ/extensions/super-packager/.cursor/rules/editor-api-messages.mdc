@@ -1,0 +1,211 @@
+---
+description: Cocos Creator Editor API 和消息系统使用指南
+---
+
+# Editor API 和消息系统使用指南
+
+## 消息系统架构
+
+### 双端通信模式
+- **Browser 端** → **Panel 端**: 通过消息系统触发面板方法
+- **Panel 端** → **Browser 端**: 使用 `Editor.Message.request()`
+- **扩展间通信**: 通过 Editor.Message 系统跨扩展调用
+
+### 消息配置 (package.json)
+```json
+{
+  "contributions": {
+    "messages": {
+      "open": { "methods": ["open"] },
+      "get-version": { "methods": ["getVersion"] },
+      "increase": { "methods": ["default.increase"] }
+    }
+  }
+}
+```
+
+## Browser 端 API
+
+### 标准导出结构
+```typescript
+// src/browser/index.ts
+export const methods = {
+    async open() {
+        Editor.Panel.open(name);
+    },
+    getVersion() {
+        return Editor.App.version;
+    },
+};
+
+export async function load() {
+    // 扩展加载时执行
+}
+
+export function unload() {
+    // 扩展卸载时执行
+}
+```
+
+### 核心 Editor API
+
+#### Editor.App
+```typescript
+// 获取编辑器版本
+const version = Editor.App.version;
+
+// 获取编辑器信息
+const info = Editor.App.getInfo();
+```
+
+#### Editor.Panel
+```typescript
+// 打开面板
+Editor.Panel.open('panel-name');
+
+// 关闭面板
+Editor.Panel.close('panel-name');
+
+// 获取面板信息
+const panelInfo = Editor.Panel.info('panel-name');
+```
+
+#### Editor.Message
+```typescript
+// 发送消息给其他扩展
+Editor.Message.send('extension-name', 'message-name', ...args);
+
+// 请求并等待响应
+const result = await Editor.Message.request('extension-name', 'message-name', ...args);
+
+// 广播消息
+Editor.Message.broadcast('message-name', ...args);
+```
+
+#### Editor.Profile
+```typescript
+// 保存扩展配置
+Editor.Profile.setConfig('extension-name', 'key', value);
+
+// 读取扩展配置
+const value = Editor.Profile.getConfig('extension-name', 'key');
+```
+
+## Panel 端 API
+
+### 基本消息通信
+```typescript
+import { name } from '../../package.json';
+
+// 向 Browser 端发送请求
+const version = await Editor.Message.request(name, 'get-version');
+
+// 发送消息给其他扩展
+Editor.Message.send('other-extension', 'message-name', data);
+```
+
+### 可用的 Editor API 子集
+- `Editor.Message` - 消息系统（完整功能）
+- `Editor.Panel` - 面板操作（有限功能）
+- `Editor.I18n` - 国际化支持
+
+### 限制说明
+- Panel 端无法访问 `Editor.App`、`Editor.Profile` 等主进程 API
+- 文件系统操作需通过 Browser 端进行
+- 项目相关操作需委托给 Browser 端
+
+## 消息最佳实践
+
+### 消息命名规范
+```json
+{
+  "messages": {
+    "open-panel": { "methods": ["openPanel"] },
+    "get-project-info": { "methods": ["getProjectInfo"] },
+    "update-settings": { "methods": ["updateSettings"] }
+  }
+}
+```
+
+### 错误处理
+```typescript
+// Browser 端
+export const methods = {
+    async riskyOperation() {
+        try {
+            // 执行可能失败的操作
+            return { success: true, data: result };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+};
+
+// Panel 端
+const result = await Editor.Message.request(name, 'risky-operation');
+if (!result.success) {
+    console.error('操作失败:', result.error);
+}
+```
+
+### 异步消息处理
+```typescript
+// Browser 端处理异步操作
+export const methods = {
+    async processFiles(files: string[]) {
+        const results = [];
+        for (const file of files) {
+            const result = await processFile(file);
+            results.push(result);
+        }
+        return results;
+    }
+};
+```
+
+## 调试和监控
+
+### 消息调试
+- 使用编辑器的 **开发者 → 消息列表** 查看所有可用消息
+- 在浏览器开发者工具中监控消息传递
+- 使用 `console.log` 跟踪消息流程
+
+### 常见问题排查
+1. **消息未响应**: 检查 package.json 中是否正确配置消息路由
+2. **方法找不到**: 确认 methods 对象中导出了对应方法
+3. **面板无法打开**: 检查面板配置和入口文件路径
+4. **跨进程通信失败**: 确认使用了正确的消息传递方式
+
+## 扩展间通信示例
+
+### 扩展 A 提供服务
+```typescript
+// extension-a/browser/index.ts
+export const methods = {
+    processData(data: any) {
+        // 处理数据
+        return processedData;
+    }
+};
+```
+
+### 扩展 B 调用服务
+```typescript
+// extension-b/panel/component.vue
+const processData = async (data: any) => {
+    const result = await Editor.Message.request('extension-a', 'process-data', data);
+    return result;
+};
+```
+
+## 性能优化建议
+
+### 消息传递优化
+- 避免频繁的小消息，考虑批量处理
+- 大数据传输时考虑使用临时文件
+- 异步操作提供进度反馈
+
+### 内存管理
+- 及时清理不再需要的数据
+- 避免在消息处理中创建大量对象
+- 使用 WeakMap/WeakSet 管理临时引用

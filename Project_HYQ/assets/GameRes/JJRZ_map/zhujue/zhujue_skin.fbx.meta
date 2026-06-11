@@ -1,0 +1,158 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "f6fb758b-ca27-49a3-9074-b55054373a42",
+  "files": [
+    "__original-animation-0.bin"
+  ],
+  "subMetas": {
+    "83767": {
+      "importer": "gltf-mesh",
+      "uuid": "f6fb758b-ca27-49a3-9074-b55054373a42@83767",
+      "displayName": "",
+      "id": "83767",
+      "name": "AK.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 652
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "74d97": {
+      "importer": "gltf-mesh",
+      "uuid": "f6fb758b-ca27-49a3-9074-b55054373a42@74d97",
+      "displayName": "",
+      "id": "74d97",
+      "name": "zhujue.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 2837
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "73b7f": {
+      "importer": "gltf-animation",
+      "uuid": "f6fb758b-ca27-49a3-9074-b55054373a42@73b7f",
+      "displayName": "",
+      "id": "73b7f",
+      "name": "idle.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 120,
+        "span": {
+          "from": 0,
+          "to": 0.6666666865348816
+        },
+        "events": []
+      },
+      "ver": "1.0.18",
+      "imported": true,
+      "files": [
+        ".bin"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "f6fb758b-ca27-49a3-9074-b55054373a42@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 21
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "16a87": {
+      "importer": "gltf-scene",
+      "uuid": "f6fb758b-ca27-49a3-9074-b55054373a42@16a87",
+      "displayName": "",
+      "id": "16a87",
+      "name": "zhujue_skin.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "f6fb758b-ca27-49a3-9074-b55054373a42@74d97",
+        "f6fb758b-ca27-49a3-9074-b55054373a42@83767"
+      ],
+      "skeletons": [
+        "f6fb758b-ca27-49a3-9074-b55054373a42@438fe"
+      ],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "f6fb758b-ca27-49a3-9074-b55054373a42@16a87"
+      ]
+    },
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 0.6666666865348816,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "idle",
+            "from": 0,
+            "to": 0.6666666865348816,
+            "wrapMode": 2,
+            "previousId": "73b7f",
+            "fps": 120
+          }
+        ]
+      }
+    ]
+  }
+}

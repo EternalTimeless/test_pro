@@ -1,0 +1,160 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "767a9023-1d3d-4608-ba16-06a9a280ef10",
+  "files": [
+    "__original-animation-0.bin"
+  ],
+  "subMetas": {
+    "336ca": {
+      "importer": "gltf-mesh",
+      "uuid": "767a9023-1d3d-4608-ba16-06a9a280ef10@336ca",
+      "displayName": "",
+      "id": "336ca",
+      "name": "pangsangshi01.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1838
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "767a9023-1d3d-4608-ba16-06a9a280ef10@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 24
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "bfae8": {
+      "importer": "texture",
+      "uuid": "767a9023-1d3d-4608-ba16-06a9a280ef10@bfae8",
+      "displayName": "",
+      "id": "bfae8",
+      "name": "贴图 #3.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/GameRes/FBX/Monster/pangsangshi01_D.jpg"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "27d23": {
+      "importer": "gltf-material",
+      "uuid": "767a9023-1d3d-4608-ba16-06a9a280ef10@27d23",
+      "displayName": "",
+      "id": "27d23",
+      "name": "Material #94291.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b6336": {
+      "importer": "gltf-scene",
+      "uuid": "767a9023-1d3d-4608-ba16-06a9a280ef10@b6336",
+      "displayName": "",
+      "id": "b6336",
+      "name": "胖丧尸_待机.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "贴图 #3",
+        "uri": "db://assets/GameRes/FBX/Monster/pangsangshi01_D.jpg"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 0.6666666865348816,
+        "fps": 30,
+        "splits": []
+      }
+    ],
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "767a9023-1d3d-4608-ba16-06a9a280ef10@336ca"
+      ],
+      "skeletons": [
+        "767a9023-1d3d-4608-ba16-06a9a280ef10@438fe"
+      ],
+      "textures": [
+        "767a9023-1d3d-4608-ba16-06a9a280ef10@bfae8"
+      ],
+      "materials": [
+        "767a9023-1d3d-4608-ba16-06a9a280ef10@27d23"
+      ],
+      "scenes": [
+        "767a9023-1d3d-4608-ba16-06a9a280ef10@b6336"
+      ]
+    },
+    "meshCompress": {
+      "enable": true,
+      "quantize": true,
+      "compress": true
+    }
+  }
+}

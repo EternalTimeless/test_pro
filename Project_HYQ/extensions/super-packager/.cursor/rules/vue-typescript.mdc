@@ -1,0 +1,155 @@
+---
+globs: *.vue,*.ts,*.tsx
+---
+
+# Vue + TypeScript Cocos 扩展开发规范
+
+## Vue 组件规范
+
+### 组件结构顺序
+```vue
+<template>
+  <!-- 模板内容 -->
+</template>
+
+<script setup lang="ts">
+// 第三方库导入
+// Cocos 相关导入
+// 本地组件导入
+// 类型定义
+// inject/provide
+// 响应式数据
+// 计算属性
+// 方法
+// 生命周期钩子
+</script>
+
+<style scoped>
+/* 样式 */
+</style>
+```
+
+### 组件命名
+- 组件文件使用 PascalCase：`HelloWorld.vue`
+- 组件名与文件名保持一致
+- 使用多个单词避免与 HTML 元素冲突
+
+### Composition API 使用
+- 优先使用 `<script setup lang="ts">` 语法
+- 使用 `defineProps`、`defineEmits` 定义组件接口
+- 合理使用 `ref`、`reactive`、`computed`
+
+### TypeScript 要求
+- 为所有 props 定义类型
+- 为复杂的数据结构定义接口
+- 使用严格的类型检查（已在 tsconfig 中启用）
+- 避免使用 `any` 类型
+- 启用 `@cocos/creator-types` 获得完整的 Editor API 类型支持
+
+### Element Plus 集成
+- 组件已自动导入，无需手动 import
+- 消息组件需指定 `appendTo` 为面板根元素
+- 样式变量使用 `:host` 而非 `:root`（面板环境要求）
+
+## Cocos 扩展特定模式
+
+### Editor API 调用
+```typescript
+import { name } from '../../package.json';
+
+// 向 Browser 端发送消息
+const version = await Editor.Message.request(name, 'get-version');
+
+// 打开其他面板
+Editor.Panel.open('other-panel');
+```
+
+### 面板通信
+```typescript
+// 使用 inject 获取消息通信方法
+import { inject } from 'vue';
+import { keyMessage } from './provide-inject';
+
+const message = inject(keyMessage)!;
+
+function showMessage() {
+    message({ message: '显示消息' });
+}
+```
+
+### Element Plus 消息组件
+```typescript
+import { inject } from 'vue';
+import { ElMessage } from 'element-plus';
+import { keyAppRoot } from './provide-inject';
+
+const appRootDom = inject(keyAppRoot);
+
+const showMessage = () => {
+    ElMessage({
+        message: '操作成功',
+        appendTo: appRootDom, // 指定挂载到面板根元素
+    });
+};
+```
+
+## 常见模式
+
+### 响应式数据
+```typescript
+const count = ref(0)
+const user = reactive({ name: '', age: 0 })
+```
+
+### 计算属性
+```typescript
+const doubleCount = computed(() => count.value * 2)
+```
+
+### 事件处理
+```typescript
+const emit = defineEmits<{
+  'update:value': [value: string]
+}>()
+```
+
+### 状态管理 (Pinia)
+```typescript
+// pina.ts
+import { reactive } from 'vue';
+
+export const state = reactive({
+    a: 100,
+});
+
+// 在组件中使用
+import { state } from './pina';
+```
+
+## 样式注意事项
+
+### CSS 作用域
+- 使用 `scoped` 样式避免污染全局
+- 面板环境中 `:root` 需要替换为 `:host`
+- Element Plus 变量会被 Vite 插件自动转换
+
+### 主题适配
+```css
+/* 支持明暗主题切换 */
+#app.dark {
+    /* 暗色主题样式 */
+}
+```
+
+## 导入规范
+
+### JSON 模块导入
+```typescript
+// 使用 with 语法导入 JSON（TypeScript 4.3+）
+import { name } from '../../package.json' with { type: 'json' };
+```
+
+### 自动导入配置
+- Vue API 自动导入（ref、reactive 等）
+- Element Plus 组件自动导入
+- 无需手动 import，直接使用即可
