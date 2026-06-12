@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 13959367.8161,
+      "mTimestamp": 17781264.6649,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -1568,7 +1568,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Player/Player.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Other/PropTireGate.ts",
           "resolved": "__unresolved_81",
           "loc": {
             "start": {
@@ -1577,12 +1577,12 @@
             },
             "end": {
               "line": 85,
-              "column": 127
+              "column": 132
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Player/Role.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Player/Player.ts",
           "resolved": "__unresolved_82",
           "loc": {
             "start": {
@@ -1591,12 +1591,12 @@
             },
             "end": {
               "line": 86,
-              "column": 125
+              "column": 127
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Rocker/RockerLogic.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Player/Role.ts",
           "resolved": "__unresolved_83",
           "loc": {
             "start": {
@@ -1605,12 +1605,12 @@
             },
             "end": {
               "line": 87,
-              "column": 132
+              "column": 125
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Rocker/RockerManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Rocker/RockerLogic.ts",
           "resolved": "__unresolved_84",
           "loc": {
             "start": {
@@ -1619,12 +1619,12 @@
             },
             "end": {
               "line": 88,
-              "column": 134
+              "column": 132
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Rocker/RockerMouseEvent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Rocker/RockerManager.ts",
           "resolved": "__unresolved_85",
           "loc": {
             "start": {
@@ -1633,12 +1633,12 @@
             },
             "end": {
               "line": 89,
-              "column": 137
+              "column": 134
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Rocker/RockerUI.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Rocker/RockerMouseEvent.ts",
           "resolved": "__unresolved_86",
           "loc": {
             "start": {
@@ -1647,12 +1647,12 @@
             },
             "end": {
               "line": 90,
-              "column": 129
+              "column": 137
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWay2D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Rocker/RockerUI.ts",
           "resolved": "__unresolved_87",
           "loc": {
             "start": {
@@ -1661,12 +1661,12 @@
             },
             "end": {
               "line": 91,
-              "column": 135
+              "column": 129
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWay3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWay2D.ts",
           "resolved": "__unresolved_88",
           "loc": {
             "start": {
@@ -1680,7 +1680,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWayBase.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWay3D.ts",
           "resolved": "__unresolved_89",
           "loc": {
             "start": {
@@ -1689,12 +1689,12 @@
             },
             "end": {
               "line": 93,
-              "column": 137
+              "column": 135
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/ShoppIngEvent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWayBase.ts",
           "resolved": "__unresolved_90",
           "loc": {
             "start": {
@@ -1703,12 +1703,12 @@
             },
             "end": {
               "line": 94,
-              "column": 136
+              "column": 137
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Shopping.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/ShoppIngEvent.ts",
           "resolved": "__unresolved_91",
           "loc": {
             "start": {
@@ -1717,12 +1717,12 @@
             },
             "end": {
               "line": 95,
-              "column": 131
+              "column": 136
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Shopping_Super.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Shopping.ts",
           "resolved": "__unresolved_92",
           "loc": {
             "start": {
@@ -1731,12 +1731,12 @@
             },
             "end": {
               "line": 96,
-              "column": 137
+              "column": 131
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/SkAnim/FbxManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/ShoppIng/Shopping_Super.ts",
           "resolved": "__unresolved_93",
           "loc": {
             "start": {
@@ -1745,12 +1745,12 @@
             },
             "end": {
               "line": 97,
-              "column": 131
+              "column": 137
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/SkAnim/SequenceFrameAnim/FrameAnimManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/SkAnim/FbxManager.ts",
           "resolved": "__unresolved_94",
           "loc": {
             "start": {
@@ -1759,12 +1759,12 @@
             },
             "end": {
               "line": 98,
-              "column": 155
+              "column": 131
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/SkAnim/SequenceFrameAnim/FrameManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/SkAnim/SequenceFrameAnim/FrameAnimManager.ts",
           "resolved": "__unresolved_95",
           "loc": {
             "start": {
@@ -1773,12 +1773,12 @@
             },
             "end": {
               "line": 99,
-              "column": 151
+              "column": 155
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/UI/GameOver/GameOverPanel.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/SkAnim/SequenceFrameAnim/FrameManager.ts",
           "resolved": "__unresolved_96",
           "loc": {
             "start": {
@@ -1787,12 +1787,12 @@
             },
             "end": {
               "line": 100,
-              "column": 139
+              "column": 151
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/UI/GameOver/UIButtonEvent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/UI/GameOver/GameOverPanel.ts",
           "resolved": "__unresolved_97",
           "loc": {
             "start": {
@@ -1806,7 +1806,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/Common/SuperPackage.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/UI/GameOver/UIButtonEvent.ts",
           "resolved": "__unresolved_98",
           "loc": {
             "start": {
@@ -1815,12 +1815,12 @@
             },
             "end": {
               "line": 102,
-              "column": 150
+              "column": 139
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/Common/super_html_playable.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/Common/SuperPackage.ts",
           "resolved": "__unresolved_99",
           "loc": {
             "start": {
@@ -1829,12 +1829,12 @@
             },
             "end": {
               "line": 103,
-              "column": 157
+              "column": 150
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PBASDK.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/Common/super_html_playable.ts",
           "resolved": "__unresolved_100",
           "loc": {
             "start": {
@@ -1843,12 +1843,12 @@
             },
             "end": {
               "line": 104,
-              "column": 155
+              "column": 157
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PLASDK.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PBASDK.ts",
           "resolved": "__unresolved_101",
           "loc": {
             "start": {
@@ -1862,7 +1862,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PrintComponent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PLASDK.ts",
           "resolved": "__unresolved_102",
           "loc": {
             "start": {
@@ -1871,12 +1871,12 @@
             },
             "end": {
               "line": 106,
-              "column": 163
+              "column": 155
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/StutterCheck.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PrintComponent.ts",
           "resolved": "__unresolved_103",
           "loc": {
             "start": {
@@ -1885,12 +1885,12 @@
             },
             "end": {
               "line": 107,
-              "column": 161
+              "column": 163
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/super_html_playable.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/StutterCheck.ts",
           "resolved": "__unresolved_104",
           "loc": {
             "start": {
@@ -1899,12 +1899,12 @@
             },
             "end": {
               "line": 108,
-              "column": 168
+              "column": 161
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/SuperPackageJY.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/super_html_playable.ts",
           "resolved": "__unresolved_105",
           "loc": {
             "start": {
@@ -1913,6 +1913,20 @@
             },
             "end": {
               "line": 109,
+              "column": 168
+            }
+          }
+        },
+        {
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/SuperPackageJY.ts",
+          "resolved": "__unresolved_106",
+          "loc": {
+            "start": {
+              "line": 110,
+              "column": 7
+            },
+            "end": {
+              "line": 110,
               "column": 153
             }
           }
@@ -2484,6 +2498,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Other/PropBrand.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Other/PropTireGate.ts"
           },
           "messages": []
         },
@@ -11596,7 +11617,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Other/CreatePropBrand.ts": {
       "mTimestamp": {
-        "mtime": 1781247960955.697,
+        "mtime": 1781254254505.356,
         "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
       },
       "chunkId": "0c8ced5f5ee21dc3098e4b6c63707b1b59bca6db",
@@ -11616,11 +11637,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 112
+              "column": 137
             },
             "end": {
               "line": 1,
-              "column": 116
+              "column": 141
             }
           }
         },
@@ -11658,11 +11679,11 @@
           "loc": {
             "start": {
               "line": 4,
-              "column": 83
+              "column": 101
             },
             "end": {
               "line": 4,
-              "column": 104
+              "column": 122
             }
           }
         },
@@ -11805,6 +11826,34 @@
               "column": 64
             }
           }
+        },
+        {
+          "value": "./PropTireGate",
+          "resolved": "__unresolved_14",
+          "loc": {
+            "start": {
+              "line": 16,
+              "column": 29
+            },
+            "end": {
+              "line": 16,
+              "column": 45
+            }
+          }
+        },
+        {
+          "value": "../Battle/CollectBattleTarger/ColliderTag",
+          "resolved": "__unresolved_15",
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 42
+            },
+            "end": {
+              "line": 17,
+              "column": 85
+            }
+          }
         }
       ],
       "type": "esm",
@@ -11925,6 +11974,20 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Battle/Base/FlashRedManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Other/PropTireGate.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Battle/CollectBattleTarger/ColliderTag.ts"
           },
           "messages": []
         }
@@ -15037,6 +15100,153 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PBASDK.ts"
+          },
+          "messages": []
+        }
+      ]
+    },
+    "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Other/PropTireGate.ts": {
+      "mTimestamp": {
+        "mtime": 1781254456450.221,
+        "uuid": "9e088f5e-0d38-4df8-9e26-b3a7b1ff4b32"
+      },
+      "chunkId": "df8013cc038ade925674e33c44c19bc01b20143c",
+      "imports": [
+        {
+          "value": "cce:/internal/code-quality/cr.mjs",
+          "resolved": "__unresolved_0"
+        },
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 57
+            },
+            "end": {
+              "line": 1,
+              "column": 61
+            }
+          }
+        },
+        {
+          "value": "../Battle/BattleTarger/BattleTarget3D",
+          "resolved": "__unresolved_1",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 31
+            },
+            "end": {
+              "line": 2,
+              "column": 70
+            }
+          }
+        },
+        {
+          "value": "../Battle/BulletMonsterCollisionManager",
+          "resolved": "__unresolved_2",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 42
+            },
+            "end": {
+              "line": 3,
+              "column": 83
+            }
+          }
+        },
+        {
+          "value": "../../Base/PoolManager",
+          "resolved": "__unresolved_3",
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 24
+            },
+            "end": {
+              "line": 4,
+              "column": 48
+            }
+          }
+        },
+        {
+          "value": "../../Base/EnumList",
+          "resolved": "__unresolved_4",
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 43
+            },
+            "end": {
+              "line": 5,
+              "column": 64
+            }
+          }
+        }
+      ],
+      "type": "esm",
+      "resolutions": [
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/code-quality/cr.mjs"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Battle/BattleTarger/BattleTarget3D.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Battle/BulletMonsterCollisionManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/Base/PoolManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/Base/EnumList.ts"
           },
           "messages": []
         }

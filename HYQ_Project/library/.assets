@@ -626,7 +626,8 @@
             "GameRes\\HYQ_map\\tex\\water_D.jpg",
             "GameRes\\HYQ_map\\tex\\yingying.png",
             "GameRes\\HYQ_map\\pro\\HYQ_map.prefab",
-            "GameRes\\HYQ_map\\pro\\HYQ_qiao_01.prefab"
+            "GameRes\\HYQ_map\\pro\\HYQ_qiao_01.prefab",
+            "Script\\functionS\\Other\\PropTireGate.ts"
         ]
     }
 }

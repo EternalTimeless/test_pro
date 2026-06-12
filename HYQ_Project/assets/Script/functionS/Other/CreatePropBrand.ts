@@ -1,7 +1,7 @@
-import { _decorator, CCFloat, CCInteger, Component, ITriggerEvent, Node, PlaceMethod, tween, Tween, Vec3 } from 'cc';
+import { _decorator, CCBoolean, CCFloat, CCInteger, Component, ITriggerEvent, MeshRenderer, Node, PlaceMethod, tween, Tween, Vec3 } from 'cc';
 import PoolManager from '../../Base/PoolManager';
 import { PropBrand } from './PropBrand';
-import { EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum } from '../../Base/EnumList';
+import { EffectEnum, EventType, LayerEnum, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum } from '../../Base/EnumList';
 import { PrefabsManager } from '../../Base/PrefabsManager';
 import { Player } from '../Player/Player';
 import { Role } from '../Player/Role';
@@ -13,6 +13,8 @@ import { UnityUpComponent } from '../../Base/UnityUpComponent';
 import { EffectManager } from '../Effect/EffectManager';
 import AudioManager from '../../Base/AudioManager';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
+import { PropTireGate } from './PropTireGate';
+import ColliderTag, { COLLIDE_TYPE } from '../Battle/CollectBattleTarger/ColliderTag';
 const { ccclass, property } = _decorator;
 
 @ccclass('CreatePropBrand')
@@ -38,15 +40,43 @@ export class CreatePropBrand extends UnityUpComponent {
     @property(Node)
     public wallNode: Node;
 
+    @property(CCBoolean)
+    public tireGateEnabled: boolean = false;
+
+    @property(CCInteger)
+    public tireGateCount: number = 3;
+
+    @property(CCFloat)
+    public tireGateSpacing: number = 1.8;
+
+    @property(CCFloat)
+    public tireGateHp: number = 1;
+
+    @property(Vec3)
+    public tireGateScale: Vec3 = new Vec3(1.44, 1.44, 1.44);
+
+    @property(CCFloat)
+    public propBackOffset: number = 5.4;
+
     private propBrandList: PropBrand[] = [];
 
     private tempPropBrandList: PropBrand[] = [];
 
     private isMove: boolean = false;
 
+    private gateTireRemain: number = 0;
+
+    private pendingMoveCount: number = 0;
+
+    private get isTireGateActive() {
+        return this.tireGateEnabled || (this.type === 0 && this.count === 1);
+    }
+
     @property(CCInteger)
     public type: number = 0;
     start() {
+
+        const startZ = this.isTireGateActive ? this.propBackOffset : 0;
 
         for (let i = 0; i < this.showCount; i++) {
 
@@ -60,7 +90,7 @@ export class CreatePropBrand extends UnityUpComponent {
 
             p.node.y = this.height;
 
-            p.node.z = i * this.distance;
+            p.node.z = startZ + i * this.distance;
 
         }
 
@@ -70,13 +100,15 @@ export class CreatePropBrand extends UnityUpComponent {
 
         // }, 1);
 
+        this.createTireGate();
+
         this.pa?.node.on(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
 
     }
 
 
     private armsUPEvent(armsInfo: ArmsInfo) {
-        this.move(armsInfo.moveCount);
+        this.requestMove(armsInfo.moveCount);
     }
 
     _update(deltaTime: number) {
@@ -85,16 +117,18 @@ export class CreatePropBrand extends UnityUpComponent {
             for (let i = 0; i < this.propBrandList.length; i++) {
                 const p = this.propBrandList[i];
 
-                if (!i) {
-                    if (p.node.z <= 0) {
-
-                        this.scheduleOnce(() => {
-                            this.pa.init(1);
-
-                        }, 0.5);
-                        this.isMove = false;
-                        break;
+                if (!i && p.node.z <= 0) {
+                    if (this.isTireGateActive) {
+                        this.pushFrontPropToPickup();
+                        i--;
+                        continue;
                     }
+                    this.scheduleOnce(() => {
+                        this.pa?.init(1);
+
+                    }, 0.5);
+                    this.isMove = false;
+                    break;
                 }
 
                 p.node.z -= this.moveSpeed * deltaTime;
@@ -144,27 +178,109 @@ export class CreatePropBrand extends UnityUpComponent {
 
     }
 
+    private pushFrontPropToPickup() {
+        const p = this.propBrandList.shift();
+        if (!p) {
+            return;
+        }
+        this.tempPropBrandList.push(p);
+        p.collide.on("onTriggerEnter", this.onTriggerEnter, this);
+        this.appendPropBrandAtBack();
+    }
+
+    private appendPropBrands(count: number) {
+        const c = this.propBrandList.length;
+        const appendStartZ = this.isTireGateActive ? this.propBackOffset : 0;
+        for (let i = 0; i < count; i++) {
+            const p = this.propBrand;
+            this.wallNode.addChild(p.node);
+            p.node.x = 0;
+            p.node.y = this.height;
+            p.node.z = appendStartZ + (i + c) * this.distance;
+            this.propBrandList.push(p);
+        }
+    }
+
+    private appendPropBrandAtBack() {
+        const p = this.propBrand;
+        this.wallNode.addChild(p.node);
+        p.node.x = 0;
+        p.node.y = this.height;
+        const last = this.propBrandList[this.propBrandList.length - 1];
+        const appendStartZ = this.isTireGateActive ? this.propBackOffset : 0;
+        p.node.z = last ? last.node.z + this.distance : appendStartZ;
+        this.propBrandList.push(p);
+    }
+    private requestMove(count: number) {
+        if (this.gateTireRemain > 0) {
+            this.pendingMoveCount += count;
+            return;
+        }
+        this.move(count);
+    }
+
+    private createTireGate() {
+        if (!this.isTireGateActive || !this.wallNode || this.tireGateCount <= 0) {
+            return;
+        }
+        this.gateTireRemain = this.tireGateCount;
+        for (let i = 0; i < this.tireGateCount; i++) {
+            const tire = this.tireGate;
+            this.wallNode.addChild(tire);
+            tire.setPosition(0, this.height, i * this.tireGateSpacing);
+            tire.setScale(Vec3.ONE);
+
+            const gate = tire.getComponent(PropTireGate);
+            const mesh = tire.children[0]?.children[0]?.getComponent(MeshRenderer);
+            if (mesh && gate.meshFlashDataList.length > 0) {
+                gate.meshFlashDataList[0].meshRender = mesh;
+            }
+            gate.initGate(() => this.onGateTireDie(), this.tireGateHp);
+        }
+    }
+
+    private onGateTireDie() {
+        this.gateTireRemain--;
+        if (this.gateTireRemain > 0) {
+            return;
+        }
+        const count = this.pendingMoveCount || this.tireGateCount;
+        this.pendingMoveCount = 0;
+        this.move(count);
+    }
+
+    private get tireGate() {
+        let tire = PoolManager.instance.getPool<Node>(PoolEnum.Other + OtherPrefabsEnum.tire);
+        if (!tire) {
+            tire = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.other, OtherPrefabsEnum.tire);
+        }
+        tire.active = true;
+        tire.children[0]?.setScale(this.tireGateScale);
+
+        let tag = tire.getComponent(ColliderTag);
+        if (!tag) {
+            tag = tire.addComponent(ColliderTag);
+        }
+        tag.tag = COLLIDE_TYPE.MONSTER;
+
+        let gate = tire.getComponent(PropTireGate);
+        if (!gate) {
+            gate = tire.addComponent(PropTireGate);
+        }
+        gate.collisionHalfX = 2;
+        gate.collisionHalfZ = 1.2;
+        gate.repelEnabled = false;
+        return tire;
+    }
+
     public move(count: number) {
 
         this.isMove = true;
-
-        const c = this.propBrandList.length;
-
-        for (let i = 0; i < count; i++) {
-
-            const p = this.propBrand;
-
-            this.wallNode.addChild(p.node);
-
-            p.node.x = 0;
-
-            p.node.y = this.height;
-
-            p.node.z = (i + c - 1) * this.distance;
-
-            this.propBrandList.push(p);
-
+        if (this.isTireGateActive) {
+            return;
         }
+
+        this.appendPropBrands(count);
 
         for (let i = 0; i < count; i++) {
 

@@ -5212,6 +5212,17 @@
     "wallNode": {
       "__id__": 177
     },
+    "tireGateEnabled": true,
+    "tireGateCount": 3,
+    "tireGateSpacing": 1.8,
+    "tireGateHp": 1,
+    "tireGateScale": {
+      "__type__": "cc.Vec3",
+      "x": 1.44,
+      "y": 1.44,
+      "z": 1.44
+    },
+    "propBackOffset": 5.4,
     "type": 0,
     "_id": "841G+cnX9NF7QUuVeQS3lD"
   },
@@ -6659,6 +6670,17 @@
     "wallNode": {
       "__id__": 254
     },
+    "tireGateEnabled": false,
+    "tireGateCount": 3,
+    "tireGateSpacing": 1.8,
+    "tireGateHp": 1,
+    "tireGateScale": {
+      "__type__": "cc.Vec3",
+      "x": 1.44,
+      "y": 1.44,
+      "z": 1.44
+    },
+    "propBackOffset": 5.4,
     "type": 1,
     "_id": "35d7SdpMFIAZmarts3dOAB"
   },

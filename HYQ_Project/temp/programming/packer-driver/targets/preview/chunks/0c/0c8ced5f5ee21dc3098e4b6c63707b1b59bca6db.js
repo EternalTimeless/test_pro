@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, MeshRenderer, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropTireGate, ColliderTag, COLLIDE_TYPE, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -27,6 +27,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfLayerEnum(extras) {
     _reporterNs.report("LayerEnum", "../../Base/EnumList", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfOtherPrefabsEnum(extras) {
+    _reporterNs.report("OtherPrefabsEnum", "../../Base/EnumList", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfPoolEnum(extras) {
@@ -85,6 +89,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("FlashRedManager", "../Battle/Base/FlashRedManager", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfPropTireGate(extras) {
+    _reporterNs.report("PropTireGate", "./PropTireGate", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfColliderTag(extras) {
+    _reporterNs.report("ColliderTag", "../Battle/CollectBattleTarger/ColliderTag", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfCOLLIDE_TYPE(extras) {
+    _reporterNs.report("COLLIDE_TYPE", "../Battle/CollectBattleTarger/ColliderTag", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -93,8 +109,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
+      CCBoolean = _cc.CCBoolean;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
+      MeshRenderer = _cc.MeshRenderer;
       Node = _cc.Node;
       tween = _cc.tween;
       Tween = _cc.Tween;
@@ -107,6 +125,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       EffectEnum = _unresolved_4.EffectEnum;
       EventType = _unresolved_4.EventType;
       LayerEnum = _unresolved_4.LayerEnum;
+      OtherPrefabsEnum = _unresolved_4.OtherPrefabsEnum;
       PoolEnum = _unresolved_4.PoolEnum;
       PrefabsEnum = _unresolved_4.PrefabsEnum;
       SoundEnum = _unresolved_4.SoundEnum;
@@ -130,13 +149,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       AudioManager = _unresolved_13.default;
     }, function (_unresolved_14) {
       FlashRedManager = _unresolved_14.FlashRedManager;
+    }, function (_unresolved_15) {
+      PropTireGate = _unresolved_15.PropTireGate;
+    }, function (_unresolved_16) {
+      ColliderTag = _unresolved_16.default;
+      COLLIDE_TYPE = _unresolved_16.COLLIDE_TYPE;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "7ab0exJe1JDaaNCop2wV4XG", "CreatePropBrand", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Component', 'ITriggerEvent', 'Node', 'PlaceMethod', 'tween', 'Tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Component', 'ITriggerEvent', 'MeshRenderer', 'Node', 'PlaceMethod', 'tween', 'Tween', 'Vec3']);
 
       ({
         ccclass,
@@ -145,7 +169,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("CreatePropBrand", CreatePropBrand = (_dec = ccclass('CreatePropBrand'), _dec2 = property(CCInteger), _dec3 = property(CCFloat), _dec4 = property(CCFloat), _dec5 = property(CCInteger), _dec6 = property(CCFloat), _dec7 = property(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
         error: Error()
-      }), PropArms) : PropArms), _dec8 = property(Node), _dec9 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), PropArms) : PropArms), _dec8 = property(Node), _dec9 = property(CCBoolean), _dec10 = property(CCInteger), _dec11 = property(CCFloat), _dec12 = property(CCFloat), _dec13 = property(Vec3), _dec14 = property(CCFloat), _dec15 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
@@ -165,17 +189,37 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "wallNode", _descriptor7, this);
 
+          _initializerDefineProperty(this, "tireGateEnabled", _descriptor8, this);
+
+          _initializerDefineProperty(this, "tireGateCount", _descriptor9, this);
+
+          _initializerDefineProperty(this, "tireGateSpacing", _descriptor10, this);
+
+          _initializerDefineProperty(this, "tireGateHp", _descriptor11, this);
+
+          _initializerDefineProperty(this, "tireGateScale", _descriptor12, this);
+
+          _initializerDefineProperty(this, "propBackOffset", _descriptor13, this);
+
           this.propBrandList = [];
           this.tempPropBrandList = [];
           this.isMove = false;
+          this.gateTireRemain = 0;
+          this.pendingMoveCount = 0;
 
-          _initializerDefineProperty(this, "type", _descriptor8, this);
+          _initializerDefineProperty(this, "type", _descriptor14, this);
 
           this.tempV3 = new Vec3();
         }
 
+        get isTireGateActive() {
+          return this.tireGateEnabled || this.type === 0 && this.count === 1;
+        }
+
         start() {
           var _this$pa;
+
+          var startZ = this.isTireGateActive ? this.propBackOffset : 0;
 
           for (var i = 0; i < this.showCount; i++) {
             var p = this.propBrand;
@@ -183,19 +227,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.wallNode.addChild(p.node);
             p.node.x = 0;
             p.node.y = this.height;
-            p.node.z = i * this.distance;
+            p.node.z = startZ + i * this.distance;
           } // this.scheduleOnce(() => {
           //     this.move(15);
           // }, 1);
 
 
+          this.createTireGate();
           (_this$pa = this.pa) == null || _this$pa.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
             error: Error()
           }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
         }
 
         armsUPEvent(armsInfo) {
-          this.move(armsInfo.moveCount);
+          this.requestMove(armsInfo.moveCount);
         }
 
         _update(deltaTime) {
@@ -203,14 +248,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             for (var i = 0; i < this.propBrandList.length; i++) {
               var p = this.propBrandList[i];
 
-              if (!i) {
-                if (p.node.z <= 0) {
-                  this.scheduleOnce(() => {
-                    this.pa.init(1);
-                  }, 0.5);
-                  this.isMove = false;
-                  break;
+              if (!i && p.node.z <= 0) {
+                if (this.isTireGateActive) {
+                  this.pushFrontPropToPickup();
+                  i--;
+                  continue;
                 }
+
+                this.scheduleOnce(() => {
+                  var _this$pa2;
+
+                  (_this$pa2 = this.pa) == null || _this$pa2.init(1);
+                }, 0.5);
+                this.isMove = false;
+                break;
               }
 
               p.node.z -= this.moveSpeed * deltaTime;
@@ -249,25 +300,156 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        move(count) {
-          this.isMove = true;
+        pushFrontPropToPickup() {
+          var p = this.propBrandList.shift();
+
+          if (!p) {
+            return;
+          }
+
+          this.tempPropBrandList.push(p);
+          p.collide.on("onTriggerEnter", this.onTriggerEnter, this);
+          this.appendPropBrandAtBack();
+        }
+
+        appendPropBrands(count) {
           var c = this.propBrandList.length;
+          var appendStartZ = this.isTireGateActive ? this.propBackOffset : 0;
 
           for (var i = 0; i < count; i++) {
             var p = this.propBrand;
             this.wallNode.addChild(p.node);
             p.node.x = 0;
             p.node.y = this.height;
-            p.node.z = (i + c - 1) * this.distance;
+            p.node.z = appendStartZ + (i + c) * this.distance;
             this.propBrandList.push(p);
           }
+        }
 
-          for (var _i2 = 0; _i2 < count; _i2++) {
-            var _p2 = this.propBrandList[0];
-            this.tempPropBrandList.push(_p2);
+        appendPropBrandAtBack() {
+          var p = this.propBrand;
+          this.wallNode.addChild(p.node);
+          p.node.x = 0;
+          p.node.y = this.height;
+          var last = this.propBrandList[this.propBrandList.length - 1];
+          var appendStartZ = this.isTireGateActive ? this.propBackOffset : 0;
+          p.node.z = last ? last.node.z + this.distance : appendStartZ;
+          this.propBrandList.push(p);
+        }
 
-            _p2.collide.on("onTriggerEnter", this.onTriggerEnter, this);
+        requestMove(count) {
+          if (this.gateTireRemain > 0) {
+            this.pendingMoveCount += count;
+            return;
+          }
 
+          this.move(count);
+        }
+
+        createTireGate() {
+          if (!this.isTireGateActive || !this.wallNode || this.tireGateCount <= 0) {
+            return;
+          }
+
+          this.gateTireRemain = this.tireGateCount;
+
+          for (var i = 0; i < this.tireGateCount; i++) {
+            var _tire$children$;
+
+            var tire = this.tireGate;
+            this.wallNode.addChild(tire);
+            tire.setPosition(0, this.height, i * this.tireGateSpacing);
+            tire.setScale(Vec3.ONE);
+            var gate = tire.getComponent(_crd && PropTireGate === void 0 ? (_reportPossibleCrUseOfPropTireGate({
+              error: Error()
+            }), PropTireGate) : PropTireGate);
+            var mesh = (_tire$children$ = tire.children[0]) == null || (_tire$children$ = _tire$children$.children[0]) == null ? void 0 : _tire$children$.getComponent(MeshRenderer);
+
+            if (mesh && gate.meshFlashDataList.length > 0) {
+              gate.meshFlashDataList[0].meshRender = mesh;
+            }
+
+            gate.initGate(() => this.onGateTireDie(), this.tireGateHp);
+          }
+        }
+
+        onGateTireDie() {
+          this.gateTireRemain--;
+
+          if (this.gateTireRemain > 0) {
+            return;
+          }
+
+          var count = this.pendingMoveCount || this.tireGateCount;
+          this.pendingMoveCount = 0;
+          this.move(count);
+        }
+
+        get tireGate() {
+          var _tire$children$2;
+
+          var tire = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+            error: Error()
+          }), PoolEnum) : PoolEnum).Other + (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
+            error: Error()
+          }), OtherPrefabsEnum) : OtherPrefabsEnum).tire);
+
+          if (!tire) {
+            tire = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
+              error: Error()
+            }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+              error: Error()
+            }), PrefabsEnum) : PrefabsEnum).other, (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
+              error: Error()
+            }), OtherPrefabsEnum) : OtherPrefabsEnum).tire);
+          }
+
+          tire.active = true;
+          (_tire$children$2 = tire.children[0]) == null || _tire$children$2.setScale(this.tireGateScale);
+          var tag = tire.getComponent(_crd && ColliderTag === void 0 ? (_reportPossibleCrUseOfColliderTag({
+            error: Error()
+          }), ColliderTag) : ColliderTag);
+
+          if (!tag) {
+            tag = tire.addComponent(_crd && ColliderTag === void 0 ? (_reportPossibleCrUseOfColliderTag({
+              error: Error()
+            }), ColliderTag) : ColliderTag);
+          }
+
+          tag.tag = (_crd && COLLIDE_TYPE === void 0 ? (_reportPossibleCrUseOfCOLLIDE_TYPE({
+            error: Error()
+          }), COLLIDE_TYPE) : COLLIDE_TYPE).MONSTER;
+          var gate = tire.getComponent(_crd && PropTireGate === void 0 ? (_reportPossibleCrUseOfPropTireGate({
+            error: Error()
+          }), PropTireGate) : PropTireGate);
+
+          if (!gate) {
+            gate = tire.addComponent(_crd && PropTireGate === void 0 ? (_reportPossibleCrUseOfPropTireGate({
+              error: Error()
+            }), PropTireGate) : PropTireGate);
+          }
+
+          gate.collisionHalfX = 2;
+          gate.collisionHalfZ = 1.2;
+          gate.repelEnabled = false;
+          return tire;
+        }
+
+        move(count) {
+          this.isMove = true;
+
+          if (this.isTireGateActive) {
+            return;
+          }
+
+          this.appendPropBrands(count);
+
+          for (var i = 0; i < count; i++) {
+            var p = this.propBrandList[0];
+            this.tempPropBrandList.push(p);
+            p.collide.on("onTriggerEnter", this.onTriggerEnter, this);
             this.propBrandList.splice(0, 1);
           }
         }
@@ -483,7 +665,49 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec9], {
+      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "tireGateEnabled", [_dec9], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return false;
+        }
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "tireGateCount", [_dec10], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 3;
+        }
+      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "tireGateSpacing", [_dec11], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 1.8;
+        }
+      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "tireGateHp", [_dec12], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 1;
+        }
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "tireGateScale", [_dec13], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return new Vec3(1.44, 1.44, 1.44);
+        }
+      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "propBackOffset", [_dec14], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 5.4;
+        }
+      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec15], {
         configurable: true,
         enumerable: true,
         writable: true,
