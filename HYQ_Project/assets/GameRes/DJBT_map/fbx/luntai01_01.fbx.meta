@@ -1,0 +1,84 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "ac885820-eb24-4333-bd15-351ec5c28de6",
+  "files": [],
+  "subMetas": {
+    "6f7e6": {
+      "importer": "gltf-mesh",
+      "uuid": "ac885820-eb24-4333-bd15-351ec5c28de6@6f7e6",
+      "displayName": "",
+      "id": "6f7e6",
+      "name": "luntai01_01.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 868
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "c3ce2": {
+      "importer": "gltf-scene",
+      "uuid": "ac885820-eb24-4333-bd15-351ec5c28de6@c3ce2",
+      "displayName": "",
+      "id": "c3ce2",
+      "name": "luntai01_01.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "ac885820-eb24-4333-bd15-351ec5c28de6@6f7e6"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "ac885820-eb24-4333-bd15-351ec5c28de6@c3ce2"
+      ]
+    },
+    "meshCompress": {
+      "enable": true,
+      "quantize": true,
+      "compress": true,
+      "encode": false
+    }
+  }
+}

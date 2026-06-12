@@ -1,0 +1,122 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "326c21a7-5045-4e8c-b7ec-39b2f56cd152",
+  "files": [],
+  "subMetas": {
+    "ab3ca": {
+      "importer": "gltf-mesh",
+      "uuid": "326c21a7-5045-4e8c-b7ec-39b2f56cd152@ab3ca",
+      "displayName": "",
+      "id": "ab3ca",
+      "name": "langan_001.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 162
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "19ebd": {
+      "importer": "gltf-mesh",
+      "uuid": "326c21a7-5045-4e8c-b7ec-39b2f56cd152@19ebd",
+      "displayName": "",
+      "id": "19ebd",
+      "name": "langan_003.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 32
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "bf45a": {
+      "importer": "gltf-mesh",
+      "uuid": "326c21a7-5045-4e8c-b7ec-39b2f56cd152@bf45a",
+      "displayName": "",
+      "id": "bf45a",
+      "name": "langan_002.mesh",
+      "userData": {
+        "gltfIndex": 2,
+        "triangleCount": 76
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "127c7": {
+      "importer": "gltf-scene",
+      "uuid": "326c21a7-5045-4e8c-b7ec-39b2f56cd152@127c7",
+      "displayName": "",
+      "id": "127c7",
+      "name": "DJBT_langan_01.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "326c21a7-5045-4e8c-b7ec-39b2f56cd152@ab3ca",
+        "326c21a7-5045-4e8c-b7ec-39b2f56cd152@19ebd",
+        "326c21a7-5045-4e8c-b7ec-39b2f56cd152@bf45a"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "326c21a7-5045-4e8c-b7ec-39b2f56cd152@127c7"
+      ]
+    },
+    "meshCompress": {
+      "enable": true,
+      "quantize": true,
+      "compress": true,
+      "encode": false
+    }
+  }
+}

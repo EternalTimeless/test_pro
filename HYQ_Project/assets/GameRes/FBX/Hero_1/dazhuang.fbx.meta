@@ -1,0 +1,102 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "03189dd5-73dd-4e52-8644-1ff1a122b972",
+  "files": [],
+  "subMetas": {
+    "bbe52": {
+      "importer": "gltf-mesh",
+      "uuid": "03189dd5-73dd-4e52-8644-1ff1a122b972@bbe52",
+      "displayName": "",
+      "id": "bbe52",
+      "name": "dazhuang.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 2331
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "03189dd5-73dd-4e52-8644-1ff1a122b972@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 21
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2e1cf": {
+      "importer": "gltf-scene",
+      "uuid": "03189dd5-73dd-4e52-8644-1ff1a122b972@2e1cf",
+      "displayName": "",
+      "id": "2e1cf",
+      "name": "dazhuang.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "03189dd5-73dd-4e52-8644-1ff1a122b972@bbe52"
+      ],
+      "skeletons": [
+        "03189dd5-73dd-4e52-8644-1ff1a122b972@438fe"
+      ],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "03189dd5-73dd-4e52-8644-1ff1a122b972@2e1cf"
+      ]
+    },
+    "meshCompress": {
+      "enable": true,
+      "compress": true,
+      "quantize": true
+    }
+  }
+}

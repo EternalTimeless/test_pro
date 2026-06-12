@@ -1,0 +1,55 @@
+// 程序化焦散效果 (Voronoi/Cellular Noise)
+// 模拟水下光线折射汇聚在水面的光斑
+// 依赖: ocean-ubos (causticsParams)
+//        ocean-helpers (hash22)
+
+// ==================== Voronoi 噪声 ====================
+// 返回最近点的距离（用于生成焦散纹理）
+float oceanVoronoi(vec2 uv) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+    float minDist = 1.0;
+    // 3x3邻域搜索，找到最近特征点
+    for (int y = -1; y <= 1; y++) {
+        for (int x = -1; x <= 1; x++) {
+            vec2 neighbor = vec2(float(x), float(y));
+            // 用hash函数生成伪随机特征点位置
+            vec2 point = hash22(i + neighbor);
+            // 加时间偏移使特征点缓慢移动
+            point = 0.5 + 0.5 * sin(cc_time.x * causticsParams.z * 0.5 + 6.2831 * point);
+            vec2 diff = neighbor + point - f;
+            float dist = length(diff);
+            minDist = min(minDist, dist);
+        }
+    }
+    return minDist;
+}
+
+// ==================== 焦散效果 ====================
+// 输入: worldXZ - 世界空间XZ坐标, time - 时间
+// 输出: 焦散亮度 [0,1]
+float oceanCaustics(vec2 worldXZ) {
+    float intensity = causticsParams.x;  // 焦散强度
+    float scale = causticsParams.y;      // 焦散缩放
+    float speed = causticsParams.z;      // 焦散速度
+
+    if (intensity < 0.001) return 0.0;
+
+    float time = cc_time.x;
+
+    // 两层voronoi叠加，产生更丰富的焦散图案
+    vec2 uv1 = worldXZ * scale * 0.1 + vec2(time * speed * 0.1, time * speed * 0.07);
+    vec2 uv2 = worldXZ * scale * 0.13 + vec2(-time * speed * 0.08, time * speed * 0.12);
+
+    float v1 = oceanVoronoi(uv1);
+    float v2 = oceanVoronoi(uv2);
+
+    // 将距离值转化为亮暗条纹（焦散的特征）
+    float caustic1 = pow(1.0 - smoothstep(0.0, 0.3, v1), 2.0);
+    float caustic2 = pow(1.0 - smoothstep(0.0, 0.35, v2), 2.0);
+
+    // 叠加两层焦散
+    float caustics = caustic1 * 0.7 + caustic2 * 0.3;
+
+    return caustics * intensity;
+}

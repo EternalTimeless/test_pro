@@ -1,0 +1,70 @@
+{
+  "__type__": "cc.Material",
+  "_name": "",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "cf33035a-7405-4c8c-9699-c1ee782e41b6",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 1,
+  "_defines": [
+    {
+      "USE_INSTANCING": true
+    }
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {
+      "baseColor": {
+        "__type__": "cc.Color",
+        "r": 199,
+        "g": 255,
+        "b": 246,
+        "a": 155
+      },
+      "mainTexture": {
+        "__uuid__": "d5f4b8f8-47e9-444d-bb79-89c9bee14f41@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "waveScale": 1,
+      "waveHeight": 0.1,
+      "normalTexture": {
+        "__uuid__": "d5f4b8f8-47e9-444d-bb79-89c9bee14f41@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "depthTexture": {
+        "__uuid__": "2fab355e-6923-45c5-9c08-4307a3dc3ef9@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "noiseTexture": {
+        "__uuid__": "250a5d99-4848-4e2c-a483-95f4f767c19f@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "speed": 0.44,
+      "scale": 10,
+      "rimPower": 0,
+      "rimColor": {
+        "__type__": "cc.Color",
+        "r": 34,
+        "g": 56,
+        "b": 52,
+        "a": 255
+      },
+      "cartoonLevels": 0,
+      "edgeThreshold": 0,
+      "specularIntensity": 2
+    }
+  ]
+}

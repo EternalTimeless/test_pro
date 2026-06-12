@@ -1,0 +1,49 @@
+// 频谱波浪函数 (ocean_realistic.effect 内联副本,仅供参考)
+// 依赖: ocean-ubos (waveControl, waveDetail)
+
+// 频谱波浪: 8八度自动生成
+void computeSpectralWaves(vec2 pos, float time,
+                          out vec3 displacement, out vec3 normalOffset) {
+  float windAng  = waveControl.x;
+  float size     = max(waveControl.y, 0.01);
+  float height   = waveControl.z;
+  float speed    = waveControl.w;
+  float choppy   = waveDetail.x;
+
+  displacement = vec3(0.0);
+  normalOffset = vec3(0.0);
+
+  float baseFreq = 0.2 / size;
+  float goldenAngle = 2.39996323;
+
+  float freq = baseFreq;
+  float amp  = height;
+
+  for (int i = 0; i < 8; i++) {
+    float fi = float(i);
+    float angle = windAng + fi * goldenAngle;
+    vec2 dir = vec2(cos(angle), sin(angle));
+
+    float windAlignment = dot(dir, vec2(cos(windAng), sin(windAng)));
+    float alignedAmp = amp * (0.7 + 0.3 * max(windAlignment, 0.0));
+
+    float omega = sqrt(9.8 * max(freq, 0.001)) * speed;
+
+    float Q = choppy / max(freq * alignedAmp * 8.0, 0.001);
+    Q = min(Q, 0.95);
+
+    float phase = freq * dot(dir, pos) - omega * time;
+    float s = sin(phase);
+    float c = cos(phase);
+
+    displacement.xz += Q * alignedAmp * dir * c;
+    displacement.y  += alignedAmp * s;
+
+    normalOffset.x += dir.x * freq * alignedAmp * c;
+    normalOffset.y += Q * freq * alignedAmp * s;
+    normalOffset.z += dir.y * freq * alignedAmp * c;
+
+    freq *= 1.6;
+    amp  *= 0.5;
+  }
+}

@@ -1,0 +1,329 @@
+// Effect Syntax Guide: https://docs.cocos.com/creator/manual/zh/shader/index.html
+
+CCEffect %{
+  techniques:
+  - name: opaque
+    passes:
+    - vert: unlit-vs:vert # builtin header
+      frag: unlit-fs:frag
+      properties: &props
+        baseColor: { value: [0.1, 0.3, 0.6, 1.0], editor: { type: color , tooltip: "水基础颜色" ,displayName: "基础颜色"} }
+        mainTexture: { value: normal , editor: { type: texture , tooltip: "贴图" ,displayName: "法线贴图" } }
+        waveScale: { value: 0.05 ,editor: {slide: true, range: [0, 200, 1] ,tooltip: "波浪比例" ,displayName: "波浪比例"}}
+        waveHeight: { value: 0.05 ,editor: {slide: true, range: [0, 5, 0.01] ,tooltip: "波浪高度" ,displayName: "波浪高度"}}
+        normalTexture: { value: normal , editor: { type: texture , tooltip: "水法线贴图" ,displayName: "法线贴图" } }
+        depthTexture: { value: white , editor: { type: texture , tooltip: "深度贴图" ,displayName: "深度贴图" } }
+        noiseTexture: { value: white , editor: { type: texture , tooltip: "噪声贴图" ,displayName: "噪声贴图" } }
+        speed: { value: 0.5 ,editor: {slide: true, range: [0, 1, 0.01]  ,tooltip: "水流动速度" ,displayName: "流动速度" }}
+        scale: { value: 0.1 ,editor: {slide: true, range: [0, 10, 0.01]  ,tooltip: "缩放比例" ,displayName: "缩放比例" }}
+        rimPower: { value: 2.0  ,editor: {slide: true, range: [-0.2, 0.0, 0.01] ,tooltip: "边缘光强度，越低越亮" ,displayName: "边缘光强度"}}
+        rimColor: { value: [0.2, 0.6, 1.0, 1.0], editor: { type: color , tooltip: "边缘光颜色" ,displayName: "边缘光颜色" } }
+        cartoonLevels: { value: 3.0,editor: {slide: true, range: [0.0, 30, 0.1] ,tooltip: "卡通色阶" ,displayName: "卡通色阶"}}
+        edgeThreshold: { value: 0.2 ,editor: {slide: true, range: [0.0, 10.0, 0.01], tooltip: "边缘阈值" ,displayName: "边缘阈值"}}
+        # specularColor: { value: [0.2, 0.6, 1.0, 1.0], editor: { type: color, tooltip: "高光颜色" ,displayName: "高光颜色" } }
+        specularIntensity: { value: 0.2 ,editor: {slide: true, range: [0.01, 10.0, 0.01], tooltip: "高光强度" ,displayName: "高光强度"}}
+
+  - name: transparent
+    passes:
+    - vert: unlit-vs:vert  # builtin header
+      frag: unlit-fs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendSrcAlpha: src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: *props
+}%
+
+
+CCProgram unlit-vs %{
+
+  precision highp float;
+  #include <legacy/input-standard>
+  #include <builtin/uniforms/cc-global>
+  #include <legacy/local-batch>
+  #include <legacy/input-standard>
+  #include <legacy/fog-vs>
+  #include <legacy/shadow-map-vs>
+  #include <NoiseParam>
+
+  in vec4 a_color;
+  #if HAS_SECOND_UV
+    in vec2 a_texCoord1;
+  #endif
+
+  out vec3 v_position;
+  out vec3 v_normal;
+  out vec3 v_tangent;
+  out vec3 v_bitangent;
+  out vec2 v_uv;
+  out vec2 v_uv1;
+  out vec4 v_color;
+  out vec3 v_worldPos;
+
+  uniform vsParam{
+    float waveHeight;
+  };
+
+
+  vec3 waveDisplacement(vec3 position) {
+    vec3 displaced = position;
+    float wave = sin(position.x * waveScale + cc_time.x * speed) * cos(position.z * waveScale+ cc_time.x * speed ) * waveHeight;
+    displaced.y += wave;
+    return displaced;
+  }
+
+  vec4 vert () {
+    StandardVertInput In;
+    CCVertInput(In);
+
+    mat4 matWorld, matWorldIT;
+    CCGetWorldMatrixFull(matWorld, matWorldIT);
+
+    vec4 pos = matWorld * In.position;
+
+    v_position = pos.xyz;
+    v_normal = normalize((matWorldIT * vec4(In.normal, 0.0)).xyz);
+    v_tangent = normalize((matWorld * vec4(In.tangent.xyz, 0.0)).xyz);
+    v_bitangent = cross(v_normal, v_tangent) * In.tangent.w; // note the cross order
+
+    v_uv = a_texCoord;
+    #if HAS_SECOND_UV
+      v_uv1 = a_texCoord1;
+    #endif
+    v_color = a_color;
+
+    CC_TRANSFER_FOG(pos);
+    CC_TRANSFER_SHADOW(pos);
+
+    vec3 displacedPos = waveDisplacement(In.position.xyz);
+    v_worldPos = (matWorld * vec4(displacedPos, 1.0)).xyz;
+    
+    v_position = displacedPos;
+    // 正确流程
+    vec4 worldPos = matWorld * vec4(displacedPos, 1.0); // 应用世界变换
+    return cc_matViewProj * worldPos; // 应用视图投影变换
+  }
+
+}%
+
+CCProgram unlit-fs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <legacy/fog-fs>
+  #include <NoiseParam>
+  // #include <cc-global>
+
+  in vec2 v_uv;
+  in vec3 v_position;
+  in vec3 v_normal;
+  in vec3 v_worldPos;
+
+  // float cartoonSpecular(vec2 uv,vec3 normal, vec3 lightDir, vec3 viewDir) {
+    
+  //   vec3 halfDir = normalize(lightDir + viewDir);
+  //   float spec = pow(max(0.0, dot(normal, halfDir)), 32.0);
+  //   float depth1 = texture(depthTexture, uv * 0.5 + vec2(cc_time.x * speed * 0.1, 0.0)).r;
+  //   float depth2 = texture(depthTexture, uv * 0.8 + vec2(0.0, cc_time.x * speed * 0.08)).g;
+  //   float depth = (depth1 + depth2) * 0.5;
+  //   spec += depth;
+  //   return step(0.7,1.0- spec);
+  // }
+
+   // 将深度值转换为线性高度 (0.0-1.0范围)
+  float depthToHeight(float depth) {
+    // 深度值范围调整（根据实际场景可能需要修改）
+    float normalizedDepth = clamp(depth, 0.0, 1.0);
+    // 反转：深度值小=高度高，深度值大=高度低
+    return  normalizedDepth;
+  }
+
+
+  vec3 cartoonShading(vec3 normal, vec3 lightDir, vec3 diffuseColor) {
+    // 1. 计算漫反射强度
+    float diff =  max( dot(normalize(normal), normalize(lightDir) * -1.0), 0.0);
+    // 2. 离散化处理 - 正确的卡通色阶
+    float level;
+    if (cartoonLevels < 1.5) {
+        // 当色阶<1.5时，使用二值化（硬边卡通效果）
+        level = step(0.5, diff);
+    }
+     else {
+        // 多级离散化
+        float steps = cartoonLevels - 1.0;
+        level = floor(diff * steps + 0.5) / steps;
+    }
+    // return vec3(diff);
+    // 3. 应用光源颜色
+    return diffuseColor * cc_mainLitColor.rgb * level ;
+}
+  
+  // 边缘光效果
+  vec3 rimLight(vec3 normal, vec3 viewDir) {
+    float rim = 1.0- max(dot(normal, viewDir ), 0.0);
+    rim = smoothstep(0.0, 1.0, rim);
+    return pow(rim, rimPower) * rimColor.rgb;
+  }
+  
+  // 泡沫生成函数
+  float generateFoam(vec2 uv, vec3 worldPos, vec3 normal) {
+    // 采样噪声纹理
+    float noise1 = texture(noiseTexture, uv * 0.5 + vec2(cc_time.x * speed * 0.1, 0.0)).r;
+    float noise2 = texture(noiseTexture, uv * 0.8 + vec2(0.0, cc_time.x * speed * 0.08)).g;
+    
+    // 混合噪声
+    float noise = (noise1 + noise2) * 0.5;
+
+    float depth1 = texture(depthTexture, uv * 0.5 + vec2(cc_time.x * speed * 0.1, 0.0)).r;
+    float depth2 = texture(depthTexture, uv * 0.8 + vec2(0.0, cc_time.x * speed * 0.08)).g;
+    float depth = (depth1 + depth2);
+    depth  = depthToHeight(depth );
+
+    // 基于高度生成泡沫（假设水面高度为waterLevel）
+    float heightFactor = 1.0 - smoothstep(
+      depth - 0.2, 
+      depth + 0.2, 
+      worldPos.y
+    );
+    
+    // 基于法线角度生成泡沫（岸边法线更水平）
+    float normalFactor = 1.0 - abs(dot(normalize(normal), vec3(0, 1, 0)));
+    // return normalFactor;
+    // 结合噪声和高度/法线因子
+    return clamp(noise * heightFactor * normalFactor, 0.0, 1.0);
+  }
+
+  float detectEdge(vec2 uv,vec3 normal, vec3 viewDir) {
+    // 方法1: 基于法线变化检测边缘
+    float normalEdge = 1.0 - abs(dot(normal, viewDir));
+    
+    // 方法2: 基于菲涅尔效应检测边缘
+    float fresnelEdge = 1.0 - max(dot(normal, viewDir), 0.0);
+
+    float depth1 = texture(depthTexture, uv * 0.5 + vec2(cc_time.x * speed * 0.1, 0.0)).r;
+    float depth2 = texture(depthTexture, uv * 0.8 + vec2(0.0, cc_time.x * speed * 0.08)).g;
+    float depth = (depth1 + depth2) ;
+    depth  = depthToHeight(depth );
+    // 方法3: 基于高度变化检测边缘
+    // float heightEdge = smoothstep(
+    //   depth - 0.5, 
+    //   depth + 0.5, 
+    //   v_worldPos.y
+    // );
+    
+    // 组合多种边缘检测方法
+    float edge = mix(normalEdge, fresnelEdge, 0.5) * depth;
+    
+    // 阈值处理
+    return step(edgeThreshold, edge);
+  }
+
+
+
+  vec4 frag () {
+    vec2 baseUV = v_uv * scale;
+    
+    // 2. 应用时间偏移创建水流动画
+    // vec2 flowUV = baseUV + vec2(cc_time.x * speed  * 0.1, cc_time.x * speed  * 0.08);
+    vec2 flowUV = baseUV + vec2(cc_time.x * speed  * 0.1, 0.0);
+    
+    // 3. 采样法线图（使用两个不同偏移的法线图创建动态效果）
+    vec3 normal1 = texture(normalTexture, flowUV).xyz * 2.0 - 1.0;
+    vec3 normal2 = texture(normalTexture, flowUV * 1.2 + vec2(cc_time.x * speed * 0.05)).xyz * 2.0 - 1.0;
+    vec3 normal = normalize(normal1 + normal2);
+    // vec3 normal = normal1;
+      
+    vec4 mainColor1 = texture(mainTexture, flowUV);
+    vec4 mainColor2 = texture(mainTexture, flowUV * 1.2 + vec2(cc_time.x * speed * 0.05));
+    vec4 Maincolor = (mainColor2 + mainColor2) * baseColor;
+
+    float depth1 = texture(depthTexture, flowUV).r *0.2;
+    float depth2 = texture(depthTexture,  flowUV * 1.2 + vec2(cc_time.x * speed * 0.05)).r *0.8;
+    float depth = (depth1 + depth2);
+    depth = depthToHeight(depth);
+        // 简化法线和光照方
+    float spColor = depth * specularIntensity + 1.0;
+ 
+    Maincolor.rgb *= spColor;
+    // 4. 混合法线图
+    // 5. 结合顶点法线和法线贴图
+    vec3 finalNormal = normalize(v_normal + normal * 0.5);
+    
+    // 6. 计算视图方向
+    vec3 viewDir = normalize(cc_cameraPos.xyz - v_worldPos);
+    
+    // 7. 卡通化光照计算
+    vec3 diffuse = cartoonShading(finalNormal, cc_mainLitDir.xyz, Maincolor.rgb);
+    
+ 
+    // return vec4(depth1,depth1,depth1,1);
+    
+
+
+    // return vec4(diffuse, baseColor.a);
+    // 8. 添加边缘光效果
+    vec3 rim = rimLight(finalNormal, viewDir);
+
+    
+    
+    // 10. 生成泡沫效果
+    float foam = generateFoam(v_uv, v_worldPos, finalNormal);
+    // return vec4(foam);
+    // 11. 边缘检测（增强卡通感）
+    float edge = detectEdge(v_uv, finalNormal, viewDir);
+    // return vec4(edge);
+    // 12. 组合最终颜色
+    vec3 finalColor = diffuse * rim;
+    // 13. 添加泡沫效果
+    finalColor = mix(finalColor, vec3(1.0), foam * 0.8);
+    
+    // 14. 应用边缘线
+    finalColor *= (1.0 - edge * 0.3);
+    
+    // 15. 添加雾效
+    // #if CC_USE_FOG
+    //   finalColor = applyFog(finalColor, cc_fogColor, cc_fogNear, cc_fogFar, cc_cameraPos, v_worldPos);
+    // #endif
+  
+
+  
+    // Maincolor.rgb *= finalColor;  
+    // Maincolor *= spColor;
+    // Maincolor.a = baseColor.a;
+ 
+
+
+
+
+    // 输出最终颜色
+    vec4 color = vec4(finalColor, baseColor.a);
+    // vec4 color = mainColor1;
+   
+
+    CC_APPLY_FOG(color, v_position);
+    return CCFragOutput(color);
+  }
+}%
+
+CCProgram NoiseParam %{
+
+  uniform param{
+      vec4 rimColor;
+      vec4 baseColor;
+      // vec4 specularColor;
+      float speed;
+      float scale;
+      float waveScale;
+      float rimPower;
+      float cartoonLevels;
+      float edgeThreshold;
+      float specularIntensity;
+  };
+
+  uniform sampler2D noiseTexture;
+  uniform sampler2D normalTexture;
+  uniform sampler2D depthTexture;
+  uniform sampler2D mainTexture;
+}%

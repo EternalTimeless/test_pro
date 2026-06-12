@@ -1,0 +1,102 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "14d3236d-84d0-4715-9cbd-8e3ffbff5f76",
+  "files": [
+    "__original-animation-0.bin"
+  ],
+  "subMetas": {
+    "73b7f": {
+      "importer": "gltf-animation",
+      "uuid": "14d3236d-84d0-4715-9cbd-8e3ffbff5f76@73b7f",
+      "displayName": "",
+      "id": "73b7f",
+      "name": "die2.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 120,
+        "span": {
+          "from": 0,
+          "to": 0.6000000238418579
+        },
+        "events": [],
+        "speed": 0.5
+      },
+      "ver": "1.0.18",
+      "imported": true,
+      "files": [
+        ".bin"
+      ],
+      "subMetas": {}
+    },
+    "bb5ef": {
+      "importer": "gltf-scene",
+      "uuid": "14d3236d-84d0-4715-9cbd-8e3ffbff5f76@bb5ef",
+      "displayName": "",
+      "id": "bb5ef",
+      "name": "胖丧尸_死亡扑腾.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 0.6000000238418579,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "die2",
+            "from": 0,
+            "to": 0.6000000238418579,
+            "wrapMode": 2,
+            "previousId": "73b7f",
+            "speed": 0.5,
+            "fps": 120
+          }
+        ]
+      }
+    ],
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "14d3236d-84d0-4715-9cbd-8e3ffbff5f76@bb5ef"
+      ]
+    }
+  }
+}

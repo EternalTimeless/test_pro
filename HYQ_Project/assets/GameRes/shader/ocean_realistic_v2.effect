@@ -1,0 +1,576 @@
+// 写实海洋水 Shader v2 - Spectral Ocean Water (优化版)
+// 适用于 Cocos Creator 3.8.x
+// 基于 ocean_realistic.effect 增强优化, 原始文件保持不变
+// 核心: 8八度频谱波浪 | 程序化天空(含云) | Beer水色 | 波长SSS | GGX高光 | 太阳闪烁 | 焦散 | 泡沫(白冠+高度) | 雨波纹 | 大气雾
+
+CCEffect %{
+  techniques:
+  - name: transparent
+    passes:
+    - vert: ocean-vs:vert
+      frag: ocean-fs:frag
+      rasterizerState:
+        cullMode: none
+      depthStencilState:
+        depthTest: true
+        depthWrite: false
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        # ========== 波浪(高级参数) ==========
+        windAngle:       { value: 0.0, target: waveControl.x, editor: { displayName: "风向角度", slide: true, range: [0.0, 6.28], step: 0.01, tooltip: "风向角度(弧度),0=+X方向,PI/2=+Z方向" } }
+        waveSize:        { value: 1.0, target: waveControl.y, editor: { displayName: "波浪大小", slide: true, range: [0.1, 100.0], step: 0.1, tooltip: "波浪空间大小,越大浪越宽越缓,越小浪越密越急" } }
+        waveHeight:      { value: 0.5, target: waveControl.z, editor: { displayName: "波浪高度", slide: true, range: [0.0, 5.0], step: 0.01, tooltip: "波浪振幅总控,越大浪越高" } }
+        waveSpeed:       { value: 1.0, target: waveControl.w, editor: { displayName: "波浪速度", slide: true, range: [0.0, 5.0], step: 0.01, tooltip: "波浪运动速度" } }
+        waveOctaves:     { value: 8.0, target: waveAdvanced.x, editor: { displayName: "波浪层数", slide: true, range: [1.0, 8.0], step: 1.0, tooltip: "波浪叠加层数,越多细节越丰富" } }
+        waveRandomness:  { value: 0.5, target: waveAdvanced.y, editor: { displayName: "波浪随机度", slide: true, range: [0.0, 1.0], step: 0.01, tooltip: "波浪方向偏离黄金角的程度,0=规则,1=高度随机" } }
+        waveGap:         { value: 1.6, target: surfaceParams.w, editor: { displayName: "波浪间隙", slide: true, range: [1.1, 3.0], step: 0.05, tooltip: "每层波浪的频率倍数,越大层间波长差越大(间隙明显),越接近1各层越相似" } }
+
+        # ========== 表面细节 ==========
+        choppiness:      { value: 0.4, target: waveDetail.x, editor: { displayName: "波峰尖锐度", slide: true, range: [0.0, 1.0], step: 0.01, tooltip: "0=正弦圆滑,1=Gerstner尖峰" } }
+        detailStrength:  { value: 0.35, target: waveDetail.y, editor: { displayName: "细波纹强度", slide: true, range: [0.0, 1.0], step: 0.01, tooltip: "微小波纹法线扰动强度" } }
+        detailSpeed:     { value: 0.6, target: waveDetail.z, editor: { displayName: "细波纹速度", slide: true, range: [0.0, 3.0], step: 0.01, tooltip: "微小波纹滚动速度" } }
+        detailScale:     { value: 5.0, target: waveAdvanced.z, editor: { displayName: "细波纹大小", slide: true, range: [1.0, 30.0], step: 0.5, tooltip: "细波纹纹理大小,越小纹理越密" } }
+        detailRandomness: { value: 0.3, target: waveAdvanced.w, editor: { displayName: "细波纹随机度", slide: true, range: [0.0, 1.0], step: 0.01, tooltip: "细波纹UV偏移随机度,0=规则滚动,1=混乱" } }
+
+        # ========== 水体颜色 ==========
+        shallowColor:    { value: [0.0, 0.75, 0.85, 1.0], linear: true, editor: { displayName: "浅水颜色", type: color, tooltip: "浅水/波峰颜色(青绿)" } }
+        deepColor:       { value: [0.0, 0.04, 0.18, 1.0], linear: true, editor: { displayName: "深水颜色", type: color, tooltip: "深水/波谷颜色(深蓝)" } }
+        absorptionDist:  { value: 2.0, target: colorParams.x, editor: { displayName: "吸收距离", slide: true, range: [0.1, 20.0], step: 0.1, tooltip: "浅水→深水过渡距离,越小过渡越快" } }
+        rainStrength:    { value: 0.12, target: colorParams.y, editor: { displayName: "雨波纹强度", slide: true, range: [0.0, 0.5], step: 0.01, tooltip: "雨天水面涟漪强度,0=无涟漪" } }
+
+        # ========== 菲涅尔 & 反射 ==========
+        smoothness:      { value: 0.85, target: surfaceParams.x, editor: { displayName: "表面光滑度", slide: true, range: [0.0, 1.0], step: 0.01, tooltip: "水面光滑度,影响菲涅尔和高光" } }
+        reflectionStrength: { value: 1.5, target: envParams.x, editor: { displayName: "天空反射强度", slide: true, range: [0.0, 3.0], step: 0.01, tooltip: "天空盒环境反射强度" } }
+
+        # ========== SSS ==========
+        sssColor:        { value: [0.0, 0.8, 0.55, 1.0], linear: true, editor: { displayName: "SSS颜色", type: color, tooltip: "次表面散射颜色(蓝绿透光)" } }
+        sssStrength:     { value: 0.5, target: surfaceParams.y, editor: { displayName: "SSS强度", slide: true, range: [0.0, 1.0], step: 0.01, tooltip: "次表面散射强度" } }
+
+        # ========== 高光 ==========
+        specularIntensity: { value: 2.0, target: surfaceParams.z, editor: { displayName: "高光强度", slide: true, range: [0.0, 5.0], step: 0.01, tooltip: "太阳高光强度" } }
+
+        # ========== 焦散 ==========
+        causticsIntensity: { value: 0.3, target: causticsParams.x, editor: { displayName: "焦散强度", slide: true, range: [0.0, 2.0], step: 0.01, tooltip: "水下光线汇聚光斑强度" } }
+        causticsScale:     { value: 1.0, target: causticsParams.y, editor: { displayName: "焦散大小", slide: true, range: [0.1, 5.0], step: 0.1, tooltip: "焦散光斑纹理大小" } }
+        causticsSpeed:     { value: 0.5, target: causticsParams.z, editor: { displayName: "焦散速度", slide: true, range: [0.0, 3.0], step: 0.01, tooltip: "焦散纹理流动速度" } }
+
+        # ========== 泡沫 ==========
+        foamColor:       { value: [0.92, 0.96, 1.0, 1.0], linear: true, editor: { displayName: "泡沫颜色", type: color, tooltip: "波峰泡沫颜色" } }
+        foamAmount:      { value: 0.6, target: waveDetail.w, editor: { displayName: "泡沫量", slide: true, range: [0.0, 2.0], step: 0.01, tooltip: "波峰泡沫总量" } }
+        foamScale:       { value: 4.0, target: envParams.w, editor: { displayName: "泡沫大小", slide: true, range: [0.5, 20.0], step: 0.5, tooltip: "泡沫纹理大小,越大泡沫越细碎,越小泡沫越宽大" } }
+
+        # ========== 大气 ==========
+        fogColor:        { value: [0.68, 0.78, 0.88, 1.0], linear: true, editor: { displayName: "雾颜色", type: color, tooltip: "远处大气雾颜色" } }
+        fogDensity:      { value: 0.008, target: envParams.y, editor: { displayName: "雾浓度", slide: true, range: [0.0, 0.05], step: 0.001, tooltip: "大气雾浓度" } }
+        fogStart:        { value: 30.0, target: envParams.z, editor: { displayName: "雾起始距离", slide: true, range: [0.0, 200.0], step: 1.0, tooltip: "雾开始生效的距离" } }
+}%
+
+// ==================== 共享 Uniform 声明 ====================
+CCProgram ocean-ubos %{
+  uniform OceanParams {
+    vec4 waveControl;       // x: 风向角度(rad), y: 波浪尺度, z: 波浪高度, w: 波浪速度
+    vec4 waveDetail;        // x: 波峰尖锐度, y: 细波纹强度, z: 细波纹速度, w: 泡沫量
+    vec4 shallowColor;
+    vec4 deepColor;
+    vec4 colorParams;       // x: 吸收距离, y: 雨波纹强度, zw: 保留
+    vec4 surfaceParams;     // x: 光滑度, y: SSS强度, z: 高光强度, w: 波浪间隙(频率倍数)
+    vec4 waveAdvanced;      // x: 波浪层数, y: 波浪随机度, z: 细波纹大小, w: 细波纹随机度
+    vec4 sssColor;
+    vec4 foamColor;
+    vec4 envParams;         // x: 反射强度, y: 雾浓度, z: 雾起始距离, w: 泡沫大小
+    vec4 fogColor;
+    vec4 causticsParams;    // x:焦散强度, y:焦散大小, z:焦散速度, w:保留
+  };
+}%
+
+// ==================== 噪声工具 ====================
+CCProgram ocean-helpers %{
+  vec2 hash22(vec2 p) {
+    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+    return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
+  }
+
+  float oceanNoise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(
+      mix(dot(hash22(i + vec2(0,0)), f - vec2(0,0)),
+          dot(hash22(i + vec2(1,0)), f - vec2(1,0)), u.x),
+      mix(dot(hash22(i + vec2(0,1)), f - vec2(0,1)),
+          dot(hash22(i + vec2(1,1)), f - vec2(1,1)), u.x),
+      u.y);
+  }
+
+  // 双层噪声法线扰动 (用于微小波纹)
+  // detailScale: 纹理大小(独立于波浪大小), detailRandomness: UV偏移随机度
+  vec3 computeDetailNormal(vec2 worldXZ, float time) {
+    float strength = waveDetail.y;
+    float speed = waveDetail.z;
+    float scale = max(waveAdvanced.z, 1.0);
+    float randomness = waveAdvanced.w;
+
+    if (strength < 0.001) return vec3(0.0, 0.0, 0.0);
+
+    // 直接用世界坐标 * scale, 不受waveSize影响
+    vec2 sp = worldXZ;
+    // 中等细节层 (用scale控制大小)
+    vec2 baseOffset1 = vec2(time * speed, time * speed * 0.7);
+    // 精细细节层 (2x频率)
+    vec2 baseOffset2 = vec2(-time * speed * 0.6, time * speed * 0.4);
+    // 随机度: 对UV叠加哈希偏移, 打破规则滚动
+    vec2 randOff1 = hash22(sp * 0.1 + 0.37) * randomness * 2.0;
+    vec2 randOff2 = hash22(sp * 0.1 + 1.73) * randomness * 2.0;
+    vec2 uv1 = sp * scale * 0.01 + baseOffset1 + randOff1;
+    vec2 uv2 = sp * scale * 2.2 * 0.01 + baseOffset2 + randOff2;
+
+    float eps = 0.05;
+    float h1  = oceanNoise(uv1);
+    float h1x = oceanNoise(uv1 + vec2(eps, 0.0));
+    float h1z = oceanNoise(uv1 + vec2(0.0, eps));
+    float h2  = oceanNoise(uv2);
+    float h2x = oceanNoise(uv2 + vec2(eps, 0.0));
+    float h2z = oceanNoise(uv2 + vec2(0.0, eps));
+
+    vec3 n;
+    n.x = ((h1 - h1x) / eps) * 0.65 + ((h2 - h2x) / eps) * 0.35;
+    n.z = ((h1 - h1z) / eps) * 0.65 + ((h2 - h2z) / eps) * 0.35;
+    n.y = 0.0;
+    n.xz *= strength;
+    return n;
+  }
+
+  // 雨波纹法线扰动 (雨后涟漪视觉效果)
+  // 用快速滚动的噪声层模拟雨滴落水产生的细微波纹
+  // 强度由 colorParams.y (rainStrength) 控制
+  vec3 computeRainRipples(vec2 worldXZ, float time) {
+    float strength = colorParams.y;
+    if (strength < 0.001) return vec3(0.0, 0.0, 0.0);
+
+    // 两层快速滚动的噪声, 不同速度和方向产生涟漪感
+    vec2 uv1 = worldXZ * 0.25 + vec2(time * 0.5, time * 0.35);
+    vec2 uv2 = worldXZ * 0.35 + vec2(-time * 0.4, time * 0.55);
+
+    float eps = 0.05;
+    float h1  = oceanNoise(uv1);
+    float h1x = oceanNoise(uv1 + vec2(eps, 0.0));
+    float h1z = oceanNoise(uv1 + vec2(0.0, eps));
+    float h2  = oceanNoise(uv2);
+    float h2x = oceanNoise(uv2 + vec2(eps, 0.0));
+    float h2z = oceanNoise(uv2 + vec2(0.0, eps));
+
+    vec3 n;
+    n.x = ((h1 - h1x) / eps) * 0.5 + ((h2 - h2x) / eps) * 0.5;
+    n.z = ((h1 - h1z) / eps) * 0.5 + ((h2 - h2z) / eps) * 0.5;
+    n.xz *= strength;
+    n.y = 0.0;
+    return n;
+  }
+}%
+
+// ==================== 频谱波浪 (8八度自动生成) ====================
+CCProgram ocean-waves %{
+  #include <ocean-helpers>
+  // 频谱波浪: 从风向/尺度/高度自动生成N个波分量
+  // waveOctaves: 层数(1~8), waveRandomness: 方向随机度
+  void computeSpectralWaves(vec2 pos, float time,
+                            out vec3 displacement, out vec3 normalOffset) {
+    float windAng  = waveControl.x;
+    float size     = max(waveControl.y, 0.01);
+    float height   = waveControl.z;
+    float speed    = waveControl.w;
+    float choppy   = waveDetail.x;
+    float octaves  = max(waveAdvanced.x, 1.0);
+    float randomness = waveAdvanced.y;
+    float freqRatio = max(surfaceParams.w, 1.1);
+
+    displacement = vec3(0.0);
+    normalOffset = vec3(0.0);
+
+    float baseFreq = 0.2 / size;
+    float goldenAngle = 2.39996323;
+
+    float freq = baseFreq;
+    float amp  = height;
+
+    // [unroll]提示编译器展开循环以获得更好性能（部分平台不支持此语法，已注释）
+    for (int i = 0; i < 8; i++) {
+      float fi = float(i);
+
+      // 层数控制: 超过octaves的层幅度归零
+      float activeMask = step(fi + 0.5, octaves);
+      float activeAmp = amp * activeMask;
+      if (activeAmp < 0.0001 && fi > 0.0) { freq *= 1.6; amp *= 0.5; continue; }
+
+      // 方向: 黄金角散布 + 随机度偏移
+      // randomness=0: 纯黄金角(规则), randomness=1: 加大方向散布(混乱)
+      float baseAngle = windAng + fi * goldenAngle;
+      // 用每层独特的哈希生成方向偏移
+      float angleJitter = (hash22(vec2(fi * 7.31, fi * 3.17)).x) * randomness * 1.5;
+      float angle = baseAngle + angleJitter;
+      vec2 dir = vec2(cos(angle), sin(angle));
+
+      // 风向对齐度
+      float windAlignment = dot(dir, vec2(cos(windAng), sin(windAng)));
+      float alignedAmp = activeAmp * (0.7 + 0.3 * max(windAlignment, 0.0));
+
+      // 深水色散关系
+      float omega = sqrt(9.8 * max(freq, 0.001)) * speed;
+
+      // Gerstner Q参数
+      float Q = choppy / max(freq * alignedAmp * 8.0, 0.001);
+      Q = min(Q, 0.95);
+
+      float phase = freq * dot(dir, pos) - omega * time;
+      float s = sin(phase);
+      float c = cos(phase);
+
+      // 位移
+      displacement.xz += Q * alignedAmp * dir * c;
+      displacement.y  += alignedAmp * s;
+
+      // 法线偏导
+      normalOffset.x += dir.x * freq * alignedAmp * c;
+      normalOffset.y += Q * freq * alignedAmp * s;
+      normalOffset.z += dir.y * freq * alignedAmp * c;
+
+      // 下一八度: 频率x freqRatio, 振幅x0.5 (频谱衰减)
+      freq *= freqRatio;
+      amp  *= 0.5;
+    }
+  }
+
+  vec3 oceanWaveNormal(vec2 pos, float time) {
+    vec3 disp, normOff;
+    computeSpectralWaves(pos, time, disp, normOff);
+    return normalize(vec3(-normOff.x, 1.0 - normOff.y, -normOff.z));
+  }
+}%
+
+// ==================== 光照函数 ====================
+CCProgram ocean-lighting %{
+  // Schlick 菲涅尔 (水的IOR=1.33, F0=0.02)
+  float oceanFresnel(vec3 N, vec3 V, float smoothness) {
+    float NdotV = max(dot(N, V), 0.0);
+    // 光滑度影响菲涅尔指数: 越光滑掠射角反射越强
+    float power = mix(2.0, 5.0, smoothness);
+    float f0 = 0.02;
+    return f0 + (1.0 - f0) * pow(1.0 - NdotV, power);
+  }
+
+  // 程序化天空反射 (无需Skybox, 含云噪声)
+  // 根据反射方向生成地平线→天顶渐变, 叠加云层图案
+  vec3 oceanEnvReflection(vec3 N, vec3 V, float time) {
+    vec3 reflectDir = reflect(-V, N);
+    // 反射方向Y分量: 0=地平线, 1=天顶
+    float skyY = max(reflectDir.y, 0.0);
+    // 地平线色(偏暖白) → 天顶色(深蓝) 渐变
+    vec3 horizonColor = vec3(0.65, 0.75, 0.85);
+    vec3 zenithColor  = vec3(0.15, 0.30, 0.60);
+    // 非线性过渡: 地平线附近区域更宽
+    float t = pow(skyY, 0.5);
+    vec3 envColor = mix(horizonColor, zenithColor, t);
+
+    // 云噪声: 用反射方向水平分量采样噪声, 产生云层反射效果
+    float cloudNoise = oceanNoise(reflectDir.xz * 1.5 + time * 0.02);
+    float cloudFactor = smoothstep(-0.2, 0.5, cloudNoise) * 0.25;
+    envColor = mix(envColor, vec3(1.0, 0.97, 0.92), cloudFactor);
+
+    // 地平线下方(反射到地面/水面)用更暗的颜色
+    float belowHorizon = smoothstep(0.0, -0.3, reflectDir.y);
+    envColor = mix(envColor, deepColor.rgb * 0.5, belowHorizon);
+    return envColor * envParams.x;
+  }
+
+  // SSS 次表面散射近似 (增强: 波长依赖 + 波谷透光)
+  vec3 oceanSSS(vec3 N, vec3 V, vec3 L, float waveHeight) {
+    float strength = surfaceParams.y;
+    if (strength < 0.001) return vec3(0.0);
+    // 波峰处散射更强(水薄→透光)
+    float heightFactor = smoothstep(-0.3, 0.8, waveHeight);
+    // 波谷处也有少量透光: 薄水区域让光线穿过
+    float troughFactor = smoothstep(-0.8, 0.0, waveHeight) * 0.3;
+    // 逆光方向散射强 (光穿过波峰)
+    float sssView = pow(max(dot(V, -L), 0.0), 3.0);
+    float sssNormal = max(dot(N, L), 0.0);
+    float sssFactor = (sssView * 0.6 + sssNormal * 0.4) * (heightFactor + troughFactor) * strength;
+    // 波长依赖性: 红光在水中吸收最快(系数0.5), 蓝光最慢(系数1.0)
+    // 使SSS从红到蓝呈现正确的物理衰减
+    vec3 wavelengthFactor = vec3(0.5, 0.8, 1.0);
+    return sssColor.rgb * sssFactor * wavelengthFactor;
+  }
+
+  // GGX 高光
+  float D_GGX(float NoH, float a2) {
+    float denom = NoH * NoH * (a2 - 1.0) + 1.0;
+    return a2 / (3.14159265 * denom * denom + 0.0001);
+  }
+  float G_SmithGGX(float NoV, float NoL, float k) {
+    float gv = NoV / (NoV * (1.0 - k) + k);
+    float gl = NoL / (NoL * (1.0 - k) + k);
+    return gv * gl;
+  }
+  vec3 oceanSpecular(vec3 N, vec3 V, vec3 L) {
+    float intensity = surfaceParams.z;
+    if (intensity < 0.001) return vec3(0.0);
+    float smoothness = surfaceParams.x;
+    float roughness = max(1.0 - smoothness, 0.01);
+    float a = roughness * roughness;
+    float a2 = a * a;
+    float k = (a + 1.0) * (a + 1.0) / 8.0;
+
+    vec3 H = normalize(V + L);
+    float NoH = max(dot(N, H), 0.0);
+    float NoV = max(dot(N, V), 0.001);
+    float NoL = max(dot(N, L), 0.0);
+    float VoH = max(dot(V, H), 0.0);
+
+    float D = D_GGX(NoH, a2);
+    float G = G_SmithGGX(NoV, NoL, k);
+    float F = 0.02 + 0.98 * pow(1.0 - VoH, 5.0);
+    float spec = (D * G * F) / max(4.0 * NoV * NoL, 0.001);
+    return cc_mainLitColor.xyz * cc_mainLitColor.w * spec * intensity;
+  }
+
+  // 太阳闪烁/光斑 (增强: 粗糙度关联频率)
+  float oceanSparkle(vec2 worldXZ, vec3 N, vec3 V, vec3 L, float time) {
+    float smoothness = surfaceParams.x;
+    float roughness = 1.0 - smoothness;
+    if (smoothness < 0.3) return 0.0;
+    // 闪烁密度与粗糙度相关: 粗糙面闪烁小而密集, 光滑面闪亮而松散
+    float uvScale = mix(25.0, 12.0, smoothness);
+    vec2 uv = worldXZ * uvScale + vec2(time * 0.4, time * 0.23);
+    // 主闪烁: 使用粗糙度调整指数, 粗糙面指数低(更分散)
+    float n = oceanNoise(uv);
+    float exponent = mix(6.0, 14.0, smoothness);
+    float sparkle = pow(max(n, 0.0), exponent) * 40.0;
+    // 次闪烁 (较小尺度, 增加丰富度)
+    vec2 uv2 = worldXZ * uvScale * 2.1 + vec2(-time * 0.3, time * 0.5);
+    float n2 = oceanNoise(uv2);
+    float sparkle2 = pow(max(n2, 0.0), exponent * 1.5) * 20.0;
+    sparkle += sparkle2 * 0.3;
+    float NoL = max(dot(N, L), 0.0);
+    sparkle *= NoL * smoothness;
+    return sparkle;
+  }
+}%
+
+// ==================== 泡沫函数 ====================
+CCProgram ocean-foam %{
+  // waveSteepness: 1.0 - N.y (法线偏离垂直程度), 用于白冠泡沫检测
+  float oceanFoam(vec2 worldXZ, float waveHeight, float waveSteepness, float time) {
+    float amount = waveDetail.w;
+    if (amount < 0.001) return 0.0;
+
+    float size = max(waveControl.y, 0.01);
+    float foamSize = max(envParams.w, 0.5);
+    vec2 uv = worldXZ / size;
+
+    // 1. 高度泡沫: 波高越大泡沫越多 (原有逻辑)
+    float heightFoam = smoothstep(0.1, 0.6, waveHeight / max(waveControl.z, 0.01));
+
+    // 2. 白冠泡沫: 基于波浪陡度 (法线偏离垂直越大=浪越陡)
+    //    waveSteepness = 1.0 - N.y, 范围[0,~0.7]
+    float steepness = clamp(waveSteepness * 2.0, 0.0, 1.0);
+    float whitecapFoam = smoothstep(0.3, 0.8, steepness);
+
+    // 合并泡沫源: 高度泡沫 + 白冠泡沫
+    float foamFactor = max(heightFoam, whitecapFoam * 0.6);
+
+    // 3. 噪声打散泡沫边缘
+    float noise1 = oceanNoise(uv * foamSize + vec2(time * 0.2, time * 0.15));
+    float noise2 = oceanNoise(uv * foamSize * 2.2 + vec2(-time * 0.15, time * 0.25));
+    foamFactor *= (0.5 + 0.3 * noise1 + 0.2 * noise2);
+    // 边缘柔化
+    foamFactor *= smoothstep(0.1, 0.4, foamFactor);
+
+    return clamp(foamFactor * amount, 0.0, 1.0);
+  }
+}%
+
+// ==================== 焦散效果 (Voronoi) ====================
+CCProgram ocean-caustics %{
+  // 依赖: cc-global (cc_time.x), ocean-ubos (causticsParams), ocean-helpers (hash22)
+
+  // Voronoi噪声: 返回最近特征点距离
+  float oceanVoronoi(vec2 uv) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+    float minDist = 1.0;
+    // [unroll] 3x3固定邻域搜索（部分平台不支持unroll语法，已注释）
+    for (int y = -1; y <= 1; y++) {
+      for (int x = -1; x <= 1; x++) {
+        vec2 neighbor = vec2(float(x), float(y));
+        vec2 point = hash22(i + neighbor);
+        point = 0.5 + 0.5 * sin(cc_time.x * causticsParams.z * 0.5 + 6.2831 * point);
+        vec2 diff = neighbor + point - f;
+        float dist = length(diff);
+        minDist = min(minDist, dist);
+      }
+    }
+    return minDist;
+  }
+
+  // 焦散效果: 两层Voronoi叠加
+  float oceanCaustics(vec2 worldXZ) {
+    float intensity = causticsParams.x;
+    float scale = causticsParams.y;
+    float speed = causticsParams.z;
+
+    if (intensity < 0.001) return 0.0;
+
+    float time = cc_time.x;
+
+    vec2 uv1 = worldXZ * scale * 0.1 + vec2(time * speed * 0.1, time * speed * 0.07);
+    vec2 uv2 = worldXZ * scale * 0.13 + vec2(-time * speed * 0.08, time * speed * 0.12);
+
+    float v1 = oceanVoronoi(uv1);
+    float v2 = oceanVoronoi(uv2);
+
+    // 将距离值转化为亮暗条纹 (焦散特征)
+    float caustic1 = pow(1.0 - smoothstep(0.0, 0.3, v1), 2.0);
+    float caustic2 = pow(1.0 - smoothstep(0.0, 0.35, v2), 2.0);
+
+    // 叠加两层焦散
+    float caustics = caustic1 * 0.7 + caustic2 * 0.3;
+    return caustics * intensity;
+  }
+}%
+// ==================== 顶点着色器 ====================
+CCProgram ocean-vs %{
+  precision highp float;
+  #include <cc-global>
+  #include <cc-local>
+  #include <ocean-ubos>
+  #include <ocean-waves>
+
+  in vec3 a_position;
+  in vec3 a_normal;
+  in vec2 a_texCoord;
+
+  out vec3 v_worldPos;
+  out vec2 v_uv;
+  out float v_waveHeight;
+  out vec3 v_waveNormal;
+  out vec3 v_viewDir;
+  out float v_waveSteepness;
+
+  vec4 vert() {
+    vec4 worldPos = cc_matWorld * vec4(a_position, 1.0);
+    float time = cc_time.x;
+    vec2 origXZ = worldPos.xz;
+
+    // 频谱波浪: 一次计算同时得到位移和法线偏导
+    vec3 displacement, normOff;
+    computeSpectralWaves(origXZ, time, displacement, normOff);
+    worldPos.xyz += displacement;
+
+    // 从法线偏导重建法线
+    vec3 waveNorm = normalize(vec3(-normOff.x, 1.0 - normOff.y, -normOff.z));
+
+    v_worldPos = worldPos.xyz;
+    v_uv = a_texCoord;
+    v_waveHeight = displacement.y;
+    v_waveNormal = waveNorm;
+    v_waveSteepness = 1.0 - waveNorm.y;   // 法线偏离垂直程度=波浪陡度
+    v_viewDir = normalize(cc_cameraPos.xyz - worldPos.xyz);
+
+    return cc_matProj * cc_matView * worldPos;
+  }
+}%
+
+// ==================== 片元着色器 ====================
+CCProgram ocean-fs %{
+  precision highp float;
+  #include <cc-global>
+  #include <ocean-ubos>
+  #include <ocean-helpers>
+  #include <ocean-waves>
+  #include <ocean-lighting>
+  #include <ocean-foam>
+  #include <ocean-caustics>
+
+  in vec3 v_worldPos;
+  in vec2 v_uv;
+  in float v_waveHeight;
+  in vec3 v_waveNormal;
+  in vec3 v_viewDir;
+  in float v_waveSteepness;
+
+  vec4 frag() {
+    float time = cc_time.x;
+    vec3 V = normalize(v_viewDir);
+    vec3 L = normalize(-cc_mainLitDir.xyz);
+    float smoothness = surfaceParams.x;
+
+    // ===== 1. 法线: 波浪法线 + 细波纹扰动 + 雨波纹 =====
+    vec3 N = normalize(v_waveNormal);
+    vec3 detailNorm = computeDetailNormal(v_worldPos.xz, time);
+    vec3 rainNorm = computeRainRipples(v_worldPos.xz, time);
+    // 叠加偏移(非mix): 只偏转XZ分量
+    N = normalize(N + vec3(detailNorm.x, 0.0, detailNorm.z) + vec3(rainNorm.x, 0.0, rainNorm.z));
+
+    // ===== 2. 菲涅尔 =====
+    float fresnel = oceanFresnel(N, V, smoothness);
+
+    // ===== 3. 天空反射 (含云噪声) =====
+    vec3 reflection = oceanEnvReflection(N, V, time);
+
+    // ===== 4. 水色 (Beer's Law 吸收模型) =====
+    // 波谷=深色(水厚), 波峰=浅色(水薄)
+    float depthFactor = clamp(exp(-max(-v_waveHeight, 0.0) / max(colorParams.x, 0.1)), 0.0, 1.0);
+    // 再加一个基于波浪高度的整体色调
+    float heightTint = smoothstep(-0.5, 0.5, v_waveHeight / max(waveControl.z, 0.01));
+    vec3 waterColor = mix(deepColor.rgb, shallowColor.rgb, depthFactor * 0.5 + heightTint * 0.5);
+
+    // ===== 5. SSS =====
+    vec3 sss = oceanSSS(N, V, L, v_waveHeight);
+
+    // ===== 6. 高光 =====
+    vec3 specular = oceanSpecular(N, V, L);
+
+    // ===== 7. 太阳闪烁 =====
+    float sparkle = oceanSparkle(v_worldPos.xz, N, V, L, time);
+
+    // ===== 8. 焦散 (波峰处光线汇聚) =====
+    float caustics = oceanCaustics(v_worldPos.xz);
+
+    // ===== 9. 泡沫 (含白冠泡沫) =====
+    float foamFactor = oceanFoam(v_worldPos.xz, v_waveHeight, v_waveSteepness, time);
+
+    // ===== 10. 合成 =====
+    // 核心: 菲涅尔混合水色与反射 (这步让水看起来像水!)
+    vec3 waterFinal = mix(waterColor, reflection, fresnel);
+    // 焦散叠加: 在菲涅尔混合后叠加, 增强波峰透光感
+    waterFinal += caustics * shallowColor.rgb * 0.3;
+    // SSS
+    waterFinal += sss;
+    // 高光
+    waterFinal += specular;
+    // 太阳闪烁
+    waterFinal += cc_mainLitColor.xyz * sparkle;
+    // 泡沫覆盖
+    waterFinal = mix(waterFinal, foamColor.rgb, foamFactor);
+
+    // ===== 11. 大气雾 =====
+    float dist = length(v_worldPos - cc_cameraPos.xyz);
+    float fogFactor = 1.0 - exp(-envParams.y * max(dist - envParams.z, 0.0));
+    fogFactor = clamp(fogFactor, 0.0, 1.0);
+    waterFinal = mix(waterFinal, fogColor.rgb, fogFactor);
+
+    // ===== 12. 环境光补光 =====
+    waterFinal += cc_ambientSky.xyz * (1.0 - fresnel) * 0.15;
+
+    // 透明度
+    float alpha = mix(0.55, 0.95, fresnel);
+    alpha = mix(alpha, 1.0, foamFactor);
+    alpha = clamp(alpha, 0.0, 1.0);
+
+    return vec4(waterFinal, alpha);
+  }
+}%

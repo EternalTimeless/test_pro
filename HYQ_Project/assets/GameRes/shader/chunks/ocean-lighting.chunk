@@ -1,0 +1,69 @@
+// 光照计算函数 (ocean_realistic.effect 内联副本,仅供参考)
+// 依赖: cc-global (cc_mainLitDir, cc_mainLitColor, cc_cameraPos)
+//        cc-environment (cc_environment)
+//        ocean-ubos (surfaceParams, sssColor, envParams)
+
+float oceanFresnel(vec3 N, vec3 V, float smoothness) {
+  float NdotV = max(dot(N, V), 0.0);
+  float power = mix(2.0, 5.0, smoothness);
+  float f0 = 0.02;
+  return f0 + (1.0 - f0) * pow(1.0 - NdotV, power);
+}
+
+vec3 oceanEnvReflection(vec3 N, vec3 V) {
+  vec3 reflectDir = reflect(-V, N);
+  reflectDir.y = max(reflectDir.y, 0.0);
+  vec3 envColor = texture(cc_environment, reflectDir).rgb;
+  return envColor * envParams.x;
+}
+
+vec3 oceanSSS(vec3 N, vec3 V, vec3 L, float waveHeight) {
+  float strength = surfaceParams.y;
+  if (strength < 0.001) return vec3(0.0);
+  float heightFactor = smoothstep(-0.3, 0.8, waveHeight);
+  float sssView = pow(max(dot(V, -L), 0.0), 3.0);
+  float sssNormal = max(dot(N, L), 0.0);
+  float sssFactor = (sssView * 0.6 + sssNormal * 0.4) * heightFactor * strength;
+  return sssColor.rgb * sssFactor;
+}
+
+float D_GGX(float NoH, float a2) {
+  float denom = NoH * NoH * (a2 - 1.0) + 1.0;
+  return a2 / (3.14159265 * denom * denom + 0.0001);
+}
+float G_SmithGGX(float NoV, float NoL, float k) {
+  float gv = NoV / (NoV * (1.0 - k) + k);
+  float gl = NoL / (NoL * (1.0 - k) + k);
+  return gv * gl;
+}
+vec3 oceanSpecular(vec3 N, vec3 V, vec3 L) {
+  float intensity = surfaceParams.z;
+  if (intensity < 0.001) return vec3(0.0);
+  float smoothness = surfaceParams.x;
+  float roughness = max(1.0 - smoothness, 0.01);
+  float a = roughness * roughness;
+  float a2 = a * a;
+  float k = (a + 1.0) * (a + 1.0) / 8.0;
+  vec3 H = normalize(V + L);
+  float NoH = max(dot(N, H), 0.0);
+  float NoV = max(dot(N, V), 0.001);
+  float NoL = max(dot(N, L), 0.0);
+  float VoH = max(dot(V, H), 0.0);
+  float D = D_GGX(NoH, a2);
+  float G = G_SmithGGX(NoV, NoL, k);
+  float F = 0.02 + 0.98 * pow(1.0 - VoH, 5.0);
+  float spec = (D * G * F) / max(4.0 * NoV * NoL, 0.001);
+  return cc_mainLitColor.xyz * cc_mainLitColor.w * spec * intensity;
+}
+
+float oceanSparkle(vec2 worldXZ, vec3 N, vec3 V, vec3 L, float time) {
+  float smoothness = surfaceParams.x;
+  if (smoothness < 0.3) return 0.0;
+  float size = max(waveControl.y, 0.01);
+  vec2 uv = worldXZ / size * 15.0 + vec2(time * 0.4, time * 0.23);
+  float n = oceanNoise(uv);
+  float sparkle = pow(max(n, 0.0), 10.0) * 40.0;
+  float NoL = max(dot(N, L), 0.0);
+  sparkle *= NoL * smoothness;
+  return sparkle;
+}

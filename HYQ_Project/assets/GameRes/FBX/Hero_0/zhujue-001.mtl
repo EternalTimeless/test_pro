@@ -1,0 +1,107 @@
+{
+  "__type__": "cc.Material",
+  "_name": "",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "6b7e860b-8ba2-45ae-b130-63eea1f9e208",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 1,
+  "_defines": [
+    {
+      "USE_NORMAL_MAP": true,
+      "USE_ALBEDO_MAP": true
+    },
+    {},
+    {},
+    {},
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {
+        "depthWrite": true
+      },
+      "blendState": {
+        "isA2C": true,
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {
+      "mainColor": {
+        "__type__": "cc.Color",
+        "r": 216,
+        "g": 233,
+        "b": 255,
+        "a": 138
+      },
+      "roughness": 0.673,
+      "specularIntensity": 0.439,
+      "normalStrength": 0.5,
+      "mainTexture": {
+        "__uuid__": "970148a4-ffe6-4e24-9806-e8bd054ccd09@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "normalMap": {
+        "__uuid__": "d4637f2a-5a2c-4582-9cd1-9108f4ab1ff1@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "grayScaleFactor": 0,
+      "flashRedColor": {
+        "__type__": "cc.Color",
+        "r": 0,
+        "g": 255,
+        "b": 245,
+        "a": 255
+      },
+      "flashRedEdgeRange": 3
+    },
+    {},
+    {},
+    {},
+    {}
+  ]
+}

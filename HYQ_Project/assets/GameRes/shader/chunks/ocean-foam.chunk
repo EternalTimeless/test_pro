@@ -1,0 +1,18 @@
+// 泡沫函数 (ocean_realistic.effect 内联副本,仅供参考)
+// 依赖: ocean-ubos (waveDetail, waveControl), ocean-helpers (oceanNoise)
+
+float oceanFoam(vec2 worldXZ, float waveHeight, float time) {
+  float amount = waveDetail.w;
+  if (amount < 0.001) return 0.0;
+
+  float size = max(waveControl.y, 0.01);
+  vec2 uv = worldXZ / size;
+
+  float foamFactor = smoothstep(0.1, 0.6, waveHeight / max(waveControl.z, 0.01));
+  float noise1 = oceanNoise(uv * 4.0 + vec2(time * 0.2, time * 0.15));
+  float noise2 = oceanNoise(uv * 9.0 + vec2(-time * 0.15, time * 0.25));
+  foamFactor *= (0.5 + 0.3 * noise1 + 0.2 * noise2);
+  foamFactor *= smoothstep(0.1, 0.4, foamFactor);
+
+  return clamp(foamFactor * amount, 0.0, 1.0);
+}
