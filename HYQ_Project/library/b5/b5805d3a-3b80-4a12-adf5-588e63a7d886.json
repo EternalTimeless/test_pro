@@ -21306,6 +21306,7 @@
     "disX": 7.8,
     "disX2": 3,
     "monsterSpeed": 4,
+    "middleLaneHalfX": 2,
     "rowCount": 23,
     "layerGapZ": 6,
     "_id": "8drBHAToxIh7Y7d09Zsa0m"

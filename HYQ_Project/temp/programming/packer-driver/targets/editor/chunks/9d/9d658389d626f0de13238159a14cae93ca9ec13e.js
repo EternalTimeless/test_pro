@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _class4, _class5, _descriptor5, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _class7, _class8, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _class4, _class5, _descriptor5, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _class7, _class8, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -204,8 +204,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       }), _dec14 = property({
         tooltip: '怪物X轴分布半宽，实际列间距=disX*2/rowCount'
       }), _dec15 = property(CCFloat), _dec16 = property({
-        tooltip: '每行生成的怪物数量'
+        tooltip: '怪物中路X轴限制半宽，防止进入左右石板区域'
       }), _dec17 = property({
+        tooltip: '每行生成的怪物数量'
+      }), _dec18 = property({
         tooltip: '怪物Z轴每层间距'
       }), _dec8(_class7 = (_class8 = (_class9 = class MonsterCreate extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
@@ -227,14 +229,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "monsterSpeed", _descriptor12, this);
 
+          _initializerDefineProperty(this, "middleLaneHalfX", _descriptor13, this);
+
           /** 每列间距，由 disX*2/rowCount 计算得出 */
           this.offX = 0;
 
-          _initializerDefineProperty(this, "rowCount", _descriptor13, this);
+          _initializerDefineProperty(this, "rowCount", _descriptor14, this);
 
           this._rowCount = 0;
 
-          _initializerDefineProperty(this, "layerGapZ", _descriptor14, this);
+          _initializerDefineProperty(this, "layerGapZ", _descriptor15, this);
 
           this._monsterList = [];
           this.posIndex = 0;
@@ -253,7 +257,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         start() {
-          this.offX = this.disX * 2 / this.rowCount;
+          this.offX = this.middleLaneHalfX * 2 / this.rowCount;
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
           }), EventManager) : EventManager).instance.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
@@ -345,8 +349,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
               if (mz <= this.stage_0 && mz > this.stage_1) {
                 const mx = monster.node.worldPositionX;
-                const scale = mx / this.disX;
-                const x = scale * this.disX2;
+                const x = this.clampMonsterX(mx);
                 tempV3.x = x;
                 tempV3.y = 0;
                 tempV3.z = this.stage_1;
@@ -366,6 +369,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 }
               }
             }
+
+            this.limitMonsterToMiddleLane(monster);
           }
 
           if (MonsterCreate.isStartMove) {
@@ -393,7 +398,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           monster.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
             error: Error()
           }), MoveModEnum) : MoveModEnum).PosMove;
-          monster.node.setPosition(0, 0, z);
+          monster.node.setPosition(this.clampMonsterX(0), 0, z);
           tempV3.set(monster.node.worldPosition);
           tempV3.z = this.stage_0;
           monster.move.pos = tempV3;
@@ -440,7 +445,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
 
           const z = this._nextSpawnZ + (Math.random() - 0.5) * this.layerGapZ;
-          const x = (Math.random() - 0.5) * this.offX + (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
+          const x = this.clampMonsterX((Math.random() - 0.5) * this.offX + (this.posIndex - (this.rowCount - 1) / 2) * this.offX);
           this.posIndex = (this.posIndex + 1) % this.rowCount;
           monster.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
             error: Error()
@@ -455,6 +460,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (this._rowCount == this.rowCount) {
             this._nextSpawnZ += this.layerGapZ;
             this._rowCount = 0;
+          }
+        }
+
+        clampMonsterX(x) {
+          if (x > this.middleLaneHalfX) {
+            return this.middleLaneHalfX;
+          }
+
+          if (x < -this.middleLaneHalfX) {
+            return -this.middleLaneHalfX;
+          }
+
+          return x;
+        }
+
+        limitMonsterToMiddleLane(monster) {
+          const x = this.clampMonsterX(monster.node.x);
+
+          if (monster.node.x != x) {
+            monster.node.x = x;
+          }
+
+          if (monster.move) {
+            monster.move.pos.x = this.clampMonsterX(monster.move.pos.x);
           }
         }
 
@@ -494,7 +523,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             if (monster.attackTarget) {
               const z = -26.3 + Math.abs(-26.3 - monster.node.z) + 10 + Math.random() * 5;
               tween(monster.node).to(0.05, {
-                x: monster.initX,
+                x: this.clampMonsterX(monster.initX),
                 z: -26.3
               }).to(0.35, {
                 z: z
@@ -543,7 +572,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), PoolManager) : PoolManager).instance.V3;
               console.log("fx2", fx);
               let px = fx * Math.random() * 20 + fx * 4;
-              endPos.x = px + fx * 8;
+              endPos.x = this.clampMonsterX(px + fx * 8);
               endPos.z = pos.z;
               const cPos = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
@@ -714,14 +743,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 2;
         }
-      }), _descriptor13 = _applyDecoratedDescriptor(_class8.prototype, "rowCount", [_dec16], {
+      }), _descriptor13 = _applyDecoratedDescriptor(_class8.prototype, "middleLaneHalfX", [_dec16], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 2;
+        }
+      }), _descriptor14 = _applyDecoratedDescriptor(_class8.prototype, "rowCount", [_dec17], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 8;
         }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class8.prototype, "layerGapZ", [_dec17], {
+      }), _descriptor15 = _applyDecoratedDescriptor(_class8.prototype, "layerGapZ", [_dec18], {
         configurable: true,
         enumerable: true,
         writable: true,
