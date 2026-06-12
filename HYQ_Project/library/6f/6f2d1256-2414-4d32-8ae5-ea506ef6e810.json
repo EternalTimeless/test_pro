@@ -1,0 +1,4543 @@
+{
+  "__type__": "cc.EffectAsset",
+  "_name": "../GameRes/shader/TranslucentGrid",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "techniques": [
+    {
+      "name": "opaque",
+      "passes": [
+        {
+          "blendState": {
+            "targets": [
+              {
+                "blend": true,
+                "blendSrc": 2,
+                "blendDst": 4,
+                "blendDstAlpha": 4
+              }
+            ]
+          },
+          "program": "../GameRes/shader/TranslucentGrid|standard-vs:vert|standard-fs:frag",
+          "properties": {
+            "blinkSec": {
+              "value": [
+                0
+              ],
+              "editor": {
+                "tooltip": "闪烁频率,每次闪烁花多少秒,设置为0则不闪烁"
+              },
+              "type": 13
+            },
+            "tilingOffset": {
+              "value": [
+                1,
+                1,
+                0,
+                0
+              ],
+              "type": 16
+            },
+            "mainColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "displayName": "Albedo",
+                "type": "color"
+              },
+              "type": 16,
+              "handleInfo": [
+                "albedo",
+                0,
+                16
+              ]
+            },
+            "albedoScale": {
+              "value": [
+                1,
+                1,
+                1
+              ],
+              "type": 15,
+              "handleInfo": [
+                "albedoScaleAndCutoff",
+                0,
+                15
+              ]
+            },
+            "alphaThreshold": {
+              "value": [
+                0.5
+              ],
+              "editor": {
+                "parent": "USE_ALPHA_TEST"
+              },
+              "type": 13,
+              "handleInfo": [
+                "albedoScaleAndCutoff",
+                3,
+                13
+              ]
+            },
+            "occlusion": {
+              "value": [
+                1
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                0,
+                13
+              ]
+            },
+            "roughness": {
+              "value": [
+                0.8
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                1,
+                13
+              ]
+            },
+            "metallic": {
+              "value": [
+                0.6
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                2,
+                13
+              ]
+            },
+            "normalStrenth": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "parent": "USE_NORMAL_MAP"
+              },
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                3,
+                13
+              ]
+            },
+            "emissive": {
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "editor": {
+                "type": "color"
+              },
+              "type": 16
+            },
+            "emissiveScale": {
+              "value": [
+                1,
+                1,
+                1
+              ],
+              "type": 15,
+              "handleInfo": [
+                "emissiveScaleParam",
+                0,
+                15
+              ]
+            },
+            "mainTexture": {
+              "value": "grey",
+              "editor": {
+                "displayName": "AlbedoMap"
+              },
+              "type": 28,
+              "handleInfo": [
+                "albedoMap",
+                0,
+                28
+              ]
+            },
+            "mainTextureSingleFaceAxis": {
+              "value": [
+                0,
+                1,
+                0
+              ],
+              "editor": {
+                "vector": "vector",
+                "displayName": "SingleFaceAxis",
+                "tooltip": "仅单面贴图的法线方向"
+              },
+              "type": 15,
+              "handleInfo": [
+                "SingleFaceAxis",
+                0,
+                15
+              ]
+            },
+            "normalMap": {
+              "value": "normal",
+              "type": 28
+            },
+            "pbrMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "metallicRoughnessMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "occlusionMap": {
+              "value": "white",
+              "type": 28
+            },
+            "emissiveMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "gradientAxisXYZ": {
+              "value": [
+                0,
+                1,
+                0
+              ],
+              "editor": {
+                "vector": "vector",
+                "tooltip": "渐变透明的方向轴(从透明到不透明),哪个方向的则填1,其他为0"
+              },
+              "type": 15,
+              "handleInfo": [
+                "gradientAxis",
+                0,
+                15
+              ]
+            },
+            "gradientStartOffset": {
+              "value": [
+                0.5
+              ],
+              "editor": {
+                "tooltip": "渐变透明开始点的偏移(从模型原点开始)"
+              },
+              "type": 13
+            },
+            "gradientLength": {
+              "value": [
+                0.8
+              ],
+              "editor": {
+                "tooltip": "渐变长度"
+              },
+              "type": 13
+            },
+            "sweepLightColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "type": "color",
+                "tooltip": "扫光的颜色"
+              },
+              "type": 16
+            },
+            "sweepLightScope": {
+              "value": [
+                10
+              ],
+              "editor": {
+                "tooltip": "扫光的总范围尺寸,以原点为中心"
+              },
+              "type": 13
+            },
+            "sweepLightWidth": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "tooltip": "扫光的宽度,以原点为中心"
+              },
+              "type": 13
+            },
+            "sweepLightSec": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "tooltip": "扫光一次花的秒数,大于0才有效果"
+              },
+              "type": 13
+            },
+            "albedo": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ]
+            },
+            "albedoScaleAndCutoff": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                0.5
+              ]
+            },
+            "pbrParams": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                0.8,
+                0.6,
+                1
+              ]
+            },
+            "emissiveScaleParam": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                0
+              ]
+            },
+            "albedoMap": {
+              "type": 28,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": "grey"
+            },
+            "SingleFaceAxis": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                0,
+                1,
+                0,
+                0
+              ]
+            },
+            "gradientAxis": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                0,
+                1,
+                0,
+                0
+              ]
+            }
+          },
+          "migrations": {
+            "properties": {
+              "mainColor": {
+                "formerlySerializedAs": "albedo"
+              },
+              "alphaThreshold": {
+                "formerlySerializedAs": "albedoScale.w"
+              },
+              "normalStrenth": {
+                "formerlySerializedAs": "pbrScale.w"
+              },
+              "mainTexture": {
+                "formerlySerializedAs": "albedoMap"
+              }
+            }
+          }
+        },
+        {
+          "phase": "forward-add",
+          "propertyIndex": 0,
+          "embeddedMacros": {
+            "CC_FORWARD_ADD": true
+          },
+          "blendState": {
+            "targets": [
+              {
+                "blend": true,
+                "blendSrc": 1,
+                "blendDst": 1,
+                "blendSrcAlpha": 0,
+                "blendDstAlpha": 1
+              }
+            ]
+          },
+          "program": "../GameRes/shader/TranslucentGrid|standard-vs:vert|standard-fs:frag",
+          "depthStencilState": {
+            "depthFunc": 2,
+            "depthTest": true,
+            "depthWrite": false
+          },
+          "properties": {
+            "blinkSec": {
+              "value": [
+                0
+              ],
+              "editor": {
+                "tooltip": "闪烁频率,每次闪烁花多少秒,设置为0则不闪烁"
+              },
+              "type": 13
+            },
+            "tilingOffset": {
+              "value": [
+                1,
+                1,
+                0,
+                0
+              ],
+              "type": 16
+            },
+            "mainColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "displayName": "Albedo",
+                "type": "color"
+              },
+              "type": 16,
+              "handleInfo": [
+                "albedo",
+                0,
+                16
+              ]
+            },
+            "albedoScale": {
+              "value": [
+                1,
+                1,
+                1
+              ],
+              "type": 15,
+              "handleInfo": [
+                "albedoScaleAndCutoff",
+                0,
+                15
+              ]
+            },
+            "alphaThreshold": {
+              "value": [
+                0.5
+              ],
+              "editor": {
+                "parent": "USE_ALPHA_TEST"
+              },
+              "type": 13,
+              "handleInfo": [
+                "albedoScaleAndCutoff",
+                3,
+                13
+              ]
+            },
+            "occlusion": {
+              "value": [
+                1
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                0,
+                13
+              ]
+            },
+            "roughness": {
+              "value": [
+                0.8
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                1,
+                13
+              ]
+            },
+            "metallic": {
+              "value": [
+                0.6
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                2,
+                13
+              ]
+            },
+            "normalStrenth": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "parent": "USE_NORMAL_MAP"
+              },
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                3,
+                13
+              ]
+            },
+            "emissive": {
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "editor": {
+                "type": "color"
+              },
+              "type": 16
+            },
+            "emissiveScale": {
+              "value": [
+                1,
+                1,
+                1
+              ],
+              "type": 15,
+              "handleInfo": [
+                "emissiveScaleParam",
+                0,
+                15
+              ]
+            },
+            "mainTexture": {
+              "value": "grey",
+              "editor": {
+                "displayName": "AlbedoMap"
+              },
+              "type": 28,
+              "handleInfo": [
+                "albedoMap",
+                0,
+                28
+              ]
+            },
+            "mainTextureSingleFaceAxis": {
+              "value": [
+                0,
+                1,
+                0
+              ],
+              "editor": {
+                "vector": "vector",
+                "displayName": "SingleFaceAxis",
+                "tooltip": "仅单面贴图的法线方向"
+              },
+              "type": 15,
+              "handleInfo": [
+                "SingleFaceAxis",
+                0,
+                15
+              ]
+            },
+            "normalMap": {
+              "value": "normal",
+              "type": 28
+            },
+            "pbrMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "metallicRoughnessMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "occlusionMap": {
+              "value": "white",
+              "type": 28
+            },
+            "emissiveMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "gradientAxisXYZ": {
+              "value": [
+                0,
+                1,
+                0
+              ],
+              "editor": {
+                "vector": "vector",
+                "tooltip": "渐变透明的方向轴(从透明到不透明),哪个方向的则填1,其他为0"
+              },
+              "type": 15,
+              "handleInfo": [
+                "gradientAxis",
+                0,
+                15
+              ]
+            },
+            "gradientStartOffset": {
+              "value": [
+                0.5
+              ],
+              "editor": {
+                "tooltip": "渐变透明开始点的偏移(从模型原点开始)"
+              },
+              "type": 13
+            },
+            "gradientLength": {
+              "value": [
+                0.8
+              ],
+              "editor": {
+                "tooltip": "渐变长度"
+              },
+              "type": 13
+            },
+            "sweepLightColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "type": "color",
+                "tooltip": "扫光的颜色"
+              },
+              "type": 16
+            },
+            "sweepLightScope": {
+              "value": [
+                10
+              ],
+              "editor": {
+                "tooltip": "扫光的总范围尺寸,以原点为中心"
+              },
+              "type": 13
+            },
+            "sweepLightWidth": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "tooltip": "扫光的宽度,以原点为中心"
+              },
+              "type": 13
+            },
+            "sweepLightSec": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "tooltip": "扫光一次花的秒数,大于0才有效果"
+              },
+              "type": 13
+            },
+            "albedo": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ]
+            },
+            "albedoScaleAndCutoff": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                0.5
+              ]
+            },
+            "pbrParams": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                0.8,
+                0.6,
+                1
+              ]
+            },
+            "emissiveScaleParam": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                0
+              ]
+            },
+            "albedoMap": {
+              "type": 28,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": "grey"
+            },
+            "SingleFaceAxis": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                0,
+                1,
+                0,
+                0
+              ]
+            },
+            "gradientAxis": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                0,
+                1,
+                0,
+                0
+              ]
+            }
+          }
+        },
+        {
+          "rasterizerState": {
+            "cullMode": 1
+          },
+          "blendState": {
+            "targets": [
+              {
+                "blend": true,
+                "blendSrc": 2,
+                "blendDst": 4,
+                "blendDstAlpha": 4
+              }
+            ]
+          },
+          "program": "../GameRes/shader/TranslucentGrid|zOutline-vs:vert|zOutline-fs:frag",
+          "switch": "USE_Outline_PASS",
+          "properties": {
+            "lineColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "type": "color",
+                "tooltip": "模型描边的颜色"
+              },
+              "type": 16
+            },
+            "lineWidth": {
+              "value": [
+                10
+              ],
+              "editor": {
+                "tooltip": "描边的宽度"
+              },
+              "type": 13
+            }
+          }
+        },
+        {
+          "phase": "shadow-caster",
+          "propertyIndex": 0,
+          "rasterizerState": {
+            "cullMode": 2
+          },
+          "program": "../GameRes/shader/TranslucentGrid|shadow-caster-vs:vert|shadow-caster-fs:frag"
+        }
+      ]
+    },
+    {
+      "name": "transparent",
+      "passes": [
+        {
+          "blendState": {
+            "targets": [
+              {
+                "blend": true,
+                "blendSrc": 2,
+                "blendDst": 4,
+                "blendDstAlpha": 4
+              }
+            ]
+          },
+          "program": "../GameRes/shader/TranslucentGrid|standard-vs:vert|standard-fs:frag",
+          "depthStencilState": {
+            "depthTest": true,
+            "depthWrite": false
+          },
+          "properties": {
+            "blinkSec": {
+              "value": [
+                0
+              ],
+              "editor": {
+                "tooltip": "闪烁频率,每次闪烁花多少秒,设置为0则不闪烁"
+              },
+              "type": 13
+            },
+            "tilingOffset": {
+              "value": [
+                1,
+                1,
+                0,
+                0
+              ],
+              "type": 16
+            },
+            "mainColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "displayName": "Albedo",
+                "type": "color"
+              },
+              "type": 16,
+              "handleInfo": [
+                "albedo",
+                0,
+                16
+              ]
+            },
+            "albedoScale": {
+              "value": [
+                1,
+                1,
+                1
+              ],
+              "type": 15,
+              "handleInfo": [
+                "albedoScaleAndCutoff",
+                0,
+                15
+              ]
+            },
+            "alphaThreshold": {
+              "value": [
+                0.5
+              ],
+              "editor": {
+                "parent": "USE_ALPHA_TEST"
+              },
+              "type": 13,
+              "handleInfo": [
+                "albedoScaleAndCutoff",
+                3,
+                13
+              ]
+            },
+            "occlusion": {
+              "value": [
+                1
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                0,
+                13
+              ]
+            },
+            "roughness": {
+              "value": [
+                0.8
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                1,
+                13
+              ]
+            },
+            "metallic": {
+              "value": [
+                0.6
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                2,
+                13
+              ]
+            },
+            "normalStrenth": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "parent": "USE_NORMAL_MAP"
+              },
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                3,
+                13
+              ]
+            },
+            "emissive": {
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "editor": {
+                "type": "color"
+              },
+              "type": 16
+            },
+            "emissiveScale": {
+              "value": [
+                1,
+                1,
+                1
+              ],
+              "type": 15,
+              "handleInfo": [
+                "emissiveScaleParam",
+                0,
+                15
+              ]
+            },
+            "mainTexture": {
+              "value": "grey",
+              "editor": {
+                "displayName": "AlbedoMap"
+              },
+              "type": 28,
+              "handleInfo": [
+                "albedoMap",
+                0,
+                28
+              ]
+            },
+            "mainTextureSingleFaceAxis": {
+              "value": [
+                0,
+                1,
+                0
+              ],
+              "editor": {
+                "vector": "vector",
+                "displayName": "SingleFaceAxis",
+                "tooltip": "仅单面贴图的法线方向"
+              },
+              "type": 15,
+              "handleInfo": [
+                "SingleFaceAxis",
+                0,
+                15
+              ]
+            },
+            "normalMap": {
+              "value": "normal",
+              "type": 28
+            },
+            "pbrMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "metallicRoughnessMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "occlusionMap": {
+              "value": "white",
+              "type": 28
+            },
+            "emissiveMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "gradientAxisXYZ": {
+              "value": [
+                0,
+                1,
+                0
+              ],
+              "editor": {
+                "vector": "vector",
+                "tooltip": "渐变透明的方向轴(从透明到不透明),哪个方向的则填1,其他为0"
+              },
+              "type": 15,
+              "handleInfo": [
+                "gradientAxis",
+                0,
+                15
+              ]
+            },
+            "gradientStartOffset": {
+              "value": [
+                0.5
+              ],
+              "editor": {
+                "tooltip": "渐变透明开始点的偏移(从模型原点开始)"
+              },
+              "type": 13
+            },
+            "gradientLength": {
+              "value": [
+                0.8
+              ],
+              "editor": {
+                "tooltip": "渐变长度"
+              },
+              "type": 13
+            },
+            "sweepLightColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "type": "color",
+                "tooltip": "扫光的颜色"
+              },
+              "type": 16
+            },
+            "sweepLightScope": {
+              "value": [
+                10
+              ],
+              "editor": {
+                "tooltip": "扫光的总范围尺寸,以原点为中心"
+              },
+              "type": 13
+            },
+            "sweepLightWidth": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "tooltip": "扫光的宽度,以原点为中心"
+              },
+              "type": 13
+            },
+            "sweepLightSec": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "tooltip": "扫光一次花的秒数,大于0才有效果"
+              },
+              "type": 13
+            },
+            "albedo": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ]
+            },
+            "albedoScaleAndCutoff": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                0.5
+              ]
+            },
+            "pbrParams": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                0.8,
+                0.6,
+                1
+              ]
+            },
+            "emissiveScaleParam": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                0
+              ]
+            },
+            "albedoMap": {
+              "type": 28,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": "grey"
+            },
+            "SingleFaceAxis": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                0,
+                1,
+                0,
+                0
+              ]
+            },
+            "gradientAxis": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                0,
+                1,
+                0,
+                0
+              ]
+            }
+          },
+          "migrations": {
+            "properties": {
+              "mainColor": {
+                "formerlySerializedAs": "albedo"
+              },
+              "alphaThreshold": {
+                "formerlySerializedAs": "albedoScale.w"
+              },
+              "normalStrenth": {
+                "formerlySerializedAs": "pbrScale.w"
+              },
+              "mainTexture": {
+                "formerlySerializedAs": "albedoMap"
+              }
+            }
+          }
+        },
+        {
+          "phase": "forward-add",
+          "propertyIndex": 0,
+          "blendState": {
+            "targets": [
+              {
+                "blend": true,
+                "blendSrc": 1,
+                "blendDst": 1
+              }
+            ]
+          },
+          "program": "../GameRes/shader/TranslucentGrid|standard-vs:vert|standard-fs:frag",
+          "depthStencilState": {
+            "depthTest": true,
+            "depthWrite": false
+          },
+          "properties": {
+            "blinkSec": {
+              "value": [
+                0
+              ],
+              "editor": {
+                "tooltip": "闪烁频率,每次闪烁花多少秒,设置为0则不闪烁"
+              },
+              "type": 13
+            },
+            "tilingOffset": {
+              "value": [
+                1,
+                1,
+                0,
+                0
+              ],
+              "type": 16
+            },
+            "mainColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "displayName": "Albedo",
+                "type": "color"
+              },
+              "type": 16,
+              "handleInfo": [
+                "albedo",
+                0,
+                16
+              ]
+            },
+            "albedoScale": {
+              "value": [
+                1,
+                1,
+                1
+              ],
+              "type": 15,
+              "handleInfo": [
+                "albedoScaleAndCutoff",
+                0,
+                15
+              ]
+            },
+            "alphaThreshold": {
+              "value": [
+                0.5
+              ],
+              "editor": {
+                "parent": "USE_ALPHA_TEST"
+              },
+              "type": 13,
+              "handleInfo": [
+                "albedoScaleAndCutoff",
+                3,
+                13
+              ]
+            },
+            "occlusion": {
+              "value": [
+                1
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                0,
+                13
+              ]
+            },
+            "roughness": {
+              "value": [
+                0.8
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                1,
+                13
+              ]
+            },
+            "metallic": {
+              "value": [
+                0.6
+              ],
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                2,
+                13
+              ]
+            },
+            "normalStrenth": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "parent": "USE_NORMAL_MAP"
+              },
+              "type": 13,
+              "handleInfo": [
+                "pbrParams",
+                3,
+                13
+              ]
+            },
+            "emissive": {
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "editor": {
+                "type": "color"
+              },
+              "type": 16
+            },
+            "emissiveScale": {
+              "value": [
+                1,
+                1,
+                1
+              ],
+              "type": 15,
+              "handleInfo": [
+                "emissiveScaleParam",
+                0,
+                15
+              ]
+            },
+            "mainTexture": {
+              "value": "grey",
+              "editor": {
+                "displayName": "AlbedoMap"
+              },
+              "type": 28,
+              "handleInfo": [
+                "albedoMap",
+                0,
+                28
+              ]
+            },
+            "mainTextureSingleFaceAxis": {
+              "value": [
+                0,
+                1,
+                0
+              ],
+              "editor": {
+                "vector": "vector",
+                "displayName": "SingleFaceAxis",
+                "tooltip": "仅单面贴图的法线方向"
+              },
+              "type": 15,
+              "handleInfo": [
+                "SingleFaceAxis",
+                0,
+                15
+              ]
+            },
+            "normalMap": {
+              "value": "normal",
+              "type": 28
+            },
+            "pbrMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "metallicRoughnessMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "occlusionMap": {
+              "value": "white",
+              "type": 28
+            },
+            "emissiveMap": {
+              "value": "grey",
+              "type": 28
+            },
+            "gradientAxisXYZ": {
+              "value": [
+                0,
+                1,
+                0
+              ],
+              "editor": {
+                "vector": "vector",
+                "tooltip": "渐变透明的方向轴(从透明到不透明),哪个方向的则填1,其他为0"
+              },
+              "type": 15,
+              "handleInfo": [
+                "gradientAxis",
+                0,
+                15
+              ]
+            },
+            "gradientStartOffset": {
+              "value": [
+                0.5
+              ],
+              "editor": {
+                "tooltip": "渐变透明开始点的偏移(从模型原点开始)"
+              },
+              "type": 13
+            },
+            "gradientLength": {
+              "value": [
+                0.8
+              ],
+              "editor": {
+                "tooltip": "渐变长度"
+              },
+              "type": 13
+            },
+            "sweepLightColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "type": "color",
+                "tooltip": "扫光的颜色"
+              },
+              "type": 16
+            },
+            "sweepLightScope": {
+              "value": [
+                10
+              ],
+              "editor": {
+                "tooltip": "扫光的总范围尺寸,以原点为中心"
+              },
+              "type": 13
+            },
+            "sweepLightWidth": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "tooltip": "扫光的宽度,以原点为中心"
+              },
+              "type": 13
+            },
+            "sweepLightSec": {
+              "value": [
+                1
+              ],
+              "editor": {
+                "tooltip": "扫光一次花的秒数,大于0才有效果"
+              },
+              "type": 13
+            },
+            "albedo": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ]
+            },
+            "albedoScaleAndCutoff": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                0.5
+              ]
+            },
+            "pbrParams": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                0.8,
+                0.6,
+                1
+              ]
+            },
+            "emissiveScaleParam": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                1,
+                1,
+                1,
+                0
+              ]
+            },
+            "albedoMap": {
+              "type": 28,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": "grey"
+            },
+            "SingleFaceAxis": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                0,
+                1,
+                0,
+                0
+              ]
+            },
+            "gradientAxis": {
+              "type": 16,
+              "editor": {
+                "visible": false,
+                "deprecated": true
+              },
+              "value": [
+                0,
+                1,
+                0,
+                0
+              ]
+            }
+          }
+        },
+        {
+          "phase": "shadow-caster",
+          "propertyIndex": 0,
+          "rasterizerState": {
+            "cullMode": 2
+          },
+          "program": "../GameRes/shader/TranslucentGrid|shadow-caster-vs:vert|shadow-caster-fs:frag"
+        }
+      ]
+    }
+  ],
+  "shaders": [
+    {
+      "blocks": [
+        {
+          "name": "Constants",
+          "members": [
+            {
+              "name": "tilingOffset",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "albedo",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "albedoScaleAndCutoff",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "pbrParams",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "emissive",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "emissiveScaleParam",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "lineColor",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "lineWidth",
+              "type": 13,
+              "count": 1
+            }
+          ],
+          "defines": [],
+          "stageFlags": 17,
+          "binding": 0
+        },
+        {
+          "name": "GlobalUniforms",
+          "members": [
+            {
+              "name": "cc_matWorld",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matWorldIT",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matView",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matViewProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matLightViewProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_cameraPos",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "cc_time",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "cc_fogColor",
+              "type": 16,
+              "count": 1
+            }
+          ],
+          "defines": [],
+          "stageFlags": 17,
+          "binding": 1
+        },
+        {
+          "name": "BlinkBlock",
+          "members": [
+            {
+              "name": "blinkSec",
+              "type": 13,
+              "count": 1
+            }
+          ],
+          "defines": [],
+          "stageFlags": 1,
+          "binding": 2
+        },
+        {
+          "name": "SweepLightBlock",
+          "members": [
+            {
+              "name": "sweepLightColor",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "sweepLightWidth",
+              "type": 13,
+              "count": 1
+            },
+            {
+              "name": "sweepLightScope",
+              "type": 13,
+              "count": 1
+            },
+            {
+              "name": "sweepLightSec",
+              "type": 13,
+              "count": 1
+            }
+          ],
+          "defines": [
+            "USE_SweepLight"
+          ],
+          "stageFlags": 17,
+          "binding": 3
+        },
+        {
+          "name": "GradientBlock",
+          "members": [
+            {
+              "name": "gradientAxis",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "gradientLength",
+              "type": 13,
+              "count": 1
+            },
+            {
+              "name": "gradientStartOffset",
+              "type": 13,
+              "count": 1
+            }
+          ],
+          "defines": [
+            "USE_GRADIENT_Transparency"
+          ],
+          "stageFlags": 16,
+          "binding": 4
+        },
+        {
+          "name": "SingleFaceBlock",
+          "members": [
+            {
+              "name": "SingleFaceAxis",
+              "type": 16,
+              "count": 1
+            }
+          ],
+          "defines": [
+            "USE_ALBEDO_MAP",
+            "USE_ALBEDO_MAP_SINGLE_FACE"
+          ],
+          "stageFlags": 16,
+          "binding": 5
+        }
+      ],
+      "samplerTextures": [
+        {
+          "name": "albedoMap",
+          "type": 28,
+          "count": 1,
+          "defines": [
+            "USE_ALBEDO_MAP"
+          ],
+          "stageFlags": 16,
+          "sampleType": 0,
+          "binding": 6
+        },
+        {
+          "name": "normalMap",
+          "type": 28,
+          "count": 1,
+          "defines": [
+            "USE_NORMAL_MAP"
+          ],
+          "stageFlags": 16,
+          "sampleType": 0,
+          "binding": 7
+        },
+        {
+          "name": "pbrMap",
+          "type": 28,
+          "count": 1,
+          "defines": [
+            "USE_PBR_MAP"
+          ],
+          "stageFlags": 16,
+          "sampleType": 0,
+          "binding": 8
+        },
+        {
+          "name": "metallicRoughnessMap",
+          "type": 28,
+          "count": 1,
+          "defines": [
+            "USE_METALLIC_ROUGHNESS_MAP"
+          ],
+          "stageFlags": 16,
+          "sampleType": 0,
+          "binding": 9
+        },
+        {
+          "name": "occlusionMap",
+          "type": 28,
+          "count": 1,
+          "defines": [
+            "USE_OCCLUSION_MAP"
+          ],
+          "stageFlags": 16,
+          "sampleType": 0,
+          "binding": 10
+        },
+        {
+          "name": "emissiveMap",
+          "type": 28,
+          "count": 1,
+          "defines": [
+            "USE_EMISSIVE_MAP"
+          ],
+          "stageFlags": 16,
+          "sampleType": 0,
+          "binding": 11
+        }
+      ],
+      "samplers": [],
+      "textures": [],
+      "buffers": [],
+      "images": [],
+      "subpassInputs": [],
+      "attributes": [
+        {
+          "name": "a_position",
+          "defines": [],
+          "format": 32,
+          "location": 0
+        },
+        {
+          "name": "a_normal",
+          "defines": [],
+          "format": 32,
+          "location": 1
+        },
+        {
+          "name": "a_texCoord",
+          "defines": [],
+          "format": 21,
+          "location": 2
+        },
+        {
+          "name": "a_tangent",
+          "defines": [],
+          "format": 44,
+          "location": 3
+        },
+        {
+          "name": "a_joints",
+          "defines": [
+            "CC_USE_SKINNING"
+          ],
+          "location": 4
+        },
+        {
+          "name": "a_weights",
+          "defines": [
+            "CC_USE_SKINNING"
+          ],
+          "format": 44,
+          "location": 5
+        },
+        {
+          "name": "a_jointAnimInfo",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_BAKED_ANIMATION"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 6
+        },
+        {
+          "name": "a_matWorld0",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 7
+        },
+        {
+          "name": "a_matWorld1",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 8
+        },
+        {
+          "name": "a_matWorld2",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 9
+        },
+        {
+          "name": "a_lightingMapUVParam",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHTMAP"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 10
+        },
+        {
+          "name": "a_localShadowBiasAndProbeId",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 11
+        },
+        {
+          "name": "a_reflectionProbeData",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_REFLECTION_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 12
+        },
+        {
+          "name": "a_sh_linear_const_r",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 13
+        },
+        {
+          "name": "a_sh_linear_const_g",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 14
+        },
+        {
+          "name": "a_sh_linear_const_b",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 15
+        },
+        {
+          "name": "a_vertexId",
+          "defines": [
+            "CC_USE_MORPH"
+          ],
+          "format": 11,
+          "location": 16
+        },
+        {
+          "name": "instanced_uv",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 17
+        },
+        {
+          "name": "instanced_albedo",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 18
+        },
+        {
+          "name": "instanced_blinkSec",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 19
+        },
+        {
+          "name": "instanced_sweepLightPosPer",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 20
+        },
+        {
+          "name": "a_texCoord1",
+          "defines": [],
+          "format": 21,
+          "location": 21
+        }
+      ],
+      "varyings": [
+        {
+          "name": "blinkTransparency",
+          "type": 13,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 0
+        },
+        {
+          "name": "v_sweepLightPosPer",
+          "type": 13,
+          "count": 1,
+          "defines": [
+            "USE_SweepLight"
+          ],
+          "stageFlags": 17,
+          "location": 1
+        },
+        {
+          "name": "position",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 2
+        },
+        {
+          "name": "v_position",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 3
+        },
+        {
+          "name": "v_normal",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 4
+        },
+        {
+          "name": "v_uv",
+          "type": 14,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 5
+        },
+        {
+          "name": "v_uv1",
+          "type": 14,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 6
+        },
+        {
+          "name": "v_fog_factor",
+          "type": 13,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 7
+        },
+        {
+          "name": "v_baseColor",
+          "type": 16,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 8
+        },
+        {
+          "name": "v_tangent",
+          "type": 15,
+          "count": 1,
+          "defines": [
+            "USE_NORMAL_MAP"
+          ],
+          "stageFlags": 17,
+          "location": 9
+        },
+        {
+          "name": "v_bitangent",
+          "type": 15,
+          "count": 1,
+          "defines": [
+            "USE_NORMAL_MAP"
+          ],
+          "stageFlags": 17,
+          "location": 10
+        }
+      ],
+      "fragColors": [
+        {
+          "name": "cc_FragColor",
+          "typename": "vec4",
+          "type": 16,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 16,
+          "location": 0
+        }
+      ],
+      "descriptors": [
+        {
+          "rate": 0,
+          "blocks": [
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCMorph",
+              "members": [
+                {
+                  "name": "cc_displacementWeights",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 15,
+                  "isArray": true
+                },
+                {
+                  "name": "cc_displacementTextureInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1
+                }
+              ],
+              "defines": [
+                "CC_USE_MORPH"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinningTexture",
+              "members": [
+                {
+                  "name": "cc_jointTextureInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinningAnimation",
+              "members": [
+                {
+                  "name": "cc_jointAnimInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinning",
+              "members": [
+                {
+                  "name": "cc_joints",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 0,
+                  "precision": "highp ",
+                  "isArray": true
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "!CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ],
+              "stageFlags": 1
+            }
+          ],
+          "samplerTextures": [
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_PositionDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_POSITION"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_NormalDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_NORMAL"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_TangentDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_TANGENT"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_jointTexture",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "precision": "highp ",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_realtimeJoint",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "precision": "highp ",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            }
+          ],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 1,
+          "blocks": [
+            {
+              "name": "Constants",
+              "members": [
+                {
+                  "name": "tilingOffset",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "albedo",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "albedoScaleAndCutoff",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "pbrParams",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "emissive",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "emissiveScaleParam",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "lineColor",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "lineWidth",
+                  "type": 13,
+                  "count": 1
+                }
+              ],
+              "defines": [],
+              "stageFlags": 17,
+              "binding": 0
+            },
+            {
+              "name": "GlobalUniforms",
+              "members": [
+                {
+                  "name": "cc_matWorld",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matWorldIT",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matView",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matViewProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matLightViewProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_cameraPos",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "cc_time",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "cc_fogColor",
+                  "type": 16,
+                  "count": 1
+                }
+              ],
+              "defines": [],
+              "stageFlags": 17,
+              "binding": 1
+            },
+            {
+              "name": "BlinkBlock",
+              "members": [
+                {
+                  "name": "blinkSec",
+                  "type": 13,
+                  "count": 1
+                }
+              ],
+              "defines": [],
+              "stageFlags": 1,
+              "binding": 2
+            },
+            {
+              "name": "SweepLightBlock",
+              "members": [
+                {
+                  "name": "sweepLightColor",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "sweepLightWidth",
+                  "type": 13,
+                  "count": 1
+                },
+                {
+                  "name": "sweepLightScope",
+                  "type": 13,
+                  "count": 1
+                },
+                {
+                  "name": "sweepLightSec",
+                  "type": 13,
+                  "count": 1
+                }
+              ],
+              "defines": [
+                "USE_SweepLight"
+              ],
+              "stageFlags": 17,
+              "binding": 3
+            },
+            {
+              "name": "GradientBlock",
+              "members": [
+                {
+                  "name": "gradientAxis",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "gradientLength",
+                  "type": 13,
+                  "count": 1
+                },
+                {
+                  "name": "gradientStartOffset",
+                  "type": 13,
+                  "count": 1
+                }
+              ],
+              "defines": [
+                "USE_GRADIENT_Transparency"
+              ],
+              "stageFlags": 16,
+              "binding": 4
+            },
+            {
+              "name": "SingleFaceBlock",
+              "members": [
+                {
+                  "name": "SingleFaceAxis",
+                  "type": 16,
+                  "count": 1
+                }
+              ],
+              "defines": [
+                "USE_ALBEDO_MAP",
+                "USE_ALBEDO_MAP_SINGLE_FACE"
+              ],
+              "stageFlags": 16,
+              "binding": 5
+            }
+          ],
+          "samplerTextures": [
+            {
+              "name": "albedoMap",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "USE_ALBEDO_MAP"
+              ],
+              "stageFlags": 16,
+              "sampleType": 0,
+              "binding": 6
+            },
+            {
+              "name": "normalMap",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "USE_NORMAL_MAP"
+              ],
+              "stageFlags": 16,
+              "sampleType": 0,
+              "binding": 7
+            },
+            {
+              "name": "pbrMap",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "USE_PBR_MAP"
+              ],
+              "stageFlags": 16,
+              "sampleType": 0,
+              "binding": 8
+            },
+            {
+              "name": "metallicRoughnessMap",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "USE_METALLIC_ROUGHNESS_MAP"
+              ],
+              "stageFlags": 16,
+              "sampleType": 0,
+              "binding": 9
+            },
+            {
+              "name": "occlusionMap",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "USE_OCCLUSION_MAP"
+              ],
+              "stageFlags": 16,
+              "sampleType": 0,
+              "binding": 10
+            },
+            {
+              "name": "emissiveMap",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "USE_EMISSIVE_MAP"
+              ],
+              "stageFlags": 16,
+              "sampleType": 0,
+              "binding": 11
+            }
+          ],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 2,
+          "blocks": [],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 3,
+          "blocks": [],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        }
+      ],
+      "hash": 14630305,
+      "glsl4": {
+        "vert": "#extension GL_EXT_shader_explicit_arithmetic_types_int32: require\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nlayout(location = 0) in vec3 a_position;\nlayout(location = 1) in vec3 a_normal;\nlayout(location = 2) in vec2 a_texCoord;\nlayout(location = 3) in vec4 a_tangent;\n#if CC_USE_SKINNING\n    layout(location = 4) in u32vec4 a_joints;\n  layout(location = 5) in vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    layout(location = 6) in highp vec4 a_jointAnimInfo;\n  #endif\n  layout(location = 7) in vec4 a_matWorld0;\n  layout(location = 8) in vec4 a_matWorld1;\n  layout(location = 9) in vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    layout(location = 10) in vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    layout(location = 11) in vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    layout(location = 12) in vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    layout(location = 13) in vec4 a_sh_linear_const_r;\n    layout(location = 14) in vec4 a_sh_linear_const_g;\n    layout(location = 15) in vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n#endif\n#if CC_USE_MORPH\n  layout(set = 2, binding = 4) uniform CCMorph {\n    vec4 cc_displacementWeights[15];\n    vec4 cc_displacementTextureInfo;\n  };\n  #if CC_MORPH_TARGET_HAS_POSITION\n    layout(set = 2, binding = 8) uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    layout(set = 2, binding = 9) uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    layout(set = 2, binding = 10) uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    layout(set = 2, binding = 3) uniform CCSkinningTexture {\n      highp vec4 cc_jointTextureInfo;\n    };\n    layout(set = 2, binding = 2) uniform CCSkinningAnimation {\n      highp vec4 cc_jointAnimInfo;\n    };\n    layout(set = 2, binding = 7) uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      layout(set = 2, binding = 7) uniform highp sampler2D cc_realtimeJoint;\n    #else\n      layout(set = 2, binding = 3) uniform CCSkinning {\n        highp vec4 cc_joints[CC_JOINT_UNIFORM_CAPACITY * 3];\n      };\n    #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(set = 1, binding = 1) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\n#if USE_INSTANCING\n  layout(location = 17) in vec4 instanced_uv;\n  layout(location = 18) in vec4 instanced_albedo;\n  layout(location = 19) in vec4 instanced_blinkSec;\n  layout(location = 20) in vec4 instanced_sweepLightPosPer;\n#endif\nlayout(set = 1, binding = 2) uniform BlinkBlock {\n  float blinkSec;\n};\nlayout(location = 0) out float blinkTransparency;\n#if USE_SweepLight\n  layout(set = 1, binding = 3) uniform SweepLightBlock {\n    vec4 sweepLightColor;\n    float sweepLightWidth;\n    float sweepLightScope;\n    float sweepLightSec;\n  };\n  layout(location = 1) out float v_sweepLightPosPer;\n#endif\nlayout(location = 2) out vec3 position;\nlayout(location = 3) out vec3 v_position;\nlayout(location = 4) out vec3 v_normal;\nlayout(location = 5) out vec2 v_uv;\nlayout(location = 6) out vec2 v_uv1;\nlayout(location = 7) out float v_fog_factor;\nlayout(location = 8) out vec4 v_baseColor;\n#if USE_NORMAL_MAP\n  layout(location = 9) out vec3 v_tangent;\n  layout(location = 10) out vec3 v_bitangent;\n#endif\n#if HAS_SECOND_UV || USE_LIGHTMAP\n  layout(location = 21) in vec2 a_texCoord1;\n#endif\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec3 normal = a_normal;\n  vec2 texCoord = a_texCoord;\n  #if USE_INSTANCING\n    v_uv = a_texCoord * instanced_uv.xy + instanced_uv.zw;\n    #if HAS_SECOND_UV\n      v_uv1 = a_texCoord1 * instanced_uv.xy + instanced_uv.zw;\n    #endif\n    v_baseColor = instanced_albedo;\n  #else\n    v_uv = a_texCoord * tilingOffset.xy + tilingOffset.zw;\n    #if HAS_SECOND_UV\n      v_uv1 = a_texCoord1 * tilingOffset.xy + tilingOffset.zw;\n    #endif\n    v_baseColor = albedo;\n  #endif\n  position = a_position.xyz;\n  vec4 worldPos = cc_matWorld * pos;\n  v_position = worldPos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(normal, 0.0)).xyz);\n  #if USE_NORMAL_MAP\n    v_tangent = normalize((cc_matWorld * vec4(a_tangent.xyz, 0.0)).xyz);\n    v_bitangent = cross(v_normal, v_tangent) * a_tangent.w;\n  #endif\n  #if USE_INSTANCING\n    if(instanced_blinkSec.x > 0.0) {\n      blinkTransparency = abs(1.0 - mod(cc_time.x, instanced_blinkSec.x * 2.0) / instanced_blinkSec.x);\n    } else {\n      blinkTransparency = 1.0;\n    }\n  #else\n    if(blinkSec > 0.0) {\n      blinkTransparency = abs(1.0 - mod(cc_time.x, blinkSec * 2.0) / blinkSec);\n    } else {\n      blinkTransparency = 1.0;\n    }\n  #endif\n  #if USE_SweepLight\n    #if USE_INSTANCING\n      v_sweepLightPosPer = instanced_sweepLightPosPer.x;\n    #else\n      if(sweepLightSec > 0.0) {\n        v_sweepLightPosPer = mod(cc_time.x, sweepLightSec) / sweepLightSec;\n      } else {\n        v_sweepLightPosPer = -1.0;\n      }\n    #endif\n  #endif\n  vec4 viewPos = cc_matView * worldPos;\n  v_fog_factor = clamp((viewPos.z + 50.0) / 100.0, 0.0, 1.0);\n  return cc_matProj * viewPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(set = 1, binding = 1) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\nlayout(location = 8) in vec4 v_baseColor;\nlayout(location = 2) in vec3 position;\nlayout(location = 3) in vec3 v_position;\nlayout(location = 5) in vec2 v_uv;\nlayout(location = 6) in vec2 v_uv1;\nlayout(location = 4) in vec3 v_normal;\nlayout(location = 7) in float v_fog_factor;\nlayout(location = 0) in float blinkTransparency;\n#if USE_GRADIENT_Transparency\nlayout(set = 1, binding = 4) uniform GradientBlock {\n  vec4 gradientAxis;\n  float gradientLength;\n  float gradientStartOffset;\n};\n#endif\n#if USE_SweepLight\n  layout(set = 1, binding = 3) uniform SweepLightBlock {\n    vec4 sweepLightColor;\n    float sweepLightWidth;\n    float sweepLightScope;\n    float sweepLightSec;\n  };\n  layout(location = 1) in float v_sweepLightPosPer;\n#endif\n#if USE_ALBEDO_MAP\n  layout(set = 1, binding = 6) uniform sampler2D albedoMap;\n  #define ALBEDO_UV v_uv\n  #if USE_ALBEDO_MAP_SINGLE_FACE\n    layout(set = 1, binding = 5) uniform SingleFaceBlock {\n      vec4 SingleFaceAxis;\n    };\n  #endif\n#endif\n#if USE_NORMAL_MAP\n  layout(location = 9) in vec3 v_tangent;\n  layout(location = 10) in vec3 v_bitangent;\n  layout(set = 1, binding = 7) uniform sampler2D normalMap;\n  #define NORMAL_UV v_uv\n#endif\n#define PBR_UV v_uv\n#if USE_PBR_MAP\n  layout(set = 1, binding = 8) uniform sampler2D pbrMap;\n#endif\n#if USE_METALLIC_ROUGHNESS_MAP\n  layout(set = 1, binding = 9) uniform sampler2D metallicRoughnessMap;\n#endif\n#if USE_OCCLUSION_MAP\n  layout(set = 1, binding = 10) uniform sampler2D occlusionMap;\n#endif\n#if USE_EMISSIVE_MAP\n  layout(set = 1, binding = 11) uniform sampler2D emissiveMap;\n  #define EMISSIVE_UV v_uv\n#endif\n#define OCCLUSION_CHANNEL r\n#define ROUGHNESS_CHANNEL g\n#define METALLIC_CHANNEL b\n#if USE_ALPHA_TEST\n  #define ALPHA_TEST_CHANNEL a\n#endif\nvec3 calculateLighting(vec3 normal, vec3 albedo) {\n  vec3 lightDir = normalize(vec3(0.5, 1.0, 0.7));\n  float diff = max(dot(normal, lightDir), 0.0);\n  vec3 diffuse = diff * vec3(1.0);\n  vec3 ambient = vec3(0.2);\n  return albedo * (ambient + diffuse);\n}\nvec4 frag () {\n  vec4 baseColor = v_baseColor;\n  #if USE_ALBEDO_MAP\n    bool hasTex = true;\n    #if USE_ALBEDO_MAP_SINGLE_FACE\n      hasTex = (v_normal.y >= 0.999);\n    #endif\n    if(hasTex) {\n      vec4 texColor = texture(albedoMap, ALBEDO_UV);\n      texColor.rgb = pow(texColor.rgb, vec3(2.2));\n      baseColor *= texColor;\n    }\n  #endif\n  #if USE_GRADIENT_Transparency\n    float gradientDir = dot(gradientAxis.xyz, position);\n    baseColor.a *= clamp((gradientDir + gradientStartOffset) / gradientLength, 0.0, 1.0);\n  #endif\n  #if USE_SweepLight\n    if(v_sweepLightPosPer > 0.0) {\n      float sweepLightCenterY = sweepLightScope / 2.0 - v_sweepLightPosPer * sweepLightScope;\n      float slDis = abs(position.y - sweepLightCenterY);\n      float slAph = smoothstep(1.0, 0.0, slDis / (sweepLightWidth / 2.0));\n      baseColor.rgb = mix(baseColor.rgb, sweepLightColor.rgb, slAph);\n    }\n  #endif\n  vec3 litColor = calculateLighting(normalize(v_normal), baseColor.rgb);\n  vec4 color = vec4(litColor, baseColor.a);\n  color.a *= blinkTransparency;\n  #if CC_USE_FOG\n    color.rgb = mix(color.rgb, cc_fogColor.rgb, v_fog_factor);\n  #endif\n  return color;\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+      },
+      "glsl3": {
+        "vert": "\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nin vec3 a_position;\nin vec3 a_normal;\nin vec2 a_texCoord;\nin vec4 a_tangent;\n#if CC_USE_SKINNING\n    in vec4 a_joints;\n  in vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    in highp vec4 a_jointAnimInfo;\n  #endif\n  in vec4 a_matWorld0;\n  in vec4 a_matWorld1;\n  in vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    in vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    in vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    in vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    in vec4 a_sh_linear_const_r;\n    in vec4 a_sh_linear_const_g;\n    in vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n    in float a_vertexId;\n#endif\n#if CC_USE_MORPH\n  layout(std140) uniform CCMorph {\n    vec4 cc_displacementWeights[15];\n    vec4 cc_displacementTextureInfo;\n  };\n  #if CC_MORPH_TARGET_HAS_POSITION\n    uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    layout(std140) uniform CCSkinningTexture {\n      highp vec4 cc_jointTextureInfo;\n    };\n    layout(std140) uniform CCSkinningAnimation {\n      highp vec4 cc_jointAnimInfo;\n    };\n    uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      uniform highp sampler2D cc_realtimeJoint;\n    #else\n      layout(std140) uniform CCSkinning {\n        highp vec4 cc_joints[CC_JOINT_UNIFORM_CAPACITY * 3];\n      };\n    #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\nlayout(std140) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(std140) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\n#if USE_INSTANCING\n  in vec4 instanced_uv;\n  in vec4 instanced_albedo;\n  in vec4 instanced_blinkSec;\n  in vec4 instanced_sweepLightPosPer;\n#endif\nlayout(std140) uniform BlinkBlock {\n  float blinkSec;\n};\nout float blinkTransparency;\n#if USE_SweepLight\n  layout(std140) uniform SweepLightBlock {\n    vec4 sweepLightColor;\n    float sweepLightWidth;\n    float sweepLightScope;\n    float sweepLightSec;\n  };\n  out float v_sweepLightPosPer;\n#endif\nout vec3 position;\nout vec3 v_position;\nout vec3 v_normal;\nout vec2 v_uv;\nout vec2 v_uv1;\nout float v_fog_factor;\nout vec4 v_baseColor;\n#if USE_NORMAL_MAP\n  out vec3 v_tangent;\n  out vec3 v_bitangent;\n#endif\n#if HAS_SECOND_UV || USE_LIGHTMAP\n  in vec2 a_texCoord1;\n#endif\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec3 normal = a_normal;\n  vec2 texCoord = a_texCoord;\n  #if USE_INSTANCING\n    v_uv = a_texCoord * instanced_uv.xy + instanced_uv.zw;\n    #if HAS_SECOND_UV\n      v_uv1 = a_texCoord1 * instanced_uv.xy + instanced_uv.zw;\n    #endif\n    v_baseColor = instanced_albedo;\n  #else\n    v_uv = a_texCoord * tilingOffset.xy + tilingOffset.zw;\n    #if HAS_SECOND_UV\n      v_uv1 = a_texCoord1 * tilingOffset.xy + tilingOffset.zw;\n    #endif\n    v_baseColor = albedo;\n  #endif\n  position = a_position.xyz;\n  vec4 worldPos = cc_matWorld * pos;\n  v_position = worldPos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(normal, 0.0)).xyz);\n  #if USE_NORMAL_MAP\n    v_tangent = normalize((cc_matWorld * vec4(a_tangent.xyz, 0.0)).xyz);\n    v_bitangent = cross(v_normal, v_tangent) * a_tangent.w;\n  #endif\n  #if USE_INSTANCING\n    if(instanced_blinkSec.x > 0.0) {\n      blinkTransparency = abs(1.0 - mod(cc_time.x, instanced_blinkSec.x * 2.0) / instanced_blinkSec.x);\n    } else {\n      blinkTransparency = 1.0;\n    }\n  #else\n    if(blinkSec > 0.0) {\n      blinkTransparency = abs(1.0 - mod(cc_time.x, blinkSec * 2.0) / blinkSec);\n    } else {\n      blinkTransparency = 1.0;\n    }\n  #endif\n  #if USE_SweepLight\n    #if USE_INSTANCING\n      v_sweepLightPosPer = instanced_sweepLightPosPer.x;\n    #else\n      if(sweepLightSec > 0.0) {\n        v_sweepLightPosPer = mod(cc_time.x, sweepLightSec) / sweepLightSec;\n      } else {\n        v_sweepLightPosPer = -1.0;\n      }\n    #endif\n  #endif\n  vec4 viewPos = cc_matView * worldPos;\n  v_fog_factor = clamp((viewPos.z + 50.0) / 100.0, 0.0, 1.0);\n  return cc_matProj * viewPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\nlayout(std140) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(std140) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\nin vec4 v_baseColor;\nin vec3 position;\nin vec3 v_position;\nin vec2 v_uv;\nin vec2 v_uv1;\nin vec3 v_normal;\nin float v_fog_factor;\nin float blinkTransparency;\n#if USE_GRADIENT_Transparency\nlayout(std140) uniform GradientBlock {\n  vec4 gradientAxis;\n  float gradientLength;\n  float gradientStartOffset;\n};\n#endif\n#if USE_SweepLight\n  layout(std140) uniform SweepLightBlock {\n    vec4 sweepLightColor;\n    float sweepLightWidth;\n    float sweepLightScope;\n    float sweepLightSec;\n  };\n  in float v_sweepLightPosPer;\n#endif\n#if USE_ALBEDO_MAP\n  uniform sampler2D albedoMap;\n  #define ALBEDO_UV v_uv\n  #if USE_ALBEDO_MAP_SINGLE_FACE\n    layout(std140) uniform SingleFaceBlock {\n      vec4 SingleFaceAxis;\n    };\n  #endif\n#endif\n#if USE_NORMAL_MAP\n  in vec3 v_tangent;\n  in vec3 v_bitangent;\n  uniform sampler2D normalMap;\n  #define NORMAL_UV v_uv\n#endif\n#define PBR_UV v_uv\n#if USE_PBR_MAP\n  uniform sampler2D pbrMap;\n#endif\n#if USE_METALLIC_ROUGHNESS_MAP\n  uniform sampler2D metallicRoughnessMap;\n#endif\n#if USE_OCCLUSION_MAP\n  uniform sampler2D occlusionMap;\n#endif\n#if USE_EMISSIVE_MAP\n  uniform sampler2D emissiveMap;\n  #define EMISSIVE_UV v_uv\n#endif\n#define OCCLUSION_CHANNEL r\n#define ROUGHNESS_CHANNEL g\n#define METALLIC_CHANNEL b\n#if USE_ALPHA_TEST\n  #define ALPHA_TEST_CHANNEL a\n#endif\nvec3 calculateLighting(vec3 normal, vec3 albedo) {\n  vec3 lightDir = normalize(vec3(0.5, 1.0, 0.7));\n  float diff = max(dot(normal, lightDir), 0.0);\n  vec3 diffuse = diff * vec3(1.0);\n  vec3 ambient = vec3(0.2);\n  return albedo * (ambient + diffuse);\n}\nvec4 frag () {\n  vec4 baseColor = v_baseColor;\n  #if USE_ALBEDO_MAP\n    bool hasTex = true;\n    #if USE_ALBEDO_MAP_SINGLE_FACE\n      hasTex = (v_normal.y >= 0.999);\n    #endif\n    if(hasTex) {\n      vec4 texColor = texture(albedoMap, ALBEDO_UV);\n      texColor.rgb = pow(texColor.rgb, vec3(2.2));\n      baseColor *= texColor;\n    }\n  #endif\n  #if USE_GRADIENT_Transparency\n    float gradientDir = dot(gradientAxis.xyz, position);\n    baseColor.a *= clamp((gradientDir + gradientStartOffset) / gradientLength, 0.0, 1.0);\n  #endif\n  #if USE_SweepLight\n    if(v_sweepLightPosPer > 0.0) {\n      float sweepLightCenterY = sweepLightScope / 2.0 - v_sweepLightPosPer * sweepLightScope;\n      float slDis = abs(position.y - sweepLightCenterY);\n      float slAph = smoothstep(1.0, 0.0, slDis / (sweepLightWidth / 2.0));\n      baseColor.rgb = mix(baseColor.rgb, sweepLightColor.rgb, slAph);\n    }\n  #endif\n  vec3 litColor = calculateLighting(normalize(v_normal), baseColor.rgb);\n  vec4 color = vec4(litColor, baseColor.a);\n  color.a *= blinkTransparency;\n  #if CC_USE_FOG\n    color.rgb = mix(color.rgb, cc_fogColor.rgb, v_fog_factor);\n  #endif\n  return color;\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+      },
+      "glsl1": {
+        "vert": "\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nattribute vec3 a_position;\nattribute vec3 a_normal;\nattribute vec2 a_texCoord;\nattribute vec4 a_tangent;\n#if CC_USE_SKINNING\n    attribute vec4 a_joints;\n  attribute vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    attribute highp vec4 a_jointAnimInfo;\n  #endif\n  attribute vec4 a_matWorld0;\n  attribute vec4 a_matWorld1;\n  attribute vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    attribute vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    attribute vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    attribute vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    attribute vec4 a_sh_linear_const_r;\n    attribute vec4 a_sh_linear_const_g;\n    attribute vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n    attribute float a_vertexId;\n#endif\n#if CC_USE_MORPH\n  #if CC_MORPH_TARGET_HAS_POSITION\n    uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      uniform highp sampler2D cc_realtimeJoint;\n    #else\n      #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\n      uniform vec4 tilingOffset;\n      uniform vec4 albedo;\n   uniform mat4 cc_matWorld;\n   uniform mat4 cc_matWorldIT;\n   uniform mat4 cc_matView;\n   uniform mat4 cc_matProj;\n   uniform vec4 cc_time;\n#if USE_INSTANCING\n  attribute vec4 instanced_uv;\n  attribute vec4 instanced_albedo;\n  attribute vec4 instanced_blinkSec;\n  attribute vec4 instanced_sweepLightPosPer;\n#endif\n  uniform float blinkSec;\nvarying float blinkTransparency;\n#if USE_SweepLight\n      uniform float sweepLightSec;\n  varying float v_sweepLightPosPer;\n#endif\nvarying vec3 position;\nvarying vec3 v_position;\nvarying vec3 v_normal;\nvarying vec2 v_uv;\nvarying vec2 v_uv1;\nvarying float v_fog_factor;\nvarying vec4 v_baseColor;\n#if USE_NORMAL_MAP\n  varying vec3 v_tangent;\n  varying vec3 v_bitangent;\n#endif\n#if HAS_SECOND_UV || USE_LIGHTMAP\n  attribute vec2 a_texCoord1;\n#endif\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec3 normal = a_normal;\n  vec2 texCoord = a_texCoord;\n  #if USE_INSTANCING\n    v_uv = a_texCoord * instanced_uv.xy + instanced_uv.zw;\n    #if HAS_SECOND_UV\n      v_uv1 = a_texCoord1 * instanced_uv.xy + instanced_uv.zw;\n    #endif\n    v_baseColor = instanced_albedo;\n  #else\n    v_uv = a_texCoord * tilingOffset.xy + tilingOffset.zw;\n    #if HAS_SECOND_UV\n      v_uv1 = a_texCoord1 * tilingOffset.xy + tilingOffset.zw;\n    #endif\n    v_baseColor = albedo;\n  #endif\n  position = a_position.xyz;\n  vec4 worldPos = cc_matWorld * pos;\n  v_position = worldPos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(normal, 0.0)).xyz);\n  #if USE_NORMAL_MAP\n    v_tangent = normalize((cc_matWorld * vec4(a_tangent.xyz, 0.0)).xyz);\n    v_bitangent = cross(v_normal, v_tangent) * a_tangent.w;\n  #endif\n  #if USE_INSTANCING\n    if(instanced_blinkSec.x > 0.0) {\n      blinkTransparency = abs(1.0 - mod(cc_time.x, instanced_blinkSec.x * 2.0) / instanced_blinkSec.x);\n    } else {\n      blinkTransparency = 1.0;\n    }\n  #else\n    if(blinkSec > 0.0) {\n      blinkTransparency = abs(1.0 - mod(cc_time.x, blinkSec * 2.0) / blinkSec);\n    } else {\n      blinkTransparency = 1.0;\n    }\n  #endif\n  #if USE_SweepLight\n    #if USE_INSTANCING\n      v_sweepLightPosPer = instanced_sweepLightPosPer.x;\n    #else\n      if(sweepLightSec > 0.0) {\n        v_sweepLightPosPer = mod(cc_time.x, sweepLightSec) / sweepLightSec;\n      } else {\n        v_sweepLightPosPer = -1.0;\n      }\n    #endif\n  #endif\n  vec4 viewPos = cc_matView * worldPos;\n  v_fog_factor = clamp((viewPos.z + 50.0) / 100.0, 0.0, 1.0);\n  return cc_matProj * viewPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\n    uniform vec4 albedo;\n   uniform vec4 cc_fogColor;\nvarying vec4 v_baseColor;\nvarying vec3 position;\nvarying vec3 v_position;\nvarying vec2 v_uv;\nvarying vec2 v_uv1;\nvarying vec3 v_normal;\nvarying float v_fog_factor;\nvarying float blinkTransparency;\n#if USE_GRADIENT_Transparency\n  uniform vec4 gradientAxis;\n  uniform float gradientLength;\n  uniform float gradientStartOffset;\n#endif\n#if USE_SweepLight\n      uniform vec4 sweepLightColor;\n    uniform float sweepLightWidth;\n    uniform float sweepLightScope;\n  varying float v_sweepLightPosPer;\n#endif\n#if USE_ALBEDO_MAP\n  uniform sampler2D albedoMap;\n  #define ALBEDO_UV v_uv\n  #if USE_ALBEDO_MAP_SINGLE_FACE\n  #endif\n#endif\n#if USE_NORMAL_MAP\n  varying vec3 v_tangent;\n  varying vec3 v_bitangent;\n  uniform sampler2D normalMap;\n  #define NORMAL_UV v_uv\n#endif\n#define PBR_UV v_uv\n#if USE_PBR_MAP\n  uniform sampler2D pbrMap;\n#endif\n#if USE_METALLIC_ROUGHNESS_MAP\n  uniform sampler2D metallicRoughnessMap;\n#endif\n#if USE_OCCLUSION_MAP\n  uniform sampler2D occlusionMap;\n#endif\n#if USE_EMISSIVE_MAP\n  uniform sampler2D emissiveMap;\n  #define EMISSIVE_UV v_uv\n#endif\n#define OCCLUSION_CHANNEL r\n#define ROUGHNESS_CHANNEL g\n#define METALLIC_CHANNEL b\n#if USE_ALPHA_TEST\n  #define ALPHA_TEST_CHANNEL a\n#endif\nvec3 calculateLighting(vec3 normal, vec3 albedo) {\n  vec3 lightDir = normalize(vec3(0.5, 1.0, 0.7));\n  float diff = max(dot(normal, lightDir), 0.0);\n  vec3 diffuse = diff * vec3(1.0);\n  vec3 ambient = vec3(0.2);\n  return albedo * (ambient + diffuse);\n}\nvec4 frag () {\n  vec4 baseColor = v_baseColor;\n  #if USE_ALBEDO_MAP\n    bool hasTex = true;\n    #if USE_ALBEDO_MAP_SINGLE_FACE\n      hasTex = (v_normal.y >= 0.999);\n    #endif\n    if(hasTex) {\n      vec4 texColor = texture2D(albedoMap, ALBEDO_UV);\n      texColor.rgb = pow(texColor.rgb, vec3(2.2));\n      baseColor *= texColor;\n    }\n  #endif\n  #if USE_GRADIENT_Transparency\n    float gradientDir = dot(gradientAxis.xyz, position);\n    baseColor.a *= clamp((gradientDir + gradientStartOffset) / gradientLength, 0.0, 1.0);\n  #endif\n  #if USE_SweepLight\n    if(v_sweepLightPosPer > 0.0) {\n      float sweepLightCenterY = sweepLightScope / 2.0 - v_sweepLightPosPer * sweepLightScope;\n      float slDis = abs(position.y - sweepLightCenterY);\n      float slAph = smoothstep(1.0, 0.0, slDis / (sweepLightWidth / 2.0));\n      baseColor.rgb = mix(baseColor.rgb, sweepLightColor.rgb, slAph);\n    }\n  #endif\n  vec3 litColor = calculateLighting(normalize(v_normal), baseColor.rgb);\n  vec4 color = vec4(litColor, baseColor.a);\n  color.a *= blinkTransparency;\n  #if CC_USE_FOG\n    color.rgb = mix(color.rgb, cc_fogColor.rgb, v_fog_factor);\n  #endif\n  return color;\n}\nvoid main() { gl_FragColor = frag(); }"
+      },
+      "builtins": {
+        "globals": {
+          "blocks": [],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [
+            {
+              "name": "CCMorph",
+              "defines": [
+                "CC_USE_MORPH"
+              ]
+            },
+            {
+              "name": "CCSkinningTexture",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "CCSkinningAnimation",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "CCSkinning",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "!CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ]
+            }
+          ],
+          "samplerTextures": [
+            {
+              "name": "cc_PositionDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_POSITION"
+              ]
+            },
+            {
+              "name": "cc_NormalDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_NORMAL"
+              ]
+            },
+            {
+              "name": "cc_TangentDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_TANGENT"
+              ]
+            },
+            {
+              "name": "cc_jointTexture",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "cc_realtimeJoint",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ]
+            }
+          ],
+          "buffers": [],
+          "images": []
+        },
+        "statistics": {
+          "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 58,
+          "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 43
+        }
+      },
+      "defines": [
+        {
+          "name": "USE_INSTANCING",
+          "type": "boolean",
+          "defines": [],
+          "editor": {
+            "elevated": true
+          }
+        },
+        {
+          "name": "CC_USE_SKINNING",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "CC_USE_BAKED_ANIMATION",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_LIGHTMAP",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_REFLECTION_PROBE",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_RECEIVE_SHADOW",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_LIGHT_PROBE",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_MORPH",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "CC_MORPH_TARGET_COUNT",
+          "type": "number",
+          "defines": [
+            "CC_USE_MORPH"
+          ],
+          "range": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_POSITION",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_NORMAL",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_TANGENT",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_USE_REAL_TIME_JOINT_TEXTURE",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_SKINNING",
+            "!CC_USE_BAKED_ANIMATION"
+          ]
+        },
+        {
+          "name": "USE_SweepLight",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_NORMAL_MAP",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "HAS_SECOND_UV",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_LIGHTMAP",
+          "type": "boolean",
+          "defines": [
+            "HAS_SECOND_UV"
+          ]
+        },
+        {
+          "name": "USE_GRADIENT_Transparency",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_ALBEDO_MAP",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_ALBEDO_MAP_SINGLE_FACE",
+          "type": "boolean",
+          "defines": [
+            "USE_ALBEDO_MAP"
+          ]
+        },
+        {
+          "name": "USE_PBR_MAP",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_METALLIC_ROUGHNESS_MAP",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_OCCLUSION_MAP",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_EMISSIVE_MAP",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_ALPHA_TEST",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "CC_USE_FOG",
+          "type": "boolean",
+          "defines": []
+        }
+      ],
+      "name": "../GameRes/shader/TranslucentGrid|standard-vs:vert|standard-fs:frag"
+    },
+    {
+      "blocks": [
+        {
+          "name": "Constants",
+          "members": [
+            {
+              "name": "tilingOffset",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "albedo",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "albedoScaleAndCutoff",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "pbrParams",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "emissive",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "emissiveScaleParam",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "lineColor",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "lineWidth",
+              "type": 13,
+              "count": 1
+            }
+          ],
+          "defines": [],
+          "stageFlags": 1,
+          "binding": 0
+        },
+        {
+          "name": "GlobalUniforms",
+          "members": [
+            {
+              "name": "cc_matWorld",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matWorldIT",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matView",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matViewProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matLightViewProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_cameraPos",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "cc_time",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "cc_fogColor",
+              "type": 16,
+              "count": 1
+            }
+          ],
+          "defines": [],
+          "stageFlags": 1,
+          "binding": 1
+        }
+      ],
+      "samplerTextures": [],
+      "samplers": [],
+      "textures": [],
+      "buffers": [],
+      "images": [],
+      "subpassInputs": [],
+      "attributes": [
+        {
+          "name": "a_position",
+          "defines": [],
+          "format": 32,
+          "location": 0
+        },
+        {
+          "name": "a_normal",
+          "defines": [],
+          "format": 32,
+          "location": 1
+        },
+        {
+          "name": "a_texCoord",
+          "defines": [],
+          "format": 21,
+          "location": 2
+        },
+        {
+          "name": "a_tangent",
+          "defines": [],
+          "format": 44,
+          "location": 3
+        },
+        {
+          "name": "a_joints",
+          "defines": [
+            "CC_USE_SKINNING"
+          ],
+          "location": 4
+        },
+        {
+          "name": "a_weights",
+          "defines": [
+            "CC_USE_SKINNING"
+          ],
+          "format": 44,
+          "location": 5
+        },
+        {
+          "name": "a_jointAnimInfo",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_BAKED_ANIMATION"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 6
+        },
+        {
+          "name": "a_matWorld0",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 7
+        },
+        {
+          "name": "a_matWorld1",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 8
+        },
+        {
+          "name": "a_matWorld2",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 9
+        },
+        {
+          "name": "a_lightingMapUVParam",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHTMAP"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 10
+        },
+        {
+          "name": "a_localShadowBiasAndProbeId",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 11
+        },
+        {
+          "name": "a_reflectionProbeData",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_REFLECTION_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 12
+        },
+        {
+          "name": "a_sh_linear_const_r",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 13
+        },
+        {
+          "name": "a_sh_linear_const_g",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 14
+        },
+        {
+          "name": "a_sh_linear_const_b",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 15
+        },
+        {
+          "name": "a_vertexId",
+          "defines": [
+            "CC_USE_MORPH"
+          ],
+          "format": 11,
+          "location": 16
+        },
+        {
+          "name": "instanced_outlineColor",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 17
+        },
+        {
+          "name": "instanced_outlineWidth",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 18
+        }
+      ],
+      "varyings": [
+        {
+          "name": "position",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 0
+        },
+        {
+          "name": "v_position",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 1
+        },
+        {
+          "name": "v_normal",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 2
+        },
+        {
+          "name": "v_color",
+          "type": 16,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 3
+        },
+        {
+          "name": "v_camera_normal_dot",
+          "type": 13,
+          "count": 1,
+          "defines": [
+            "USE_Margin_FadeOut"
+          ],
+          "stageFlags": 17,
+          "location": 4
+        }
+      ],
+      "fragColors": [
+        {
+          "name": "cc_FragColor",
+          "typename": "vec4",
+          "type": 16,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 16,
+          "location": 0
+        }
+      ],
+      "descriptors": [
+        {
+          "rate": 0,
+          "blocks": [
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCMorph",
+              "members": [
+                {
+                  "name": "cc_displacementWeights",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 15,
+                  "isArray": true
+                },
+                {
+                  "name": "cc_displacementTextureInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1
+                }
+              ],
+              "defines": [
+                "CC_USE_MORPH"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinningTexture",
+              "members": [
+                {
+                  "name": "cc_jointTextureInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinningAnimation",
+              "members": [
+                {
+                  "name": "cc_jointAnimInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinning",
+              "members": [
+                {
+                  "name": "cc_joints",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 0,
+                  "precision": "highp ",
+                  "isArray": true
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "!CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ],
+              "stageFlags": 1
+            }
+          ],
+          "samplerTextures": [
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_PositionDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_POSITION"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_NormalDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_NORMAL"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_TangentDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_TANGENT"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_jointTexture",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "precision": "highp ",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_realtimeJoint",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "precision": "highp ",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            }
+          ],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 1,
+          "blocks": [
+            {
+              "name": "Constants",
+              "members": [
+                {
+                  "name": "tilingOffset",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "albedo",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "albedoScaleAndCutoff",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "pbrParams",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "emissive",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "emissiveScaleParam",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "lineColor",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "lineWidth",
+                  "type": 13,
+                  "count": 1
+                }
+              ],
+              "defines": [],
+              "stageFlags": 1,
+              "binding": 0
+            },
+            {
+              "name": "GlobalUniforms",
+              "members": [
+                {
+                  "name": "cc_matWorld",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matWorldIT",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matView",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matViewProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matLightViewProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_cameraPos",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "cc_time",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "cc_fogColor",
+                  "type": 16,
+                  "count": 1
+                }
+              ],
+              "defines": [],
+              "stageFlags": 1,
+              "binding": 1
+            }
+          ],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 2,
+          "blocks": [],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 3,
+          "blocks": [],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        }
+      ],
+      "hash": 956548756,
+      "glsl4": {
+        "vert": "#extension GL_EXT_shader_explicit_arithmetic_types_int32: require\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nlayout(location = 0) in vec3 a_position;\nlayout(location = 1) in vec3 a_normal;\nlayout(location = 2) in vec2 a_texCoord;\nlayout(location = 3) in vec4 a_tangent;\n#if CC_USE_SKINNING\n    layout(location = 4) in u32vec4 a_joints;\n  layout(location = 5) in vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    layout(location = 6) in highp vec4 a_jointAnimInfo;\n  #endif\n  layout(location = 7) in vec4 a_matWorld0;\n  layout(location = 8) in vec4 a_matWorld1;\n  layout(location = 9) in vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    layout(location = 10) in vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    layout(location = 11) in vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    layout(location = 12) in vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    layout(location = 13) in vec4 a_sh_linear_const_r;\n    layout(location = 14) in vec4 a_sh_linear_const_g;\n    layout(location = 15) in vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n#endif\n#if CC_USE_MORPH\n  layout(set = 2, binding = 4) uniform CCMorph {\n    vec4 cc_displacementWeights[15];\n    vec4 cc_displacementTextureInfo;\n  };\n  #if CC_MORPH_TARGET_HAS_POSITION\n    layout(set = 2, binding = 8) uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    layout(set = 2, binding = 9) uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    layout(set = 2, binding = 10) uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    layout(set = 2, binding = 3) uniform CCSkinningTexture {\n      highp vec4 cc_jointTextureInfo;\n    };\n    layout(set = 2, binding = 2) uniform CCSkinningAnimation {\n      highp vec4 cc_jointAnimInfo;\n    };\n    layout(set = 2, binding = 7) uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      layout(set = 2, binding = 7) uniform highp sampler2D cc_realtimeJoint;\n    #else\n      layout(set = 2, binding = 3) uniform CCSkinning {\n        highp vec4 cc_joints[CC_JOINT_UNIFORM_CAPACITY * 3];\n      };\n    #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(set = 1, binding = 1) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\n#if USE_INSTANCING\n  layout(location = 17) in vec4 instanced_outlineColor;\n  layout(location = 18) in vec4 instanced_outlineWidth;\n#endif\nlayout(location = 0) out vec3 position;\nlayout(location = 1) out vec3 v_position;\nlayout(location = 2) out vec3 v_normal;\nlayout(location = 3) out vec4 v_color;\n#if USE_Margin_FadeOut\n  layout(location = 4) out float v_camera_normal_dot;\n#endif\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec3 normal = a_normal;\n  vec4 worldPos = cc_matWorld * pos;\n  v_position = worldPos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(normal, 0.0)).xyz);\n  #if USE_Margin_FadeOut\n    vec3 cameraDir = normalize(cc_cameraPos.xyz - v_position);\n    v_camera_normal_dot = dot(v_normal, cameraDir);\n  #endif\n  float width;\n  #if USE_INSTANCING\n    width = instanced_outlineWidth.x * 0.001;\n    v_color = instanced_outlineColor;\n  #else\n    width = lineWidth * 0.001;\n    v_color = lineColor;\n  #endif\n  vec3 expandDir = normalize(a_normal);\n  pos.xyz += expandDir * width;\n  vec4 viewPos = cc_matView * worldPos;\n  return cc_matProj * viewPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\nlayout(location = 0) in vec3 position;\nlayout(location = 1) in vec3 v_position;\nlayout(location = 2) in vec3 v_normal;\nlayout(location = 3) in vec4 v_color;\n#if USE_Margin_FadeOut\n  layout(location = 4) in float v_camera_normal_dot;\n#endif\nvec4 frag () {\n  vec4 o = v_color;\n  #if USE_Margin_FadeOut\n    o.a = abs(v_camera_normal_dot);\n  #endif\n  return o;\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+      },
+      "glsl3": {
+        "vert": "\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nin vec3 a_position;\nin vec3 a_normal;\nin vec2 a_texCoord;\nin vec4 a_tangent;\n#if CC_USE_SKINNING\n    in vec4 a_joints;\n  in vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    in highp vec4 a_jointAnimInfo;\n  #endif\n  in vec4 a_matWorld0;\n  in vec4 a_matWorld1;\n  in vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    in vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    in vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    in vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    in vec4 a_sh_linear_const_r;\n    in vec4 a_sh_linear_const_g;\n    in vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n    in float a_vertexId;\n#endif\n#if CC_USE_MORPH\n  layout(std140) uniform CCMorph {\n    vec4 cc_displacementWeights[15];\n    vec4 cc_displacementTextureInfo;\n  };\n  #if CC_MORPH_TARGET_HAS_POSITION\n    uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    layout(std140) uniform CCSkinningTexture {\n      highp vec4 cc_jointTextureInfo;\n    };\n    layout(std140) uniform CCSkinningAnimation {\n      highp vec4 cc_jointAnimInfo;\n    };\n    uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      uniform highp sampler2D cc_realtimeJoint;\n    #else\n      layout(std140) uniform CCSkinning {\n        highp vec4 cc_joints[CC_JOINT_UNIFORM_CAPACITY * 3];\n      };\n    #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\nlayout(std140) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(std140) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\n#if USE_INSTANCING\n  in vec4 instanced_outlineColor;\n  in vec4 instanced_outlineWidth;\n#endif\nout vec3 position;\nout vec3 v_position;\nout vec3 v_normal;\nout vec4 v_color;\n#if USE_Margin_FadeOut\n  out float v_camera_normal_dot;\n#endif\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec3 normal = a_normal;\n  vec4 worldPos = cc_matWorld * pos;\n  v_position = worldPos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(normal, 0.0)).xyz);\n  #if USE_Margin_FadeOut\n    vec3 cameraDir = normalize(cc_cameraPos.xyz - v_position);\n    v_camera_normal_dot = dot(v_normal, cameraDir);\n  #endif\n  float width;\n  #if USE_INSTANCING\n    width = instanced_outlineWidth.x * 0.001;\n    v_color = instanced_outlineColor;\n  #else\n    width = lineWidth * 0.001;\n    v_color = lineColor;\n  #endif\n  vec3 expandDir = normalize(a_normal);\n  pos.xyz += expandDir * width;\n  vec4 viewPos = cc_matView * worldPos;\n  return cc_matProj * viewPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\nin vec3 position;\nin vec3 v_position;\nin vec3 v_normal;\nin vec4 v_color;\n#if USE_Margin_FadeOut\n  in float v_camera_normal_dot;\n#endif\nvec4 frag () {\n  vec4 o = v_color;\n  #if USE_Margin_FadeOut\n    o.a = abs(v_camera_normal_dot);\n  #endif\n  return o;\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+      },
+      "glsl1": {
+        "vert": "\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nattribute vec3 a_position;\nattribute vec3 a_normal;\nattribute vec2 a_texCoord;\nattribute vec4 a_tangent;\n#if CC_USE_SKINNING\n    attribute vec4 a_joints;\n  attribute vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    attribute highp vec4 a_jointAnimInfo;\n  #endif\n  attribute vec4 a_matWorld0;\n  attribute vec4 a_matWorld1;\n  attribute vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    attribute vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    attribute vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    attribute vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    attribute vec4 a_sh_linear_const_r;\n    attribute vec4 a_sh_linear_const_g;\n    attribute vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n    attribute float a_vertexId;\n#endif\n#if CC_USE_MORPH\n  #if CC_MORPH_TARGET_HAS_POSITION\n    uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      uniform highp sampler2D cc_realtimeJoint;\n    #else\n      #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\n      uniform vec4 lineColor;\n      uniform float lineWidth;\n   uniform mat4 cc_matWorld;\n   uniform mat4 cc_matWorldIT;\n   uniform mat4 cc_matView;\n   uniform mat4 cc_matProj;\n   uniform vec4 cc_cameraPos;\n#if USE_INSTANCING\n  attribute vec4 instanced_outlineColor;\n  attribute vec4 instanced_outlineWidth;\n#endif\nvarying vec3 position;\nvarying vec3 v_position;\nvarying vec3 v_normal;\nvarying vec4 v_color;\n#if USE_Margin_FadeOut\n  varying float v_camera_normal_dot;\n#endif\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec3 normal = a_normal;\n  vec4 worldPos = cc_matWorld * pos;\n  v_position = worldPos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(normal, 0.0)).xyz);\n  #if USE_Margin_FadeOut\n    vec3 cameraDir = normalize(cc_cameraPos.xyz - v_position);\n    v_camera_normal_dot = dot(v_normal, cameraDir);\n  #endif\n  float width;\n  #if USE_INSTANCING\n    width = instanced_outlineWidth.x * 0.001;\n    v_color = instanced_outlineColor;\n  #else\n    width = lineWidth * 0.001;\n    v_color = lineColor;\n  #endif\n  vec3 expandDir = normalize(a_normal);\n  pos.xyz += expandDir * width;\n  vec4 viewPos = cc_matView * worldPos;\n  return cc_matProj * viewPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\nvarying vec3 position;\nvarying vec3 v_position;\nvarying vec3 v_normal;\nvarying vec4 v_color;\n#if USE_Margin_FadeOut\n  varying float v_camera_normal_dot;\n#endif\nvec4 frag () {\n  vec4 o = v_color;\n  #if USE_Margin_FadeOut\n    o.a = abs(v_camera_normal_dot);\n  #endif\n  return o;\n}\nvoid main() { gl_FragColor = frag(); }"
+      },
+      "builtins": {
+        "globals": {
+          "blocks": [],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [
+            {
+              "name": "CCMorph",
+              "defines": [
+                "CC_USE_MORPH"
+              ]
+            },
+            {
+              "name": "CCSkinningTexture",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "CCSkinningAnimation",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "CCSkinning",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "!CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ]
+            }
+          ],
+          "samplerTextures": [
+            {
+              "name": "cc_PositionDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_POSITION"
+              ]
+            },
+            {
+              "name": "cc_NormalDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_NORMAL"
+              ]
+            },
+            {
+              "name": "cc_TangentDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_TANGENT"
+              ]
+            },
+            {
+              "name": "cc_jointTexture",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "cc_realtimeJoint",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ]
+            }
+          ],
+          "buffers": [],
+          "images": []
+        },
+        "statistics": {
+          "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 53,
+          "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 0
+        }
+      },
+      "defines": [
+        {
+          "name": "USE_INSTANCING",
+          "type": "boolean",
+          "defines": [],
+          "editor": {
+            "elevated": true
+          }
+        },
+        {
+          "name": "CC_USE_SKINNING",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "CC_USE_BAKED_ANIMATION",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_LIGHTMAP",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_REFLECTION_PROBE",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_RECEIVE_SHADOW",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_LIGHT_PROBE",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_MORPH",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "CC_MORPH_TARGET_COUNT",
+          "type": "number",
+          "defines": [
+            "CC_USE_MORPH"
+          ],
+          "range": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_POSITION",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_NORMAL",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_TANGENT",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_USE_REAL_TIME_JOINT_TEXTURE",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_SKINNING",
+            "!CC_USE_BAKED_ANIMATION"
+          ]
+        },
+        {
+          "name": "USE_Margin_FadeOut",
+          "type": "boolean",
+          "defines": []
+        }
+      ],
+      "name": "../GameRes/shader/TranslucentGrid|zOutline-vs:vert|zOutline-fs:frag"
+    },
+    {
+      "blocks": [
+        {
+          "name": "Constants",
+          "members": [
+            {
+              "name": "tilingOffset",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "albedo",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "albedoScaleAndCutoff",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "pbrParams",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "emissive",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "emissiveScaleParam",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "lineColor",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "lineWidth",
+              "type": 13,
+              "count": 1
+            }
+          ],
+          "defines": [],
+          "stageFlags": 17,
+          "binding": 0
+        },
+        {
+          "name": "GlobalUniforms",
+          "members": [
+            {
+              "name": "cc_matWorld",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matWorldIT",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matView",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matViewProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_matLightViewProj",
+              "type": 25,
+              "count": 1
+            },
+            {
+              "name": "cc_cameraPos",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "cc_time",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "cc_fogColor",
+              "type": 16,
+              "count": 1
+            }
+          ],
+          "defines": [],
+          "stageFlags": 17,
+          "binding": 1
+        }
+      ],
+      "samplerTextures": [
+        {
+          "name": "albedoMap",
+          "type": 28,
+          "count": 1,
+          "defines": [
+            "USE_ALBEDO_MAP"
+          ],
+          "stageFlags": 16,
+          "sampleType": 0,
+          "binding": 2
+        }
+      ],
+      "samplers": [],
+      "textures": [],
+      "buffers": [],
+      "images": [],
+      "subpassInputs": [],
+      "attributes": [
+        {
+          "name": "a_position",
+          "defines": [],
+          "format": 32,
+          "location": 0
+        },
+        {
+          "name": "a_normal",
+          "defines": [],
+          "format": 32,
+          "location": 1
+        },
+        {
+          "name": "a_texCoord",
+          "defines": [],
+          "format": 21,
+          "location": 2
+        },
+        {
+          "name": "a_tangent",
+          "defines": [],
+          "format": 44,
+          "location": 3
+        },
+        {
+          "name": "a_joints",
+          "defines": [
+            "CC_USE_SKINNING"
+          ],
+          "location": 4
+        },
+        {
+          "name": "a_weights",
+          "defines": [
+            "CC_USE_SKINNING"
+          ],
+          "format": 44,
+          "location": 5
+        },
+        {
+          "name": "a_jointAnimInfo",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_BAKED_ANIMATION"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 6
+        },
+        {
+          "name": "a_matWorld0",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 7
+        },
+        {
+          "name": "a_matWorld1",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 8
+        },
+        {
+          "name": "a_matWorld2",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 9
+        },
+        {
+          "name": "a_lightingMapUVParam",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHTMAP"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 10
+        },
+        {
+          "name": "a_localShadowBiasAndProbeId",
+          "defines": [
+            "USE_INSTANCING"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 11
+        },
+        {
+          "name": "a_reflectionProbeData",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_REFLECTION_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 12
+        },
+        {
+          "name": "a_sh_linear_const_r",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 13
+        },
+        {
+          "name": "a_sh_linear_const_g",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 14
+        },
+        {
+          "name": "a_sh_linear_const_b",
+          "defines": [
+            "USE_INSTANCING",
+            "CC_USE_LIGHT_PROBE"
+          ],
+          "format": 44,
+          "isInstanced": true,
+          "location": 15
+        },
+        {
+          "name": "a_vertexId",
+          "defines": [
+            "CC_USE_MORPH"
+          ],
+          "format": 11,
+          "location": 16
+        },
+        {
+          "name": "a_texCoord1",
+          "defines": [],
+          "format": 21,
+          "location": 17
+        }
+      ],
+      "varyings": [
+        {
+          "name": "v_uv",
+          "type": 14,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 0
+        },
+        {
+          "name": "v_uv1",
+          "type": 14,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 1
+        },
+        {
+          "name": "v_clip_depth",
+          "type": 14,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 2
+        }
+      ],
+      "fragColors": [
+        {
+          "name": "cc_FragColor",
+          "typename": "vec4",
+          "type": 16,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 16,
+          "location": 0
+        }
+      ],
+      "descriptors": [
+        {
+          "rate": 0,
+          "blocks": [
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCMorph",
+              "members": [
+                {
+                  "name": "cc_displacementWeights",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 15,
+                  "isArray": true
+                },
+                {
+                  "name": "cc_displacementTextureInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1
+                }
+              ],
+              "defines": [
+                "CC_USE_MORPH"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinningTexture",
+              "members": [
+                {
+                  "name": "cc_jointTextureInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinningAnimation",
+              "members": [
+                {
+                  "name": "cc_jointAnimInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCSkinning",
+              "members": [
+                {
+                  "name": "cc_joints",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 0,
+                  "precision": "highp ",
+                  "isArray": true
+                }
+              ],
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "!CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ],
+              "stageFlags": 1
+            }
+          ],
+          "samplerTextures": [
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_PositionDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_POSITION"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_NormalDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_NORMAL"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_TangentDisplacements",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_TANGENT"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_jointTexture",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "precision": "highp ",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            },
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "cc_realtimeJoint",
+              "typename": "sampler2D",
+              "type": 28,
+              "count": 1,
+              "precision": "highp ",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ],
+              "stageFlags": 1,
+              "sampleType": 0
+            }
+          ],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 1,
+          "blocks": [
+            {
+              "name": "Constants",
+              "members": [
+                {
+                  "name": "tilingOffset",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "albedo",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "albedoScaleAndCutoff",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "pbrParams",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "emissive",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "emissiveScaleParam",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "lineColor",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "lineWidth",
+                  "type": 13,
+                  "count": 1
+                }
+              ],
+              "defines": [],
+              "stageFlags": 17,
+              "binding": 0
+            },
+            {
+              "name": "GlobalUniforms",
+              "members": [
+                {
+                  "name": "cc_matWorld",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matWorldIT",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matView",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matViewProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_matLightViewProj",
+                  "type": 25,
+                  "count": 1
+                },
+                {
+                  "name": "cc_cameraPos",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "cc_time",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "cc_fogColor",
+                  "type": 16,
+                  "count": 1
+                }
+              ],
+              "defines": [],
+              "stageFlags": 17,
+              "binding": 1
+            }
+          ],
+          "samplerTextures": [
+            {
+              "name": "albedoMap",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "USE_ALBEDO_MAP"
+              ],
+              "stageFlags": 16,
+              "sampleType": 0,
+              "binding": 2
+            }
+          ],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 2,
+          "blocks": [],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 3,
+          "blocks": [],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        }
+      ],
+      "hash": 2099398383,
+      "glsl4": {
+        "vert": "#extension GL_EXT_shader_explicit_arithmetic_types_int32: require\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nlayout(location = 0) in vec3 a_position;\nlayout(location = 1) in vec3 a_normal;\nlayout(location = 2) in vec2 a_texCoord;\nlayout(location = 3) in vec4 a_tangent;\n#if CC_USE_SKINNING\n    layout(location = 4) in u32vec4 a_joints;\n  layout(location = 5) in vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    layout(location = 6) in highp vec4 a_jointAnimInfo;\n  #endif\n  layout(location = 7) in vec4 a_matWorld0;\n  layout(location = 8) in vec4 a_matWorld1;\n  layout(location = 9) in vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    layout(location = 10) in vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    layout(location = 11) in vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    layout(location = 12) in vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    layout(location = 13) in vec4 a_sh_linear_const_r;\n    layout(location = 14) in vec4 a_sh_linear_const_g;\n    layout(location = 15) in vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n#endif\n#if CC_USE_MORPH\n  layout(set = 2, binding = 4) uniform CCMorph {\n    vec4 cc_displacementWeights[15];\n    vec4 cc_displacementTextureInfo;\n  };\n  #if CC_MORPH_TARGET_HAS_POSITION\n    layout(set = 2, binding = 8) uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    layout(set = 2, binding = 9) uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    layout(set = 2, binding = 10) uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    layout(set = 2, binding = 3) uniform CCSkinningTexture {\n      highp vec4 cc_jointTextureInfo;\n    };\n    layout(set = 2, binding = 2) uniform CCSkinningAnimation {\n      highp vec4 cc_jointAnimInfo;\n    };\n    layout(set = 2, binding = 7) uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      layout(set = 2, binding = 7) uniform highp sampler2D cc_realtimeJoint;\n    #else\n      layout(set = 2, binding = 3) uniform CCSkinning {\n        highp vec4 cc_joints[CC_JOINT_UNIFORM_CAPACITY * 3];\n      };\n    #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(set = 1, binding = 1) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\n#if HAS_SECOND_UV || USE_LIGHTMAP\n  layout(location = 17) in vec2 a_texCoord1;\n#endif\nlayout(location = 0) out vec2 v_uv;\nlayout(location = 1) out vec2 v_uv1;\nlayout(location = 2) out vec2 v_clip_depth;\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec4 worldPos = cc_matWorld * pos;\n  vec4 clipPos = cc_matLightViewProj * worldPos;\n  v_uv = a_texCoord * tilingOffset.xy + tilingOffset.zw;\n  #if HAS_SECOND_UV\n    v_uv1 = a_texCoord1 * tilingOffset.xy + tilingOffset.zw;\n  #endif\n  v_clip_depth = clipPos.zw;\n  return clipPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(set = 1, binding = 1) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\nlayout(location = 0) in vec2 v_uv;\nlayout(location = 1) in vec2 v_uv1;\nlayout(location = 2) in vec2 v_clip_depth;\n#if USE_ALBEDO_MAP\n  layout(set = 1, binding = 2) uniform sampler2D albedoMap;\n  #define ALBEDO_UV v_uv\n#endif\n#if USE_ALPHA_TEST\n  #define ALPHA_TEST_CHANNEL a\n#endif\nvec4 packDepth(float depth) {\n  depth = depth * 0.5 + 0.5;\n  vec4 enc = vec4(1.0, 255.0, 65025.0, 16581375.0) * depth;\n  enc = fract(enc);\n  enc -= enc.yzww * vec4(1.0/255.0, 1.0/255.0, 1.0/255.0, 0.0);\n  return enc;\n}\nvec4 frag () {\n  vec4 baseColor = albedo;\n  #if USE_ALBEDO_MAP\n    baseColor *= texture(albedoMap, ALBEDO_UV);\n  #endif\n  #if USE_ALPHA_TEST\n    if (baseColor.ALPHA_TEST_CHANNEL < albedoScaleAndCutoff.w) discard;\n  #endif\n  float depth = v_clip_depth.x / v_clip_depth.y;\n  return packDepth(depth);\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+      },
+      "glsl3": {
+        "vert": "\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nin vec3 a_position;\nin vec3 a_normal;\nin vec2 a_texCoord;\nin vec4 a_tangent;\n#if CC_USE_SKINNING\n    in vec4 a_joints;\n  in vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    in highp vec4 a_jointAnimInfo;\n  #endif\n  in vec4 a_matWorld0;\n  in vec4 a_matWorld1;\n  in vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    in vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    in vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    in vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    in vec4 a_sh_linear_const_r;\n    in vec4 a_sh_linear_const_g;\n    in vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n    in float a_vertexId;\n#endif\n#if CC_USE_MORPH\n  layout(std140) uniform CCMorph {\n    vec4 cc_displacementWeights[15];\n    vec4 cc_displacementTextureInfo;\n  };\n  #if CC_MORPH_TARGET_HAS_POSITION\n    uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    layout(std140) uniform CCSkinningTexture {\n      highp vec4 cc_jointTextureInfo;\n    };\n    layout(std140) uniform CCSkinningAnimation {\n      highp vec4 cc_jointAnimInfo;\n    };\n    uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      uniform highp sampler2D cc_realtimeJoint;\n    #else\n      layout(std140) uniform CCSkinning {\n        highp vec4 cc_joints[CC_JOINT_UNIFORM_CAPACITY * 3];\n      };\n    #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\nlayout(std140) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(std140) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\n#if HAS_SECOND_UV || USE_LIGHTMAP\n  in vec2 a_texCoord1;\n#endif\nout vec2 v_uv;\nout vec2 v_uv1;\nout vec2 v_clip_depth;\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec4 worldPos = cc_matWorld * pos;\n  vec4 clipPos = cc_matLightViewProj * worldPos;\n  v_uv = a_texCoord * tilingOffset.xy + tilingOffset.zw;\n  #if HAS_SECOND_UV\n    v_uv1 = a_texCoord1 * tilingOffset.xy + tilingOffset.zw;\n  #endif\n  v_clip_depth = clipPos.zw;\n  return clipPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\nlayout(std140) uniform Constants {\n  vec4 tilingOffset;\n  vec4 albedo;\n  vec4 albedoScaleAndCutoff;\n  vec4 pbrParams;\n  vec4 emissive;\n  vec4 emissiveScaleParam;\n  vec4 lineColor;\n  float lineWidth;\n};\nlayout(std140) uniform GlobalUniforms {\n  mat4 cc_matWorld;\n  mat4 cc_matWorldIT;\n  mat4 cc_matView;\n  mat4 cc_matProj;\n  mat4 cc_matViewProj;\n  mat4 cc_matLightViewProj;\n  vec4 cc_cameraPos;\n  vec4 cc_time;\n  vec4 cc_fogColor;\n};\nin vec2 v_uv;\nin vec2 v_uv1;\nin vec2 v_clip_depth;\n#if USE_ALBEDO_MAP\n  uniform sampler2D albedoMap;\n  #define ALBEDO_UV v_uv\n#endif\n#if USE_ALPHA_TEST\n  #define ALPHA_TEST_CHANNEL a\n#endif\nvec4 packDepth(float depth) {\n  depth = depth * 0.5 + 0.5;\n  vec4 enc = vec4(1.0, 255.0, 65025.0, 16581375.0) * depth;\n  enc = fract(enc);\n  enc -= enc.yzww * vec4(1.0/255.0, 1.0/255.0, 1.0/255.0, 0.0);\n  return enc;\n}\nvec4 frag () {\n  vec4 baseColor = albedo;\n  #if USE_ALBEDO_MAP\n    baseColor *= texture(albedoMap, ALBEDO_UV);\n  #endif\n  #if USE_ALPHA_TEST\n    if (baseColor.ALPHA_TEST_CHANNEL < albedoScaleAndCutoff.w) discard;\n  #endif\n  float depth = v_clip_depth.x / v_clip_depth.y;\n  return packDepth(depth);\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+      },
+      "glsl1": {
+        "vert": "\nprecision highp float;\n#define QUATER_PI         0.78539816340\n#define HALF_PI           1.57079632679\n#define PI                3.14159265359\n#define PI2               6.28318530718\n#define PI4               12.5663706144\n#define INV_QUATER_PI     1.27323954474\n#define INV_HALF_PI       0.63661977237\n#define INV_PI            0.31830988618\n#define INV_PI2           0.15915494309\n#define INV_PI4           0.07957747155\n#define EPSILON           1e-6\n#define EPSILON_LOWP      1e-4\n#define LOG2              1.442695\n#define EXP_VALUE         2.71828183\n#define FP_MAX            65504.0\n#define FP_SCALE          0.0009765625\n#define FP_SCALE_INV      1024.0\n#define GRAY_VECTOR       vec3(0.299, 0.587, 0.114)\n#define LIGHT_MAP_TYPE_DISABLED 0\n#define LIGHT_MAP_TYPE_ALL_IN_ONE 1\n#define LIGHT_MAP_TYPE_INDIRECT_OCCLUSION 2\n#define REFLECTION_PROBE_TYPE_NONE 0\n#define REFLECTION_PROBE_TYPE_CUBE 1\n#define REFLECTION_PROBE_TYPE_PLANAR 2\n#define REFLECTION_PROBE_TYPE_BLEND 3\n#define REFLECTION_PROBE_TYPE_BLEND_AND_SKYBOX 4\n#define LIGHT_TYPE_DIRECTIONAL 0.0\n#define LIGHT_TYPE_SPHERE 1.0\n#define LIGHT_TYPE_SPOT 2.0\n#define LIGHT_TYPE_POINT 3.0\n#define LIGHT_TYPE_RANGED_DIRECTIONAL 4.0\n#define IS_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_DIRECTIONAL)) < EPSILON_LOWP)\n#define IS_SPHERE_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPHERE)) < EPSILON_LOWP)\n#define IS_SPOT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_SPOT)) < EPSILON_LOWP)\n#define IS_POINT_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_POINT)) < EPSILON_LOWP)\n#define IS_RANGED_DIRECTIONAL_LIGHT(light_type) (abs(float(light_type) - float(LIGHT_TYPE_RANGED_DIRECTIONAL)) < EPSILON_LOWP)\n#define TONE_MAPPING_ACES 0\n#define TONE_MAPPING_LINEAR 1\n#define SURFACES_MAX_TRANSMIT_DEPTH_VALUE 999999.0\n#ifndef CC_SURFACES_DEBUG_VIEW_SINGLE\n  #define CC_SURFACES_DEBUG_VIEW_SINGLE 1\n#endif\n#ifndef CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC\n  #define CC_SURFACES_DEBUG_VIEW_COMPOSITE_AND_MISC 2\n#endif\nstruct StandardVertInput {\n  highp vec4 position;\n  vec3 normal;\n  vec4 tangent;\n};\nattribute vec3 a_position;\nattribute vec3 a_normal;\nattribute vec2 a_texCoord;\nattribute vec4 a_tangent;\n#if CC_USE_SKINNING\n    attribute vec4 a_joints;\n  attribute vec4 a_weights;\n#endif\n#if USE_INSTANCING\n  #if CC_USE_BAKED_ANIMATION\n    attribute highp vec4 a_jointAnimInfo;\n  #endif\n  attribute vec4 a_matWorld0;\n  attribute vec4 a_matWorld1;\n  attribute vec4 a_matWorld2;\n  #if CC_USE_LIGHTMAP\n    attribute vec4 a_lightingMapUVParam;\n  #endif\n  #if CC_USE_REFLECTION_PROBE || CC_RECEIVE_SHADOW\n    #if CC_RECEIVE_SHADOW\n    #endif\n    attribute vec4 a_localShadowBiasAndProbeId;\n  #endif\n  #if CC_USE_REFLECTION_PROBE\n    attribute vec4 a_reflectionProbeData;\n  #endif\n  #if CC_USE_LIGHT_PROBE\n    attribute vec4 a_sh_linear_const_r;\n    attribute vec4 a_sh_linear_const_g;\n    attribute vec4 a_sh_linear_const_b;\n  #endif\n#endif\n#if CC_USE_MORPH\n    attribute float a_vertexId;\n#endif\n#if CC_USE_MORPH\n  #if CC_MORPH_TARGET_HAS_POSITION\n    uniform sampler2D cc_PositionDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n    uniform sampler2D cc_NormalDisplacements;\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n    uniform sampler2D cc_TangentDisplacements;\n  #endif\n  #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n  #else\n  #endif\n  #if CC_MORPH_TARGET_HAS_POSITION\n  #endif\n  #if CC_MORPH_TARGET_HAS_NORMAL\n  #endif\n  #if CC_MORPH_TARGET_HAS_TANGENT\n  #endif\n#endif\n#if CC_USE_SKINNING\n  #if CC_USE_BAKED_ANIMATION\n    uniform highp sampler2D cc_jointTexture;\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      uniform highp sampler2D cc_realtimeJoint;\n    #else\n      #endif\n  #endif\n  #if CC_USE_BAKED_ANIMATION\n    #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n    #else\n    #endif\n  #else\n    #if CC_USE_REAL_TIME_JOINT_TEXTURE\n      #if CC_DEVICE_SUPPORT_FLOAT_TEXTURE\n      #else\n      #endif\n    #else\n    #endif\n  #endif\n#endif\n      uniform vec4 tilingOffset;\n   uniform mat4 cc_matWorld;\n   uniform mat4 cc_matLightViewProj;\n#if HAS_SECOND_UV || USE_LIGHTMAP\n  attribute vec2 a_texCoord1;\n#endif\nvarying vec2 v_uv;\nvarying vec2 v_uv1;\nvarying vec2 v_clip_depth;\nvec4 vert () {\n  vec4 pos = vec4(a_position, 1.0);\n  vec4 worldPos = cc_matWorld * pos;\n  vec4 clipPos = cc_matLightViewProj * worldPos;\n  v_uv = a_texCoord * tilingOffset.xy + tilingOffset.zw;\n  #if HAS_SECOND_UV\n    v_uv1 = a_texCoord1 * tilingOffset.xy + tilingOffset.zw;\n  #endif\n  v_clip_depth = clipPos.zw;\n  return clipPos;\n}\nvoid main() { gl_Position = vert(); }",
+        "frag": "\nprecision highp float;\n    uniform vec4 albedo;\n    uniform vec4 albedoScaleAndCutoff;\nvarying vec2 v_uv;\nvarying vec2 v_uv1;\nvarying vec2 v_clip_depth;\n#if USE_ALBEDO_MAP\n  uniform sampler2D albedoMap;\n  #define ALBEDO_UV v_uv\n#endif\n#if USE_ALPHA_TEST\n  #define ALPHA_TEST_CHANNEL a\n#endif\nvec4 packDepth(float depth) {\n  depth = depth * 0.5 + 0.5;\n  vec4 enc = vec4(1.0, 255.0, 65025.0, 16581375.0) * depth;\n  enc = fract(enc);\n  enc -= enc.yzww * vec4(1.0/255.0, 1.0/255.0, 1.0/255.0, 0.0);\n  return enc;\n}\nvec4 frag () {\n  vec4 baseColor = albedo;\n  #if USE_ALBEDO_MAP\n    baseColor *= texture2D(albedoMap, ALBEDO_UV);\n  #endif\n  #if USE_ALPHA_TEST\n    if (baseColor.ALPHA_TEST_CHANNEL < albedoScaleAndCutoff.w) discard;\n  #endif\n  float depth = v_clip_depth.x / v_clip_depth.y;\n  return packDepth(depth);\n}\nvoid main() { gl_FragColor = frag(); }"
+      },
+      "builtins": {
+        "globals": {
+          "blocks": [],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [
+            {
+              "name": "CCMorph",
+              "defines": [
+                "CC_USE_MORPH"
+              ]
+            },
+            {
+              "name": "CCSkinningTexture",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "CCSkinningAnimation",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "CCSkinning",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "!CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ]
+            }
+          ],
+          "samplerTextures": [
+            {
+              "name": "cc_PositionDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_POSITION"
+              ]
+            },
+            {
+              "name": "cc_NormalDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_NORMAL"
+              ]
+            },
+            {
+              "name": "cc_TangentDisplacements",
+              "defines": [
+                "CC_USE_MORPH",
+                "CC_MORPH_TARGET_HAS_TANGENT"
+              ]
+            },
+            {
+              "name": "cc_jointTexture",
+              "defines": [
+                "CC_USE_SKINNING",
+                "CC_USE_BAKED_ANIMATION"
+              ]
+            },
+            {
+              "name": "cc_realtimeJoint",
+              "defines": [
+                "CC_USE_SKINNING",
+                "!CC_USE_BAKED_ANIMATION",
+                "CC_USE_REAL_TIME_JOINT_TEXTURE"
+              ]
+            }
+          ],
+          "buffers": [],
+          "images": []
+        },
+        "statistics": {
+          "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 53,
+          "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 35
+        }
+      },
+      "defines": [
+        {
+          "name": "USE_INSTANCING",
+          "type": "boolean",
+          "defines": [],
+          "editor": {
+            "elevated": true
+          }
+        },
+        {
+          "name": "CC_USE_SKINNING",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "CC_USE_BAKED_ANIMATION",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_LIGHTMAP",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_REFLECTION_PROBE",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_RECEIVE_SHADOW",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_LIGHT_PROBE",
+          "type": "boolean",
+          "defines": [
+            "USE_INSTANCING"
+          ]
+        },
+        {
+          "name": "CC_USE_MORPH",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "CC_MORPH_TARGET_COUNT",
+          "type": "number",
+          "defines": [
+            "CC_USE_MORPH"
+          ],
+          "range": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_POSITION",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_NORMAL",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_MORPH_TARGET_HAS_TANGENT",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_MORPH"
+          ]
+        },
+        {
+          "name": "CC_USE_REAL_TIME_JOINT_TEXTURE",
+          "type": "boolean",
+          "defines": [
+            "CC_USE_SKINNING",
+            "!CC_USE_BAKED_ANIMATION"
+          ]
+        },
+        {
+          "name": "HAS_SECOND_UV",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_LIGHTMAP",
+          "type": "boolean",
+          "defines": [
+            "HAS_SECOND_UV"
+          ]
+        },
+        {
+          "name": "USE_ALBEDO_MAP",
+          "type": "boolean",
+          "defines": []
+        },
+        {
+          "name": "USE_ALPHA_TEST",
+          "type": "boolean",
+          "defines": []
+        }
+      ],
+      "name": "../GameRes/shader/TranslucentGrid|shadow-caster-vs:vert|shadow-caster-fs:frag"
+    }
+  ],
+  "combinations": [],
+  "hideInEditor": false
+}

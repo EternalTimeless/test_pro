@@ -1,0 +1,86 @@
+{
+  "__type__": "cc.Material",
+  "_name": "AK",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "6b7e860b-8ba2-45ae-b130-63eea1f9e208",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 0,
+  "_defines": [
+    {
+      "USE_INSTANCING": true,
+      "USE_ALBEDO_MAP": true
+    },
+    {},
+    {},
+    {},
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {
+      "occlusion": 0.231,
+      "roughness": 0.185,
+      "metallic": 0.321,
+      "specularIntensity": 0.314,
+      "mainTexture": {
+        "__uuid__": "c798f61f-240a-4535-bbb9-e5c50c4a3de5@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "grayScaleFactor": 0
+    },
+    {},
+    {},
+    {},
+    {}
+  ]
+}

@@ -1,0 +1,582 @@
+{
+  "__type__": "cc.EffectAsset",
+  "_name": "../GameRes/shader/Glow_Effect",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "techniques": [
+    {
+      "passes": [
+        {
+          "rasterizerState": {
+            "cullMode": 0
+          },
+          "blendState": {
+            "targets": [
+              {
+                "blend": true,
+                "blendSrc": 2,
+                "blendDst": 4,
+                "blendDstAlpha": 4
+              }
+            ]
+          },
+          "program": "../GameRes/shader/Glow_Effect|general-vs|glow-fs:frag",
+          "properties": {
+            "mainTexture": {
+              "value": "white",
+              "type": 28
+            },
+            "mainColor": {
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "editor": {
+                "type": "color"
+              },
+              "type": 16
+            },
+            "glowColor": {
+              "value": [
+                0,
+                0.8,
+                1,
+                1
+              ],
+              "editor": {
+                "type": "color"
+              },
+              "type": 16
+            },
+            "glowIntensity": {
+              "value": [
+                2
+              ],
+              "type": 13
+            },
+            "glowWidth": {
+              "value": [
+                0.1
+              ],
+              "type": 13
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "shaders": [
+    {
+      "blocks": [
+        {
+          "name": "glowParam",
+          "members": [
+            {
+              "name": "mainColor",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "glowColor",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "glowIntensity",
+              "type": 13,
+              "count": 1
+            },
+            {
+              "name": "glowWidth",
+              "type": 13,
+              "count": 1
+            }
+          ],
+          "defines": [],
+          "stageFlags": 16,
+          "binding": 0
+        }
+      ],
+      "samplerTextures": [
+        {
+          "name": "mainTexture",
+          "type": 28,
+          "count": 1,
+          "defines": [
+            "USE_MAINTEXT"
+          ],
+          "stageFlags": 16,
+          "sampleType": 0,
+          "binding": 1
+        }
+      ],
+      "samplers": [],
+      "textures": [],
+      "buffers": [],
+      "images": [],
+      "subpassInputs": [],
+      "attributes": [
+        {
+          "name": "a_position",
+          "defines": [],
+          "format": 32,
+          "location": 0
+        },
+        {
+          "name": "a_normal",
+          "defines": [],
+          "format": 32,
+          "location": 1
+        },
+        {
+          "name": "a_texCoord",
+          "defines": [],
+          "format": 21,
+          "location": 2
+        }
+      ],
+      "varyings": [
+        {
+          "name": "v_position",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 0
+        },
+        {
+          "name": "v_normal",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 1
+        },
+        {
+          "name": "v_uv",
+          "type": 14,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 2
+        },
+        {
+          "name": "v_viewDir",
+          "type": 15,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 17,
+          "location": 3
+        }
+      ],
+      "fragColors": [
+        {
+          "name": "cc_FragColor",
+          "typename": "vec4",
+          "type": 16,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 16,
+          "location": 0
+        }
+      ],
+      "descriptors": [
+        {
+          "rate": 0,
+          "blocks": [
+            {
+              "tags": {
+                "builtin": "local"
+              },
+              "name": "CCLocal",
+              "members": [
+                {
+                  "name": "cc_matWorld",
+                  "typename": "mat4",
+                  "type": 25,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_matWorldIT",
+                  "typename": "mat4",
+                  "type": 25,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_lightingMapUVParam",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_localShadowBias",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_reflectionProbeData1",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_reflectionProbeData2",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_reflectionProbeBlendData1",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_reflectionProbeBlendData2",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                }
+              ],
+              "defines": [],
+              "stageFlags": 1
+            }
+          ],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 1,
+          "blocks": [
+            {
+              "name": "glowParam",
+              "members": [
+                {
+                  "name": "mainColor",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "glowColor",
+                  "type": 16,
+                  "count": 1
+                },
+                {
+                  "name": "glowIntensity",
+                  "type": 13,
+                  "count": 1
+                },
+                {
+                  "name": "glowWidth",
+                  "type": 13,
+                  "count": 1
+                }
+              ],
+              "defines": [],
+              "stageFlags": 16,
+              "binding": 0
+            }
+          ],
+          "samplerTextures": [
+            {
+              "name": "mainTexture",
+              "type": 28,
+              "count": 1,
+              "defines": [
+                "USE_MAINTEXT"
+              ],
+              "stageFlags": 16,
+              "sampleType": 0,
+              "binding": 1
+            }
+          ],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 2,
+          "blocks": [],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        },
+        {
+          "rate": 3,
+          "blocks": [
+            {
+              "tags": {
+                "builtin": "global"
+              },
+              "name": "CCGlobal",
+              "members": [
+                {
+                  "name": "cc_time",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_screenSize",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_nativeSize",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_probeInfo",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_debug_view_mode",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                }
+              ],
+              "defines": [],
+              "stageFlags": 17
+            },
+            {
+              "tags": {
+                "builtin": "global"
+              },
+              "name": "CCCamera",
+              "members": [
+                {
+                  "name": "cc_matView",
+                  "typename": "mat4",
+                  "type": 25,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_matViewInv",
+                  "typename": "mat4",
+                  "type": 25,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_matProj",
+                  "typename": "mat4",
+                  "type": 25,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_matProjInv",
+                  "typename": "mat4",
+                  "type": 25,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_matViewProj",
+                  "typename": "mat4",
+                  "type": 25,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_matViewProjInv",
+                  "typename": "mat4",
+                  "type": 25,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_cameraPos",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "highp "
+                },
+                {
+                  "name": "cc_surfaceTransform",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_screenScale",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_exposure",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_mainLitDir",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_mainLitColor",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_ambientSky",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_ambientGround",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_fogColor",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_fogBase",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_fogAdd",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_nearFar",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                },
+                {
+                  "name": "cc_viewPort",
+                  "typename": "vec4",
+                  "type": 16,
+                  "count": 1,
+                  "precision": "mediump "
+                }
+              ],
+              "defines": [],
+              "stageFlags": 17
+            }
+          ],
+          "samplerTextures": [],
+          "samplers": [],
+          "textures": [],
+          "buffers": [],
+          "images": [],
+          "subpassInputs": []
+        }
+      ],
+      "hash": 2681157901,
+      "glsl4": {
+        "vert": "\nprecision highp float;\nlayout(set = 0, binding = 0) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_probeInfo;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(set = 0, binding = 1) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nlayout(set = 2, binding = 0) uniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n  highp vec4 cc_reflectionProbeData1;\n  highp vec4 cc_reflectionProbeData2;\n  highp vec4 cc_reflectionProbeBlendData1;\n  highp vec4 cc_reflectionProbeBlendData2;\n};\nlayout(location = 0) in vec3 a_position;\nlayout(location = 1) in vec3 a_normal;\nlayout(location = 2) in vec2 a_texCoord;\nlayout(location = 0) out vec3 v_position;\nlayout(location = 1) out vec3 v_normal;\nlayout(location = 2) out vec2 v_uv;\nlayout(location = 3) out vec3 v_viewDir;\nvoid main () {\n  vec4 pos = cc_matWorld * vec4(a_position, 1.0);\n  v_position = pos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(a_normal, 0.0)).xyz);\n  v_uv = a_texCoord;\n  v_viewDir = normalize(cc_cameraPos.xyz - v_position);\n  gl_Position = cc_matProj * cc_matView * pos;\n}",
+        "frag": "\nprecision highp float;\nlayout(set = 0, binding = 0) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_probeInfo;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(set = 0, binding = 1) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\n#if USE_MAINTEXT\n  layout(set = 1, binding = 1) uniform sampler2D mainTexture;\n#endif\nlayout(set = 1, binding = 0) uniform glowParam{\n  vec4 mainColor;\n  vec4 glowColor;\n  float glowIntensity;\n  float glowWidth;\n};\nlayout(location = 0) in vec3 v_position;\nlayout(location = 1) in vec3 v_normal;\nlayout(location = 2) in vec2 v_uv;\nlayout(location = 3) in vec3 v_viewDir;\nvec4 frag () {\n  #if USE_MAINTEXT\n    vec4 baseColor = texture(mainTexture, v_uv) * mainColor;\n  #else\n    vec4 baseColor = mainColor;\n  #endif\n  vec3 normal = normalize(v_normal);\n  vec3 viewDir = normalize(v_viewDir);\n  float edge = 1.0 - abs(dot(normal, viewDir));\n  float glowFactor = smoothstep(0.0, glowWidth, edge);\n  vec3 glow = glowColor.rgb * glowFactor * glowIntensity;\n  vec3 finalColor = baseColor.rgb + glow;\n  return vec4(finalColor, baseColor.a);\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+      },
+      "glsl3": {
+        "vert": "\nprecision highp float;\nlayout(std140) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_probeInfo;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(std140) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nlayout(std140) uniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n  highp vec4 cc_reflectionProbeData1;\n  highp vec4 cc_reflectionProbeData2;\n  highp vec4 cc_reflectionProbeBlendData1;\n  highp vec4 cc_reflectionProbeBlendData2;\n};\nin vec3 a_position;\nin vec3 a_normal;\nin vec2 a_texCoord;\nout vec3 v_position;\nout vec3 v_normal;\nout vec2 v_uv;\nout vec3 v_viewDir;\nvoid main () {\n  vec4 pos = cc_matWorld * vec4(a_position, 1.0);\n  v_position = pos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(a_normal, 0.0)).xyz);\n  v_uv = a_texCoord;\n  v_viewDir = normalize(cc_cameraPos.xyz - v_position);\n  gl_Position = cc_matProj * cc_matView * pos;\n}",
+        "frag": "\nprecision highp float;\nlayout(std140) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_probeInfo;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(std140) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\n#if USE_MAINTEXT\n  uniform sampler2D mainTexture;\n#endif\nlayout(std140) uniform glowParam{\n  vec4 mainColor;\n  vec4 glowColor;\n  float glowIntensity;\n  float glowWidth;\n};\nin vec3 v_position;\nin vec3 v_normal;\nin vec2 v_uv;\nin vec3 v_viewDir;\nvec4 frag () {\n  #if USE_MAINTEXT\n    vec4 baseColor = texture(mainTexture, v_uv) * mainColor;\n  #else\n    vec4 baseColor = mainColor;\n  #endif\n  vec3 normal = normalize(v_normal);\n  vec3 viewDir = normalize(v_viewDir);\n  float edge = 1.0 - abs(dot(normal, viewDir));\n  float glowFactor = smoothstep(0.0, glowWidth, edge);\n  vec3 glow = glowColor.rgb * glowFactor * glowIntensity;\n  vec3 finalColor = baseColor.rgb + glow;\n  return vec4(finalColor, baseColor.a);\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+      },
+      "glsl1": {
+        "vert": "\nprecision highp float;\nuniform highp mat4 cc_matView;\n  uniform highp mat4 cc_matProj;\n  uniform highp vec4 cc_cameraPos;\nuniform highp mat4 cc_matWorld;\n  uniform highp mat4 cc_matWorldIT;\nattribute vec3 a_position;\nattribute vec3 a_normal;\nattribute vec2 a_texCoord;\nvarying vec3 v_position;\nvarying vec3 v_normal;\nvarying vec2 v_uv;\nvarying vec3 v_viewDir;\nvoid main () {\n  vec4 pos = cc_matWorld * vec4(a_position, 1.0);\n  v_position = pos.xyz;\n  v_normal = normalize((cc_matWorldIT * vec4(a_normal, 0.0)).xyz);\n  v_uv = a_texCoord;\n  v_viewDir = normalize(cc_cameraPos.xyz - v_position);\n  gl_Position = cc_matProj * cc_matView * pos;\n}",
+        "frag": "\nprecision highp float;\n#if USE_MAINTEXT\n  uniform sampler2D mainTexture;\n#endif\n  uniform vec4 mainColor;\n  uniform vec4 glowColor;\n  uniform float glowIntensity;\n  uniform float glowWidth;\nvarying vec3 v_position;\nvarying vec3 v_normal;\nvarying vec2 v_uv;\nvarying vec3 v_viewDir;\nvec4 frag () {\n  #if USE_MAINTEXT\n    vec4 baseColor = texture2D(mainTexture, v_uv) * mainColor;\n  #else\n    vec4 baseColor = mainColor;\n  #endif\n  vec3 normal = normalize(v_normal);\n  vec3 viewDir = normalize(v_viewDir);\n  float edge = 1.0 - abs(dot(normal, viewDir));\n  float glowFactor = smoothstep(0.0, glowWidth, edge);\n  vec3 glow = glowColor.rgb * glowFactor * glowIntensity;\n  vec3 finalColor = baseColor.rgb + glow;\n  return vec4(finalColor, baseColor.a);\n}\nvoid main() { gl_FragColor = frag(); }"
+      },
+      "builtins": {
+        "globals": {
+          "blocks": [
+            {
+              "name": "CCGlobal",
+              "defines": []
+            },
+            {
+              "name": "CCCamera",
+              "defines": []
+            }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [
+            {
+              "name": "CCLocal",
+              "defines": []
+            }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "statistics": {
+          "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 56,
+          "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 46
+        }
+      },
+      "defines": [
+        {
+          "name": "USE_MAINTEXT",
+          "type": "boolean",
+          "defines": []
+        }
+      ],
+      "name": "../GameRes/shader/Glow_Effect|general-vs|glow-fs:frag"
+    }
+  ],
+  "combinations": [],
+  "hideInEditor": false
+}

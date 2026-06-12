@@ -1,0 +1,4381 @@
+{
+  "version": "1.0.1",
+  "map": {
+    "GameRes": {
+      "time": 1781235116762.4385,
+      "uuid": "5f69c6c0-cb55-40e6-9ce8-7bb74031024e"
+    },
+    "resources": {
+      "time": 1781235117022.2686,
+      "uuid": "caffc481-8e86-4f96-8867-9213f3a378f4"
+    },
+    "Scene": {
+      "time": 1781235117168.5547,
+      "uuid": "e72949cf-3923-4906-b42c-4ca5bc00f29a"
+    },
+    "Script": {
+      "time": 1781235118441.769,
+      "uuid": "250fcd96-efb3-4b9f-af9b-258a1c2ae47a"
+    },
+    "GameRes\\1219": {
+      "time": 1781235113000.0154,
+      "uuid": "a078e7ba-e4a3-425b-be13-298685081d18"
+    },
+    "GameRes\\Anim": {
+      "time": 1781235113266.9746,
+      "uuid": "6997fd28-eacc-422f-bf41-7346af53bc80"
+    },
+    "GameRes\\bd-jtl": {
+      "time": 1781235113276.7844,
+      "uuid": "55fce1e2-1345-48e7-91e7-62cee7308746"
+    },
+    "GameRes\\DJBT_map": {
+      "time": 1781235113718.3372,
+      "uuid": "5407ff8f-12ff-4b08-9caf-28a0bd55a2fd"
+    },
+    "GameRes\\Effect": {
+      "time": 1781235114618.6555,
+      "uuid": "9554cd5d-9ce5-4a13-8a3d-19978a2b2514"
+    },
+    "GameRes\\Environment": {
+      "time": 1781235115004.633,
+      "uuid": "ad1b2238-2043-493a-b441-07481638373c"
+    },
+    "GameRes\\FBX": {
+      "time": 1781235115955.5576,
+      "uuid": "40d1d5c7-78a7-40d6-89f9-f4805e69e72f"
+    },
+    "GameRes\\Font": {
+      "time": 1781235116020.3098,
+      "uuid": "b09a7e51-aa3d-414e-a2ae-4121f67e8d85"
+    },
+    "GameRes\\Image": {
+      "time": 1781235116308.1902,
+      "uuid": "26ea6386-6292-424c-8aa6-58fcacbd6bf1"
+    },
+    "GameRes\\Mat": {
+      "time": 1781235116430.7722,
+      "uuid": "f5776f74-f3e7-4e66-9f4e-65dd56f462a8"
+    },
+    "GameRes\\Material": {
+      "time": 1781235116474.6006,
+      "uuid": "d82f0132-cc7a-4ab8-b19c-f6a874dbebc6"
+    },
+    "GameRes\\Prefab": {
+      "time": 1781235116617.6714,
+      "uuid": "1029672c-2441-4553-9cff-34a1dae006d8"
+    },
+    "GameRes\\Prefabs": {
+      "time": 1781235116721.893,
+      "uuid": "a7da298a-ccf3-4ace-a950-7f4fe970f717"
+    },
+    "GameRes\\Rocker": {
+      "time": 1781235116748.3918,
+      "uuid": "9f6c0b0e-fbea-417f-9927-de3336dd38a2"
+    },
+    "GameRes\\shader": {
+      "time": 1781235116942.0752,
+      "uuid": "284060d3-3d91-41b4-b0b4-d96fd6cdede2"
+    },
+    "resources\\Sound": {
+      "time": 1781235117137.182,
+      "uuid": "c876c6c5-e04c-4641-b7f8-444b82eb5b19"
+    },
+    "Script\\Base": {
+      "time": 1781235117337.5337,
+      "uuid": "ff42d022-3c11-4c4e-9d78-5ab16c1517d9"
+    },
+    "Script\\functionS": {
+      "time": 1781235118385.5317,
+      "uuid": "eafc0e9d-bb59-4905-955a-71ed10274751"
+    },
+    "Script\\Tool": {
+      "time": 1781235118437.7786,
+      "uuid": "60e1114a-09c5-4426-bc29-b3c90b18cec6"
+    },
+    "Script\\Tween": {
+      "time": 1781235118464.7656,
+      "uuid": "f2436a4c-b513-4e22-be6c-23836ea972e7"
+    },
+    "GameRes\\1219\\A-texiao": {
+      "time": 1781235112716.9448,
+      "uuid": "54bb626a-9219-4d5f-bed9-f7907f8f6cc0"
+    },
+    "GameRes\\1219\\FX": {
+      "time": 1781235112956.7292,
+      "uuid": "a936f593-b5c8-455e-9e91-639fdca841d8"
+    },
+    "GameRes\\1219\\Res": {
+      "time": 1781235112988.901,
+      "uuid": "a9916d26-423f-40c8-a300-0bdd08ddb312"
+    },
+    "GameRes\\1219\\Scene": {
+      "time": 1781235113007.0002,
+      "uuid": "4eed21cf-4c24-442f-922e-b0ffad0eea53"
+    },
+    "GameRes\\17.27\\GameRes": {
+      "time": 1781235113060.7415,
+      "uuid": "790443a5-6fa7-4ff1-a773-ca3f4b26ff59"
+    },
+    "GameRes\\bd-jtl\\GameRes": {
+      "time": 1781235113282.7686,
+      "uuid": "58843a53-c19f-4447-afeb-de529e954798"
+    },
+    "GameRes\\DJBT_map\\fbx": {
+      "time": 1781235113519.0632,
+      "uuid": "229eb031-8d50-4c68-b73d-e66523715f82"
+    },
+    "GameRes\\DJBT_map\\mat": {
+      "time": 1781235113694.7913,
+      "uuid": "e69ae79e-b3b8-4c5c-96a5-3f3cf1f66c88"
+    },
+    "GameRes\\DJBT_map\\pro": {
+      "time": 1781235113714.2415,
+      "uuid": "ef4f8192-49e6-4b7c-ae26-b60ed84dae17"
+    },
+    "GameRes\\DJBT_map\\tex": {
+      "time": 1781235113865.589,
+      "uuid": "513967f0-60a3-4c8f-a634-ff1654d7f0d4"
+    },
+    "GameRes\\Effect\\A-texiao": {
+      "time": 1781235113927.6816,
+      "uuid": "837859aa-724b-4c1a-b221-01ab084ac591"
+    },
+    "GameRes\\Effect\\fab": {
+      "time": 1781235114028.6282,
+      "uuid": "4631c54e-7aec-49b5-acb1-96bcb6f24c21"
+    },
+    "GameRes\\Effect\\fx": {
+      "time": 1781235114040.594,
+      "uuid": "4f380cb1-1960-4b5d-a7d4-d5634e583ac9"
+    },
+    "GameRes\\Effect\\propLight": {
+      "time": 1781235114334.763,
+      "uuid": "bc3a23eb-68cd-4abc-ac3b-227eb2a27fe5"
+    },
+    "GameRes\\Effect\\qh": {
+      "time": 1781235114614.1133,
+      "uuid": "b39f94a5-ca0b-4889-99fd-7d05dafca413"
+    },
+    "GameRes\\Effect\\qh2": {
+      "time": 1781235114718.1372,
+      "uuid": "152061c8-1234-4f22-b515-9ab82f84cced"
+    },
+    "GameRes\\Environment\\Fbx": {
+      "time": 1781235114821.6255,
+      "uuid": "0c840380-0030-4612-a19c-a071d2a74ea1"
+    },
+    "GameRes\\Environment\\Mat": {
+      "time": 1781235114949.376,
+      "uuid": "bebf8828-8b77-42b1-a43b-510a8ed2e34b"
+    },
+    "GameRes\\Environment\\Per": {
+      "time": 1781235115000.6438,
+      "uuid": "e0e76207-b1eb-4434-a939-3aa58e8d096f"
+    },
+    "GameRes\\Environment\\Tex": {
+      "time": 1781235115157.6882,
+      "uuid": "26410a41-8134-4cbd-87f4-d3fe0ce61ac3"
+    },
+    "GameRes\\FBX\\Arms": {
+      "time": 1781235115284.9365,
+      "uuid": "5bd31cd6-f23b-4920-9559-30386a06aa92"
+    },
+    "GameRes\\FBX\\Hero_0": {
+      "time": 1781235115387.6208,
+      "uuid": "1ad268a0-08b9-4ab5-88b8-c296eccd1587"
+    },
+    "GameRes\\FBX\\Hero_1": {
+      "time": 1781235115475.6184,
+      "uuid": "ee84f284-f32b-4020-8c2a-b7682e95c04c"
+    },
+    "GameRes\\FBX\\Hero_2": {
+      "time": 1781235115562.1064,
+      "uuid": "eab9f9f8-69bc-4194-968d-4081e5d713f2"
+    },
+    "GameRes\\FBX\\Hero_3": {
+      "time": 1781235115655.8462,
+      "uuid": "78fd2053-f682-4776-8c51-201921329329"
+    },
+    "GameRes\\FBX\\JJ": {
+      "time": 1781235115725.487,
+      "uuid": "f86f6f6f-0082-4f28-9a76-c3c6cb841dd1"
+    },
+    "GameRes\\FBX\\Monster": {
+      "time": 1781235115880.208,
+      "uuid": "7a893dd5-3763-4e7d-b590-45b74975df04"
+    },
+    "GameRes\\FBX\\Monster_boos": {
+      "time": 1781235115948.5789,
+      "uuid": "ff85989c-55f9-47bc-9991-a3ebb0133140"
+    },
+    "GameRes\\FBX\\Monster_boos_2": {
+      "time": 1781235116008.3362,
+      "uuid": "e511735a-84e8-46cf-baef-bebfa13c996c"
+    },
+    "GameRes\\Image\\Bullet": {
+      "time": 1781235116109.2903,
+      "uuid": "44ed9999-20d4-40b3-ba03-04fce46aeca8"
+    },
+    "GameRes\\Image\\GameOver": {
+      "time": 1781235116222.3523,
+      "uuid": "d90bf99e-8785-47fb-9693-9dbca1408fb4"
+    },
+    "GameRes\\Image\\Hp": {
+      "time": 1781235116303.6023,
+      "uuid": "0b18c425-4fed-4b19-aea5-8bcf4fd3de14"
+    },
+    "GameRes\\Image\\img": {
+      "time": 1781235116397.672,
+      "uuid": "6a17c1de-ef6d-438d-b022-585b50c08a05"
+    },
+    "GameRes\\Prefab\\Bullet": {
+      "time": 1781235116693.2112,
+      "uuid": "295859b4-f4ea-44f6-bc6c-cde1272b447b"
+    },
+    "GameRes\\shader\\chunks": {
+      "time": 1781235117007.2217,
+      "uuid": "2609eef6-ab6a-459c-85d1-80c4227be411"
+    },
+    "Script\\Base\\MoveRot": {
+      "time": 1781235117332.3792,
+      "uuid": "3db9d314-1f22-4773-ba23-6669f07878b5"
+    },
+    "Script\\Base\\TextAdaptation": {
+      "time": 1781235117396.944,
+      "uuid": "4d153afb-6da8-4428-adc5-1c4c4b44a81f"
+    },
+    "Script\\functionS\\Bag": {
+      "time": 1781235117566.9893,
+      "uuid": "d38c02da-611e-403b-aa12-bc928efb6925"
+    },
+    "Script\\functionS\\Battle": {
+      "time": 1781235117969.0193,
+      "uuid": "52daef60-30ed-45a5-a531-a3928e83c94f"
+    },
+    "Script\\functionS\\Effect": {
+      "time": 1781235118028.9648,
+      "uuid": "172e5ba9-08f9-4d34-883f-3214fa11f394"
+    },
+    "Script\\functionS\\Guide": {
+      "time": 1781235118046.4343,
+      "uuid": "9c0abca0-fa8f-46d6-8cd5-cfa2196272f1"
+    },
+    "Script\\functionS\\Jump": {
+      "time": 1781235118125.696,
+      "uuid": "0eb60b0d-6019-42e8-8dc0-77a7212b5088"
+    },
+    "Script\\functionS\\Monster": {
+      "time": 1781235118162.1309,
+      "uuid": "480b0da3-6475-4aa1-8e49-cfeec87991ec"
+    },
+    "Script\\functionS\\Other": {
+      "time": 1781235118196.153,
+      "uuid": "31a1e406-7653-4a32-9a59-655e6188e99e"
+    },
+    "Script\\functionS\\Player": {
+      "time": 1781235118214.784,
+      "uuid": "e19290d4-e44e-4c69-93cb-1471d99d1597"
+    },
+    "Script\\functionS\\Rocker": {
+      "time": 1781235118249.1199,
+      "uuid": "1a847aaf-c962-4d25-8a95-4fc386fd89fc"
+    },
+    "Script\\functionS\\ShoppIng": {
+      "time": 1781235118329.808,
+      "uuid": "f4cf1ce7-d994-4717-8212-c7f8c4535f79"
+    },
+    "Script\\functionS\\SkAnim": {
+      "time": 1781235118346.9905,
+      "uuid": "a8bdab5a-cd05-4a51-af0a-cd49848f995f"
+    },
+    "Script\\functionS\\UI": {
+      "time": 1781235118392.515,
+      "uuid": "79397966-c6cd-42ff-be0d-300ea928080d"
+    },
+    "GameRes\\1219\\A-texiao\\Fab": {
+      "time": 1780287686648.8335,
+      "uuid": "89cf64c4-457d-4a75-88a3-7b94c8c0086b"
+    },
+    "GameRes\\1219\\A-texiao\\mat": {
+      "time": 1781235112691.7163,
+      "uuid": "18efe0f7-9eb0-4256-86ef-2696818491eb"
+    },
+    "GameRes\\1219\\A-texiao\\mech": {
+      "time": 1781235112712.8755,
+      "uuid": "9dc09430-e6d5-4e6c-854e-8a1eaad104a1"
+    },
+    "GameRes\\1219\\A-texiao\\tex": {
+      "time": 1781235112791.8708,
+      "uuid": "0e81f5a7-88e2-44ed-9308-4286462b2acd"
+    },
+    "GameRes\\1219\\FX\\mat": {
+      "time": 1781235112896.859,
+      "uuid": "6134788c-0517-4884-8e47-a78077bc99b6"
+    },
+    "GameRes\\1219\\FX\\tex": {
+      "time": 1781235112953.7383,
+      "uuid": "072f23ca-3e07-47c4-aaf7-b94d6edc2013"
+    },
+    "GameRes\\1219\\FX\\yw": {
+      "time": 1781235112977.8528,
+      "uuid": "0506578e-864d-407b-90cd-921979c7c83d"
+    },
+    "GameRes\\1219\\Res\\fbx": {
+      "time": 1781235112995.8875,
+      "uuid": "0c429bf6-9e86-44ac-b44e-c4a92b821dcd"
+    },
+    "GameRes\\1219\\Scene\\Eff": {
+      "time": 1781235113013.9832,
+      "uuid": "e0471003-b9f2-40e3-859f-bed4bba504a3"
+    },
+    "GameRes\\17.27\\GameRes\\FX": {
+      "time": 1781235113229.0774,
+      "uuid": "b665a4f3-531a-4d2d-b56c-af7a19e75f8f"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX": {
+      "time": 1781235113290.3125,
+      "uuid": "e48b7457-a54f-4542-b0f8-efa1a4e74976"
+    },
+    "GameRes\\Effect\\A-texiao\\mat": {
+      "time": 1781235113923.9197,
+      "uuid": "a1b97449-dc16-46d7-802c-754f88ea8979"
+    },
+    "GameRes\\Effect\\A-texiao\\tex": {
+      "time": 1781235113949.184,
+      "uuid": "6a4243bf-3c9d-4b05-8039-0e5a0748126e"
+    },
+    "GameRes\\Effect\\fx\\A-texiao": {
+      "time": 1781235114098.9902,
+      "uuid": "271081d4-2e7e-42e1-ad9e-6a9fd71ad26b"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao": {
+      "time": 1781235114246.228,
+      "uuid": "91f9ac9b-3a8d-4a57-9ada-d41a7373ac96"
+    },
+    "GameRes\\Effect\\propLight\\FX": {
+      "time": 1781235114303.4106,
+      "uuid": "72f5f583-6219-45d6-b2de-2f22b06e0e82"
+    },
+    "GameRes\\Effect\\propLight\\VFX": {
+      "time": 1781235114424.2314,
+      "uuid": "9954e8cb-65a9-448e-a43d-5e61d29ec21a"
+    },
+    "GameRes\\FBX\\Hero_3\\Materials_big_dazhuang_01_skin_2": {
+      "time": 1781235115687.781,
+      "uuid": "0fc84025-435e-4480-9394-b3a73289eb35"
+    },
+    "Script\\functionS\\Bag\\Base": {
+      "time": 1781235117578.289,
+      "uuid": "7510b784-2997-4459-9407-95b13e90684f"
+    },
+    "Script\\functionS\\Battle\\Attack": {
+      "time": 1781235117671.0952,
+      "uuid": "52d81576-66c9-49e8-a91b-262291ae2701"
+    },
+    "Script\\functionS\\Battle\\Base": {
+      "time": 1781235117699.4402,
+      "uuid": "81ec19eb-25e4-4db9-a771-a4d1223b9bda"
+    },
+    "Script\\functionS\\Battle\\Battle2D": {
+      "time": 1781235117775.4224,
+      "uuid": "bac6ad31-2471-43d6-9bb7-a6d0a546300f"
+    },
+    "Script\\functionS\\Battle\\Battle3D": {
+      "time": 1781235117904.2942,
+      "uuid": "9dae369d-13fa-45e2-81c8-7fa7531e6771"
+    },
+    "Script\\functionS\\Battle\\BattleTarger": {
+      "time": 1781235117964.6995,
+      "uuid": "e535ea9b-da2c-4a8b-971e-ca98046311bc"
+    },
+    "Script\\functionS\\Battle\\CollectBattleTarger": {
+      "time": 1781235117983.079,
+      "uuid": "52a8d136-4163-46ef-85dd-c7de7bcb94b4"
+    },
+    "Script\\functionS\\ShoppIng\\Buy": {
+      "time": 1781235118324.7014,
+      "uuid": "80957475-8d30-4821-bdd8-cba4b0292b00"
+    },
+    "Script\\functionS\\ShoppIng\\ShopEvent": {
+      "time": 1780287689910.4436,
+      "uuid": "70d606b0-b3ae-4d9e-bfe8-33add2df3c15"
+    },
+    "Script\\functionS\\SkAnim\\SequenceFrameAnim": {
+      "time": 1781235118381.288,
+      "uuid": "85f50bd8-10f4-4f0c-9862-7f830468db0b"
+    },
+    "Script\\functionS\\UI\\GameOver": {
+      "time": 1781235118406.6748,
+      "uuid": "21b02b8e-20f1-4b17-9c4a-fc175d815deb"
+    },
+    "GameRes\\1219\\Scene\\Eff\\light": {
+      "time": 1781235113042.608,
+      "uuid": "517acd34-ce68-4409-b685-b9e248918513"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu": {
+      "time": 1781235113222.0962,
+      "uuid": "72bf1262-2a8c-4305-b11c-10453232b485"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\jg-gj": {
+      "time": 1781235113236.8005,
+      "uuid": "cc82a55d-6d43-452a-8ab8-b5efcd792ebd"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu": {
+      "time": 1781235113419.9182,
+      "uuid": "2669eb55-3a3f-4d80-9e17-634ddf64bcc4"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat": {
+      "time": 1781235114093.999,
+      "uuid": "3d867b7d-b6ad-4c67-af4c-72b3635a2d84"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex": {
+      "time": 1781235114138.1655,
+      "uuid": "473912b9-0b5a-4d49-965b-e1c9793ed66d"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat": {
+      "time": 1781235114237.981,
+      "uuid": "4b7a18d9-c6e5-42fa-a650-5c052931bf94"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex": {
+      "time": 1781235114291.2805,
+      "uuid": "0a48c589-2506-41bf-b7e7-52f775a3b183"
+    },
+    "GameRes\\Effect\\propLight\\FX\\Fab": {
+      "time": 1781235114329.621,
+      "uuid": "706d3b96-35e0-4b4a-a260-c889e06bf935"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material": {
+      "time": 1781235114404.4055,
+      "uuid": "b958147a-630a-4513-881b-b060b76f18c1"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Texture": {
+      "time": 1781235114451.565,
+      "uuid": "d43c3ac9-2790-4232-a576-ced3440952cd"
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Attack2D": {
+      "time": 1781235117770.4353,
+      "uuid": "8f50cc6b-7eca-4cea-a1d8-188420bc0cb0"
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Bullet": {
+      "time": 1781235117794.8545,
+      "uuid": "08461181-fd71-4c5f-9c5b-77d796f09ed4"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Attack3D": {
+      "time": 1781235117899.3062,
+      "uuid": "9dc1b926-0e3b-4f26-b5f2-71f3d963e326"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Bullet": {
+      "time": 1781235117919.782,
+      "uuid": "6c2886a7-2ef3-4ce2-9acf-9a6d2995dfb5"
+    },
+    "GameRes\\shader\\chunks\\ocean-caustics.chunk": {
+      "time": 1780287688908.5251,
+      "uuid": "e5283bb0-6e90-4635-9817-94ea476c2ddf"
+    },
+    "GameRes\\shader\\chunks\\ocean-foam.chunk": {
+      "time": 1780287688909.521,
+      "uuid": "bf58c31f-e788-436d-b391-012e8a4a598f"
+    },
+    "GameRes\\shader\\chunks\\ocean-lighting.chunk": {
+      "time": 1780287688910.5186,
+      "uuid": "a74fc0ab-456b-47e4-b4f4-005dd2664f2e"
+    },
+    "GameRes\\shader\\chunks\\ocean-waves.chunk": {
+      "time": 1780287688911.5156,
+      "uuid": "a5beae43-77f6-4d07-8863-5a04802edab0"
+    },
+    "GameRes\\shader\\chunks\\outline-fs.chunk": {
+      "time": 1780287688918.5842,
+      "uuid": "2381fce6-3e02-4568-85bb-34bd5217f10e"
+    },
+    "GameRes\\shader\\chunks\\outline-vs.chunk": {
+      "time": 1780287688929.5762,
+      "uuid": "b4641e0a-eba0-4569-8c96-570eef87de5c"
+    },
+    "GameRes\\shader\\chunks\\OutLineParmas.chunk": {
+      "time": 1780287688902.541,
+      "uuid": "a665cdc7-13f6-4636-ae20-52b1e1ce60af"
+    },
+    "GameRes\\shader\\builtin-standard_GRAY.effect": {
+      "time": 1780287688882.83,
+      "uuid": "6b7e860b-8ba2-45ae-b130-63eea1f9e208"
+    },
+    "GameRes\\shader\\dissolve_effect.effect": {
+      "time": 1780287688960.8213,
+      "uuid": "dcec5269-8db4-45db-af9d-8b2a0684144d"
+    },
+    "GameRes\\shader\\Glow_Effect.effect": {
+      "time": 1780287688867.2083,
+      "uuid": "2b86cc04-9a59-4bff-bb1a-eeb1ec63a97c"
+    },
+    "GameRes\\shader\\ocean_realistic.effect": {
+      "time": 1780287688960.8213,
+      "uuid": "eb9cc796-e90c-4759-a0c4-a04ce69a4ae7"
+    },
+    "GameRes\\shader\\ocean_realistic_v2.effect": {
+      "time": 1780287688960.8213,
+      "uuid": "2571894f-70de-47da-8208-24c0a95023ed"
+    },
+    "GameRes\\shader\\outLight.effect": {
+      "time": 1781231241676.021,
+      "uuid": "99dfb14b-3bcc-4744-8576-86bcabd9de45"
+    },
+    "GameRes\\shader\\standard-diss-glow-outline.effect": {
+      "time": 1780287688976.4436,
+      "uuid": "6b44536c-b1b6-4add-b243-c1655413c793"
+    },
+    "GameRes\\shader\\standard-outline.effect": {
+      "time": 1780287688976.4436,
+      "uuid": "18566a16-1883-406e-8e5c-f662ca9409f8"
+    },
+    "GameRes\\shader\\standard-outline_GRAY.effect": {
+      "time": 1780287688992.0618,
+      "uuid": "289690fc-1d11-4d60-bc8b-6530b3bfa62f"
+    },
+    "GameRes\\shader\\toon_diss_glow_outline.effect": {
+      "time": 1780287689007.685,
+      "uuid": "6f88dd73-a218-4f4a-8d53-a13135a2866a"
+    },
+    "GameRes\\shader\\toon_GRAY.effect": {
+      "time": 1780287688992.0618,
+      "uuid": "2c9c2681-b8db-4786-bf04-0ca447710be4"
+    },
+    "GameRes\\shader\\TranslucentGrid.effect": {
+      "time": 1780287688882.83,
+      "uuid": "6f2d1256-2414-4d32-8ae5-ea506ef6e810"
+    },
+    "GameRes\\DJBT_map\\mat\\builtin-standard-water.effect": {
+      "time": 1780287687023.1978,
+      "uuid": "6a4ab442-3da7-4426-96c7-f628a1416a22"
+    },
+    "GameRes\\DJBT_map\\mat\\Shader_Water.effect": {
+      "time": 1780287687023.1978,
+      "uuid": "cd8b6824-0576-48cb-af48-79e0c83536e9"
+    },
+    "GameRes\\Environment\\Mat\\builtin-standard-water.effect": {
+      "time": 1780287687648.4883,
+      "uuid": "3b4c940c-a8b8-446e-b554-14457c48b288"
+    },
+    "GameRes\\Environment\\Mat\\Shader_Water.effect": {
+      "time": 1780287687648.4883,
+      "uuid": "cf33035a-7405-4c8c-9699-c1ee782e41b6"
+    },
+    "scene0002.scene": {
+      "time": 1780287690132.2834,
+      "uuid": "ec7f7bf7-0fd0-4eeb-85c1-47f28682aeeb"
+    },
+    "项目功能完整说明文档.md": {
+      "time": 1780287690132.2834,
+      "uuid": "d19666f0-6b73-4103-a8a8-d2d1f39c4e49"
+    },
+    "GameRes\\17.27": {
+      "time": 1781235113054.6553,
+      "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
+    },
+    "Scene\\Game_3D-002.scene": {
+      "time": 1781235100448.4592,
+      "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
+    },
+    "Scene\\Game_3D-003.scene": {
+      "time": 1781231241718.0942,
+      "uuid": "309086be-d835-4cda-b365-599529f3acbe"
+    },
+    "GameRes\\Anim\\Anim_hand.anim": {
+      "time": 1780287686914.2603,
+      "uuid": "bbb48c40-318f-4f04-842a-0390928c0411"
+    },
+    "GameRes\\Anim\\Anim_loadIng.anim": {
+      "time": 1781231239240.3926,
+      "uuid": "a595e5eb-0769-47a1-9463-431576dc5e39"
+    },
+    "GameRes\\Anim\\Anim_Lose.anim": {
+      "time": 1780287686914.2603,
+      "uuid": "cf397f64-ad36-4d7b-9a31-eebd2f278290"
+    },
+    "GameRes\\Anim\\Anim_win.anim": {
+      "time": 1780287686914.2603,
+      "uuid": "8e09a2d7-56b3-4568-85d6-2dbb0282677f"
+    },
+    "GameRes\\Font\\Roundfont.ttf": {
+      "time": 1780287688054.9597,
+      "uuid": "d8b780dd-5fb2-4fb7-8373-e274964bc306"
+    },
+    "GameRes\\Image\\图层 1 拷贝.png": {
+      "time": 1780287688367.9255,
+      "uuid": "193f8647-b8b4-42d4-9a69-a525d853a987"
+    },
+    "GameRes\\Image\\图层 11.png": {
+      "time": 1780287688368.9233,
+      "uuid": "ece63a52-0b21-432c-a88b-da288c555960"
+    },
+    "GameRes\\Mat\\Mat_2D-001.mtl": {
+      "time": 1780287688382.959,
+      "uuid": "f98437b4-4680-4f47-b90d-a0c7b826005b"
+    },
+    "GameRes\\Mat\\Mat_2D.mtl": {
+      "time": 1780287688398.582,
+      "uuid": "dea19d00-1fd6-4699-a3f7-2c8aae96e8cb"
+    },
+    "GameRes\\Mat\\Monster.mtl": {
+      "time": 1780287688398.582,
+      "uuid": "58880e11-eefe-4562-a336-56560137f3e5"
+    },
+    "GameRes\\Material\\GuideLine.mtl": {
+      "time": 1780287688414.23,
+      "uuid": "65b489dd-3f40-490c-bce5-3a6a7b9b6729"
+    },
+    "GameRes\\Material\\UI_2D.mtl": {
+      "time": 1780287688429.8518,
+      "uuid": "4e3e112c-62c3-4ab6-99d0-d9339458e6e0"
+    },
+    "GameRes\\Prefab\\GuideLine.prefab": {
+      "time": 1780287688523.1948,
+      "uuid": "8f687ae9-f5b3-4c5d-9170-5014aa2c3c84"
+    },
+    "GameRes\\Prefab\\Monster.prefab": {
+      "time": 1780287688523.1948,
+      "uuid": "690bac2b-2534-4d7a-b00e-a339a3d7796d"
+    },
+    "GameRes\\Prefab\\Monster_0.prefab": {
+      "time": 1781231241031.5652,
+      "uuid": "32cdc417-d225-4c93-bc55-2cc97b66bb81"
+    },
+    "GameRes\\Prefab\\Monster_1.prefab": {
+      "time": 1781231241031.5652,
+      "uuid": "31a7d71c-dbfe-4ce3-920b-07a58fd2c910"
+    },
+    "GameRes\\Prefab\\Monster_boss.prefab": {
+      "time": 1781231241032.5625,
+      "uuid": "d16848b5-18b3-400e-8cad-f629e5124e7c"
+    },
+    "GameRes\\Prefab\\Prop_Brand.prefab": {
+      "time": 1781231241034.0688,
+      "uuid": "0138029d-bfaa-4d43-aa1c-63b3be01e8e5"
+    },
+    "GameRes\\Prefab\\Prop_Brand_2.prefab": {
+      "time": 1781231241035.064,
+      "uuid": "09f7d7d0-5529-499d-8bbb-e3e6a9394677"
+    },
+    "GameRes\\Prefab\\Role.prefab": {
+      "time": 1780287688538.789,
+      "uuid": "8d8c8972-548e-4871-9402-0815207b5c60"
+    },
+    "GameRes\\Prefab\\Role_0.prefab": {
+      "time": 1780287688538.789,
+      "uuid": "ac6eb507-f8e3-437a-8986-b7b34e4f6c5e"
+    },
+    "GameRes\\Prefab\\Role_1.prefab": {
+      "time": 1781231241036.3477,
+      "uuid": "f96153eb-6f89-4aad-b84b-808954761c02"
+    },
+    "GameRes\\Prefab\\Role_2.prefab": {
+      "time": 1781231241037.3428,
+      "uuid": "799add5f-4370-4ee6-b0a4-aca1ebcd06a3"
+    },
+    "GameRes\\Prefab\\tire.prefab": {
+      "time": 1780287688538.789,
+      "uuid": "b836b03f-f23c-4801-87e2-8742f0f6477c"
+    },
+    "GameRes\\Prefabs\\GameOverPanel.prefab": {
+      "time": 1781231241058.5945,
+      "uuid": "f2d57ce1-7cab-48c2-9b0d-2efc33f4c47e"
+    },
+    "GameRes\\Prefabs\\HpGreen.prefab": {
+      "time": 1780287688592.749,
+      "uuid": "30cd7eb3-1c98-49b9-bf05-884296181ef8"
+    },
+    "GameRes\\Prefabs\\loading.prefab": {
+      "time": 1781231241065.9792,
+      "uuid": "85451143-4e29-4add-aec1-eec95efd2b0e"
+    },
+    "GameRes\\Rocker\\img_rocker_0.png": {
+      "time": 1780287688617.4065,
+      "uuid": "e2e3e8d1-37d6-48e7-a135-2241a772190f"
+    },
+    "GameRes\\Rocker\\img_rocker_1.png": {
+      "time": 1780287688648.6777,
+      "uuid": "d8f83505-8f07-4727-8042-6e4adaf03bdb"
+    },
+    "GameRes\\Rocker\\RockerAnim.anim": {
+      "time": 1780287688617.4065,
+      "uuid": "6889e32d-f9ce-435e-9639-73129df1cac2"
+    },
+    "GameRes\\shader\\640.webp": {
+      "time": 1780287688851.5894,
+      "uuid": "22288457-61e0-46d9-acf6-95660a35f123"
+    },
+    "GameRes\\shader\\material.mtl": {
+      "time": 1781231241673.5112,
+      "uuid": "1594d569-5fd8-4c03-81df-8996298cb0ca"
+    },
+    "GameRes\\shader\\ocean_realistic.mtl": {
+      "time": 1781231241675.0151,
+      "uuid": "d3dbdd89-bce8-43ec-9708-17fd28f6efdb"
+    },
+    "GameRes\\shader\\ocean_realistic_v2.mtl": {
+      "time": 1780287688960.8213,
+      "uuid": "6a8cd156-886e-4184-bb36-b1c65ccc329c"
+    },
+    "resources\\Sound\\bgm.mp3": {
+      "time": 1780287690101.5012,
+      "uuid": "d9b0a8bb-bf1c-4814-8c31-c104a082c60a"
+    },
+    "resources\\Sound\\lose_music.mp3": {
+      "time": 1780287690101.5012,
+      "uuid": "b56d0bca-ff4c-4902-acc7-b66af7c8e883"
+    },
+    "resources\\Sound\\Sound_boss_attack.mp3": {
+      "time": 1780287690101.5012,
+      "uuid": "56d52346-f861-403d-a527-d6dffc2ded9b"
+    },
+    "resources\\Sound\\Sound_boss_die.mp3": {
+      "time": 1780287690101.5012,
+      "uuid": "25166a3f-be0b-4268-a944-53f03d6d0bf4"
+    },
+    "resources\\Sound\\Sound_downST.mp3": {
+      "time": 1780287690101.5012,
+      "uuid": "ef4bcb16-89f6-473f-9457-7fa5cd05d7be"
+    },
+    "resources\\Sound\\Sound_FireGun.mp3": {
+      "time": 1780287690039.016,
+      "uuid": "07c69e78-4f59-46bf-8085-ea93541b51bf"
+    },
+    "resources\\Sound\\Sound_Gun.mp3": {
+      "time": 1780287690054.666,
+      "uuid": "fda7e2c0-f3e4-4356-b173-c15025365e5b"
+    },
+    "resources\\Sound\\sound_met_die.mp3": {
+      "time": 1780287690118.3218,
+      "uuid": "6e45eab1-c0dc-433b-af88-46052a2adb3c"
+    },
+    "resources\\Sound\\Sound_Monster_Die.mp3": {
+      "time": 1780287690070.286,
+      "uuid": "4078c4cc-d108-493c-b959-3aafb9fab5c3"
+    },
+    "resources\\Sound\\Sound_Monster_Hit.mp3": {
+      "time": 1780287690070.286,
+      "uuid": "e349a6a9-8256-4143-bc88-e508824ef0c1"
+    },
+    "resources\\Sound\\Sound_PlaceGold.mp3": {
+      "time": 1780287690085.879,
+      "uuid": "bfbb7042-265d-401d-92bd-a5ce4486d931"
+    },
+    "resources\\Sound\\Sound_Ship_UpLevel.mp3": {
+      "time": 1780287690085.879,
+      "uuid": "8981b351-c252-40d6-8b66-a26a72ae55f4"
+    },
+    "resources\\Sound\\Sound_tire_hit.mp3": {
+      "time": 1780287690101.5012,
+      "uuid": "a38c216e-f965-4573-a94d-0ac9fd3ed083"
+    },
+    "resources\\Sound\\win_music.mp3": {
+      "time": 1780287690125.2744,
+      "uuid": "98ed4bea-d9d8-4d5f-8090-4daef727eb3e"
+    },
+    "Script\\Base\\AudioManager.ts": {
+      "time": 1781231241753.6729,
+      "uuid": "fd17f062-881f-41a5-a1eb-4f8151149b53"
+    },
+    "Script\\Base\\CameraMove.ts": {
+      "time": 1780287689070.6526,
+      "uuid": "df21d7c0-057f-42d0-99ac-f0c9a1c670d6"
+    },
+    "Script\\Base\\EnumList.ts": {
+      "time": 1780287689070.6526,
+      "uuid": "49e180d9-1509-4993-b800-4940b178b63d"
+    },
+    "Script\\Base\\EventManager.ts": {
+      "time": 1780287689070.6526,
+      "uuid": "766e78e8-765f-4dbc-90f5-35508a4641ff"
+    },
+    "Script\\Base\\LayerManager.ts": {
+      "time": 1780287689070.6526,
+      "uuid": "d0985bd0-e138-4615-b805-a38923e6194b"
+    },
+    "Script\\Base\\PoolManager.ts": {
+      "time": 1780287689117.517,
+      "uuid": "d7997931-d633-4991-8104-5260d342fbee"
+    },
+    "Script\\Base\\PrefabsManager.ts": {
+      "time": 1780287689135.3032,
+      "uuid": "a29e6a86-d980-4d4a-9a2d-b68c9f5fbfc9"
+    },
+    "Script\\Base\\Singleton.ts": {
+      "time": 1780287689136.2734,
+      "uuid": "3d2373bc-112c-490a-899f-7491814b2670"
+    },
+    "Script\\Base\\UnityUpComponent.ts": {
+      "time": 1780287689163.9194,
+      "uuid": "f0f4e5a3-06ce-4d64-8b9c-dde813391bac"
+    },
+    "Script\\Tool\\Index.ts": {
+      "time": 1780287689195.1619,
+      "uuid": "e175eb12-8615-4c57-9375-71a331ab92d9"
+    },
+    "Script\\Tool\\TweenTool.ts": {
+      "time": 1780287689195.1619,
+      "uuid": "7d9d1c54-738f-483f-8f82-8fab60b75f28"
+    },
+    "Script\\Tween\\tweener-cheat-sheet.png": {
+      "time": 1780287689250.3162,
+      "uuid": "bb652aad-a1e4-4d80-af8c-eb83bfbc6846"
+    },
+    "Script\\Tween\\TweenExamples.md": {
+      "time": 1780287689210.7837,
+      "uuid": "9c95a587-279d-41ae-8265-644f4b5c5ecb"
+    },
+    "Script\\Tween\\TweenReadMe.md": {
+      "time": 1780287689226.4302,
+      "uuid": "2b7df82f-4643-48a7-a0f9-b67d2883b9d0"
+    },
+    "GameRes\\DJBT_map\\fbx\\beizhenmen01.fbx": {
+      "time": 1780287686960.7107,
+      "uuid": "982fdbd7-08e1-41e7-9cc3-718cf0152d36"
+    },
+    "GameRes\\DJBT_map\\fbx\\DJBT_dangban_01.fbx": {
+      "time": 1781231239312.2754,
+      "uuid": "a5876ec0-50c8-4dcc-9c9c-49ee75282744"
+    },
+    "GameRes\\DJBT_map\\fbx\\DJBT_langan_01.fbx": {
+      "time": 1780287686958.6504,
+      "uuid": "326c21a7-5045-4e8c-b7ec-39b2f56cd152"
+    },
+    "GameRes\\DJBT_map\\fbx\\DJBT_qiao_01.fbx": {
+      "time": 1781231239314.3066,
+      "uuid": "bd1e91e4-1c8d-4703-8492-cf658e13e8e9"
+    },
+    "GameRes\\DJBT_map\\fbx\\DJBT_shiban_01.fbx": {
+      "time": 1780287686960.7107,
+      "uuid": "9a96fc79-fcf2-4e2d-946e-0dca53a468fb"
+    },
+    "GameRes\\DJBT_map\\fbx\\luntai01_01.fbx": {
+      "time": 1780287686960.7107,
+      "uuid": "ac885820-eb24-4333-bd15-351ec5c28de6"
+    },
+    "GameRes\\DJBT_map\\fbx\\SM_robot_01.fbx": {
+      "time": 1780287686960.7107,
+      "uuid": "e76c3f98-2be2-4e00-81c7-f9aa9699e9a6"
+    },
+    "GameRes\\DJBT_map\\fbx\\yinying.fbx": {
+      "time": 1781231239316.3025,
+      "uuid": "afc1e48c-0091-4e75-acf9-68ac0e7c0bde"
+    },
+    "GameRes\\DJBT_map\\mat\\beizhenmen01_huang.mtl": {
+      "time": 1780287687023.1978,
+      "uuid": "81266e09-8b67-40ba-8c32-369d9f124fd9"
+    },
+    "GameRes\\DJBT_map\\mat\\beizhenmen01_lan.mtl": {
+      "time": 1780287687023.1978,
+      "uuid": "7e90093d-1c1a-4c56-8364-41128c59a42f"
+    },
+    "GameRes\\DJBT_map\\mat\\liewen-001.mtl": {
+      "time": 1781231239507.83,
+      "uuid": "55a052c4-dbad-4acd-8faf-ade16a9d4a0a"
+    },
+    "GameRes\\DJBT_map\\mat\\liewen.mtl": {
+      "time": 1781231239509.8264,
+      "uuid": "b46f5d80-b298-4ee3-b55f-04cf6ba54a87"
+    },
+    "GameRes\\DJBT_map\\mat\\luntai01_01.mtl": {
+      "time": 1780287687023.1978,
+      "uuid": "c79d9585-fd6d-4b7f-a246-98b7350bd89c"
+    },
+    "GameRes\\DJBT_map\\mat\\M_dangban_01.mtl": {
+      "time": 1780287687007.577,
+      "uuid": "fc9d49d8-ba55-41f9-9b0b-d7c74c55e9d3"
+    },
+    "GameRes\\DJBT_map\\mat\\M_mlyz_01.mtl": {
+      "time": 1780287687007.577,
+      "uuid": "878dea73-e3e0-4fa7-bb8b-a4fa5e0e07d3"
+    },
+    "GameRes\\DJBT_map\\mat\\M_qiao_01.mtl": {
+      "time": 1781235100230.5789,
+      "uuid": "c2aaab69-96de-4321-a4f1-2a5cc5ca4fdf"
+    },
+    "GameRes\\DJBT_map\\mat\\M_qiao_03.mtl": {
+      "time": 1781231239504.4678,
+      "uuid": "cb382567-9951-4923-ae47-16b864529b75"
+    },
+    "GameRes\\DJBT_map\\mat\\M_qiao_langan_01.mtl": {
+      "time": 1781231239506.6853,
+      "uuid": "e9773f04-54f5-4eeb-a2da-a494fb963e22"
+    },
+    "GameRes\\DJBT_map\\mat\\M_shiban_01.mtl": {
+      "time": 1781231239506.8923,
+      "uuid": "195a1b86-f57e-4d07-af1b-3f836083249a"
+    },
+    "GameRes\\DJBT_map\\mat\\qiaoliang01_01.mtl": {
+      "time": 1780287687023.1978,
+      "uuid": "f46a2487-e479-4716-b8eb-7daa599f5c11"
+    },
+    "GameRes\\DJBT_map\\mat\\SM_robot_01.mtl": {
+      "time": 1780287687007.577,
+      "uuid": "e0222792-1620-46fa-9c4f-ea969b954977"
+    },
+    "GameRes\\DJBT_map\\mat\\spTo3D-material.mtl": {
+      "time": 1780287687023.1978,
+      "uuid": "3ad2b178-466a-44a7-9764-346b7c6fbc5d"
+    },
+    "GameRes\\DJBT_map\\mat\\water-001.mtl": {
+      "time": 1780287687023.1978,
+      "uuid": "b317da22-e4e1-4c90-b51d-6aa7bc18e54d"
+    },
+    "GameRes\\DJBT_map\\mat\\water.mtl": {
+      "time": 1780287687023.1978,
+      "uuid": "096f8e98-af7e-491e-80c0-80ef90a131cc"
+    },
+    "GameRes\\DJBT_map\\mat\\yinying.mtl": {
+      "time": 1781231239510.8242,
+      "uuid": "e410c191-ff39-4573-9d85-3dfcba3b155a"
+    },
+    "GameRes\\DJBT_map\\pro\\DJBT_map.prefab": {
+      "time": 1780287687038.8196,
+      "uuid": "22dfe303-8284-4807-ba7c-1b31f4b70dc5"
+    },
+    "GameRes\\DJBT_map\\pro\\DJBT_qiao_01.prefab": {
+      "time": 1781231239521.8743,
+      "uuid": "f662e3c5-87ed-44be-8d8e-dc1a26ed1272"
+    },
+    "GameRes\\DJBT_map\\tex\\beizengmen01.png": {
+      "time": 1780287687133.103,
+      "uuid": "28ca28a1-4e55-452a-b636-dad659c2ba46"
+    },
+    "GameRes\\DJBT_map\\tex\\Bowen_W.PNG": {
+      "time": 1780287687117.4807,
+      "uuid": "d2c9a906-e79b-44bb-a570-3fbb7d7aa15c"
+    },
+    "GameRes\\DJBT_map\\tex\\Landscape_city_10.png": {
+      "time": 1780287687117.4807,
+      "uuid": "6464220d-a1d5-4f9e-9d56-38281362fd8d"
+    },
+    "GameRes\\DJBT_map\\tex\\liefeng.png": {
+      "time": 1781231239597.5454,
+      "uuid": "68c8b667-a35d-4716-ba3f-d930f6b0821c"
+    },
+    "GameRes\\DJBT_map\\tex\\liefeng_01.png": {
+      "time": 1781231239599.541,
+      "uuid": "9eb76989-dc0d-45a9-b104-f09c7cdd0e26"
+    },
+    "GameRes\\DJBT_map\\tex\\luntai01_D.jpg": {
+      "time": 1780287687133.103,
+      "uuid": "b7f12e03-7c47-46f2-ba4c-86ba9a484716"
+    },
+    "GameRes\\DJBT_map\\tex\\sky.jpg": {
+      "time": 1780287687133.103,
+      "uuid": "abf9fc2d-30b1-4322-8252-d2a817bc30a2"
+    },
+    "GameRes\\DJBT_map\\tex\\T_langan_01.jpg": {
+      "time": 1780287687117.4807,
+      "uuid": "937ccd78-68c9-44b6-915e-32722bd41c36"
+    },
+    "GameRes\\DJBT_map\\tex\\T_qiao_01_ao.jpg": {
+      "time": 1780287687117.4807,
+      "uuid": "4d65f42c-8c92-4837-aae4-28f834150cf2"
+    },
+    "GameRes\\DJBT_map\\tex\\T_qiao_01_d.jpg": {
+      "time": 1781235100281.9912,
+      "uuid": "14b5a011-290c-4251-b35f-bec32fc58382"
+    },
+    "GameRes\\DJBT_map\\tex\\T_qiao_01_n.jpg": {
+      "time": 1780287687117.4807,
+      "uuid": "08075244-6601-49b1-8099-38b4b84d80b8"
+    },
+    "GameRes\\DJBT_map\\tex\\T_shiban_01_ao.png": {
+      "time": 1780287687117.4807,
+      "uuid": "6652108b-c630-4693-9754-bc9348c93d98"
+    },
+    "GameRes\\DJBT_map\\tex\\T_shiban_01_d.png": {
+      "time": 1780287687133.103,
+      "uuid": "3c4fc7ee-0847-4cd5-bdd0-45e87d810f68"
+    },
+    "GameRes\\DJBT_map\\tex\\T_xht_01_albedo.jpg": {
+      "time": 1781231239593.9102,
+      "uuid": "47531653-44f0-40d6-928b-17fedff9ae80"
+    },
+    "GameRes\\DJBT_map\\tex\\T_xht_01_ao2.jpg": {
+      "time": 1781231239595.99,
+      "uuid": "802d7aee-8813-4d4a-8ec0-205ca8c52a3e"
+    },
+    "GameRes\\DJBT_map\\tex\\Water01_foam_mask.png": {
+      "time": 1780287687133.103,
+      "uuid": "0d346d61-6562-4160-9fce-d4a47f56d6c0"
+    },
+    "GameRes\\DJBT_map\\tex\\Water01_n.png": {
+      "time": 1780287687133.103,
+      "uuid": "08febe36-022c-4ca1-b568-28f760d111e0"
+    },
+    "GameRes\\DJBT_map\\tex\\water03.jpg": {
+      "time": 1780287687133.103,
+      "uuid": "07cc6b4c-5d3c-4d3e-8bcf-8af824bac77d"
+    },
+    "GameRes\\DJBT_map\\tex\\water04.png": {
+      "time": 1780287687133.103,
+      "uuid": "33aea521-eff2-482d-997a-9bc1d5ea3476"
+    },
+    "GameRes\\DJBT_map\\tex\\water_D.jpg": {
+      "time": 1780287687133.103,
+      "uuid": "1952f1cf-3e18-404f-8a39-c99f1c2bbbdd"
+    },
+    "GameRes\\DJBT_map\\tex\\yingying.png": {
+      "time": 1780287687133.103,
+      "uuid": "aa89680d-40b4-4269-90ea-c4f45cd11c63"
+    },
+    "GameRes\\Effect\\fab\\baozha-.prefab": {
+      "time": 1780287687227.0972,
+      "uuid": "72ce292c-65fb-4136-a645-1c4c08a68cc7"
+    },
+    "GameRes\\Effect\\fab\\men.prefab": {
+      "time": 1780287687227.0972,
+      "uuid": "289a414f-8e4b-4d81-b760-72d9013ee799"
+    },
+    "GameRes\\Effect\\fab\\nujian-bd.prefab": {
+      "time": 1780287687227.0972,
+      "uuid": "aa3d3fdc-214f-4f3d-8f6b-fc611a93cede"
+    },
+    "GameRes\\Effect\\fab\\qh-001.prefab": {
+      "time": 1780287687227.0972,
+      "uuid": "d8076440-ef47-4d75-901b-ee91a400e94c"
+    },
+    "GameRes\\Effect\\fab\\qh.prefab": {
+      "time": 1780287687227.0972,
+      "uuid": "faa22f04-725e-4055-8b62-36df2433e7ec"
+    },
+    "GameRes\\Effect\\fab\\qianghuo-buqiang.prefab": {
+      "time": 1780287687227.0972,
+      "uuid": "840b2c11-e17e-4ef9-9697-3be7c862b78f"
+    },
+    "GameRes\\Effect\\fab\\shengji.prefab": {
+      "time": 1780287687227.0972,
+      "uuid": "d4e35cfc-bccc-44da-a862-9531b7c1dda1"
+    },
+    "GameRes\\Effect\\fab\\ss.prefab": {
+      "time": 1781231239612.0342,
+      "uuid": "ac9ad6bb-eec4-4420-9650-717c4a7d5140"
+    },
+    "GameRes\\Effect\\fab\\xue.prefab": {
+      "time": 1780287687227.0972,
+      "uuid": "c2f82c75-5ebc-4e16-a3e5-be2431d23e47"
+    },
+    "GameRes\\Effect\\qh\\002635eg02izlx9s29xd59.png": {
+      "time": 1780287687502.2422,
+      "uuid": "ce6ba46d-f814-4a93-aa2d-473f2eff10c3"
+    },
+    "GameRes\\Effect\\qh\\b8549c638f53cd243225c8c23e3191e3ae292ce14bef-Qt8wvR_fw1200.png": {
+      "time": 1780287687503.24,
+      "uuid": "51100177-1acc-4b62-9207-69be1eedd3e1"
+    },
+    "GameRes\\Effect\\qh\\baodian-001.mtl": {
+      "time": 1780287687504.237,
+      "uuid": "ad1ef5a2-f2ef-4529-8b31-0804a5b1e21c"
+    },
+    "GameRes\\Effect\\qh\\baodian.mtl": {
+      "time": 1780287687505.2346,
+      "uuid": "d5fc3e60-93d2-4147-b99c-e8bcf8db7d44"
+    },
+    "GameRes\\Effect\\qh\\cloul-001.mtl": {
+      "time": 1780287687506.2314,
+      "uuid": "93be6cde-8b65-46b8-86cf-9ba8632d5ec0"
+    },
+    "GameRes\\Effect\\qh\\cloul.mtl": {
+      "time": 1780287687507.2288,
+      "uuid": "a26cf025-ed12-4889-866d-75b9532f4e9b"
+    },
+    "GameRes\\Effect\\qh\\d77160d88d227ad681e9f91f3510799cb3bb346514505-FSDhpo.png": {
+      "time": 1780287687508.3645,
+      "uuid": "16c750c4-2bc9-42b5-9c3d-773e758bfd33"
+    },
+    "GameRes\\Effect\\qh\\e7a6425ec0bca3388ed2383c4cc84116d25cb68739c9b-SifAef.png": {
+      "time": 1780287687508.3645,
+      "uuid": "e8d46ab7-8915-4d45-980c-d76a531453dc"
+    },
+    "GameRes\\Effect\\qh\\glow_00175_RM.png": {
+      "time": 1780287687508.3645,
+      "uuid": "71f11d67-1309-4ea0-8b60-7f1e60150830"
+    },
+    "GameRes\\Effect\\qh\\glow_wjf_014.png": {
+      "time": 1780287687523.9885,
+      "uuid": "4d71c90e-e958-401b-b6c0-87808e963cef"
+    },
+    "GameRes\\Effect\\qh\\km.mtl": {
+      "time": 1780287687523.9885,
+      "uuid": "68e790a0-a702-4606-aaa3-40d99c3f88d0"
+    },
+    "GameRes\\Effect\\qh\\s-001.mtl": {
+      "time": 1780287687523.9885,
+      "uuid": "540db0bc-a317-4234-87dd-c8d0bc20b538"
+    },
+    "GameRes\\Effect\\qh\\s.mtl": {
+      "time": 1780287687523.9885,
+      "uuid": "5c5267db-229c-4572-9294-35cef8332e2b"
+    },
+    "GameRes\\Effect\\qh\\smoke_CPxs_rmx_007.png": {
+      "time": 1780287687523.9885,
+      "uuid": "493aa1fb-19fc-463e-ac2c-61befbc7f177"
+    },
+    "GameRes\\Effect\\qh\\sssssssssssssssss-001.mtl": {
+      "time": 1781231239633.2666,
+      "uuid": "b5eeff04-e5f5-4289-8fb9-8e02e1808513"
+    },
+    "GameRes\\Effect\\qh\\sssssssssssssssss-002.mtl": {
+      "time": 1781231239635.587,
+      "uuid": "4c1b3c07-0998-4153-9618-141ccdc75700"
+    },
+    "GameRes\\Effect\\qh\\sssssssssssssssss.mtl": {
+      "time": 1781231239636.4153,
+      "uuid": "aadeec31-aaa7-4ef8-b1ca-e73d933dad4f"
+    },
+    "GameRes\\Effect\\qh2\\002635eg02izlx9s29xd59.png": {
+      "time": 1780287687555.23,
+      "uuid": "3250450a-c83f-4b86-9e0e-93d3c7fd029f"
+    },
+    "GameRes\\Effect\\qh2\\baodian-001.mtl": {
+      "time": 1780287687555.23,
+      "uuid": "c44275be-b535-4f0e-8a8f-0a78d5317a6d"
+    },
+    "GameRes\\Effect\\qh2\\baodian.mtl": {
+      "time": 1780287687555.23,
+      "uuid": "fa79550a-3022-4b6c-af42-56edc08e88b1"
+    },
+    "GameRes\\Effect\\qh2\\cloul.mtl": {
+      "time": 1780287687555.23,
+      "uuid": "25fdff95-1735-4365-adc8-e50c8e4df99f"
+    },
+    "GameRes\\Effect\\qh2\\d77160d88d227ad681e9f91f3510799cb3bb346514505-FSDhpo.png": {
+      "time": 1780287687555.23,
+      "uuid": "4e87890d-9d42-4d33-9064-bb3a41d75466"
+    },
+    "GameRes\\Effect\\qh2\\e7a6425ec0bca3388ed2383c4cc84116d25cb68739c9b-SifAef.png": {
+      "time": 1780287687555.23,
+      "uuid": "115d609a-7881-4b83-b902-b2a0e7b98fec"
+    },
+    "GameRes\\Effect\\qh2\\glow_00175_RM.png": {
+      "time": 1780287687570.8494,
+      "uuid": "4f28d64b-264f-4804-9f2a-7d9f1f31e3c8"
+    },
+    "GameRes\\Effect\\qh2\\glow_wjf_014.png": {
+      "time": 1780287687570.8494,
+      "uuid": "e05bafbb-4213-44d1-8fd0-1b764e14353d"
+    },
+    "GameRes\\Effect\\qh2\\qh.prefab": {
+      "time": 1780287687570.8494,
+      "uuid": "4b9f570b-90dd-4e4f-9c5b-67a057423a33"
+    },
+    "GameRes\\Effect\\qh2\\qh_up.prefab": {
+      "time": 1780287687570.8494,
+      "uuid": "abe468af-16db-4692-affc-7e1c16e95c22"
+    },
+    "GameRes\\Effect\\qh2\\s-001.mtl": {
+      "time": 1780287687570.8494,
+      "uuid": "4f8ffa8c-d917-47fe-b60f-1f8449ecdef7"
+    },
+    "GameRes\\Effect\\qh2\\s.mtl": {
+      "time": 1780287687570.8494,
+      "uuid": "794c5203-b075-4f7b-ad61-880197cfbf7b"
+    },
+    "GameRes\\Environment\\Fbx\\beizhenmen01.fbx": {
+      "time": 1780287687608.2344,
+      "uuid": "06ccd6bf-6c20-475e-a1e9-4769cec74cb6"
+    },
+    "GameRes\\Environment\\Fbx\\daqiao01_01.fbx": {
+      "time": 1780287687609.2324,
+      "uuid": "1fb70f2f-5995-44c7-8f0c-001dfdc0a132"
+    },
+    "GameRes\\Environment\\Fbx\\luntai01_01.fbx": {
+      "time": 1780287687611.227,
+      "uuid": "89fb2e90-6994-44be-bb80-7fcd40c7078b"
+    },
+    "GameRes\\Environment\\Fbx\\qiaoliang01_01.fbx": {
+      "time": 1780287687612.2234,
+      "uuid": "6170922e-f183-4802-9687-5b9ed652797a"
+    },
+    "GameRes\\Environment\\Fbx\\SM_robot_01.fbx": {
+      "time": 1780287687607.2368,
+      "uuid": "03457ef1-37ef-4e45-a8ba-2dfb3482af20"
+    },
+    "GameRes\\Environment\\Mat\\beizhenmen01_huang.mtl": {
+      "time": 1781235100374.0623,
+      "uuid": "23c4fd15-ed5c-4985-bb9b-da57952cde67"
+    },
+    "GameRes\\Environment\\Mat\\beizhenmen01_lan.mtl": {
+      "time": 1780287687648.4883,
+      "uuid": "af858f76-80d6-480e-92e9-5d1106503555"
+    },
+    "GameRes\\Environment\\Mat\\daqiao01_01.mtl": {
+      "time": 1780287687648.4883,
+      "uuid": "1d75f07a-ad30-424d-97d1-79b71bf33ca1"
+    },
+    "GameRes\\Environment\\Mat\\daqiao01_02.mtl": {
+      "time": 1780287687648.4883,
+      "uuid": "94e6d9ec-40d7-47df-a940-0165266757bb"
+    },
+    "GameRes\\Environment\\Mat\\luntai01_01.mtl": {
+      "time": 1781235100375.0676,
+      "uuid": "bd869bc3-cee5-4497-b488-b6c495639a9d"
+    },
+    "GameRes\\Environment\\Mat\\qiaoliang01_01.mtl": {
+      "time": 1780287687648.4883,
+      "uuid": "6461478f-69db-419e-bc06-821d63829a80"
+    },
+    "GameRes\\Environment\\Mat\\SM_robot_01.mtl": {
+      "time": 1781231239655.244,
+      "uuid": "400f48ef-cc6e-4c45-8f6b-a037badc0ec2"
+    },
+    "GameRes\\Environment\\Mat\\SM_robot_02.mtl": {
+      "time": 1781235100372.0671,
+      "uuid": "bb5a0bbd-1818-410e-8d02-a2343aedc7fa"
+    },
+    "GameRes\\Environment\\Mat\\spTo3D-material.mtl": {
+      "time": 1780287687648.4883,
+      "uuid": "d9ae9902-2a2e-4317-8ae1-83a0b679ab82"
+    },
+    "GameRes\\Environment\\Mat\\water-001.mtl": {
+      "time": 1780287687648.4883,
+      "uuid": "1133d150-ac52-4519-a90d-833999d978b3"
+    },
+    "GameRes\\Environment\\Mat\\water.mtl": {
+      "time": 1780287687648.4883,
+      "uuid": "04257d09-40ac-4fc5-9837-04a3a753c988"
+    },
+    "GameRes\\Environment\\Per\\daqiao01_01.prefab": {
+      "time": 1780287687679.7344,
+      "uuid": "6f256767-b299-4e03-9a43-f5a146b73e74"
+    },
+    "GameRes\\Environment\\Per\\LTTJ.prefab": {
+      "time": 1780287687679.7344,
+      "uuid": "4627cece-5784-4738-bb46-c1db8697131b"
+    },
+    "GameRes\\Environment\\Per\\luntai01_01.prefab": {
+      "time": 1780287687679.7344,
+      "uuid": "65affe68-8f21-48ed-a35b-1622aa4dc067"
+    },
+    "GameRes\\Environment\\Per\\qiaoliang01_01.prefab": {
+      "time": 1780287687679.7344,
+      "uuid": "87006dc5-4cd5-4ca7-a9c0-6ca6d5d1460a"
+    },
+    "GameRes\\Environment\\Tex\\beizengmen01.png": {
+      "time": 1780287687726.4282,
+      "uuid": "8442ed22-2fba-4e1f-ade4-aa62392ab5f9"
+    },
+    "GameRes\\Environment\\Tex\\Bowen_W.PNG": {
+      "time": 1780287687724.4023,
+      "uuid": "3824d61c-6dd3-4111-8da3-152750f30295"
+    },
+    "GameRes\\Environment\\Tex\\daqiao01_01.jpg": {
+      "time": 1780287687726.4282,
+      "uuid": "2292c620-6797-434f-ab58-08a3d8540931"
+    },
+    "GameRes\\Environment\\Tex\\daqiao01_02D.jpg": {
+      "time": 1780287687726.4282,
+      "uuid": "c408f5cd-7eb6-4ee4-9c24-dd017df1b4c0"
+    },
+    "GameRes\\Environment\\Tex\\daqiao01_02M.jpg": {
+      "time": 1780287687726.4282,
+      "uuid": "e6712196-25fb-49b7-b262-e5b905d1bdc2"
+    },
+    "GameRes\\Environment\\Tex\\daqiao01_02N.jpg": {
+      "time": 1780287687726.4282,
+      "uuid": "715bda89-52ec-4c2e-accb-e7463a97ee17"
+    },
+    "GameRes\\Environment\\Tex\\Landscape_city_10.png": {
+      "time": 1780287687725.3984,
+      "uuid": "dd955aad-9fb4-43f7-93d3-04f3ebdefbbb"
+    },
+    "GameRes\\Environment\\Tex\\luntai01_D.jpg": {
+      "time": 1780287687726.4282,
+      "uuid": "87d70ff7-4ebf-498f-bfd7-eb67fd697419"
+    },
+    "GameRes\\Environment\\Tex\\SM_robot_01_D.jpg": {
+      "time": 1780287687726.4282,
+      "uuid": "f930c461-a1e9-4d26-a882-001ecbec2419"
+    },
+    "GameRes\\Environment\\Tex\\SM_robot_02_D_2.jpg": {
+      "time": 1781231239670.667,
+      "uuid": "b0edef45-cc28-4310-b390-a3c9e316c1a3"
+    },
+    "GameRes\\Environment\\Tex\\Water01_foam_mask.png": {
+      "time": 1780287687726.4282,
+      "uuid": "250a5d99-4848-4e2c-a483-95f4f767c19f"
+    },
+    "GameRes\\Environment\\Tex\\Water01_n.png": {
+      "time": 1780287687726.4282,
+      "uuid": "d5f4b8f8-47e9-444d-bb79-89c9bee14f41"
+    },
+    "GameRes\\Environment\\Tex\\water03.jpg": {
+      "time": 1780287687726.4282,
+      "uuid": "2fab355e-6923-45c5-9c08-4307a3dc3ef9"
+    },
+    "GameRes\\Environment\\Tex\\water04.png": {
+      "time": 1780287687726.4282,
+      "uuid": "1e06fec1-8e00-4bd1-a57e-696235306e36"
+    },
+    "GameRes\\Environment\\Tex\\water_D.jpg": {
+      "time": 1780287687726.4282,
+      "uuid": "e51f2b8c-e993-4c63-8938-901ea4dfa8be"
+    },
+    "GameRes\\FBX\\Arms\\AK-001.mtl": {
+      "time": 1780287687757.6711,
+      "uuid": "36280121-26ae-4a8f-812b-7095d6e8f68b"
+    },
+    "GameRes\\FBX\\Arms\\AK.mtl": {
+      "time": 1780287687757.6711,
+      "uuid": "8015b4dc-d95e-4f81-b20e-c2b71afcce8e"
+    },
+    "GameRes\\FBX\\Arms\\AK.PNG": {
+      "time": 1780287687757.6711,
+      "uuid": "c798f61f-240a-4535-bbb9-e5c50c4a3de5"
+    },
+    "GameRes\\FBX\\Arms\\jiateling01.fbx": {
+      "time": 1781231239710.3123,
+      "uuid": "df892961-7da4-4f4d-8b24-7963cfcd3df7"
+    },
+    "GameRes\\FBX\\Arms\\jiateling01.jpg": {
+      "time": 1780287687757.6711,
+      "uuid": "6f775316-c88d-430c-8b8c-d75d0241fa70"
+    },
+    "GameRes\\FBX\\Arms\\jiateling01.mtl": {
+      "time": 1781231239726.056,
+      "uuid": "29cb620a-6a6f-4137-9526-751deb1882ad"
+    },
+    "GameRes\\FBX\\Arms\\jiateling01_N.jpg": {
+      "time": 1780287687757.6711,
+      "uuid": "edef3121-c42c-4f22-932c-4e3b1f2b0212"
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue-001.mtl": {
+      "time": 1780287687807.8362,
+      "uuid": "8879c864-8ca1-4cda-9717-1c4ca76c4e49"
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue.mtl": {
+      "time": 1780287687808.8318,
+      "uuid": "86121299-c6f8-40dc-9d7a-506ce7650f00"
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue_D.jpg": {
+      "time": 1780287687809.829,
+      "uuid": "970148a4-ffe6-4e24-9806-e8bd054ccd09"
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue_N.jpg": {
+      "time": 1780287687810.8264,
+      "uuid": "d4637f2a-5a2c-4582-9cd1-9108f4ab1ff1"
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue_skin.fbx": {
+      "time": 1780287687812.8213,
+      "uuid": "f6fb758b-ca27-49a3-9074-b55054373a42"
+    },
+    "GameRes\\FBX\\Hero_0\\攻击.fbx": {
+      "time": 1780287687813.819,
+      "uuid": "51d56256-92f6-45fa-b2db-367beed5cdd3"
+    },
+    "GameRes\\FBX\\Hero_0\\死亡.fbx": {
+      "time": 1780287687814.816,
+      "uuid": "6db01980-304b-413d-9e3a-2474df155af7"
+    },
+    "GameRes\\FBX\\Hero_0\\跑.fbx": {
+      "time": 1780287687816.8108,
+      "uuid": "44781d6b-42f6-43c4-8ab6-2696357c119b"
+    },
+    "GameRes\\FBX\\Hero_0\\跑攻击.fbx": {
+      "time": 1780287687817.808,
+      "uuid": "00747b8e-4572-4648-8258-ebc081c7d02a"
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang-001.mtl": {
+      "time": 1781231240149.1487,
+      "uuid": "cc1ba55d-5314-4c01-ba6d-b71fae6946a4"
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang.fbx": {
+      "time": 1781231240158.7742,
+      "uuid": "03189dd5-73dd-4e52-8644-1ff1a122b972"
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang.mtl": {
+      "time": 1781231240167.8757,
+      "uuid": "97875736-18f9-4cef-9a33-541d0698780f"
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang_D.jpg": {
+      "time": 1781231240168.6328,
+      "uuid": "2e320805-52f9-41c8-b0fc-1d93b5c2faa5"
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang_N.jpg": {
+      "time": 1780287687851.5256,
+      "uuid": "943e4f04-9a69-4477-a605-f38ae13fec12"
+    },
+    "GameRes\\FBX\\Hero_1\\举东西待机(xg)_2.fbx": {
+      "time": 1781231240169.6592,
+      "uuid": "ba379bbc-987c-4bbc-a296-3cabc67825bb"
+    },
+    "GameRes\\FBX\\Hero_1\\攻击.fbx": {
+      "time": 1780287687867.1477,
+      "uuid": "df302368-4b18-45eb-891f-3c73d8d276f7"
+    },
+    "GameRes\\FBX\\Hero_1\\死亡.fbx": {
+      "time": 1780287687867.1477,
+      "uuid": "3ea9dc04-56ca-4324-93eb-96ea09812d35"
+    },
+    "GameRes\\FBX\\Hero_1\\跑攻击.fbx": {
+      "time": 1780287687867.1477,
+      "uuid": "9f192ab3-942d-4cdc-916e-ca4ca8ce0c38"
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_0.mtl": {
+      "time": 1781231240316.7502,
+      "uuid": "11ec8ab1-b6a8-4a61-8013-e4c9eb94e965"
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_01_idle1.fbx": {
+      "time": 1781231240319.4478,
+      "uuid": "4d091a41-1051-4aa3-899b-6c614c37f3f1"
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_1.mtl": {
+      "time": 1781231240320.9521,
+      "uuid": "33158a4f-83b9-4f1c-baca-8c16a8fb8f6d"
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_2.mtl": {
+      "time": 1781231240321.9775,
+      "uuid": "a940ff9a-70dc-4bd5-91ca-f7badfe4f9ef"
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_3.mtl": {
+      "time": 1781231240324.173,
+      "uuid": "0be8fd33-e86d-424b-af22-996a79677903"
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_3_D.fbx": {
+      "time": 1781231240325.714,
+      "uuid": "e8aabdc2-bc10-4f97-95c0-c41ee701c0f1"
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_3_D.jpg": {
+      "time": 1781231240327.708,
+      "uuid": "4404460d-98f6-42ef-ad34-908d552842ad"
+    },
+    "GameRes\\FBX\\Hero_2\\Dz_01_ao.jpg": {
+      "time": 1781231240313.8555,
+      "uuid": "8a4b8293-cdb7-44f7-a8db-b8a486664ac2"
+    },
+    "GameRes\\FBX\\Hero_2\\Dz_01_n.jpg": {
+      "time": 1781231240314.755,
+      "uuid": "a9088b81-0674-4854-ade3-94c634d1d71c"
+    },
+    "GameRes\\FBX\\Hero_2\\dz_tou_02_d.jpg": {
+      "time": 1781231240330.0315,
+      "uuid": "db801395-488e-4bca-9812-6bb57978c10c"
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_01_skin_2.fbx": {
+      "time": 1781231240476.1006,
+      "uuid": "fed75016-e3cc-4c00-b479-b84368d1644c"
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_1_D.jpg": {
+      "time": 1781231240477.0947,
+      "uuid": "1a315c37-24d4-403b-a5d5-7af55efb26e7"
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_1_N.jpg": {
+      "time": 1781231240479.2212,
+      "uuid": "ae132773-d554-4a35-808d-3e5a154bdb2d"
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_2_D.jpg": {
+      "time": 1781231240481.755,
+      "uuid": "b7e7867b-ef04-4165-bedf-0f60428fe1ea"
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_2_N.jpg": {
+      "time": 1781231240484.2964,
+      "uuid": "9668af73-50bc-442b-a954-34268f6d8364"
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_3_D.jpg": {
+      "time": 1781231240486.4536,
+      "uuid": "f97fa1a2-3894-42bc-9ee7-b641a7709058"
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_3_N.jpg": {
+      "time": 1781231240488.4492,
+      "uuid": "5a83da1b-d60f-4391-9133-2aa5a1eb6a67"
+    },
+    "GameRes\\FBX\\Hero_3\\super_big_dazhuang_0.mtl": {
+      "time": 1781231240490.6418,
+      "uuid": "2340ba67-ccb8-4006-a654-2a152409965f"
+    },
+    "GameRes\\FBX\\JJ\\SM_robot_03.mtl": {
+      "time": 1781231240544.0188,
+      "uuid": "1d2b8612-f6ae-4320-a873-5af045f9f98b"
+    },
+    "GameRes\\FBX\\JJ\\机甲待机.fbx": {
+      "time": 1780287687945.7268,
+      "uuid": "4db48fb5-536d-4b8e-8629-440f75ca9448"
+    },
+    "GameRes\\FBX\\Monster\\Monster_0.mtl": {
+      "time": 1780287687976.9712,
+      "uuid": "fb15396d-2e5f-44b3-9283-e6945d3cd61d"
+    },
+    "GameRes\\FBX\\Monster\\Monster_1.mtl": {
+      "time": 1780287687992.5923,
+      "uuid": "245be2b3-6b5d-4469-8888-d7d452bdd113"
+    },
+    "GameRes\\FBX\\Monster\\pangsangshi01_D.jpg": {
+      "time": 1780287687992.5923,
+      "uuid": "30a1f477-c107-496c-b0a2-31a5777fd1c3"
+    },
+    "GameRes\\FBX\\Monster\\pangsangshi01_N.jpg": {
+      "time": 1780287687992.5923,
+      "uuid": "bc1cc512-d19b-49db-abf5-8b3193786fab"
+    },
+    "GameRes\\FBX\\Monster\\T_Slimed_Zombie_01_D.jpg": {
+      "time": 1780287687992.5923,
+      "uuid": "c9024b4d-ade1-48ec-beed-9fc568fc7fa9"
+    },
+    "GameRes\\FBX\\Monster\\T_Slimed_Zombie_01_N.jpg": {
+      "time": 1780287687992.5923,
+      "uuid": "778bdaaa-3035-4917-bc3d-c446935e682a"
+    },
+    "GameRes\\FBX\\Monster\\瘦丧尸.fbx": {
+      "time": 1780287687992.5923,
+      "uuid": "ca231c52-143a-4d1c-8ccf-e6685591c136"
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_待机.fbx": {
+      "time": 1780287687992.5923,
+      "uuid": "767a9023-1d3d-4608-ba16-06a9a280ef10"
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_攻击.fbx": {
+      "time": 1780287687992.5923,
+      "uuid": "f6af3e31-8188-49bd-afa5-3afdb36b009b"
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_死亡02.fbx": {
+      "time": 1781231240591.8699,
+      "uuid": "429b647c-60ef-4dab-8284-256c82a19175"
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_死亡扑腾(xg)1.fbx": {
+      "time": 1781231240608.8208,
+      "uuid": "fcda3620-487d-4b96-8216-e70e5e584b0a"
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_死亡扑腾.fbx": {
+      "time": 1781231240617.7544,
+      "uuid": "14d3236d-84d0-4715-9cbd-8e3ffbff5f76"
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_跑（修改）.fbx": {
+      "time": 1781231240619.5793,
+      "uuid": "8d48e0bb-a81f-4d0d-a7ae-96b8a70375bb"
+    },
+    "GameRes\\FBX\\Monster_boos\\Monster_boos.mtl": {
+      "time": 1780287688023.8337,
+      "uuid": "4e446eab-83af-465f-89cc-3038b76fb95a"
+    },
+    "GameRes\\FBX\\Monster_boos\\T_Zaombie_01_D.jpg": {
+      "time": 1780287688023.8337,
+      "uuid": "1f8f952e-cd66-4bd3-b6e2-032f15e4244e"
+    },
+    "GameRes\\FBX\\Monster_boos\\原地攻击.fbx": {
+      "time": 1780287688023.8337,
+      "uuid": "7d16b0cf-cd7d-453e-9bc5-94cc60205299"
+    },
+    "GameRes\\FBX\\Monster_boos\\待机.fbx": {
+      "time": 1780287688023.8337,
+      "uuid": "52b069bf-3b39-46c8-948b-e59b39807e29"
+    },
+    "GameRes\\FBX\\Monster_boos\\死亡.fbx": {
+      "time": 1780287688023.8337,
+      "uuid": "991d4abd-74e7-4fd3-ae59-7c26c0a7bb84"
+    },
+    "GameRes\\FBX\\Monster_boos\\跑.fbx": {
+      "time": 1780287688023.8337,
+      "uuid": "06a7d090-bde0-4fcb-82eb-f6a712c304b9"
+    },
+    "GameRes\\FBX\\Monster_boos_2\\boos_02_skin_1.fbx": {
+      "time": 1781231240759.7944,
+      "uuid": "f9c2dc52-d167-47a7-9c34-8d324da4b592"
+    },
+    "GameRes\\FBX\\Monster_boos_2\\boos_02_攻击.fbx": {
+      "time": 1781231240776.6963,
+      "uuid": "25948de8-9a1a-4ce1-aa6e-de722b3ce662"
+    },
+    "GameRes\\FBX\\Monster_boos_2\\boos_02_死亡.fbx": {
+      "time": 1781231240787.4143,
+      "uuid": "a71d8bf6-dda8-4dde-9233-0655157e2815"
+    },
+    "GameRes\\FBX\\Monster_boos_2\\boos_02_走.fbx": {
+      "time": 1781231240805.5068,
+      "uuid": "1b22d11e-b7b7-4eb6-858d-6e06a3bdc0e8"
+    },
+    "GameRes\\FBX\\Monster_boos_2\\Boss_shenti_01.jpg": {
+      "time": 1781231240727.8613,
+      "uuid": "c7512ea2-02e1-4911-b218-de370a5eca04"
+    },
+    "GameRes\\FBX\\Monster_boos_2\\Monster_boos.mtl": {
+      "time": 1781231240742.7344,
+      "uuid": "e0077ea2-1edc-4c28-bfbc-8f3e72a9bdf9"
+    },
+    "GameRes\\Image\\Bullet\\auto-atlas.pac": {
+      "time": 1780287688086.2046,
+      "uuid": "17513a27-4f11-4047-a0be-8d0cb6187b9e"
+    },
+    "GameRes\\Image\\Bullet\\bullet_0.png": {
+      "time": 1780287688086.2046,
+      "uuid": "ca742501-e16f-4a7b-b5c1-270228fb8168"
+    },
+    "GameRes\\Image\\Bullet\\bullet_1.png": {
+      "time": 1780287688086.2046,
+      "uuid": "748c6511-a26a-4fe0-a206-901bd98bc56a"
+    },
+    "GameRes\\Image\\Bullet\\bullet_2.png": {
+      "time": 1780287688086.2046,
+      "uuid": "f68c0530-d123-4979-8115-45a86607b984"
+    },
+    "GameRes\\Image\\Bullet\\bullet_3.png": {
+      "time": 1780287688086.2046,
+      "uuid": "168104d3-6799-455c-b63a-3c17f56d39f9"
+    },
+    "GameRes\\Image\\Bullet\\bullet_4.png": {
+      "time": 1780287688101.824,
+      "uuid": "36b966de-1e03-4b02-b9d3-c8ea39109fce"
+    },
+    "GameRes\\Image\\GameOver\\bg.png": {
+      "time": 1780287688133.0696,
+      "uuid": "b738efa1-7a9e-4246-817e-55f76ad638a8"
+    },
+    "GameRes\\Image\\GameOver\\bg_top.png": {
+      "time": 1780287688179.4783,
+      "uuid": "d5f2f2a6-3230-4c62-8ebb-b6e2a66167d3"
+    },
+    "GameRes\\Image\\GameOver\\button.png": {
+      "time": 1780287688179.4783,
+      "uuid": "b86f34a9-5c63-4ea9-9bb4-66d9e9d8fdb3"
+    },
+    "GameRes\\Image\\GameOver\\DEFEAT.png": {
+      "time": 1780287688133.0696,
+      "uuid": "75214300-6550-4e89-9a74-affe90a7cbc8"
+    },
+    "GameRes\\Image\\GameOver\\img_button.png": {
+      "time": 1780287688179.4783,
+      "uuid": "852ddad0-33f6-42cd-8f5d-dcdebf7a56c0"
+    },
+    "GameRes\\Image\\GameOver\\logo.png": {
+      "time": 1781231240847.6592,
+      "uuid": "40db16a5-622a-407c-9085-a2924c3b0a18"
+    },
+    "GameRes\\Image\\GameOver\\The War.png": {
+      "time": 1780287688133.0696,
+      "uuid": "bbba8aab-d001-49cf-9a22-04d565443060"
+    },
+    "GameRes\\Image\\GameOver\\VICTORY.png": {
+      "time": 1780287688133.0696,
+      "uuid": "8cdd403d-0fc0-45e7-8aab-00a00ed80ec0"
+    },
+    "GameRes\\Image\\GameOver\\按钮-落版生锈.png": {
+      "time": 1780287688195.0984,
+      "uuid": "7ef93c88-aead-4955-86eb-b3349668bfa0"
+    },
+    "GameRes\\Image\\Hp\\img_hp_0.png": {
+      "time": 1781231240875.1323,
+      "uuid": "09e5b55e-3df6-4cdf-a28e-8fdaa8ba6e44"
+    },
+    "GameRes\\Image\\Hp\\img_hp_1.png": {
+      "time": 1781231240889.4006,
+      "uuid": "a27423b7-9046-4bb2-815c-97a6f29c2541"
+    },
+    "GameRes\\Image\\Hp\\img_hp_3.png": {
+      "time": 1780287688226.34,
+      "uuid": "c3c56650-4f45-4681-8bff-0001a2e85e9e"
+    },
+    "GameRes\\Image\\Hp\\img_hp_5.png": {
+      "time": 1780287688248.0808,
+      "uuid": "2b3d625c-2421-495a-b79f-100bff6b75cf"
+    },
+    "GameRes\\Image\\Hp\\img_hp_6.png": {
+      "time": 1780287688268.0273,
+      "uuid": "b02d9bd3-9ab4-4d1e-be38-72962cacb681"
+    },
+    "GameRes\\Image\\Hp\\img_hp_7_1.png": {
+      "time": 1781231240904.0688,
+      "uuid": "9af4dd6f-c12b-4495-8aa7-156f1821a6e8"
+    },
+    "GameRes\\Image\\Hp\\img_hp_7_2.png": {
+      "time": 1781231240918.598,
+      "uuid": "ac4e569f-d6a9-410e-a15c-936b043997e0"
+    },
+    "GameRes\\Image\\img\\img_arrow_1.png": {
+      "time": 1780287688335.571,
+      "uuid": "8ef1e9ff-a7e7-40e6-8346-4a1426728166"
+    },
+    "GameRes\\Image\\img\\UI-AK47.png": {
+      "time": 1780287688319.9482,
+      "uuid": "e5a10833-686e-4228-87ed-aca44459882d"
+    },
+    "GameRes\\Image\\img\\UI-MP5.png": {
+      "time": 1780287688319.9482,
+      "uuid": "4ce3fb87-244e-4ed7-bb00-2f9687e91dca"
+    },
+    "GameRes\\Image\\img\\UI-加特林.png": {
+      "time": 1780287688319.9482,
+      "uuid": "3f378fba-df47-4b72-b72e-ef2eba4ff243"
+    },
+    "GameRes\\Image\\img\\UI-加特林黄金.png": {
+      "time": 1780287688335.571,
+      "uuid": "7fc67cdc-acec-492c-a54b-86e9a779f48a"
+    },
+    "GameRes\\Image\\img\\UI-坦克.png": {
+      "time": 1780287688335.571,
+      "uuid": "cae775eb-2703-445b-9f91-3846027ce23d"
+    },
+    "GameRes\\Image\\img\\倍增板中间红光.png": {
+      "time": 1780287688335.571,
+      "uuid": "187087c5-cae7-4505-aa1a-535b5c6557ef"
+    },
+    "GameRes\\Image\\img\\倍增板中间蓝光.png": {
+      "time": 1780287688335.571,
+      "uuid": "f5a6d5b4-6c0f-4971-9d44-692cf22fde88"
+    },
+    "GameRes\\Image\\img\\倍增板蓝.png": {
+      "time": 1781235100420.284,
+      "uuid": "d721c99c-6745-434c-900e-6182785622ea"
+    },
+    "GameRes\\Image\\img\\倍增板黄.png": {
+      "time": 1781235100421.281,
+      "uuid": "ef7c10c2-a068-41bd-a6f0-5777121982ff"
+    },
+    "GameRes\\Image\\img\\手.png": {
+      "time": 1781231240947.3982,
+      "uuid": "376fb3f4-139f-4977-b12d-690632989155"
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_0.prefab": {
+      "time": 1780287688461.0662,
+      "uuid": "22df2732-7376-4d1e-b3ec-198dc70edfad"
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_1.prefab": {
+      "time": 1780287688461.0662,
+      "uuid": "990960bd-9301-4607-aca1-7c65a19e12bc"
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_2.prefab": {
+      "time": 1780287688461.0662,
+      "uuid": "ac2e0ce8-427b-413a-b957-031450d6f06c"
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_3.prefab": {
+      "time": 1780287688461.0662,
+      "uuid": "2be39540-c3f7-4309-a0f6-bffb11e792ab"
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_4.prefab": {
+      "time": 1780287688461.0662,
+      "uuid": "a5d3d483-f17b-40f0-b2f6-f8315c79c88c"
+    },
+    "Script\\Base\\MoveRot\\MoveDrive.ts": {
+      "time": 1780287689086.2754,
+      "uuid": "7dd534b2-c228-4325-8133-e281022dab59"
+    },
+    "Script\\Base\\MoveRot\\RotationDrive.ts": {
+      "time": 1780287689101.895,
+      "uuid": "5a97dffc-3dbe-4f86-81a4-4d3d760c3807"
+    },
+    "Script\\Base\\MoveRot\\RotationVector.ts": {
+      "time": 1780287689101.895,
+      "uuid": "f6e63630-8156-48f3-9778-48eeaec479bd"
+    },
+    "Script\\Base\\TextAdaptation\\DownLoadL8.ts": {
+      "time": 1780287689137.2715,
+      "uuid": "0bf867df-81f2-478d-86c8-d963c3f9d0b0"
+    },
+    "Script\\Base\\TextAdaptation\\DragAndMoveL8.ts": {
+      "time": 1780287689148.2952,
+      "uuid": "cb6752a1-fb1e-4a6b-aed5-383318059697"
+    },
+    "Script\\Base\\TextAdaptation\\L18Manager.ts": {
+      "time": 1780287689163.9194,
+      "uuid": "71ade929-1f34-4339-ba92-2c2ea17e6fa0"
+    },
+    "Script\\Base\\TextAdaptation\\LangArrAuto.ts": {
+      "time": 1780287689163.9194,
+      "uuid": "ab58a1a2-5924-434a-95f5-c540a9b95ffe"
+    },
+    "Script\\Base\\TextAdaptation\\LangAuto.ts": {
+      "time": 1780287689163.9194,
+      "uuid": "741d0ea7-4c0c-48fd-8304-20741c4d1494"
+    },
+    "Script\\Base\\TextAdaptation\\ResurrectionL8.ts": {
+      "time": 1780287689163.9194,
+      "uuid": "3a4460f0-b1ee-4c25-87a9-dc408b3fd6f4"
+    },
+    "Script\\functionS\\Bag\\FlayPropManager.ts": {
+      "time": 1780287689273.9414,
+      "uuid": "c2ed89b6-da94-4719-be6b-1e8cd6f4809f"
+    },
+    "Script\\functionS\\Bag\\GroupBag3D.ts": {
+      "time": 1780287689305.1824,
+      "uuid": "77b1c61e-a943-4bef-8787-832374a052e2"
+    },
+    "Script\\functionS\\Bag\\GroupPropTransform.ts": {
+      "time": 1780287689305.1824,
+      "uuid": "4678f3de-a2d2-45cb-924f-a441cead5f48"
+    },
+    "Script\\functionS\\Bag\\IPropFly.ts": {
+      "time": 1780287689305.1824,
+      "uuid": "3edf4e7f-24b8-4b7c-90a4-a521b4f6903b"
+    },
+    "Script\\functionS\\Bag\\LabBagUp.ts": {
+      "time": 1780287689326.9302,
+      "uuid": "71b17bf5-34cd-4a20-a03a-7ed685dff48c"
+    },
+    "Script\\functionS\\Bag\\Prop.ts": {
+      "time": 1780287689341.999,
+      "uuid": "4c479784-1b58-4f16-8e3c-3c82611dbacb"
+    },
+    "Script\\functionS\\Bag\\PropManager.ts": {
+      "time": 1780287689350.9756,
+      "uuid": "78192de4-419d-473e-b57d-fd8f4fc5361b"
+    },
+    "Script\\functionS\\Battle\\BulletManager.ts": {
+      "time": 1780287689586.017,
+      "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
+    },
+    "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
+      "time": 1780287689586.017,
+      "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
+    },
+    "Script\\functionS\\Battle\\HpComponent.ts": {
+      "time": 1780287689601.6394,
+      "uuid": "f320b7fd-4bce-4185-8a9f-e6542c401465"
+    },
+    "Script\\functionS\\Effect\\EffectManager.ts": {
+      "time": 1781231241814.383,
+      "uuid": "779f7a27-3852-4bb6-8e5e-1d7c5e17016c"
+    },
+    "Script\\functionS\\Effect\\EffectRemoveBase.ts": {
+      "time": 1780287689617.2598,
+      "uuid": "18e01bdd-d6d2-46d1-8225-7d2d0f9e28bd"
+    },
+    "Script\\functionS\\Effect\\EffectTimePartRemove.ts": {
+      "time": 1780287689617.2598,
+      "uuid": "acd072f5-2f8b-4008-b25b-4b5273089bd2"
+    },
+    "Script\\functionS\\Effect\\EffectTimeRemove.ts": {
+      "time": 1780287689617.2598,
+      "uuid": "bbccb099-9876-4172-aeaf-c85274b1d133"
+    },
+    "Script\\functionS\\Guide\\GuideLine.ts": {
+      "time": 1780287689689.2458,
+      "uuid": "3b47f7bf-91d0-40e1-8f86-30832c9f6191"
+    },
+    "Script\\functionS\\Guide\\GuideManager.ts": {
+      "time": 1780287689694.2527,
+      "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
+    },
+    "Script\\functionS\\Jump\\BezierCurve.ts": {
+      "time": 1781231241829.9224,
+      "uuid": "5add3271-9494-4192-9305-43afd4211713"
+    },
+    "Script\\functionS\\Jump\\JumpCurve.ts": {
+      "time": 1780287689725.4966,
+      "uuid": "ad103012-14b5-43d2-84e6-91bcdce91126"
+    },
+    "Script\\functionS\\Jump\\JumpCurve3D.ts": {
+      "time": 1780287689741.1455,
+      "uuid": "51ce8bc6-5c46-4437-9487-bbb73dddcf11"
+    },
+    "Script\\functionS\\Jump\\JumpDriveEngine.ts": {
+      "time": 1780287689741.1455,
+      "uuid": "b90fa0fb-e6c3-42e0-97be-7bf968ba4459"
+    },
+    "Script\\functionS\\Jump\\JumpManager.ts": {
+      "time": 1781231241832.914,
+      "uuid": "868d7cc2-b26f-45f0-98e8-77f942063a20"
+    },
+    "Script\\functionS\\Jump\\JumpParabola.ts": {
+      "time": 1780287689756.741,
+      "uuid": "11998d98-7550-400e-bac6-40b1b791d590"
+    },
+    "Script\\functionS\\Jump\\JumpScatter.ts": {
+      "time": 1780287689756.741,
+      "uuid": "948ff7a2-4f0a-4b9f-ac49-3e80f7129eb1"
+    },
+    "Script\\functionS\\Jump\\JumpSequenceBase.ts": {
+      "time": 1780287689785.6646,
+      "uuid": "d8070158-7b59-48fe-b8e4-5b2009ffa4e2"
+    },
+    "Script\\functionS\\Monster\\MonsterBattleTaerget.ts": {
+      "time": 1781231241865.3853,
+      "uuid": "93b74258-97e4-4fcb-bfc0-851d38430b93"
+    },
+    "Script\\functionS\\Monster\\MonsterCreate.ts": {
+      "time": 1781231241875.153,
+      "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
+    },
+    "Script\\functionS\\Other\\ArmsUp.ts": {
+      "time": 1780287689819.898,
+      "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
+    },
+    "Script\\functionS\\Other\\CreatePropBrand.ts": {
+      "time": 1781231242041.8423,
+      "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
+    },
+    "Script\\functionS\\Other\\PropArms.ts": {
+      "time": 1781231242053.0022,
+      "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
+    },
+    "Script\\functionS\\Other\\PropBrand.ts": {
+      "time": 1780287689826.8792,
+      "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
+    },
+    "Script\\functionS\\Player\\Player.ts": {
+      "time": 1781231242089.7732,
+      "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
+    },
+    "Script\\functionS\\Player\\Role.ts": {
+      "time": 1781231242097.7043,
+      "uuid": "86381968-3bf9-4a3d-8c3e-d52a5c62ef9c"
+    },
+    "Script\\functionS\\Rocker\\RockerLogic.ts": {
+      "time": 1780287689851.5068,
+      "uuid": "69a421c9-a0d6-4482-9818-83ab388e9189"
+    },
+    "Script\\functionS\\Rocker\\RockerManager.ts": {
+      "time": 1780287689851.5068,
+      "uuid": "fbd9850c-b380-43a5-96a0-68f22a5f11e9"
+    },
+    "Script\\functionS\\Rocker\\RockerMouseEvent.ts": {
+      "time": 1780287689851.5068,
+      "uuid": "7b32bbdb-1abc-4b60-aa8e-6c522754f601"
+    },
+    "Script\\functionS\\Rocker\\RockerUI.ts": {
+      "time": 1780287689867.1294,
+      "uuid": "dff7897e-71d1-4b28-8219-157367884693"
+    },
+    "Script\\functionS\\ShoppIng\\Shopping.ts": {
+      "time": 1780287689914.4963,
+      "uuid": "8ad288eb-96d0-46cc-93a8-0104f4678ec2"
+    },
+    "Script\\functionS\\ShoppIng\\ShoppIngEvent.ts": {
+      "time": 1780287689914.4963,
+      "uuid": "c69a9986-7fd9-4ffa-99f8-683ab27ba2e5"
+    },
+    "Script\\functionS\\ShoppIng\\Shopping_Super.ts": {
+      "time": 1780287689930.1187,
+      "uuid": "09867ea2-0e46-443f-ab24-6b1c92a278f1"
+    },
+    "Script\\functionS\\SkAnim\\FbxManager.ts": {
+      "time": 1780287689945.7393,
+      "uuid": "6f259595-5aee-41d8-9049-d7188fa1e78a"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\baodian-add.mtl": {
+      "time": 1780287686664.4802,
+      "uuid": "ba8cc73f-3973-440f-aa0d-e3ad0f17cf40"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\glow-add-yuan-001.mtl": {
+      "time": 1780287686664.4802,
+      "uuid": "00a80b33-d439-486c-9bb3-df8094d1199b"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\glow-add-yuan.mtl": {
+      "time": 1780287686664.4802,
+      "uuid": "aff24f1b-e1d9-4fb0-b483-4c342ab6b9f9"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\glow-add.mtl": {
+      "time": 1780287686680.0754,
+      "uuid": "4c0e1b65-eb9b-4170-bda5-8b9e0f1945a9"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\glow-blend.mtl": {
+      "time": 1780287686680.0754,
+      "uuid": "9c1e0e4c-a142-4ffc-9832-d9a8d64e165e"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\jiantou-add.mtl": {
+      "time": 1780287686680.0754,
+      "uuid": "afae95f9-936d-434a-a80d-d4c8ee1be097"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\qianghuo.mtl": {
+      "time": 1780287686680.0754,
+      "uuid": "171a7b78-4176-4a54-a8b9-2a92d939ba02"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\sji-yuan-add.mtl": {
+      "time": 1780287686695.6953,
+      "uuid": "f7eeb0c9-54e3-4bb4-b7c3-d26e0335ad96"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\sji-yuan.mtl": {
+      "time": 1780287686695.6953,
+      "uuid": "e9494f13-12ce-4216-8847-f0ac62fcee83"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\spark-add.mtl": {
+      "time": 1780287686695.6953,
+      "uuid": "c81b1f52-7c47-4830-a5fc-27b41d1d1d9f"
+    },
+    "GameRes\\1219\\A-texiao\\mat\\star-add.mtl": {
+      "time": 1780287686695.6953,
+      "uuid": "1ee732da-7390-44e8-ad5f-28c0a7ad163f"
+    },
+    "GameRes\\1219\\A-texiao\\mech\\hilex.FBX": {
+      "time": 1780287686711.3184,
+      "uuid": "068a5758-286d-4302-8c41-edc3f86f24c9"
+    },
+    "GameRes\\1219\\A-texiao\\mech\\yuan-huan.FBX": {
+      "time": 1780287686729.072,
+      "uuid": "9bd40adc-57ea-41ba-8449-f8eb9c563670"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\ani_CPxs_kx_067_lz01.png": {
+      "time": 1780287686765.2925,
+      "uuid": "2e99be43-9fde-46e9-8312-cbc916d90a93"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\fx_trail_yp_01.png": {
+      "time": 1780287686766.2896,
+      "uuid": "13bfa739-72de-4d6d-b8ee-9bf8c88a762c"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\Glow_CPdr_wzc_002.png": {
+      "time": 1780287686762.2998,
+      "uuid": "08834739-6501-4f47-87a8-2e8384ed3b0d"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\Glow_CPgt_wlt_059.png": {
+      "time": 1780287686763.297,
+      "uuid": "7fbfbb1b-ef0c-4bd1-88d9-1371f3881571"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\glow_wjf_014.png": {
+      "time": 1780287686767.2869,
+      "uuid": "80c0ab8e-5cd3-4d1b-98ea-0e0b37e6318a"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\glow_wx_05.png": {
+      "time": 1780287686768.2837,
+      "uuid": "2b4256c6-e863-4847-b46d-97b4db983fbe"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\jiantou_key_001.png": {
+      "time": 1780287686769.282,
+      "uuid": "835d3e4b-7d10-46f6-86f6-21e0ee0d4c29"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\star.png": {
+      "time": 1780287686771.275,
+      "uuid": "b7860061-93cd-4b84-a9ae-af97ae16965e"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\Tex_Glow_03.PNG.png": {
+      "time": 1780287686764.2944,
+      "uuid": "546fb9a0-ea51-44e3-a180-dad8864ba9ad"
+    },
+    "GameRes\\1219\\A-texiao\\tex\\trail_CPxs_kx_038 - 副本.png": {
+      "time": 1780287686772.2737,
+      "uuid": "6b5b53ee-2dd7-481b-8e6d-20171c497cd3"
+    },
+    "GameRes\\1219\\FX\\mat\\boom-b.mtl": {
+      "time": 1780287686791.5808,
+      "uuid": "0aea22e6-8be3-4f8c-a1af-3fe6673d0e49"
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend-001.mtl": {
+      "time": 1780287686792.5786,
+      "uuid": "aa2e394e-74c9-4778-9081-5b17ac82a494"
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend-002.mtl": {
+      "time": 1780287686793.575,
+      "uuid": "15868de0-2aae-4941-aefb-5d72c9622542"
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend-003.mtl": {
+      "time": 1780287686794.5742,
+      "uuid": "0e3fdbc9-fe03-42c0-b7c7-e42b84980dbc"
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend-004.mtl": {
+      "time": 1780287686796.5674,
+      "uuid": "953cc07a-e0fa-4fee-b47a-fdcb90bcf671"
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend.mtl": {
+      "time": 1780287686797.565,
+      "uuid": "16db86d3-d25c-4780-8943-3761759b8e0b"
+    },
+    "GameRes\\1219\\FX\\mat\\smok-001.mtl": {
+      "time": 1780287686798.5618,
+      "uuid": "3e17f67c-8110-4eb6-9837-55962249a08b"
+    },
+    "GameRes\\1219\\FX\\tex\\150125y8s4mh93xee3t9eu__1_.png": {
+      "time": 1780287686822.7378,
+      "uuid": "53e94029-f8b4-49fa-b0a9-a18bb75291ae"
+    },
+    "GameRes\\1219\\FX\\tex\\boom3.png": {
+      "time": 1780287686827.7239,
+      "uuid": "68ee2dc1-01ff-43e2-a736-1f2c31dcd6cb"
+    },
+    "GameRes\\1219\\FX\\tex\\fx_decal_zjj_01.png": {
+      "time": 1780287686828.7205,
+      "uuid": "ed9a6fb9-12c6-428d-ad04-057461d9bb14"
+    },
+    "GameRes\\1219\\FX\\tex\\Glow_a_0004_00000.png": {
+      "time": 1780287686824.7334,
+      "uuid": "f9464bd2-400c-4231-83e1-e3fdd3658422"
+    },
+    "GameRes\\1219\\FX\\tex\\Glow_CPmy_pfy_004.png": {
+      "time": 1780287686823.7354,
+      "uuid": "487353f6-06de-43d1-9aeb-e1035901a63e"
+    },
+    "GameRes\\1219\\FX\\tex\\Tex_Glow_03.PNG.png": {
+      "time": 1780287686825.7295,
+      "uuid": "5b4ec68f-342b-42c0-a07b-bdf3a1a73257"
+    },
+    "GameRes\\1219\\FX\\tex\\yuan.png": {
+      "time": 1780287686829.7185,
+      "uuid": "7a4600e7-f67a-49a7-b803-2fb95672a916"
+    },
+    "GameRes\\1219\\FX\\yw\\002635eg02izlx9s29xd59.png": {
+      "time": 1780287686843.764,
+      "uuid": "c139fc4e-e40c-4fe6-b9ff-b35dd5d034a4"
+    },
+    "GameRes\\1219\\FX\\yw\\yanwu.mtl": {
+      "time": 1780287686847.754,
+      "uuid": "f0190114-da7c-459f-ae4a-617ed3da4de0"
+    },
+    "GameRes\\1219\\FX\\yw\\yanwu.prefab": {
+      "time": 1780287686849.7483,
+      "uuid": "85075bb1-7df0-491d-bece-017584a8240e"
+    },
+    "GameRes\\1219\\Res\\fbx\\dimian.fbx": {
+      "time": 1780287686851.7717,
+      "uuid": "d242d589-d84a-48a2-914d-561fa6656270"
+    },
+    "GameRes\\Effect\\A-texiao\\mat\\glow-add-yuan-001.mtl": {
+      "time": 1780287687169.8682,
+      "uuid": "5bd6af82-03bd-4b16-b0d9-8e0ded63438e"
+    },
+    "GameRes\\Effect\\A-texiao\\mat\\glow-add-yuan-00228.mtl": {
+      "time": 1780287687170.8647,
+      "uuid": "9100370e-2727-4e30-ad5f-640af980787a"
+    },
+    "GameRes\\Effect\\A-texiao\\tex\\03a5eb855a8d54a2009dec92ce5bd2e297dade3b12e26-iNahpk.png": {
+      "time": 1780287687180.2312,
+      "uuid": "61d7fa81-0859-46b8-9af2-efcc97486b29"
+    },
+    "GameRes\\Effect\\A-texiao\\tex\\Glow_CPgt_wlt_059.png": {
+      "time": 1780287687180.2312,
+      "uuid": "281073fb-ab6b-49d0-be25-58c8d72689f5"
+    },
+    "GameRes\\Effect\\A-texiao\\tex\\s1.png": {
+      "time": 1780287687180.2312,
+      "uuid": "6307150a-4591-4cc4-9bd5-9eaf3f34ad86"
+    },
+    "GameRes\\FBX\\Hero_3\\Materials_big_dazhuang_01_skin_2\\maozi.mtl": {
+      "time": 1781231240353.2737,
+      "uuid": "c0c0c34d-aad6-4f50-80dc-0b800103993d"
+    },
+    "GameRes\\FBX\\Hero_3\\Materials_big_dazhuang_01_skin_2\\pifu.mtl": {
+      "time": 1781231240354.271,
+      "uuid": "09b2eb71-a7c5-4f5e-9b8b-ec5341ef3e85"
+    },
+    "GameRes\\FBX\\Hero_3\\Materials_big_dazhuang_01_skin_2\\yifu.mtl": {
+      "time": 1781231240356.358,
+      "uuid": "449da0c7-5f32-4ebf-ae20-b49e69fce669"
+    },
+    "Script\\functionS\\Bag\\Base\\BagBase.ts": {
+      "time": 1780287689258.3171,
+      "uuid": "c79c60e4-c303-43d9-ad94-da804d80c6b9"
+    },
+    "Script\\functionS\\Battle\\Attack\\AreaAttack.ts": {
+      "time": 1780287689366.9583,
+      "uuid": "ba164f43-79fb-48ed-86ed-1b5a8075e3f2"
+    },
+    "Script\\functionS\\Battle\\Attack\\AttackState.ts": {
+      "time": 1780287689366.9583,
+      "uuid": "ae0a6b57-54d6-453d-b3e9-5681da203d74"
+    },
+    "Script\\functionS\\Battle\\Attack\\MeleeAttack.ts": {
+      "time": 1780287689366.9583,
+      "uuid": "960a15d6-4516-4443-bf79-1c7609cd1949"
+    },
+    "Script\\functionS\\Battle\\Base\\AttackTargetBase.ts": {
+      "time": 1780287689398.2012,
+      "uuid": "8492eebe-815c-4f0c-90cd-0f39c3569897"
+    },
+    "Script\\functionS\\Battle\\Base\\BattleTargetBase.ts": {
+      "time": 1780287689398.2012,
+      "uuid": "a9926452-d8e9-47dc-a181-19f79a3a148e"
+    },
+    "Script\\functionS\\Battle\\Base\\FlashRedManager.ts": {
+      "time": 1781231241771.772,
+      "uuid": "7eeb70e3-f1ea-4d16-b4ec-793f0341aa41"
+    },
+    "Script\\functionS\\Battle\\Battle2D\\CollectBattleTarger2D.ts": {
+      "time": 1780287689445.067,
+      "uuid": "a668c6ff-75f5-4831-9311-b1bb37bf6ccd"
+    },
+    "Script\\functionS\\Battle\\Battle2D\\TriggerBase2D.ts": {
+      "time": 1780287689462.0132,
+      "uuid": "90e660d8-80f5-4f03-8a78-7a2227e7c925"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\AttackParkPlay.ts": {
+      "time": 1780287689508.209,
+      "uuid": "a3fc851d-1125-44b5-aa5b-0bc582d46016"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\CollectBattleTarger3D.ts": {
+      "time": 1780287689539.48,
+      "uuid": "6566b439-96e7-4801-97c0-dc22f120e6ed"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\TriggerBase3D.ts": {
+      "time": 1780287689539.48,
+      "uuid": "5c0b3b6c-b22d-4b36-9050-89265a402a14"
+    },
+    "Script\\functionS\\Battle\\BattleTarger\\BattleTarget2D.ts": {
+      "time": 1780287689555.106,
+      "uuid": "ce18d9a1-ffb3-4c20-ba16-b33bd8309509"
+    },
+    "Script\\functionS\\Battle\\BattleTarger\\BattleTarget3D.ts": {
+      "time": 1780287689555.106,
+      "uuid": "d490fc41-2b7f-4209-a6b1-dca139d03fef"
+    },
+    "Script\\functionS\\Battle\\CollectBattleTarger\\CollectGetTarget.ts": {
+      "time": 1780287689586.017,
+      "uuid": "03fdbedd-90df-47ac-9aa4-7fdee708b589"
+    },
+    "Script\\functionS\\Battle\\CollectBattleTarger\\ColliderTag.ts": {
+      "time": 1780287689586.017,
+      "uuid": "da648bf8-ab14-4a6a-a474-9832df4b466c"
+    },
+    "Script\\functionS\\ShoppIng\\Buy\\BuyWay2D.ts": {
+      "time": 1780287689882.7505,
+      "uuid": "ea9f80d9-a5da-4dc5-90e9-e4d35b8d01a6"
+    },
+    "Script\\functionS\\ShoppIng\\Buy\\BuyWay3D.ts": {
+      "time": 1780287689882.7505,
+      "uuid": "243052bb-7330-474d-8a84-6fa7122a194e"
+    },
+    "Script\\functionS\\ShoppIng\\Buy\\BuyWayBase.ts": {
+      "time": 1780287689908.4485,
+      "uuid": "9ae1f10a-a48e-46c8-81f3-0785e1b2f0bd"
+    },
+    "Script\\functionS\\SkAnim\\SequenceFrameAnim\\FrameAnimManager.ts": {
+      "time": 1780287689945.7393,
+      "uuid": "14b8391c-ac74-4a6c-9b13-6b729312860d"
+    },
+    "Script\\functionS\\SkAnim\\SequenceFrameAnim\\FrameManager.ts": {
+      "time": 1780287689961.3623,
+      "uuid": "0e10e3eb-c092-401d-9845-406f83db77b1"
+    },
+    "Script\\functionS\\UI\\GameOver\\GameOverPanel.ts": {
+      "time": 1780287689976.982,
+      "uuid": "f8a82cf1-d03a-4819-b239-de7affccb8ef"
+    },
+    "Script\\functionS\\UI\\GameOver\\UIButtonEvent.ts": {
+      "time": 1780287689976.982,
+      "uuid": "79eb11be-aeb7-479f-a611-4d22341a1d35"
+    },
+    "GameRes\\1219\\Scene\\Eff\\light\\Lightning.ts": {
+      "time": 1780287686883.016,
+      "uuid": "1f1fa9f5-b5de-45be-a5bc-9dd43a307118"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\153650dgx7m2px787xzp24.png": {
+      "time": 1781231238985.6785,
+      "uuid": "8131644f-f5c9-4a4c-9ed8-a342891d2c53"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\4011c5224acc2ceca45b61e1a0b720dbc7adc2282841-fwig59.png": {
+      "time": 1781231238994.3813,
+      "uuid": "d49d1e7a-48d9-49f6-a155-2363ab70edaf"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\bd-ci.mtl": {
+      "time": 1781231239032.3347,
+      "uuid": "90f8d371-c47d-465c-ba72-31d5a87ac82d"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\f55647c336a3a1def5504374fa5a33bb5b613d0763ad-ug0rOi.png": {
+      "time": 1781231239040.1936,
+      "uuid": "318c18ee-52af-4335-8157-796887d03a4e"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\Fx_Object02.png": {
+      "time": 1781231239009.7693,
+      "uuid": "b3453b6e-d951-4ec5-92a1-8028bebcb76e"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\glow-add.mtl": {
+      "time": 1781231239048.4702,
+      "uuid": "52da5ccb-e858-4a21-9487-1f119ee91d96"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\glow-alpha.mtl": {
+      "time": 1781231239057.5205,
+      "uuid": "e009621d-32d0-49de-8722-e8df562e7b45"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\glow-bd.mtl": {
+      "time": 1781231239065.2332,
+      "uuid": "2d1625b1-3cdf-446c-8e28-56c539db4e26"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\glow_00175_RM.png": {
+      "time": 1781231239073.4707,
+      "uuid": "5faed95b-d8f3-42d3-8e30-0178b0b4f446"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\Glow_CPdr_wzc_002.png": {
+      "time": 1781231239024.3037,
+      "uuid": "6b57a23a-da89-4d07-9aed-01a11c9db95b"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\ks-bd.prefab": {
+      "time": 1781231239074.9763,
+      "uuid": "209de045-a891-4749-af79-9c7612828baa"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\nujian-bd.prefab": {
+      "time": 1781231239084.043,
+      "uuid": "4a1c46cc-de5b-4b80-bbaf-835444348748"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\shuye.mtl": {
+      "time": 1781231239092.098,
+      "uuid": "c0704bc5-23d1-4c42-a56d-e6de9fc34292"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\stone.mtl": {
+      "time": 1781231239106.6677,
+      "uuid": "5aadbcd1-0d99-43cd-9ae7-106548efa817"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\wk-bd.prefab": {
+      "time": 1781231239108.4348,
+      "uuid": "f19ed0a7-16a4-4396-9694-523cae12fb4f"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\wood.mtl": {
+      "time": 1781231239123.5454,
+      "uuid": "c4ad5db9-d320-47c7-aa5e-049a9d3884a2"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\yhuan.mtl": {
+      "time": 1781231239137.4172,
+      "uuid": "25cf1813-d83f-42dd-9ceb-b86d7bfbde49"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\yhuan2.png": {
+      "time": 1781231239145.4707,
+      "uuid": "55898ead-6451-488a-9d3e-be7f82d0dde7"
+    },
+    "GameRes\\17.27\\GameRes\\FX\\jg-gj\\bd-hong.prefab": {
+      "time": 1781231239161.9133,
+      "uuid": "7f9c88ee-c0c3-4e43-8300-6e6d37d04184"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\153650dgx7m2px787xzp24.png": {
+      "time": 1780287688697.612,
+      "uuid": "66c64260-eb8a-49aa-ae9a-ba3340770179"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\baodian (2).png": {
+      "time": 1781231241115.8154,
+      "uuid": "6729ff63-eab1-4ead-aff5-7a04d7078c79"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\bd-ci.mtl": {
+      "time": 1780287688710.6658,
+      "uuid": "880974a8-793c-4a92-9c67-000e685a1db0"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\f55647c336a3a1def5504374fa5a33bb5b613d0763ad-ug0rOi.png": {
+      "time": 1780287688710.6658,
+      "uuid": "4a532025-4d0d-4e37-924d-5e04e70e8c16"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow-add.mtl": {
+      "time": 1780287688726.316,
+      "uuid": "3435bed8-0c70-430f-b290-86e6cd29aaf4"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow-alpha.mtl": {
+      "time": 1780287688741.9382,
+      "uuid": "ad34781b-579c-405d-b095-4605f1745295"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow-bd-001.mtl": {
+      "time": 1781231241117.877,
+      "uuid": "ce1bd793-c0d2-489d-b8b9-18d0d2f73848"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow-bd.mtl": {
+      "time": 1780287688757.5674,
+      "uuid": "78d33a3b-5e6c-4a09-963b-cc211ff61140"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow_00175_RM.png": {
+      "time": 1780287688757.5674,
+      "uuid": "d2ab31ad-6fd8-4f74-ab1d-e4b62d8f9698"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\Glow_CPdr_wzc_002.png": {
+      "time": 1780287688704.5923,
+      "uuid": "de7760e5-b919-42b1-982e-b81f225d3afd"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\nujian-bd.prefab": {
+      "time": 1781231241119.9275,
+      "uuid": "8e1d9d77-0185-438a-8766-79a299bea251"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\stone.mtl": {
+      "time": 1780287688773.1804,
+      "uuid": "3b93c0c2-f9d8-4477-9632-2712f3e5829b"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\yhuan.mtl": {
+      "time": 1780287688799.901,
+      "uuid": "6058ff56-0e0f-4e03-96ad-a150ebeda078"
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\yhuan2.png": {
+      "time": 1780287688806.8555,
+      "uuid": "7b9261a1-1f17-4d6d-9440-f8ae48ec67d0"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat\\glow-add-yuan-002.mtl": {
+      "time": 1780287687242.7173,
+      "uuid": "fdd8a8fd-0820-4b2c-9dfc-f46c21ea9463"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat\\glow-light-01.mtl": {
+      "time": 1780287687242.7173,
+      "uuid": "95f8c5b3-301f-49ed-a9ee-80a046716408"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat\\glow-light-ch.mtl": {
+      "time": 1780287687242.7173,
+      "uuid": "acaf5e7d-d6c4-43e1-9b5d-b8adebb17341"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat\\tril-wuqi.mtl": {
+      "time": 1780287687242.7173,
+      "uuid": "d782bceb-d40a-433c-a58b-9facaed011ed"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex\\glow_cpdr_04.png": {
+      "time": 1780287687283.0254,
+      "uuid": "7c472454-a37e-400e-988d-619bd12f10d0"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex\\glow_CPgt_hyy_008.png": {
+      "time": 1780287687277.0679,
+      "uuid": "4d893f2f-8395-48a2-8244-6b3b42b0d317"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex\\mask_CPmj_zf_013 (1).png": {
+      "time": 1780287687289.0837,
+      "uuid": "91dc1f7e-59a6-40bc-9637-d5d715955e00"
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex\\yuan.png": {
+      "time": 1780287687296.0654,
+      "uuid": "4a546953-c320-4a2f-85cb-c854f1b982c7"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat\\glow-add-yuan-002.mtl": {
+      "time": 1780287687320.7798,
+      "uuid": "140948a9-e52b-408a-9954-b93339d4d3fc"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat\\glow-light-01.mtl": {
+      "time": 1780287687320.7798,
+      "uuid": "e4dea29f-57d9-40bf-b563-ba314e1ff13d"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat\\glow-light-ch.mtl": {
+      "time": 1780287687320.7798,
+      "uuid": "c7d7d4c9-bd01-41f7-9947-694b1a487ca3"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat\\tril-wuqi.mtl": {
+      "time": 1780287687320.7798,
+      "uuid": "25b2fdf2-7047-4e5e-9693-2323ea1ea2b4"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex\\glow_cpdr_04.png": {
+      "time": 1780287687336.4004,
+      "uuid": "35c3e692-9ed5-497d-a29c-737a73402f5e"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex\\glow_CPgt_hyy_008.png": {
+      "time": 1780287687336.4004,
+      "uuid": "1333839b-780a-4410-87cf-1a269c37d21a"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex\\mask_CPmj_zf_013 (1).png": {
+      "time": 1780287687336.4004,
+      "uuid": "ca9168c7-258b-4ef1-8d95-32909bccb354"
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex\\yuan.png": {
+      "time": 1780287687336.4004,
+      "uuid": "5dea543e-1758-4ce7-b42b-ee55d7f33716"
+    },
+    "GameRes\\Effect\\propLight\\FX\\Fab\\dan-buf-001.prefab": {
+      "time": 1780287687367.6433,
+      "uuid": "00b4fcdc-3171-42c8-b1b3-6613db807787"
+    },
+    "GameRes\\Effect\\propLight\\FX\\Fab\\dan-buf-002.prefab": {
+      "time": 1780287687367.6433,
+      "uuid": "dec65276-2bc0-42a2-ba24-7a6b04e7b477"
+    },
+    "GameRes\\Effect\\propLight\\FX\\Fab\\dan-buf.prefab": {
+      "time": 1780287687367.6433,
+      "uuid": "bb914768-2c43-46b2-a2b8-9514082b289b"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material\\glow-add-002.mtl": {
+      "time": 1780287687398.436,
+      "uuid": "e1a05476-ce19-4c6a-8cf4-bdcd55e82a71"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material\\glow-blend.mtl": {
+      "time": 1780287687398.436,
+      "uuid": "2ffdb541-610a-4eea-a694-b8e72f61bacf"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material\\spark-add-001.mtl": {
+      "time": 1780287687398.436,
+      "uuid": "7f037251-f5e1-47c0-ab2a-938ee8c882a5"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material\\star-add-001.mtl": {
+      "time": 1780287687414.06,
+      "uuid": "b7af261c-724b-434e-aa63-e299f209fef6"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Texture\\glow_wjf_015.png": {
+      "time": 1780287687429.7083,
+      "uuid": "d23222ba-6b39-4774-b958-1e414572cf2f"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Texture\\star-001.png": {
+      "time": 1780287687445.3013,
+      "uuid": "b9ffa9e8-5793-4e6d-bb00-2f9a71058628"
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Texture\\Tex_Glow_03.PNG-002.png": {
+      "time": 1780287687429.7083,
+      "uuid": "dd2b542c-9d3b-4953-8e21-03968ae60c63"
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Attack2D\\RangedAttack.ts": {
+      "time": 1780287689413.8503,
+      "uuid": "eca5f41d-ae31-40f8-903c-b4c2d85bce48"
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Bullet\\BulletBattle2D.ts": {
+      "time": 1780287689429.4695,
+      "uuid": "2aad1529-d092-4678-afbb-0fd5dfb641fb"
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Bullet\\BulletCollideBase2D.ts": {
+      "time": 1780287689429.4695,
+      "uuid": "aa4e54c0-1386-4a6e-8059-7ae1089f2b7b"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Circle.ts": {
+      "time": 1780287689476.9656,
+      "uuid": "2ca63bff-3aee-4d3f-b7ff-3446caf025e8"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Shrapnel.ts": {
+      "time": 1780287689492.6187,
+      "uuid": "e7536043-22db-4827-9640-644dfc670a71"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangeTowerAttack.ts": {
+      "time": 1780287689476.9656,
+      "uuid": "ca0fd3d6-55e4-45ca-80e4-4c8243a063fd"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts": {
+      "time": 1781231241788.3462,
+      "uuid": "aa25268b-cb3c-4c8a-8144-994c0a68b3b6"
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts": {
+      "time": 1780287689523.8596,
+      "uuid": "8ca3d4f0-7015-4c3d-844c-89b840c09e17"
+    },
+    "GameRes.meta": {
+      "time": 1781231241690.4817
+    },
+    "resources.meta": {
+      "time": 1780287690132.2834
+    },
+    "Scene.meta": {
+      "time": 1780287689070.6526
+    },
+    "Script.meta": {
+      "time": 1780287690039.016
+    },
+    "GameRes\\1219.meta": {
+      "time": 1780287686898.6392
+    },
+    "GameRes\\Anim.meta": {
+      "time": 1780287686957.652
+    },
+    "GameRes\\bd-jtl.meta": {
+      "time": 1780287688851.5894
+    },
+    "GameRes\\DJBT_map.meta": {
+      "time": 1780287687167.8728
+    },
+    "GameRes\\Effect.meta": {
+      "time": 1780287687607.2368
+    },
+    "GameRes\\Environment.meta": {
+      "time": 1780287687757.6711
+    },
+    "GameRes\\FBX.meta": {
+      "time": 1780287688050.924
+    },
+    "GameRes\\Font.meta": {
+      "time": 1780287688086.2046
+    },
+    "GameRes\\Image.meta": {
+      "time": 1780287688382.959
+    },
+    "GameRes\\Mat.meta": {
+      "time": 1780287688398.582
+    },
+    "GameRes\\Material.meta": {
+      "time": 1780287688461.0662
+    },
+    "GameRes\\Prefab.meta": {
+      "time": 1780287688570.0317
+    },
+    "GameRes\\Prefabs.meta": {
+      "time": 1781231241109.8525
+    },
+    "GameRes\\Rocker.meta": {
+      "time": 1780287688697.612
+    },
+    "GameRes\\shader.meta": {
+      "time": 1780287689024.4329
+    },
+    "resources\\Sound.meta": {
+      "time": 1780287690128.2666
+    },
+    "Script\\Base.meta": {
+      "time": 1780287689179.5386
+    },
+    "Script\\functionS.meta": {
+      "time": 1780287690012.411
+    },
+    "Script\\Tool.meta": {
+      "time": 1780287689210.7837
+    },
+    "Script\\Tween.meta": {
+      "time": 1780287689258.3171
+    },
+    "GameRes\\1219\\A-texiao.meta": {
+      "time": 1780287686791.5808
+    },
+    "GameRes\\1219\\FX.meta": {
+      "time": 1780287686851.7717
+    },
+    "GameRes\\1219\\Res.meta": {
+      "time": 1780287686867.3955
+    },
+    "GameRes\\1219\\Scene.meta": {
+      "time": 1780287686898.6392
+    },
+    "GameRes\\17.27\\GameRes.meta": {
+      "time": 1781231239213.4026
+    },
+    "GameRes\\bd-jtl\\GameRes.meta": {
+      "time": 1780287688835.966
+    },
+    "GameRes\\DJBT_map\\fbx.meta": {
+      "time": 1780287687007.577
+    },
+    "GameRes\\DJBT_map\\mat.meta": {
+      "time": 1780287687038.8196
+    },
+    "GameRes\\DJBT_map\\pro.meta": {
+      "time": 1780287687117.4807
+    },
+    "GameRes\\DJBT_map\\tex.meta": {
+      "time": 1780287687155.9033
+    },
+    "GameRes\\Effect\\A-texiao.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\Effect\\fab.meta": {
+      "time": 1780287687242.7173
+    },
+    "GameRes\\Effect\\fx.meta": {
+      "time": 1780287687320.7798
+    },
+    "GameRes\\Effect\\propLight.meta": {
+      "time": 1780287687501.2449
+    },
+    "GameRes\\Effect\\qh.meta": {
+      "time": 1780287687555.23
+    },
+    "GameRes\\Effect\\qh2.meta": {
+      "time": 1780287687570.8494
+    },
+    "GameRes\\Environment\\Fbx.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Mat.meta": {
+      "time": 1780287687679.7344
+    },
+    "GameRes\\Environment\\Per.meta": {
+      "time": 1780287687724.4023
+    },
+    "GameRes\\Environment\\Tex.meta": {
+      "time": 1780287687742.052
+    },
+    "GameRes\\FBX\\Arms.meta": {
+      "time": 1780287687807.8362
+    },
+    "GameRes\\FBX\\Hero_0.meta": {
+      "time": 1780287687851.5256
+    },
+    "GameRes\\FBX\\Hero_1.meta": {
+      "time": 1780287687898.3909
+    },
+    "GameRes\\FBX\\Hero_2.meta": {
+      "time": 1780287687942.625
+    },
+    "GameRes\\FBX\\Hero_3.meta": {
+      "time": 1781231240501.6372
+    },
+    "GameRes\\FBX\\JJ.meta": {
+      "time": 1780287687976.9712
+    },
+    "GameRes\\FBX\\Monster.meta": {
+      "time": 1780287688023.8337
+    },
+    "GameRes\\FBX\\Monster_boos.meta": {
+      "time": 1780287688043.9426
+    },
+    "GameRes\\FBX\\Monster_boos_2.meta": {
+      "time": 1781231240835.656
+    },
+    "GameRes\\Image\\Bullet.meta": {
+      "time": 1780287688133.0696
+    },
+    "GameRes\\Image\\GameOver.meta": {
+      "time": 1780287688210.72
+    },
+    "GameRes\\Image\\Hp.meta": {
+      "time": 1780287688319.9482
+    },
+    "GameRes\\Image\\img.meta": {
+      "time": 1780287688366.929
+    },
+    "GameRes\\Prefab\\Bullet.meta": {
+      "time": 1780287688507.547
+    },
+    "GameRes\\shader\\chunks.meta": {
+      "time": 1780287688960.8213
+    },
+    "Script\\Base\\MoveRot.meta": {
+      "time": 1780287689117.517
+    },
+    "Script\\Base\\TextAdaptation.meta": {
+      "time": 1780287689163.9194
+    },
+    "Script\\functionS\\Bag.meta": {
+      "time": 1780287689360.9492
+    },
+    "Script\\functionS\\Battle.meta": {
+      "time": 1780287689601.6394
+    },
+    "Script\\functionS\\Effect.meta": {
+      "time": 1780287689688.2483
+    },
+    "Script\\functionS\\Guide.meta": {
+      "time": 1780287689709.875
+    },
+    "Script\\functionS\\Jump.meta": {
+      "time": 1780287689794.6433
+    },
+    "Script\\functionS\\Monster.meta": {
+      "time": 1780287689816.9038
+    },
+    "Script\\functionS\\Other.meta": {
+      "time": 1780287689835.8853
+    },
+    "Script\\functionS\\Player.meta": {
+      "time": 1780287689851.5068
+    },
+    "Script\\functionS\\Rocker.meta": {
+      "time": 1780287689867.1294
+    },
+    "Script\\functionS\\ShoppIng.meta": {
+      "time": 1780287689945.7393
+    },
+    "Script\\functionS\\SkAnim.meta": {
+      "time": 1780287689976.982
+    },
+    "Script\\functionS\\UI.meta": {
+      "time": 1780287689992.603
+    },
+    "GameRes\\1219\\A-texiao\\Fab.meta": {
+      "time": 1780287686664.4802
+    },
+    "GameRes\\1219\\A-texiao\\mat.meta": {
+      "time": 1780287686711.3184
+    },
+    "GameRes\\1219\\A-texiao\\mech.meta": {
+      "time": 1780287686761.3025
+    },
+    "GameRes\\1219\\A-texiao\\tex.meta": {
+      "time": 1780287686775.531
+    },
+    "GameRes\\1219\\FX\\mat.meta": {
+      "time": 1780287686822.7378
+    },
+    "GameRes\\1219\\FX\\tex.meta": {
+      "time": 1780287686842.7673
+    },
+    "GameRes\\1219\\FX\\yw.meta": {
+      "time": 1780287686851.7717
+    },
+    "GameRes\\1219\\Res\\fbx.meta": {
+      "time": 1780287686867.3955
+    },
+    "GameRes\\1219\\Scene\\Eff.meta": {
+      "time": 1780287686898.6392
+    },
+    "GameRes\\17.27\\GameRes\\FX.meta": {
+      "time": 1781231239199.5562
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX.meta": {
+      "time": 1780287688827.93
+    },
+    "GameRes\\Effect\\A-texiao\\mat.meta": {
+      "time": 1780287687180.2312
+    },
+    "GameRes\\Effect\\A-texiao\\tex.meta": {
+      "time": 1780287687195.855
+    },
+    "GameRes\\Effect\\fx\\A-texiao.meta": {
+      "time": 1780287687305.1572
+    },
+    "GameRes\\Effect\\propLight\\A-texiao.meta": {
+      "time": 1780287687367.6433
+    },
+    "GameRes\\Effect\\propLight\\FX.meta": {
+      "time": 1780287687398.436
+    },
+    "GameRes\\Effect\\propLight\\VFX.meta": {
+      "time": 1780287687460.9243
+    },
+    "GameRes\\FBX\\Hero_3\\Materials_big_dazhuang_01_skin_2.meta": {
+      "time": 1781231240474.5483
+    },
+    "Script\\functionS\\Bag\\Base.meta": {
+      "time": 1780287689273.9414
+    },
+    "Script\\functionS\\Battle\\Attack.meta": {
+      "time": 1780287689382.5823
+    },
+    "Script\\functionS\\Battle\\Base.meta": {
+      "time": 1780287689398.2012
+    },
+    "Script\\functionS\\Battle\\Battle2D.meta": {
+      "time": 1780287689470.9883
+    },
+    "Script\\functionS\\Battle\\Battle3D.meta": {
+      "time": 1780287689555.106
+    },
+    "Script\\functionS\\Battle\\BattleTarger.meta": {
+      "time": 1780287689578.9844
+    },
+    "Script\\functionS\\Battle\\CollectBattleTarger.meta": {
+      "time": 1780287689601.6394
+    },
+    "Script\\functionS\\ShoppIng\\Buy.meta": {
+      "time": 1780287689910.4436
+    },
+    "Script\\functionS\\ShoppIng\\ShopEvent.meta": {
+      "time": 1780287689914.4963
+    },
+    "Script\\functionS\\SkAnim\\SequenceFrameAnim.meta": {
+      "time": 1780287689961.3623
+    },
+    "Script\\functionS\\UI\\GameOver.meta": {
+      "time": 1780287689992.603
+    },
+    "GameRes\\1219\\Scene\\Eff\\light.meta": {
+      "time": 1780287686898.6392
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu.meta": {
+      "time": 1781231239158.9204
+    },
+    "GameRes\\17.27\\GameRes\\FX\\jg-gj.meta": {
+      "time": 1781231239188.1675
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu.meta": {
+      "time": 1780287688820.9497
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat.meta": {
+      "time": 1780287687258.3386
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex.meta": {
+      "time": 1780287687302.082
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat.meta": {
+      "time": 1780287687336.4004
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex.meta": {
+      "time": 1780287687352.0212
+    },
+    "GameRes\\Effect\\propLight\\FX\\Fab.meta": {
+      "time": 1780287687392.3806
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material.meta": {
+      "time": 1780287687429.7083
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Texture.meta": {
+      "time": 1780287687445.3013
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Attack2D.meta": {
+      "time": 1780287689413.8503
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Bullet.meta": {
+      "time": 1780287689445.067
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Attack3D.meta": {
+      "time": 1780287689508.209
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Bullet.meta": {
+      "time": 1780287689523.8596
+    },
+    "GameRes\\shader\\chunks\\ocean-caustics.chunk.meta": {
+      "time": 1780287688909.521
+    },
+    "GameRes\\shader\\chunks\\ocean-foam.chunk.meta": {
+      "time": 1780287688910.5186
+    },
+    "GameRes\\shader\\chunks\\ocean-lighting.chunk.meta": {
+      "time": 1780287688911.5156
+    },
+    "GameRes\\shader\\chunks\\ocean-waves.chunk.meta": {
+      "time": 1780287688912.5132
+    },
+    "GameRes\\shader\\chunks\\outline-fs.chunk.meta": {
+      "time": 1780287688924.5667
+    },
+    "GameRes\\shader\\chunks\\outline-vs.chunk.meta": {
+      "time": 1780287688929.5762
+    },
+    "GameRes\\shader\\chunks\\OutLineParmas.chunk.meta": {
+      "time": 1780287688908.5251
+    },
+    "GameRes\\shader\\Glow_Effect.effect.meta": {
+      "time": 1780287688867.2083
+    },
+    "GameRes\\shader\\builtin-standard_GRAY.effect.meta": {
+      "time": 1780287688882.83
+    },
+    "GameRes\\shader\\ocean_realistic.effect.meta": {
+      "time": 1780287688960.8213
+    },
+    "GameRes\\shader\\dissolve_effect.effect.meta": {
+      "time": 1780287688960.8213
+    },
+    "GameRes\\shader\\ocean_realistic_v2.effect.meta": {
+      "time": 1780287688960.8213
+    },
+    "GameRes\\shader\\outLight.effect.meta": {
+      "time": 1781231241677.0146
+    },
+    "GameRes\\shader\\standard-diss-glow-outline.effect.meta": {
+      "time": 1780287688976.4436
+    },
+    "GameRes\\shader\\standard-outline_GRAY.effect.meta": {
+      "time": 1780287688992.0618
+    },
+    "GameRes\\shader\\standard-outline.effect.meta": {
+      "time": 1780287688976.4436
+    },
+    "GameRes\\shader\\toon_diss_glow_outline.effect.meta": {
+      "time": 1780287689007.685
+    },
+    "GameRes\\shader\\TranslucentGrid.effect.meta": {
+      "time": 1780287688882.83
+    },
+    "GameRes\\DJBT_map\\mat\\builtin-standard-water.effect.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\shader\\toon_GRAY.effect.meta": {
+      "time": 1780287688992.0618
+    },
+    "GameRes\\DJBT_map\\mat\\Shader_Water.effect.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\Environment\\Mat\\builtin-standard-water.effect.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\17.27.meta": {
+      "time": 1781231239226.1206
+    },
+    "GameRes\\Environment\\Mat\\Shader_Water.effect.meta": {
+      "time": 1780287687648.4883
+    },
+    "scene0002.scene.meta": {
+      "time": 1780287690132.2834
+    },
+    "项目功能完整说明文档.md.meta": {
+      "time": 1780287690147.9314
+    },
+    "Scene\\Game_3D-003.scene.meta": {
+      "time": 1781231241719.4607
+    },
+    "Scene\\Game_3D-002.scene.meta": {
+      "time": 1780287689055.061
+    },
+    "GameRes\\Anim\\Anim_hand.anim.meta": {
+      "time": 1780287686914.2603
+    },
+    "GameRes\\Anim\\Anim_Lose.anim.meta": {
+      "time": 1780287686914.2603
+    },
+    "GameRes\\Anim\\Anim_loadIng.anim.meta": {
+      "time": 1781231239249.4426
+    },
+    "GameRes\\Mat\\Mat_2D-001.mtl.meta": {
+      "time": 1780287688382.959
+    },
+    "GameRes\\Mat\\Mat_2D.mtl.meta": {
+      "time": 1780287688398.582
+    },
+    "GameRes\\Anim\\Anim_win.anim.meta": {
+      "time": 1780287686914.2603
+    },
+    "GameRes\\Font\\Roundfont.ttf.meta": {
+      "time": 1780287688054.9597
+    },
+    "GameRes\\Material\\GuideLine.mtl.meta": {
+      "time": 1780287688429.8518
+    },
+    "GameRes\\Mat\\Monster.mtl.meta": {
+      "time": 1780287688398.582
+    },
+    "GameRes\\Material\\UI_2D.mtl.meta": {
+      "time": 1780287688429.8518
+    },
+    "GameRes\\Image\\图层 1 拷贝.png.meta": {
+      "time": 1780287688367.9255
+    },
+    "GameRes\\Image\\图层 11.png.meta": {
+      "time": 1780287688375.9048
+    },
+    "GameRes\\Prefab\\GuideLine.prefab.meta": {
+      "time": 1780287688523.1948
+    },
+    "GameRes\\Prefab\\Monster_0.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\Monster.prefab.meta": {
+      "time": 1780287688523.1948
+    },
+    "GameRes\\Prefab\\Monster_1.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\Prop_Brand.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\Monster_boss.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\Prop_Brand_2.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\Role_1.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\Role_0.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\Role.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\Role_2.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefab\\tire.prefab.meta": {
+      "time": 1780287688538.789
+    },
+    "GameRes\\Prefabs\\HpGreen.prefab.meta": {
+      "time": 1780287688599.73
+    },
+    "GameRes\\Prefabs\\loading.prefab.meta": {
+      "time": 1781231241074.2717
+    },
+    "GameRes\\Prefabs\\GameOverPanel.prefab.meta": {
+      "time": 1780287688570.0317
+    },
+    "GameRes\\shader\\material.mtl.meta": {
+      "time": 1781231241674.389
+    },
+    "GameRes\\shader\\ocean_realistic.mtl.meta": {
+      "time": 1780287688960.8213
+    },
+    "GameRes\\Rocker\\RockerAnim.anim.meta": {
+      "time": 1780287688617.4065
+    },
+    "GameRes\\shader\\ocean_realistic_v2.mtl.meta": {
+      "time": 1780287688960.8213
+    },
+    "GameRes\\shader\\640.webp.meta": {
+      "time": 1780287688851.5894
+    },
+    "GameRes\\Rocker\\img_rocker_0.png.meta": {
+      "time": 1780287688648.6777
+    },
+    "GameRes\\Rocker\\img_rocker_1.png.meta": {
+      "time": 1780287688648.6777
+    },
+    "resources\\Sound\\bgm.mp3.meta": {
+      "time": 1780287690101.5012
+    },
+    "resources\\Sound\\lose_music.mp3.meta": {
+      "time": 1780287690101.5012
+    },
+    "resources\\Sound\\Sound_boss_die.mp3.meta": {
+      "time": 1780287690101.5012
+    },
+    "resources\\Sound\\Sound_boss_attack.mp3.meta": {
+      "time": 1780287690101.5012
+    },
+    "resources\\Sound\\Sound_downST.mp3.meta": {
+      "time": 1780287690101.5012
+    },
+    "resources\\Sound\\Sound_FireGun.mp3.meta": {
+      "time": 1780287690054.666
+    },
+    "resources\\Sound\\Sound_Gun.mp3.meta": {
+      "time": 1780287690070.286
+    },
+    "resources\\Sound\\sound_met_die.mp3.meta": {
+      "time": 1780287690125.2744
+    },
+    "resources\\Sound\\Sound_Monster_Die.mp3.meta": {
+      "time": 1780287690070.286
+    },
+    "resources\\Sound\\Sound_Monster_Hit.mp3.meta": {
+      "time": 1780287690085.879
+    },
+    "Script\\Base\\AudioManager.ts.meta": {
+      "time": 1780287689070.6526
+    },
+    "Script\\Base\\CameraMove.ts.meta": {
+      "time": 1780287689070.6526
+    },
+    "resources\\Sound\\Sound_Ship_UpLevel.mp3.meta": {
+      "time": 1780287690101.5012
+    },
+    "resources\\Sound\\Sound_PlaceGold.mp3.meta": {
+      "time": 1780287690085.879
+    },
+    "Script\\Base\\EnumList.ts.meta": {
+      "time": 1780287689070.6526
+    },
+    "Script\\Base\\EventManager.ts.meta": {
+      "time": 1780287689070.6526
+    },
+    "Script\\Base\\LayerManager.ts.meta": {
+      "time": 1780287689086.2754
+    },
+    "Script\\Base\\PoolManager.ts.meta": {
+      "time": 1780287689117.517
+    },
+    "Script\\Base\\PrefabsManager.ts.meta": {
+      "time": 1780287689136.2734
+    },
+    "Script\\Base\\Singleton.ts.meta": {
+      "time": 1780287689137.2715
+    },
+    "Script\\Base\\UnityUpComponent.ts.meta": {
+      "time": 1780287689163.9194
+    },
+    "Script\\Tool\\Index.ts.meta": {
+      "time": 1780287689195.1619
+    },
+    "Script\\Tool\\TweenTool.ts.meta": {
+      "time": 1780287689195.1619
+    },
+    "resources\\Sound\\Sound_tire_hit.mp3.meta": {
+      "time": 1780287690101.5012
+    },
+    "resources\\Sound\\win_music.mp3.meta": {
+      "time": 1780287690126.272
+    },
+    "Script\\Tween\\TweenExamples.md.meta": {
+      "time": 1780287689226.4302
+    },
+    "Script\\Tween\\TweenReadMe.md.meta": {
+      "time": 1780287689243.3357
+    },
+    "Script\\Tween\\tweener-cheat-sheet.png.meta": {
+      "time": 1780287689257.2964
+    },
+    "GameRes\\DJBT_map\\fbx\\beizhenmen01.fbx.meta": {
+      "time": 1780287686960.7107
+    },
+    "GameRes\\DJBT_map\\fbx\\DJBT_dangban_01.fbx.meta": {
+      "time": 1780287686958.6504
+    },
+    "GameRes\\DJBT_map\\fbx\\DJBT_shiban_01.fbx.meta": {
+      "time": 1780287686960.7107
+    },
+    "GameRes\\DJBT_map\\fbx\\DJBT_langan_01.fbx.meta": {
+      "time": 1780287686959.6475
+    },
+    "GameRes\\DJBT_map\\mat\\beizhenmen01_huang.mtl.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\DJBT_map\\mat\\beizhenmen01_lan.mtl.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\DJBT_map\\mat\\liewen-001.mtl.meta": {
+      "time": 1781231239508.8296
+    },
+    "GameRes\\DJBT_map\\mat\\liewen.mtl.meta": {
+      "time": 1781231239509.8264
+    },
+    "GameRes\\DJBT_map\\mat\\luntai01_01.mtl.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\DJBT_map\\mat\\M_dangban_01.mtl.meta": {
+      "time": 1780287687007.577
+    },
+    "GameRes\\DJBT_map\\mat\\M_mlyz_01.mtl.meta": {
+      "time": 1780287687007.577
+    },
+    "GameRes\\DJBT_map\\mat\\M_qiao_01.mtl.meta": {
+      "time": 1780287687007.577
+    },
+    "GameRes\\DJBT_map\\fbx\\luntai01_01.fbx.meta": {
+      "time": 1780287686960.7107
+    },
+    "GameRes\\DJBT_map\\mat\\M_qiao_03.mtl.meta": {
+      "time": 1781231239505.4739
+    },
+    "GameRes\\DJBT_map\\mat\\M_qiao_langan_01.mtl.meta": {
+      "time": 1780287687007.577
+    },
+    "GameRes\\DJBT_map\\mat\\M_shiban_01.mtl.meta": {
+      "time": 1780287687007.577
+    },
+    "GameRes\\DJBT_map\\fbx\\yinying.fbx.meta": {
+      "time": 1781231239317.7292
+    },
+    "GameRes\\DJBT_map\\mat\\qiaoliang01_01.mtl.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\DJBT_map\\mat\\SM_robot_01.mtl.meta": {
+      "time": 1780287687007.577
+    },
+    "GameRes\\DJBT_map\\mat\\spTo3D-material.mtl.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\DJBT_map\\fbx\\SM_robot_01.fbx.meta": {
+      "time": 1780287686960.7107
+    },
+    "GameRes\\DJBT_map\\fbx\\DJBT_qiao_01.fbx.meta": {
+      "time": 1781231239315.3057
+    },
+    "GameRes\\DJBT_map\\mat\\water-001.mtl.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\DJBT_map\\mat\\water.mtl.meta": {
+      "time": 1780287687023.1978
+    },
+    "GameRes\\DJBT_map\\mat\\yinying.mtl.meta": {
+      "time": 1781231239512.0188
+    },
+    "GameRes\\DJBT_map\\pro\\DJBT_map.prefab.meta": {
+      "time": 1780287687038.8196
+    },
+    "GameRes\\DJBT_map\\pro\\DJBT_qiao_01.prefab.meta": {
+      "time": 1781231239524.459
+    },
+    "GameRes\\DJBT_map\\tex\\beizengmen01.png.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\Bowen_W.PNG.meta": {
+      "time": 1780287687117.4807
+    },
+    "GameRes\\DJBT_map\\tex\\liefeng_01.png.meta": {
+      "time": 1781231239600.538
+    },
+    "GameRes\\DJBT_map\\tex\\Landscape_city_10.png.meta": {
+      "time": 1780287687117.4807
+    },
+    "GameRes\\DJBT_map\\tex\\liefeng.png.meta": {
+      "time": 1781231239598.5435
+    },
+    "GameRes\\DJBT_map\\tex\\luntai01_D.jpg.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\T_langan_01.jpg.meta": {
+      "time": 1780287687117.4807
+    },
+    "GameRes\\DJBT_map\\tex\\sky.jpg.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\T_qiao_01_d.jpg.meta": {
+      "time": 1780287687117.4807
+    },
+    "GameRes\\DJBT_map\\tex\\T_qiao_01_ao.jpg.meta": {
+      "time": 1780287687117.4807
+    },
+    "GameRes\\DJBT_map\\tex\\T_qiao_01_n.jpg.meta": {
+      "time": 1780287687117.4807
+    },
+    "GameRes\\DJBT_map\\tex\\T_shiban_01_ao.png.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\T_shiban_01_d.png.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\T_xht_01_ao2.jpg.meta": {
+      "time": 1781231239596.9888
+    },
+    "GameRes\\DJBT_map\\tex\\T_xht_01_albedo.jpg.meta": {
+      "time": 1781231239594.8574
+    },
+    "GameRes\\DJBT_map\\tex\\Water01_foam_mask.png.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\water03.jpg.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\Water01_n.png.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\water04.png.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\DJBT_map\\tex\\water_D.jpg.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\Effect\\fab\\men.prefab.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\Effect\\fab\\baozha-.prefab.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\DJBT_map\\tex\\yingying.png.meta": {
+      "time": 1780287687133.103
+    },
+    "GameRes\\Effect\\fab\\nujian-bd.prefab.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\Effect\\fab\\qh-001.prefab.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\Effect\\fab\\qh.prefab.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\Effect\\fab\\qianghuo-buqiang.prefab.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\Effect\\fab\\shengji.prefab.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\Effect\\fab\\ss.prefab.meta": {
+      "time": 1781231239613.1433
+    },
+    "GameRes\\Effect\\qh\\baodian-001.mtl.meta": {
+      "time": 1780287687504.237
+    },
+    "GameRes\\Effect\\fab\\xue.prefab.meta": {
+      "time": 1780287687227.0972
+    },
+    "GameRes\\Effect\\qh\\baodian.mtl.meta": {
+      "time": 1780287687505.2346
+    },
+    "GameRes\\Effect\\qh\\cloul-001.mtl.meta": {
+      "time": 1780287687506.2314
+    },
+    "GameRes\\Effect\\qh\\cloul.mtl.meta": {
+      "time": 1780287687508.2256
+    },
+    "GameRes\\Effect\\qh\\b8549c638f53cd243225c8c23e3191e3ae292ce14bef-Qt8wvR_fw1200.png.meta": {
+      "time": 1780287687503.24
+    },
+    "GameRes\\Effect\\qh\\002635eg02izlx9s29xd59.png.meta": {
+      "time": 1780287687502.2422
+    },
+    "GameRes\\Effect\\qh\\km.mtl.meta": {
+      "time": 1780287687523.9885
+    },
+    "GameRes\\Effect\\qh\\s-001.mtl.meta": {
+      "time": 1780287687523.9885
+    },
+    "GameRes\\Effect\\qh\\e7a6425ec0bca3388ed2383c4cc84116d25cb68739c9b-SifAef.png.meta": {
+      "time": 1780287687508.3645
+    },
+    "GameRes\\Effect\\qh\\d77160d88d227ad681e9f91f3510799cb3bb346514505-FSDhpo.png.meta": {
+      "time": 1780287687508.3645
+    },
+    "GameRes\\Effect\\qh\\s.mtl.meta": {
+      "time": 1780287687523.9885
+    },
+    "GameRes\\Effect\\qh\\sssssssssssssssss-001.mtl.meta": {
+      "time": 1781231239634.2625
+    },
+    "GameRes\\Effect\\qh\\glow_wjf_014.png.meta": {
+      "time": 1780287687523.9885
+    },
+    "GameRes\\Effect\\qh\\sssssssssssssssss-002.mtl.meta": {
+      "time": 1781231239636.4153
+    },
+    "GameRes\\Effect\\qh\\glow_00175_RM.png.meta": {
+      "time": 1780287687508.3645
+    },
+    "GameRes\\Effect\\qh\\sssssssssssssssss.mtl.meta": {
+      "time": 1781231239637.4138
+    },
+    "GameRes\\Effect\\qh2\\baodian.mtl.meta": {
+      "time": 1780287687555.23
+    },
+    "GameRes\\Effect\\qh2\\cloul.mtl.meta": {
+      "time": 1780287687555.23
+    },
+    "GameRes\\Effect\\qh2\\baodian-001.mtl.meta": {
+      "time": 1780287687555.23
+    },
+    "GameRes\\Effect\\qh\\smoke_CPxs_rmx_007.png.meta": {
+      "time": 1780287687523.9885
+    },
+    "GameRes\\Effect\\qh2\\002635eg02izlx9s29xd59.png.meta": {
+      "time": 1780287687555.23
+    },
+    "GameRes\\Effect\\qh2\\e7a6425ec0bca3388ed2383c4cc84116d25cb68739c9b-SifAef.png.meta": {
+      "time": 1780287687555.23
+    },
+    "GameRes\\Effect\\qh2\\d77160d88d227ad681e9f91f3510799cb3bb346514505-FSDhpo.png.meta": {
+      "time": 1780287687555.23
+    },
+    "GameRes\\Effect\\qh2\\glow_00175_RM.png.meta": {
+      "time": 1780287687570.8494
+    },
+    "GameRes\\Effect\\qh2\\qh.prefab.meta": {
+      "time": 1780287687570.8494
+    },
+    "GameRes\\Effect\\qh2\\s.mtl.meta": {
+      "time": 1780287687570.8494
+    },
+    "GameRes\\Effect\\qh2\\s-001.mtl.meta": {
+      "time": 1780287687570.8494
+    },
+    "GameRes\\Effect\\qh2\\glow_wjf_014.png.meta": {
+      "time": 1780287687570.8494
+    },
+    "GameRes\\Effect\\qh2\\qh_up.prefab.meta": {
+      "time": 1780287687570.8494
+    },
+    "GameRes\\Environment\\Fbx\\beizhenmen01.fbx.meta": {
+      "time": 1780287687609.2324
+    },
+    "GameRes\\Environment\\Mat\\beizhenmen01_huang.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Mat\\beizhenmen01_lan.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Mat\\daqiao01_01.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Fbx\\daqiao01_01.fbx.meta": {
+      "time": 1780287687610.229
+    },
+    "GameRes\\Environment\\Mat\\daqiao01_02.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Mat\\luntai01_01.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Mat\\qiaoliang01_01.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Mat\\SM_robot_01.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Fbx\\luntai01_01.fbx.meta": {
+      "time": 1780287687611.227
+    },
+    "GameRes\\Environment\\Mat\\SM_robot_02.mtl.meta": {
+      "time": 1781235100373.065
+    },
+    "GameRes\\Environment\\Mat\\spTo3D-material.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Mat\\water-001.mtl.meta": {
+      "time": 1780287687648.4883
+    },
+    "GameRes\\Environment\\Fbx\\qiaoliang01_01.fbx.meta": {
+      "time": 1780287687612.2234
+    },
+    "GameRes\\Environment\\Mat\\water.mtl.meta": {
+      "time": 1780287687664.1104
+    },
+    "GameRes\\Environment\\Per\\daqiao01_01.prefab.meta": {
+      "time": 1780287687679.7344
+    },
+    "GameRes\\Environment\\Per\\luntai01_01.prefab.meta": {
+      "time": 1780287687679.7344
+    },
+    "GameRes\\Environment\\Per\\LTTJ.prefab.meta": {
+      "time": 1780287687679.7344
+    },
+    "GameRes\\Environment\\Per\\qiaoliang01_01.prefab.meta": {
+      "time": 1780287687679.7344
+    },
+    "GameRes\\Environment\\Fbx\\SM_robot_01.fbx.meta": {
+      "time": 1780287687608.2344
+    },
+    "GameRes\\Environment\\Tex\\beizengmen01.png.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\Bowen_W.PNG.meta": {
+      "time": 1780287687725.3984
+    },
+    "GameRes\\Environment\\Tex\\daqiao01_01.jpg.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\daqiao01_02D.jpg.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\daqiao01_02M.jpg.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\daqiao01_02N.jpg.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\luntai01_D.jpg.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\SM_robot_01_D.jpg.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\SM_robot_02_D_2.jpg.meta": {
+      "time": 1781231239674.038
+    },
+    "GameRes\\Environment\\Tex\\Landscape_city_10.png.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\Water01_foam_mask.png.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\Water01_n.png.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\FBX\\Arms\\AK-001.mtl.meta": {
+      "time": 1780287687757.6711
+    },
+    "GameRes\\Environment\\Tex\\water03.jpg.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\FBX\\Arms\\AK.mtl.meta": {
+      "time": 1780287687757.6711
+    },
+    "GameRes\\Environment\\Tex\\water04.png.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\Environment\\Tex\\water_D.jpg.meta": {
+      "time": 1780287687726.4282
+    },
+    "GameRes\\FBX\\Arms\\jiateling01.mtl.meta": {
+      "time": 1780287687757.6711
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue-001.mtl.meta": {
+      "time": 1780287687808.8318
+    },
+    "GameRes\\FBX\\Arms\\AK.PNG.meta": {
+      "time": 1780287687757.6711
+    },
+    "GameRes\\FBX\\Arms\\jiateling01.jpg.meta": {
+      "time": 1780287687757.6711
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue.mtl.meta": {
+      "time": 1780287687809.829
+    },
+    "GameRes\\FBX\\Arms\\jiateling01_N.jpg.meta": {
+      "time": 1780287687757.6711
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue_D.jpg.meta": {
+      "time": 1780287687809.829
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue_N.jpg.meta": {
+      "time": 1780287687810.8264
+    },
+    "GameRes\\FBX\\Arms\\jiateling01.fbx.meta": {
+      "time": 1781231239717.795
+    },
+    "GameRes\\FBX\\Hero_0\\攻击.fbx.meta": {
+      "time": 1780287687814.816
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang-001.mtl.meta": {
+      "time": 1781231240149.1487
+    },
+    "GameRes\\FBX\\Hero_0\\死亡.fbx.meta": {
+      "time": 1780287687815.8132
+    },
+    "GameRes\\FBX\\Hero_0\\跑.fbx.meta": {
+      "time": 1780287687816.8108
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang.mtl.meta": {
+      "time": 1780287687851.5256
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang_N.jpg.meta": {
+      "time": 1780287687851.5256
+    },
+    "GameRes\\FBX\\Hero_0\\跑攻击.fbx.meta": {
+      "time": 1780287687818.8054
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang_D.jpg.meta": {
+      "time": 1780287687851.5256
+    },
+    "GameRes\\FBX\\Hero_0\\zhujue_skin.fbx.meta": {
+      "time": 1780287687812.8213
+    },
+    "GameRes\\FBX\\Hero_1\\dazhuang.fbx.meta": {
+      "time": 1781231240159.7751
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_0.mtl.meta": {
+      "time": 1781231240317.792
+    },
+    "GameRes\\FBX\\Hero_1\\举东西待机(xg)_2.fbx.meta": {
+      "time": 1781231240170.6287
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_1.mtl.meta": {
+      "time": 1781231240321.9775
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_2.mtl.meta": {
+      "time": 1781231240322.9475
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_3.mtl.meta": {
+      "time": 1781231240325.2048
+    },
+    "GameRes\\FBX\\Hero_1\\跑攻击.fbx.meta": {
+      "time": 1780287687867.1477
+    },
+    "GameRes\\FBX\\Hero_1\\死亡.fbx.meta": {
+      "time": 1780287687867.1477
+    },
+    "GameRes\\FBX\\Hero_1\\攻击.fbx.meta": {
+      "time": 1780287687867.1477
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_3_D.jpg.meta": {
+      "time": 1781231240328.705
+    },
+    "GameRes\\FBX\\Hero_2\\Dz_01_ao.jpg.meta": {
+      "time": 1781231240313.8555
+    },
+    "GameRes\\FBX\\Hero_2\\Dz_01_n.jpg.meta": {
+      "time": 1781231240315.7522
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_01_idle1.fbx.meta": {
+      "time": 1781231240319.9626
+    },
+    "GameRes\\FBX\\Hero_2\\dz_tou_02_d.jpg.meta": {
+      "time": 1781231240330.9875
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_2_D.jpg.meta": {
+      "time": 1781231240482.7542
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_1_N.jpg.meta": {
+      "time": 1781231240480.7578
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_1_D.jpg.meta": {
+      "time": 1781231240478.8186
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_2_N.jpg.meta": {
+      "time": 1781231240485.4216
+    },
+    "GameRes\\FBX\\Hero_3\\super_big_dazhuang_0.mtl.meta": {
+      "time": 1781231240491.64
+    },
+    "GameRes\\FBX\\JJ\\SM_robot_03.mtl.meta": {
+      "time": 1781231240545.0164
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_3_D.jpg.meta": {
+      "time": 1781231240487.452
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_3_N.jpg.meta": {
+      "time": 1781231240489.4463
+    },
+    "GameRes\\FBX\\Monster\\Monster_0.mtl.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\Monster\\Monster_1.mtl.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\Monster\\pangsangshi01_N.jpg.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\Monster\\pangsangshi01_D.jpg.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\Hero_2\\big_dazhuang_3_D.fbx.meta": {
+      "time": 1781231240326.7107
+    },
+    "GameRes\\FBX\\Monster\\T_Slimed_Zombie_01_D.jpg.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\Monster\\T_Slimed_Zombie_01_N.jpg.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\Hero_3\\big_dazhuang_01_skin_2.fbx.meta": {
+      "time": 1781231240476.1006
+    },
+    "GameRes\\FBX\\Monster\\瘦丧尸.fbx.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_攻击.fbx.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\JJ\\机甲待机.fbx.meta": {
+      "time": 1781235453713.908
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_死亡02.fbx.meta": {
+      "time": 1781231240599.478
+    },
+    "GameRes\\FBX\\Monster_boos\\Monster_boos.mtl.meta": {
+      "time": 1780287688023.8337
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_待机.fbx.meta": {
+      "time": 1780287687992.5923
+    },
+    "GameRes\\FBX\\Monster_boos\\T_Zaombie_01_D.jpg.meta": {
+      "time": 1780287688023.8337
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_死亡扑腾(xg)1.fbx.meta": {
+      "time": 1781231240615.6807
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_死亡扑腾.fbx.meta": {
+      "time": 1781231240618.752
+    },
+    "GameRes\\FBX\\Monster\\胖丧尸_跑（修改）.fbx.meta": {
+      "time": 1781231240620.578
+    },
+    "GameRes\\FBX\\Monster_boos\\原地攻击.fbx.meta": {
+      "time": 1780287688023.8337
+    },
+    "GameRes\\FBX\\Monster_boos\\死亡.fbx.meta": {
+      "time": 1780287688023.8337
+    },
+    "GameRes\\FBX\\Monster_boos\\待机.fbx.meta": {
+      "time": 1780287688023.8337
+    },
+    "GameRes\\FBX\\Monster_boos\\跑.fbx.meta": {
+      "time": 1780287688023.8337
+    },
+    "GameRes\\FBX\\Monster_boos_2\\Boss_shenti_01.jpg.meta": {
+      "time": 1781231240735.717
+    },
+    "GameRes\\FBX\\Monster_boos_2\\Monster_boos.mtl.meta": {
+      "time": 1781231240750.4
+    },
+    "GameRes\\Image\\Bullet\\auto-atlas.pac.meta": {
+      "time": 1780287688086.2046
+    },
+    "GameRes\\FBX\\Monster_boos_2\\boos_02_skin_1.fbx.meta": {
+      "time": 1781231240767.906
+    },
+    "GameRes\\Image\\Bullet\\bullet_0.png.meta": {
+      "time": 1780287688086.2046
+    },
+    "GameRes\\Image\\Bullet\\bullet_1.png.meta": {
+      "time": 1780287688086.2046
+    },
+    "GameRes\\Image\\Bullet\\bullet_2.png.meta": {
+      "time": 1780287688086.2046
+    },
+    "GameRes\\Image\\Bullet\\bullet_3.png.meta": {
+      "time": 1780287688101.824
+    },
+    "GameRes\\Image\\Bullet\\bullet_4.png.meta": {
+      "time": 1780287688101.824
+    },
+    "GameRes\\Image\\GameOver\\bg.png.meta": {
+      "time": 1780287688179.4783
+    },
+    "GameRes\\Image\\GameOver\\bg_top.png.meta": {
+      "time": 1780287688179.4783
+    },
+    "GameRes\\FBX\\Monster_boos_2\\boos_02_攻击.fbx.meta": {
+      "time": 1781231240777.6262
+    },
+    "GameRes\\Image\\GameOver\\button.png.meta": {
+      "time": 1780287688179.4783
+    },
+    "GameRes\\Image\\GameOver\\DEFEAT.png.meta": {
+      "time": 1780287688133.0696
+    },
+    "GameRes\\Image\\GameOver\\img_button.png.meta": {
+      "time": 1780287688195.0984
+    },
+    "GameRes\\Image\\GameOver\\logo.png.meta": {
+      "time": 1781231240856.75
+    },
+    "GameRes\\Image\\GameOver\\The War.png.meta": {
+      "time": 1780287688133.0696
+    },
+    "GameRes\\Image\\GameOver\\VICTORY.png.meta": {
+      "time": 1780287688133.0696
+    },
+    "GameRes\\Image\\GameOver\\按钮-落版生锈.png.meta": {
+      "time": 1780287688195.0984
+    },
+    "GameRes\\Image\\Hp\\img_hp_0.png.meta": {
+      "time": 1781231240882.4143
+    },
+    "GameRes\\Image\\Hp\\img_hp_1.png.meta": {
+      "time": 1781231240896.924
+    },
+    "GameRes\\Image\\Hp\\img_hp_3.png.meta": {
+      "time": 1780287688243.0935
+    },
+    "GameRes\\FBX\\Monster_boos_2\\boos_02_死亡.fbx.meta": {
+      "time": 1781231240795.604
+    },
+    "GameRes\\Image\\Hp\\img_hp_5.png.meta": {
+      "time": 1780287688259.078
+    },
+    "GameRes\\Image\\Hp\\img_hp_6.png.meta": {
+      "time": 1780287688273.0835
+    },
+    "GameRes\\Image\\Hp\\img_hp_7_1.png.meta": {
+      "time": 1781231240912.0718
+    },
+    "GameRes\\Image\\img\\img_arrow_1.png.meta": {
+      "time": 1780287688335.571
+    },
+    "GameRes\\Image\\Hp\\img_hp_7_2.png.meta": {
+      "time": 1781231240925.9214
+    },
+    "GameRes\\FBX\\Monster_boos_2\\boos_02_走.fbx.meta": {
+      "time": 1781231240812.541
+    },
+    "GameRes\\Image\\img\\UI-AK47.png.meta": {
+      "time": 1780287688319.9482
+    },
+    "GameRes\\Image\\img\\UI-MP5.png.meta": {
+      "time": 1780287688319.9482
+    },
+    "GameRes\\Image\\img\\UI-加特林.png.meta": {
+      "time": 1780287688319.9482
+    },
+    "GameRes\\Image\\img\\UI-加特林黄金.png.meta": {
+      "time": 1780287688335.571
+    },
+    "GameRes\\Image\\img\\UI-坦克.png.meta": {
+      "time": 1780287688335.571
+    },
+    "GameRes\\Image\\img\\倍增板中间蓝光.png.meta": {
+      "time": 1780287688335.571
+    },
+    "GameRes\\Image\\img\\倍增板中间红光.png.meta": {
+      "time": 1780287688335.571
+    },
+    "GameRes\\Image\\img\\倍增板蓝.png.meta": {
+      "time": 1780287688351.1902
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_0.prefab.meta": {
+      "time": 1780287688461.0662
+    },
+    "GameRes\\Image\\img\\倍增板黄.png.meta": {
+      "time": 1780287688351.1902
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_1.prefab.meta": {
+      "time": 1780287688461.0662
+    },
+    "Script\\Base\\MoveRot\\MoveDrive.ts.meta": {
+      "time": 1780287689086.2754
+    },
+    "Script\\Base\\MoveRot\\RotationDrive.ts.meta": {
+      "time": 1780287689101.895
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_2.prefab.meta": {
+      "time": 1780287688461.0662
+    },
+    "Script\\Base\\MoveRot\\RotationVector.ts.meta": {
+      "time": 1780287689101.895
+    },
+    "Script\\Base\\TextAdaptation\\DownLoadL8.ts.meta": {
+      "time": 1780287689143.255
+    },
+    "Script\\Base\\TextAdaptation\\DragAndMoveL8.ts.meta": {
+      "time": 1780287689148.2952
+    },
+    "Script\\Base\\TextAdaptation\\L18Manager.ts.meta": {
+      "time": 1780287689163.9194
+    },
+    "Script\\Base\\TextAdaptation\\LangArrAuto.ts.meta": {
+      "time": 1780287689163.9194
+    },
+    "Script\\Base\\TextAdaptation\\LangAuto.ts.meta": {
+      "time": 1780287689163.9194
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_3.prefab.meta": {
+      "time": 1780287688461.0662
+    },
+    "GameRes\\Image\\img\\手.png.meta": {
+      "time": 1781231240953.0596
+    },
+    "Script\\Base\\TextAdaptation\\ResurrectionL8.ts.meta": {
+      "time": 1780287689163.9194
+    },
+    "GameRes\\Prefab\\Bullet\\Bullet_4.prefab.meta": {
+      "time": 1780287688461.0662
+    },
+    "Script\\functionS\\Bag\\FlayPropManager.ts.meta": {
+      "time": 1780287689289.562
+    },
+    "Script\\functionS\\Bag\\GroupBag3D.ts.meta": {
+      "time": 1780287689305.1824
+    },
+    "Script\\functionS\\Bag\\GroupPropTransform.ts.meta": {
+      "time": 1780287689305.1824
+    },
+    "Script\\functionS\\Bag\\IPropFly.ts.meta": {
+      "time": 1780287689305.1824
+    },
+    "Script\\functionS\\Bag\\LabBagUp.ts.meta": {
+      "time": 1780287689332.9136
+    },
+    "Script\\functionS\\Bag\\Prop.ts.meta": {
+      "time": 1780287689341.999
+    },
+    "Script\\functionS\\Bag\\PropManager.ts.meta": {
+      "time": 1780287689351.9739
+    },
+    "Script\\functionS\\Battle\\BulletManager.ts.meta": {
+      "time": 1780287689586.017
+    },
+    "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts.meta": {
+      "time": 1780287689586.017
+    },
+    "Script\\functionS\\Battle\\HpComponent.ts.meta": {
+      "time": 1780287689601.6394
+    },
+    "Script\\functionS\\Effect\\EffectManager.ts.meta": {
+      "time": 1780287689617.2598
+    },
+    "Script\\functionS\\Effect\\EffectRemoveBase.ts.meta": {
+      "time": 1780287689617.2598
+    },
+    "Script\\functionS\\Effect\\EffectTimePartRemove.ts.meta": {
+      "time": 1780287689617.2598
+    },
+    "Script\\functionS\\Effect\\EffectTimeRemove.ts.meta": {
+      "time": 1780287689617.2598
+    },
+    "Script\\functionS\\Guide\\GuideLine.ts.meta": {
+      "time": 1780287689694.2527
+    },
+    "Script\\functionS\\Guide\\GuideManager.ts.meta": {
+      "time": 1780287689694.2527
+    },
+    "Script\\functionS\\Jump\\BezierCurve.ts.meta": {
+      "time": 1780287689709.875
+    },
+    "Script\\functionS\\Jump\\JumpCurve.ts.meta": {
+      "time": 1780287689725.4966
+    },
+    "Script\\functionS\\Jump\\JumpCurve3D.ts.meta": {
+      "time": 1780287689741.1455
+    },
+    "Script\\functionS\\Jump\\JumpDriveEngine.ts.meta": {
+      "time": 1780287689741.1455
+    },
+    "Script\\functionS\\Jump\\JumpManager.ts.meta": {
+      "time": 1780287689741.1455
+    },
+    "Script\\functionS\\Jump\\JumpParabola.ts.meta": {
+      "time": 1780287689756.741
+    },
+    "Script\\functionS\\Jump\\JumpScatter.ts.meta": {
+      "time": 1780287689775.484
+    },
+    "Script\\functionS\\Jump\\JumpSequenceBase.ts.meta": {
+      "time": 1780287689785.6646
+    },
+    "Script\\functionS\\Monster\\MonsterBattleTaerget.ts.meta": {
+      "time": 1780287689801.6243
+    },
+    "Script\\functionS\\Monster\\MonsterCreate.ts.meta": {
+      "time": 1780287689803.9382
+    },
+    "Script\\functionS\\Other\\ArmsUp.ts.meta": {
+      "time": 1780287689819.898
+    },
+    "Script\\functionS\\Other\\CreatePropBrand.ts.meta": {
+      "time": 1780287689824.9143
+    },
+    "Script\\functionS\\Other\\PropArms.ts.meta": {
+      "time": 1780287689825.8816
+    },
+    "Script\\functionS\\Other\\PropBrand.ts.meta": {
+      "time": 1780287689826.8792
+    },
+    "Script\\functionS\\Player\\Player.ts.meta": {
+      "time": 1780287689835.8853
+    },
+    "Script\\functionS\\Player\\Role.ts.meta": {
+      "time": 1780287689835.8853
+    },
+    "Script\\functionS\\Rocker\\RockerLogic.ts.meta": {
+      "time": 1780287689851.5068
+    },
+    "Script\\functionS\\Rocker\\RockerManager.ts.meta": {
+      "time": 1780287689851.5068
+    },
+    "Script\\functionS\\Rocker\\RockerMouseEvent.ts.meta": {
+      "time": 1780287689851.5068
+    },
+    "Script\\functionS\\Rocker\\RockerUI.ts.meta": {
+      "time": 1780287689867.1294
+    },
+    "Script\\functionS\\ShoppIng\\Shopping.ts.meta": {
+      "time": 1780287689914.4963
+    },
+    "Script\\functionS\\ShoppIng\\ShoppIngEvent.ts.meta": {
+      "time": 1780287689914.4963
+    },
+    "Script\\functionS\\ShoppIng\\Shopping_Super.ts.meta": {
+      "time": 1780287689930.1187
+    },
+    "Script\\functionS\\SkAnim\\FbxManager.ts.meta": {
+      "time": 1780287689945.7393
+    },
+    "GameRes\\1219\\A-texiao\\mat\\baodian-add.mtl.meta": {
+      "time": 1780287686664.4802
+    },
+    "GameRes\\1219\\A-texiao\\mat\\glow-add-yuan-001.mtl.meta": {
+      "time": 1780287686664.4802
+    },
+    "GameRes\\1219\\A-texiao\\mat\\glow-add-yuan.mtl.meta": {
+      "time": 1780287686680.0754
+    },
+    "GameRes\\1219\\A-texiao\\mat\\glow-add.mtl.meta": {
+      "time": 1780287686680.0754
+    },
+    "GameRes\\1219\\A-texiao\\mat\\glow-blend.mtl.meta": {
+      "time": 1780287686680.0754
+    },
+    "GameRes\\1219\\A-texiao\\mat\\jiantou-add.mtl.meta": {
+      "time": 1780287686680.0754
+    },
+    "GameRes\\1219\\A-texiao\\mat\\sji-yuan-add.mtl.meta": {
+      "time": 1780287686695.6953
+    },
+    "GameRes\\1219\\A-texiao\\mat\\qianghuo.mtl.meta": {
+      "time": 1780287686695.6953
+    },
+    "GameRes\\1219\\A-texiao\\mat\\sji-yuan.mtl.meta": {
+      "time": 1780287686695.6953
+    },
+    "GameRes\\1219\\A-texiao\\mat\\spark-add.mtl.meta": {
+      "time": 1780287686695.6953
+    },
+    "GameRes\\1219\\A-texiao\\mat\\star-add.mtl.meta": {
+      "time": 1780287686695.6953
+    },
+    "GameRes\\1219\\A-texiao\\tex\\ani_CPxs_kx_067_lz01.png.meta": {
+      "time": 1780287686765.2925
+    },
+    "GameRes\\1219\\A-texiao\\tex\\fx_trail_yp_01.png.meta": {
+      "time": 1780287686766.2896
+    },
+    "GameRes\\1219\\A-texiao\\tex\\Glow_CPdr_wzc_002.png.meta": {
+      "time": 1780287686762.2998
+    },
+    "GameRes\\1219\\A-texiao\\tex\\Glow_CPgt_wlt_059.png.meta": {
+      "time": 1780287686763.297
+    },
+    "GameRes\\1219\\A-texiao\\tex\\glow_wjf_014.png.meta": {
+      "time": 1780287686767.2869
+    },
+    "GameRes\\1219\\A-texiao\\tex\\glow_wx_05.png.meta": {
+      "time": 1780287686769.282
+    },
+    "GameRes\\1219\\A-texiao\\tex\\jiantou_key_001.png.meta": {
+      "time": 1780287686770.2793
+    },
+    "GameRes\\1219\\A-texiao\\tex\\star.png.meta": {
+      "time": 1780287686771.275
+    },
+    "GameRes\\1219\\FX\\mat\\boom-b.mtl.meta": {
+      "time": 1780287686792.5786
+    },
+    "GameRes\\1219\\A-texiao\\tex\\Tex_Glow_03.PNG.png.meta": {
+      "time": 1780287686764.2944
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend-001.mtl.meta": {
+      "time": 1780287686792.5786
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend-002.mtl.meta": {
+      "time": 1780287686793.575
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend-003.mtl.meta": {
+      "time": 1780287686795.5713
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend-004.mtl.meta": {
+      "time": 1780287686796.5674
+    },
+    "GameRes\\1219\\A-texiao\\tex\\trail_CPxs_kx_038 - 副本.png.meta": {
+      "time": 1780287686772.2737
+    },
+    "GameRes\\1219\\FX\\mat\\glow_blend.mtl.meta": {
+      "time": 1780287686798.5618
+    },
+    "GameRes\\1219\\FX\\mat\\smok-001.mtl.meta": {
+      "time": 1780287686799.5596
+    },
+    "GameRes\\1219\\A-texiao\\mech\\hilex.FBX.meta": {
+      "time": 1780287686729.072
+    },
+    "GameRes\\1219\\FX\\tex\\150125y8s4mh93xee3t9eu__1_.png.meta": {
+      "time": 1780287686823.7354
+    },
+    "GameRes\\1219\\FX\\tex\\boom3.png.meta": {
+      "time": 1780287686827.7239
+    },
+    "GameRes\\1219\\A-texiao\\mech\\yuan-huan.FBX.meta": {
+      "time": 1780287686736.053
+    },
+    "GameRes\\1219\\FX\\tex\\fx_decal_zjj_01.png.meta": {
+      "time": 1780287686828.7205
+    },
+    "GameRes\\1219\\FX\\tex\\Glow_a_0004_00000.png.meta": {
+      "time": 1780287686825.7295
+    },
+    "GameRes\\1219\\FX\\tex\\Glow_CPmy_pfy_004.png.meta": {
+      "time": 1780287686824.7334
+    },
+    "GameRes\\1219\\FX\\yw\\yanwu.mtl.meta": {
+      "time": 1780287686848.7512
+    },
+    "GameRes\\1219\\FX\\tex\\Tex_Glow_03.PNG.png.meta": {
+      "time": 1780287686826.7263
+    },
+    "GameRes\\Effect\\A-texiao\\mat\\glow-add-yuan-001.mtl.meta": {
+      "time": 1780287687169.8682
+    },
+    "GameRes\\1219\\FX\\yw\\yanwu.prefab.meta": {
+      "time": 1780287686850.7456
+    },
+    "GameRes\\Effect\\A-texiao\\mat\\glow-add-yuan-00228.mtl.meta": {
+      "time": 1780287687172.8594
+    },
+    "GameRes\\1219\\FX\\yw\\002635eg02izlx9s29xd59.png.meta": {
+      "time": 1780287686843.764
+    },
+    "GameRes\\1219\\FX\\tex\\yuan.png.meta": {
+      "time": 1780287686829.7185
+    },
+    "GameRes\\FBX\\Hero_3\\Materials_big_dazhuang_01_skin_2\\maozi.mtl.meta": {
+      "time": 1781231240354.271
+    },
+    "GameRes\\FBX\\Hero_3\\Materials_big_dazhuang_01_skin_2\\pifu.mtl.meta": {
+      "time": 1781231240355.364
+    },
+    "GameRes\\FBX\\Hero_3\\Materials_big_dazhuang_01_skin_2\\yifu.mtl.meta": {
+      "time": 1781231240357.7175
+    },
+    "Script\\functionS\\Bag\\Base\\BagBase.ts.meta": {
+      "time": 1780287689258.3171
+    },
+    "GameRes\\Effect\\A-texiao\\tex\\Glow_CPgt_wlt_059.png.meta": {
+      "time": 1780287687180.2312
+    },
+    "GameRes\\Effect\\A-texiao\\tex\\03a5eb855a8d54a2009dec92ce5bd2e297dade3b12e26-iNahpk.png.meta": {
+      "time": 1780287687180.2312
+    },
+    "Script\\functionS\\Battle\\Attack\\AreaAttack.ts.meta": {
+      "time": 1780287689366.9583
+    },
+    "GameRes\\Effect\\A-texiao\\tex\\s1.png.meta": {
+      "time": 1780287687180.2312
+    },
+    "Script\\functionS\\Battle\\Attack\\AttackState.ts.meta": {
+      "time": 1780287689366.9583
+    },
+    "Script\\functionS\\Battle\\Attack\\MeleeAttack.ts.meta": {
+      "time": 1780287689366.9583
+    },
+    "Script\\functionS\\Battle\\Base\\AttackTargetBase.ts.meta": {
+      "time": 1780287689398.2012
+    },
+    "Script\\functionS\\Battle\\Base\\BattleTargetBase.ts.meta": {
+      "time": 1780287689398.2012
+    },
+    "Script\\functionS\\Battle\\Base\\FlashRedManager.ts.meta": {
+      "time": 1780287689398.2012
+    },
+    "Script\\functionS\\Battle\\Battle2D\\CollectBattleTarger2D.ts.meta": {
+      "time": 1780287689445.067
+    },
+    "Script\\functionS\\Battle\\Battle2D\\TriggerBase2D.ts.meta": {
+      "time": 1780287689463.011
+    },
+    "Script\\functionS\\Battle\\Battle3D\\AttackParkPlay.ts.meta": {
+      "time": 1780287689508.209
+    },
+    "Script\\functionS\\Battle\\Battle3D\\CollectBattleTarger3D.ts.meta": {
+      "time": 1780287689539.48
+    },
+    "Script\\functionS\\Battle\\Battle3D\\TriggerBase3D.ts.meta": {
+      "time": 1780287689539.48
+    },
+    "Script\\functionS\\Battle\\BattleTarger\\BattleTarget2D.ts.meta": {
+      "time": 1780287689555.106
+    },
+    "Script\\functionS\\Battle\\BattleTarger\\BattleTarget3D.ts.meta": {
+      "time": 1780287689555.106
+    },
+    "Script\\functionS\\Battle\\CollectBattleTarger\\CollectGetTarget.ts.meta": {
+      "time": 1780287689586.017
+    },
+    "Script\\functionS\\Battle\\CollectBattleTarger\\ColliderTag.ts.meta": {
+      "time": 1780287689601.6394
+    },
+    "Script\\functionS\\ShoppIng\\Buy\\BuyWay2D.ts.meta": {
+      "time": 1780287689882.7505
+    },
+    "Script\\functionS\\ShoppIng\\Buy\\BuyWay3D.ts.meta": {
+      "time": 1780287689882.7505
+    },
+    "Script\\functionS\\ShoppIng\\Buy\\BuyWayBase.ts.meta": {
+      "time": 1780287689908.4485
+    },
+    "Script\\functionS\\SkAnim\\SequenceFrameAnim\\FrameAnimManager.ts.meta": {
+      "time": 1780287689945.7393
+    },
+    "Script\\functionS\\SkAnim\\SequenceFrameAnim\\FrameManager.ts.meta": {
+      "time": 1780287689961.3623
+    },
+    "Script\\functionS\\UI\\GameOver\\GameOverPanel.ts.meta": {
+      "time": 1780287689976.982
+    },
+    "Script\\functionS\\UI\\GameOver\\UIButtonEvent.ts.meta": {
+      "time": 1780287689976.982
+    },
+    "GameRes\\1219\\Scene\\Eff\\light\\Lightning.ts.meta": {
+      "time": 1780287686883.016
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\bd-ci.mtl.meta": {
+      "time": 1781231239033.332
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\4011c5224acc2ceca45b61e1a0b720dbc7adc2282841-fwig59.png.meta": {
+      "time": 1781231239002.3196
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\153650dgx7m2px787xzp24.png.meta": {
+      "time": 1781231238986.6748
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\glow-add.mtl.meta": {
+      "time": 1781231239049.4668
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\glow-alpha.mtl.meta": {
+      "time": 1781231239057.5205
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\glow-bd.mtl.meta": {
+      "time": 1781231239065.739
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\Fx_Object02.png.meta": {
+      "time": 1781231239016.361
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\f55647c336a3a1def5504374fa5a33bb5b613d0763ad-ug0rOi.png.meta": {
+      "time": 1781231239041.058
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\glow_00175_RM.png.meta": {
+      "time": 1781231239074.0144
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\Glow_CPdr_wzc_002.png.meta": {
+      "time": 1781231239025.0244
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\shuye.mtl.meta": {
+      "time": 1781231239098.4885
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\stone.mtl.meta": {
+      "time": 1781231239107.437
+    },
+    "GameRes\\1219\\Res\\fbx\\dimian.fbx.meta": {
+      "time": 1780287686867.3955
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\ks-bd.prefab.meta": {
+      "time": 1781231239083.0454
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\nujian-bd.prefab.meta": {
+      "time": 1781231239084.5667
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\wood.mtl.meta": {
+      "time": 1781231239129.7722
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\yhuan.mtl.meta": {
+      "time": 1781231239138.414
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\wk-bd.prefab.meta": {
+      "time": 1781231239116.2559
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\bd-ci.mtl.meta": {
+      "time": 1780287688710.6658
+    },
+    "GameRes\\17.27\\GameRes\\FX\\jg-gj\\bd-hong.prefab.meta": {
+      "time": 1781231239173.442
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow-add.mtl.meta": {
+      "time": 1780287688741.9382
+    },
+    "GameRes\\17.27\\GameRes\\FX\\bd-kanshu\\yhuan2.png.meta": {
+      "time": 1781231239145.7124
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\153650dgx7m2px787xzp24.png.meta": {
+      "time": 1780287688703.5957
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow-alpha.mtl.meta": {
+      "time": 1780287688741.9382
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow-bd-001.mtl.meta": {
+      "time": 1781231241118.929
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow-bd.mtl.meta": {
+      "time": 1780287688757.5674
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\baodian (2).png.meta": {
+      "time": 1781231241116.8103
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\stone.mtl.meta": {
+      "time": 1780287688793.922
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\f55647c336a3a1def5504374fa5a33bb5b613d0763ad-ug0rOi.png.meta": {
+      "time": 1780287688726.316
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\yhuan.mtl.meta": {
+      "time": 1780287688806.8555
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat\\glow-add-yuan-002.mtl.meta": {
+      "time": 1780287687242.7173
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\nujian-bd.prefab.meta": {
+      "time": 1780287688773.1804
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat\\glow-light-01.mtl.meta": {
+      "time": 1780287687242.7173
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\Glow_CPdr_wzc_002.png.meta": {
+      "time": 1780287688710.6658
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\glow_00175_RM.png.meta": {
+      "time": 1780287688773.1804
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat\\glow-light-ch.mtl.meta": {
+      "time": 1780287687242.7173
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\mat\\tril-wuqi.mtl.meta": {
+      "time": 1780287687242.7173
+    },
+    "GameRes\\bd-jtl\\GameRes\\FX\\bd-kanshu\\yhuan2.png.meta": {
+      "time": 1780287688812.838
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat\\glow-add-yuan-002.mtl.meta": {
+      "time": 1780287687320.7798
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat\\glow-light-01.mtl.meta": {
+      "time": 1780287687320.7798
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat\\glow-light-ch.mtl.meta": {
+      "time": 1780287687320.7798
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex\\glow_cpdr_04.png.meta": {
+      "time": 1780287687284.0212
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex\\glow_CPgt_hyy_008.png.meta": {
+      "time": 1780287687277.0679
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex\\mask_CPmj_zf_013 (1).png.meta": {
+      "time": 1780287687290.0813
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\mat\\tril-wuqi.mtl.meta": {
+      "time": 1780287687320.7798
+    },
+    "GameRes\\Effect\\fx\\A-texiao\\tex\\yuan.png.meta": {
+      "time": 1780287687296.0654
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex\\glow_cpdr_04.png.meta": {
+      "time": 1780287687336.4004
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex\\glow_CPgt_hyy_008.png.meta": {
+      "time": 1780287687336.4004
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex\\mask_CPmj_zf_013 (1).png.meta": {
+      "time": 1780287687336.4004
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material\\glow-add-002.mtl.meta": {
+      "time": 1780287687398.436
+    },
+    "GameRes\\Effect\\propLight\\A-texiao\\tex\\yuan.png.meta": {
+      "time": 1780287687336.4004
+    },
+    "GameRes\\Effect\\propLight\\FX\\Fab\\dan-buf-001.prefab.meta": {
+      "time": 1780287687367.6433
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material\\glow-blend.mtl.meta": {
+      "time": 1780287687398.436
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material\\spark-add-001.mtl.meta": {
+      "time": 1780287687398.436
+    },
+    "GameRes\\Effect\\propLight\\FX\\Fab\\dan-buf-002.prefab.meta": {
+      "time": 1780287687367.6433
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Material\\star-add-001.mtl.meta": {
+      "time": 1780287687414.06
+    },
+    "GameRes\\Effect\\propLight\\FX\\Fab\\dan-buf.prefab.meta": {
+      "time": 1780287687384.402
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Attack2D\\RangedAttack.ts.meta": {
+      "time": 1780287689413.8503
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Bullet\\BulletBattle2D.ts.meta": {
+      "time": 1780287689429.4695
+    },
+    "Script\\functionS\\Battle\\Battle2D\\Bullet\\BulletCollideBase2D.ts.meta": {
+      "time": 1780287689429.4695
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Circle.ts.meta": {
+      "time": 1780287689476.9656
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Shrapnel.ts.meta": {
+      "time": 1780287689492.6187
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangeTowerAttack.ts.meta": {
+      "time": 1780287689476.9656
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts.meta": {
+      "time": 1780287689508.209
+    },
+    "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts.meta": {
+      "time": 1780287689523.8596
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Texture\\glow_wjf_015.png.meta": {
+      "time": 1780287687445.3013
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Texture\\star-001.png.meta": {
+      "time": 1780287687445.3013
+    },
+    "GameRes\\Effect\\propLight\\VFX\\Texture\\Tex_Glow_03.PNG-002.png.meta": {
+      "time": 1780287687429.7083
+    }
+  },
+  "missing": {}
+}

@@ -1,0 +1,50 @@
+<script>
+!function(t,e,n,s,a,c,i,o,p){t.AppsFlyerSdkObject=a,t.AF=t.AF||function(){
+(t.AF.q=t.AF.q||[]).push([Date.now()].concat(Array.prototype.slice.call(arguments)))},
+t.AF.id=t.AF.id||i,t.AF.plugins={},o=e.createElement(n),p=e.getElementsByTagName(n)[0],o.async=1,
+o.src="https://websdk.appsflyersdk.com?"+(c.length>0?"st="+c.split(",").sort().join(",")+"&":"")+(i.length>0?"af_id="+i:""),
+p.parentNode.insertBefore(o,p)}(window,document,"script",0,"AF","pba",{pba: {webAppId: "ddeb4b08-7608-499d-92d9-31adcbd48d23"}})
+</script>
+<script>
+    window.pba_init_cuid = function (id) {
+        try {
+            if (typeof AF === 'function') {
+                AF('pba', 'setCustomerUserId', id)
+            }
+            console.log("pba_log cuid: ", id)
+        } catch (error) {
+            // console.warn("pba_log cuid failed: ", error)
+        }
+    }
+    window.pba_send_msg = function (eventName, eventValue) {
+        try {
+            if (typeof AF === 'function') {
+                AF('pba', 'event', {eventType: 'EVENT', eventValue: eventValue, eventName: eventName});
+            }
+            console.log("pba_log msg: ", eventName, eventValue)
+        } catch (error) {
+            // console.warn("pba_log msg failed: ", error)
+        }
+    }
+</script>
+<script>
+    window.addEventListener('error', function (event) {
+        // 构建错误信息对象
+        const errorInfo = {
+            message: event.message,
+            filename: event.filename,
+            lineno: event.lineno,
+            colno: event.colno,
+            // error堆栈信息通常最有用
+            stack: event.error ? event.error.stack : 'No stack trace'
+        };
+
+        // 在此处处理错误信息：打印到控制台或发送到服务器
+        try {
+            window["pba_send_msg"] && window["pba_send_msg"]("game_error", JSON.stringify(errorInfo))
+        } catch (error) {
+            // console.warn("pba_log error report failed: ", error)
+        }
+        // console.error('Cocos 发生报错:', errorInfo);
+    });
+</script>

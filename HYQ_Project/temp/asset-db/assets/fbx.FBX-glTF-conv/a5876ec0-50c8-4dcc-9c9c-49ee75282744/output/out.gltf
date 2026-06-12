@@ -1,0 +1,136 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        3.8611011505126953,
+        281.6004943847656,
+        1.825233817100525
+      ],
+      "min": [
+        -3.875108003616333,
+        1.0214354991912842,
+        -0.00851736031472683
+      ],
+      "name": "dangban_01/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 96,
+      "name": "dangban_01/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 96,
+      "name": "dangban_01/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5123,
+      "count": 144,
+      "name": "dangban_01/INDICES",
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "copyright": "Copyright (c) 2018-2020 Chukong Technologies Inc.",
+    "generator": "FBX-glTF-conv",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 3072,
+      "byteStride": 32,
+      "name": "dangban_01",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 3072,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 3360,
+      "uri": "out.bin"
+    }
+  ],
+  "extras": {
+    "FBX-glTF-conv": {
+      "animationFrameRate": 30.0,
+      "fbxFileHeaderInfo": {
+        "creationTimeStamp": {
+          "day": 21,
+          "hour": 18,
+          "millisecond": 141,
+          "minute": 14,
+          "month": 5,
+          "second": 42,
+          "year": 2026
+        },
+        "creator": "FBX SDK/FBX Plugins version 2020.3.1",
+        "sceneInfo": {
+          "author": "",
+          "comment": "",
+          "keywords": "",
+          "original": {
+            "applicationName": "3ds Max",
+            "applicationVendor": "Autodesk",
+            "applicationVersion": "2023",
+            "fileName": "C:\\PlayableAD\\Cocos\\TheW\\DJBT\\DJBT_Project\\assets\\GameRes\\DJBT_map\\fbx\\DJBT_dangban_01.fbx"
+          },
+          "revision": "",
+          "subject": "",
+          "title": "",
+          "url": "D:\\工程项目\\test_pro\\test_pro\\HYQ_Project\\assets\\GameRes\\DJBT_map\\fbx\\DJBT_dangban_01.fbx"
+        }
+      }
+    }
+  },
+  "meshes": [
+    {
+      "name": "dangban_01",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "dangban_01",
+      "rotation": [
+        -0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071067094802856
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

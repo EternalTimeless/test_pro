@@ -1,0 +1,136 @@
+{
+  "__type__": "cc.Material",
+  "_name": "SM_robot_01",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "289690fc-1d11-4d60-bc8b-6530b3bfa62f",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 0,
+  "_defines": [
+    {
+      "USE_OUTLINE_PASS": true
+    },
+    {
+      "USE_ALBEDO_MAP": true,
+      "USE_OCCLUSION_MAP": true
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    },
+    {
+      "rasterizerState": {},
+      "depthStencilState": {},
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {
+      "lineWidth": 30,
+      "baseColor": {
+        "__type__": "cc.Color",
+        "r": 255,
+        "g": 235,
+        "b": 0,
+        "a": 255
+      }
+    },
+    {
+      "mainColor": {
+        "__type__": "cc.Color",
+        "r": 184,
+        "g": 217,
+        "b": 248,
+        "a": 255
+      },
+      "albedoScale": {
+        "__type__": "cc.Vec3",
+        "x": 2,
+        "y": 1.5,
+        "z": 1.5
+      },
+      "occlusion": 1,
+      "roughness": 0.798,
+      "metallic": 0.75,
+      "specularIntensity": 0,
+      "mainTexture": {
+        "__uuid__": "b0edef45-cc28-4310-b390-a3c9e316c1a3@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "occlusionMap": {
+        "__uuid__": "f930c461-a1e9-4d26-a882-001ecbec2419@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "flashRedEdgeRange": 0.69
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+}

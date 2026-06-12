@@ -1,0 +1,136 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 3953,
+      "max": [
+        2.5375072956085205,
+        1.931480884552002,
+        7.05244255065918
+      ],
+      "min": [
+        -2.5375072956085205,
+        -1.931480884552002,
+        -0.021123962476849556
+      ],
+      "name": "SM_robot_01/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 3953,
+      "name": "SM_robot_01/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 3953,
+      "name": "SM_robot_01/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5123,
+      "count": 8001,
+      "name": "SM_robot_01/INDICES",
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "copyright": "Copyright (c) 2018-2020 Chukong Technologies Inc.",
+    "generator": "FBX-glTF-conv",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 126496,
+      "byteStride": 32,
+      "name": "SM_robot_01",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 16002,
+      "byteOffset": 126496,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 142498,
+      "uri": "out.bin"
+    }
+  ],
+  "extras": {
+    "FBX-glTF-conv": {
+      "animationFrameRate": 30.0,
+      "fbxFileHeaderInfo": {
+        "creationTimeStamp": {
+          "day": 13,
+          "hour": 17,
+          "millisecond": 527,
+          "minute": 51,
+          "month": 5,
+          "second": 45,
+          "year": 2026
+        },
+        "creator": "FBX SDK/FBX Plugins version 2020.1.1",
+        "sceneInfo": {
+          "author": "",
+          "comment": "",
+          "keywords": "",
+          "original": {
+            "applicationName": "3ds Max",
+            "applicationVendor": "Autodesk",
+            "applicationVersion": "2022",
+            "fileName": "D:\\work_2025\\20260507\\JJI54553705227_fbx\\FBX\\SM_robot_01\\1.fbx"
+          },
+          "revision": "",
+          "subject": "",
+          "title": "",
+          "url": "D:\\工程项目\\test_pro\\test_pro\\HYQ_Project\\assets\\GameRes\\DJBT_map\\fbx\\SM_robot_01.fbx"
+        }
+      }
+    }
+  },
+  "meshes": [
+    {
+      "name": "SM_robot_01",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "SM_robot_01",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

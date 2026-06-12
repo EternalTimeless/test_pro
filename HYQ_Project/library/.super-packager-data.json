@@ -1,0 +1,64 @@
+{
+  "4a53e2af-1a8b-4928-a79a-b5f0acfdefe3": {
+    "url": "db://super-packager/Common",
+    "value": {},
+    "versionCode": 1
+  },
+  "cd7be2fd-ec28-40a6-adc7-c0bef20e54c0": {
+    "url": "db://super-packager/JiangYv",
+    "value": {},
+    "versionCode": 1
+  },
+  "38070a08-b7cb-4d0c-87e3-71e496a9cc24": {
+    "url": "db://super-packager/JiangYv/PBASDK-v3",
+    "value": {},
+    "versionCode": 1
+  },
+  "aa6cd0a6-0e91-4013-94bc-e2063049f65a": {
+    "url": "db://super-packager/Common/SuperPackage.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "846ecf41-ae5d-42d1-b5c2-6e313419dcaf": {
+    "url": "db://super-packager/Common/super_html_playable.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "bc92f911-8c01-4655-8a5b-36ae0ec1adea": {
+    "url": "db://super-packager/JiangYv/ReadMe.md",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "e1855f73-071a-43c2-a9f2-8159084b9fef": {
+    "url": "db://super-packager/JiangYv/SuperPackageJY.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "de608ba4-76a0-4ad8-899e-06d88d0487fc": {
+    "url": "db://super-packager/JiangYv/PBASDK-v3/PBASDK.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "4b4090e1-7c95-4b8e-8ac3-a719cc61150b": {
+    "url": "db://super-packager/JiangYv/PBASDK-v3/PLASDK.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "c689d256-1b66-46b2-b469-99c81a70e587": {
+    "url": "db://super-packager/JiangYv/PBASDK-v3/PrintComponent.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "c698ed40-8d4f-4437-8819-712c3c483b38": {
+    "url": "db://super-packager/JiangYv/PBASDK-v3/StutterCheck.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "60a7277c-7686-410d-bce1-6c9bc1c776be": {
+    "url": "db://super-packager/JiangYv/PBASDK-v3/super_html_playable.ts",
+    "value": {},
+    "versionCode": 1
+  }
+}

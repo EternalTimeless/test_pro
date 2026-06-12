@@ -1,0 +1,90 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "img_hp_6",
+    "atlas": "",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 147,
+      "height": 28
+    },
+    "offset": {
+      "x": 0,
+      "y": 0
+    },
+    "originalSize": {
+      "width": 147,
+      "height": 28
+    },
+    "rotated": false,
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "vertices": {
+      "rawPosition": [
+        -73.5,
+        -14,
+        0,
+        73.5,
+        -14,
+        0,
+        -73.5,
+        14,
+        0,
+        73.5,
+        14,
+        0
+      ],
+      "indexes": [
+        0,
+        1,
+        2,
+        2,
+        1,
+        3
+      ],
+      "uv": [
+        0,
+        28,
+        147,
+        28,
+        0,
+        0,
+        147,
+        0
+      ],
+      "nuv": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "minPos": {
+        "x": -73.5,
+        "y": -14,
+        "z": 0
+      },
+      "maxPos": {
+        "x": 73.5,
+        "y": 14,
+        "z": 0
+      }
+    },
+    "texture": "b02d9bd3-9ab4-4d1e-be38-72962cacb681@6c48a",
+    "packable": true,
+    "pixelsToUnit": 100,
+    "pivot": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "meshType": 0
+  }
+}

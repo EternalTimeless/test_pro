@@ -1,0 +1,90 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "倍增板中间红光",
+    "atlas": "",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 329,
+      "height": 182
+    },
+    "offset": {
+      "x": 0,
+      "y": 0
+    },
+    "originalSize": {
+      "width": 329,
+      "height": 182
+    },
+    "rotated": false,
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "vertices": {
+      "rawPosition": [
+        -164.5,
+        -91,
+        0,
+        164.5,
+        -91,
+        0,
+        -164.5,
+        91,
+        0,
+        164.5,
+        91,
+        0
+      ],
+      "indexes": [
+        0,
+        1,
+        2,
+        2,
+        1,
+        3
+      ],
+      "uv": [
+        0,
+        182,
+        329,
+        182,
+        0,
+        0,
+        329,
+        0
+      ],
+      "nuv": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "minPos": {
+        "x": -164.5,
+        "y": -91,
+        "z": 0
+      },
+      "maxPos": {
+        "x": 164.5,
+        "y": 91,
+        "z": 0
+      }
+    },
+    "texture": "187087c5-cae7-4505-aa1a-535b5c6557ef@6c48a",
+    "packable": true,
+    "pixelsToUnit": 100,
+    "pivot": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "meshType": 0
+  }
+}

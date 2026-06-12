@@ -1,0 +1,8 @@
+{
+  "__type__": "cc.TextAsset",
+  "_name": "ReadMe",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "text": "# PBASDK 可玩广告SDK\r\n\r\n## 快速开始\r\n只适用于江娱\r\n\r\n### 1. 初始化SDK\r\n\r\n在游戏开始前调用初始化方法：\r\n\r\n```typescript\r\n/**\r\n * 初始化SDK\r\n * @param material 素材名称，打包好后自动注入\r\n * @param maxStage 最大关卡数，例如: 1，没有关卡的游戏可以传 1\r\n */\r\nPBASDK.Init(SuperPackageJY.Instance.materialName, 1);\r\n```\r\n\r\n### 2. 基本使用流程\r\n\r\n```typescript\r\n// 游戏开始\r\nPBASDK.GameStart()\r\n\r\n// 触摸开始\r\nPBASDK.TouchStart()\r\n\r\n// 触摸结束\r\nPBASDK.TouchEnd()\r\n\r\n// 重试按钮点击时候调用\r\nPBASDK.RePlay()\r\n\r\n// 游戏结束\r\nPBASDK.GameEnd(true) // true表示成功，false表示失败\r\n\r\n// 下载\r\nSuperPackageJY.Instance.Download()\r\n\r\n// 自动跳转下载\r\nSuperPackageJY.Instance.AutoDownload()\r\n\r\n// TCE下载，在常规版本中不起作用，TCE版本中会跳转\r\nSuperPackageJY.Instance.DownloadTCE()\r\n```"
+}

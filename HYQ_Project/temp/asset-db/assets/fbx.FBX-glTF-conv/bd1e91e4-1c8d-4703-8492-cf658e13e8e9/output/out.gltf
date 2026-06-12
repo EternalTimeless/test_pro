@@ -1,0 +1,292 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 5980,
+      "max": [
+        8.635624885559082,
+        302.6367492675781,
+        1.2944408655166626
+      ],
+      "min": [
+        -8.24004077911377,
+        33.89341735839844,
+        0.22203704714775085
+      ],
+      "name": "daqiao01_02/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 5980,
+      "name": "daqiao01_02/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 5980,
+      "name": "daqiao01_02/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5123,
+      "count": 19320,
+      "name": "daqiao01_02/INDICES",
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        8.450764656066895,
+        345.1439208984375,
+        0.03797607496380806
+      ],
+      "min": [
+        -8.001128196716309,
+        6.486913681030273,
+        0.03797607496380806
+      ],
+      "name": "daqiao01_01/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 6,
+      "name": "daqiao01_01/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 6,
+      "name": "daqiao01_01/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 12,
+      "name": "daqiao01_01/INDICES",
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 750,
+      "max": [
+        8.675376892089844,
+        296.5203857421875,
+        0.24839423596858978
+      ],
+      "min": [
+        -8.283750534057617,
+        32.84675598144531,
+        -0.05737560987472534
+      ],
+      "name": "daqiao01_03/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 4,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 750,
+      "name": "daqiao01_03/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 4,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 750,
+      "name": "daqiao01_03/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5123,
+      "count": 3456,
+      "name": "daqiao01_03/INDICES",
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "copyright": "Copyright (c) 2018-2020 Chukong Technologies Inc.",
+    "generator": "FBX-glTF-conv",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 191360,
+      "byteStride": 32,
+      "name": "daqiao01_02",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 38640,
+      "byteOffset": 191360,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 192,
+      "byteOffset": 230000,
+      "byteStride": 32,
+      "name": "daqiao01_01",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 24,
+      "byteOffset": 230192,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 24000,
+      "byteOffset": 230216,
+      "byteStride": 32,
+      "name": "daqiao01_03",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 6912,
+      "byteOffset": 254216,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 261128,
+      "uri": "out.bin"
+    }
+  ],
+  "extras": {
+    "FBX-glTF-conv": {
+      "animationFrameRate": 30.0,
+      "fbxFileHeaderInfo": {
+        "creationTimeStamp": {
+          "day": 9,
+          "hour": 11,
+          "millisecond": 599,
+          "minute": 57,
+          "month": 6,
+          "second": 17,
+          "year": 2026
+        },
+        "creator": "FBX SDK/FBX Plugins version 2020.3.1",
+        "sceneInfo": {
+          "author": "",
+          "comment": "",
+          "keywords": "",
+          "original": {
+            "applicationName": "3ds Max",
+            "applicationVendor": "Autodesk",
+            "applicationVersion": "2023",
+            "fileName": "C:\\PlayableAD\\Cocos\\TheW\\DJBT\\DJBT_Project\\assets\\GameRes\\DJBT_map\\fbx\\DJBT_qiao_01.fbx"
+          },
+          "revision": "",
+          "subject": "",
+          "title": "",
+          "url": "D:\\工程项目\\test_pro\\test_pro\\HYQ_Project\\assets\\GameRes\\DJBT_map\\fbx\\DJBT_qiao_01.fbx"
+        }
+      }
+    }
+  },
+  "meshes": [
+    {
+      "name": "daqiao01_02",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3
+        }
+      ]
+    },
+    {
+      "name": "daqiao01_01",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7
+        }
+      ]
+    },
+    {
+      "name": "daqiao01_03",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "daqiao01_02",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
+    },
+    {
+      "mesh": 1,
+      "name": "daqiao01_01",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
+    },
+    {
+      "mesh": 2,
+      "name": "daqiao01_03",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "nodes": [
+        0,
+        1,
+        2
+      ]
+    }
+  ]
+}

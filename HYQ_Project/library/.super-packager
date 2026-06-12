@@ -1,0 +1,19 @@
+{
+    "version": "1.0.1",
+    "data": {
+        "paths": [
+            "Common",
+            "JiangYv",
+            "JiangYv\\PBASDK-v3",
+            "Common\\SuperPackage.ts",
+            "Common\\super_html_playable.ts",
+            "JiangYv\\ReadMe.md",
+            "JiangYv\\SuperPackageJY.ts",
+            "JiangYv\\PBASDK-v3\\PBASDK.ts",
+            "JiangYv\\PBASDK-v3\\PLASDK.ts",
+            "JiangYv\\PBASDK-v3\\PrintComponent.ts",
+            "JiangYv\\PBASDK-v3\\StutterCheck.ts",
+            "JiangYv\\PBASDK-v3\\super_html_playable.ts"
+        ]
+    }
+}
