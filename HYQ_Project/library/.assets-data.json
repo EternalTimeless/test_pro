@@ -35,7 +35,7 @@
     "versionCode": 1
   },
   "5407ff8f-12ff-4b08-9caf-28a0bd55a2fd": {
-    "url": "db://assets/GameRes/DJBT_map",
+    "url": "db://assets/GameRes/HYQ_map",
     "value": {},
     "versionCode": 1
   },
@@ -150,22 +150,22 @@
     "versionCode": 1
   },
   "229eb031-8d50-4c68-b73d-e66523715f82": {
-    "url": "db://assets/GameRes/DJBT_map/fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx",
     "value": {},
     "versionCode": 1
   },
   "e69ae79e-b3b8-4c5c-96a5-3f3cf1f66c88": {
-    "url": "db://assets/GameRes/DJBT_map/mat",
+    "url": "db://assets/GameRes/HYQ_map/mat",
     "value": {},
     "versionCode": 1
   },
   "ef4f8192-49e6-4b7c-ae26-b60ed84dae17": {
-    "url": "db://assets/GameRes/DJBT_map/pro",
+    "url": "db://assets/GameRes/HYQ_map/pro",
     "value": {},
     "versionCode": 1
   },
   "513967f0-60a3-4c8f-a634-ff1654d7f0d4": {
-    "url": "db://assets/GameRes/DJBT_map/tex",
+    "url": "db://assets/GameRes/HYQ_map/tex",
     "value": {},
     "versionCode": 1
   },
@@ -704,14 +704,14 @@
     "versionCode": 1
   },
   "6a4ab442-3da7-4426-96c7-f628a1416a22": {
-    "url": "db://assets/GameRes/DJBT_map/mat/builtin-standard-water.effect",
+    "url": "db://assets/GameRes/HYQ_map/mat/builtin-standard-water.effect",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "cd8b6824-0576-48cb-af48-79e0c83536e9": {
-    "url": "db://assets/GameRes/DJBT_map/mat/Shader_Water.effect",
+    "url": "db://assets/GameRes/HYQ_map/mat/Shader_Water.effect",
     "value": {
       "depends": []
     },
@@ -1649,22 +1649,22 @@
     "versionCode": 1
   },
   "982fdbd7-08e1-41e7-9cc3-718cf0152d36": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/beizhenmen01.fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx/beizhenmen01.fbx",
     "value": {},
     "versionCode": 3
   },
   "a5876ec0-50c8-4dcc-9c9c-49ee75282744": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_dangban_01.fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_dangban_01.fbx",
     "value": {},
     "versionCode": 3
   },
   "326c21a7-5045-4e8c-b7ec-39b2f56cd152": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_langan_01.fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_langan_01.fbx",
     "value": {},
     "versionCode": 3
   },
   "bd1e91e4-1c8d-4703-8492-cf658e13e8e9": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_qiao_01.fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_qiao_01.fbx",
     "value": {},
     "versionCode": 3
   },
@@ -1678,19 +1678,19 @@
     "versionCode": 1
   },
   "9a96fc79-fcf2-4e2d-946e-0dca53a468fb": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_shiban_01.fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_shiban_01.fbx",
     "value": {},
     "versionCode": 3
   },
   "982fdbd7-08e1-41e7-9cc3-718cf0152d36@35625": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/beizhenmen01.fbx@35625",
+    "url": "db://assets/GameRes/HYQ_map/fbx/beizhenmen01.fbx@35625",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "982fdbd7-08e1-41e7-9cc3-718cf0152d36@ba9d2": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/beizhenmen01.fbx@ba9d2",
+    "url": "db://assets/GameRes/HYQ_map/fbx/beizhenmen01.fbx@ba9d2",
     "value": {
       "depends": [
         "982fdbd7-08e1-41e7-9cc3-718cf0152d36@35625"
@@ -1699,19 +1699,19 @@
     "versionCode": 1
   },
   "ac885820-eb24-4333-bd15-351ec5c28de6": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/luntai01_01.fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx/luntai01_01.fbx",
     "value": {},
     "versionCode": 3
   },
   "a5876ec0-50c8-4dcc-9c9c-49ee75282744@3ac76": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_dangban_01.fbx@3ac76",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_dangban_01.fbx@3ac76",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "a5876ec0-50c8-4dcc-9c9c-49ee75282744@3c2cb": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_dangban_01.fbx@3c2cb",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_dangban_01.fbx@3c2cb",
     "value": {
       "depends": [
         "a5876ec0-50c8-4dcc-9c9c-49ee75282744@3ac76"
@@ -1720,26 +1720,26 @@
     "versionCode": 1
   },
   "e76c3f98-2be2-4e00-81c7-f9aa9699e9a6": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/SM_robot_01.fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx/SM_robot_01.fbx",
     "value": {},
     "versionCode": 3
   },
   "326c21a7-5045-4e8c-b7ec-39b2f56cd152@ab3ca": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_langan_01.fbx@ab3ca",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_langan_01.fbx@ab3ca",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "9a96fc79-fcf2-4e2d-946e-0dca53a468fb@6016b": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_shiban_01.fbx@6016b",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_shiban_01.fbx@6016b",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "9a96fc79-fcf2-4e2d-946e-0dca53a468fb@05c10": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_shiban_01.fbx@05c10",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_shiban_01.fbx@05c10",
     "value": {
       "depends": [
         "9a96fc79-fcf2-4e2d-946e-0dca53a468fb@6016b"
@@ -1748,26 +1748,26 @@
     "versionCode": 1
   },
   "afc1e48c-0091-4e75-acf9-68ac0e7c0bde": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/yinying.fbx",
+    "url": "db://assets/GameRes/HYQ_map/fbx/yinying.fbx",
     "value": {},
     "versionCode": 3
   },
   "326c21a7-5045-4e8c-b7ec-39b2f56cd152@19ebd": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_langan_01.fbx@19ebd",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_langan_01.fbx@19ebd",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "326c21a7-5045-4e8c-b7ec-39b2f56cd152@bf45a": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_langan_01.fbx@bf45a",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_langan_01.fbx@bf45a",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "326c21a7-5045-4e8c-b7ec-39b2f56cd152@127c7": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_langan_01.fbx@127c7",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_langan_01.fbx@127c7",
     "value": {
       "depends": [
         "326c21a7-5045-4e8c-b7ec-39b2f56cd152@ab3ca",
@@ -1778,7 +1778,7 @@
     "versionCode": 1
   },
   "81266e09-8b67-40ba-8c32-369d9f124fd9": {
-    "url": "db://assets/GameRes/DJBT_map/mat/beizhenmen01_huang.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/beizhenmen01_huang.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1788,7 +1788,7 @@
     "versionCode": 1
   },
   "7e90093d-1c1a-4c56-8364-41128c59a42f": {
-    "url": "db://assets/GameRes/DJBT_map/mat/beizhenmen01_lan.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/beizhenmen01_lan.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1798,7 +1798,7 @@
     "versionCode": 1
   },
   "55a052c4-dbad-4acd-8faf-ade16a9d4a0a": {
-    "url": "db://assets/GameRes/DJBT_map/mat/liewen-001.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/liewen-001.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1808,7 +1808,7 @@
     "versionCode": 1
   },
   "b46f5d80-b298-4ee3-b55f-04cf6ba54a87": {
-    "url": "db://assets/GameRes/DJBT_map/mat/liewen.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/liewen.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1818,7 +1818,7 @@
     "versionCode": 1
   },
   "c79d9585-fd6d-4b7f-a246-98b7350bd89c": {
-    "url": "db://assets/GameRes/DJBT_map/mat/luntai01_01.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/luntai01_01.mtl",
     "value": {
       "depends": [
         "6b44536c-b1b6-4add-b243-c1655413c793",
@@ -1828,7 +1828,7 @@
     "versionCode": 1
   },
   "fc9d49d8-ba55-41f9-9b0b-d7c74c55e9d3": {
-    "url": "db://assets/GameRes/DJBT_map/mat/M_dangban_01.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/M_dangban_01.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1839,7 +1839,7 @@
     "versionCode": 1
   },
   "878dea73-e3e0-4fa7-bb8b-a4fa5e0e07d3": {
-    "url": "db://assets/GameRes/DJBT_map/mat/M_mlyz_01.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/M_mlyz_01.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4"
@@ -1848,7 +1848,7 @@
     "versionCode": 1
   },
   "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@17065": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_qiao_01.fbx@17065",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_qiao_01.fbx@17065",
     "value": {
       "depends": [
         "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@80389",
@@ -1859,7 +1859,7 @@
     "versionCode": 1
   },
   "c2aaab69-96de-4321-a4f1-2a5cc5ca4fdf": {
-    "url": "db://assets/GameRes/DJBT_map/mat/M_qiao_01.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/M_qiao_01.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1871,14 +1871,14 @@
     "versionCode": 1
   },
   "ac885820-eb24-4333-bd15-351ec5c28de6@6f7e6": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/luntai01_01.fbx@6f7e6",
+    "url": "db://assets/GameRes/HYQ_map/fbx/luntai01_01.fbx@6f7e6",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "cb382567-9951-4923-ae47-16b864529b75": {
-    "url": "db://assets/GameRes/DJBT_map/mat/M_qiao_03.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/M_qiao_03.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1889,7 +1889,7 @@
     "versionCode": 1
   },
   "ac885820-eb24-4333-bd15-351ec5c28de6@c3ce2": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/luntai01_01.fbx@c3ce2",
+    "url": "db://assets/GameRes/HYQ_map/fbx/luntai01_01.fbx@c3ce2",
     "value": {
       "depends": [
         "ac885820-eb24-4333-bd15-351ec5c28de6@6f7e6"
@@ -1898,14 +1898,14 @@
     "versionCode": 1
   },
   "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@80389": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_qiao_01.fbx@80389",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_qiao_01.fbx@80389",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "e9773f04-54f5-4eeb-a2da-a494fb963e22": {
-    "url": "db://assets/GameRes/DJBT_map/mat/M_qiao_langan_01.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/M_qiao_langan_01.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1915,7 +1915,7 @@
     "versionCode": 1
   },
   "195a1b86-f57e-4d07-af1b-3f836083249a": {
-    "url": "db://assets/GameRes/DJBT_map/mat/M_shiban_01.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/M_shiban_01.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1926,14 +1926,14 @@
     "versionCode": 1
   },
   "afc1e48c-0091-4e75-acf9-68ac0e7c0bde@b8a2d": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/yinying.fbx@b8a2d",
+    "url": "db://assets/GameRes/HYQ_map/fbx/yinying.fbx@b8a2d",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "f46a2487-e479-4716-b8eb-7daa599f5c11": {
-    "url": "db://assets/GameRes/DJBT_map/mat/qiaoliang01_01.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/qiaoliang01_01.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1944,14 +1944,14 @@
     "versionCode": 1
   },
   "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@7a922": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_qiao_01.fbx@7a922",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_qiao_01.fbx@7a922",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "afc1e48c-0091-4e75-acf9-68ac0e7c0bde@559c4": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/yinying.fbx@559c4",
+    "url": "db://assets/GameRes/HYQ_map/fbx/yinying.fbx@559c4",
     "value": {
       "depends": [
         "afc1e48c-0091-4e75-acf9-68ac0e7c0bde@b8a2d"
@@ -1960,7 +1960,7 @@
     "versionCode": 1
   },
   "e0222792-1620-46fa-9c4f-ea969b954977": {
-    "url": "db://assets/GameRes/DJBT_map/mat/SM_robot_01.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/SM_robot_01.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1970,7 +1970,7 @@
     "versionCode": 1
   },
   "3ad2b178-466a-44a7-9764-346b7c6fbc5d": {
-    "url": "db://assets/GameRes/DJBT_map/mat/spTo3D-material.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/spTo3D-material.mtl",
     "value": {
       "depends": [
         "60f7195c-ec2a-45eb-ba94-8955f60e81d0"
@@ -1979,14 +1979,14 @@
     "versionCode": 1
   },
   "e76c3f98-2be2-4e00-81c7-f9aa9699e9a6@7a08d": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/SM_robot_01.fbx@7a08d",
+    "url": "db://assets/GameRes/HYQ_map/fbx/SM_robot_01.fbx@7a08d",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "b317da22-e4e1-4c90-b51d-6aa7bc18e54d": {
-    "url": "db://assets/GameRes/DJBT_map/mat/water-001.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/water-001.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -1996,7 +1996,7 @@
     "versionCode": 1
   },
   "096f8e98-af7e-491e-80c0-80ef90a131cc": {
-    "url": "db://assets/GameRes/DJBT_map/mat/water.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/water.mtl",
     "value": {
       "depends": [
         "cf33035a-7405-4c8c-9699-c1ee782e41b6",
@@ -2008,7 +2008,7 @@
     "versionCode": 1
   },
   "e410c191-ff39-4573-9d85-3dfcba3b155a": {
-    "url": "db://assets/GameRes/DJBT_map/mat/yinying.mtl",
+    "url": "db://assets/GameRes/HYQ_map/mat/yinying.mtl",
     "value": {
       "depends": [
         "c8f66d17-351a-48da-a12c-0212d28575c4",
@@ -2018,7 +2018,7 @@
     "versionCode": 1
   },
   "e76c3f98-2be2-4e00-81c7-f9aa9699e9a6@8fd00": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/SM_robot_01.fbx@8fd00",
+    "url": "db://assets/GameRes/HYQ_map/fbx/SM_robot_01.fbx@8fd00",
     "value": {
       "depends": [
         "e76c3f98-2be2-4e00-81c7-f9aa9699e9a6@7a08d"
@@ -2027,7 +2027,7 @@
     "versionCode": 1
   },
   "22dfe303-8284-4807-ba7c-1b31f4b70dc5": {
-    "url": "db://assets/GameRes/DJBT_map/pro/DJBT_map.prefab",
+    "url": "db://assets/GameRes/HYQ_map/pro/HYQ_map.prefab",
     "value": {
       "depends": [
         "04257d09-40ac-4fc5-9837-04a3a753c988",
@@ -2051,14 +2051,14 @@
     "versionCode": 1
   },
   "bd1e91e4-1c8d-4703-8492-cf658e13e8e9@bc4e5": {
-    "url": "db://assets/GameRes/DJBT_map/fbx/DJBT_qiao_01.fbx@bc4e5",
+    "url": "db://assets/GameRes/HYQ_map/fbx/DJBT_qiao_01.fbx@bc4e5",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "f662e3c5-87ed-44be-8d8e-dc1a26ed1272": {
-    "url": "db://assets/GameRes/DJBT_map/pro/DJBT_qiao_01.prefab",
+    "url": "db://assets/GameRes/HYQ_map/pro/HYQ_qiao_01.prefab",
     "value": {
       "depends": [
         "e9773f04-54f5-4eeb-a2da-a494fb963e22",
@@ -2073,42 +2073,42 @@
     "versionCode": 1
   },
   "28ca28a1-4e55-452a-b636-dad659c2ba46": {
-    "url": "db://assets/GameRes/DJBT_map/tex/beizengmen01.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/beizengmen01.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "d2c9a906-e79b-44bb-a570-3fbb7d7aa15c": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Bowen_W.PNG",
+    "url": "db://assets/GameRes/HYQ_map/tex/Bowen_W.PNG",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "6464220d-a1d5-4f9e-9d56-38281362fd8d": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Landscape_city_10.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/Landscape_city_10.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "68c8b667-a35d-4716-ba3f-d930f6b0821c": {
-    "url": "db://assets/GameRes/DJBT_map/tex/liefeng.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/liefeng.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "9eb76989-dc0d-45a9-b104-f09c7cdd0e26": {
-    "url": "db://assets/GameRes/DJBT_map/tex/liefeng_01.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/liefeng_01.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "28ca28a1-4e55-452a-b636-dad659c2ba46@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/beizengmen01.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/beizengmen01.png@6c48a",
     "value": {
       "depends": [
         "28ca28a1-4e55-452a-b636-dad659c2ba46"
@@ -2117,14 +2117,14 @@
     "versionCode": 1
   },
   "b7f12e03-7c47-46f2-ba4c-86ba9a484716": {
-    "url": "db://assets/GameRes/DJBT_map/tex/luntai01_D.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/luntai01_D.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "d2c9a906-e79b-44bb-a570-3fbb7d7aa15c@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Bowen_W.PNG@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/Bowen_W.PNG@6c48a",
     "value": {
       "depends": [
         "d2c9a906-e79b-44bb-a570-3fbb7d7aa15c"
@@ -2133,14 +2133,14 @@
     "versionCode": 1
   },
   "abf9fc2d-30b1-4322-8252-d2a817bc30a2": {
-    "url": "db://assets/GameRes/DJBT_map/tex/sky.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/sky.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "6464220d-a1d5-4f9e-9d56-38281362fd8d@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Landscape_city_10.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/Landscape_city_10.png@6c48a",
     "value": {
       "depends": [
         "6464220d-a1d5-4f9e-9d56-38281362fd8d"
@@ -2149,7 +2149,7 @@
     "versionCode": 1
   },
   "9eb76989-dc0d-45a9-b104-f09c7cdd0e26@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/liefeng_01.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/liefeng_01.png@6c48a",
     "value": {
       "depends": [
         "9eb76989-dc0d-45a9-b104-f09c7cdd0e26"
@@ -2158,14 +2158,14 @@
     "versionCode": 1
   },
   "937ccd78-68c9-44b6-915e-32722bd41c36": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_langan_01.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_langan_01.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "6464220d-a1d5-4f9e-9d56-38281362fd8d@f9941": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Landscape_city_10.png@f9941",
+    "url": "db://assets/GameRes/HYQ_map/tex/Landscape_city_10.png@f9941",
     "value": {
       "depends": [
         "6464220d-a1d5-4f9e-9d56-38281362fd8d@6c48a"
@@ -2174,14 +2174,14 @@
     "versionCode": 1
   },
   "4d65f42c-8c92-4837-aae4-28f834150cf2": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_qiao_01_ao.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_qiao_01_ao.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "68c8b667-a35d-4716-ba3f-d930f6b0821c@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/liefeng.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/liefeng.png@6c48a",
     "value": {
       "depends": [
         "68c8b667-a35d-4716-ba3f-d930f6b0821c"
@@ -2190,14 +2190,14 @@
     "versionCode": 1
   },
   "14b5a011-290c-4251-b35f-bec32fc58382": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_qiao_01_d.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_qiao_01_d.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "b7f12e03-7c47-46f2-ba4c-86ba9a484716@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/luntai01_D.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/luntai01_D.jpg@6c48a",
     "value": {
       "depends": [
         "b7f12e03-7c47-46f2-ba4c-86ba9a484716"
@@ -2206,14 +2206,14 @@
     "versionCode": 1
   },
   "08075244-6601-49b1-8099-38b4b84d80b8": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_qiao_01_n.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_qiao_01_n.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "abf9fc2d-30b1-4322-8252-d2a817bc30a2@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/sky.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/sky.jpg@6c48a",
     "value": {
       "depends": [
         "abf9fc2d-30b1-4322-8252-d2a817bc30a2"
@@ -2222,7 +2222,7 @@
     "versionCode": 1
   },
   "937ccd78-68c9-44b6-915e-32722bd41c36@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_langan_01.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_langan_01.jpg@6c48a",
     "value": {
       "depends": [
         "937ccd78-68c9-44b6-915e-32722bd41c36"
@@ -2231,14 +2231,14 @@
     "versionCode": 1
   },
   "6652108b-c630-4693-9754-bc9348c93d98": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_shiban_01_ao.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_shiban_01_ao.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "abf9fc2d-30b1-4322-8252-d2a817bc30a2@f9941": {
-    "url": "db://assets/GameRes/DJBT_map/tex/sky.jpg@f9941",
+    "url": "db://assets/GameRes/HYQ_map/tex/sky.jpg@f9941",
     "value": {
       "depends": [
         "abf9fc2d-30b1-4322-8252-d2a817bc30a2@6c48a"
@@ -2247,14 +2247,14 @@
     "versionCode": 1
   },
   "3c4fc7ee-0847-4cd5-bdd0-45e87d810f68": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_shiban_01_d.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_shiban_01_d.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "14b5a011-290c-4251-b35f-bec32fc58382@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_qiao_01_d.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_qiao_01_d.jpg@6c48a",
     "value": {
       "depends": [
         "14b5a011-290c-4251-b35f-bec32fc58382"
@@ -2263,14 +2263,14 @@
     "versionCode": 1
   },
   "47531653-44f0-40d6-928b-17fedff9ae80": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_xht_01_albedo.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_xht_01_albedo.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "4d65f42c-8c92-4837-aae4-28f834150cf2@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_qiao_01_ao.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_qiao_01_ao.jpg@6c48a",
     "value": {
       "depends": [
         "4d65f42c-8c92-4837-aae4-28f834150cf2"
@@ -2279,14 +2279,14 @@
     "versionCode": 1
   },
   "802d7aee-8813-4d4a-8ec0-205ca8c52a3e": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_xht_01_ao2.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_xht_01_ao2.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "08075244-6601-49b1-8099-38b4b84d80b8@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_qiao_01_n.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_qiao_01_n.jpg@6c48a",
     "value": {
       "depends": [
         "08075244-6601-49b1-8099-38b4b84d80b8"
@@ -2295,14 +2295,14 @@
     "versionCode": 1
   },
   "0d346d61-6562-4160-9fce-d4a47f56d6c0": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Water01_foam_mask.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/Water01_foam_mask.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "6652108b-c630-4693-9754-bc9348c93d98@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_shiban_01_ao.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_shiban_01_ao.png@6c48a",
     "value": {
       "depends": [
         "6652108b-c630-4693-9754-bc9348c93d98"
@@ -2311,7 +2311,7 @@
     "versionCode": 1
   },
   "3c4fc7ee-0847-4cd5-bdd0-45e87d810f68@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_shiban_01_d.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_shiban_01_d.png@6c48a",
     "value": {
       "depends": [
         "3c4fc7ee-0847-4cd5-bdd0-45e87d810f68"
@@ -2320,21 +2320,21 @@
     "versionCode": 1
   },
   "08febe36-022c-4ca1-b568-28f760d111e0": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Water01_n.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/Water01_n.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "07cc6b4c-5d3c-4d3e-8bcf-8af824bac77d": {
-    "url": "db://assets/GameRes/DJBT_map/tex/water03.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/water03.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "802d7aee-8813-4d4a-8ec0-205ca8c52a3e@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_xht_01_ao2.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_xht_01_ao2.jpg@6c48a",
     "value": {
       "depends": [
         "802d7aee-8813-4d4a-8ec0-205ca8c52a3e"
@@ -2343,14 +2343,14 @@
     "versionCode": 1
   },
   "33aea521-eff2-482d-997a-9bc1d5ea3476": {
-    "url": "db://assets/GameRes/DJBT_map/tex/water04.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/water04.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "47531653-44f0-40d6-928b-17fedff9ae80@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/T_xht_01_albedo.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/T_xht_01_albedo.jpg@6c48a",
     "value": {
       "depends": [
         "47531653-44f0-40d6-928b-17fedff9ae80"
@@ -2359,14 +2359,14 @@
     "versionCode": 1
   },
   "1952f1cf-3e18-404f-8a39-c99f1c2bbbdd": {
-    "url": "db://assets/GameRes/DJBT_map/tex/water_D.jpg",
+    "url": "db://assets/GameRes/HYQ_map/tex/water_D.jpg",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "0d346d61-6562-4160-9fce-d4a47f56d6c0@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Water01_foam_mask.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/Water01_foam_mask.png@6c48a",
     "value": {
       "depends": [
         "0d346d61-6562-4160-9fce-d4a47f56d6c0"
@@ -2375,14 +2375,14 @@
     "versionCode": 1
   },
   "aa89680d-40b4-4269-90ea-c4f45cd11c63": {
-    "url": "db://assets/GameRes/DJBT_map/tex/yingying.png",
+    "url": "db://assets/GameRes/HYQ_map/tex/yingying.png",
     "value": {
       "depends": []
     },
     "versionCode": 1
   },
   "07cc6b4c-5d3c-4d3e-8bcf-8af824bac77d@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/water03.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/water03.jpg@6c48a",
     "value": {
       "depends": [
         "07cc6b4c-5d3c-4d3e-8bcf-8af824bac77d"
@@ -2417,7 +2417,7 @@
     "versionCode": 1
   },
   "08febe36-022c-4ca1-b568-28f760d111e0@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/Water01_n.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/Water01_n.png@6c48a",
     "value": {
       "depends": [
         "08febe36-022c-4ca1-b568-28f760d111e0"
@@ -2440,7 +2440,7 @@
     "versionCode": 1
   },
   "33aea521-eff2-482d-997a-9bc1d5ea3476@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/water04.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/water04.png@6c48a",
     "value": {
       "depends": [
         "33aea521-eff2-482d-997a-9bc1d5ea3476"
@@ -2471,7 +2471,7 @@
     "versionCode": 1
   },
   "1952f1cf-3e18-404f-8a39-c99f1c2bbbdd@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/water_D.jpg@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/water_D.jpg@6c48a",
     "value": {
       "depends": [
         "1952f1cf-3e18-404f-8a39-c99f1c2bbbdd"
@@ -2534,7 +2534,7 @@
     "versionCode": 1
   },
   "aa89680d-40b4-4269-90ea-c4f45cd11c63@6c48a": {
-    "url": "db://assets/GameRes/DJBT_map/tex/yingying.png@6c48a",
+    "url": "db://assets/GameRes/HYQ_map/tex/yingying.png@6c48a",
     "value": {
       "depends": [
         "aa89680d-40b4-4269-90ea-c4f45cd11c63"

@@ -1,0 +1,504 @@
+2026-6-12 11:45:03-log: Cannot access game frame or container.
+2026-6-12 11:45:04-debug: asset-db:require-engine-code (1580ms)
+2026-6-12 11:45:04-log: meshopt wasm decoder initialized
+2026-6-12 11:45:04-log: [bullet]:bullet wasm lib loaded.
+2026-6-12 11:45:04-log: [box2d]:box2d wasm lib loaded.
+2026-6-12 11:45:04-log: Forward render pipeline initialized.
+2026-6-12 11:45:04-log: Cocos Creator v3.8.7
+2026-6-12 11:45:04-log: Using legacy pipeline
+2026-6-12 11:45:04-debug: [Assets Memory track]: asset-db:worker-init: initEngine start:28.90MB, end 80.03MB, increase: 51.13MB
+2026-6-12 11:45:06-debug: [Assets Memory track]: asset-db:worker-init: initPlugin start:80.08MB, end 274.90MB, increase: 194.82MB
+2026-6-12 11:45:06-debug: asset-db:worker-init: initPlugin (2271ms)
+2026-6-12 11:45:06-debug: [Assets Memory track]: asset-db:worker-init start:28.89MB, end 275.02MB, increase: 246.14MB
+2026-6-12 11:45:06-debug: Run asset db hook programming:beforePreStart ...
+2026-6-12 11:45:06-debug: Run asset db hook programming:beforePreStart success!
+2026-6-12 11:45:06-debug: Run asset db hook engine-extends:beforePreStart success!
+2026-6-12 11:45:07-debug: Preimport db  success
+2026-6-12 11:45:06-debug: Run asset db hook engine-extends:beforePreStart ...
+2026-6-12 11:45:07-debug: Preimport db  success
+2026-6-12 11:45:07-debug: Preimport db  success
+2026-6-12 11:45:07-debug: Run asset db hook programming:afterPreStart ...
+2026-6-12 11:45:07-debug: starting packer-driver...
+2026-6-12 11:45:07-debug: asset-db:worker-init (4039ms)
+2026-6-12 11:45:07-debug: asset-db-hook-programming-beforePreStart (76ms)
+2026-6-12 11:45:07-debug: asset-db-hook-engine-extends-beforePreStart (75ms)
+2026-6-12 11:45:07-debug: initialize scripting environment...
+2026-6-12 11:45:07-debug: [[Executor]] prepare before lock
+2026-6-12 11:45:07-debug: Set detail map pack:///resolution-detail-map.json: {}
+2026-6-12 11:45:07-debug: [[Executor]] prepare after unlock
+2026-6-12 11:45:07-debug: Run asset db hook programming:afterPreStart success!
+2026-6-12 11:45:07-debug: Run asset db hook engine-extends:afterPreStart success!
+2026-6-12 11:45:07-debug: Start up the 'internal' database...
+2026-6-12 11:45:07-debug: Run asset db hook engine-extends:afterPreStart ...
+2026-6-12 11:45:07-debug: [Assets Memory track]: asset-db:worker-init: preStart start:275.04MB, end 279.58MB, increase: 4.54MB
+2026-6-12 11:45:07-debug: asset-db-hook-programming-afterPreStart (565ms)
+2026-6-12 11:45:07-debug: asset-db:worker-effect-data-processing (180ms)
+2026-6-12 11:45:07-debug: asset-db-hook-engine-extends-afterPreStart (180ms)
+2026-6-12 11:45:08-debug: Run asset db hook engine-extends:afterStartDB ...
+2026-6-12 11:45:08-debug: recompile effect.bin success
+2026-6-12 11:45:08-debug: Run asset db hook engine-extends:afterStartDB success!
+2026-6-12 11:45:08-debug: Start up the 'assets' database...
+2026-6-12 11:45:10-debug: asset-db:worker-effect-data-processing (2558ms)
+2026-6-12 11:45:10-debug: asset-db-hook-engine-extends-afterStartDB (2558ms)
+2026-6-12 11:45:10-debug: Run asset db hook engine-extends:afterStartDB ...
+2026-6-12 11:45:11-debug: recompile effect.bin success
+2026-6-12 11:45:11-debug: Run asset db hook engine-extends:afterStartDB success!
+2026-6-12 11:45:11-debug: Start up the 'super-packager' database...
+2026-6-12 11:45:11-debug: asset-db:worker-effect-data-processing (407ms)
+2026-6-12 11:45:11-debug: asset-db-hook-engine-extends-afterStartDB (407ms)
+2026-6-12 11:45:11-debug: Run asset db hook engine-extends:afterStartDB ...
+2026-6-12 11:45:11-debug: recompile effect.bin success
+2026-6-12 11:45:11-debug: lazy register asset handler *
+2026-6-12 11:45:11-debug: Run asset db hook engine-extends:afterStartDB success!
+2026-6-12 11:45:11-debug: lazy register asset handler json
+2026-6-12 11:45:11-debug: lazy register asset handler text
+2026-6-12 11:45:11-debug: lazy register asset handler directory
+2026-6-12 11:45:11-debug: lazy register asset handler spine-data
+2026-6-12 11:45:11-debug: lazy register asset handler dragonbones
+2026-6-12 11:45:11-debug: lazy register asset handler dragonbones-atlas
+2026-6-12 11:45:11-debug: lazy register asset handler javascript
+2026-6-12 11:45:11-debug: lazy register asset handler terrain
+2026-6-12 11:45:11-debug: lazy register asset handler scene
+2026-6-12 11:45:11-debug: lazy register asset handler typescript
+2026-6-12 11:45:11-debug: lazy register asset handler prefab
+2026-6-12 11:45:11-debug: lazy register asset handler sprite-frame
+2026-6-12 11:45:11-debug: lazy register asset handler tiled-map
+2026-6-12 11:45:11-debug: lazy register asset handler image
+2026-6-12 11:45:11-debug: lazy register asset handler sign-image
+2026-6-12 11:45:11-debug: lazy register asset handler buffer
+2026-6-12 11:45:11-debug: lazy register asset handler alpha-image
+2026-6-12 11:45:11-debug: lazy register asset handler texture-cube
+2026-6-12 11:45:11-debug: lazy register asset handler texture
+2026-6-12 11:45:11-debug: lazy register asset handler erp-texture-cube
+2026-6-12 11:45:11-debug: lazy register asset handler render-texture
+2026-6-12 11:45:11-debug: lazy register asset handler texture-cube-face
+2026-6-12 11:45:11-debug: lazy register asset handler gltf
+2026-6-12 11:45:11-debug: lazy register asset handler rt-sprite-frame
+2026-6-12 11:45:11-debug: lazy register asset handler gltf-animation
+2026-6-12 11:45:11-debug: lazy register asset handler gltf-skeleton
+2026-6-12 11:45:11-debug: lazy register asset handler gltf-mesh
+2026-6-12 11:45:11-debug: lazy register asset handler gltf-scene
+2026-6-12 11:45:11-debug: lazy register asset handler gltf-material
+2026-6-12 11:45:11-debug: lazy register asset handler gltf-embeded-image
+2026-6-12 11:45:11-debug: lazy register asset handler material
+2026-6-12 11:45:11-debug: lazy register asset handler fbx
+2026-6-12 11:45:11-debug: lazy register asset handler physics-material
+2026-6-12 11:45:11-debug: lazy register asset handler effect
+2026-6-12 11:45:11-debug: lazy register asset handler effect-header
+2026-6-12 11:45:11-debug: lazy register asset handler audio-clip
+2026-6-12 11:45:11-debug: lazy register asset handler animation-clip
+2026-6-12 11:45:11-debug: lazy register asset handler animation-graph
+2026-6-12 11:45:11-debug: lazy register asset handler animation-graph-variant
+2026-6-12 11:45:11-debug: lazy register asset handler animation-mask
+2026-6-12 11:45:11-debug: lazy register asset handler ttf-font
+2026-6-12 11:45:11-debug: lazy register asset handler bitmap-font
+2026-6-12 11:45:11-debug: lazy register asset handler particle
+2026-6-12 11:45:11-debug: lazy register asset handler sprite-atlas
+2026-6-12 11:45:11-debug: lazy register asset handler label-atlas
+2026-6-12 11:45:11-debug: lazy register asset handler auto-atlas
+2026-6-12 11:45:11-debug: lazy register asset handler render-pipeline
+2026-6-12 11:45:11-debug: lazy register asset handler render-stage
+2026-6-12 11:45:11-debug: lazy register asset handler instantiation-material
+2026-6-12 11:45:11-debug: lazy register asset handler render-flow
+2026-6-12 11:45:11-debug: lazy register asset handler instantiation-mesh
+2026-6-12 11:45:11-debug: lazy register asset handler instantiation-skeleton
+2026-6-12 11:45:11-debug: lazy register asset handler instantiation-animation
+2026-6-12 11:45:11-debug: lazy register asset handler video-clip
+2026-6-12 11:45:11-debug: asset-db-hook-engine-extends-afterStartDB (451ms)
+2026-6-12 11:45:11-debug: asset-db:start-database (4638ms)
+2026-6-12 11:45:11-debug: asset-db:ready (12265ms)
+2026-6-12 11:45:11-debug: asset-db:worker-effect-data-processing (451ms)
+2026-6-12 11:45:11-debug: init worker message success
+2026-6-12 11:45:11-debug: programming:execute-script (14ms)
+2026-6-12 11:45:12-log: [SUPER_PACKAGE]async function() {
+  console.log(PACKAGE_NAME, load);
+}
+2026-6-12 11:45:12-debug: [Build Memory track]: builder:worker-init start:228.85MB, end 251.27MB, increase: 22.42MB
+2026-6-12 11:45:12-debug: builder:worker-init (1227ms)
+2026-6-12 11:46:14-debug: refresh db internal success
+2026-6-12 11:46:14-debug: refresh db assets success
+2026-6-12 11:46:14-debug: refresh db super-packager success
+2026-6-12 11:46:14-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:46:14-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:46:14-debug: asset-db:refresh-all-database (190ms)
+2026-6-12 11:46:14-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-12 11:46:14-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-12 11:46:19-debug: Query all assets info in project
+2026-6-12 11:46:19-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-12 11:46:19-debug: Skip compress image, progress: 0%
+2026-6-12 11:46:19-debug: Init all bundles start..., progress: 0%
+2026-6-12 11:46:19-debug: Num of bundles: 3..., progress: 0%
+2026-6-12 11:46:19-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-12 11:46:19-debug: Init bundle root assets start..., progress: 0%
+2026-6-12 11:46:19-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-12 11:46:19-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-12 11:46:19-debug:   Number of all scenes: 3
+2026-6-12 11:46:19-debug:   Number of other assets: 985
+2026-6-12 11:46:19-debug: Init bundle root assets success..., progress: 0%
+2026-6-12 11:46:19-debug: // ---- build task 查询 Asset Bundle ---- (17ms)
+2026-6-12 11:46:19-debug: [Build Memory track]: 查询 Asset Bundle start:243.45MB, end 243.42MB, increase: -30.98KB
+2026-6-12 11:46:19-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-12 11:46:19-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-12 11:46:19-debug:   Number of all scripts: 106
+2026-6-12 11:46:19-log: run build task 查询 Asset Bundle success in 17 ms√, progress: 5%
+2026-6-12 11:46:19-debug: // ---- build task 查询 Asset Bundle ---- (10ms)
+2026-6-12 11:46:19-log: run build task 查询 Asset Bundle success in 10 ms√, progress: 10%
+2026-6-12 11:46:19-debug: [Build Memory track]: 查询 Asset Bundle start:243.47MB, end 243.70MB, increase: 240.30KB
+2026-6-12 11:46:19-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-12 11:46:19-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-12 11:46:19-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-6-12 11:46:19-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-6-12 11:46:19-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:243.75MB, end 243.78MB, increase: 36.26KB
+2026-6-12 11:46:19-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-12 11:46:19-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-12 11:46:19-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-6-12 11:46:19-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-6-12 11:46:19-debug: [Build Memory track]: 填充脚本数据到 settings.json start:243.83MB, end 243.87MB, increase: 35.78KB
+2026-6-12 11:46:19-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-12 11:46:19-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-12 11:46:19-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (5ms)
+2026-6-12 11:46:19-log: run build task 整理部分构建选项内数据到 settings.json success in 5 ms√, progress: 15%
+2026-6-12 11:46:19-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:243.91MB, end 243.99MB, increase: 77.53KB
+2026-6-12 11:47:28-debug: refresh db internal success
+2026-6-12 11:47:29-debug: refresh db assets success
+2026-6-12 11:47:29-debug: refresh db super-packager success
+2026-6-12 11:47:29-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:47:29-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:47:29-debug: asset-db:refresh-all-database (235ms)
+2026-6-12 11:47:29-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-12 11:47:29-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:48:48-debug: refresh db internal success
+2026-6-12 11:48:48-debug: refresh db assets success
+2026-6-12 11:48:48-debug: refresh db super-packager success
+2026-6-12 11:48:48-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:48:48-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:48:48-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-12 11:48:48-debug: asset-db:refresh-all-database (242ms)
+2026-6-12 11:48:48-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:49:10-debug: refresh db internal success
+2026-6-12 11:49:11-debug: refresh db assets success
+2026-6-12 11:49:11-debug: refresh db super-packager success
+2026-6-12 11:49:11-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:49:11-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:49:11-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-12 11:49:11-debug: asset-db:refresh-all-database (247ms)
+2026-6-12 11:49:11-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:50:02-debug: refresh db internal success
+2026-6-12 11:50:03-debug: refresh db assets success
+2026-6-12 11:50:03-debug: refresh db super-packager success
+2026-6-12 11:50:03-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:50:03-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:50:03-debug: asset-db:refresh-all-database (247ms)
+2026-6-12 11:50:03-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-12 11:50:03-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:51:13-debug: refresh db internal success
+2026-6-12 11:51:13-debug: refresh db assets success
+2026-6-12 11:51:13-debug: refresh db super-packager success
+2026-6-12 11:51:13-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:51:13-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:51:13-debug: asset-db:refresh-all-database (247ms)
+2026-6-12 11:51:13-debug: asset-db:worker-effect-data-processing (3ms)
+2026-6-12 11:51:13-debug: asset-db-hook-engine-extends-afterRefresh (4ms)
+2026-6-12 11:51:25-debug: refresh db internal success
+2026-6-12 11:51:25-debug: refresh db assets success
+2026-6-12 11:51:25-debug: refresh db super-packager success
+2026-6-12 11:51:25-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:51:25-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:51:25-debug: asset-db:refresh-all-database (225ms)
+2026-6-12 11:51:25-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-12 11:51:25-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-6-12 11:51:30-debug: refresh db internal success
+2026-6-12 11:51:30-debug: refresh db assets success
+2026-6-12 11:51:30-debug: refresh db super-packager success
+2026-6-12 11:51:30-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:51:30-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:51:30-debug: asset-db:refresh-all-database (167ms)
+2026-6-12 11:51:30-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-12 11:51:30-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:52:15-debug: refresh db internal success
+2026-6-12 11:52:15-debug: refresh db assets success
+2026-6-12 11:52:15-debug: refresh db super-packager success
+2026-6-12 11:52:15-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:52:15-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:52:15-debug: asset-db:refresh-all-database (232ms)
+2026-6-12 11:52:15-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-12 11:52:15-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:52:41-debug: start move asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\DJBT_map -> D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map...
+2026-6-12 11:52:41-debug: start refresh asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map...
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_mapbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\probackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\texbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\matbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\beizhenmen01.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_shiban_01.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_dangban_01.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_langan_01.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_qiao_01.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: Frame rate: 30 [{asset(982fdbd7-08e1-41e7-9cc3-718cf0152d36)}]
+2026-6-12 11:52:41-debug: Frame rate: 30 [{asset(9a96fc79-fcf2-4e2d-946e-0dca53a468fb)}]
+2026-6-12 11:52:41-debug: Frame rate: 30 [{asset(a5876ec0-50c8-4dcc-9c9c-49ee75282744)}]
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_shiban_01.fbx@6016bbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_dangban_01.fbx@3ac76background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-log: MeshOpt init success
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\beizhenmen01.fbx@35625background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-log: MeshOpt init success
+2026-6-12 11:52:41-log: MeshOpt init success
+2026-6-12 11:52:41-debug: Frame rate: 30 [{asset(326c21a7-5045-4e8c-b7ec-39b2f56cd152)}]
+2026-6-12 11:52:41-debug: Frame rate: 30 [{asset(bd1e91e4-1c8d-4703-8492-cf658e13e8e9)}]
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_shiban_01.fbx@05c10background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\beizhenmen01.fbx@ba9d2background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_dangban_01.fbx@3c2cbbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_langan_01.fbx@ab3cabackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_qiao_01.fbx@17065background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_qiao_01.fbx@80389background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_langan_01.fbx@19ebdbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\luntai01_01.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\SM_robot_01.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\yinying.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_qiao_01.fbx@7a922background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_langan_01.fbx@bf45abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: Frame rate: 30 [{asset(ac885820-eb24-4333-bd15-351ec5c28de6)}]
+2026-6-12 11:52:41-debug: Frame rate: 30 [{asset(e76c3f98-2be2-4e00-81c7-f9aa9699e9a6)}]
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_qiao_01.fbx@bc4e5background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\DJBT_langan_01.fbx@127c7background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: Frame rate: 30 [{asset(afc1e48c-0091-4e75-acf9-68ac0e7c0bde)}]
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\luntai01_01.fbx@6f7e6background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\SM_robot_01.fbx@7a08dbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\beizhenmen01_huang.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\beizhenmen01_lan.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\yinying.fbx@b8a2dbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\luntai01_01.fbx@c3ce2background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:41-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\builtin-standard-water.effectbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\SM_robot_01.fbx@8fd00background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\liewen-001.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\fbx\yinying.fbx@559c4background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\luntai01_01.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\liewen.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\M_dangban_01.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\M_mlyz_01.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\M_qiao_01.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\M_qiao_03.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\M_qiao_langan_01.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\M_shiban_01.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\qiaoliang01_01.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\Shader_Water.effectbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\SM_robot_01.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\spTo3D-material.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\water-001.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\water.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\mat\yinying.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\DJBT_map.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\DJBT_qiao_01.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Bowen_W.PNGbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\beizengmen01.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:42-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Landscape_city_10.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\beizengmen01.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\liefeng.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\liefeng_01.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Bowen_W.PNG@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\luntai01_D.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Landscape_city_10.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Landscape_city_10.png@f9941background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\sky.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\liefeng_01.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\luntai01_D.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\liefeng.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\sky.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_langan_01.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_qiao_01_ao.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_qiao_01_d.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\sky.jpg@f9941background: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_qiao_01_n.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_qiao_01_ao.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_langan_01.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_shiban_01_d.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_shiban_01_ao.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_xht_01_albedo.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_qiao_01_n.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_qiao_01_d.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_xht_01_ao2.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_shiban_01_ao.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_shiban_01_d.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Water01_foam_mask.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Water01_n.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_xht_01_albedo.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\water03.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Water01_foam_mask.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\T_xht_01_ao2.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\water04.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\yingying.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\water_D.jpgbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\Water01_n.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\water03.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\water04.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\yingying.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: %cReImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\tex\water_D.jpg@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: refresh asset D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes success
+2026-6-12 11:52:43-debug: start refresh asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes...
+2026-6-12 11:52:43-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameResbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:43-debug: refresh asset D:\工程项目\test_pro\test_pro\HYQ_Project\assets success
+2026-6-12 11:52:43-debug: move asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\DJBT_map -> D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map success
+2026-6-12 11:52:44-debug: recompile effect.bin success
+2026-6-12 11:52:47-debug: start move asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\DJBT_map.prefab -> D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\HYQ_map.prefab...
+2026-6-12 11:52:47-debug: start refresh asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\HYQ_map.prefab...
+2026-6-12 11:52:47-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\HYQ_map.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:47-debug: refresh asset D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro success
+2026-6-12 11:52:47-debug: start refresh asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro...
+2026-6-12 11:52:47-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\probackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:47-debug: refresh asset D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map success
+2026-6-12 11:52:47-debug: move asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\DJBT_map.prefab -> D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\HYQ_map.prefab success
+2026-6-12 11:52:51-debug: start move asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\DJBT_qiao_01.prefab -> D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\HYQ_qiao_01.prefab...
+2026-6-12 11:52:51-debug: start refresh asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\HYQ_qiao_01.prefab...
+2026-6-12 11:52:51-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\HYQ_qiao_01.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:51-debug: refresh asset D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro success
+2026-6-12 11:52:51-debug: start refresh asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro...
+2026-6-12 11:52:51-debug: %cImport%c: D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\probackground: #aaff85; color: #000;color: #000;
+2026-6-12 11:52:51-debug: refresh asset D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map success
+2026-6-12 11:52:51-debug: move asset from D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\DJBT_qiao_01.prefab -> D:\工程项目\test_pro\test_pro\HYQ_Project\assets\GameRes\HYQ_map\pro\HYQ_qiao_01.prefab success
+2026-6-12 11:54:04-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-12 11:54:07-debug: refresh db internal success
+2026-6-12 11:54:07-debug: refresh db assets success
+2026-6-12 11:54:07-debug: refresh db super-packager success
+2026-6-12 11:54:07-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:54:07-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:54:07-debug: asset-db:refresh-all-database (243ms)
+2026-6-12 11:54:07-debug: asset-db:worker-effect-data-processing (4ms)
+2026-6-12 11:54:07-debug: asset-db-hook-engine-extends-afterRefresh (5ms)
+2026-6-12 11:54:08-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-12 11:54:35-debug: refresh db internal success
+2026-6-12 11:54:35-debug: refresh db assets success
+2026-6-12 11:54:35-debug: refresh db super-packager success
+2026-6-12 11:54:35-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:54:35-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:54:35-debug: asset-db:refresh-all-database (262ms)
+2026-6-12 11:54:35-debug: asset-db:worker-effect-data-processing (3ms)
+2026-6-12 11:54:35-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-6-12 11:54:37-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-12 11:55:17-debug: refresh db internal success
+2026-6-12 11:55:17-debug: refresh db assets success
+2026-6-12 11:55:17-debug: refresh db super-packager success
+2026-6-12 11:55:17-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:55:17-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:55:17-debug: asset-db:refresh-all-database (222ms)
+2026-6-12 11:55:17-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-12 11:55:17-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:55:21-debug: refresh db internal success
+2026-6-12 11:55:21-debug: refresh db assets success
+2026-6-12 11:55:21-debug: refresh db super-packager success
+2026-6-12 11:55:21-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:55:21-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:55:21-debug: asset-db:refresh-all-database (162ms)
+2026-6-12 11:55:21-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-12 11:55:21-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-12 11:55:56-debug: refresh db internal success
+2026-6-12 11:55:56-debug: refresh db assets success
+2026-6-12 11:55:56-debug: refresh db super-packager success
+2026-6-12 11:55:56-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:55:56-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:55:56-debug: asset-db:refresh-all-database (228ms)
+2026-6-12 11:55:56-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-12 11:55:56-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-12 11:56:06-debug: Query all assets info in project
+2026-6-12 11:56:06-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-12 11:56:06-debug: Skip compress image, progress: 0%
+2026-6-12 11:56:06-debug: Init all bundles start..., progress: 0%
+2026-6-12 11:56:06-debug: Num of bundles: 3..., progress: 0%
+2026-6-12 11:56:06-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-12 11:56:06-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-12 11:56:06-debug: Init bundle root assets start..., progress: 0%
+2026-6-12 11:56:06-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-12 11:56:06-debug:   Number of all scenes: 3
+2026-6-12 11:56:06-debug:   Number of all scripts: 106
+2026-6-12 11:56:06-debug:   Number of other assets: 985
+2026-6-12 11:56:06-debug: Init bundle root assets success..., progress: 0%
+2026-6-12 11:56:06-debug: // ---- build task 查询 Asset Bundle ---- (17ms)
+2026-6-12 11:56:06-log: run build task 查询 Asset Bundle success in 17 ms√, progress: 5%
+2026-6-12 11:56:06-debug: [Build Memory track]: 查询 Asset Bundle start:289.58MB, end 290.11MB, increase: 545.59KB
+2026-6-12 11:56:06-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-12 11:56:06-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-12 11:56:06-debug: // ---- build task 查询 Asset Bundle ---- (8ms)
+2026-6-12 11:56:06-log: run build task 查询 Asset Bundle success in 8 ms√, progress: 10%
+2026-6-12 11:56:06-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-12 11:56:06-debug: [Build Memory track]: 查询 Asset Bundle start:290.15MB, end 289.53MB, increase: -627.64KB
+2026-6-12 11:56:06-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-12 11:56:06-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-6-12 11:56:06-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-6-12 11:56:06-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-12 11:56:06-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:289.58MB, end 289.60MB, increase: 28.84KB
+2026-6-12 11:56:06-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-12 11:56:06-debug: [Build Memory track]: 填充脚本数据到 settings.json start:289.64MB, end 289.66MB, increase: 21.86KB
+2026-6-12 11:56:06-log: run build task 填充脚本数据到 settings.json success in √, progress: 13%
+2026-6-12 11:56:06-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-12 11:56:06-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-12 11:56:06-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (5ms)
+2026-6-12 11:56:06-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:289.69MB, end 289.76MB, increase: 68.22KB
+2026-6-12 11:56:06-log: run build task 整理部分构建选项内数据到 settings.json success in 5 ms√, progress: 15%
+2026-6-12 11:57:25-debug: refresh db internal success
+2026-6-12 11:57:25-debug: refresh db assets success
+2026-6-12 11:57:25-debug: refresh db super-packager success
+2026-6-12 11:57:25-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:57:25-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:57:25-debug: asset-db:refresh-all-database (251ms)
+2026-6-12 11:57:25-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-12 11:57:25-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:57:30-debug: refresh db internal success
+2026-6-12 11:57:30-debug: refresh db assets success
+2026-6-12 11:57:30-debug: refresh db super-packager success
+2026-6-12 11:57:30-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:57:30-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:57:30-debug: asset-db:refresh-all-database (191ms)
+2026-6-12 11:57:30-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-12 11:57:30-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:59:31-debug: refresh db internal success
+2026-6-12 11:59:31-debug: refresh db assets success
+2026-6-12 11:59:31-debug: refresh db super-packager success
+2026-6-12 11:59:31-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:59:31-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:59:31-debug: asset-db:refresh-all-database (217ms)
+2026-6-12 11:59:31-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-12 11:59:31-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-12 11:59:49-debug: refresh db internal success
+2026-6-12 11:59:49-debug: refresh db assets success
+2026-6-12 11:59:49-debug: refresh db super-packager success
+2026-6-12 11:59:49-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-12 11:59:49-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-12 11:59:49-debug: asset-db:refresh-all-database (227ms)
+2026-6-12 11:59:49-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-12 11:59:49-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-12 11:59:56-debug: Query all assets info in project
+2026-6-12 11:59:56-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-12 11:59:56-debug: Skip compress image, progress: 0%
+2026-6-12 11:59:56-debug: Init all bundles start..., progress: 0%
+2026-6-12 11:59:56-debug: Num of bundles: 3..., progress: 0%
+2026-6-12 11:59:56-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-12 11:59:56-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-12 11:59:56-debug: Init bundle root assets start..., progress: 0%
+2026-6-12 11:59:56-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-12 11:59:56-debug:   Number of other assets: 985
+2026-6-12 11:59:56-debug:   Number of all scripts: 106
+2026-6-12 11:59:56-debug:   Number of all scenes: 3
+2026-6-12 11:59:56-debug: Init bundle root assets success..., progress: 0%
+2026-6-12 11:59:56-debug: // ---- build task 查询 Asset Bundle ---- (17ms)
+2026-6-12 11:59:56-log: run build task 查询 Asset Bundle success in 17 ms√, progress: 5%
+2026-6-12 11:59:56-debug: [Build Memory track]: 查询 Asset Bundle start:296.26MB, end 296.78MB, increase: 527.17KB
+2026-6-12 11:59:56-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-12 11:59:56-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-12 11:59:56-log: run build task 查询 Asset Bundle success in 10 ms√, progress: 10%
+2026-6-12 11:59:56-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-12 11:59:56-debug: // ---- build task 查询 Asset Bundle ---- (10ms)
+2026-6-12 11:59:56-debug: [Build Memory track]: 查询 Asset Bundle start:296.81MB, end 296.27MB, increase: -552.43KB
+2026-6-12 11:59:56-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-12 11:59:56-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-6-12 11:59:56-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-6-12 11:59:56-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-12 11:59:56-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:296.30MB, end 296.34MB, increase: 34.13KB
+2026-6-12 11:59:56-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-12 11:59:56-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-6-12 11:59:56-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-6-12 11:59:56-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-12 11:59:56-debug: [Build Memory track]: 填充脚本数据到 settings.json start:296.37MB, end 296.40MB, increase: 28.33KB
+2026-6-12 11:59:56-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-12 11:59:56-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (7ms)
+2026-6-12 11:59:56-log: run build task 整理部分构建选项内数据到 settings.json success in 7 ms√, progress: 15%
+2026-6-12 11:59:56-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:296.43MB, end 296.50MB, increase: 65.64KB

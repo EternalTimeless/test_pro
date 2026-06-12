@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "DJBT_qiao_01",
+    "_name": "HYQ_qiao_01",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DJBT_qiao_01",
+    "_name": "HYQ_qiao_01",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,

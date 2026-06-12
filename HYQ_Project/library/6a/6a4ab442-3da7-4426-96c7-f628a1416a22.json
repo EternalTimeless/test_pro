@@ -1,6 +1,6 @@
 {
   "__type__": "cc.EffectAsset",
-  "_name": "../GameRes/DJBT_map/mat/builtin-standard-water",
+  "_name": "../GameRes/HYQ_map/mat/builtin-standard-water",
   "_objFlags": 0,
   "__editorExtras__": {},
   "_native": "",
@@ -9,7 +9,7 @@
       "name": "opaque",
       "passes": [
         {
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|standard-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|standard-fs",
           "properties": {
             "tilingOffset": {
               "value": [
@@ -412,7 +412,7 @@
               }
             ]
           },
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|standard-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|standard-fs",
           "depthStencilState": {
             "depthFunc": 2,
             "depthTest": true,
@@ -425,7 +425,7 @@
           "rasterizerState": {
             "cullMode": 1
           },
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|shadow-caster-vs|shadow-caster-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|shadow-caster-vs|shadow-caster-fs",
           "properties": {
             "tilingOffset": {
               "value": [
@@ -532,7 +532,7 @@
         {
           "phase": "reflect-map",
           "propertyIndex": 0,
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|reflect-map-fs"
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|reflect-map-fs"
         },
         {
           "phase": "planar-shadow",
@@ -547,7 +547,7 @@
               }
             ]
           },
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|planar-shadow-vs|planar-shadow-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|planar-shadow-vs|planar-shadow-fs",
           "depthStencilState": {
             "depthTest": true,
             "depthWrite": false,
@@ -569,7 +569,7 @@
             "CC_PIPELINE_TYPE": 1
           },
           "propertyIndex": 0,
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|standard-fs"
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|standard-fs"
         }
       ]
     },
@@ -590,7 +590,7 @@
               }
             ]
           },
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|standard-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|standard-fs",
           "depthStencilState": {
             "depthTest": true,
             "depthWrite": false
@@ -997,7 +997,7 @@
               }
             ]
           },
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|standard-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|standard-fs",
           "depthStencilState": {
             "depthFunc": 2,
             "depthTest": true,
@@ -1010,7 +1010,7 @@
           "rasterizerState": {
             "cullMode": 1
           },
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|shadow-caster-vs|shadow-caster-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|shadow-caster-vs|shadow-caster-fs",
           "properties": {
             "tilingOffset": {
               "value": [
@@ -1127,7 +1127,7 @@
               }
             ]
           },
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|planar-shadow-vs|planar-shadow-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|planar-shadow-vs|planar-shadow-fs",
           "depthStencilState": {
             "depthTest": true,
             "depthWrite": false,
@@ -1158,7 +1158,7 @@
               }
             ]
           },
-          "program": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|standard-fs",
+          "program": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|standard-fs",
           "depthStencilState": {
             "depthTest": true,
             "depthWrite": false
@@ -3272,7 +3272,7 @@
           "defines": []
         }
       ],
-      "name": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|standard-fs"
+      "name": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|standard-fs"
     },
     {
       "blocks": [
@@ -5213,7 +5213,7 @@
           ]
         }
       ],
-      "name": "../GameRes/DJBT_map/mat/builtin-standard-water|shadow-caster-vs|shadow-caster-fs"
+      "name": "../GameRes/HYQ_map/mat/builtin-standard-water|shadow-caster-vs|shadow-caster-fs"
     },
     {
       "blocks": [
@@ -7249,7 +7249,7 @@
           "defines": []
         }
       ],
-      "name": "../GameRes/DJBT_map/mat/builtin-standard-water|standard-vs|reflect-map-fs"
+      "name": "../GameRes/HYQ_map/mat/builtin-standard-water|standard-vs|reflect-map-fs"
     },
     {
       "blocks": [
@@ -9176,7 +9176,7 @@
           ]
         }
       ],
-      "name": "../GameRes/DJBT_map/mat/builtin-standard-water|planar-shadow-vs|planar-shadow-fs"
+      "name": "../GameRes/HYQ_map/mat/builtin-standard-water|planar-shadow-vs|planar-shadow-fs"
     }
   ],
   "combinations": [],

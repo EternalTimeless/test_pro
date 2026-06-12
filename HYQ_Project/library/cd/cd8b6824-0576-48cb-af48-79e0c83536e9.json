@@ -1,6 +1,6 @@
 {
   "__type__": "cc.EffectAsset",
-  "_name": "../GameRes/DJBT_map/mat/Shader_Water",
+  "_name": "../GameRes/HYQ_map/mat/Shader_Water",
   "_objFlags": 0,
   "__editorExtras__": {},
   "_native": "",
@@ -9,7 +9,7 @@
       "name": "opaque",
       "passes": [
         {
-          "program": "../GameRes/DJBT_map/mat/Shader_Water|unlit-vs:vert|unlit-fs:frag",
+          "program": "../GameRes/HYQ_map/mat/Shader_Water|unlit-vs:vert|unlit-fs:frag",
           "properties": {
             "baseColor": {
               "value": [
@@ -222,7 +222,7 @@
               }
             ]
           },
-          "program": "../GameRes/DJBT_map/mat/Shader_Water|unlit-vs:vert|unlit-fs:frag",
+          "program": "../GameRes/HYQ_map/mat/Shader_Water|unlit-vs:vert|unlit-fs:frag",
           "properties": {
             "baseColor": {
               "value": [
@@ -1803,7 +1803,7 @@
           "defines": []
         }
       ],
-      "name": "../GameRes/DJBT_map/mat/Shader_Water|unlit-vs:vert|unlit-fs:frag"
+      "name": "../GameRes/HYQ_map/mat/Shader_Water|unlit-vs:vert|unlit-fs:frag"
     }
   ],
   "combinations": [],
