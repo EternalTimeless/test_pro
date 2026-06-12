@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, Component, Node, GuideLine, Player, MoveDrive, EffectManager, EffectEnum, EventType, SoundEnum, CameraMove, AudioManager, EventManager, MonsterCreate, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _class3, _crd, ccclass, property, GuideManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, Component, Node, GuideLine, Player, MoveDrive, MonsterCreate, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _class3, _crd, ccclass, property, GuideManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -19,34 +19,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfMoveDrive(extras) {
     _reporterNs.report("MoveDrive", "../../Base/MoveRot/MoveDrive", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfEffectManager(extras) {
-    _reporterNs.report("EffectManager", "../Effect/EffectManager", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfEffectEnum(extras) {
-    _reporterNs.report("EffectEnum", "../../Base/EnumList", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfEventType(extras) {
-    _reporterNs.report("EventType", "../../Base/EnumList", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfSoundEnum(extras) {
-    _reporterNs.report("SoundEnum", "../../Base/EnumList", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfCameraMove(extras) {
-    _reporterNs.report("CameraMove", "../../Base/CameraMove", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfAudioManager(extras) {
-    _reporterNs.report("AudioManager", "../../Base/AudioManager", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfEventManager(extras) {
-    _reporterNs.report("EventManager", "../../Base/EventManager", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfMonsterCreate(extras) {
@@ -71,26 +43,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_4) {
       MoveDrive = _unresolved_4.MoveDrive;
     }, function (_unresolved_5) {
-      EffectManager = _unresolved_5.EffectManager;
-    }, function (_unresolved_6) {
-      EffectEnum = _unresolved_6.EffectEnum;
-      EventType = _unresolved_6.EventType;
-      SoundEnum = _unresolved_6.SoundEnum;
-    }, function (_unresolved_7) {
-      CameraMove = _unresolved_7.CameraMove;
-    }, function (_unresolved_8) {
-      AudioManager = _unresolved_8.default;
-    }, function (_unresolved_9) {
-      EventManager = _unresolved_9.default;
-    }, function (_unresolved_10) {
-      MonsterCreate = _unresolved_10.MonsterCreate;
+      MonsterCreate = _unresolved_5.MonsterCreate;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "3062cO1YclDl4EzgZtjrqle", "GuideManager", undefined);
 
-      __checkObsolete__(['_decorator', 'Animation', 'CacheMode', 'Component', 'Node']);
+      __checkObsolete__(['_decorator', 'Animation', 'Component', 'Node']);
 
       ({
         ccclass,
@@ -110,60 +70,38 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         start() {
           GuideManager.instance = this;
-          (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
-            error: Error()
-          }), GuideLine) : GuideLine).instance.setLineNode((_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
-            error: Error()
-          }), Player) : Player).instance.node, this.roleNode);
-          (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
-            error: Error()
-          }), EventManager) : EventManager).instance.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-            error: Error()
-          }), EventType) : EventType).firstClick, this.onClickEvent, this);
+          this.finishGuide();
         }
 
-        onClickEvent() {
-          this.handAnim.node.active = false;
-        }
+        finishGuide() {
+          var _this$handAnim, _instance;
 
-        update(dt) {
-          var x = Math.abs(this.roleNode.x - (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
-            error: Error()
-          }), Player) : Player).instance.node.x);
-
-          if ((x < 0.8 || (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
-            error: Error()
-          }), Player) : Player).instance.node.x >= this.roleNode.x) && !this.isLock) {
-            this.isLock = true;
-            this.roleNode.active = false;
-            (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
-              error: Error()
-            }), GuideLine) : GuideLine).instance.setLineNode();
-            (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
-              error: Error()
-            }), Player) : Player).instance.isLock = true;
-            (_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
-              error: Error()
-            }), MoveDrive) : MoveDrive).isMoveOk = true;
-            (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
-              error: Error()
-            }), MonsterCreate) : MonsterCreate).isStartMove = true;
-            (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
-              error: Error()
-            }), EffectManager) : EffectManager).instance.addShowEffect((_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
-              error: Error()
-            }), Player) : Player).instance.node.worldPosition, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
-              error: Error()
-            }), EffectEnum) : EffectEnum).up, 2);
-            (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
-              error: Error()
-            }), CameraMove) : CameraMove).instance.Shake1();
-            (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
-              error: Error()
-            }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
-              error: Error()
-            }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
+          if (this.isLock) {
+            return;
           }
+
+          this.isLock = true;
+
+          if (this.roleNode) {
+            this.roleNode.active = false;
+          }
+
+          if ((_this$handAnim = this.handAnim) != null && _this$handAnim.node) {
+            this.handAnim.node.active = false;
+          }
+
+          (_instance = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
+            error: Error()
+          }), GuideLine) : GuideLine).instance) == null || _instance.setLineNode();
+          (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance.isLock = true;
+          (_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
+            error: Error()
+          }), MoveDrive) : MoveDrive).isMoveOk = true;
+          (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+            error: Error()
+          }), MonsterCreate) : MonsterCreate).isStartMove = true;
         }
 
       }, _class3.instance = void 0, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "roleNode", [_dec2], {

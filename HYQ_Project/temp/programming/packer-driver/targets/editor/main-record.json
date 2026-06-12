@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 14429.0846,
+      "mTimestamp": 10077544.2563,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -10031,7 +10031,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Guide/GuideManager.ts": {
       "mTimestamp": {
-        "mtime": 1780287689694.2527,
+        "mtime": 1781245843089.9397,
         "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
       },
       "chunkId": "e6193a6067c9e4b6e335ddf1a40216922e107802",
@@ -10051,11 +10051,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 66
+              "column": 55
             },
             "end": {
               "line": 1,
-              "column": 70
+              "column": 59
             }
           }
         },
@@ -10102,7 +10102,7 @@
           }
         },
         {
-          "value": "../Effect/EffectManager",
+          "value": "../Monster/MonsterCreate",
           "resolved": "__unresolved_4",
           "loc": {
             "start": {
@@ -10111,76 +10111,6 @@
             },
             "end": {
               "line": 5,
-              "column": 55
-            }
-          }
-        },
-        {
-          "value": "../../Base/EnumList",
-          "resolved": "__unresolved_5",
-          "loc": {
-            "start": {
-              "line": 6,
-              "column": 49
-            },
-            "end": {
-              "line": 6,
-              "column": 70
-            }
-          }
-        },
-        {
-          "value": "../../Base/CameraMove",
-          "resolved": "__unresolved_6",
-          "loc": {
-            "start": {
-              "line": 7,
-              "column": 27
-            },
-            "end": {
-              "line": 7,
-              "column": 50
-            }
-          }
-        },
-        {
-          "value": "../../Base/AudioManager",
-          "resolved": "__unresolved_7",
-          "loc": {
-            "start": {
-              "line": 8,
-              "column": 25
-            },
-            "end": {
-              "line": 8,
-              "column": 50
-            }
-          }
-        },
-        {
-          "value": "../../Base/EventManager",
-          "resolved": "__unresolved_8",
-          "loc": {
-            "start": {
-              "line": 9,
-              "column": 25
-            },
-            "end": {
-              "line": 9,
-              "column": 50
-            }
-          }
-        },
-        {
-          "value": "../Monster/MonsterCreate",
-          "resolved": "__unresolved_9",
-          "loc": {
-            "start": {
-              "line": 10,
-              "column": 30
-            },
-            "end": {
-              "line": 10,
               "column": 56
             }
           }
@@ -10234,41 +10164,6 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/Base/MoveRot/MoveDrive.ts"
-          },
-          "messages": []
-        },
-        {
-          "resolved": {
-            "type": "module",
-            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Effect/EffectManager.ts"
-          },
-          "messages": []
-        },
-        {
-          "resolved": {
-            "type": "module",
-            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/Base/EnumList.ts"
-          },
-          "messages": []
-        },
-        {
-          "resolved": {
-            "type": "module",
-            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/Base/CameraMove.ts"
-          },
-          "messages": []
-        },
-        {
-          "resolved": {
-            "type": "module",
-            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/Base/AudioManager.ts"
-          },
-          "messages": []
-        },
-        {
-          "resolved": {
-            "type": "module",
-            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/Base/EventManager.ts"
           },
           "messages": []
         },
@@ -12604,7 +12499,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/test_pro/test_pro/HYQ_Project/assets/Script/functionS/Other/PropArms.ts": {
       "mTimestamp": {
-        "mtime": 1781231242053.0022,
+        "mtime": 1781244882958.0005,
         "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
       },
       "chunkId": "592fb6079f79828da006a46884621149f44109ac",
