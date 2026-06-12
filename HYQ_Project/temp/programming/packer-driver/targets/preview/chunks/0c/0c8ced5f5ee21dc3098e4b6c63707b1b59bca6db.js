@@ -175,6 +175,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         start() {
+          var _this$pa;
+
           for (var i = 0; i < this.showCount; i++) {
             var p = this.propBrand;
             this.propBrandList.push(p);
@@ -187,7 +189,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           // }, 1);
 
 
-          this.pa.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+          (_this$pa = this.pa) == null || _this$pa.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
             error: Error()
           }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
         }

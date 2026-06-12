@@ -70,7 +70,7 @@ export class CreatePropBrand extends UnityUpComponent {
 
         // }, 1);
 
-        this.pa.node.on(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
+        this.pa?.node.on(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
 
     }
 

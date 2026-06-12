@@ -393,7 +393,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), EventType) : EventType).PROP_ARMS_DIE, this._curArms); // this._curArms.fbx.setAnimation(AnimArms.up_ju, true);
           // }, time * 0.8);
-          // 石板三段式动画：抛起→人跳走→落下砸地
+
+          if (!this.wallNode) {
+            this.node.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, this._curArms);
+            return;
+          } // 石板三段式动画：抛起→人跳走→落下砸地
+
 
           tween(this.wallNode) // .delay(halfTime)
           .call(() => {
@@ -431,14 +438,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
                 error: Error()
               }), SoundEnum) : SoundEnum).Sound_downST);
-              this.wallEffect.active = true;
 
-              for (var _i = 0; _i < this.wallEffect.children.length; _i++) {
-                var _this$wallEffect$chil;
+              if (this.wallEffect) {
+                this.wallEffect.active = true;
 
-                (_this$wallEffect$chil = this.wallEffect.children[_i].getComponent(_crd && AttackParkPlay === void 0 ? (_reportPossibleCrUseOfAttackParkPlay({
-                  error: Error()
-                }), AttackParkPlay) : AttackParkPlay)) == null || _this$wallEffect$chil.play();
+                for (var _i = 0; _i < this.wallEffect.children.length; _i++) {
+                  var _this$wallEffect$chil;
+
+                  (_this$wallEffect$chil = this.wallEffect.children[_i].getComponent(_crd && AttackParkPlay === void 0 ? (_reportPossibleCrUseOfAttackParkPlay({
+                    error: Error()
+                  }), AttackParkPlay) : AttackParkPlay)) == null || _this$wallEffect$chil.play();
+                }
               }
 
               this.isWallH = false; // this.effect_ss.active = true;
@@ -724,9 +734,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             var scale = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(this._curArms.fbx.node.scale); // 初始位置: 石板在地面, FBX在地下
+            }), PoolManager) : PoolManager).instance.V3.set(this._curArms.fbx.node.scale); // 初始位置: FBX在地下
 
-            this.wallNode.x = 0;
             this._curArms.fbx.node.y = -1;
 
             this._curArms.fbx.node.setScale(Vec3.ZERO);
@@ -771,11 +780,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               easing: "backOut"
             }).start(); // wallNode跟随FBX升起
 
-            tween(this.wallNode).delay(phase1Delay).to(phase1RiseTime, {
-              y: wallPhase1TargetY
-            }, {
-              easing: "backOut"
-            }).start(); // Phase 2: 轮胎从地底依次升起，把FBX顶上去
+            if (this.wallNode) {
+              tween(this.wallNode).delay(phase1Delay).to(phase1RiseTime, {
+                y: wallPhase1TargetY
+              }, {
+                easing: "backOut"
+              }).start();
+            } // Phase 2: 轮胎从地底依次升起，把FBX顶上去
+
 
             var tireStartDelay = phase1Delay + phase1RiseTime + 0.02;
             var tireRiseTime = 0.1;
@@ -803,11 +815,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 }, {
                   easing: "backOut"
                 }).start();
-                tween(this.wallNode).delay(liftDelay).to(liftTime, {
-                  y: targetWallY
-                }, {
-                  easing: "backOut"
-                }).start();
+
+                if (this.wallNode) {
+                  tween(this.wallNode).delay(liftDelay).to(liftTime, {
+                    y: targetWallY
+                  }, {
+                    easing: "backOut"
+                  }).start();
+                }
               }
             } // 计算总动画时长，结束后统一处理
 
@@ -861,7 +876,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         _update(deltaTime) {
           var dt = deltaTime; // 石板浮动
 
-          if (this.isWallH) {
+          if (this.isWallH && this.wallNode) {
             this._time += dt * this.speed;
             var curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;

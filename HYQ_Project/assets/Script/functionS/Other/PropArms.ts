@@ -150,6 +150,11 @@ export class PropArms extends BattleTarget3D {
         // this._curArms.fbx.setAnimation(AnimArms.up_ju, true);
         // }, time * 0.8);
 
+        if (!this.wallNode) {
+            this.node.emit(EventType.PROP_ARMS_DIE, this._curArms);
+            return;
+        }
+
         // 石板三段式动画：抛起→人跳走→落下砸地
         tween(this.wallNode)
             // .delay(halfTime)
@@ -174,9 +179,11 @@ export class PropArms extends BattleTarget3D {
                         }, 0.1);
                         CameraMove.instance.Shake2(2);
                         AudioManager.inst.playOneShot(SoundEnum.Sound_downST);
-                        this.wallEffect.active = true;
-                        for (let i = 0; i < this.wallEffect.children.length; i++)
-                            this.wallEffect.children[i].getComponent(AttackParkPlay)?.play();
+                        if (this.wallEffect) {
+                            this.wallEffect.active = true;
+                            for (let i = 0; i < this.wallEffect.children.length; i++)
+                                this.wallEffect.children[i].getComponent(AttackParkPlay)?.play();
+                        }
                         this.isWallH = false;
                         // this.effect_ss.active = true;
                         // for (let i = 0; i < this.effect_ss.children.length; i++) {
@@ -383,8 +390,7 @@ export class PropArms extends BattleTarget3D {
             // 保存FBX原始scale（复用PoolManager的V3避免GC）
             const scale = PoolManager.instance.V3.set(this._curArms.fbx.node.scale);
 
-            // 初始位置: 石板在地面, FBX在地下
-            this.wallNode.x = 0;
+            // 初始位置: FBX在地下
             this._curArms.fbx.node.y = -1;
             this._curArms.fbx.node.setScale(Vec3.ZERO);
             this._curArms.fbx.setAnimation(AnimArms.idle, true);
@@ -428,10 +434,12 @@ export class PropArms extends BattleTarget3D {
                 .start();
 
             // wallNode跟随FBX升起
-            tween(this.wallNode)
-                .delay(phase1Delay)
-                .to(phase1RiseTime, { y: wallPhase1TargetY }, { easing: "backOut" })
-                .start();
+            if (this.wallNode) {
+                tween(this.wallNode)
+                    .delay(phase1Delay)
+                    .to(phase1RiseTime, { y: wallPhase1TargetY }, { easing: "backOut" })
+                    .start();
+            }
 
             // Phase 2: 轮胎从地底依次升起，把FBX顶上去
             const tireStartDelay = phase1Delay + phase1RiseTime + 0.02;
@@ -460,10 +468,12 @@ export class PropArms extends BattleTarget3D {
                         .delay(liftDelay)
                         .to(liftTime, { y: targetFbxY }, { easing: "backOut" })
                         .start();
-                    tween(this.wallNode)
-                        .delay(liftDelay)
-                        .to(liftTime, { y: targetWallY }, { easing: "backOut" })
-                        .start();
+                    if (this.wallNode) {
+                        tween(this.wallNode)
+                            .delay(liftDelay)
+                            .to(liftTime, { y: targetWallY }, { easing: "backOut" })
+                            .start();
+                    }
                 }
             }
 
@@ -510,7 +520,7 @@ export class PropArms extends BattleTarget3D {
     _update(deltaTime: number) {
         const dt = deltaTime;
         // 石板浮动
-        if (this.isWallH) {
+        if (this.isWallH && this.wallNode) {
             this._time += dt * this.speed;
             const curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;
