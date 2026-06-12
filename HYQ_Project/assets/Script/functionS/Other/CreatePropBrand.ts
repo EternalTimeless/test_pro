@@ -58,6 +58,12 @@ export class CreatePropBrand extends UnityUpComponent {
     @property(CCFloat)
     public propBackOffset: number = 5.4;
 
+    @property(CCFloat)
+    public tireGatePropGap: number = 2.8;
+
+    @property(CCFloat)
+    public tireGateX: number = 0.28;
+
     private propBrandList: PropBrand[] = [];
 
     private tempPropBrandList: PropBrand[] = [];
@@ -76,7 +82,7 @@ export class CreatePropBrand extends UnityUpComponent {
         if (!this.isTireGateActive) {
             return 0;
         }
-        return Math.max(this.propBackOffset, this.tireGateCount * this.tireGateSpacing + this.distance);
+        return Math.max(this.propBackOffset, Math.max(0, this.tireGateCount - 1) * this.tireGateSpacing + this.tireGatePropGap);
     }
 
     @property(CCInteger)
@@ -234,7 +240,7 @@ export class CreatePropBrand extends UnityUpComponent {
         for (let i = 0; i < this.tireGateCount; i++) {
             const tire = this.tireGate;
             this.wallNode.addChild(tire);
-            tire.setPosition(0, this.height, i * this.tireGateSpacing);
+            tire.setPosition(this.tireGateX, this.height, i * this.tireGateSpacing);
             tire.setScale(Vec3.ONE);
 
             const gate = tire.getComponent(PropTireGate);

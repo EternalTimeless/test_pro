@@ -5223,6 +5223,8 @@
       "z": 1.44
     },
     "propBackOffset": 5.4,
+    "tireGatePropGap": 2.8,
+    "tireGateX": 0.28,
     "type": 0,
     "_id": "841G+cnX9NF7QUuVeQS3lD"
   },

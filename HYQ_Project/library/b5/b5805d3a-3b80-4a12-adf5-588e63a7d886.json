@@ -12738,6 +12738,8 @@
       "z": 1.44
     },
     "propBackOffset": 5.4,
+    "tireGatePropGap": 2.8,
+    "tireGateX": 0.28,
     "type": 0,
     "_id": "841G+cnX9NF7QUuVeQS3lD"
   },
@@ -21475,6 +21477,8 @@
       "z": 1.44
     },
     "propBackOffset": 5.4,
+    "tireGatePropGap": 2.8,
+    "tireGateX": 0.28,
     "type": 1,
     "_id": "35d7SdpMFIAZmarts3dOAB"
   },

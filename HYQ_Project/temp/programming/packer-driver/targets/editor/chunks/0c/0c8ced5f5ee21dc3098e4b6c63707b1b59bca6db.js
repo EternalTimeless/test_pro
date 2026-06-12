@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, MeshRenderer, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropTireGate, ColliderTag, COLLIDE_TYPE, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, MeshRenderer, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropTireGate, ColliderTag, COLLIDE_TYPE, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -169,7 +169,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("CreatePropBrand", CreatePropBrand = (_dec = ccclass('CreatePropBrand'), _dec2 = property(CCInteger), _dec3 = property(CCFloat), _dec4 = property(CCFloat), _dec5 = property(CCInteger), _dec6 = property(CCFloat), _dec7 = property(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
         error: Error()
-      }), PropArms) : PropArms), _dec8 = property(Node), _dec9 = property(CCBoolean), _dec10 = property(CCInteger), _dec11 = property(CCFloat), _dec12 = property(CCFloat), _dec13 = property(Vec3), _dec14 = property(CCFloat), _dec15 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), PropArms) : PropArms), _dec8 = property(Node), _dec9 = property(CCBoolean), _dec10 = property(CCInteger), _dec11 = property(CCFloat), _dec12 = property(CCFloat), _dec13 = property(Vec3), _dec14 = property(CCFloat), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor(...args) {
@@ -201,13 +201,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "propBackOffset", _descriptor13, this);
 
+          _initializerDefineProperty(this, "tireGatePropGap", _descriptor14, this);
+
+          _initializerDefineProperty(this, "tireGateX", _descriptor15, this);
+
           this.propBrandList = [];
           this.tempPropBrandList = [];
           this.isMove = false;
           this.gateTireRemain = 0;
           this.pendingMoveCount = 0;
 
-          _initializerDefineProperty(this, "type", _descriptor14, this);
+          _initializerDefineProperty(this, "type", _descriptor16, this);
 
           this.tempV3 = new Vec3();
         }
@@ -221,7 +225,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return 0;
           }
 
-          return Math.max(this.propBackOffset, this.tireGateCount * this.tireGateSpacing + this.distance);
+          return Math.max(this.propBackOffset, Math.max(0, this.tireGateCount - 1) * this.tireGateSpacing + this.tireGatePropGap);
         }
 
         start() {
@@ -366,7 +370,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             const tire = this.tireGate;
             this.wallNode.addChild(tire);
-            tire.setPosition(0, this.height, i * this.tireGateSpacing);
+            tire.setPosition(this.tireGateX, this.height, i * this.tireGateSpacing);
             tire.setScale(Vec3.ONE);
             const gate = tire.getComponent(_crd && PropTireGate === void 0 ? (_reportPossibleCrUseOfPropTireGate({
               error: Error()
@@ -715,7 +719,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 5.4;
         }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec15], {
+      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "tireGatePropGap", [_dec15], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 2.8;
+        }
+      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "tireGateX", [_dec16], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.28;
+        }
+      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec17], {
         configurable: true,
         enumerable: true,
         writable: true,

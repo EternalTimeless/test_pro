@@ -80,6 +80,12 @@ export class MonsterCreate extends UnityUpComponent {
     @property({ tooltip: '怪物中路X轴限制半宽，防止进入左右石板区域' })
     public middleLaneHalfX: number = 2;
 
+    @property({ tooltip: '左右石板区域Z轴起点，怪物只在该区间内限制中路' })
+    public sideSlabLimitMinZ: number = 0;
+
+    @property({ tooltip: '左右石板区域Z轴终点，怪物只在该区间内限制中路' })
+    public sideSlabLimitMaxZ: number = 55;
+
 
 
     /** 每列间距，由 disX*2/rowCount 计算得出 */
@@ -115,7 +121,7 @@ export class MonsterCreate extends UnityUpComponent {
     private _hasInitialFilled: boolean = false;
 
     start() {
-        this.offX = this.middleLaneHalfX * 2 / this.rowCount;
+        this.offX = this.disX * 2 / this.rowCount;
         EventManager.instance.on(EventType.PLAYER_RESURRECTION, this.TimeFlowsBackWard, this);
         EventManager.instance.on(EventType.MONSTER_SKILL_XRD, this.skillXRMonster, this);
         // this.scheduleOnce(() => {
@@ -188,7 +194,7 @@ export class MonsterCreate extends UnityUpComponent {
                 const mz = monster.node.worldPositionZ;
                 if (mz <= this.stage_0 && mz > this.stage_1) {
                     const mx = monster.node.worldPositionX;
-                    const x = this.clampMonsterX(mx);
+                    const x = this.shouldLimitMonsterXAtZ(mz) || this.shouldLimitMonsterXAtZ(this.stage_1) ? this.clampMonsterX(mx) : mx;
                     tempV3.x = x;
                     tempV3.y = 0;
                     tempV3.z = this.stage_1;
@@ -270,7 +276,8 @@ export class MonsterCreate extends UnityUpComponent {
         //     }
         // }
         const z = this._nextSpawnZ + (Math.random() - 0.5) * this.layerGapZ;
-        const x = this.clampMonsterX((Math.random() - 0.5) * this.offX + (this.posIndex - (this.rowCount - 1) / 2) * this.offX);
+        const rawX = (Math.random() - 0.5) * this.offX + (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
+        const x = this.shouldLimitMonsterXAtZ(z) ? this.clampMonsterX(rawX) : rawX;
 
         this.posIndex = (this.posIndex + 1) % this.rowCount;
 
@@ -293,6 +300,10 @@ export class MonsterCreate extends UnityUpComponent {
 
     }
 
+    private shouldLimitMonsterXAtZ(z: number): boolean {
+        return z >= this.sideSlabLimitMinZ && z <= this.sideSlabLimitMaxZ;
+    }
+
     private clampMonsterX(x: number): number {
         if (x > this.middleLaneHalfX) {
             return this.middleLaneHalfX;
@@ -304,6 +315,9 @@ export class MonsterCreate extends UnityUpComponent {
     }
 
     private limitMonsterToMiddleLane(monster: MonsterBattleTaerget) {
+        if (!this.shouldLimitMonsterXAtZ(monster.node.worldPositionZ)) {
+            return;
+        }
         const x = this.clampMonsterX(monster.node.x);
         if (monster.node.x != x) {
             monster.node.x = x;
@@ -333,7 +347,8 @@ export class MonsterCreate extends UnityUpComponent {
             monster.move.autoMove = false;
             if (monster.attackTarget) {
                 const z = -26.3 + Math.abs(-26.3 - monster.node.z) + 10 + Math.random() * 5;
-                tween(monster.node).to(0.05, { x: this.clampMonsterX(monster.initX), z: -26.3 }).to(0.35, { z: z }).call(() => {
+                const resetX = this.shouldLimitMonsterXAtZ(-26.3) ? this.clampMonsterX(monster.initX) : monster.initX;
+                tween(monster.node).to(0.05, { x: resetX, z: -26.3 }).to(0.35, { z: z }).call(() => {
                     monster.move.autoMove = true;
                     monster.move.moveMod = MoveModEnum.PosMove;
                     tempV3.set(monster.node.worldPosition);
@@ -375,7 +390,8 @@ export class MonsterCreate extends UnityUpComponent {
                 console.log("fx2", fx);
                 let px = fx * Math.random() * 20 + fx * 4;
 
-                endPos.x = this.clampMonsterX(px + fx * 8);
+                const skillEndX = px + fx * 8;
+                endPos.x = this.shouldLimitMonsterXAtZ(pos.z) ? this.clampMonsterX(skillEndX) : skillEndX;
                 endPos.z = pos.z;
 
                 const cPos = PoolManager.instance.V3;

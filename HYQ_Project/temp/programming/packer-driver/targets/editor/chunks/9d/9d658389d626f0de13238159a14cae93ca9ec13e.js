@@ -257,7 +257,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         start() {
-          this.offX = this.middleLaneHalfX * 2 / this.rowCount;
+          this.offX = this.disX * 2 / this.rowCount;
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
           }), EventManager) : EventManager).instance.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
@@ -349,7 +349,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
               if (mz <= this.stage_0 && mz > this.stage_1) {
                 const mx = monster.node.worldPositionX;
-                const x = this.clampMonsterX(mx);
+                const x = this.shouldLimitMonsterXAtZ(this.stage_1) ? this.clampMonsterX(mx) : mx;
                 tempV3.x = x;
                 tempV3.y = 0;
                 tempV3.z = this.stage_1;
@@ -445,7 +445,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
 
           const z = this._nextSpawnZ + (Math.random() - 0.5) * this.layerGapZ;
-          const x = this.clampMonsterX((Math.random() - 0.5) * this.offX + (this.posIndex - (this.rowCount - 1) / 2) * this.offX);
+          const rawX = (Math.random() - 0.5) * this.offX + (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
+          const x = this.shouldLimitMonsterXAtZ(z) ? this.clampMonsterX(rawX) : rawX;
           this.posIndex = (this.posIndex + 1) % this.rowCount;
           monster.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
             error: Error()
@@ -463,6 +464,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
+        shouldLimitMonsterXAtZ(z) {
+          return z >= this.sideSlabLimitMinZ && z <= this.sideSlabLimitMaxZ;
+        }
+
         clampMonsterX(x) {
           if (x > this.middleLaneHalfX) {
             return this.middleLaneHalfX;
@@ -476,6 +481,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         limitMonsterToMiddleLane(monster) {
+          if (!this.shouldLimitMonsterXAtZ(monster.node.worldPositionZ)) {
+            return;
+          }
+
           const x = this.clampMonsterX(monster.node.x);
 
           if (monster.node.x != x) {
@@ -522,8 +531,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             if (monster.attackTarget) {
               const z = -26.3 + Math.abs(-26.3 - monster.node.z) + 10 + Math.random() * 5;
+              const resetX = this.shouldLimitMonsterXAtZ(-26.3) ? this.clampMonsterX(monster.initX) : monster.initX;
               tween(monster.node).to(0.05, {
-                x: this.clampMonsterX(monster.initX),
+                x: resetX,
                 z: -26.3
               }).to(0.35, {
                 z: z
@@ -572,7 +582,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), PoolManager) : PoolManager).instance.V3;
               console.log("fx2", fx);
               let px = fx * Math.random() * 20 + fx * 4;
-              endPos.x = this.clampMonsterX(px + fx * 8);
+              const skillEndX = px + fx * 8;
+              endPos.x = this.shouldLimitMonsterXAtZ(pos.z) ? this.clampMonsterX(skillEndX) : skillEndX;
               endPos.z = pos.z;
               const cPos = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
