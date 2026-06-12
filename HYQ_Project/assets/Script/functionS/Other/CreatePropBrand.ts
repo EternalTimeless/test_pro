@@ -47,7 +47,7 @@ export class CreatePropBrand extends UnityUpComponent {
     public tireGateCount: number = 3;
 
     @property(CCFloat)
-    public tireGateSpacing: number = 1.8;
+    public tireGateSpacing: number = 4.2;
 
     @property(CCFloat)
     public tireGateHp: number = 1;
@@ -72,11 +72,18 @@ export class CreatePropBrand extends UnityUpComponent {
         return this.tireGateEnabled || (this.type === 0 && this.count === 1);
     }
 
+    private get activePropBackOffset() {
+        if (!this.isTireGateActive) {
+            return 0;
+        }
+        return Math.max(this.propBackOffset, this.tireGateCount * this.tireGateSpacing + this.distance);
+    }
+
     @property(CCInteger)
     public type: number = 0;
     start() {
 
-        const startZ = this.isTireGateActive ? this.propBackOffset : 0;
+        const startZ = this.activePropBackOffset;
 
         for (let i = 0; i < this.showCount; i++) {
 
@@ -190,7 +197,7 @@ export class CreatePropBrand extends UnityUpComponent {
 
     private appendPropBrands(count: number) {
         const c = this.propBrandList.length;
-        const appendStartZ = this.isTireGateActive ? this.propBackOffset : 0;
+        const appendStartZ = this.activePropBackOffset;
         for (let i = 0; i < count; i++) {
             const p = this.propBrand;
             this.wallNode.addChild(p.node);
@@ -207,7 +214,7 @@ export class CreatePropBrand extends UnityUpComponent {
         p.node.x = 0;
         p.node.y = this.height;
         const last = this.propBrandList[this.propBrandList.length - 1];
-        const appendStartZ = this.isTireGateActive ? this.propBackOffset : 0;
+        const appendStartZ = this.activePropBackOffset;
         p.node.z = last ? last.node.z + this.distance : appendStartZ;
         this.propBrandList.push(p);
     }

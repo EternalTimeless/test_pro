@@ -5214,7 +5214,7 @@
     },
     "tireGateEnabled": true,
     "tireGateCount": 3,
-    "tireGateSpacing": 1.8,
+    "tireGateSpacing": 4.2,
     "tireGateHp": 1,
     "tireGateScale": {
       "__type__": "cc.Vec3",

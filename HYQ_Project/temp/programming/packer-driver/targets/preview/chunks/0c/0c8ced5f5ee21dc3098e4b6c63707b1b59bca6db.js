@@ -216,10 +216,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return this.tireGateEnabled || this.type === 0 && this.count === 1;
         }
 
+        get activePropBackOffset() {
+          if (!this.isTireGateActive) {
+            return 0;
+          }
+
+          return Math.max(this.propBackOffset, this.tireGateCount * this.tireGateSpacing + this.distance);
+        }
+
         start() {
           var _this$pa;
 
-          var startZ = this.isTireGateActive ? this.propBackOffset : 0;
+          var startZ = this.activePropBackOffset;
 
           for (var i = 0; i < this.showCount; i++) {
             var p = this.propBrand;
@@ -314,7 +322,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         appendPropBrands(count) {
           var c = this.propBrandList.length;
-          var appendStartZ = this.isTireGateActive ? this.propBackOffset : 0;
+          var appendStartZ = this.activePropBackOffset;
 
           for (var i = 0; i < count; i++) {
             var p = this.propBrand;
@@ -332,7 +340,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           p.node.x = 0;
           p.node.y = this.height;
           var last = this.propBrandList[this.propBrandList.length - 1];
-          var appendStartZ = this.isTireGateActive ? this.propBackOffset : 0;
+          var appendStartZ = this.activePropBackOffset;
           p.node.z = last ? last.node.z + this.distance : appendStartZ;
           this.propBrandList.push(p);
         }
@@ -684,7 +692,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return 1.8;
+          return 4.2;
         }
       }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "tireGateHp", [_dec12], {
         configurable: true,
