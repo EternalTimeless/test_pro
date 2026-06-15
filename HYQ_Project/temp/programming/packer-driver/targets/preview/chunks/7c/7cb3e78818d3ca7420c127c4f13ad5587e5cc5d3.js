@@ -264,6 +264,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.monsterMatIns = [0, 0, 0];
         }
 
+        onLoad() {
+          MonsterCreate.instance = this;
+        }
+
         start() {
           this.offX = this.disX * 2 / this.rowCount;
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
@@ -318,6 +322,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             quest.curMonsterCount += count;
 
             if (quest.curMonsterCount == quest.monsterCountMax) {
+              (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
+                error: Error()
+              }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+                error: Error()
+              }), EventType) : EventType).MONSTER_WAVE_STAGE);
               quest.curLoopCount++;
               this._nextSpawnZ += quest.brotherExcludeZ;
 
@@ -474,6 +483,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         shouldLimitMonsterXAtZ(z) {
           return z >= this.sideSlabLimitMinZ && z <= this.sideSlabLimitMaxZ;
+        }
+
+        getFrontMonsterWorldZ(defaultZ) {
+          if (defaultZ === void 0) {
+            defaultZ = this.stage_0;
+          }
+
+          var frontZ = Number.POSITIVE_INFINITY;
+
+          for (var i = 0; i < this._monsterList.length; i++) {
+            var monster = this._monsterList[i];
+
+            if (!monster || !monster.node || !monster.node.active || monster.isDie) {
+              continue;
+            }
+
+            if (monster.node.worldPositionZ < frontZ) {
+              frontZ = monster.node.worldPositionZ;
+            }
+          }
+
+          return Number.isFinite(frontZ) ? frontZ : defaultZ;
         }
 
         clampMonsterX(x) {
@@ -740,7 +771,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), CameraMove) : CameraMove).instance.Shake2(10);
         }
 
-      }, _class9.isStartMove = false, _class9), (_descriptor6 = _applyDecoratedDescriptor(_class8.prototype, "monsterCount", [_dec9], {
+      }, _class9.instance = null, _class9.isStartMove = false, _class9), (_descriptor6 = _applyDecoratedDescriptor(_class8.prototype, "monsterCount", [_dec9], {
         configurable: true,
         enumerable: true,
         writable: true,

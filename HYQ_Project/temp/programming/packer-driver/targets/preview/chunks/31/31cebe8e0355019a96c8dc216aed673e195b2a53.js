@@ -25,6 +25,7 @@ System.register(["cc"], function (_export, _context) {
       EventType.GoldUP = "GoldUP";
       EventType.EFFECT_PLAY_OVER = "Effect_Play_over";
       EventType.PROP_ARMS_DIE = "Prop_Arms_Die";
+      EventType.MONSTER_WAVE_STAGE = "Monster_Wave_Stage";
       EventType.Monster_Attack_Player_ADD = "Monster_Attack_Player_ADD";
       EventType.PLAYER_HIT = "Player_Hit";
       EventType.PLAYER_RESURRECTION = "Player_Resurrection";

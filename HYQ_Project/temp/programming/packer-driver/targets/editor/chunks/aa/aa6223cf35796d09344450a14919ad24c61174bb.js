@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -77,6 +77,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("CameraMove", "../../Base/CameraMove", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfMonsterCreate(extras) {
+    _reporterNs.report("MonsterCreate", "../Monster/MonsterCreate", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -124,6 +128,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       FbxManager = _unresolved_12.FbxManager;
     }, function (_unresolved_13) {
       CameraMove = _unresolved_13.CameraMove;
+    }, function (_unresolved_14) {
+      MonsterCreate = _unresolved_14.MonsterCreate;
     }],
     execute: function () {
       _crd = true;
@@ -252,7 +258,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
       })), _class2)) || _class));
 
-      _export("PropArms", PropArms = (_dec11 = ccclass('PropArms'), _dec12 = property(ArmsInfo), _dec13 = property(Label), _dec14 = property(Vec3), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCFloat), _dec18 = property(Node), _dec19 = property(Vec3), _dec20 = property(Node), _dec21 = property(CCFloat), _dec22 = property(CCFloat), _dec11(_class4 = (_class5 = class PropArms extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
+      _export("PropArms", PropArms = (_dec11 = ccclass('PropArms'), _dec12 = property(ArmsInfo), _dec13 = property(Label), _dec14 = property(Vec3), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCFloat), _dec18 = property(CCFloat), _dec19 = property(CCFloat), _dec20 = property(Node), _dec21 = property(Vec3), _dec22 = property(Node), _dec23 = property(CCFloat), _dec24 = property(CCFloat), _dec11(_class4 = (_class5 = class PropArms extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
         constructor(...args) {
@@ -284,22 +290,29 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "jumpHeight", _descriptor14, this);
 
+          _initializerDefineProperty(this, "waveFrontGap", _descriptor15, this);
+
+          _initializerDefineProperty(this, "nextStageDelay", _descriptor16, this);
+
           // @property(AttackParkPlay)
           // public effect: AttackParkPlay;
-          _initializerDefineProperty(this, "animScale", _descriptor15, this);
+          _initializerDefineProperty(this, "animScale", _descriptor17, this);
 
-          _initializerDefineProperty(this, "wallNode", _descriptor16, this);
+          _initializerDefineProperty(this, "wallNode", _descriptor18, this);
 
-          _initializerDefineProperty(this, "jumpWallPos", _descriptor17, this);
+          _initializerDefineProperty(this, "jumpWallPos", _descriptor19, this);
 
-          _initializerDefineProperty(this, "wallEffect", _descriptor18, this);
+          _initializerDefineProperty(this, "wallEffect", _descriptor20, this);
 
-          _initializerDefineProperty(this, "speed", _descriptor19, this);
+          _initializerDefineProperty(this, "speed", _descriptor21, this);
 
-          _initializerDefineProperty(this, "h", _descriptor20, this);
+          _initializerDefineProperty(this, "h", _descriptor22, this);
 
           this._time = 0;
           this.isWallH = false;
+          this._pendingWaveStageCount = 0;
+          this._isStageAlive = false;
+          this._stageSpawnPos = new Vec3();
         }
 
         // @property(Node)
@@ -374,12 +387,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
             error: Error()
           }), EventType) : EventType).PROP_ARMS_DIE, this._curArms); // this._curArms.fbx.setAnimation(AnimArms.up_ju, true);
-          // }, time * 0.8);
+
+          this._isStageAlive = false; // }, time * 0.8);
 
           if (!this.wallNode) {
             this.node.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
               error: Error()
             }), EventType) : EventType).PROP_ARMS_DIE, this._curArms);
+            this.queueTrySpawnNextStage();
             return;
           } // 石板三段式动画：抛起→人跳走→落下砸地
 
@@ -405,6 +420,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               this.node.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
                 error: Error()
               }), EventType) : EventType).PROP_ARMS_DIE, this._curArms);
+              this.queueTrySpawnNextStage();
               this.scheduleOnce(() => {
                 (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
                   error: Error()
@@ -684,6 +700,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._level += count;
 
           if (this._level >= this.armsInfoList.length) {
+            this._isStageAlive = false;
             this.node.active = false;
           } else {
             for (let i = 0; i < this.armsInfoList.length; i++) {
@@ -691,6 +708,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             this._curArms = this.armsInfoList[this._level];
+            this._isStageAlive = true;
             const tireSpacing = this.tireSpacing;
             const wallHeight = this._curArms.wallHeight;
             const tireCount = this._curArms.tireCount;
@@ -841,7 +859,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         selectArms() {}
 
         start() {
+          (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
+            error: Error()
+          }), EventManager) : EventManager).instance.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+            error: Error()
+          }), EventType) : EventType).MONSTER_WAVE_STAGE, this.onMonsterWaveStage, this);
           this.init(0); // this.effect.node.active = false;
+        }
+
+        onDestroy() {
+          (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
+            error: Error()
+          }), EventManager) : EventManager).instance.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+            error: Error()
+          }), EventType) : EventType).MONSTER_WAVE_STAGE, this.onMonsterWaveStage);
         }
 
         _update(deltaTime) {
@@ -864,6 +895,51 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               this._isShake = false;
             }
           }
+        }
+
+        onMonsterWaveStage() {
+          this._pendingWaveStageCount++;
+          this.trySpawnNextStage();
+        }
+
+        queueTrySpawnNextStage() {
+          if (this._pendingWaveStageCount <= 0 || this._isStageAlive) {
+            return;
+          }
+
+          this.scheduleOnce(() => {
+            this.trySpawnNextStage();
+          }, this.nextStageDelay);
+        }
+
+        trySpawnNextStage() {
+          if (this._isStageAlive || this._pendingWaveStageCount <= 0) {
+            return;
+          }
+
+          if (this._level >= this.armsInfoList.length - 1) {
+            this._pendingWaveStageCount = 0;
+            this.node.active = false;
+            return;
+          }
+
+          this._pendingWaveStageCount--;
+          this.resetStagePosition();
+          this.node.active = true;
+          this.init(1);
+        }
+
+        resetStagePosition() {
+          var _instance$getFrontMon, _instance;
+
+          const worldPos = this.node.worldPosition;
+          const frontZ = (_instance$getFrontMon = (_instance = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+            error: Error()
+          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
+
+          this._stageSpawnPos.set(worldPos.x, worldPos.y, frontZ - this.waveFrontGap);
+
+          this.node.setWorldPosition(this._stageSpawnPos);
         }
 
       }, (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
@@ -901,38 +977,52 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 0.5;
         }
-      }), _descriptor15 = _applyDecoratedDescriptor(_class5.prototype, "animScale", [_dec17], {
+      }), _descriptor15 = _applyDecoratedDescriptor(_class5.prototype, "waveFrontGap", [_dec17], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 2;
+        }
+      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "nextStageDelay", [_dec18], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.2;
+        }
+      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "animScale", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 1;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "wallNode", [_dec18], {
+      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "wallNode", [_dec20], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "jumpWallPos", [_dec19], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "jumpWallPos", [_dec21], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return new Vec3();
         }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "wallEffect", [_dec20], {
+      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "wallEffect", [_dec22], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "speed", [_dec21], {
+      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "speed", [_dec23], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 1;
         }
-      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "h", [_dec22], {
+      }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "h", [_dec24], {
         configurable: true,
         enumerable: true,
         writable: true,

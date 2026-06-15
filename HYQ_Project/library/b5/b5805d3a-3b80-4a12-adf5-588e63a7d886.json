@@ -4674,6 +4674,8 @@
     },
     "tireSpacing": 1.232,
     "jumpHeight": 0.7,
+    "waveFrontGap": 2,
+    "nextStageDelay": 0.2,
     "animScale": 2,
     "wallNode": null,
     "jumpWallPos": {
@@ -13078,6 +13080,7 @@
     },
     "propBackOffset": 5.4,
     "tireGatePropGap": 2.8,
+    "editorTireTailOffset": 1.2,
     "tireGateX": 0.28,
     "editorTireGateNodes": [
       {
@@ -21735,6 +21738,8 @@
     },
     "tireSpacing": 1.4,
     "jumpHeight": 0.7,
+    "waveFrontGap": 2,
+    "nextStageDelay": 0.2,
     "animScale": 2,
     "wallNode": {
       "__id__": 812
@@ -21828,6 +21833,7 @@
     },
     "propBackOffset": 5.4,
     "tireGatePropGap": 2.8,
+    "editorTireTailOffset": 1.2,
     "tireGateX": 0.28,
     "editorTireGateNodes": [],
     "type": 1,
