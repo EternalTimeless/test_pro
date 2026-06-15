@@ -214,7 +214,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         get isTireGateActive() {
-          return this.tireGateEnabled || this.type === 0 && this.count === 1;
+          return this.tireGateEnabled && this.validEditorTireGateNodes.length > 0;
         }
 
         get activePropBackOffset() {
