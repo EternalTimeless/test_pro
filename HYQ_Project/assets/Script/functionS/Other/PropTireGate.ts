@@ -9,13 +9,20 @@ const { ccclass } = _decorator;
 @ccclass('PropTireGate')
 export class PropTireGate extends BattleTarget3D {
 
+    public poolOnDie: boolean = true;
+
     private _onDie: () => void = null;
+
+    private _initialScale: Vec3 = new Vec3(1, 1, 1);
 
     public initGate(onDie: () => void, hp: number) {
         this._onDie = onDie;
         this.MaxHp = hp;
         this.curHp = hp;
         this.isDestroy = false;
+        this.node.active = true;
+        this._initialScale.set(this.node.scale);
+        this.node.setScale(this._initialScale);
         BulletMonsterCollisionManager.instance.registerTarget(this);
     }
 
@@ -52,8 +59,10 @@ export class PropTireGate extends BattleTarget3D {
             .to(0.1, { scale: Vec3.ZERO }, { easing: 'sineIn' })
             .call(() => {
                 this.node.active = false;
-                this.node.setScale(Vec3.ONE);
-                PoolManager.instance.setPool(PoolEnum.Other + OtherPrefabsEnum.tire, this.node);
+                this.node.setScale(this._initialScale);
+                if (this.poolOnDie) {
+                    PoolManager.instance.setPool(PoolEnum.Other + OtherPrefabsEnum.tire, this.node);
+                }
             })
             .start();
     }

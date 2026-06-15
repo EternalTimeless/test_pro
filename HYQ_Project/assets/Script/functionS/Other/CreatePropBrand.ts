@@ -78,7 +78,7 @@ export class CreatePropBrand extends UnityUpComponent {
     private pendingMoveCount: number = 0;
 
     private get isTireGateActive() {
-        return this.tireGateEnabled || (this.type === 0 && this.count === 1);
+        return this.tireGateEnabled && this.validEditorTireGateNodes.length > 0;
     }
 
     private get activePropBackOffset() {
