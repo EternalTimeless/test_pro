@@ -1,0 +1,113 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "0f0fe2c7-2f05-46db-be77-9d0a9769582c",
+  "files": [],
+  "subMetas": {
+    "0c40b": {
+      "importer": "gltf-mesh",
+      "uuid": "0f0fe2c7-2f05-46db-be77-9d0a9769582c@0c40b",
+      "displayName": "",
+      "id": "0c40b",
+      "name": "拉链_锯齿002.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1680
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f5fb7": {
+      "importer": "gltf-material",
+      "uuid": "0f0fe2c7-2f05-46db-be77-9d0a9769582c@f5fb7",
+      "displayName": "",
+      "id": "f5fb7",
+      "name": "拉链材质_Inst1.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "db4d2": {
+      "importer": "gltf-material",
+      "uuid": "0f0fe2c7-2f05-46db-be77-9d0a9769582c@db4d2",
+      "displayName": "",
+      "id": "db4d2",
+      "name": "02 - Default.material",
+      "userData": {
+        "gltfIndex": 1
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d0fb0": {
+      "importer": "gltf-scene",
+      "uuid": "0f0fe2c7-2f05-46db-be77-9d0a9769582c@d0fb0",
+      "displayName": "",
+      "id": "d0fb0",
+      "name": "拉链右2.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "0f0fe2c7-2f05-46db-be77-9d0a9769582c@0c40b"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "0f0fe2c7-2f05-46db-be77-9d0a9769582c@f5fb7",
+        "0f0fe2c7-2f05-46db-be77-9d0a9769582c@db4d2"
+      ],
+      "scenes": [
+        "0f0fe2c7-2f05-46db-be77-9d0a9769582c@d0fb0"
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, MeshRenderer, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropTireGate, ColliderTag, COLLIDE_TYPE, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, MeshRenderer, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropTireGate, ColliderTag, COLLIDE_TYPE, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -27,10 +27,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfLayerEnum(extras) {
     _reporterNs.report("LayerEnum", "../../Base/EnumList", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfOtherPrefabsEnum(extras) {
-    _reporterNs.report("OtherPrefabsEnum", "../../Base/EnumList", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfPoolEnum(extras) {
@@ -125,7 +121,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       EffectEnum = _unresolved_4.EffectEnum;
       EventType = _unresolved_4.EventType;
       LayerEnum = _unresolved_4.LayerEnum;
-      OtherPrefabsEnum = _unresolved_4.OtherPrefabsEnum;
       PoolEnum = _unresolved_4.PoolEnum;
       PrefabsEnum = _unresolved_4.PrefabsEnum;
       SoundEnum = _unresolved_4.SoundEnum;
@@ -169,7 +164,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("CreatePropBrand", CreatePropBrand = (_dec = ccclass('CreatePropBrand'), _dec2 = property(CCInteger), _dec3 = property(CCFloat), _dec4 = property(CCFloat), _dec5 = property(CCInteger), _dec6 = property(CCFloat), _dec7 = property(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
         error: Error()
-      }), PropArms) : PropArms), _dec8 = property(Node), _dec9 = property(CCBoolean), _dec10 = property(CCInteger), _dec11 = property(CCFloat), _dec12 = property(CCFloat), _dec13 = property(Vec3), _dec14 = property(CCFloat), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), PropArms) : PropArms), _dec8 = property(Node), _dec9 = property(CCBoolean), _dec10 = property(CCInteger), _dec11 = property(CCFloat), _dec12 = property(CCFloat), _dec13 = property(Vec3), _dec14 = property(CCFloat), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property([Node]), _dec18 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor(...args) {
@@ -205,13 +200,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "tireGateX", _descriptor15, this);
 
+          _initializerDefineProperty(this, "editorTireGateNodes", _descriptor16, this);
+
           this.propBrandList = [];
           this.tempPropBrandList = [];
           this.isMove = false;
           this.gateTireRemain = 0;
           this.pendingMoveCount = 0;
 
-          _initializerDefineProperty(this, "type", _descriptor16, this);
+          _initializerDefineProperty(this, "type", _descriptor17, this);
 
           this.tempV3 = new Vec3();
         }
@@ -225,7 +222,27 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return 0;
           }
 
-          return Math.max(this.propBackOffset, Math.max(0, this.tireGateCount - 1) * this.tireGateSpacing + this.tireGatePropGap);
+          const editorTires = this.validEditorTireGateNodes;
+
+          if (editorTires.length <= 0) {
+            return 0;
+          }
+
+          let maxZ = 0;
+
+          for (let i = 0; i < editorTires.length; i++) {
+            maxZ = Math.max(maxZ, editorTires[i].position.z);
+          }
+
+          return Math.max(this.propBackOffset, maxZ + this.tireGatePropGap);
+        }
+
+        get validEditorTireGateNodes() {
+          return this.editorTireGateNodes.filter(node => !!node);
+        }
+
+        get activeTireGateCount() {
+          return this.validEditorTireGateNodes.length;
         }
 
         start() {
@@ -359,67 +376,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         createTireGate() {
-          if (!this.isTireGateActive || !this.wallNode || this.tireGateCount <= 0) {
+          if (!this.isTireGateActive || !this.wallNode) {
             return;
           }
 
-          this.gateTireRemain = this.tireGateCount;
+          const editorTires = this.validEditorTireGateNodes;
+          this.gateTireRemain = editorTires.length;
 
-          for (let i = 0; i < this.tireGateCount; i++) {
-            var _tire$children$;
-
-            const tire = this.tireGate;
-            this.wallNode.addChild(tire);
-            tire.setPosition(this.tireGateX, this.height, i * this.tireGateSpacing);
-            tire.setScale(Vec3.ONE);
-            const gate = tire.getComponent(_crd && PropTireGate === void 0 ? (_reportPossibleCrUseOfPropTireGate({
-              error: Error()
-            }), PropTireGate) : PropTireGate);
-            const mesh = (_tire$children$ = tire.children[0]) == null || (_tire$children$ = _tire$children$.children[0]) == null ? void 0 : _tire$children$.getComponent(MeshRenderer);
-
-            if (mesh && gate.meshFlashDataList.length > 0) {
-              gate.meshFlashDataList[0].meshRender = mesh;
-            }
-
-            gate.initGate(() => this.onGateTireDie(), this.tireGateHp);
+          for (let i = 0; i < editorTires.length; i++) {
+            this.setupTireGateNode(editorTires[i]);
           }
         }
 
-        onGateTireDie() {
-          this.gateTireRemain--;
-
-          if (this.gateTireRemain > 0) {
-            return;
-          }
-
-          const count = this.pendingMoveCount || this.tireGateCount;
-          this.pendingMoveCount = 0;
-          this.move(count);
-        }
-
-        get tireGate() {
-          var _tire$children$2;
-
-          let tire = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-            error: Error()
-          }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-            error: Error()
-          }), PoolEnum) : PoolEnum).Other + (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
-            error: Error()
-          }), OtherPrefabsEnum) : OtherPrefabsEnum).tire);
-
-          if (!tire) {
-            tire = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
-              error: Error()
-            }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
-              error: Error()
-            }), PrefabsEnum) : PrefabsEnum).other, (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
-              error: Error()
-            }), OtherPrefabsEnum) : OtherPrefabsEnum).tire);
-          }
+        setupTireGateNode(tire) {
+          var _tire$children$;
 
           tire.active = true;
-          (_tire$children$2 = tire.children[0]) == null || _tire$children$2.setScale(this.tireGateScale);
           let tag = tire.getComponent(_crd && ColliderTag === void 0 ? (_reportPossibleCrUseOfColliderTag({
             error: Error()
           }), ColliderTag) : ColliderTag);
@@ -443,10 +415,29 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), PropTireGate) : PropTireGate);
           }
 
+          const mesh = (_tire$children$ = tire.children[0]) == null || (_tire$children$ = _tire$children$.children[0]) == null ? void 0 : _tire$children$.getComponent(MeshRenderer);
+
+          if (mesh && gate.meshFlashDataList.length > 0) {
+            gate.meshFlashDataList[0].meshRender = mesh;
+          }
+
           gate.collisionHalfX = 2;
           gate.collisionHalfZ = 1.2;
           gate.repelEnabled = false;
-          return tire;
+          gate.poolOnDie = false;
+          gate.initGate(() => this.onGateTireDie(), this.tireGateHp);
+        }
+
+        onGateTireDie() {
+          this.gateTireRemain--;
+
+          if (this.gateTireRemain > 0) {
+            return;
+          }
+
+          const count = this.pendingMoveCount || this.activeTireGateCount;
+          this.pendingMoveCount = 0;
+          this.move(count);
         }
 
         move(count) {
@@ -733,7 +724,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 0.28;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec17], {
+      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "editorTireGateNodes", [_dec17], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return [];
+        }
+      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec18], {
         configurable: true,
         enumerable: true,
         writable: true,

@@ -7729,5 +7729,97 @@
     "url": "db://assets/Script/functionS/Other/PropTireGate.ts",
     "value": {},
     "versionCode": 1
+  },
+  "ada15e19-6156-431e-8d14-2eab9b733780": {
+    "url": "db://assets/GameRes/FBX/Lalian",
+    "value": {},
+    "versionCode": 1
+  },
+  "0f0fe2c7-2f05-46db-be77-9d0a9769582c": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链右2.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "bec1faad-f254-4fcf-ae23-6582d93cb9a9": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链左2.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "0f0fe2c7-2f05-46db-be77-9d0a9769582c@0c40b": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链右2.fbx@0c40b",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "bec1faad-f254-4fcf-ae23-6582d93cb9a9@8e112": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链左2.fbx@8e112",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "0f0fe2c7-2f05-46db-be77-9d0a9769582c@f5fb7": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链右2.fbx@f5fb7",
+    "value": {
+      "depends": [
+        "2ec11458-f855-4978-b14d-f3ed5cf697fa"
+      ]
+    },
+    "versionCode": 1
+  },
+  "bec1faad-f254-4fcf-ae23-6582d93cb9a9@f5fb7": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链左2.fbx@f5fb7",
+    "value": {
+      "depends": [
+        "2ec11458-f855-4978-b14d-f3ed5cf697fa"
+      ]
+    },
+    "versionCode": 1
+  },
+  "0f0fe2c7-2f05-46db-be77-9d0a9769582c@db4d2": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链右2.fbx@db4d2",
+    "value": {
+      "depends": [
+        "2ec11458-f855-4978-b14d-f3ed5cf697fa"
+      ]
+    },
+    "versionCode": 1
+  },
+  "bec1faad-f254-4fcf-ae23-6582d93cb9a9@db4d2": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链左2.fbx@db4d2",
+    "value": {
+      "depends": [
+        "2ec11458-f855-4978-b14d-f3ed5cf697fa"
+      ]
+    },
+    "versionCode": 1
+  },
+  "0f0fe2c7-2f05-46db-be77-9d0a9769582c@d0fb0": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链右2.fbx@d0fb0",
+    "value": {
+      "depends": [
+        "0f0fe2c7-2f05-46db-be77-9d0a9769582c@f5fb7",
+        "0f0fe2c7-2f05-46db-be77-9d0a9769582c@db4d2",
+        "0f0fe2c7-2f05-46db-be77-9d0a9769582c@0c40b"
+      ]
+    },
+    "versionCode": 1
+  },
+  "bec1faad-f254-4fcf-ae23-6582d93cb9a9@715e7": {
+    "url": "db://assets/GameRes/FBX/Lalian/拉链左2.fbx@715e7",
+    "value": {
+      "depends": [
+        "bec1faad-f254-4fcf-ae23-6582d93cb9a9@f5fb7",
+        "bec1faad-f254-4fcf-ae23-6582d93cb9a9@db4d2",
+        "bec1faad-f254-4fcf-ae23-6582d93cb9a9@8e112"
+      ]
+    },
+    "versionCode": 1
+  },
+  "b12573ef-1832-411b-9a3a-aaaf5b3a3dd9": {
+    "url": "db://assets/GameRes/Prefab/Lalian.prefab",
+    "value": {},
+    "versionCode": 1
   }
 }

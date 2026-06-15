@@ -627,7 +627,10 @@
             "GameRes\\HYQ_map\\tex\\yingying.png",
             "GameRes\\HYQ_map\\pro\\HYQ_map.prefab",
             "GameRes\\HYQ_map\\pro\\HYQ_qiao_01.prefab",
-            "Script\\functionS\\Other\\PropTireGate.ts"
+            "Script\\functionS\\Other\\PropTireGate.ts",
+            "GameRes\\FBX\\Lalian",
+            "GameRes\\FBX\\Lalian\\拉链右2.fbx",
+            "GameRes\\FBX\\Lalian\\拉链左2.fbx"
         ]
     }
 }

@@ -12740,6 +12740,7 @@
     "propBackOffset": 5.4,
     "tireGatePropGap": 2.8,
     "tireGateX": 0.28,
+    "editorTireGateNodes": [],
     "type": 0,
     "_id": "841G+cnX9NF7QUuVeQS3lD"
   },
@@ -21479,6 +21480,7 @@
     "propBackOffset": 5.4,
     "tireGatePropGap": 2.8,
     "tireGateX": 0.28,
+    "editorTireGateNodes": [],
     "type": 1,
     "_id": "35d7SdpMFIAZmarts3dOAB"
   },
@@ -21629,6 +21631,8 @@
     "disX2": 3,
     "monsterSpeed": 4,
     "middleLaneHalfX": 2,
+    "sideSlabLimitMinZ": 22,
+    "sideSlabLimitMaxZ": 200,
     "rowCount": 23,
     "layerGapZ": 6,
     "_id": "8drBHAToxIh7Y7d09Zsa0m"

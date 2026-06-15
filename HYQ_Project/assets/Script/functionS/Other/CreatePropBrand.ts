@@ -64,6 +64,9 @@ export class CreatePropBrand extends UnityUpComponent {
     @property(CCFloat)
     public tireGateX: number = 0.28;
 
+    @property([Node])
+    public editorTireGateNodes: Node[] = [];
+
     private propBrandList: PropBrand[] = [];
 
     private tempPropBrandList: PropBrand[] = [];
@@ -82,7 +85,23 @@ export class CreatePropBrand extends UnityUpComponent {
         if (!this.isTireGateActive) {
             return 0;
         }
-        return Math.max(this.propBackOffset, Math.max(0, this.tireGateCount - 1) * this.tireGateSpacing + this.tireGatePropGap);
+        const editorTires = this.validEditorTireGateNodes;
+        if (editorTires.length <= 0) {
+            return 0;
+        }
+        let maxZ = 0;
+        for (let i = 0; i < editorTires.length; i++) {
+            maxZ = Math.max(maxZ, editorTires[i].position.z);
+        }
+        return Math.max(this.propBackOffset, maxZ + this.tireGatePropGap);
+    }
+
+    private get validEditorTireGateNodes() {
+        return this.editorTireGateNodes.filter(node => !!node);
+    }
+
+    private get activeTireGateCount() {
+        return this.validEditorTireGateNodes.length;
     }
 
     @property(CCInteger)
@@ -233,42 +252,18 @@ export class CreatePropBrand extends UnityUpComponent {
     }
 
     private createTireGate() {
-        if (!this.isTireGateActive || !this.wallNode || this.tireGateCount <= 0) {
+        if (!this.isTireGateActive || !this.wallNode) {
             return;
         }
-        this.gateTireRemain = this.tireGateCount;
-        for (let i = 0; i < this.tireGateCount; i++) {
-            const tire = this.tireGate;
-            this.wallNode.addChild(tire);
-            tire.setPosition(this.tireGateX, this.height, i * this.tireGateSpacing);
-            tire.setScale(Vec3.ONE);
-
-            const gate = tire.getComponent(PropTireGate);
-            const mesh = tire.children[0]?.children[0]?.getComponent(MeshRenderer);
-            if (mesh && gate.meshFlashDataList.length > 0) {
-                gate.meshFlashDataList[0].meshRender = mesh;
-            }
-            gate.initGate(() => this.onGateTireDie(), this.tireGateHp);
+        const editorTires = this.validEditorTireGateNodes;
+        this.gateTireRemain = editorTires.length;
+        for (let i = 0; i < editorTires.length; i++) {
+            this.setupTireGateNode(editorTires[i]);
         }
     }
 
-    private onGateTireDie() {
-        this.gateTireRemain--;
-        if (this.gateTireRemain > 0) {
-            return;
-        }
-        const count = this.pendingMoveCount || this.tireGateCount;
-        this.pendingMoveCount = 0;
-        this.move(count);
-    }
-
-    private get tireGate() {
-        let tire = PoolManager.instance.getPool<Node>(PoolEnum.Other + OtherPrefabsEnum.tire);
-        if (!tire) {
-            tire = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.other, OtherPrefabsEnum.tire);
-        }
+    private setupTireGateNode(tire: Node) {
         tire.active = true;
-        tire.children[0]?.setScale(this.tireGateScale);
 
         let tag = tire.getComponent(ColliderTag);
         if (!tag) {
@@ -280,11 +275,29 @@ export class CreatePropBrand extends UnityUpComponent {
         if (!gate) {
             gate = tire.addComponent(PropTireGate);
         }
+
+        const mesh = tire.children[0]?.children[0]?.getComponent(MeshRenderer);
+        if (mesh && gate.meshFlashDataList.length > 0) {
+            gate.meshFlashDataList[0].meshRender = mesh;
+        }
+
         gate.collisionHalfX = 2;
         gate.collisionHalfZ = 1.2;
         gate.repelEnabled = false;
-        return tire;
+        gate.poolOnDie = false;
+        gate.initGate(() => this.onGateTireDie(), this.tireGateHp);
     }
+
+    private onGateTireDie() {
+        this.gateTireRemain--;
+        if (this.gateTireRemain > 0) {
+            return;
+        }
+        const count = this.pendingMoveCount || this.activeTireGateCount;
+        this.pendingMoveCount = 0;
+        this.move(count);
+    }
+
 
     public move(count: number) {
 

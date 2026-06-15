@@ -1,0 +1,187 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "bec1faad-f254-4fcf-ae23-6582d93cb9a9",
+  "files": [],
+  "subMetas": {
+    "8e112": {
+      "importer": "gltf-mesh",
+      "uuid": "bec1faad-f254-4fcf-ae23-6582d93cb9a9@8e112",
+      "displayName": "",
+      "id": "8e112",
+      "name": "拉链_锯齿003.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1680
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f5fb7": {
+      "importer": "gltf-material",
+      "uuid": "bec1faad-f254-4fcf-ae23-6582d93cb9a9@f5fb7",
+      "displayName": "",
+      "id": "f5fb7",
+      "name": "拉链材质_Inst1.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "db4d2": {
+      "importer": "gltf-material",
+      "uuid": "bec1faad-f254-4fcf-ae23-6582d93cb9a9@db4d2",
+      "displayName": "",
+      "id": "db4d2",
+      "name": "02 - Default.material",
+      "userData": {
+        "gltfIndex": 1
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "715e7": {
+      "importer": "gltf-scene",
+      "uuid": "bec1faad-f254-4fcf-ae23-6582d93cb9a9@715e7",
+      "displayName": "",
+      "id": "715e7",
+      "name": "拉链左2.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "bec1faad-f254-4fcf-ae23-6582d93cb9a9@8e112"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "bec1faad-f254-4fcf-ae23-6582d93cb9a9@f5fb7",
+        "bec1faad-f254-4fcf-ae23-6582d93cb9a9@db4d2"
+      ],
+      "scenes": [
+        "bec1faad-f254-4fcf-ae23-6582d93cb9a9@715e7"
+      ]
+    },
+    "materials": {
+      "bec1faad-f254-4fcf-ae23-6582d93cb9a9@db4d2": {
+        "__type__": "cc.Material",
+        "_name": "",
+        "_objFlags": 0,
+        "__editorExtras__": {},
+        "_native": "",
+        "_effectAsset": {
+          "__uuid__": "2ec11458-f855-4978-b14d-f3ed5cf697fa",
+          "__expectedType__": "cc.EffectAsset"
+        },
+        "_techIdx": 0,
+        "_defines": [
+          {},
+          {},
+          {},
+          {}
+        ],
+        "_states": [
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          }
+        ],
+        "_props": [
+          {
+            "mainColor": {
+              "__type__": "cc.Color",
+              "r": 255,
+              "g": 0,
+              "b": 0,
+              "a": 255
+            },
+            "roughness": 0,
+            "metallic": 0
+          },
+          {},
+          {},
+          {}
+        ]
+      }
+    }
+  }
+}

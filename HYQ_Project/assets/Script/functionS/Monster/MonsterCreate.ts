@@ -81,10 +81,10 @@ export class MonsterCreate extends UnityUpComponent {
     public middleLaneHalfX: number = 2;
 
     @property({ tooltip: '左右石板区域Z轴起点，怪物只在该区间内限制中路' })
-    public sideSlabLimitMinZ: number = 0;
+    public sideSlabLimitMinZ: number = 22;
 
     @property({ tooltip: '左右石板区域Z轴终点，怪物只在该区间内限制中路' })
-    public sideSlabLimitMaxZ: number = 55;
+    public sideSlabLimitMaxZ: number = 200;
 
 
 

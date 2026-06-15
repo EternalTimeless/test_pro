@@ -6831,6 +6831,9 @@
     "disX": 7.8,
     "disX2": 3,
     "monsterSpeed": 4,
+    "middleLaneHalfX": 2,
+    "sideSlabLimitMinZ": 22,
+    "sideSlabLimitMaxZ": 200,
     "rowCount": 10,
     "layerGapZ": 6,
     "_id": "8drBHAToxIh7Y7d09Zsa0m"

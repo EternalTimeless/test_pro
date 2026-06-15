@@ -38,7 +38,7 @@
       "uuid": "ad1b2238-2043-493a-b441-07481638373c"
     },
     "GameRes\\FBX": {
-      "time": 1781235115955.5576,
+      "time": 1781489250819.1936,
       "uuid": "40d1d5c7-78a7-40d6-89f9-f4805e69e72f"
     },
     "GameRes\\Font": {
@@ -58,7 +58,7 @@
       "uuid": "d82f0132-cc7a-4ab8-b19c-f6a874dbebc6"
     },
     "GameRes\\Prefab": {
-      "time": 1781235116617.6714,
+      "time": 1781492473805.6804,
       "uuid": "1029672c-2441-4553-9cff-34a1dae006d8"
     },
     "GameRes\\Prefabs": {
@@ -546,11 +546,11 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1781260360489,
+      "time": 1781492477527.173,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
-      "time": 1781257792518.2808,
+      "time": 1781488767343.4082,
       "uuid": "309086be-d835-4cda-b365-599529f3acbe"
     },
     "GameRes\\Anim\\Anim_hand.anim": {
@@ -1662,7 +1662,7 @@
       "uuid": "93b74258-97e4-4fcb-bfc0-851d38430b93"
     },
     "Script\\functionS\\Monster\\MonsterCreate.ts": {
-      "time": 1781260325289.8047,
+      "time": 1781488767320.6504,
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
@@ -1670,7 +1670,7 @@
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
-      "time": 1781257792494.983,
+      "time": 1781492092271.9146,
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
@@ -4380,8 +4380,29 @@
       "time": 1781250869876.959
     },
     "Script\\functionS\\Other\\PropTireGate.ts": {
-      "time": 1781254456450.221,
+      "time": 1781492092271.9146,
       "uuid": "9e088f5e-0d38-4df8-9e26-b3a7b1ff4b32"
+    },
+    "GameRes\\FBX\\Lalian.meta": {
+      "time": 1781489243643.8013
+    },
+    "GameRes\\FBX\\Lalian": {
+      "time": 1781489271117.4685,
+      "uuid": "ada15e19-6156-431e-8d14-2eab9b733780"
+    },
+    "GameRes\\FBX\\Lalian\\拉链右2.fbx.meta": {
+      "time": 1781489271720.0317
+    },
+    "GameRes\\FBX\\Lalian\\拉链左2.fbx.meta": {
+      "time": 1781490128934.752
+    },
+    "GameRes\\FBX\\Lalian\\拉链右2.fbx": {
+      "time": 1781489189156.4956,
+      "uuid": "0f0fe2c7-2f05-46db-be77-9d0a9769582c"
+    },
+    "GameRes\\FBX\\Lalian\\拉链左2.fbx": {
+      "time": 1781489188791.0786,
+      "uuid": "bec1faad-f254-4fcf-ae23-6582d93cb9a9"
     }
   },
   "missing": {}
