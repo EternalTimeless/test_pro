@@ -13,6 +13,7 @@ import { count } from 'console';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { JumpManager } from '../Jump/JumpManager';
 import { CameraMove } from '../../Base/CameraMove';
+import { MonsterCreate } from '../Monster/MonsterCreate';
 const { ccclass, property } = _decorator;
 
 enum AnimArms {
@@ -84,6 +85,12 @@ export class PropArms extends BattleTarget3D {
     @property(CCFloat)
     public jumpHeight: number = 0.5;
 
+    @property(CCFloat)
+    public waveFrontGap: number = 2;
+
+    @property(CCFloat)
+    public nextStageDelay: number = 0.2;
+
     // @property(AttackParkPlay)
     // public effect: AttackParkPlay;
     @property(CCFloat)
@@ -148,10 +155,12 @@ export class PropArms extends BattleTarget3D {
         // this.scheduleOnce(() => {
         EventManager.instance.emit(EventType.PROP_ARMS_DIE, this._curArms);
         // this._curArms.fbx.setAnimation(AnimArms.up_ju, true);
+        this._isStageAlive = false;
         // }, time * 0.8);
 
         if (!this.wallNode) {
             this.node.emit(EventType.PROP_ARMS_DIE, this._curArms);
+            this.queueTrySpawnNextStage();
             return;
         }
 
@@ -173,6 +182,7 @@ export class PropArms extends BattleTarget3D {
                     .to(0.4, { y: groundY }, { easing: 'sineIn' })
                     .call(() => {
                         this.node.emit(EventType.PROP_ARMS_DIE, this._curArms);
+                        this.queueTrySpawnNextStage();
                         this.scheduleOnce(() => {
 
                             EventManager.instance.emit(EventType.MONSTER_SKILL_XRD, this.wallNode.worldPositionX, 6, this._curArms.moveCount / 8 * 3.5);
@@ -368,12 +378,14 @@ export class PropArms extends BattleTarget3D {
 
         this._level += count;
         if (this._level >= this.armsInfoList.length) {
+            this._isStageAlive = false;
             this.node.active = false;
         } else {
             for (let i = 0; i < this.armsInfoList.length; i++) {
                 this.armsInfoList[i].fbx.node.active = i === this._level;
             }
             this._curArms = this.armsInfoList[this._level];
+            this._isStageAlive = true;
 
             const tireSpacing = this.tireSpacing;
             const wallHeight = this._curArms.wallHeight;
@@ -506,6 +518,7 @@ export class PropArms extends BattleTarget3D {
 
 
     start() {
+        EventManager.instance.on(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage, this);
         this.init(0);
         // this.effect.node.active = false;
     }
@@ -516,6 +529,13 @@ export class PropArms extends BattleTarget3D {
     public h: number = 0.2;
     private _time: number = 0;
     private isWallH: boolean = false;
+    private _pendingWaveStageCount: number = 0;
+    private _isStageAlive: boolean = false;
+    private _stageSpawnPos: Vec3 = new Vec3();
+
+    protected onDestroy(): void {
+        EventManager.instance.off(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage);
+    }
 
     _update(deltaTime: number) {
         const dt = deltaTime;
@@ -536,6 +556,42 @@ export class PropArms extends BattleTarget3D {
                 this._isShake = false;
             }
         }
+    }
+
+    private onMonsterWaveStage() {
+        this._pendingWaveStageCount++;
+        this.trySpawnNextStage();
+    }
+
+    private queueTrySpawnNextStage() {
+        if (this._pendingWaveStageCount <= 0 || this._isStageAlive) {
+            return;
+        }
+        this.scheduleOnce(() => {
+            this.trySpawnNextStage();
+        }, this.nextStageDelay);
+    }
+
+    private trySpawnNextStage() {
+        if (this._isStageAlive || this._pendingWaveStageCount <= 0) {
+            return;
+        }
+        if (this._level >= this.armsInfoList.length - 1) {
+            this._pendingWaveStageCount = 0;
+            this.node.active = false;
+            return;
+        }
+        this._pendingWaveStageCount--;
+        this.resetStagePosition();
+        this.node.active = true;
+        this.init(1);
+    }
+
+    private resetStagePosition() {
+        const worldPos = this.node.worldPosition;
+        const frontZ = MonsterCreate.instance?.getFrontMonsterWorldZ(worldPos.z) ?? worldPos.z;
+        this._stageSpawnPos.set(worldPos.x, worldPos.y, frontZ - this.waveFrontGap);
+        this.node.setWorldPosition(this._stageSpawnPos);
     }
 
 

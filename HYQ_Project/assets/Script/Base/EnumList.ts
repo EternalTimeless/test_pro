@@ -5,6 +5,7 @@ export class EventType {
     public static readonly GoldUP = "GoldUP";
     public static readonly EFFECT_PLAY_OVER = "Effect_Play_over";
     public static readonly PROP_ARMS_DIE = "Prop_Arms_Die";
+    public static readonly MONSTER_WAVE_STAGE = "Monster_Wave_Stage";
     public static readonly Monster_Attack_Player_ADD = "Monster_Attack_Player_ADD";
     public static readonly PLAYER_HIT = "Player_Hit";
     public static readonly PLAYER_RESURRECTION = "Player_Resurrection";

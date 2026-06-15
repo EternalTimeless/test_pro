@@ -61,7 +61,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       }), BattleTarget3D) : BattleTarget3D) {
         constructor() {
           super(...arguments);
+          this.poolOnDie = true;
           this._onDie = null;
+          this._initialScale = new Vec3(1, 1, 1);
         }
 
         initGate(onDie, hp) {
@@ -69,6 +71,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.MaxHp = hp;
           this.curHp = hp;
           this.isDestroy = false;
+          this.node.active = true;
+
+          this._initialScale.set(this.node.scale);
+
+          this.node.setScale(this._initialScale);
           (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
             error: Error()
           }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.registerTarget(this);
@@ -123,14 +130,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             easing: 'sineIn'
           }).call(() => {
             this.node.active = false;
-            this.node.setScale(Vec3.ONE);
-            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-              error: Error()
-            }), PoolEnum) : PoolEnum).Other + (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
-              error: Error()
-            }), OtherPrefabsEnum) : OtherPrefabsEnum).tire, this.node);
+            this.node.setScale(this._initialScale);
+
+            if (this.poolOnDie) {
+              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+                error: Error()
+              }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+                error: Error()
+              }), PoolEnum) : PoolEnum).Other + (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
+                error: Error()
+              }), OtherPrefabsEnum) : OtherPrefabsEnum).tire, this.node);
+            }
           }).start();
         }
 

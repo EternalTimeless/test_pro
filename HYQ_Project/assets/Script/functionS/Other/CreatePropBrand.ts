@@ -62,6 +62,9 @@ export class CreatePropBrand extends UnityUpComponent {
     public tireGatePropGap: number = 2.8;
 
     @property(CCFloat)
+    public editorTireTailOffset: number = 1.2;
+
+    @property(CCFloat)
     public tireGateX: number = 0.28;
 
     @property([Node])
@@ -89,11 +92,11 @@ export class CreatePropBrand extends UnityUpComponent {
         if (editorTires.length <= 0) {
             return 0;
         }
-        let maxZ = 0;
+        let maxBackZ = 0;
         for (let i = 0; i < editorTires.length; i++) {
-            maxZ = Math.max(maxZ, editorTires[i].position.z);
+            maxBackZ = Math.max(maxBackZ, editorTires[i].position.z + this.editorTireTailOffset);
         }
-        return Math.max(this.propBackOffset, maxZ + this.tireGatePropGap);
+        return Math.max(this.propBackOffset, maxBackZ + this.tireGatePropGap);
     }
 
     private get validEditorTireGateNodes() {
@@ -155,10 +158,6 @@ export class CreatePropBrand extends UnityUpComponent {
                         i--;
                         continue;
                     }
-                    this.scheduleOnce(() => {
-                        this.pa?.init(1);
-
-                    }, 0.5);
                     this.isMove = false;
                     break;
                 }

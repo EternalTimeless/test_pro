@@ -56,6 +56,8 @@ class MonsterCreateQueue {
 @ccclass('MonsterCreate')
 export class MonsterCreate extends UnityUpComponent {
 
+    public static instance: MonsterCreate = null;
+
     @property({ type: CCInteger, tooltip: '场景中最大怪物数量' })
     public monsterCount: number = 500;
     @property({ type: CCInteger, tooltip: '补充阶段每帧最大生成数，防止大量死怪时瞬间补怪掉帧' })
@@ -120,6 +122,10 @@ export class MonsterCreate extends UnityUpComponent {
     private stage_1: number = 15;
     private _hasInitialFilled: boolean = false;
 
+    protected onLoad(): void {
+        MonsterCreate.instance = this;
+    }
+
     start() {
         this.offX = this.disX * 2 / this.rowCount;
         EventManager.instance.on(EventType.PLAYER_RESURRECTION, this.TimeFlowsBackWard, this);
@@ -161,6 +167,7 @@ export class MonsterCreate extends UnityUpComponent {
             }
             quest.curMonsterCount += count;
             if (quest.curMonsterCount == quest.monsterCountMax) {
+                EventManager.instance.emit(EventType.MONSTER_WAVE_STAGE);
                 quest.curLoopCount++;
                 this._nextSpawnZ += quest.brotherExcludeZ;
                 if (quest.loopMax != -1 && quest.curLoopCount == quest.loopMax) {
@@ -302,6 +309,20 @@ export class MonsterCreate extends UnityUpComponent {
 
     private shouldLimitMonsterXAtZ(z: number): boolean {
         return z >= this.sideSlabLimitMinZ && z <= this.sideSlabLimitMaxZ;
+    }
+
+    public getFrontMonsterWorldZ(defaultZ: number = this.stage_0): number {
+        let frontZ = Number.POSITIVE_INFINITY;
+        for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+            if (!monster || !monster.node || !monster.node.active || monster.isDie) {
+                continue;
+            }
+            if (monster.node.worldPositionZ < frontZ) {
+                frontZ = monster.node.worldPositionZ;
+            }
+        }
+        return Number.isFinite(frontZ) ? frontZ : defaultZ;
     }
 
     private clampMonsterX(x: number): number {
