@@ -514,7 +514,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             if (stageTypeList[i] === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
               error: Error()
             }), MonsterType) : MonsterType).ZombieBrother) {
-              result.push(i + 1);
+              result.push(i);
             }
           }
 
@@ -1180,6 +1180,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.scheduleOnce(() => {
             this.restoreWaveRolesAfterRebirth();
+
+            for (let i = 0; i < this._monsterList.length; i++) {
+              var _m$node;
+
+              const m = this._monsterList[i];
+
+              if (m && !m.isDie && (_m$node = m.node) != null && _m$node.active) {
+                (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
+                  error: Error()
+                }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.unregisterTarget(m);
+                (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
+                  error: Error()
+                }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.registerTarget(m);
+              }
+            }
           }, 0.45); // this.scheduleOnce(() => {
           //     this.isFlowIN = false;
           // }, 0.4);

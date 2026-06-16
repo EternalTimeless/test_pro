@@ -294,7 +294,7 @@ export class MonsterCreate extends UnityUpComponent {
         result.push(0);
         for (let i = 0; i < stageTypeList.length - 1; i++) {
             if (stageTypeList[i] === MonsterType.ZombieBrother) {
-                result.push(i + 1);
+                result.push(i);
             }
         }
 
@@ -843,6 +843,13 @@ export class MonsterCreate extends UnityUpComponent {
         }
         this.scheduleOnce(() => {
             this.restoreWaveRolesAfterRebirth();
+            for (let i = 0; i < this._monsterList.length; i++) {
+                const m = this._monsterList[i];
+                if (m && !m.isDie && m.node?.active) {
+                    BulletMonsterCollisionManager.instance.unregisterTarget(m);
+                    BulletMonsterCollisionManager.instance.registerTarget(m);
+                }
+            }
         }, 0.45);
         // this.scheduleOnce(() => {
         //     this.isFlowIN = false;
