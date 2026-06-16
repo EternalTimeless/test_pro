@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 73484780.6795,
+      "mTimestamp": 89037134.87,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -23664,7 +23664,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/CreatePropBrand.ts": {
       "mTimestamp": {
-        "mtime": 1781576192699.5522,
+        "mtime": 1781593298375.6873,
         "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
       },
       "chunkId": "e2cd37831230a7474a5c89ec9f0764c2d6ce1581",
@@ -24042,7 +24042,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts": {
       "mTimestamp": {
-        "mtime": 1781576134075.0896,
+        "mtime": 1781593368017.6804,
         "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
       },
       "chunkId": "aa6223cf35796d09344450a14919ad24c61174bb",

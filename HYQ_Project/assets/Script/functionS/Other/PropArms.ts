@@ -147,7 +147,7 @@ export class PropArms extends BattleTarget3D {
         }
         this.tireList = [];
         this.hpLabel.string = "";
-        Tween.stopAllByTarget(this._curArms.fbx.node);
+        Tween.stopAllByTarget(this._curArms?.fbx?.node);
         // const time = this._curArms.fbx.setAnimation(AnimArms.up_out, false).duration;
         // const halfTime = time * 0.5;
 
@@ -173,7 +173,7 @@ export class PropArms extends BattleTarget3D {
             .call(() => {
                 this.isWallH = false;
                 // 锁定到浮动基准中心，消除sin相位差异
-                const baseY = this._curArms.fbx.node.y + this._curArms.wallHeight;
+                const baseY = (this._curArms?.fbx?.node?.y ?? 0) + this._curArms?.wallHeight;
                 this.wallNode.y = baseY;
 
                 // 运行时捕获位置
@@ -302,15 +302,17 @@ export class PropArms extends BattleTarget3D {
         this._setupTireBounce();
 
         // FBX弹跳一下
-        Tween.stopAllByTarget(this._curArms.fbx.node);
+        Tween.stopAllByTarget(this._curArms?.fbx?.node);
+        const fbxNode = this._curArms?.fbx?.node;
+        if (!fbxNode) return;
         const delay = 0.05 + this.tireList.length * 0.05;
-        const fbxY = this._curArms.fbx.node.y;
+        const fbxY = fbxNode.y;
         const bounceH = this.jumpHeight + this.tireList.length * 0.1 * this.jumpHeight;
         let dropOffset = -this.tireSpacing;
         if (!this._curArms.isCanMove && this.tireList.length > this._curArms.canTireCount) {
             dropOffset = 0;
         }
-        tween(this._curArms.fbx.node)
+        tween(fbxNode)
             .delay(delay)
             .to(0.04 * this.animScale, { y: fbxY + bounceH }, { easing: 'sineOut' })
             .to(0.06 * this.animScale, { y: fbxY + dropOffset }, { easing: 'quadIn' })
@@ -385,9 +387,16 @@ export class PropArms extends BattleTarget3D {
             this.node.active = false;
         } else {
             for (let i = 0; i < this.armsInfoList.length; i++) {
-                this.armsInfoList[i].fbx.node.active = i === this._level;
+                const fbx = this.armsInfoList[i].fbx;
+                if (fbx?.node) {
+                    fbx.node.active = i === this._level;
+                }
             }
             this._curArms = this.armsInfoList[this._level];
+            if (!this._curArms?.fbx?.node) {
+                this._isStageAlive = false;
+                return;
+            }
             this._isStageAlive = true;
 
             const tireSpacing = this.tireSpacing;
@@ -560,7 +569,7 @@ export class PropArms extends BattleTarget3D {
     _update(deltaTime: number) {
         const dt = deltaTime;
         // 石板浮动
-        if (this.isWallH && this.wallNode) {
+        if (this.isWallH && this.wallNode && this._curArms?.fbx?.node) {
             this._time += dt * this.speed;
             const curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;

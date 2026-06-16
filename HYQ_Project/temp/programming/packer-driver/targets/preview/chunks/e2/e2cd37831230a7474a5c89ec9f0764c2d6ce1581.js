@@ -162,12 +162,66 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         property
       } = _decorator);
 
-      _export("CreatePropBrand", CreatePropBrand = (_dec = ccclass('CreatePropBrand'), _dec2 = property(CCInteger), _dec3 = property(CCFloat), _dec4 = property(CCFloat), _dec5 = property(CCInteger), _dec6 = property(CCFloat), _dec7 = property(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
-        error: Error()
-      }), PropArms) : PropArms), _dec8 = property({
+      _export("CreatePropBrand", CreatePropBrand = (_dec = ccclass('CreatePropBrand'), _dec2 = property({
+        type: CCInteger,
+        displayName: '展示数量 - 初始显示的道具数量'
+      }), _dec3 = property({
+        type: CCFloat,
+        displayName: '道间距 - 道具之间的前后间距'
+      }), _dec4 = property({
+        type: CCFloat,
+        displayName: '高度 - 道具初始Y轴高度'
+      }), _dec5 = property({
+        type: CCInteger,
+        displayName: '每份数值 - 每个道具显示的数值（如+99填99）'
+      }), _dec6 = property({
+        type: CCFloat,
+        displayName: '移动速度 - 道具向前移动的速度'
+      }), _dec7 = property({
+        type: _crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+          error: Error()
+        }), PropArms) : PropArms,
+        displayName: 'PropArms组件 - 关联的武器组件，轮胎门模式下可为空'
+      }), _dec8 = property({
         type: [Node],
-        tooltip: '按怪物波次顺序绑定中路 Role_x 节点。第1波对应 Role_0，第2波对应 Role_1，第3波对应 Role_2。该列表现在只用于监听这些节点被打掉后的奖励推进，不再负责生成和摆位。'
-      }), _dec9 = property(Node), _dec10 = property(CCBoolean), _dec11 = property(CCInteger), _dec12 = property(CCFloat), _dec13 = property(CCFloat), _dec14 = property(Vec3), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCFloat), _dec18 = property(CCFloat), _dec19 = property([Node]), _dec20 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+        displayName: '按怪物波次顺序绑定中路 Role_x 节点。第1波对应 Role_0，第2波对应 Role_1，第3波对应 Role_2。该列表现在只用于监听这些节点被打掉后的奖励推进，不再负责生成和摆位。'
+      }), _dec9 = property({
+        type: Node,
+        displayName: '墙壁节点 - 道具挂载的父节点'
+      }), _dec10 = property({
+        type: CCBoolean,
+        displayName: '启用轮胎门 - 是否用轮胎阻挡道具前进'
+      }), _dec11 = property({
+        type: CCInteger,
+        displayName: '轮胎门数量 - 已废弃，实际由轮胎门节点列表长度决定'
+      }), _dec12 = property({
+        type: CCFloat,
+        displayName: '轮胎门间距 - 轮胎门之间的前后间距'
+      }), _dec13 = property({
+        type: CCFloat,
+        displayName: '轮胎门血量 - 每个轮胎门的生命值'
+      }), _dec14 = property({
+        type: Vec3,
+        displayName: '轮胎门缩放 - 轮胎门的缩放比例'
+      }), _dec15 = property({
+        type: CCFloat,
+        displayName: '道具初始偏移 - 道具在轮胎门后方的起始Z轴偏移'
+      }), _dec16 = property({
+        type: CCFloat,
+        displayName: '轮胎道具间距 - 最后一个轮胎到第一个道具的间隔距离'
+      }), _dec17 = property({
+        type: CCFloat,
+        displayName: '轮胎尾部偏移 - 轮胎尾部额外的Z轴偏移量'
+      }), _dec18 = property({
+        type: CCFloat,
+        displayName: '轮胎门X偏移 - 轮胎门的X轴位置偏移'
+      }), _dec19 = property({
+        type: [Node],
+        displayName: '轮胎门节点列表 - 手动拖入作为门阻挡道具的轮胎节点'
+      }), _dec20 = property({
+        type: CCInteger,
+        displayName: '道具类型 - 对应预置体的类型编号，左路填0右路填1'
+      }), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {

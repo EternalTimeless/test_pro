@@ -360,7 +360,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         die() {
-          var _this = this;
+          var _this = this,
+              _this$_curArms;
 
           this._isShake = false;
           (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
@@ -397,7 +398,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.tireList = [];
           this.hpLabel.string = "";
-          Tween.stopAllByTarget(this._curArms.fbx.node); // const time = this._curArms.fbx.setAnimation(AnimArms.up_out, false).duration;
+          Tween.stopAllByTarget((_this$_curArms = this._curArms) == null || (_this$_curArms = _this$_curArms.fbx) == null ? void 0 : _this$_curArms.node); // const time = this._curArms.fbx.setAnimation(AnimArms.up_out, false).duration;
           // const halfTime = time * 0.5;
           // FBX动画结束后切回idle，发送全局事件让人跳走
           // this.scheduleOnce(() => {
@@ -426,9 +427,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           tween(this.wallNode) // .delay(halfTime)
           .call(() => {
+            var _this$_curArms$fbx$no, _this$_curArms2, _this$_curArms3;
+
             this.isWallH = false; // 锁定到浮动基准中心，消除sin相位差异
 
-            var baseY = this._curArms.fbx.node.y + this._curArms.wallHeight;
+            var baseY = ((_this$_curArms$fbx$no = (_this$_curArms2 = this._curArms) == null || (_this$_curArms2 = _this$_curArms2.fbx) == null || (_this$_curArms2 = _this$_curArms2.node) == null ? void 0 : _this$_curArms2.y) != null ? _this$_curArms$fbx$no : 0) + ((_this$_curArms3 = this._curArms) == null ? void 0 : _this$_curArms3.wallHeight);
             this.wallNode.y = baseY; // 运行时捕获位置
 
             var throwY = this.wallNode.y + 3;
@@ -549,6 +552,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
 
         destroyOneTire() {
+          var _this$_curArms4, _this$_curArms5;
+
           var tire = this.tireList.shift();
           if (!tire) return; // 停止残留缩放动画并重置到原始大小
 
@@ -637,9 +642,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._setupTireBounce(); // FBX弹跳一下
 
 
-          Tween.stopAllByTarget(this._curArms.fbx.node);
+          Tween.stopAllByTarget((_this$_curArms4 = this._curArms) == null || (_this$_curArms4 = _this$_curArms4.fbx) == null ? void 0 : _this$_curArms4.node);
+          var fbxNode = (_this$_curArms5 = this._curArms) == null || (_this$_curArms5 = _this$_curArms5.fbx) == null ? void 0 : _this$_curArms5.node;
+          if (!fbxNode) return;
           var delay = 0.05 + this.tireList.length * 0.05;
-          var fbxY = this._curArms.fbx.node.y;
+          var fbxY = fbxNode.y;
           var bounceH = this.jumpHeight + this.tireList.length * 0.1 * this.jumpHeight;
           var dropOffset = -this.tireSpacing;
 
@@ -647,7 +654,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             dropOffset = 0;
           }
 
-          tween(this._curArms.fbx.node).delay(delay).to(0.04 * this.animScale, {
+          tween(fbxNode).delay(delay).to(0.04 * this.animScale, {
             y: fbxY + bounceH
           }, {
             easing: 'sineOut'
@@ -742,11 +749,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this._isStageAlive = false;
             this.node.active = false;
           } else {
+            var _this$_curArms6;
+
             for (var i = 0; i < this.armsInfoList.length; i++) {
-              this.armsInfoList[i].fbx.node.active = i === this._level;
+              var fbx = this.armsInfoList[i].fbx;
+
+              if (fbx != null && fbx.node) {
+                fbx.node.active = i === this._level;
+              }
             }
 
             this._curArms = this.armsInfoList[this._level];
+
+            if (!((_this$_curArms6 = this._curArms) != null && (_this$_curArms6 = _this$_curArms6.fbx) != null && _this$_curArms6.node)) {
+              this._isStageAlive = false;
+              return;
+            }
+
             this._isStageAlive = true;
             var tireSpacing = this.tireSpacing;
             var wallHeight = this._curArms.wallHeight;
@@ -933,9 +952,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         _update(deltaTime) {
+          var _this$_curArms7;
+
           var dt = deltaTime; // 石板浮动
 
-          if (this.isWallH && this.wallNode) {
+          if (this.isWallH && this.wallNode && (_this$_curArms7 = this._curArms) != null && (_this$_curArms7 = _this$_curArms7.fbx) != null && _this$_curArms7.node) {
             this._time += dt * this.speed;
             var curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;
