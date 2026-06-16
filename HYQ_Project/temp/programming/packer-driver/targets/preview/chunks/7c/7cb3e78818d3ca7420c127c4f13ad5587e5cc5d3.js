@@ -827,7 +827,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var monsterFrontZ = frontMonster.node.worldPositionZ - monsterHalfZ;
             var targetZ = monsterFrontZ - this.waveRolePushGapInternal - roleHalfZ;
 
-            if (targetZ < role.node.worldPositionZ) {
+            if (Math.abs(targetZ - role.node.worldPositionZ) > 0.05) {
               var pos = role.node.worldPosition;
               role.node.setWorldPosition(pos.x, pos.y, targetZ);
             }
