@@ -251,7 +251,7 @@ export class CreatePropBrand extends UnityUpComponent {
 
                 p.node.active = false;
 
-                PoolManager.instance.setPool(PoolEnum.Prop + 0, p);
+                PoolManager.instance.setPool(PoolEnum.Prop + this.type, p);
 
             }
         }

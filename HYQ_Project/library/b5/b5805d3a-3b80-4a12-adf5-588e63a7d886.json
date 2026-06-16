@@ -14202,7 +14202,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": -0.886,
-      "z": 148.129
+      "z": 207.5
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -21672,8 +21672,8 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "showCount": 30,
-    "distance": 5.988,
+    "showCount": 50,
+    "distance": 5.287,
     "height": 0,
     "count": 99,
     "moveSpeed": 13,

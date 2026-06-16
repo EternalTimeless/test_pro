@@ -14,6 +14,7 @@ import { EffectManager } from '../Effect/EffectManager';
 import { CameraMove } from '../../Base/CameraMove';
 import { PropArms } from '../Other/PropArms';
 import { CreatePropBrand } from '../Other/CreatePropBrand';
+import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 const { ccclass, property } = _decorator;
 const tempV3 = new Vec3();
 
@@ -875,6 +876,10 @@ export class MonsterCreate extends UnityUpComponent {
                 role.node.active = false;
                 continue;
             }
+            // hideWaveRolesDuringRebirth 设 inactive 后，
+            // BulletMonsterCollisionManager.update 会把 !node.active 的目标移除，
+            // 所以活着的 Role 也需要重新注册碰撞
+            BulletMonsterCollisionManager.instance.registerTarget(role);
             role.node.active = true;
             const frontMonster = this.getFrontMonsterByWave(i);
             if (!frontMonster || !frontMonster.node) {

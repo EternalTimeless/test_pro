@@ -456,7 +456,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 error: Error()
               }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
                 error: Error()
-              }), PoolEnum) : PoolEnum).Prop + 0, _p);
+              }), PoolEnum) : PoolEnum).Prop + this.type, _p);
             }
           }
         }
