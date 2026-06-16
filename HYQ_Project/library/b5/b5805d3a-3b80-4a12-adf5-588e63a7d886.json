@@ -13017,7 +13017,7 @@
       "__type__": "cc.Vec3",
       "x": -0.039,
       "y": 0.789,
-      "z": 0.409
+      "z": 0.5
     }
   },
   {
@@ -13099,7 +13099,7 @@
     },
     "propBackOffset": 5.4,
     "tireGatePropGap": 2.8,
-    "editorTireTailOffset": 1.2,
+    "editorTireTailOffset": 6.5,
     "tireGateX": 0.28,
     "editorTireGateNodes": [
       {
