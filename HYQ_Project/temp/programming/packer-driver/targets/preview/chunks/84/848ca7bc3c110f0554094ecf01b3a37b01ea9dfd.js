@@ -45,14 +45,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("UIButtonEvent", UIButtonEvent = (_dec = ccclass('UIButtonEvent'), _dec(_class = class UIButtonEvent extends Component {
         onPlayerRebirth() {
+          (_crd && GameOverPanel === void 0 ? (_reportPossibleCrUseOfGameOverPanel({
+            error: Error()
+          }), GameOverPanel) : GameOverPanel).instance.hide();
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
           }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
             error: Error()
           }), EventType) : EventType).PLAYER_RESURRECTION);
-          (_crd && GameOverPanel === void 0 ? (_reportPossibleCrUseOfGameOverPanel({
-            error: Error()
-          }), GameOverPanel) : GameOverPanel).instance.hide();
         }
 
       }) || _class));

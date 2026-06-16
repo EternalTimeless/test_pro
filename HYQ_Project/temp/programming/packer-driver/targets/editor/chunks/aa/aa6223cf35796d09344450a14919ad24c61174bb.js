@@ -313,6 +313,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._pendingWaveStageCount = 0;
           this._isStageAlive = false;
           this._stageSpawnPos = new Vec3();
+          this._fixedStageIndex = -1;
+          this._disableWaveStageChain = false;
         }
 
         // @property(Node)
@@ -395,6 +397,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), EventType) : EventType).PROP_ARMS_DIE, this._curArms);
             this.queueTrySpawnNextStage();
+
+            if (this._disableWaveStageChain) {
+              this.node.active = false;
+            }
+
             return;
           } // 石板三段式动画：抛起→人跳走→落下砸地
 
@@ -421,13 +428,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 error: Error()
               }), EventType) : EventType).PROP_ARMS_DIE, this._curArms);
               this.queueTrySpawnNextStage();
-              this.scheduleOnce(() => {
-                (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
-                  error: Error()
-                }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-                  error: Error()
-                }), EventType) : EventType).MONSTER_SKILL_XRD, this.wallNode.worldPositionX, 6, this._curArms.moveCount / 8 * 3.5);
-              }, 0.1);
+              (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
+                error: Error()
+              }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+                error: Error()
+              }), EventType) : EventType).MONSTER_SKILL_XRD, this.wallNode.worldPositionX, 6, this._curArms.moveCount / 8 * 3.5);
               (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
                 error: Error()
               }), CameraMove) : CameraMove).instance.Shake2(2);
@@ -449,11 +454,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 }
               }
 
-              this.isWallH = false; // this.effect_ss.active = true;
+              this.isWallH = false;
+
+              if (this._disableWaveStageChain) {
+                this.node.active = false;
+              } // this.effect_ss.active = true;
               // for (let i = 0; i < this.effect_ss.children.length; i++) {
               //     const e = this.effect_ss.children[i].getComponent(AttackParkPlay);
               //     e.play();
               // }
+
             }).start();
           }).start();
         }
@@ -859,12 +869,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         selectArms() {}
 
         start() {
-          (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
-            error: Error()
-          }), EventManager) : EventManager).instance.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-            error: Error()
-          }), EventType) : EventType).MONSTER_WAVE_STAGE, this.onMonsterWaveStage, this);
+          if (!this._disableWaveStageChain) {
+            (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
+              error: Error()
+            }), EventManager) : EventManager).instance.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).MONSTER_WAVE_STAGE, this.onMonsterWaveStage, this);
+          }
+
           this.init(0); // this.effect.node.active = false;
+        }
+
+        setFixedStage(stageIndex) {
+          this._fixedStageIndex = Math.max(0, stageIndex);
+          this._disableWaveStageChain = true;
+          this._pendingWaveStageCount = 0;
+          this._level = this._fixedStageIndex;
+        }
+
+        getBlockCollisionHalfZ() {
+          var _this$tireScale, _this$tireScale2;
+
+          const tireDepth = ((_this$tireScale = this.tireScale) == null ? void 0 : _this$tireScale.z) || ((_this$tireScale2 = this.tireScale) == null ? void 0 : _this$tireScale2.x) || 1;
+          const tireHalfZ = tireDepth * 0.5;
+          return Math.max(this.collisionHalfZ, tireHalfZ, 0.9);
         }
 
         onDestroy() {
@@ -898,11 +926,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         onMonsterWaveStage() {
+          if (this._disableWaveStageChain) {
+            return;
+          }
+
           this._pendingWaveStageCount++;
           this.trySpawnNextStage();
         }
 
         queueTrySpawnNextStage() {
+          if (this._disableWaveStageChain) {
+            return;
+          }
+
           if (this._pendingWaveStageCount <= 0 || this._isStageAlive) {
             return;
           }
@@ -913,6 +949,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         trySpawnNextStage() {
+          if (this._disableWaveStageChain) {
+            return;
+          }
+
           if (this._isStageAlive || this._pendingWaveStageCount <= 0) {
             return;
           }

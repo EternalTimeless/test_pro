@@ -9,8 +9,8 @@ const { ccclass, property } = _decorator;
 export class UIButtonEvent extends Component {
 
     public onPlayerRebirth() {
-        EventManager.instance.emit(EventType.PLAYER_RESURRECTION);
         GameOverPanel.instance.hide();
+        EventManager.instance.emit(EventType.PLAYER_RESURRECTION);
     }
 
 }

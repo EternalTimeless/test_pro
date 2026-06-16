@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _class4, _class5, _descriptor5, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _class7, _class8, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, director, instantiate, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _class4, _class5, _descriptor5, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _class7, _class8, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -69,6 +69,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("CameraMove", "../../Base/CameraMove", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfPropArms(extras) {
+    _reporterNs.report("PropArms", "../Other/PropArms", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfCreatePropBrand(extras) {
+    _reporterNs.report("CreatePropBrand", "../Other/CreatePropBrand", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -79,6 +87,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       _decorator = _cc._decorator;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
+      director = _cc.director;
+      instantiate = _cc.instantiate;
       tween = _cc.tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -108,13 +118,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       FlashRedManager = _unresolved_12.FlashRedManager;
     }, function (_unresolved_13) {
       CameraMove = _unresolved_13.CameraMove;
+    }, function (_unresolved_14) {
+      PropArms = _unresolved_14.PropArms;
+    }, function (_unresolved_15) {
+      CreatePropBrand = _unresolved_15.CreatePropBrand;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "1f73f/6fgtCdZIelyOdUt06", "MonsterCreate", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Component', 'Node', 'Pool', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Component', 'director', 'instantiate', 'Node', 'Pool', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -213,6 +227,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '每行生成的怪物数量'
       }), _dec20 = property({
         tooltip: '怪物Z轴每层间距'
+      }), _dec21 = property({
+        type: _crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+          error: Error()
+        }), PropArms) : PropArms,
+        tooltip: '中路Role_x模板。MonsterCreate会按怪物大波次一次性复制出Role_0/Role_1/Role_2并在开场全部摆好。留空时会自动寻找场景中带多阶段armsInfoList的PropArms。'
+      }), _dec22 = property({
+        type: CCInteger,
+        tooltip: '中路Role_x的大波次数量，默认3。'
       }), _dec8(_class7 = (_class8 = (_class9 = class MonsterCreate extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
@@ -261,11 +283,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.stage_0 = 26.5;
           this.stage_1 = 15;
           this._hasInitialFilled = false;
+          this._spawnAllWavesOnStart = true;
+
+          _initializerDefineProperty(this, "waveRoleTemplate", _descriptor18, this);
+
+          _initializerDefineProperty(this, "waveRoleCount", _descriptor19, this);
+
+          this._waveRoleNodes = [];
+          this._waveStageStartZList = [];
+          this._monsterWaveIndexMap = new WeakMap();
+          this.waveRolePushGapInternal = 0.02;
+          this._isRestoringWaveRolesAfterRebirth = false;
           this.monsterMatIns = [0, 0, 0];
         }
 
         onLoad() {
           MonsterCreate.instance = this;
+          this.prepareWaveRoles();
         }
 
         start() {
@@ -279,68 +313,433 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), EventManager) : EventManager).instance.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
             error: Error()
-          }), EventType) : EventType).MONSTER_SKILL_XRD, this.skillXRMonster, this); // this.scheduleOnce(() => {
+          }), EventType) : EventType).MONSTER_SKILL_XRD, this.skillXRMonster, this);
+          this.spawnAllWavesAtStart(); // this.scheduleOnce(() => {
           //     this.skillXRMonster(2, 2, 2);
           // }, 2);
         }
 
-        _update(deltaTime) {
-          // if (this.isFlowIN) {
-          //     return;
-          // }
-          if (!this._hasInitialFilled && this._monsterList.length >= this.monsterCount) {
-            this._hasInitialFilled = true;
+        prepareWaveRoles() {
+          var _this$waveRoleTemplat;
+
+          if (this._waveRoleNodes.length > 0) {
+            return;
           }
 
-          if (this._monsterList.length < this.monsterCount) {
-            var quest = this.monsterCreateQueue.monsterCreateInfoList[this.monsterCreateQueue.curIndex];
-            var monsterCount = quest.monsterCountMax - quest.curMonsterCount;
-            var count = this.monsterCount - monsterCount + this._monsterList.length;
+          var template = (_this$waveRoleTemplat = this.waveRoleTemplate) != null ? _this$waveRoleTemplat : this.findWaveRoleTemplate();
 
-            if (count >= 0) {
-              count = monsterCount;
-            } else {
-              count = this.monsterCount - this._monsterList.length;
+          if (!template || !template.node) {
+            return;
+          }
+
+          var totalStageCount = this.getConfiguredWaveCount();
+
+          if (totalStageCount <= 0) {
+            return;
+          }
+
+          var allStageStartZList = this.getWaveStageStartZList(totalStageCount);
+          var stageZList = this.getBigWaveStartZList(allStageStartZList, this.waveRoleCount);
+          this._waveStageStartZList = stageZList.slice();
+          var parent = template.node.parent;
+
+          if (!parent) {
+            return;
+          }
+
+          this._waveRoleNodes.length = 0;
+
+          this._waveRoleNodes.push(template);
+
+          template.setFixedStage(0);
+          template.node.active = true;
+
+          if (typeof stageZList[0] === 'number') {
+            this.resetWaveRoleToStageStart(template, stageZList[0]);
+          }
+
+          for (var i = 1; i < stageZList.length; i++) {
+            var cloneNode = instantiate(template.node);
+            parent.addChild(cloneNode);
+            var clone = cloneNode.getComponent(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+              error: Error()
+            }), PropArms) : PropArms);
+
+            if (!clone) {
+              continue;
             }
 
-            var maxPerFrame = this._hasInitialFilled ? this.maxSpawnPerFrame : 51;
+            clone.setFixedStage(Math.min(i, clone.armsInfoList.length - 1));
+            clone.node.active = true;
 
-            if (count > maxPerFrame) {
-              count = maxPerFrame;
+            if (typeof stageZList[i] === 'number') {
+              this.resetWaveRoleToStageStart(clone, stageZList[i]);
             }
 
-            for (var i = 0; i < count; i++) {
-              if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
-                error: Error()
-              }), MonsterType) : MonsterType).ZombieBrother) {
-                this.spawnBrother();
-              } else {
-                this.spawnBaby();
+            this._waveRoleNodes.push(clone);
+          }
+
+          this.bindWaveRolesToCreatePropBrand();
+        }
+
+        findWaveRoleTemplate() {
+          var scene = director.getScene();
+
+          if (!scene) {
+            return null;
+          }
+
+          var stack = [scene];
+
+          while (stack.length > 0) {
+            var node = stack.pop();
+
+            if (!node) {
+              continue;
+            }
+
+            var arms = node.getComponent(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+              error: Error()
+            }), PropArms) : PropArms);
+
+            if (arms && arms.armsInfoList.length > 1) {
+              return arms;
+            }
+
+            for (var i = node.children.length - 1; i >= 0; i--) {
+              stack.push(node.children[i]);
+            }
+          }
+
+          return null;
+        }
+
+        getConfiguredWaveCount() {
+          var _this$monsterCreateQu, _this$monsterCreateQu2;
+
+          var list = (_this$monsterCreateQu = (_this$monsterCreateQu2 = this.monsterCreateQueue) == null ? void 0 : _this$monsterCreateQu2.monsterCreateInfoList) != null ? _this$monsterCreateQu : [];
+          var count = 0;
+
+          for (var i = 0; i < list.length; i++) {
+            var quest = list[i];
+
+            if (!quest) {
+              continue;
+            }
+
+            var loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
+            count += loopCount;
+          }
+
+          return count;
+        }
+
+        getBigWaveStartZList(allStageStartZList, bigWaveCount) {
+          var result = [];
+
+          if (!allStageStartZList.length || bigWaveCount <= 0) {
+            return result;
+          }
+
+          var stageTypeList = this.getExpandedStageMonsterTypeList();
+          var stageStartIndexList = this.getBigWaveStartStageIndexList(stageTypeList, bigWaveCount);
+
+          if (stageStartIndexList.length > 0) {
+            for (var i = 0; i < stageStartIndexList.length; i++) {
+              var stageIndex = stageStartIndexList[i];
+              var stageZ = allStageStartZList[stageIndex];
+
+              if (typeof stageZ === 'number') {
+                result.push(stageZ);
               }
             }
 
-            quest.curMonsterCount += count;
+            if (result.length > 0) {
+              return result;
+            }
+          }
 
-            if (quest.curMonsterCount == quest.monsterCountMax) {
-              (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
-                error: Error()
-              }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-                error: Error()
-              }), EventType) : EventType).MONSTER_WAVE_STAGE);
-              quest.curLoopCount++;
+          var chunkSize = Math.max(1, Math.ceil(allStageStartZList.length / bigWaveCount));
+
+          for (var _i = 0; _i < allStageStartZList.length && result.length < bigWaveCount; _i += chunkSize) {
+            result.push(allStageStartZList[_i]);
+          }
+
+          while (result.length < bigWaveCount && result.length < allStageStartZList.length) {
+            result.push(allStageStartZList[result.length]);
+          }
+
+          return result;
+        }
+
+        getExpandedStageMonsterTypeList() {
+          var _this$monsterCreateQu3, _this$monsterCreateQu4;
+
+          var result = [];
+          var list = (_this$monsterCreateQu3 = (_this$monsterCreateQu4 = this.monsterCreateQueue) == null ? void 0 : _this$monsterCreateQu4.monsterCreateInfoList) != null ? _this$monsterCreateQu3 : [];
+
+          for (var i = 0; i < list.length; i++) {
+            var quest = list[i];
+
+            if (!quest) {
+              continue;
+            }
+
+            var loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
+
+            for (var loop = 0; loop < loopCount; loop++) {
+              result.push(quest.monsterType);
+            }
+          }
+
+          return result;
+        }
+
+        getBigWaveStartStageIndexList(stageTypeList, bigWaveCount) {
+          var result = [];
+
+          if (stageTypeList.length <= 0 || bigWaveCount <= 0) {
+            return result;
+          }
+
+          result.push(0);
+
+          for (var i = 0; i < stageTypeList.length - 1; i++) {
+            if (stageTypeList[i] === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+              error: Error()
+            }), MonsterType) : MonsterType).ZombieBrother) {
+              result.push(i + 1);
+            }
+          }
+
+          if (result.length > bigWaveCount) {
+            result.length = bigWaveCount;
+            return result;
+          }
+
+          if (result.length < bigWaveCount) {
+            var chunkSize = Math.max(1, Math.ceil(stageTypeList.length / bigWaveCount));
+
+            for (var _i2 = 0; _i2 < stageTypeList.length && result.length < bigWaveCount; _i2 += chunkSize) {
+              if (result.indexOf(_i2) === -1) {
+                result.push(_i2);
+              }
+            }
+          }
+
+          result.sort((a, b) => a - b);
+          return result;
+        }
+
+        buildStageToBigWaveIndex(stageCount, bigWaveCount) {
+          var result = [];
+
+          if (stageCount <= 0 || bigWaveCount <= 0) {
+            return result;
+          }
+
+          var stageTypeList = this.getExpandedStageMonsterTypeList().slice(0, stageCount);
+          var stageStartIndexList = this.getBigWaveStartStageIndexList(stageTypeList, bigWaveCount);
+
+          if (stageStartIndexList.length > 0) {
+            var waveIndex = 0;
+
+            for (var i = 0; i < stageCount; i++) {
+              while (waveIndex + 1 < stageStartIndexList.length && i >= stageStartIndexList[waveIndex + 1]) {
+                waveIndex++;
+              }
+
+              result.push(waveIndex);
+            }
+
+            return result;
+          }
+
+          var chunkSize = Math.max(1, Math.ceil(stageCount / bigWaveCount));
+
+          for (var _i3 = 0; _i3 < stageCount; _i3++) {
+            result.push(Math.min(bigWaveCount - 1, Math.floor(_i3 / chunkSize)));
+          }
+
+          return result;
+        }
+
+        resetWaveRoleToStageStart(role, stageStartZ) {
+          if (!(role != null && role.node)) {
+            return;
+          }
+
+          var targetZ = this.node.worldPositionZ + stageStartZ - this.getWaveRoleCollisionHalfZ(role) - this.waveRolePushGapInternal;
+          var pos = role.node.worldPosition;
+          role.node.setWorldPosition(pos.x, pos.y, targetZ);
+        }
+
+        snapWaveRolesToCurrentWaveFront() {
+          if (this._waveRoleNodes.length <= 0) {
+            return;
+          }
+
+          for (var i = 0; i < this._waveRoleNodes.length; i++) {
+            var role = this._waveRoleNodes[i];
+            var frontMonster = this.getFrontMonsterByWave(i);
+
+            if (!(role != null && role.node) || !(frontMonster != null && frontMonster.node)) {
+              continue;
+            }
+
+            var roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
+            var monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
+            var monsterFrontZ = frontMonster.node.worldPositionZ - monsterHalfZ;
+            var targetZ = monsterFrontZ - this.waveRolePushGapInternal - roleHalfZ;
+            var pos = role.node.worldPosition;
+            role.node.setWorldPosition(pos.x, pos.y, targetZ);
+          }
+        }
+
+        bindWaveRolesToCreatePropBrand() {
+          var scene = director.getScene();
+
+          if (!scene || this._waveRoleNodes.length <= 0) {
+            return;
+          }
+
+          var waveRoleNodeList = this._waveRoleNodes.map(role => role == null ? void 0 : role.node).filter(node => !!node);
+
+          var stack = [scene];
+
+          while (stack.length > 0) {
+            var node = stack.pop();
+
+            if (!node) {
+              continue;
+            }
+
+            var createPropBrand = node.getComponent(_crd && CreatePropBrand === void 0 ? (_reportPossibleCrUseOfCreatePropBrand({
+              error: Error()
+            }), CreatePropBrand) : CreatePropBrand);
+
+            if (createPropBrand && createPropBrand.type === 0) {
+              createPropBrand.setWaveRoleList(waveRoleNodeList);
+            }
+
+            for (var i = node.children.length - 1; i >= 0; i--) {
+              stack.push(node.children[i]);
+            }
+          }
+        }
+
+        spawnAllWavesAtStart() {
+          var _this$monsterCreateQu5, _this$monsterCreateQu6;
+
+          var stageList = (_this$monsterCreateQu5 = (_this$monsterCreateQu6 = this.monsterCreateQueue) == null ? void 0 : _this$monsterCreateQu6.monsterCreateInfoList) != null ? _this$monsterCreateQu5 : [];
+
+          if (stageList.length <= 0) {
+            return;
+          }
+
+          this._spawnAllWavesOnStart = true;
+          this._hasInitialFilled = true;
+          this._monsterList.length = 0;
+          this._nextSpawnZ = 0;
+          this._rowCount = 0;
+          this.posIndex = 0;
+          this._monsterBossCount = 0;
+          this.bossDieCount = 0;
+          this.monsterMatIns = [0, 0, 0];
+          this._monsterWaveIndexMap = new WeakMap();
+          var stageToBigWaveList = this.buildStageToBigWaveIndex(this.getConfiguredWaveCount(), Math.max(1, this.waveRoleCount));
+          var stageCursor = 0;
+
+          for (var i = 0; i < stageList.length; i++) {
+            var quest = stageList[i];
+            var loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
+
+            for (var loop = 0; loop < loopCount; loop++) {
+              var _stageToBigWaveList$M;
+
+              var waveIndex = (_stageToBigWaveList$M = stageToBigWaveList[Math.min(stageCursor, stageToBigWaveList.length - 1)]) != null ? _stageToBigWaveList$M : 0;
+
+              for (var count = 0; count < quest.monsterCountMax; count++) {
+                if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+                  error: Error()
+                }), MonsterType) : MonsterType).ZombieBrother) {
+                  this.spawnBrother(waveIndex);
+                } else {
+                  this.spawnBaby(waveIndex);
+                }
+              }
+
               this._nextSpawnZ += quest.brotherExcludeZ;
+              stageCursor++;
+            }
 
-              if (quest.loopMax != -1 && quest.curLoopCount == quest.loopMax) {
-                this.monsterCreateQueue.curIndex++;
-                this.monsterCreateQueue.curIndex = this.monsterCreateQueue.curIndex % this.monsterCreateQueue.monsterCreateInfoList.length;
+            quest.init();
+          }
+
+          this.monsterCount = this._monsterList.length;
+          this.snapWaveRolesToCurrentWaveFront();
+        }
+
+        _update(deltaTime) {
+          if (!this._spawnAllWavesOnStart) {
+            if (!this._hasInitialFilled && this._monsterList.length >= this.monsterCount) {
+              this._hasInitialFilled = true;
+            }
+
+            if (this._monsterList.length < this.monsterCount) {
+              var quest = this.monsterCreateQueue.monsterCreateInfoList[this.monsterCreateQueue.curIndex];
+              var monsterCount = quest.monsterCountMax - quest.curMonsterCount;
+              var count = this.monsterCount - monsterCount + this._monsterList.length;
+
+              if (count >= 0) {
+                count = monsterCount;
+              } else {
+                count = this.monsterCount - this._monsterList.length;
               }
 
-              quest.init();
+              var maxPerFrame = this._hasInitialFilled ? this.maxSpawnPerFrame : 51;
+
+              if (count > maxPerFrame) {
+                count = maxPerFrame;
+              }
+
+              for (var i = 0; i < count; i++) {
+                if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+                  error: Error()
+                }), MonsterType) : MonsterType).ZombieBrother) {
+                  this.spawnBrother();
+                } else {
+                  this.spawnBaby();
+                }
+              }
+
+              quest.curMonsterCount += count;
+
+              if (quest.curMonsterCount == quest.monsterCountMax) {
+                (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
+                  error: Error()
+                }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+                  error: Error()
+                }), EventType) : EventType).MONSTER_WAVE_STAGE);
+                quest.curLoopCount++;
+                this._nextSpawnZ += quest.brotherExcludeZ;
+
+                if (quest.loopMax != -1 && quest.curLoopCount == quest.loopMax) {
+                  this.monsterCreateQueue.curIndex++;
+                  this.monsterCreateQueue.curIndex = this.monsterCreateQueue.curIndex % this.monsterCreateQueue.monsterCreateInfoList.length;
+                }
+
+                quest.init();
+              }
             }
           }
 
-          for (var _i = this._monsterList.length - 1; _i >= 0; _i--) {
-            var monster = this._monsterList[_i];
+          if (!this._isRestoringWaveRolesAfterRebirth) {
+            this.updateWaveRolePush();
+          }
+
+          for (var _i4 = this._monsterList.length - 1; _i4 >= 0; _i4--) {
+            var monster = this._monsterList[_i4];
 
             if (monster.isDie) {
               // swap-and-pop替代splice，iOS优化
@@ -358,7 +757,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 }
               }
 
-              this._monsterList[_i] = this._monsterList[this._monsterList.length - 1];
+              this._monsterList[_i4] = this._monsterList[this._monsterList.length - 1];
 
               this._monsterList.pop();
             } else if (monster.move.isPos) {
@@ -387,6 +786,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }
             }
 
+            if (!this._isRestoringWaveRolesAfterRebirth) {
+              this.clampMonsterBehindWaveRole(monster);
+            }
+
             this.limitMonsterToMiddleLane(monster);
           }
 
@@ -394,10 +797,179 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this._nextSpawnZ -= deltaTime * this.monsterSpeed;
           }
         }
+
+        updateWaveRolePush() {
+          if (this._waveRoleNodes.length <= 0 || this._waveStageStartZList.length <= 0) {
+            return;
+          }
+
+          for (var i = 0; i < this._waveRoleNodes.length; i++) {
+            var role = this._waveRoleNodes[i];
+
+            if (!role || !role.node || !role.node.active || role.isDie) {
+              continue;
+            }
+
+            var frontMonster = this.getFrontMonsterByWave(i);
+
+            if (!frontMonster) {
+              continue;
+            }
+
+            var roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
+            var monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
+            var monsterFrontZ = frontMonster.node.worldPositionZ - monsterHalfZ;
+            var targetZ = monsterFrontZ - this.waveRolePushGapInternal - roleHalfZ;
+
+            if (targetZ < role.node.worldPositionZ) {
+              var pos = role.node.worldPosition;
+              role.node.setWorldPosition(pos.x, pos.y, targetZ);
+            }
+          }
+        }
+
+        clampMonsterBehindWaveRole(monster) {
+          var _monster$move;
+
+          var waveIndex = this.getWaveIndexByMonster(monster);
+
+          if (waveIndex < 0 || waveIndex >= this._waveRoleNodes.length) {
+            return;
+          }
+
+          var role = this._waveRoleNodes[waveIndex];
+
+          if (!role || !role.node || !role.node.active || role.isDie) {
+            return;
+          }
+
+          var roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
+          var monsterHalfZ = this.getMonsterCollisionHalfZ(monster);
+          var limitZ = role.node.worldPositionZ + roleHalfZ + monsterHalfZ + this.waveRolePushGapInternal;
+
+          if (monster.node.worldPositionZ < limitZ) {
+            monster.node.setWorldPosition(monster.node.worldPositionX, monster.node.worldPositionY, limitZ);
+          }
+
+          if ((_monster$move = monster.move) != null && _monster$move.pos && monster.move.pos.z < limitZ) {
+            monster.move.pos.z = limitZ;
+          }
+        }
+
+        getFrontMonsterByWave(waveIndex) {
+          var frontMonster = null;
+
+          for (var i = 0; i < this._monsterList.length; i++) {
+            var monster = this._monsterList[i];
+
+            if (!monster || !monster.node || !monster.node.active || monster.isDie) {
+              continue;
+            }
+
+            if (this.getWaveIndexByMonster(monster) !== waveIndex) {
+              continue;
+            }
+
+            if (!frontMonster || monster.node.worldPositionZ < frontMonster.node.worldPositionZ) {
+              frontMonster = monster;
+            }
+          }
+
+          return frontMonster;
+        }
+
+        getWaveIndexByMonster(monster) {
+          if (!monster) {
+            return -1;
+          }
+
+          var bindWaveIndex = this._monsterWaveIndexMap.get(monster);
+
+          if (typeof bindWaveIndex === 'number') {
+            return bindWaveIndex;
+          }
+
+          return this.getWaveIndexByMonsterZ(monster.node.worldPositionZ);
+        }
+
+        getWaveRoleCollisionHalfZ(role) {
+          var _role$getBlockCollisi, _role$collisionHalfZ;
+
+          return (_role$getBlockCollisi = role == null || role.getBlockCollisionHalfZ == null ? void 0 : role.getBlockCollisionHalfZ()) != null ? _role$getBlockCollisi : Math.max(0.65, (_role$collisionHalfZ = role == null ? void 0 : role.collisionHalfZ) != null ? _role$collisionHalfZ : 0.65);
+        }
+
+        getMonsterCollisionHalfZ(monster) {
+          var _monster$collisionHal;
+
+          return Math.max(0, (_monster$collisionHal = monster == null ? void 0 : monster.collisionHalfZ) != null ? _monster$collisionHal : 0);
+        }
+
+        getWaveIndexByMonsterZ(z) {
+          if (this._waveStageStartZList.length <= 0) {
+            return -1;
+          }
+
+          for (var i = 0; i < this._waveStageStartZList.length; i++) {
+            var currentStart = this._waveStageStartZList[i];
+            var nextStart = i + 1 < this._waveStageStartZList.length ? this._waveStageStartZList[i + 1] : Number.POSITIVE_INFINITY;
+
+            if (z >= currentStart && z < nextStart) {
+              return i;
+            }
+          }
+
+          return z < this._waveStageStartZList[0] ? 0 : this._waveStageStartZList.length - 1;
+        }
+
+        getWaveStageStartZList(stageCount) {
+          var result = [];
+          var stages = this.monsterCreateQueue.monsterCreateInfoList;
+
+          if (!stages || stages.length <= 0 || stageCount <= 0) {
+            return result;
+          }
+
+          var nextSpawnZ = 0;
+          var rowCount = 0;
+
+          for (var i = 0; i < stages.length && result.length < stageCount; i++) {
+            var quest = stages[i];
+            var loopMax = quest.loopMax > 0 ? quest.loopMax : 1;
+            var loopCount = quest.loopMax == -1 ? 1 : loopMax;
+
+            for (var loop = 0; loop < loopCount && result.length < stageCount; loop++) {
+              result.push(nextSpawnZ);
+
+              if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+                error: Error()
+              }), MonsterType) : MonsterType).ZombieBrother) {
+                nextSpawnZ += this.brotherExcludeZ;
+                nextSpawnZ += this.brotherExcludeZ;
+              } else {
+                for (var count = 0; count < quest.monsterCountMax; count++) {
+                  rowCount++;
+
+                  if (rowCount == this.rowCount) {
+                    nextSpawnZ += this.layerGapZ;
+                    rowCount = 0;
+                  }
+                }
+              }
+
+              nextSpawnZ += quest.brotherExcludeZ;
+            }
+          }
+
+          return result;
+        }
         /** 生成ZombieBrother，放在排斥区域的中间 */
 
 
-        spawnBrother() {
+        spawnBrother(waveIndex) {
+          if (waveIndex === void 0) {
+            waveIndex = -1;
+          }
+
           var monster = this.getMonster((_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
           }), MonsterType) : MonsterType).ZombieBrother);
@@ -419,14 +991,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           tempV3.set(monster.node.worldPosition);
           tempV3.z = this.stage_0;
           monster.move.pos = tempV3;
-          monster.initX = 0; // this._brotherZPositions.push(z);
+          monster.initX = 0;
+
+          if (waveIndex >= 0) {
+            this._monsterWaveIndexMap.set(monster, waveIndex);
+          } // this._brotherZPositions.push(z);
+
 
           this._monsterBossCount++;
         }
         /** 生成ZombieBaby，自动避开ZombieBrother的排斥区域 */
 
 
-        spawnBaby() {
+        spawnBaby(waveIndex) {
+          if (waveIndex === void 0) {
+            waveIndex = -1;
+          }
+
           var type = Math.random() < 0.5 ? (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
           }), MonsterType) : MonsterType).ZombieBaby_0 : (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
@@ -473,6 +1054,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           tempV3.z = this.stage_0;
           monster.move.pos = tempV3;
           monster.initX = x;
+
+          if (waveIndex >= 0) {
+            this._monsterWaveIndexMap.set(monster, waveIndex);
+          }
+
           this._rowCount++;
 
           if (this._rowCount == this.rowCount) {
@@ -569,6 +1155,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         TimeFlowsBackWard() {
           var _this = this;
 
+          // this.isFlowIN = true;
+          this._isRestoringWaveRolesAfterRebirth = true;
+          this.hideWaveRolesDuringRebirth();
+
           var _loop = function _loop() {
             var monster = _this._monsterList[i];
             monster.move.autoMove = false;
@@ -600,13 +1190,66 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
           };
 
-          // this.isFlowIN = true;
           for (var i = 0; i < this._monsterList.length; i++) {
             _loop();
-          } // this.scheduleOnce(() => {
+          }
+
+          this.scheduleOnce(() => {
+            this.restoreWaveRolesAfterRebirth();
+          }, 0.45); // this.scheduleOnce(() => {
           //     this.isFlowIN = false;
           // }, 0.4);
+        }
 
+        hideWaveRolesDuringRebirth() {
+          if (!this._waveRoleNodes.length) {
+            return;
+          }
+
+          for (var i = 0; i < this._waveRoleNodes.length; i++) {
+            var role = this._waveRoleNodes[i];
+
+            if (!(role != null && role.node)) {
+              continue;
+            }
+
+            role.node.active = false;
+          }
+        }
+
+        restoreWaveRolesAfterRebirth() {
+          if (!this._waveRoleNodes.length) {
+            this._isRestoringWaveRolesAfterRebirth = false;
+            return;
+          }
+
+          for (var i = 0; i < this._waveRoleNodes.length; i++) {
+            var role = this._waveRoleNodes[i];
+
+            if (!role || !role.node) {
+              continue;
+            }
+
+            if (role.isDie) {
+              role.node.active = false;
+              continue;
+            }
+
+            role.node.active = true;
+            var frontMonster = this.getFrontMonsterByWave(i);
+
+            if (!frontMonster || !frontMonster.node) {
+              continue;
+            }
+
+            var roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
+            var monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
+            var targetZ = frontMonster.node.worldPositionZ - monsterHalfZ - this.waveRolePushGapInternal - roleHalfZ;
+            var pos = role.node.worldPosition;
+            role.node.setWorldPosition(pos.x, pos.y, targetZ);
+          }
+
+          this._isRestoringWaveRolesAfterRebirth = false;
         }
 
         skillXRMonster(x, r, delay) {
@@ -854,6 +1497,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         writable: true,
         initializer: function initializer() {
           return 0.8;
+        }
+      }), _descriptor18 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleTemplate", [_dec21], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor19 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleCount", [_dec22], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 3;
         }
       })), _class8)) || _class7));
 

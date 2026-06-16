@@ -434,5 +434,4 @@ export class Player extends UnityUpComponent {
     //         this._soundTime = 1 / (this.attackSpeed * (this.roleList.length));
     //     }
     // }
-
 }

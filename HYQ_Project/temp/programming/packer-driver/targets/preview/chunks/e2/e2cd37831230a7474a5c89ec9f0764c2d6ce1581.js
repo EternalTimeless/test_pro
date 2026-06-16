@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, MeshRenderer, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropTireGate, ColliderTag, COLLIDE_TYPE, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, MeshRenderer, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropTireGate, ColliderTag, COLLIDE_TYPE, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -164,7 +164,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("CreatePropBrand", CreatePropBrand = (_dec = ccclass('CreatePropBrand'), _dec2 = property(CCInteger), _dec3 = property(CCFloat), _dec4 = property(CCFloat), _dec5 = property(CCInteger), _dec6 = property(CCFloat), _dec7 = property(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
         error: Error()
-      }), PropArms) : PropArms), _dec8 = property(Node), _dec9 = property(CCBoolean), _dec10 = property(CCInteger), _dec11 = property(CCFloat), _dec12 = property(CCFloat), _dec13 = property(Vec3), _dec14 = property(CCFloat), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCFloat), _dec18 = property([Node]), _dec19 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), PropArms) : PropArms), _dec8 = property({
+        type: [Node],
+        tooltip: '按怪物波次顺序绑定中路 Role_x 节点。第1波对应 Role_0，第2波对应 Role_1，第3波对应 Role_2。该列表现在只用于监听这些节点被打掉后的奖励推进，不再负责生成和摆位。'
+      }), _dec9 = property(Node), _dec10 = property(CCBoolean), _dec11 = property(CCInteger), _dec12 = property(CCFloat), _dec13 = property(CCFloat), _dec14 = property(Vec3), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCFloat), _dec18 = property(CCFloat), _dec19 = property([Node]), _dec20 = property(CCInteger), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
@@ -182,27 +185,29 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "pa", _descriptor6, this);
 
-          _initializerDefineProperty(this, "wallNode", _descriptor7, this);
+          _initializerDefineProperty(this, "waveRoleList", _descriptor7, this);
 
-          _initializerDefineProperty(this, "tireGateEnabled", _descriptor8, this);
+          _initializerDefineProperty(this, "wallNode", _descriptor8, this);
 
-          _initializerDefineProperty(this, "tireGateCount", _descriptor9, this);
+          _initializerDefineProperty(this, "tireGateEnabled", _descriptor9, this);
 
-          _initializerDefineProperty(this, "tireGateSpacing", _descriptor10, this);
+          _initializerDefineProperty(this, "tireGateCount", _descriptor10, this);
 
-          _initializerDefineProperty(this, "tireGateHp", _descriptor11, this);
+          _initializerDefineProperty(this, "tireGateSpacing", _descriptor11, this);
 
-          _initializerDefineProperty(this, "tireGateScale", _descriptor12, this);
+          _initializerDefineProperty(this, "tireGateHp", _descriptor12, this);
 
-          _initializerDefineProperty(this, "propBackOffset", _descriptor13, this);
+          _initializerDefineProperty(this, "tireGateScale", _descriptor13, this);
 
-          _initializerDefineProperty(this, "tireGatePropGap", _descriptor14, this);
+          _initializerDefineProperty(this, "propBackOffset", _descriptor14, this);
 
-          _initializerDefineProperty(this, "editorTireTailOffset", _descriptor15, this);
+          _initializerDefineProperty(this, "tireGatePropGap", _descriptor15, this);
 
-          _initializerDefineProperty(this, "tireGateX", _descriptor16, this);
+          _initializerDefineProperty(this, "editorTireTailOffset", _descriptor16, this);
 
-          _initializerDefineProperty(this, "editorTireGateNodes", _descriptor17, this);
+          _initializerDefineProperty(this, "tireGateX", _descriptor17, this);
+
+          _initializerDefineProperty(this, "editorTireGateNodes", _descriptor18, this);
 
           this.propBrandList = [];
           this.tempPropBrandList = [];
@@ -210,7 +215,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.gateTireRemain = 0;
           this.pendingMoveCount = 0;
 
-          _initializerDefineProperty(this, "type", _descriptor18, this);
+          _initializerDefineProperty(this, "type", _descriptor19, this);
 
           this.tempV3 = new Vec3();
         }
@@ -243,13 +248,34 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return this.editorTireGateNodes.filter(node => !!node);
         }
 
+        setWaveRoleList(nodes) {
+          var lastRoleList = this.getActiveWaveRoles();
+
+          for (var i = 0; i < lastRoleList.length; i++) {
+            var _lastRoleList$i;
+
+            (_lastRoleList$i = lastRoleList[i]) == null || _lastRoleList$i.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
+          }
+
+          this.waveRoleList = (nodes != null ? nodes : []).filter(node => !!node);
+          var nextRoleList = this.getActiveWaveRoles();
+
+          for (var _i = 0; _i < nextRoleList.length; _i++) {
+            var _nextRoleList$_i;
+
+            (_nextRoleList$_i = nextRoleList[_i]) == null || _nextRoleList$_i.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
+          }
+        }
+
         get activeTireGateCount() {
           return this.validEditorTireGateNodes.length;
         }
 
         start() {
-          var _this$pa;
-
           var startZ = this.activePropBackOffset;
 
           for (var i = 0; i < this.showCount; i++) {
@@ -265,9 +291,64 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
 
           this.createTireGate();
-          (_this$pa = this.pa) == null || _this$pa.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-            error: Error()
-          }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
+          var roleList = this.getActiveWaveRoles();
+
+          for (var _i2 = 0; _i2 < roleList.length; _i2++) {
+            var _roleList$_i, _roleList$_i2;
+
+            (_roleList$_i = roleList[_i2]) == null || _roleList$_i.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
+            (_roleList$_i2 = roleList[_i2]) == null || _roleList$_i2.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
+          }
+        }
+
+        getActiveWaveRoles() {
+          var roles = [];
+
+          var addRole = role => {
+            if (!role || roles.indexOf(role) !== -1) {
+              return;
+            }
+
+            roles.push(role);
+          };
+
+          for (var i = 0; i < this.waveRoleList.length; i++) {
+            var _node$getComponent;
+
+            var node = this.waveRoleList[i];
+
+            if (!node) {
+              continue;
+            }
+
+            addRole((_node$getComponent = node.getComponent(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+              error: Error()
+            }), PropArms) : PropArms)) != null ? _node$getComponent : node.getComponentInParent(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+              error: Error()
+            }), PropArms) : PropArms));
+          }
+
+          if (roles.length <= 0 && this.pa) {
+            addRole(this.pa);
+          }
+
+          return roles;
+        }
+
+        onDestroy() {
+          var roleList = this.getActiveWaveRoles();
+
+          for (var i = 0; i < roleList.length; i++) {
+            var _roleList$i;
+
+            (_roleList$i = roleList[i]) == null || _roleList$i.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
+          }
         }
 
         armsUPEvent(armsInfo) {
@@ -302,8 +383,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
           }
 
-          for (var _i = this.tempPropBrandList.length - 1; _i >= 0; _i--) {
-            var _p = this.tempPropBrandList[_i];
+          for (var _i3 = this.tempPropBrandList.length - 1; _i3 >= 0; _i3--) {
+            var _p = this.tempPropBrandList[_i3];
             _p.node.z -= this.moveSpeed * deltaTime;
 
             if (_p.node.z <= -0.614) {
@@ -315,7 +396,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             if (_p.node.z <= -30) {
-              this.tempPropBrandList.splice(_i, 1);
+              this.tempPropBrandList.splice(_i3, 1);
               _p.node.active = false;
               (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
@@ -660,82 +741,89 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec8], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: null
-      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "tireGateEnabled", [_dec9], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return false;
-        }
-      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "tireGateCount", [_dec10], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 3;
-        }
-      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "tireGateSpacing", [_dec11], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 4.2;
-        }
-      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "tireGateHp", [_dec12], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 1;
-        }
-      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "tireGateScale", [_dec13], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return new Vec3(1.44, 1.44, 1.44);
-        }
-      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "propBackOffset", [_dec14], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 5.4;
-        }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "tireGatePropGap", [_dec15], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 2.8;
-        }
-      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "editorTireTailOffset", [_dec16], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 1.2;
-        }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "tireGateX", [_dec17], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 0.28;
-        }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "editorTireGateNodes", [_dec18], {
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "waveRoleList", [_dec8], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return [];
         }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec19], {
+      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec9], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: null
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "tireGateEnabled", [_dec10], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return false;
+        }
+      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "tireGateCount", [_dec11], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 3;
+        }
+      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "tireGateSpacing", [_dec12], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 4.2;
+        }
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "tireGateHp", [_dec13], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 1;
+        }
+      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "tireGateScale", [_dec14], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return new Vec3(1.44, 1.44, 1.44);
+        }
+      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "propBackOffset", [_dec15], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 5.4;
+        }
+      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "tireGatePropGap", [_dec16], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 2.8;
+        }
+      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "editorTireTailOffset", [_dec17], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 1.2;
+        }
+      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "tireGateX", [_dec18], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.28;
+        }
+      }), _descriptor18 = _applyDecoratedDescriptor(_class2.prototype, "editorTireGateNodes", [_dec19], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return [];
+        }
+      }), _descriptor19 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec20], {
         configurable: true,
         enumerable: true,
         writable: true,

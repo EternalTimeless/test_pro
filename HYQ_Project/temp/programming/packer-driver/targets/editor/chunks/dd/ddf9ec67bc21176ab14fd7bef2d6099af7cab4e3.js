@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, Component, Node, GuideLine, Player, MoveDrive, MonsterCreate, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _class3, _crd, ccclass, property, GuideManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, GuideManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -34,8 +34,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
       Animation = _cc.Animation;
+      CCFloat = _cc.CCFloat;
       Component = _cc.Component;
       Node = _cc.Node;
+      Sprite = _cc.Sprite;
     }, function (_unresolved_2) {
       GuideLine = _unresolved_2.GuideLine;
     }, function (_unresolved_3) {
@@ -50,14 +52,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "3062cO1YclDl4EzgZtjrqle", "GuideManager", undefined);
 
-      __checkObsolete__(['_decorator', 'Animation', 'Component', 'Node']);
+      __checkObsolete__(['_decorator', 'Animation', 'CCFloat', 'Component', 'Node', 'Sprite']);
 
       ({
         ccclass,
         property
       } = _decorator);
 
-      _export("GuideManager", GuideManager = (_dec = ccclass('GuideManager'), _dec2 = property(Node), _dec3 = property(Animation), _dec(_class = (_class2 = (_class3 = class GuideManager extends Component {
+      _export("GuideManager", GuideManager = (_dec = ccclass('GuideManager'), _dec2 = property(Node), _dec3 = property(Animation), _dec4 = property({
+        type: CCFloat,
+        tooltip: '加载条播放时长'
+      }), _dec(_class = (_class2 = (_class3 = class GuideManager extends Component {
         constructor(...args) {
           super(...args);
 
@@ -66,11 +71,105 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isLock = false;
 
           _initializerDefineProperty(this, "handAnim", _descriptor2, this);
+
+          _initializerDefineProperty(this, "loadingDuration", _descriptor3, this);
+
+          this.loadingNode = null;
+          this.loadingProgress = null;
+          this.loadingTime = 0;
         }
 
         start() {
           GuideManager.instance = this;
-          this.finishGuide();
+          this.lockGameplay();
+          this.initLoadingView();
+        }
+
+        update(dt) {
+          if (this.isLock) {
+            return;
+          }
+
+          if (!this.loadingNode || !this.loadingNode.active) {
+            this.finishGuide();
+            return;
+          }
+
+          this.loadingTime += dt;
+          const progress = this.loadingDuration <= 0 ? 1 : Math.min(1, this.loadingTime / this.loadingDuration);
+
+          if (this.loadingProgress) {
+            this.loadingProgress.fillRange = progress;
+          }
+
+          if (progress >= 1) {
+            this.loadingNode.active = false;
+            this.finishGuide();
+          }
+        }
+
+        lockGameplay() {
+          this.isLock = false;
+
+          if ((_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance) {
+            (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+              error: Error()
+            }), Player) : Player).instance.isLock = false;
+          }
+
+          (_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
+            error: Error()
+          }), MoveDrive) : MoveDrive).isMoveOk = false;
+          (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+            error: Error()
+          }), MonsterCreate) : MonsterCreate).isStartMove = false;
+        }
+
+        initLoadingView() {
+          let root = this.node;
+
+          while (root.parent) {
+            root = root.parent;
+          }
+
+          this.loadingNode = this.findNodeByName(root, "loading");
+
+          if (!this.loadingNode) {
+            this.finishGuide();
+            return;
+          }
+
+          this.loadingNode.active = true;
+          const progressNode = this.findNodeByName(this.loadingNode, "img_hp_0") || this.findNodeByName(this.loadingNode, "img_hp_1");
+          this.loadingProgress = progressNode ? progressNode.getComponent(Sprite) : null;
+
+          if (this.loadingProgress) {
+            this.loadingProgress.fillRange = 0;
+          }
+
+          this.loadingTime = 0;
+        }
+
+        findNodeByName(root, name) {
+          if (!root) {
+            return null;
+          }
+
+          if (root.name === name) {
+            return root;
+          }
+
+          for (let i = 0; i < root.children.length; i++) {
+            const result = this.findNodeByName(root.children[i], name);
+
+            if (result) {
+              return result;
+            }
+          }
+
+          return null;
         }
 
         finishGuide() {
@@ -93,9 +192,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_instance = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
             error: Error()
           }), GuideLine) : GuideLine).instance) == null || _instance.setLineNode();
-          (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+
+          if ((_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
             error: Error()
-          }), Player) : Player).instance.isLock = true;
+          }), Player) : Player).instance) {
+            (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+              error: Error()
+            }), Player) : Player).instance.isLock = true;
+          }
+
           (_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
             error: Error()
           }), MoveDrive) : MoveDrive).isMoveOk = true;
@@ -114,6 +219,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: null
+      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "loadingDuration", [_dec4], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 1.2;
+        }
       })), _class2)) || _class));
 
       _cclegacy._RF.pop();

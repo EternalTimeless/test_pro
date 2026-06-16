@@ -37,6 +37,9 @@ export class CreatePropBrand extends UnityUpComponent {
     @property(PropArms)
     public pa: PropArms;
 
+    @property({ type: [Node], tooltip: '按怪物波次顺序绑定中路 Role_x 节点。第1波对应 Role_0，第2波对应 Role_1，第3波对应 Role_2。该列表现在只用于监听这些节点被打掉后的奖励推进，不再负责生成和摆位。' })
+    public waveRoleList: Node[] = [];
+
     @property(Node)
     public wallNode: Node;
 
@@ -103,6 +106,18 @@ export class CreatePropBrand extends UnityUpComponent {
         return this.editorTireGateNodes.filter(node => !!node);
     }
 
+    public setWaveRoleList(nodes: Node[]) {
+        const lastRoleList = this.getActiveWaveRoles();
+        for (let i = 0; i < lastRoleList.length; i++) {
+            lastRoleList[i]?.node.off(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
+        }
+        this.waveRoleList = (nodes ?? []).filter(node => !!node);
+        const nextRoleList = this.getActiveWaveRoles();
+        for (let i = 0; i < nextRoleList.length; i++) {
+            nextRoleList[i]?.node.on(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
+        }
+    }
+
     private get activeTireGateCount() {
         return this.validEditorTireGateNodes.length;
     }
@@ -110,7 +125,6 @@ export class CreatePropBrand extends UnityUpComponent {
     @property(CCInteger)
     public type: number = 0;
     start() {
-
         const startZ = this.activePropBackOffset;
 
         for (let i = 0; i < this.showCount; i++) {
@@ -137,8 +151,43 @@ export class CreatePropBrand extends UnityUpComponent {
 
         this.createTireGate();
 
-        this.pa?.node.on(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
+        const roleList = this.getActiveWaveRoles();
+        for (let i = 0; i < roleList.length; i++) {
+            roleList[i]?.node.off(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
+            roleList[i]?.node.on(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
+        }
 
+    }
+
+    private getActiveWaveRoles() {
+        const roles: PropArms[] = [];
+        const addRole = (role: PropArms | null) => {
+            if (!role || roles.indexOf(role) !== -1) {
+                return;
+            }
+            roles.push(role);
+        };
+
+        for (let i = 0; i < this.waveRoleList.length; i++) {
+            const node = this.waveRoleList[i];
+            if (!node) {
+                continue;
+            }
+            addRole(node.getComponent(PropArms) ?? node.getComponentInParent(PropArms));
+        }
+
+        if (roles.length <= 0 && this.pa) {
+            addRole(this.pa);
+        }
+
+        return roles;
+    }
+
+    protected onDestroy(): void {
+        const roleList = this.getActiveWaveRoles();
+        for (let i = 0; i < roleList.length; i++) {
+            roleList[i]?.node.off(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
+        }
     }
 
 

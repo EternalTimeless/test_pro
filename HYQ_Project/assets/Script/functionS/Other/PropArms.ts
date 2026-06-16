@@ -161,6 +161,9 @@ export class PropArms extends BattleTarget3D {
         if (!this.wallNode) {
             this.node.emit(EventType.PROP_ARMS_DIE, this._curArms);
             this.queueTrySpawnNextStage();
+            if (this._disableWaveStageChain) {
+                this.node.active = false;
+            }
             return;
         }
 
@@ -183,10 +186,7 @@ export class PropArms extends BattleTarget3D {
                     .call(() => {
                         this.node.emit(EventType.PROP_ARMS_DIE, this._curArms);
                         this.queueTrySpawnNextStage();
-                        this.scheduleOnce(() => {
-
-                            EventManager.instance.emit(EventType.MONSTER_SKILL_XRD, this.wallNode.worldPositionX, 6, this._curArms.moveCount / 8 * 3.5);
-                        }, 0.1);
+                        EventManager.instance.emit(EventType.MONSTER_SKILL_XRD, this.wallNode.worldPositionX, 6, this._curArms.moveCount / 8 * 3.5);
                         CameraMove.instance.Shake2(2);
                         AudioManager.inst.playOneShot(SoundEnum.Sound_downST);
                         if (this.wallEffect) {
@@ -195,6 +195,9 @@ export class PropArms extends BattleTarget3D {
                                 this.wallEffect.children[i].getComponent(AttackParkPlay)?.play();
                         }
                         this.isWallH = false;
+                        if (this._disableWaveStageChain) {
+                            this.node.active = false;
+                        }
                         // this.effect_ss.active = true;
                         // for (let i = 0; i < this.effect_ss.children.length; i++) {
                         //     const e = this.effect_ss.children[i].getComponent(AttackParkPlay);
@@ -518,7 +521,9 @@ export class PropArms extends BattleTarget3D {
 
 
     start() {
-        EventManager.instance.on(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage, this);
+        if (!this._disableWaveStageChain) {
+            EventManager.instance.on(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage, this);
+        }
         this.init(0);
         // this.effect.node.active = false;
     }
@@ -532,6 +537,21 @@ export class PropArms extends BattleTarget3D {
     private _pendingWaveStageCount: number = 0;
     private _isStageAlive: boolean = false;
     private _stageSpawnPos: Vec3 = new Vec3();
+    private _fixedStageIndex: number = -1;
+    private _disableWaveStageChain: boolean = false;
+
+    public setFixedStage(stageIndex: number) {
+        this._fixedStageIndex = Math.max(0, stageIndex);
+        this._disableWaveStageChain = true;
+        this._pendingWaveStageCount = 0;
+        this._level = this._fixedStageIndex;
+    }
+
+    public getBlockCollisionHalfZ() {
+        const tireDepth = this.tireScale?.z || this.tireScale?.x || 1;
+        const tireHalfZ = tireDepth * 0.5;
+        return Math.max(this.collisionHalfZ, tireHalfZ, 0.9);
+    }
 
     protected onDestroy(): void {
         EventManager.instance.off(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage);
@@ -559,11 +579,17 @@ export class PropArms extends BattleTarget3D {
     }
 
     private onMonsterWaveStage() {
+        if (this._disableWaveStageChain) {
+            return;
+        }
         this._pendingWaveStageCount++;
         this.trySpawnNextStage();
     }
 
     private queueTrySpawnNextStage() {
+        if (this._disableWaveStageChain) {
+            return;
+        }
         if (this._pendingWaveStageCount <= 0 || this._isStageAlive) {
             return;
         }
@@ -573,6 +599,9 @@ export class PropArms extends BattleTarget3D {
     }
 
     private trySpawnNextStage() {
+        if (this._disableWaveStageChain) {
+            return;
+        }
         if (this._isStageAlive || this._pendingWaveStageCount <= 0) {
             return;
         }
