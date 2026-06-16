@@ -3591,3 +3591,326 @@
 2026-6-16 11:08:17-debug: asset-db:refresh-all-database (166ms)
 2026-6-16 11:08:17-debug: asset-db:worker-effect-data-processing (1ms)
 2026-6-16 11:08:17-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-16 11:09:28-debug: refresh db internal success
+2026-6-16 11:09:28-debug: refresh db assets success
+2026-6-16 11:09:28-debug: refresh db super-packager success
+2026-6-16 11:09:28-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:09:28-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:09:28-debug: asset-db:refresh-all-database (160ms)
+2026-6-16 11:09:28-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-16 11:09:28-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-16 11:09:35-debug: refresh db internal success
+2026-6-16 11:09:35-debug: refresh db assets success
+2026-6-16 11:09:35-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:09:35-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:09:35-debug: refresh db super-packager success
+2026-6-16 11:09:35-debug: asset-db:refresh-all-database (164ms)
+2026-6-16 11:09:35-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-16 11:09:35-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-16 11:14:01-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-16 11:14:01-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (32ms)
+2026-6-16 11:14:03-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-16 11:14:03-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (30ms)
+2026-6-16 11:14:05-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-16 11:14:05-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (29ms)
+2026-6-16 11:14:10-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-16 11:14:10-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (31ms)
+2026-6-16 11:14:13-debug: Query all assets info in project
+2026-6-16 11:14:13-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-16 11:14:13-debug: Skip compress image, progress: 0%
+2026-6-16 11:14:13-debug: Init all bundles start..., progress: 0%
+2026-6-16 11:14:13-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-16 11:14:13-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-16 11:14:13-debug: Init bundle root assets start..., progress: 0%
+2026-6-16 11:14:13-debug: Num of bundles: 3..., progress: 0%
+2026-6-16 11:14:13-debug:   Number of all scenes: 3
+2026-6-16 11:14:13-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-16 11:14:13-debug: Init bundle root assets success..., progress: 0%
+2026-6-16 11:14:13-debug:   Number of all scripts: 107
+2026-6-16 11:14:13-debug:   Number of other assets: 993
+2026-6-16 11:14:13-debug: // ---- build task 查询 Asset Bundle ---- (19ms)
+2026-6-16 11:14:13-debug: [Build Memory track]: 查询 Asset Bundle start:263.55MB, end 263.24MB, increase: -317.00KB
+2026-6-16 11:14:13-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-16 11:14:13-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-16 11:14:13-log: run build task 查询 Asset Bundle success in 19 ms√, progress: 5%
+2026-6-16 11:14:13-log: run build task 查询 Asset Bundle success in 30 ms√, progress: 10%
+2026-6-16 11:14:13-debug: // ---- build task 查询 Asset Bundle ---- (30ms)
+2026-6-16 11:14:13-debug: [Build Memory track]: 查询 Asset Bundle start:263.27MB, end 263.47MB, increase: 206.02KB
+2026-6-16 11:14:13-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-16 11:14:13-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-16 11:14:13-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-6-16 11:14:13-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-6-16 11:14:13-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:263.51MB, end 263.53MB, increase: 28.28KB
+2026-6-16 11:14:13-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-16 11:14:13-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-16 11:14:13-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-6-16 11:14:13-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-6-16 11:14:13-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-16 11:14:13-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-16 11:14:13-debug: [Build Memory track]: 填充脚本数据到 settings.json start:263.57MB, end 263.60MB, increase: 27.81KB
+2026-6-16 11:14:13-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (34ms)
+2026-6-16 11:14:13-log: run build task 整理部分构建选项内数据到 settings.json success in 34 ms√, progress: 15%
+2026-6-16 11:14:13-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:263.63MB, end 242.03MB, increase: -22116.84KB
+2026-6-16 11:14:32-debug: refresh db internal success
+2026-6-16 11:14:32-debug: refresh db assets success
+2026-6-16 11:14:32-debug: refresh db super-packager success
+2026-6-16 11:14:32-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:14:32-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:14:32-debug: asset-db:refresh-all-database (232ms)
+2026-6-16 11:14:32-debug: asset-db:worker-effect-data-processing (3ms)
+2026-6-16 11:14:32-debug: asset-db-hook-engine-extends-afterRefresh (4ms)
+2026-6-16 11:14:41-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-16 11:14:47-debug: refresh db internal success
+2026-6-16 11:14:47-debug: refresh db assets success
+2026-6-16 11:14:47-debug: refresh db super-packager success
+2026-6-16 11:14:47-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:14:47-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:14:47-debug: asset-db:refresh-all-database (184ms)
+2026-6-16 11:14:47-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-16 11:14:47-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-16 11:14:57-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-16 11:15:11-debug: refresh db internal success
+2026-6-16 11:15:12-debug: refresh db assets success
+2026-6-16 11:15:12-debug: refresh db super-packager success
+2026-6-16 11:15:12-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:15:12-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:15:12-debug: asset-db:refresh-all-database (167ms)
+2026-6-16 11:15:12-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-16 11:15:12-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-16 11:15:15-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-16 11:15:42-debug: refresh db internal success
+2026-6-16 11:15:42-debug: refresh db assets success
+2026-6-16 11:15:42-debug: refresh db super-packager success
+2026-6-16 11:15:42-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:15:42-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:15:42-debug: asset-db:refresh-all-database (162ms)
+2026-6-16 11:15:42-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-16 11:15:42-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-16 11:16:22-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-16 11:16:22-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (36ms)
+2026-6-16 11:16:23-debug: Query all assets info in project
+2026-6-16 11:16:23-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-16 11:16:23-debug: Skip compress image, progress: 0%
+2026-6-16 11:16:23-debug: Init all bundles start..., progress: 0%
+2026-6-16 11:16:23-debug: Num of bundles: 3..., progress: 0%
+2026-6-16 11:16:23-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-16 11:16:23-debug: Init bundle root assets start..., progress: 0%
+2026-6-16 11:16:23-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-16 11:16:23-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-16 11:16:23-debug: Init bundle root assets success..., progress: 0%
+2026-6-16 11:16:23-debug:   Number of all scenes: 3
+2026-6-16 11:16:23-debug:   Number of all scripts: 107
+2026-6-16 11:16:23-debug:   Number of other assets: 993
+2026-6-16 11:16:23-debug: // ---- build task 查询 Asset Bundle ---- (12ms)
+2026-6-16 11:16:23-log: run build task 查询 Asset Bundle success in 12 ms√, progress: 5%
+2026-6-16 11:16:23-debug: [Build Memory track]: 查询 Asset Bundle start:252.12MB, end 251.84MB, increase: -291.67KB
+2026-6-16 11:16:23-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-16 11:16:23-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-16 11:16:23-debug: // ---- build task 查询 Asset Bundle ---- (4ms)
+2026-6-16 11:16:23-log: run build task 查询 Asset Bundle success in 4 ms√, progress: 10%
+2026-6-16 11:16:23-debug: [Build Memory track]: 查询 Asset Bundle start:251.87MB, end 252.07MB, increase: 207.86KB
+2026-6-16 11:16:23-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-16 11:16:23-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-16 11:16:23-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (1ms)
+2026-6-16 11:16:23-log: run build task 整理部分构建选项内数据到 settings.json success in 1 ms√, progress: 12%
+2026-6-16 11:16:23-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:252.11MB, end 252.14MB, increase: 29.83KB
+2026-6-16 11:16:23-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-16 11:16:23-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-16 11:16:23-debug: [Build Memory track]: 填充脚本数据到 settings.json start:252.17MB, end 252.20MB, increase: 28.99KB
+2026-6-16 11:16:23-debug: // ---- build task 填充脚本数据到 settings.json ---- (1ms)
+2026-6-16 11:16:23-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-16 11:16:23-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-16 11:16:23-log: run build task 填充脚本数据到 settings.json success in 1 ms√, progress: 13%
+2026-6-16 11:16:23-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (7ms)
+2026-6-16 11:16:23-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:252.23MB, end 252.31MB, increase: 77.61KB
+2026-6-16 11:16:23-log: run build task 整理部分构建选项内数据到 settings.json success in 7 ms√, progress: 15%
+2026-6-16 11:17:01-debug: refresh db internal success
+2026-6-16 11:17:01-debug: refresh db assets success
+2026-6-16 11:17:01-debug: refresh db super-packager success
+2026-6-16 11:17:01-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:17:01-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:17:01-debug: asset-db:refresh-all-database (178ms)
+2026-6-16 11:17:01-debug: asset-db:worker-effect-data-processing (3ms)
+2026-6-16 11:17:01-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-6-16 11:17:40-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-16 11:18:15-debug: refresh db internal success
+2026-6-16 11:18:15-debug: refresh db assets success
+2026-6-16 11:18:15-debug: refresh db super-packager success
+2026-6-16 11:18:15-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:18:15-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:18:15-debug: asset-db:refresh-all-database (176ms)
+2026-6-16 11:18:15-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-16 11:18:15-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-16 11:18:33-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-16 11:19:01-debug: refresh db internal success
+2026-6-16 11:19:01-debug: refresh db assets success
+2026-6-16 11:19:01-debug: refresh db super-packager success
+2026-6-16 11:19:01-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:19:01-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:19:01-debug: asset-db:refresh-all-database (168ms)
+2026-6-16 11:19:01-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-16 11:19:01-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-6-16 11:19:08-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-16 11:19:39-debug: refresh db internal success
+2026-6-16 11:19:39-debug: refresh db assets success
+2026-6-16 11:19:39-debug: refresh db super-packager success
+2026-6-16 11:19:39-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:19:39-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:19:39-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-16 11:19:39-debug: asset-db:refresh-all-database (166ms)
+2026-6-16 11:19:39-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-16 11:19:54-debug: refresh db internal success
+2026-6-16 11:19:54-debug: refresh db assets success
+2026-6-16 11:19:54-debug: refresh db super-packager success
+2026-6-16 11:19:54-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:19:54-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:19:54-debug: asset-db:refresh-all-database (163ms)
+2026-6-16 11:20:05-debug: refresh db internal success
+2026-6-16 11:20:05-debug: refresh db assets success
+2026-6-16 11:20:05-debug: refresh db super-packager success
+2026-6-16 11:20:05-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:20:05-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:20:05-debug: asset-db:refresh-all-database (242ms)
+2026-6-16 11:20:05-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-16 11:20:05-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-16 11:20:21-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-16 11:20:21-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (92ms)
+2026-6-16 11:20:22-debug: Query all assets info in project
+2026-6-16 11:20:22-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-16 11:20:22-debug: Skip compress image, progress: 0%
+2026-6-16 11:20:22-debug: Init all bundles start..., progress: 0%
+2026-6-16 11:20:22-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-16 11:20:22-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-16 11:20:22-debug: Init bundle root assets start..., progress: 0%
+2026-6-16 11:20:22-debug: Num of bundles: 3..., progress: 0%
+2026-6-16 11:20:22-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-16 11:20:22-debug:   Number of all scripts: 107
+2026-6-16 11:20:22-debug: Init bundle root assets success..., progress: 0%
+2026-6-16 11:20:22-debug:   Number of other assets: 993
+2026-6-16 11:20:22-debug:   Number of all scenes: 3
+2026-6-16 11:20:22-debug: // ---- build task 查询 Asset Bundle ---- (19ms)
+2026-6-16 11:20:22-log: run build task 查询 Asset Bundle success in 19 ms√, progress: 5%
+2026-6-16 11:20:22-debug: [Build Memory track]: 查询 Asset Bundle start:244.18MB, end 244.72MB, increase: 559.70KB
+2026-6-16 11:20:22-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-16 11:20:22-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-16 11:20:22-debug: // ---- build task 查询 Asset Bundle ---- (4ms)
+2026-6-16 11:20:22-log: run build task 查询 Asset Bundle success in 4 ms√, progress: 10%
+2026-6-16 11:20:22-debug: [Build Memory track]: 查询 Asset Bundle start:244.76MB, end 244.25MB, increase: -514.95KB
+2026-6-16 11:20:22-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-16 11:20:22-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-16 11:20:22-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (1ms)
+2026-6-16 11:20:22-log: run build task 整理部分构建选项内数据到 settings.json success in 1 ms√, progress: 12%
+2026-6-16 11:20:22-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:244.29MB, end 244.32MB, increase: 28.66KB
+2026-6-16 11:20:22-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-16 11:20:22-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-16 11:20:22-debug: // ---- build task 填充脚本数据到 settings.json ---- (1ms)
+2026-6-16 11:20:22-debug: [Build Memory track]: 填充脚本数据到 settings.json start:244.35MB, end 244.38MB, increase: 30.09KB
+2026-6-16 11:20:22-log: run build task 填充脚本数据到 settings.json success in 1 ms√, progress: 13%
+2026-6-16 11:20:22-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-16 11:20:22-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-16 11:20:22-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (7ms)
+2026-6-16 11:20:22-log: run build task 整理部分构建选项内数据到 settings.json success in 7 ms√, progress: 15%
+2026-6-16 11:20:22-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:244.41MB, end 244.48MB, increase: 70.34KB
+2026-6-16 11:20:22-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-16 11:20:22-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (56ms)
+2026-6-16 11:20:23-debug: Query all assets info in project
+2026-6-16 11:20:23-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-16 11:20:23-debug: Skip compress image, progress: 0%
+2026-6-16 11:20:23-debug: Init all bundles start..., progress: 0%
+2026-6-16 11:20:23-debug: Num of bundles: 3..., progress: 0%
+2026-6-16 11:20:23-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-16 11:20:23-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-16 11:20:23-debug: Init bundle root assets start..., progress: 0%
+2026-6-16 11:20:23-debug:   Number of all scenes: 3
+2026-6-16 11:20:23-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-16 11:20:23-debug:   Number of other assets: 993
+2026-6-16 11:20:23-debug: Init bundle root assets success..., progress: 0%
+2026-6-16 11:20:23-debug:   Number of all scripts: 107
+2026-6-16 11:20:23-debug: // ---- build task 查询 Asset Bundle ---- (15ms)
+2026-6-16 11:20:23-log: run build task 查询 Asset Bundle success in 15 ms√, progress: 5%
+2026-6-16 11:20:23-debug: [Build Memory track]: 查询 Asset Bundle start:246.93MB, end 246.49MB, increase: -458.83KB
+2026-6-16 11:20:23-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-16 11:20:23-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-16 11:20:23-debug: // ---- build task 查询 Asset Bundle ---- (8ms)
+2026-6-16 11:20:23-log: run build task 查询 Asset Bundle success in 8 ms√, progress: 10%
+2026-6-16 11:20:23-debug: [Build Memory track]: 查询 Asset Bundle start:246.52MB, end 246.72MB, increase: 206.66KB
+2026-6-16 11:20:23-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-16 11:20:23-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-16 11:20:23-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-6-16 11:20:23-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-6-16 11:20:23-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:246.76MB, end 246.78MB, increase: 29.50KB
+2026-6-16 11:20:23-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-16 11:20:23-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-16 11:20:23-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-6-16 11:20:23-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-6-16 11:20:23-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-16 11:20:23-debug: [Build Memory track]: 填充脚本数据到 settings.json start:246.82MB, end 246.85MB, increase: 28.04KB
+2026-6-16 11:20:23-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-16 11:20:23-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:246.88MB, end 246.94MB, increase: 66.22KB
+2026-6-16 11:20:23-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (7ms)
+2026-6-16 11:20:23-log: run build task 整理部分构建选项内数据到 settings.json success in 7 ms√, progress: 15%
+2026-6-16 11:20:46-warn: 为更好地打开脚本，请在 {preferences} -> {program} -> {scriptEditor} 里配置打开脚本的应用程序
+2026-6-16 11:21:38-debug: refresh db internal success
+2026-6-16 11:21:38-debug: refresh db assets success
+2026-6-16 11:21:38-debug: refresh db super-packager success
+2026-6-16 11:21:38-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:21:38-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:21:38-debug: asset-db:refresh-all-database (169ms)
+2026-6-16 11:21:38-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-16 11:21:38-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-16 11:28:43-debug: refresh db internal success
+2026-6-16 11:28:43-debug: refresh db assets success
+2026-6-16 11:28:43-debug: refresh db super-packager success
+2026-6-16 11:28:43-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:28:43-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:28:43-debug: asset-db:refresh-all-database (271ms)
+2026-6-16 11:28:43-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-16 11:28:43-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-16 11:28:48-debug: refresh db internal success
+2026-6-16 11:28:48-debug: refresh db assets success
+2026-6-16 11:28:48-debug: refresh db super-packager success
+2026-6-16 11:28:48-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:28:48-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:28:48-debug: asset-db:refresh-all-database (196ms)
+2026-6-16 11:28:48-debug: asset-db:worker-effect-data-processing (3ms)
+2026-6-16 11:28:48-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-6-16 11:29:14-debug: refresh db internal success
+2026-6-16 11:29:14-debug: refresh db assets success
+2026-6-16 11:29:14-debug: refresh db super-packager success
+2026-6-16 11:29:14-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:29:14-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:29:14-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-16 11:29:14-debug: asset-db:refresh-all-database (184ms)
+2026-6-16 11:29:14-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-6-16 11:29:38-debug: refresh db internal success
+2026-6-16 11:29:38-debug: refresh db assets success
+2026-6-16 11:29:38-debug: refresh db super-packager success
+2026-6-16 11:29:38-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:29:38-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:29:38-debug: asset-db:refresh-all-database (322ms)
+2026-6-16 11:29:38-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-16 11:29:38-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-16 11:29:43-debug: refresh db internal success
+2026-6-16 11:29:43-debug: refresh db assets success
+2026-6-16 11:29:43-debug: refresh db super-packager success
+2026-6-16 11:29:43-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:29:43-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:29:43-debug: asset-db:refresh-all-database (176ms)
+2026-6-16 11:29:43-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-16 11:29:43-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-16 11:30:44-debug: refresh db internal success
+2026-6-16 11:30:44-debug: refresh db assets success
+2026-6-16 11:30:44-debug: refresh db super-packager success
+2026-6-16 11:30:44-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:30:44-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:30:44-debug: asset-db:refresh-all-database (251ms)
+2026-6-16 11:30:44-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-16 11:30:44-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-16 11:35:01-debug: refresh db internal success
+2026-6-16 11:35:01-debug: refresh db assets success
+2026-6-16 11:35:01-debug: refresh db super-packager success
+2026-6-16 11:35:01-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-16 11:35:01-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-16 11:35:01-debug: asset-db:refresh-all-database (195ms)
+2026-6-16 11:35:01-debug: asset-db:worker-effect-data-processing (3ms)
+2026-6-16 11:35:01-debug: asset-db-hook-engine-extends-afterRefresh (4ms)
