@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Tween, Vec3, Player, EventManager, EffectEnum, EventType, SoundEnum, JumpManager, CameraMove, UnityUpComponent, EffectManager, AudioManager, _dec, _dec2, _class, _class2, _descriptor, _crd, ccclass, property, ArmsUp;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Tween, Vec3, Player, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, JumpManager, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, _dec, _dec2, _class, _class2, _descriptor, _crd, ccclass, property, ArmsUp;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -27,6 +27,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfEventType(extras) {
     _reporterNs.report("EventType", "../../Base/EnumList", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfLayerEnum(extras) {
+    _reporterNs.report("LayerEnum", "../../Base/EnumList", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfSoundEnum(extras) {
@@ -57,6 +61,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("AudioManager", "../../Base/AudioManager", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfLayerManager(extras) {
+    _reporterNs.report("LayerManager", "../../Base/LayerManager", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -74,6 +82,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_4) {
       EffectEnum = _unresolved_4.EffectEnum;
       EventType = _unresolved_4.EventType;
+      LayerEnum = _unresolved_4.LayerEnum;
       SoundEnum = _unresolved_4.SoundEnum;
     }, function (_unresolved_5) {
       JumpManager = _unresolved_5.JumpManager;
@@ -85,6 +94,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       EffectManager = _unresolved_8.EffectManager;
     }, function (_unresolved_9) {
       AudioManager = _unresolved_9.default;
+    }, function (_unresolved_10) {
+      LayerManager = _unresolved_10.default;
     }],
     execute: function () {
       _crd = true;
@@ -126,30 +137,48 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         armsUPEvent(armsInfo) {
+          var _armsInfo$fbx;
+
           var pos = this.player.node.worldPosition;
-          Tween.stopAllByTarget(armsInfo.fbx);
-          (_crd && JumpManager === void 0 ? (_reportPossibleCrUseOfJumpManager({
-            error: Error()
-          }), JumpManager) : JumpManager).instance.jumpCurve(armsInfo.fbx.node, pos, 0.7, 2).onComplete(() => {
-            (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+          var fbxNode = (_armsInfo$fbx = armsInfo.fbx) == null ? void 0 : _armsInfo$fbx.node;
+
+          if (!fbxNode) {
+            return;
+          }
+
+          var startPos = fbxNode.worldPosition.clone();
+          this.scheduleOnce(() => {
+            Tween.stopAllByTarget(fbxNode);
+            (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
               error: Error()
-            }), CameraMove) : CameraMove).instance.Shake2(0.5);
-            armsInfo.fbx.node.active = false;
-            (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+            }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
               error: Error()
-            }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            }), LayerEnum) : LayerEnum).Layer_1_Ground).addChild(fbxNode);
+            fbxNode.setWorldPosition(startPos);
+            fbxNode.active = true;
+            (_crd && JumpManager === void 0 ? (_reportPossibleCrUseOfJumpManager({
               error: Error()
-            }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
-            this.player.upArms(armsInfo.armsType);
-            (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
-              error: Error()
-            }), EffectManager) : EffectManager).instance.addShowEffect(pos, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
-              error: Error()
-            }), EffectEnum) : EffectEnum).up, 3);
-            (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
-              error: Error()
-            }), CameraMove) : CameraMove).instance.Shake1(1.5);
-          });
+            }), JumpManager) : JumpManager).instance.jumpCurve(fbxNode, pos, 0.7, 2).onComplete(() => {
+              (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+                error: Error()
+              }), CameraMove) : CameraMove).instance.Shake2(0.5);
+              fbxNode.active = false;
+              (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+                error: Error()
+              }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+                error: Error()
+              }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
+              this.player.upArms(armsInfo.armsType);
+              (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
+                error: Error()
+              }), EffectManager) : EffectManager).instance.addShowEffect(pos, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
+                error: Error()
+              }), EffectEnum) : EffectEnum).up, 3);
+              (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+                error: Error()
+              }), CameraMove) : CameraMove).instance.Shake1(1.5);
+            });
+          }, 0);
         }
 
         addMonster(monster) {

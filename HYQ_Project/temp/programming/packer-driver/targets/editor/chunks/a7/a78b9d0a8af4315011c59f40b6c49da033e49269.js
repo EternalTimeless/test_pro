@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Component, Vec3, BulletEnum, PoolEnum, PoolManager, EffectManager, MoveDrive, MoveModEnum, COLLIDE_TYPE, BulletMonsterCollisionManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _crd, ccclass, property, BulletBattle3D;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Component, Vec3, BulletEnum, PoolEnum, PoolManager, EffectManager, MoveDrive, MoveModEnum, COLLIDE_TYPE, BulletMonsterCollisionManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _class3, _crd, ccclass, property, BulletBattle3D;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -117,7 +117,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           error: Error()
         }), MoveDrive) : MoveDrive,
         tooltip: '移动驱动组件'
-      }), _dec(_class = (_class2 = class BulletBattle3D extends Component {
+      }), _dec(_class = (_class2 = (_class3 = class BulletBattle3D extends Component {
         constructor(...args) {
           super(...args);
 
@@ -247,15 +247,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           battle.Hit(this._damage);
           battle.repelBattleTarget(this.node, this._repelPower);
           this._attackCount--;
-          this.temp.set(this.node.worldPosition);
-          this.temp.z -= 2;
-          this.temp.y += 0.5;
-          (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
-            error: Error()
-          }), EffectManager) : EffectManager).instance.addShowEffect(this.temp, battle.hitEffect, 2);
+          const now = Date.now() * 0.001;
+
+          if (now - BulletBattle3D._effectWindowStart >= BulletBattle3D._hitEffectWindow) {
+            BulletBattle3D._effectWindowStart = now;
+            BulletBattle3D._effectCountInWindow = 0;
+          }
+
+          if (BulletBattle3D._effectCountInWindow < BulletBattle3D._maxHitEffectPerWindow) {
+            BulletBattle3D._effectCountInWindow++;
+            this.temp.set(this.node.worldPosition);
+            this.temp.z -= 2;
+            this.temp.y += 0.5;
+            (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
+              error: Error()
+            }), EffectManager) : EffectManager).instance.addShowEffect(this.temp, battle.hitEffect, 2);
+          }
         }
 
-      }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "bulletEnum", [_dec2], {
+      }, _class3._effectWindowStart = 0, _class3._effectCountInWindow = 0, _class3._hitEffectWindow = 0.05, _class3._maxHitEffectPerWindow = 3, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "bulletEnum", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,

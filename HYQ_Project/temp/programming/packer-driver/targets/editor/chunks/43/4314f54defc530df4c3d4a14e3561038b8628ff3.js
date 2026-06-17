@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, instantiate, PoolEnum, PrefabsEnum, PoolManager, PrefabsManager, Singleton, BulletBattle3D, BulletBattle2D, BulletManager, _crd;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, PoolEnum, PrefabsEnum, PoolManager, PrefabsManager, Singleton, BulletBattle3D, BulletBattle2D, BulletManager, _crd;
 
   function _reportPossibleCrUseOfBulletEnum(extras) {
     _reporterNs.report("BulletEnum", "db://assets/Script/Base/EnumList", _context.meta, extras);
@@ -44,7 +44,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       _cclegacy = _cc.cclegacy;
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
-      instantiate = _cc.instantiate;
     }, function (_unresolved_2) {
       PoolEnum = _unresolved_2.PoolEnum;
       PrefabsEnum = _unresolved_2.PrefabsEnum;
@@ -64,7 +63,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "77055F7mqxGTKxT5Thp+szf", "BulletManager", undefined);
 
-      __checkObsolete__(['ccenum', 'instantiate', 'math', 'Prefab']);
+      __checkObsolete__(['math']);
 
       _export("default", BulletManager = class BulletManager extends (_crd && Singleton === void 0 ? (_reportPossibleCrUseOfSingleton({
         error: Error()
@@ -90,12 +89,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), PoolEnum) : PoolEnum).bullet + bulletEnum);
 
           if (!bullet) {
-            let pre = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
+            let node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
               error: Error()
             }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
               error: Error()
             }), PrefabsEnum) : PrefabsEnum).bullet, bulletEnum);
-            let node = instantiate(pre);
             bullet = node.getComponent(_crd && BulletBattle2D === void 0 ? (_reportPossibleCrUseOfBulletBattle2D({
               error: Error()
             }), BulletBattle2D) : BulletBattle2D);
@@ -123,12 +121,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), PoolEnum) : PoolEnum).bullet + bulletEnum);
 
           if (!bullet) {
-            let pre = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
+            let node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
               error: Error()
             }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
               error: Error()
             }), PrefabsEnum) : PrefabsEnum).bullet, bulletEnum);
-            let node = instantiate(pre);
             bullet = node.getComponent(_crd && BulletBattle3D === void 0 ? (_reportPossibleCrUseOfBulletBattle3D({
               error: Error()
             }), BulletBattle3D) : BulletBattle3D);

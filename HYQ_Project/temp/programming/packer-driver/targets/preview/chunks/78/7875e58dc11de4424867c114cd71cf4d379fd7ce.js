@@ -172,25 +172,42 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         // }
 
 
-        attackEvent(num) {
+        get visualBulletCount() {
+          return 1 + this.attackNum;
+        }
+
+        attackEvent(num, visualBulletCount, damageScale) {
           var _this$effect;
+
+          if (visualBulletCount === void 0) {
+            visualBulletCount = this.visualBulletCount;
+          }
+
+          if (damageScale === void 0) {
+            damageScale = 1;
+          }
+
+          if (visualBulletCount <= 0) {
+            return;
+          }
 
           (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
             error: Error()
           }), AudioManager) : AudioManager).inst.playOneShot(Role.soundType, 0.3, 0.08);
           console.log("攻击", num);
           var pos = this.shoot.worldPosition;
+          var damage = Role.power * damageScale;
           var bullet = (_crd && BulletManager === void 0 ? (_reportPossibleCrUseOfBulletManager({
             error: Error()
-          }), BulletManager) : BulletManager).instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, Role.power, Role.repelPower);
+          }), BulletManager) : BulletManager).instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
           Role.bulletLayer.addChild(bullet.node);
           bullet.node.setWorldPosition(pos);
           (_this$effect = this.effect) == null || _this$effect.play();
 
-          for (var i = 0; i < this.attackNum; i++) {
+          for (var i = 1; i < visualBulletCount; i++) {
             var _bullet = (_crd && BulletManager === void 0 ? (_reportPossibleCrUseOfBulletManager({
               error: Error()
-            }), BulletManager) : BulletManager).instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, Role.power, Role.repelPower);
+            }), BulletManager) : BulletManager).instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
 
             Role.bulletLayer.addChild(_bullet.node);
 

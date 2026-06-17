@@ -115,6 +115,11 @@ export default class BulletBattle3D extends Component {
 
     public temp: Vec3 = new Vec3();
 
+    private static _effectWindowStart: number = 0;
+    private static _effectCountInWindow: number = 0;
+    private static readonly _hitEffectWindow: number = 0.05;
+    private static readonly _maxHitEffectPerWindow: number = 3;
+
     /**
      * 碰撞命中处理（迁移自原 _startCollide）
      * 由 BulletMonsterCollisionManager 在检测到碰撞时调用
@@ -131,9 +136,17 @@ export default class BulletBattle3D extends Component {
         battle.Hit(this._damage);
         battle.repelBattleTarget(this.node, this._repelPower);
         this._attackCount--;
-        this.temp.set(this.node.worldPosition);
-        this.temp.z -= 2;
-        this.temp.y += 0.5;
-        EffectManager.instance.addShowEffect(this.temp, battle.hitEffect, 2);
+        const now = Date.now() * 0.001;
+        if (now - BulletBattle3D._effectWindowStart >= BulletBattle3D._hitEffectWindow) {
+            BulletBattle3D._effectWindowStart = now;
+            BulletBattle3D._effectCountInWindow = 0;
+        }
+        if (BulletBattle3D._effectCountInWindow < BulletBattle3D._maxHitEffectPerWindow) {
+            BulletBattle3D._effectCountInWindow++;
+            this.temp.set(this.node.worldPosition);
+            this.temp.z -= 2;
+            this.temp.y += 0.5;
+            EffectManager.instance.addShowEffect(this.temp, battle.hitEffect, 2);
+        }
     }
 }

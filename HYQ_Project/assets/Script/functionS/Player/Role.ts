@@ -69,18 +69,26 @@ export class Role extends Component {
     //     }
     // }
 
-    public attackEvent(num: number) {
+    public get visualBulletCount() {
+        return 1 + this.attackNum;
+    }
+
+    public attackEvent(num: number, visualBulletCount: number = this.visualBulletCount, damageScale: number = 1) {
+        if (visualBulletCount <= 0) {
+            return;
+        }
         AudioManager.inst.playOneShot(Role.soundType, 0.3, 0.08);
         console.log("攻击", num);
         const pos = this.shoot.worldPosition;
+        const damage = Role.power * damageScale;
 
-        const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, Role.power, Role.repelPower);
+        const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
         this.effect?.play();
 
-        for (let i = 0; i < this.attackNum; i++) {
-            const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, Role.power, Role.repelPower);
+        for (let i = 1; i < visualBulletCount; i++) {
+            const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
             Role.bulletLayer.addChild(bullet.node);
             bullet.node.setWorldPosition(pos);
             const x = (Math.random() - 0.5) * 2;

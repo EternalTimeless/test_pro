@@ -1,4 +1,4 @@
-import { ccenum, instantiate, math, Prefab } from "cc";
+import { math } from "cc";
 import { BulletEnum, PoolEnum, PrefabsEnum } from "db://assets/Script/Base/EnumList";
 import PoolManager from "db://assets/Script/Base/PoolManager";
 import { PrefabsManager } from "db://assets/Script/Base/PrefabsManager";
@@ -26,8 +26,7 @@ export default class BulletManager extends Singleton {
 
         let bullet = PoolManager.instance.getPool<BulletBattle2D>(PoolEnum.bullet + bulletEnum);
         if (!bullet) {
-            let pre = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.bullet, bulletEnum);
-            let node = instantiate(pre);
+            let node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.bullet, bulletEnum);
             bullet = node.getComponent(BulletBattle2D);
         }
         bullet.setBulletInfo(angle, damage, repelPower);
@@ -47,8 +46,7 @@ export default class BulletManager extends Singleton {
 
         let bullet = PoolManager.instance.getPool<BulletBattle3D>(PoolEnum.bullet + bulletEnum);
         if (!bullet) {
-            let pre = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.bullet, bulletEnum);
-            let node = instantiate(pre);
+            let node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.bullet, bulletEnum);
             bullet = node.getComponent(BulletBattle3D);
         }
         bullet.setBulletInfo(rot, damage, repelPower);
