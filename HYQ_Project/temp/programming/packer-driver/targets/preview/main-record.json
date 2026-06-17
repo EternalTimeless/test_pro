@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 172283653.6585,
+      "mTimestamp": 173731884.9233,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -21470,7 +21470,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Guide/GuideManager.ts": {
       "mTimestamp": {
-        "mtime": 1781512268835.876,
+        "mtime": 1781677957074.1326,
         "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
       },
       "chunkId": "ddf9ec67bc21176ab14fd7bef2d6099af7cab4e3",
@@ -21553,6 +21553,118 @@
               "column": 56
             }
           }
+        },
+        {
+          "value": "../../Base/EnumList",
+          "resolved": "__unresolved_5",
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 60
+            },
+            "end": {
+              "line": 6,
+              "column": 81
+            }
+          }
+        },
+        {
+          "value": "../../Base/PoolManager",
+          "resolved": "__unresolved_6",
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 24
+            },
+            "end": {
+              "line": 7,
+              "column": 48
+            }
+          }
+        },
+        {
+          "value": "../../Base/PrefabsManager",
+          "resolved": "__unresolved_7",
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 31
+            },
+            "end": {
+              "line": 8,
+              "column": 58
+            }
+          }
+        },
+        {
+          "value": "../Player/Role",
+          "resolved": "__unresolved_8",
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 21
+            },
+            "end": {
+              "line": 9,
+              "column": 37
+            }
+          }
+        },
+        {
+          "value": "../Jump/JumpManager",
+          "resolved": "__unresolved_9",
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 28
+            },
+            "end": {
+              "line": 10,
+              "column": 49
+            }
+          }
+        },
+        {
+          "value": "../Effect/EffectManager",
+          "resolved": "__unresolved_10",
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 30
+            },
+            "end": {
+              "line": 11,
+              "column": 55
+            }
+          }
+        },
+        {
+          "value": "../Jump/BezierCurve",
+          "resolved": "__unresolved_11",
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 24
+            },
+            "end": {
+              "line": 12,
+              "column": 45
+            }
+          }
+        },
+        {
+          "value": "../Jump/JumpCurve3D",
+          "resolved": "__unresolved_12",
+          "loc": {
+            "start": {
+              "line": 13,
+              "column": 28
+            },
+            "end": {
+              "line": 13,
+              "column": 49
+            }
+          }
         }
       ],
       "type": "esm",
@@ -21610,6 +21722,62 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/EnumList.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/PoolManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/PrefabsManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Role.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/BezierCurve.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpCurve3D.ts"
           },
           "messages": []
         }
@@ -22121,7 +22289,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpManager.ts": {
       "mTimestamp": {
-        "mtime": 1781231241832.914,
+        "mtime": 1781677518697.7263,
         "uuid": "868d7cc2-b26f-45f0-98e8-77f942063a20"
       },
       "chunkId": "2edb51f2f57b638345a2b9d561f476b67029b574",
@@ -24599,7 +24767,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Player.ts": {
       "mTimestamp": {
-        "mtime": 1781676523790.8635,
+        "mtime": 1781678062433.94,
         "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
       },
       "chunkId": "120cba8f856407335ad8a04347cd4d36bf752a1e",

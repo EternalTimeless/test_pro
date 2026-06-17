@@ -142,17 +142,18 @@ export class Player extends UnityUpComponent {
                 Role.power = 0.5;
                 this.attackSpeed = 10;
                 Role.bulletType = BulletEnum.arrow_3;
-                this.roleType = RoleEnum.dazhuang;
+                const newRoleType = RoleEnum.dazhuang;
+                this.roleType = newRoleType;
                 const count = this.roleList.length;
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
                 for (let i = 0; i < count; i++) {
                     const role = this.roleList[i];
-                    const newRole = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, this.roleType);
-                    this.roleList[i] = newRole.getComponent(Role);
-                    this.node.addChild(newRole);
-                    newRole.setPosition(role.node.position);
+                    const newRole = this.getRoleByType(newRoleType);
+                    this.roleList[i] = newRole;
+                    this.node.addChild(newRole.node);
+                    newRole.node.setPosition(role.node.position);
                     role.node.active = false;
                 }
                 this.upPos();
@@ -161,17 +162,18 @@ export class Player extends UnityUpComponent {
                 Role.power = 0.3;
                 Role.bulletType = BulletEnum.arrow_4;
                 this.attackSpeed = 20;
-                this.roleType = RoleEnum.dazhuangPlus;
+                const newRoleType = RoleEnum.dazhuangPlus;
+                this.roleType = newRoleType;
                 const count = this.roleList.length;
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
                 for (let i = 0; i < count; i++) {
                     const role = this.roleList[i];
-                    const newRole = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, this.roleType);
-                    this.roleList[i] = newRole.getComponent(Role);
-                    this.node.addChild(newRole);
-                    newRole.setPosition(role.node.position);
+                    const newRole = this.getRoleByType(newRoleType);
+                    this.roleList[i] = newRole;
+                    this.node.addChild(newRole.node);
+                    newRole.node.setPosition(role.node.position);
                     role.node.active = false;
                 }
                 this.upPos();
@@ -411,9 +413,16 @@ export class Player extends UnityUpComponent {
     }
 
     private get role() {
-        let role = PoolManager.instance.getPool<Role>(PoolEnum.role + this.roleType);
+        const role = this.getRoleByType(this.roleType);
+        role.hp = 2;
+        role.node.active = true;
+        return role;
+    }
+
+    private getRoleByType(roleType: RoleEnum) {
+        let role = PoolManager.instance.getPool<Role>(PoolEnum.role + roleType);
         if (!role) {
-            const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, this.roleType);
+            const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, roleType);
             role = node.getComponent(Role);
         }
         role.hp = 2;

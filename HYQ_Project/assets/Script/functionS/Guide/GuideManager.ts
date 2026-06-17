@@ -3,7 +3,23 @@ import { GuideLine } from './GuideLine';
 import { Player } from '../Player/Player';
 import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
 import { MonsterCreate } from '../Monster/MonsterCreate';
+import { EffectEnum, PoolEnum, PrefabsEnum, RoleEnum } from '../../Base/EnumList';
+import PoolManager from '../../Base/PoolManager';
+import { PrefabsManager } from '../../Base/PrefabsManager';
+import { Role } from '../Player/Role';
+import { JumpManager } from '../Jump/JumpManager';
+import { EffectManager } from '../Effect/EffectManager';
+import BezierCurve from '../Jump/BezierCurve';
+import { JumpCurve3D } from '../Jump/JumpCurve3D';
 const { ccclass, property } = _decorator;
+
+type WarmupTask = {
+    poolKey: string;
+    prefabType: PrefabsEnum;
+    prefabIndex: number;
+    component?: any;
+    count: number;
+};
 
 @ccclass('GuideManager')
 export class GuideManager extends Component {
@@ -24,11 +40,16 @@ export class GuideManager extends Component {
     private loadingNode: Node = null;
     private loadingProgress: Sprite = null;
     private loadingTime: number = 0;
+    private warmupTasks: WarmupTask[] = [];
+    private warmupTaskIndex: number = 0;
+    private warmupPerFrame: number = 4;
+    private warmupRoot: Node = null;
 
     start() {
         GuideManager.instance = this;
         this.lockGameplay();
         this.initLoadingView();
+        this.initWarmupTasks();
     }
 
     update(dt: number) {
@@ -42,6 +63,7 @@ export class GuideManager extends Component {
         }
 
         this.loadingTime += dt;
+        this.runWarmup();
         const progress = this.loadingDuration <= 0 ? 1 : Math.min(1, this.loadingTime / this.loadingDuration);
         if (this.loadingProgress) {
             this.loadingProgress.fillRange = progress;
@@ -81,6 +103,48 @@ export class GuideManager extends Component {
             this.loadingProgress.fillRange = 0;
         }
         this.loadingTime = 0;
+    }
+
+    private initWarmupTasks() {
+        if (!PrefabsManager.instance) {
+            return;
+        }
+        this.warmupRoot = new Node("WarmupPool");
+        this.warmupRoot.active = false;
+        this.node.addChild(this.warmupRoot);
+
+        JumpManager.instance;
+        EffectManager.instance;
+        PoolManager.instance.setPool(PoolEnum.JumpSequence + BezierCurve, new BezierCurve());
+        PoolManager.instance.setPool(PoolEnum.JumpSequence + JumpCurve3D, new JumpCurve3D());
+
+        this.warmupTasks = [
+            { poolKey: PoolEnum.role + RoleEnum.underling, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.underling, component: Role, count: 40 },
+            { poolKey: PoolEnum.role + RoleEnum.dazhuang, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.dazhuang, component: Role, count: 40 },
+            { poolKey: PoolEnum.role + RoleEnum.dazhuangPlus, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.dazhuangPlus, component: Role, count: 40 },
+            { poolKey: PoolEnum.effect + EffectEnum.up, prefabType: PrefabsEnum.effect, prefabIndex: EffectEnum.up, count: 6 },
+            { poolKey: PoolEnum.effect + EffectEnum.door, prefabType: PrefabsEnum.effect, prefabIndex: EffectEnum.door, count: 6 },
+        ];
+        this.warmupTaskIndex = 0;
+    }
+
+    private runWarmup() {
+        if (!this.warmupRoot) {
+            return;
+        }
+        let count = this.warmupPerFrame;
+        while (count > 0 && this.warmupTaskIndex < this.warmupTasks.length) {
+            const task = this.warmupTasks[this.warmupTaskIndex];
+            const node = PrefabsManager.instance.GetPrefabsIns(task.prefabType, task.prefabIndex);
+            node.active = false;
+            this.warmupRoot.addChild(node);
+            PoolManager.instance.setPool(task.poolKey, task.component ? node.getComponent(task.component) : node);
+            task.count--;
+            count--;
+            if (task.count <= 0) {
+                this.warmupTaskIndex++;
+            }
+        }
     }
 
     private findNodeByName(root: Node, name: string): Node | null {

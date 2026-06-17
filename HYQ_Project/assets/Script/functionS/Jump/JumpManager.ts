@@ -163,7 +163,6 @@ export class JumpManager extends Singleton {
                 : new Float32Array([p.x, p.y, p.z])
         );
         const allPoints: Vector[] = [startVec, ...pointVecs];
-        console.log("allPoints", allPoints);
         return this.bezierCurve(flyNode, allPoints, jumpSpeed);
     }
 

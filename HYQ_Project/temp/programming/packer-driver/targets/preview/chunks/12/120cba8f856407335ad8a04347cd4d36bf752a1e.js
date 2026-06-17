@@ -292,9 +292,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), Role) : Role).bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
                 error: Error()
               }), BulletEnum) : BulletEnum).arrow_3;
-              this.roleType = (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
+              var newRoleType = (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
                 error: Error()
               }), RoleEnum) : RoleEnum).dazhuang;
+              this.roleType = newRoleType;
               var count = this.roleList.length;
               (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
                 error: Error()
@@ -308,16 +309,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
               for (var i = 0; i < count; i++) {
                 var role = this.roleList[i];
-                var newRole = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
-                  error: Error()
-                }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
-                  error: Error()
-                }), PrefabsEnum) : PrefabsEnum).hero, this.roleType);
-                this.roleList[i] = newRole.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                  error: Error()
-                }), Role) : Role);
-                this.node.addChild(newRole);
-                newRole.setPosition(role.node.position);
+                var newRole = this.getRoleByType(newRoleType);
+                this.roleList[i] = newRole;
+                this.node.addChild(newRole.node);
+                newRole.node.setPosition(role.node.position);
                 role.node.active = false;
               }
 
@@ -337,9 +332,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                   error: Error()
                 }), BulletEnum) : BulletEnum).arrow_4;
                 this.attackSpeed = 20;
-                this.roleType = (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
+                var _newRoleType = (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
                   error: Error()
                 }), RoleEnum) : RoleEnum).dazhuangPlus;
+                this.roleType = _newRoleType;
                 var _count = this.roleList.length;
                 (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
                   error: Error()
@@ -354,18 +350,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 for (var _i = 0; _i < _count; _i++) {
                   var _role = this.roleList[_i];
 
-                  var _newRole = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
-                    error: Error()
-                  }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
-                    error: Error()
-                  }), PrefabsEnum) : PrefabsEnum).hero, this.roleType);
+                  var _newRole = this.getRoleByType(_newRoleType);
 
-                  this.roleList[_i] = _newRole.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                    error: Error()
-                  }), Role) : Role);
-                  this.node.addChild(_newRole);
+                  this.roleList[_i] = _newRole;
+                  this.node.addChild(_newRole.node);
 
-                  _newRole.setPosition(_role.node.position);
+                  _newRole.node.setPosition(_role.node.position);
 
                   _role.node.active = false;
                 }
@@ -694,18 +684,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         get role() {
+          var role = this.getRoleByType(this.roleType);
+          role.hp = 2;
+          role.node.active = true;
+          return role;
+        }
+
+        getRoleByType(roleType) {
           var role = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
             error: Error()
           }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
             error: Error()
-          }), PoolEnum) : PoolEnum).role + this.roleType);
+          }), PoolEnum) : PoolEnum).role + roleType);
 
           if (!role) {
             var node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
               error: Error()
             }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
               error: Error()
-            }), PrefabsEnum) : PrefabsEnum).hero, this.roleType);
+            }), PrefabsEnum) : PrefabsEnum).hero, roleType);
             role = node.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
               error: Error()
             }), Role) : Role);

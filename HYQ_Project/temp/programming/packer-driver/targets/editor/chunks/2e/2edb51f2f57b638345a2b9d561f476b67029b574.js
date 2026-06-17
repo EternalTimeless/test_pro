@@ -290,7 +290,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const startVec = is2D ? new Float32Array([startPos.x, startPos.y]) : new Float32Array([startPos.x, startPos.y, startPos.z]);
           const pointVecs = waypoints.map(p => is2D ? new Float32Array([p.x, p.y]) : new Float32Array([p.x, p.y, p.z]));
           const allPoints = [startVec, ...pointVecs];
-          console.log("allPoints", allPoints);
           return this.bezierCurve(flyNode, allPoints, jumpSpeed);
         }
         /**

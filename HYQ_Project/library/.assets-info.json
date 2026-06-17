@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1781676725153.1438,
+      "time": 1781678175250.0676,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1622,7 +1622,7 @@
       "uuid": "3b47f7bf-91d0-40e1-8f86-30832c9f6191"
     },
     "Script\\functionS\\Guide\\GuideManager.ts": {
-      "time": 1781512268835.876,
+      "time": 1781677957074.1326,
       "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
     },
     "Script\\functionS\\Jump\\BezierCurve.ts": {
@@ -1642,7 +1642,7 @@
       "uuid": "b90fa0fb-e6c3-42e0-97be-7bf968ba4459"
     },
     "Script\\functionS\\Jump\\JumpManager.ts": {
-      "time": 1781231241832.914,
+      "time": 1781677518697.7263,
       "uuid": "868d7cc2-b26f-45f0-98e8-77f942063a20"
     },
     "Script\\functionS\\Jump\\JumpParabola.ts": {
@@ -1682,7 +1682,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1781676523790.8635,
+      "time": 1781678062433.94,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
