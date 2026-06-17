@@ -45,6 +45,10 @@ export class Player extends UnityUpComponent {
     public isDie: boolean = false;
     private curCount: number = 1;
 
+    public maxShootingRoleCount: number = 35;
+
+    private shootRoleStartIndex: number = 0;
+
     public isLock: boolean = false;
 
     // public MoveX: number = 8;
@@ -96,8 +100,9 @@ export class Player extends UnityUpComponent {
             //     this.attackEvent(i);
             // }
 
-            for (let i = 0; i < this.roleList.length; i++) {
-                const role = this.roleList[i];
+            const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
+            for (let i = 0; i < shootCount; i++) {
+                const role = this.roleList[(this.shootRoleStartIndex + i) % this.roleList.length];
                 if (!role.attackIN) {
                     role.attackEvent(0);
                     // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
@@ -107,6 +112,9 @@ export class Player extends UnityUpComponent {
                     // animState.speed = animScale;
 
                 }
+            }
+            if (this.roleList.length > 0) {
+                this.shootRoleStartIndex = (this.shootRoleStartIndex + shootCount) % this.roleList.length;
             }
             // this.scheduleOnce(() => {
             //     this.attackIn = false;
