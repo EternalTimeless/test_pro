@@ -72,7 +72,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           for (var i = 0; i < this.targets.length; i++) {
             var t = this.targets[i];
             if (t.isDie) continue;
-            var x = t.node.worldPosition.x;
+            var x = t.hitNode.worldPosition.x;
             if (x < minX) minX = x - t.collisionHalfX;
             if (x > maxX) maxX = x + t.collisionHalfX;
           } // 扩展半个碰撞体宽度作为预过滤容差
@@ -261,7 +261,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              var _z = target.node.worldPosition.z;
+              var _z = target.hitNode.worldPosition.z;
 
               var _bIdx = this._getBucketIdx(_z);
 
@@ -304,8 +304,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                   var _target = bucketTargets[mj];
                   if (_target.isDie) continue; // AABB碰撞判定
 
-                  var tx = _target.node.worldPosition.x;
-                  var tz = _target.node.worldPosition.z;
+                  var tx = _target.hitNode.worldPosition.x;
+                  var tz = _target.hitNode.worldPosition.z;
                   var tHalfX = _target.collisionHalfX;
                   var tHalfZ = _target.collisionHalfZ;
                   var dx = bx - tx;

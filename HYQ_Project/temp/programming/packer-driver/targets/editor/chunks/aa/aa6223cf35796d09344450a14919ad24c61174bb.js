@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, instantiate, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -92,6 +92,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCBoolean = _cc.CCBoolean;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
+      instantiate = _cc.instantiate;
       Label = _cc.Label;
       MeshRenderer = _cc.MeshRenderer;
       Node = _cc.Node;
@@ -136,7 +137,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "4c579+CEFxDCr/XI7aDRdSS", "PropArms", undefined);
 
-      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Color', 'Component', 'Label', 'MeshRenderer', 'Node', 'Tween', 'tween', 'v3', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Color', 'Component', 'instantiate', 'Label', 'MeshRenderer', 'Node', 'Tween', 'tween', 'v3', 'Vec3']);
 
       ({
         ccclass,
@@ -258,7 +259,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
       })), _class2)) || _class));
 
-      _export("PropArms", PropArms = (_dec11 = ccclass('PropArms'), _dec12 = property(ArmsInfo), _dec13 = property(Label), _dec14 = property(Vec3), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCFloat), _dec18 = property(CCFloat), _dec19 = property(CCFloat), _dec20 = property(Node), _dec21 = property(Vec3), _dec22 = property(Node), _dec23 = property(CCFloat), _dec24 = property(CCFloat), _dec11(_class4 = (_class5 = class PropArms extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
+      _export("PropArms", PropArms = (_dec11 = ccclass('PropArms'), _dec12 = property(ArmsInfo), _dec13 = property(Label), _dec14 = property(Vec3), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCFloat), _dec18 = property(CCFloat), _dec19 = property(CCFloat), _dec20 = property(Node), _dec21 = property({
+        type: CCInteger,
+        displayName: 'Lalian节点数量(0=全部)'
+      }), _dec22 = property({
+        type: CCFloat,
+        displayName: 'Lalian节点Z间距'
+      }), _dec23 = property({
+        type: CCFloat,
+        displayName: 'Lalian收拢X'
+      }), _dec24 = property({
+        type: CCInteger,
+        displayName: 'Lalian完成移动数量(0=节点数)'
+      }), _dec25 = property(Vec3), _dec26 = property(Node), _dec27 = property(CCFloat), _dec28 = property(CCFloat), _dec11(_class4 = (_class5 = class PropArms extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
         constructor(...args) {
@@ -270,6 +283,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this._curArms = void 0;
           this.tireList = [];
+          this.lalianNode = null;
+          this.lalianCube = null;
+          this.lalianSegments = [];
+          this.lalianSegmentChildStartPos = [];
+          this.lalianHitIndex = 0;
+          this.lalianSegmentHitStep = 0;
+          this.lalianCubeStartScale = new Vec3(1, 1, 1);
+          this.lalianAnimating = false;
+          this.lalianFinished = false;
+          this.hasLalian = false;
           this._level = 0;
           this._isShake = false;
           this._initialTireCount = 0;
@@ -300,13 +323,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "wallNode", _descriptor18, this);
 
-          _initializerDefineProperty(this, "jumpWallPos", _descriptor19, this);
+          _initializerDefineProperty(this, "lalianNodeCount", _descriptor19, this);
 
-          _initializerDefineProperty(this, "wallEffect", _descriptor20, this);
+          _initializerDefineProperty(this, "lalianNodeSpacingZ", _descriptor20, this);
 
-          _initializerDefineProperty(this, "speed", _descriptor21, this);
+          _initializerDefineProperty(this, "lalianCloseX", _descriptor21, this);
 
-          _initializerDefineProperty(this, "h", _descriptor22, this);
+          _initializerDefineProperty(this, "lalianMoveCount", _descriptor22, this);
+
+          _initializerDefineProperty(this, "jumpWallPos", _descriptor23, this);
+
+          _initializerDefineProperty(this, "wallEffect", _descriptor24, this);
+
+          _initializerDefineProperty(this, "speed", _descriptor25, this);
+
+          _initializerDefineProperty(this, "h", _descriptor26, this);
 
           this._time = 0;
           this.isWallH = false;
@@ -319,8 +350,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         // @property(Node)
         // public effect_ss: Node;
+        get hitNode() {
+          if (this.hasLalian && this.lalianCube) {
+            return this.lalianCube;
+          }
+
+          return super.hitNode;
+        }
+
         damage(power) {
-          // 轮胎销毁不受_isShake阻塞
+          if (this.hasLalian) {
+            this.playLalianHit();
+            return;
+          } // 轮胎销毁不受_isShake阻塞
+
+
           const hpRatio = this.curHp / this.MaxHp;
           const shouldRemain = Math.max(0, Math.ceil(hpRatio * this._initialTireCount));
 
@@ -528,8 +572,167 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         /** 销毁一个轮胎：被销毁轮胎做果冻缩放→消失，剩余轮胎弹跳→下落 */
 
 
+        playLalianHit() {
+          var _this$hpLabel;
+
+          if (this.lalianAnimating || this.lalianFinished) {
+            this.curHp = Math.max(1, this.curHp);
+            return;
+          }
+
+          if (!this.lalianSegments.length) {
+            this.finishLalian();
+            return;
+          }
+
+          const segment = this.lalianSegments[this.lalianHitIndex];
+          const startPosList = this.lalianSegmentChildStartPos[this.lalianHitIndex];
+
+          if (!segment || !startPosList) {
+            this.finishLalian();
+            return;
+          }
+
+          this.lalianAnimating = true;
+          (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+            error: Error()
+          }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            error: Error()
+          }), SoundEnum) : SoundEnum).Sound_tire_hit, 0.4, 0.08);
+
+          if ((_this$hpLabel = this.hpLabel) != null && _this$hpLabel.node) {
+            (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
+              error: Error()
+            }), TweenTool) : TweenTool).scaleShake(this.hpLabel.node);
+          }
+
+          this.flashRed();
+          const duration = 0.12 * this.animScale;
+          const progress = this.lalianSegmentHitStep === 0 ? 0.5 : 1;
+
+          for (let i = 0; i < segment.children.length; i++) {
+            const part = segment.children[i];
+            const startPos = startPosList[i];
+
+            if (!part || !startPos) {
+              continue;
+            }
+
+            let targetX = startPos.x;
+
+            if (Math.abs(startPos.x) > this.lalianCloseX) {
+              const closeX = startPos.x > 0 ? this.lalianCloseX : -this.lalianCloseX;
+              targetX = startPos.x + (closeX - startPos.x) * progress;
+            }
+
+            Tween.stopAllByTarget(part);
+            tween(part).to(duration, {
+              position: v3(targetX, startPos.y, startPos.z)
+            }, {
+              easing: 'cubicOut'
+            }).start();
+          }
+
+          const segmentClosed = progress >= 1;
+
+          if (segmentClosed) {
+            this.lalianHitIndex++;
+            this.lalianSegmentHitStep = 0;
+          } else {
+            this.lalianSegmentHitStep++;
+          }
+
+          const remain = Math.max(0, this.lalianSegments.length - this.lalianHitIndex);
+          this.curHp = Math.max(1, remain);
+
+          if (this.hpLabel) {
+            this.hpLabel.string = Math.ceil(remain + (this.lalianSegmentHitStep > 0 ? 0.5 : 0)).toString();
+          }
+
+          const nextSegment = this.lalianSegments[this.lalianHitIndex];
+
+          if (segmentClosed && this.lalianCube && nextSegment) {
+            const cubePos = this.lalianCube.position;
+            Tween.stopAllByTarget(this.lalianCube);
+            tween(this.lalianCube).to(duration, {
+              position: v3(cubePos.x, cubePos.y, nextSegment.position.z)
+            }, {
+              easing: 'cubicOut'
+            }).start();
+          }
+
+          this.scheduleOnce(() => {
+            this.lalianAnimating = false;
+
+            if (segmentClosed && remain <= 0) {
+              this.finishLalian();
+            }
+          }, duration);
+        }
+
+        finishLalian() {
+          if (this.lalianFinished) {
+            return;
+          }
+
+          this.lalianFinished = true;
+          this.lalianAnimating = false;
+          this.curHp = 1;
+          this._isShake = false;
+          this._isStageAlive = false;
+
+          if (this.hpLabel) {
+            this.hpLabel.string = "";
+          }
+
+          (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
+            error: Error()
+          }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.unregisterTarget(this);
+
+          const emitFinish = () => {
+            var _this$_curArms4;
+
+            const armsInfo = (_this$_curArms4 = this._curArms) != null ? _this$_curArms4 : this.createLalianArmsInfo();
+            (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
+              error: Error()
+            }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, armsInfo);
+            this.node.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, armsInfo);
+            this.queueTrySpawnNextStage();
+
+            if (this._disableWaveStageChain) {
+              this.node.active = false;
+            }
+          };
+
+          if (!this.lalianCube) {
+            emitFinish();
+            return;
+          }
+
+          Tween.stopAllByTarget(this.lalianCube);
+          tween(this.lalianCube).to(0.08 * this.animScale, {
+            scale: Vec3.ZERO
+          }, {
+            easing: 'sineIn'
+          }).call(() => {
+            this.lalianCube.active = false;
+            this.lalianCube.setScale(this.lalianCubeStartScale);
+            emitFinish();
+          }).start();
+        }
+
+        createLalianArmsInfo() {
+          const armsInfo = new ArmsInfo();
+          armsInfo.moveCount = this.lalianMoveCount > 0 ? this.lalianMoveCount : this.lalianSegments.length;
+          return armsInfo;
+        }
+
         destroyOneTire() {
-          var _this$_curArms4, _this$_curArms5;
+          var _this$_curArms5, _this$_curArms6;
 
           const tire = this.tireList.shift();
           if (!tire) return; // 停止残留缩放动画并重置到原始大小
@@ -619,8 +822,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._setupTireBounce(); // FBX弹跳一下
 
 
-          Tween.stopAllByTarget((_this$_curArms4 = this._curArms) == null || (_this$_curArms4 = _this$_curArms4.fbx) == null ? void 0 : _this$_curArms4.node);
-          const fbxNode = (_this$_curArms5 = this._curArms) == null || (_this$_curArms5 = _this$_curArms5.fbx) == null ? void 0 : _this$_curArms5.node;
+          Tween.stopAllByTarget((_this$_curArms5 = this._curArms) == null || (_this$_curArms5 = _this$_curArms5.fbx) == null ? void 0 : _this$_curArms5.node);
+          const fbxNode = (_this$_curArms6 = this._curArms) == null || (_this$_curArms6 = _this$_curArms6.fbx) == null ? void 0 : _this$_curArms6.node;
           if (!fbxNode) return;
           const delay = 0.05 + this.tireList.length * 0.05;
           const fbxY = fbxNode.y;
@@ -717,11 +920,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         init(count = 0) {
           this._level += count;
 
+          if (this.armsInfoList.length <= 0) {
+            this.initLalianOnly();
+            return;
+          }
+
           if (this._level >= this.armsInfoList.length) {
             this._isStageAlive = false;
             this.node.active = false;
           } else {
-            var _this$_curArms6;
+            var _this$_curArms7;
 
             for (let i = 0; i < this.armsInfoList.length; i++) {
               const fbx = this.armsInfoList[i].fbx;
@@ -733,16 +941,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             this._curArms = this.armsInfoList[this._level];
 
-            if (!((_this$_curArms6 = this._curArms) != null && (_this$_curArms6 = _this$_curArms6.fbx) != null && _this$_curArms6.node)) {
+            if (!((_this$_curArms7 = this._curArms) != null && (_this$_curArms7 = _this$_curArms7.fbx) != null && _this$_curArms7.node)) {
               this._isStageAlive = false;
               return;
             }
 
             this._isStageAlive = true;
+            this.initLalian();
             const tireSpacing = this.tireSpacing;
             const wallHeight = this._curArms.wallHeight;
-            const tireCount = this._curArms.tireCount;
+            const tireCount = this.hasLalian ? 0 : this._curArms.tireCount;
             this.initHp(this._curArms.hp);
+
+            if (this.hasLalian) {
+              this.MaxHp = Math.max(1, this.lalianSegments.length * 2);
+              this.curHp = this.MaxHp;
+            }
+
             this.hpLabel.string = Math.round(this.MaxHp).toString(); // 保存hpLabel原始缩放（用number避免GC），动画期间隐藏
 
             const hpS = this.hpLabel.node.scale;
@@ -763,12 +978,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             this.isWallH = false; // 生成所有轮胎（起始在地底）
 
-            for (let i = 0; i < tireCount; i++) {
-              const tire = this.tire;
-              this.tireList.push(tire);
-              this.node.addChild(tire);
-              tire.setPosition(0, -tireSpacing, 0);
-              if (!i) this.meshFlashDataList[0].meshRender = tire.children[0].children[0].getComponent(MeshRenderer);
+            if (!this.hasLalian) {
+              for (let i = 0; i < tireCount; i++) {
+                const tire = this.tire;
+                this.tireList.push(tire);
+                this.node.addChild(tire);
+                tire.setPosition(0, -tireSpacing, 0);
+                if (!i) this.meshFlashDataList[0].meshRender = tire.children[0].children[0].getComponent(MeshRenderer);
+              }
             }
 
             this._initialTireCount = this.tireList.length; // Phase 1: FBX从地底快速升起
@@ -846,7 +1063,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             } // 计算总动画时长，结束后统一处理
 
 
-            const totalTime = tireStartDelay + (tireCount - 1) * tireInterval + tireRiseTime + 0.05;
+            const totalTime = this.hasLalian ? phase1Delay + phase1RiseTime + 0.05 : tireStartDelay + (tireCount - 1) * tireInterval + tireRiseTime + 0.05;
             this.scheduleOnce(() => {
               this.hpLabel.node.setScale(hplSx, hplSy, hplSz);
               (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
@@ -858,6 +1075,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               this.isWallH = true;
             }, totalTime);
           }
+        }
+
+        initLalianOnly() {// 预留给已废弃/外部兼容的空配置分支，当前版本不再在这里生成拉链逻辑。
         }
 
         get tire() {
@@ -884,6 +1104,99 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           tire.setScale(Vec3.ONE); // Set tire scale to one
 
           return tire;
+        }
+
+        initLalian() {
+          this.lalianNode = this.findNodeByName(this.node, "Lalian");
+          this.lalianCube = null;
+          this.lalianSegments.length = 0;
+          this.lalianSegmentChildStartPos.length = 0;
+          this.lalianHitIndex = 0;
+          this.lalianSegmentHitStep = 0;
+          this.lalianAnimating = false;
+          this.lalianFinished = false;
+          this.hasLalian = false;
+
+          if (!this.lalianNode) {
+            return;
+          }
+
+          this.lalianCube = this.findNodeByName(this.lalianNode, "Cube");
+
+          if (this.lalianCube) {
+            this.lalianCube.active = true;
+            this.lalianCubeStartScale.set(this.lalianCube.scale);
+            this.lalianCube.setScale(this.lalianCubeStartScale);
+          }
+
+          const segmentNodes = [];
+
+          for (let i = 0; i < this.lalianNode.children.length; i++) {
+            const child = this.lalianNode.children[i];
+
+            if (!child || child === this.lalianCube || child.name === "Cube" || child.children.length <= 0) {
+              continue;
+            }
+
+            segmentNodes.push(child);
+          }
+
+          const desiredCount = this.lalianNodeCount > 0 ? this.lalianNodeCount : segmentNodes.length;
+
+          if (desiredCount > segmentNodes.length && segmentNodes.length > 0) {
+            const template = segmentNodes[0];
+            const basePos = template.position;
+
+            for (let i = segmentNodes.length; i < desiredCount; i++) {
+              const node = instantiate(template);
+              node.name = `${template.name}_${i}`;
+              this.lalianNode.addChild(node);
+              node.setPosition(basePos.x, basePos.y, basePos.z + this.lalianNodeSpacingZ * i);
+              segmentNodes.push(node);
+            }
+          }
+
+          for (let i = 0; i < segmentNodes.length; i++) {
+            segmentNodes[i].active = i < desiredCount;
+          }
+
+          for (let i = 0; i < desiredCount && i < segmentNodes.length; i++) {
+            const child = segmentNodes[i];
+            this.lalianSegments.push(child);
+            const startPosList = [];
+
+            for (let j = 0; j < child.children.length; j++) {
+              const part = child.children[j];
+              const startPos = part.position.clone();
+              startPosList.push(startPos);
+              Tween.stopAllByTarget(part);
+              part.setPosition(startPos);
+            }
+
+            this.lalianSegmentChildStartPos.push(startPosList);
+          }
+
+          this.hasLalian = !!this.lalianCube && this.lalianSegments.length > 0;
+        }
+
+        findNodeByName(root, name) {
+          if (!root) {
+            return null;
+          }
+
+          if (root.name === name) {
+            return root;
+          }
+
+          for (let i = 0; i < root.children.length; i++) {
+            const result = this.findNodeByName(root.children[i], name);
+
+            if (result) {
+              return result;
+            }
+          }
+
+          return null;
         }
 
         selectArms() {}
@@ -924,11 +1237,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         _update(deltaTime) {
-          var _this$_curArms7;
+          var _this$_curArms8;
 
           const dt = deltaTime; // 石板浮动
 
-          if (this.isWallH && this.wallNode && (_this$_curArms7 = this._curArms) != null && (_this$_curArms7 = _this$_curArms7.fbx) != null && _this$_curArms7.node) {
+          if (this.isWallH && this.wallNode && (_this$_curArms8 = this._curArms) != null && (_this$_curArms8 = _this$_curArms8.fbx) != null && _this$_curArms8.node) {
             this._time += dt * this.speed;
             const curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;
@@ -1065,26 +1378,54 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "jumpWallPos", [_dec21], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "lalianNodeCount", [_dec21], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0;
+        }
+      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "lalianNodeSpacingZ", [_dec22], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.8;
+        }
+      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "lalianCloseX", [_dec23], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.1;
+        }
+      }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "lalianMoveCount", [_dec24], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0;
+        }
+      }), _descriptor23 = _applyDecoratedDescriptor(_class5.prototype, "jumpWallPos", [_dec25], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return new Vec3();
         }
-      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "wallEffect", [_dec22], {
+      }), _descriptor24 = _applyDecoratedDescriptor(_class5.prototype, "wallEffect", [_dec26], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "speed", [_dec23], {
+      }), _descriptor25 = _applyDecoratedDescriptor(_class5.prototype, "speed", [_dec27], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 1;
         }
-      }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "h", [_dec24], {
+      }), _descriptor26 = _applyDecoratedDescriptor(_class5.prototype, "h", [_dec28], {
         configurable: true,
         enumerable: true,
         writable: true,

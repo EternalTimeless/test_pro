@@ -1,0 +1,154 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23",
+  "files": [
+    "__original-animation-0.bin"
+  ],
+  "subMetas": {
+    "8e112": {
+      "importer": "gltf-mesh",
+      "uuid": "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@8e112",
+      "displayName": "",
+      "id": "8e112",
+      "name": "拉链_锯齿003.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 444
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "73b7f": {
+      "importer": "gltf-animation",
+      "uuid": "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@73b7f",
+      "displayName": "",
+      "id": "73b7f",
+      "name": "Take 001.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 3.3333332538604736
+        },
+        "events": []
+      },
+      "ver": "1.0.18",
+      "imported": true,
+      "files": [
+        ".bin"
+      ],
+      "subMetas": {}
+    },
+    "f5fb7": {
+      "importer": "gltf-material",
+      "uuid": "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@f5fb7",
+      "displayName": "",
+      "id": "f5fb7",
+      "name": "拉链材质_Inst1.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "db4d2": {
+      "importer": "gltf-material",
+      "uuid": "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@db4d2",
+      "displayName": "",
+      "id": "db4d2",
+      "name": "02 - Default.material",
+      "userData": {
+        "gltfIndex": 1
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "dda6a": {
+      "importer": "gltf-scene",
+      "uuid": "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@dda6a",
+      "displayName": "",
+      "id": "dda6a",
+      "name": "左.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 3.3333332538604736,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "Take 001",
+            "from": 0,
+            "to": 3.3333332538604736,
+            "wrapMode": 2,
+            "previousId": "73b7f"
+          }
+        ]
+      }
+    ],
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@8e112"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@f5fb7",
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@db4d2"
+      ],
+      "scenes": [
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@dda6a"
+      ]
+    }
+  }
+}

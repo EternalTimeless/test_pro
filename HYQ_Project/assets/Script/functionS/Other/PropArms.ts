@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, CCFloat, CCInteger, Color, Component, Label, MeshRenderer, Node, Tween, tween, v3, Vec3 } from 'cc';
+import { _decorator, CCBoolean, CCFloat, CCInteger, Color, Component, instantiate, Label, MeshRenderer, Node, Tween, tween, v3, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import PoolManager from '../../Base/PoolManager';
@@ -60,6 +60,17 @@ export class PropArms extends BattleTarget3D {
 
     private tireList: Node[] = [];
 
+    private lalianNode: Node = null;
+    private lalianCube: Node = null;
+    private lalianSegments: Node[] = [];
+    private lalianSegmentChildStartPos: Vec3[][] = [];
+    private lalianHitIndex: number = 0;
+    private lalianSegmentHitStep: number = 0;
+    private lalianCubeStartScale: Vec3 = new Vec3(1, 1, 1);
+    private lalianAnimating: boolean = false;
+    private lalianFinished: boolean = false;
+    private hasLalian: boolean = false;
+
     private _level: number = 0;
 
     private _isShake: boolean = false;
@@ -98,6 +109,18 @@ export class PropArms extends BattleTarget3D {
     @property(Node)
     public wallNode: Node;
 
+    @property({ type: CCInteger, displayName: 'Lalian节点数量(0=全部)' })
+    public lalianNodeCount: number = 0;
+
+    @property({ type: CCFloat, displayName: 'Lalian节点Z间距' })
+    public lalianNodeSpacingZ: number = 0.8;
+
+    @property({ type: CCFloat, displayName: 'Lalian收拢X' })
+    public lalianCloseX: number = 0.1;
+
+    @property({ type: CCInteger, displayName: 'Lalian完成移动数量(0=节点数)' })
+    public lalianMoveCount: number = 0;
+
     @property(Vec3)
     public jumpWallPos: Vec3 = new Vec3();
     @property(Node)
@@ -106,7 +129,18 @@ export class PropArms extends BattleTarget3D {
     // @property(Node)
     // public effect_ss: Node;
 
+    public get hitNode() {
+        if (this.hasLalian && this.lalianCube) {
+            return this.lalianCube;
+        }
+        return super.hitNode;
+    }
+
     protected damage(power: number): void {
+        if (this.hasLalian) {
+            this.playLalianHit();
+            return;
+        }
         // 轮胎销毁不受_isShake阻塞
         const hpRatio = this.curHp / this.MaxHp;
         const shouldRemain = Math.max(0, Math.ceil(hpRatio * this._initialTireCount));
@@ -249,6 +283,127 @@ export class PropArms extends BattleTarget3D {
     }
 
     /** 销毁一个轮胎：被销毁轮胎做果冻缩放→消失，剩余轮胎弹跳→下落 */
+    private playLalianHit(): void {
+        if (this.lalianAnimating || this.lalianFinished) {
+            this.curHp = Math.max(1, this.curHp);
+            return;
+        }
+
+        if (!this.lalianSegments.length) {
+            this.finishLalian();
+            return;
+        }
+
+        const segment = this.lalianSegments[this.lalianHitIndex];
+        const startPosList = this.lalianSegmentChildStartPos[this.lalianHitIndex];
+        if (!segment || !startPosList) {
+            this.finishLalian();
+            return;
+        }
+
+        this.lalianAnimating = true;
+        AudioManager.inst.playOneShot(SoundEnum.Sound_tire_hit, 0.4, 0.08);
+        if (this.hpLabel?.node) {
+            TweenTool.scaleShake(this.hpLabel.node);
+        }
+        this.flashRed();
+
+        const duration = 0.12 * this.animScale;
+        const progress = this.lalianSegmentHitStep === 0 ? 0.5 : 1;
+        for (let i = 0; i < segment.children.length; i++) {
+            const part = segment.children[i];
+            const startPos = startPosList[i];
+            if (!part || !startPos) {
+                continue;
+            }
+            let targetX = startPos.x;
+            if (Math.abs(startPos.x) > this.lalianCloseX) {
+                const closeX = startPos.x > 0 ? this.lalianCloseX : -this.lalianCloseX;
+                targetX = startPos.x + (closeX - startPos.x) * progress;
+            }
+            Tween.stopAllByTarget(part);
+            tween(part)
+                .to(duration, { position: v3(targetX, startPos.y, startPos.z) }, { easing: 'cubicOut' })
+                .start();
+        }
+
+        const segmentClosed = progress >= 1;
+        if (segmentClosed) {
+            this.lalianHitIndex++;
+            this.lalianSegmentHitStep = 0;
+        } else {
+            this.lalianSegmentHitStep++;
+        }
+
+        const remain = Math.max(0, this.lalianSegments.length - this.lalianHitIndex);
+        this.curHp = Math.max(1, remain);
+        if (this.hpLabel) {
+            this.hpLabel.string = Math.ceil(remain + (this.lalianSegmentHitStep > 0 ? 0.5 : 0)).toString();
+        }
+
+        const nextSegment = this.lalianSegments[this.lalianHitIndex];
+        if (segmentClosed && this.lalianCube && nextSegment) {
+            const cubePos = this.lalianCube.position;
+            Tween.stopAllByTarget(this.lalianCube);
+            tween(this.lalianCube)
+                .to(duration, { position: v3(cubePos.x, cubePos.y, nextSegment.position.z) }, { easing: 'cubicOut' })
+                .start();
+        }
+
+        this.scheduleOnce(() => {
+            this.lalianAnimating = false;
+            if (segmentClosed && remain <= 0) {
+                this.finishLalian();
+            }
+        }, duration);
+    }
+
+    private finishLalian(): void {
+        if (this.lalianFinished) {
+            return;
+        }
+        this.lalianFinished = true;
+        this.lalianAnimating = false;
+        this.curHp = 1;
+        this._isShake = false;
+        this._isStageAlive = false;
+        if (this.hpLabel) {
+            this.hpLabel.string = "";
+        }
+        BulletMonsterCollisionManager.instance.unregisterTarget(this);
+
+        const emitFinish = () => {
+            const armsInfo = this._curArms ?? this.createLalianArmsInfo();
+            EventManager.instance.emit(EventType.PROP_ARMS_DIE, armsInfo);
+            this.node.emit(EventType.PROP_ARMS_DIE, armsInfo);
+            this.queueTrySpawnNextStage();
+            if (this._disableWaveStageChain) {
+                this.node.active = false;
+            }
+        };
+
+        if (!this.lalianCube) {
+            emitFinish();
+            return;
+        }
+
+        Tween.stopAllByTarget(this.lalianCube);
+        tween(this.lalianCube)
+            .to(0.08 * this.animScale, { scale: Vec3.ZERO }, { easing: 'sineIn' })
+            .call(() => {
+                this.lalianCube.active = false;
+                this.lalianCube.setScale(this.lalianCubeStartScale);
+                emitFinish();
+            })
+            .start();
+    }
+
+    private createLalianArmsInfo(): ArmsInfo {
+        const armsInfo = new ArmsInfo();
+        armsInfo.moveCount = this.lalianMoveCount > 0 ? this.lalianMoveCount : this.lalianSegments.length;
+        return armsInfo;
+    }
+
     private destroyOneTire(): void {
         const tire = this.tireList.shift();
         if (!tire) return;
@@ -382,6 +537,10 @@ export class PropArms extends BattleTarget3D {
     public init(count: number = 0) {
 
         this._level += count;
+        if (this.armsInfoList.length <= 0) {
+            this.initLalianOnly();
+            return;
+        }
         if (this._level >= this.armsInfoList.length) {
             this._isStageAlive = false;
             this.node.active = false;
@@ -398,12 +557,17 @@ export class PropArms extends BattleTarget3D {
                 return;
             }
             this._isStageAlive = true;
+            this.initLalian();
 
             const tireSpacing = this.tireSpacing;
             const wallHeight = this._curArms.wallHeight;
-            const tireCount = this._curArms.tireCount;
+            const tireCount = this.hasLalian ? 0 : this._curArms.tireCount;
 
             this.initHp(this._curArms.hp);
+            if (this.hasLalian) {
+                this.MaxHp = Math.max(1, this.lalianSegments.length * 2);
+                this.curHp = this.MaxHp;
+            }
             this.hpLabel.string = Math.round(this.MaxHp).toString();
 
             // 保存hpLabel原始缩放（用number避免GC），动画期间隐藏
@@ -421,13 +585,15 @@ export class PropArms extends BattleTarget3D {
             this.isWallH = false;
 
             // 生成所有轮胎（起始在地底）
-            for (let i = 0; i < tireCount; i++) {
-                const tire = this.tire;
-                this.tireList.push(tire);
-                this.node.addChild(tire);
-                tire.setPosition(0, -tireSpacing, 0);
-                if (!i)
-                    this.meshFlashDataList[0].meshRender = tire.children[0].children[0].getComponent(MeshRenderer);
+            if (!this.hasLalian) {
+                for (let i = 0; i < tireCount; i++) {
+                    const tire = this.tire;
+                    this.tireList.push(tire);
+                    this.node.addChild(tire);
+                    tire.setPosition(0, -tireSpacing, 0);
+                    if (!i)
+                        this.meshFlashDataList[0].meshRender = tire.children[0].children[0].getComponent(MeshRenderer);
+                }
             }
 
             this._initialTireCount = this.tireList.length;
@@ -502,7 +668,7 @@ export class PropArms extends BattleTarget3D {
             }
 
             // 计算总动画时长，结束后统一处理
-            const totalTime = tireStartDelay + (tireCount - 1) * tireInterval + tireRiseTime + 0.05;
+            const totalTime = this.hasLalian ? phase1Delay + phase1RiseTime + 0.05 : tireStartDelay + (tireCount - 1) * tireInterval + tireRiseTime + 0.05;
             this.scheduleOnce(() => {
                 this.hpLabel.node.setScale(hplSx, hplSy, hplSz);
                 PoolManager.instance.V3 = scale;
@@ -510,6 +676,10 @@ export class PropArms extends BattleTarget3D {
                 this.isWallH = true;
             }, totalTime);
         }
+    }
+
+    private initLalianOnly(): void {
+        // 预留给已废弃/外部兼容的空配置分支，当前版本不再在这里生成拉链逻辑。
     }
 
     private get tire() {
@@ -521,6 +691,86 @@ export class PropArms extends BattleTarget3D {
         tire.children[0].setScale(this.tireScale);
         tire.setScale(Vec3.ONE); // Set tire scale to one
         return tire;
+    }
+
+    private initLalian() {
+        this.lalianNode = this.findNodeByName(this.node, "Lalian");
+        this.lalianCube = null;
+        this.lalianSegments.length = 0;
+        this.lalianSegmentChildStartPos.length = 0;
+        this.lalianHitIndex = 0;
+        this.lalianSegmentHitStep = 0;
+        this.lalianAnimating = false;
+        this.lalianFinished = false;
+        this.hasLalian = false;
+        if (!this.lalianNode) {
+            return;
+        }
+
+        this.lalianCube = this.findNodeByName(this.lalianNode, "Cube");
+        if (this.lalianCube) {
+            this.lalianCube.active = true;
+            this.lalianCubeStartScale.set(this.lalianCube.scale);
+            this.lalianCube.setScale(this.lalianCubeStartScale);
+        }
+
+        const segmentNodes: Node[] = [];
+        for (let i = 0; i < this.lalianNode.children.length; i++) {
+            const child = this.lalianNode.children[i];
+            if (!child || child === this.lalianCube || child.name === "Cube" || child.children.length <= 0) {
+                continue;
+            }
+            segmentNodes.push(child);
+        }
+
+        const desiredCount = this.lalianNodeCount > 0 ? this.lalianNodeCount : segmentNodes.length;
+        if (desiredCount > segmentNodes.length && segmentNodes.length > 0) {
+            const template = segmentNodes[0];
+            const basePos = template.position;
+            for (let i = segmentNodes.length; i < desiredCount; i++) {
+                const node = instantiate(template);
+                node.name = `${template.name}_${i}`;
+                this.lalianNode.addChild(node);
+                node.setPosition(basePos.x, basePos.y, basePos.z + this.lalianNodeSpacingZ * i);
+                segmentNodes.push(node);
+            }
+        }
+
+        for (let i = 0; i < segmentNodes.length; i++) {
+            segmentNodes[i].active = i < desiredCount;
+        }
+
+        for (let i = 0; i < desiredCount && i < segmentNodes.length; i++) {
+            const child = segmentNodes[i];
+            this.lalianSegments.push(child);
+            const startPosList: Vec3[] = [];
+            for (let j = 0; j < child.children.length; j++) {
+                const part = child.children[j];
+                const startPos = part.position.clone();
+                startPosList.push(startPos);
+                Tween.stopAllByTarget(part);
+                part.setPosition(startPos);
+            }
+            this.lalianSegmentChildStartPos.push(startPosList);
+        }
+
+        this.hasLalian = !!this.lalianCube && this.lalianSegments.length > 0;
+    }
+
+    private findNodeByName(root: Node, name: string): Node | null {
+        if (!root) {
+            return null;
+        }
+        if (root.name === name) {
+            return root;
+        }
+        for (let i = 0; i < root.children.length; i++) {
+            const result = this.findNodeByName(root.children[i], name);
+            if (result) {
+                return result;
+            }
+        }
+        return null;
     }
 
     private selectArms() {

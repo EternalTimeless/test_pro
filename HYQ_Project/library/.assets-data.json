@@ -782,7 +782,7 @@
         "195a1b86-f57e-4d07-af1b-3f836083249a",
         "9a96fc79-fcf2-4e2d-946e-0dca53a468fb@6016b",
         "85075bb1-7df0-491d-bece-017584a8240e",
-        "b836b03f-f23c-4801-87e2-8742f0f6477c",
+        "d6735de2-0335-44ee-a765-33ae30b43066",
         "ac9ad6bb-eec4-4420-9650-717c4a7d5140",
         "8f687ae9-f5b3-4c5d-9170-5014aa2c3c84",
         "193f8647-b8b4-42d4-9a69-a525d853a987@f9941",
@@ -807,6 +807,7 @@
         "799add5f-4370-4ee6-b0a4-aca1ebcd06a3",
         "0138029d-bfaa-4d43-aa1c-63b3be01e8e5",
         "09f7d7d0-5529-499d-8bbb-e3e6a9394677",
+        "b836b03f-f23c-4801-87e2-8742f0f6477c",
         "22df2732-7376-4d1e-b3ec-198dc70edfad",
         "990960bd-9301-4607-aca1-7c65a19e12bc",
         "ac2e0ce8-427b-413a-b957-031450d6f06c",
@@ -828,6 +829,7 @@
         "4c579f82-105c-430a-bfd7-23b68345d492",
         "da648bf8-ab14-4a6a-a474-9832df4b466c",
         "a3fc851d-1125-44b5-aa5b-0bc582d46016",
+        "1bf3438b-1da7-4434-930b-814432d521fc",
         "7ab0ec49-7b52-4369-a342-a29db05785c6",
         "1f73fffa-7e0b-4275-921e-97239d52dd3a",
         "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0",
@@ -7815,6 +7817,76 @@
   },
   "b12573ef-1832-411b-9a3a-aaaf5b3a3dd9": {
     "url": "db://assets/GameRes/Prefab/Lalian.prefab",
+    "value": {},
+    "versionCode": 1
+  },
+  "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23": {
+    "url": "db://assets/GameRes/HYQ_map/fbx/左.fbx",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@8e112": {
+    "url": "db://assets/GameRes/HYQ_map/fbx/左.fbx@8e112",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@73b7f": {
+    "url": "db://assets/GameRes/HYQ_map/fbx/左.fbx@73b7f",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@f5fb7": {
+    "url": "db://assets/GameRes/HYQ_map/fbx/左.fbx@f5fb7",
+    "value": {
+      "depends": [
+        "2ec11458-f855-4978-b14d-f3ed5cf697fa"
+      ]
+    },
+    "versionCode": 1
+  },
+  "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@db4d2": {
+    "url": "db://assets/GameRes/HYQ_map/fbx/左.fbx@db4d2",
+    "value": {
+      "depends": [
+        "2ec11458-f855-4978-b14d-f3ed5cf697fa"
+      ]
+    },
+    "versionCode": 1
+  },
+  "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@dda6a": {
+    "url": "db://assets/GameRes/HYQ_map/fbx/左.fbx@dda6a",
+    "value": {
+      "depends": [
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@f5fb7",
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@db4d2",
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@8e112",
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@73b7f"
+      ]
+    },
+    "versionCode": 1
+  },
+  "d6735de2-0335-44ee-a765-33ae30b43066": {
+    "url": "db://assets/GameRes/Prefab/Lalian.prefab",
+    "value": {
+      "depends": [
+        "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23@dda6a",
+        "620b6bf3-0369-4560-837f-2a2c00b73c26",
+        "1263d74c-8167-4928-91a6-4e2672411f47@a804a"
+      ],
+      "dependScripts": [
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "1bf3438b-1da7-4434-930b-814432d521fc": {
+    "url": "db://assets/Script/functionS/Other/PropLalianGate.ts",
     "value": {},
     "versionCode": 1
   }

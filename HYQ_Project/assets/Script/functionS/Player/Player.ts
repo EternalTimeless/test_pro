@@ -45,6 +45,8 @@ export class Player extends UnityUpComponent {
     public isDie: boolean = false;
     private curCount: number = 1;
 
+    public maxRoleCount: number = 55;
+
     public maxShootingRoleCount: number = 35;
 
     private shootRoleStartIndex: number = 0;
@@ -217,9 +219,13 @@ export class Player extends UnityUpComponent {
 
 
     public addRole(role: Role) {
+        if (this.roleList.length >= this.maxRoleCount) {
+            return false;
+        }
         role.attackIN = true;
         this.roleList.push(role);
         this.curCount++;
+        return true;
     }
 
     /**

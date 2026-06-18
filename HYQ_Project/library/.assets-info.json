@@ -58,7 +58,7 @@
       "uuid": "d82f0132-cc7a-4ab8-b19c-f6a874dbebc6"
     },
     "GameRes\\Prefab": {
-      "time": 1781493202618.7786,
+      "time": 1781682038391.8308,
       "uuid": "1029672c-2441-4553-9cff-34a1dae006d8"
     },
     "GameRes\\Prefabs": {
@@ -250,7 +250,7 @@
       "uuid": "480b0da3-6475-4aa1-8e49-cfeec87991ec"
     },
     "Script\\functionS\\Other": {
-      "time": 1781596448554.99,
+      "time": 1781689637560.5134,
       "uuid": "31a1e406-7653-4a32-9a59-655e6188e99e"
     },
     "Script\\functionS\\Player": {
@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1781678175250.0676,
+      "time": 1781746061442.8184,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -646,7 +646,7 @@
       "uuid": "799add5f-4370-4ee6-b0a4-aca1ebcd06a3"
     },
     "GameRes\\Prefab\\tire.prefab": {
-      "time": 1780287688538.789,
+      "time": 1781682312889.218,
       "uuid": "b836b03f-f23c-4801-87e2-8742f0f6477c"
     },
     "GameRes\\Prefabs\\GameOverPanel.prefab": {
@@ -1594,7 +1594,7 @@
       "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
     },
     "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
-      "time": 1780287689586.017,
+      "time": 1781685853518.4907,
       "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
     },
     "Script\\functionS\\Battle\\HpComponent.ts": {
@@ -1670,11 +1670,11 @@
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
-      "time": 1781676613813.2007,
+      "time": 1781692373390.4595,
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1781593368017.6804,
+      "time": 1781690302955.5994,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -1682,7 +1682,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1781678062433.94,
+      "time": 1781681615967.1902,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
@@ -4011,7 +4011,7 @@
       "uuid": "5407ff8f-12ff-4b08-9caf-28a0bd55a2fd"
     },
     "GameRes\\HYQ_map\\fbx": {
-      "time": 1781493202059.3535,
+      "time": 1781681988398.4663,
       "uuid": "229eb031-8d50-4c68-b73d-e66523715f82"
     },
     "GameRes\\HYQ_map\\mat": {
@@ -4403,6 +4403,27 @@
     "GameRes\\FBX\\Lalian\\拉链左2.fbx": {
       "time": 1781489188791.0786,
       "uuid": "bec1faad-f254-4fcf-ae23-6582d93cb9a9"
+    },
+    "GameRes\\HYQ_map\\fbx\\左.fbx.meta": {
+      "time": 1781681989095.794
+    },
+    "GameRes\\HYQ_map\\fbx\\左.fbx": {
+      "time": 1781681884787.2112,
+      "uuid": "793e3466-c1ba-4fcc-b2d4-e4aee7fbcf23"
+    },
+    "GameRes\\Prefab\\Lalian.prefab.meta": {
+      "time": 1781682038405.792
+    },
+    "GameRes\\Prefab\\Lalian.prefab": {
+      "time": 1781688391200.8352,
+      "uuid": "d6735de2-0335-44ee-a765-33ae30b43066"
+    },
+    "Script\\functionS\\Other\\PropLalianGate.ts.meta": {
+      "time": 1781689576517.3992
+    },
+    "Script\\functionS\\Other\\PropLalianGate.ts": {
+      "time": 1781692736538.0698,
+      "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
     }
   },
   "missing": {}

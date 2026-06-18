@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, MeshRenderer, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, PropArms, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropTireGate, ColliderTag, COLLIDE_TYPE, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -61,14 +61,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("JumpManager", "../Jump/JumpManager", _context.meta, extras);
   }
 
-  function _reportPossibleCrUseOfArmsInfo(extras) {
-    _reporterNs.report("ArmsInfo", "./PropArms", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfPropArms(extras) {
-    _reporterNs.report("PropArms", "./PropArms", _context.meta, extras);
-  }
-
   function _reportPossibleCrUseOfUnityUpComponent(extras) {
     _reporterNs.report("UnityUpComponent", "../../Base/UnityUpComponent", _context.meta, extras);
   }
@@ -85,16 +77,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("FlashRedManager", "../Battle/Base/FlashRedManager", _context.meta, extras);
   }
 
-  function _reportPossibleCrUseOfPropTireGate(extras) {
-    _reporterNs.report("PropTireGate", "./PropTireGate", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfColliderTag(extras) {
-    _reporterNs.report("ColliderTag", "../Battle/CollectBattleTarger/ColliderTag", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfCOLLIDE_TYPE(extras) {
-    _reporterNs.report("COLLIDE_TYPE", "../Battle/CollectBattleTarger/ColliderTag", _context.meta, extras);
+  function _reportPossibleCrUseOfPropLalianGate(extras) {
+    _reporterNs.report("PropLalianGate", "./PropLalianGate", _context.meta, extras);
   }
 
   return {
@@ -105,10 +89,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
-      CCBoolean = _cc.CCBoolean;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
-      MeshRenderer = _cc.MeshRenderer;
       Node = _cc.Node;
       tween = _cc.tween;
       Tween = _cc.Tween;
@@ -135,27 +117,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_9) {
       JumpManager = _unresolved_9.JumpManager;
     }, function (_unresolved_10) {
-      PropArms = _unresolved_10.PropArms;
+      UnityUpComponent = _unresolved_10.UnityUpComponent;
     }, function (_unresolved_11) {
-      UnityUpComponent = _unresolved_11.UnityUpComponent;
+      EffectManager = _unresolved_11.EffectManager;
     }, function (_unresolved_12) {
-      EffectManager = _unresolved_12.EffectManager;
+      AudioManager = _unresolved_12.default;
     }, function (_unresolved_13) {
-      AudioManager = _unresolved_13.default;
+      FlashRedManager = _unresolved_13.FlashRedManager;
     }, function (_unresolved_14) {
-      FlashRedManager = _unresolved_14.FlashRedManager;
-    }, function (_unresolved_15) {
-      PropTireGate = _unresolved_15.PropTireGate;
-    }, function (_unresolved_16) {
-      ColliderTag = _unresolved_16.default;
-      COLLIDE_TYPE = _unresolved_16.COLLIDE_TYPE;
+      PropLalianGate = _unresolved_14.PropLalianGate;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "7ab0exJe1JDaaNCop2wV4XG", "CreatePropBrand", undefined);
 
-      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Component', 'ITriggerEvent', 'MeshRenderer', 'Node', 'PlaceMethod', 'tween', 'Tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'ITriggerEvent', 'Node', 'tween', 'Tween', 'Vec3']);
 
       ({
         ccclass,
@@ -164,63 +141,42 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("CreatePropBrand", CreatePropBrand = (_dec = ccclass('CreatePropBrand'), _dec2 = property({
         type: CCInteger,
-        displayName: '展示数量 - 初始显示的道具数量'
+        displayName: '展示数量',
+        tooltip: '开局先摆出来的 +1/+99 道具数量，只影响初始队列长度。'
       }), _dec3 = property({
         type: CCFloat,
-        displayName: '道间距 - 道具之间的前后间距'
+        displayName: '道具间距',
+        tooltip: '道具队列里相邻两个道具在 Z 轴上的距离。'
       }), _dec4 = property({
         type: CCFloat,
-        displayName: '高度 - 道具初始Y轴高度'
+        displayName: '道具高度',
+        tooltip: '道具生成时的 Y 轴高度。'
       }), _dec5 = property({
         type: CCInteger,
-        displayName: '每份数值 - 每个道具显示的数值（如+99填99）'
+        displayName: '每个道具数值',
+        tooltip: '每个道具显示和生效的数值。左边 +1 填 1，右边 +99 填 99。'
       }), _dec6 = property({
         type: CCFloat,
-        displayName: '移动速度 - 道具向前移动的速度'
+        displayName: '移动速度',
+        tooltip: '拉链完成后，道具队列向玩家移动的速度。'
       }), _dec7 = property({
-        type: _crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+        type: _crd && PropLalianGate === void 0 ? (_reportPossibleCrUseOfPropLalianGate({
           error: Error()
-        }), PropArms) : PropArms,
-        displayName: 'PropArms组件 - 关联的武器组件，轮胎门模式下可为空'
+        }), PropLalianGate) : PropLalianGate,
+        displayName: 'Lalian拉链组件',
+        tooltip: '拖入同一侧 Prop_arms 上的 PropLalianGate。为空时会自动在当前节点子级查找。'
       }), _dec8 = property({
-        type: [Node],
-        displayName: '按怪物波次顺序绑定中路 Role_x 节点。第1波对应 Role_0，第2波对应 Role_1，第3波对应 Role_2。该列表现在只用于监听这些节点被打掉后的奖励推进，不再负责生成和摆位。'
+        type: CCFloat,
+        displayName: '道具起始Z额外偏移',
+        tooltip: '在拉链自动计算的起始 Z 基础上额外加的偏移。用于微调 +1/+99 队列离拉链的远近。'
       }), _dec9 = property({
         type: Node,
-        displayName: '墙壁节点 - 道具挂载的父节点'
+        displayName: '道具挂载父节点',
+        tooltip: '生成出来的 +1/+99 道具会挂到这个节点下面。通常填当前通道的 wall/root 节点。'
       }), _dec10 = property({
-        type: CCBoolean,
-        displayName: '启用轮胎门 - 是否用轮胎阻挡道具前进'
-      }), _dec11 = property({
         type: CCInteger,
-        displayName: '轮胎门数量 - 已废弃，实际由轮胎门节点列表长度决定'
-      }), _dec12 = property({
-        type: CCFloat,
-        displayName: '轮胎门间距 - 轮胎门之间的前后间距'
-      }), _dec13 = property({
-        type: CCFloat,
-        displayName: '轮胎门血量 - 每个轮胎门的生命值'
-      }), _dec14 = property({
-        type: Vec3,
-        displayName: '轮胎门缩放 - 轮胎门的缩放比例'
-      }), _dec15 = property({
-        type: CCFloat,
-        displayName: '道具初始偏移 - 道具在轮胎门后方的起始Z轴偏移'
-      }), _dec16 = property({
-        type: CCFloat,
-        displayName: '轮胎道具间距 - 最后一个轮胎到第一个道具的间隔距离'
-      }), _dec17 = property({
-        type: CCFloat,
-        displayName: '轮胎尾部偏移 - 轮胎尾部额外的Z轴偏移量'
-      }), _dec18 = property({
-        type: CCFloat,
-        displayName: '轮胎门X偏移 - 轮胎门的X轴位置偏移'
-      }), _dec19 = property({
-        type: [Node],
-        displayName: '轮胎门节点列表 - 手动拖入作为门阻挡道具的轮胎节点'
-      }), _dec20 = property({
-        type: CCInteger,
-        displayName: '道具类型 - 对应预置体的类型编号，左路填0右路填1'
+        displayName: '道具类型',
+        tooltip: '对应 PrefabsEnum.prop 的预制体类型编号。保持和原来左/右道具类型一致。'
       }), _dec(_class = (_class2 = class CreatePropBrand extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
@@ -237,100 +193,37 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "moveSpeed", _descriptor5, this);
 
-          _initializerDefineProperty(this, "pa", _descriptor6, this);
+          _initializerDefineProperty(this, "lalianGate", _descriptor6, this);
 
-          _initializerDefineProperty(this, "waveRoleList", _descriptor7, this);
+          _initializerDefineProperty(this, "propStartZ", _descriptor7, this);
 
           _initializerDefineProperty(this, "wallNode", _descriptor8, this);
 
-          _initializerDefineProperty(this, "tireGateEnabled", _descriptor9, this);
-
-          _initializerDefineProperty(this, "tireGateCount", _descriptor10, this);
-
-          _initializerDefineProperty(this, "tireGateSpacing", _descriptor11, this);
-
-          _initializerDefineProperty(this, "tireGateHp", _descriptor12, this);
-
-          _initializerDefineProperty(this, "tireGateScale", _descriptor13, this);
-
-          _initializerDefineProperty(this, "propBackOffset", _descriptor14, this);
-
-          _initializerDefineProperty(this, "tireGatePropGap", _descriptor15, this);
-
-          _initializerDefineProperty(this, "editorTireTailOffset", _descriptor16, this);
-
-          _initializerDefineProperty(this, "tireGateX", _descriptor17, this);
-
-          _initializerDefineProperty(this, "editorTireGateNodes", _descriptor18, this);
+          _initializerDefineProperty(this, "type", _descriptor9, this);
 
           this.propBrandList = [];
           this.tempPropBrandList = [];
           this.isMove = false;
-          this.gateTireRemain = 0;
-          this.pendingMoveCount = 0;
-
-          _initializerDefineProperty(this, "type", _descriptor19, this);
-
+          this.pendingReleaseCount = 0;
           this.tempV3 = new Vec3();
         }
 
-        get isTireGateActive() {
-          return this.tireGateEnabled && this.validEditorTireGateNodes.length > 0;
+        get activeLalianGate() {
+          if (!this.lalianGate) {
+            this.lalianGate = this.findLalianGate(this.node);
+          }
+
+          return this.lalianGate;
         }
 
-        get activePropBackOffset() {
-          if (!this.isTireGateActive) {
-            return 0;
-          }
+        get activePropStartZ() {
+          var _this$activeLalianGat, _this$activeLalianGat2;
 
-          var editorTires = this.validEditorTireGateNodes;
-
-          if (editorTires.length <= 0) {
-            return 0;
-          }
-
-          var maxBackZ = 0;
-
-          for (var i = 0; i < editorTires.length; i++) {
-            maxBackZ = Math.max(maxBackZ, editorTires[i].position.z + this.editorTireTailOffset);
-          }
-
-          return Math.max(this.propBackOffset, maxBackZ + this.tireGatePropGap);
-        }
-
-        get validEditorTireGateNodes() {
-          return this.editorTireGateNodes.filter(node => !!node);
-        }
-
-        setWaveRoleList(nodes) {
-          var lastRoleList = this.getActiveWaveRoles();
-
-          for (var i = 0; i < lastRoleList.length; i++) {
-            var _lastRoleList$i;
-
-            (_lastRoleList$i = lastRoleList[i]) == null || _lastRoleList$i.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-              error: Error()
-            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
-          }
-
-          this.waveRoleList = (nodes != null ? nodes : []).filter(node => !!node);
-          var nextRoleList = this.getActiveWaveRoles();
-
-          for (var _i = 0; _i < nextRoleList.length; _i++) {
-            var _nextRoleList$_i;
-
-            (_nextRoleList$_i = nextRoleList[_i]) == null || _nextRoleList$_i.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-              error: Error()
-            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
-          }
-        }
-
-        get activeTireGateCount() {
-          return this.validEditorTireGateNodes.length;
+          return this.propStartZ + ((_this$activeLalianGat = (_this$activeLalianGat2 = this.activeLalianGate) == null ? void 0 : _this$activeLalianGat2.getPropStartZ()) != null ? _this$activeLalianGat : 0);
         }
 
         start() {
-          var startZ = this.activePropBackOffset;
+          var startZ = this.activePropStartZ;
 
           for (var i = 0; i < this.showCount; i++) {
             var p = this.propBrand;
@@ -339,74 +232,33 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             p.node.x = 0;
             p.node.y = this.height;
             p.node.z = startZ + i * this.distance;
-          } // this.scheduleOnce(() => {
-          //     this.move(15);
-          // }, 1);
-
-
-          this.createTireGate();
-          var roleList = this.getActiveWaveRoles();
-
-          for (var _i2 = 0; _i2 < roleList.length; _i2++) {
-            var _roleList$_i, _roleList$_i2;
-
-            (_roleList$_i = roleList[_i2]) == null || _roleList$_i.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-              error: Error()
-            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
-            (_roleList$_i2 = roleList[_i2]) == null || _roleList$_i2.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-              error: Error()
-            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
-          }
-        }
-
-        getActiveWaveRoles() {
-          var roles = [];
-
-          var addRole = role => {
-            if (!role || roles.indexOf(role) !== -1) {
-              return;
-            }
-
-            roles.push(role);
-          };
-
-          for (var i = 0; i < this.waveRoleList.length; i++) {
-            var _node$getComponent;
-
-            var node = this.waveRoleList[i];
-
-            if (!node) {
-              continue;
-            }
-
-            addRole((_node$getComponent = node.getComponent(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
-              error: Error()
-            }), PropArms) : PropArms)) != null ? _node$getComponent : node.getComponentInParent(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
-              error: Error()
-            }), PropArms) : PropArms));
           }
 
-          if (roles.length <= 0 && this.pa) {
-            addRole(this.pa);
-          }
+          var gate = this.activeLalianGate;
 
-          return roles;
+          if (gate) {
+            gate.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, this.lalianDoneEvent, this);
+            gate.node.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+              error: Error()
+            }), EventType) : EventType).PROP_ARMS_DIE, this.lalianDoneEvent, this);
+          }
         }
 
         onDestroy() {
-          var roleList = this.getActiveWaveRoles();
+          var _this$activeLalianGat3;
 
-          for (var i = 0; i < roleList.length; i++) {
-            var _roleList$i;
-
-            (_roleList$i = roleList[i]) == null || _roleList$i.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-              error: Error()
-            }), EventType) : EventType).PROP_ARMS_DIE, this.armsUPEvent, this);
-          }
+          (_this$activeLalianGat3 = this.activeLalianGate) == null || _this$activeLalianGat3.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+            error: Error()
+          }), EventType) : EventType).PROP_ARMS_DIE, this.lalianDoneEvent, this);
         }
 
-        armsUPEvent(armsInfo) {
-          this.requestMove(armsInfo.moveCount);
+        lalianDoneEvent(info) {
+          var _info$moveCount;
+
+          var count = ((_info$moveCount = info == null ? void 0 : info.moveCount) != null ? _info$moveCount : 0) > 0 ? info.moveCount : -1;
+          this.move(count);
         }
 
         _update(deltaTime) {
@@ -415,13 +267,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               var p = this.propBrandList[i];
 
               if (!i && p.node.z <= 0) {
-                if (this.isTireGateActive) {
-                  this.pushFrontPropToPickup();
-                  i--;
-                  continue;
+                if (!this.releaseFrontProp()) {
+                  this.isMove = false;
                 }
 
-                this.isMove = false;
+                i--;
                 break;
               }
 
@@ -437,8 +287,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
           }
 
-          for (var _i3 = this.tempPropBrandList.length - 1; _i3 >= 0; _i3--) {
-            var _p = this.tempPropBrandList[_i3];
+          for (var _i = this.tempPropBrandList.length - 1; _i >= 0; _i--) {
+            var _p = this.tempPropBrandList[_i];
             _p.node.z -= this.moveSpeed * deltaTime;
 
             if (_p.node.z <= -0.614) {
@@ -450,7 +300,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             if (_p.node.z <= -30) {
-              this.tempPropBrandList.splice(_i3, 1);
+              this.tempPropBrandList.splice(_i, 1);
               _p.node.active = false;
               (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
@@ -461,132 +311,55 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        pushFrontPropToPickup() {
-          var p = this.propBrandList.shift();
-
-          if (!p) {
-            return;
-          }
-
-          this.tempPropBrandList.push(p);
-          p.collide.on("onTriggerEnter", this.onTriggerEnter, this);
-          this.appendPropBrandAtBack();
-        }
-
         appendPropBrands(count) {
-          var c = this.propBrandList.length;
-          var appendStartZ = this.activePropBackOffset;
+          var last = this.propBrandList[this.propBrandList.length - 1];
+          var appendStartZ = last ? last.node.z + this.distance : this.activePropStartZ;
 
           for (var i = 0; i < count; i++) {
             var p = this.propBrand;
             this.wallNode.addChild(p.node);
             p.node.x = 0;
             p.node.y = this.height;
-            p.node.z = appendStartZ + (i + c) * this.distance;
+            p.node.z = appendStartZ + i * this.distance;
             this.propBrandList.push(p);
           }
         }
 
-        appendPropBrandAtBack() {
-          var p = this.propBrand;
-          this.wallNode.addChild(p.node);
-          p.node.x = 0;
-          p.node.y = this.height;
-          var last = this.propBrandList[this.propBrandList.length - 1];
-          var appendStartZ = this.activePropBackOffset;
-          p.node.z = last ? last.node.z + this.distance : appendStartZ;
-          this.propBrandList.push(p);
-        }
-
-        requestMove(count) {
-          if (this.gateTireRemain > 0) {
-            this.pendingMoveCount += count;
-            return;
+        releaseFrontProp() {
+          if (this.pendingReleaseCount === 0) {
+            return false;
           }
 
-          this.move(count);
-        }
+          var p = this.propBrandList.shift();
 
-        createTireGate() {
-          if (!this.isTireGateActive || !this.wallNode) {
-            return;
+          if (!p) {
+            this.pendingReleaseCount = 0;
+            return false;
           }
 
-          var editorTires = this.validEditorTireGateNodes;
-          this.gateTireRemain = editorTires.length;
-
-          for (var i = 0; i < editorTires.length; i++) {
-            this.setupTireGateNode(editorTires[i]);
-          }
-        }
-
-        setupTireGateNode(tire) {
-          var _tire$children$;
-
-          tire.active = true;
-          var tag = tire.getComponent(_crd && ColliderTag === void 0 ? (_reportPossibleCrUseOfColliderTag({
-            error: Error()
-          }), ColliderTag) : ColliderTag);
-
-          if (!tag) {
-            tag = tire.addComponent(_crd && ColliderTag === void 0 ? (_reportPossibleCrUseOfColliderTag({
-              error: Error()
-            }), ColliderTag) : ColliderTag);
+          if (this.pendingReleaseCount > 0) {
+            this.pendingReleaseCount--;
           }
 
-          tag.tag = (_crd && COLLIDE_TYPE === void 0 ? (_reportPossibleCrUseOfCOLLIDE_TYPE({
-            error: Error()
-          }), COLLIDE_TYPE) : COLLIDE_TYPE).MONSTER;
-          var gate = tire.getComponent(_crd && PropTireGate === void 0 ? (_reportPossibleCrUseOfPropTireGate({
-            error: Error()
-          }), PropTireGate) : PropTireGate);
-
-          if (!gate) {
-            gate = tire.addComponent(_crd && PropTireGate === void 0 ? (_reportPossibleCrUseOfPropTireGate({
-              error: Error()
-            }), PropTireGate) : PropTireGate);
-          }
-
-          var mesh = (_tire$children$ = tire.children[0]) == null || (_tire$children$ = _tire$children$.children[0]) == null ? void 0 : _tire$children$.getComponent(MeshRenderer);
-
-          if (mesh && gate.meshFlashDataList.length > 0) {
-            gate.meshFlashDataList[0].meshRender = mesh;
-          }
-
-          gate.collisionHalfX = 2;
-          gate.collisionHalfZ = 1.2;
-          gate.repelEnabled = false;
-          gate.poolOnDie = false;
-          gate.initGate(() => this.onGateTireDie(), this.tireGateHp);
-        }
-
-        onGateTireDie() {
-          this.gateTireRemain--;
-
-          if (this.gateTireRemain > 0) {
-            return;
-          }
-
-          var count = this.pendingMoveCount || this.activeTireGateCount;
-          this.pendingMoveCount = 0;
-          this.move(count);
+          this.tempPropBrandList.push(p);
+          p.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+          p.collide.on("onTriggerEnter", this.onTriggerEnter, this);
+          this.appendPropBrands(1);
+          return this.pendingReleaseCount !== 0;
         }
 
         move(count) {
-          this.isMove = true;
-
-          if (this.isTireGateActive) {
+          if (count === 0) {
             return;
           }
 
-          this.appendPropBrands(count);
-
-          for (var i = 0; i < count; i++) {
-            var p = this.propBrandList[0];
-            this.tempPropBrandList.push(p);
-            p.collide.on("onTriggerEnter", this.onTriggerEnter, this);
-            this.propBrandList.splice(0, 1);
+          if (count < 0 || this.pendingReleaseCount < 0) {
+            this.pendingReleaseCount = -1;
+          } else {
+            this.pendingReleaseCount += count;
           }
+
+          this.isMove = true;
         }
 
         get propBrand() {
@@ -617,133 +390,59 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), Player) : Player);
 
-          if (player) {
-            var role = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-              error: Error()
-            }), PoolEnum) : PoolEnum).role + player.roleType);
+          if (!player) {
+            return;
+          }
 
-            if (!role) {
-              var node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
-                error: Error()
-              }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
-                error: Error()
-              }), PrefabsEnum) : PrefabsEnum).hero, player.roleType);
-              role = node.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                error: Error()
-              }), Role) : Role);
+          var role = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+            error: Error()
+          }), PoolEnum) : PoolEnum).role + player.roleType);
+
+          if (!role) {
+            var node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
+              error: Error()
+            }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+              error: Error()
+            }), PrefabsEnum) : PrefabsEnum).hero, player.roleType);
+            role = node.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+              error: Error()
+            }), Role) : Role);
+          }
+
+          var layer = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
+            error: Error()
+          }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
+            error: Error()
+          }), LayerEnum) : LayerEnum).Layer_1_Ground);
+          layer.addChild(role.node);
+          var selfPos = event.selfCollider.node.worldPosition;
+          role.node.setWorldPosition(selfPos);
+          role.hp = 2;
+          role.node.active = true;
+          var propBrand = event.selfCollider.getComponent(_crd && PropBrand === void 0 ? (_reportPossibleCrUseOfPropBrand({
+            error: Error()
+          }), PropBrand) : PropBrand);
+
+          if (!player.addRole(role)) {
+            role.node.active = false;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).role + player.roleType, role);
+            var propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
+
+            if (propBrandIndex !== -1) {
+              this.tempPropBrandList.splice(propBrandIndex, 1);
             }
 
-            var layer = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
-              error: Error()
-            }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
-              error: Error()
-            }), LayerEnum) : LayerEnum).Layer_1_Ground);
-            layer.addChild(role.node);
-            var selfPos = event.selfCollider.node.worldPosition;
-            role.node.setWorldPosition(selfPos);
-            role.hp = 2;
-            role.node.active = true;
-            player.addRole(role);
-            var pos = player.getNextPos();
-            var index = player.length - 1;
-            this.tempV3.set(selfPos);
-            this.tempV3.y += 1;
-            (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
-              error: Error()
-            }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
-              error: Error()
-            }), SoundEnum) : SoundEnum).Sound_PlaceGold);
-            (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
-              error: Error()
-            }), EffectManager) : EffectManager).instance.addShowEffect(this.tempV3, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
-              error: Error()
-            }), EffectEnum) : EffectEnum).door, 2);
-            var cPos = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(Vec3.ZERO);
-            cPos.z = (selfPos.z + pos.z) * 0.5;
-            var f = selfPos.x - pos.x;
-            f = f / Math.abs(f);
-            cPos.x = (selfPos.x + pos.x) * 0.5 - f * 3; // cPos.set()
-
-            (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
-              error: Error()
-            }), EffectManager) : EffectManager).instance.addShowEffect_3(role.node, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
-              error: Error()
-            }), EffectEnum) : EffectEnum).up, 1);
-            var roleFBXNode = role.fbxManager.node;
-            var scaleR = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(roleFBXNode.scale); // roleFBXNode.setPosition(Vec3.ZERO);
-
-            (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
-              error: Error()
-            }), FlashRedManager) : FlashRedManager).instance.flashRed(role.node, role.meshCreateDataList, 0.5);
-            var scale2 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(scaleR).multiplyScalar(1.5);
-            tween(roleFBXNode).to(0.4, {
-              scale: scale2
-            }).to(0.2, {
-              scale: scaleR
-            }, {
-              easing: "backOut"
-            }).call(() => {
-              console.log("curScale:" + roleFBXNode.scale, "scaleR:" + scaleR, "scale2:" + scale2);
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.V3 = scaleR;
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.V3 = scale2;
-            }).start();
-            role.attackIN = true;
-            (_crd && JumpManager === void 0 ? (_reportPossibleCrUseOfJumpManager({
-              error: Error()
-            }), JumpManager) : JumpManager).instance.jumpBezierByPoints(role.node, 3, cPos, pos).onComplete(() => {
-              (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
-                error: Error()
-              }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
-                error: Error()
-              }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
-              role.attackIN = false;
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.V3 = pos;
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.V3 = cPos; // const selfPos = role.node.position;
-
-              var selfPos2 = player.getNextPos(index);
-              player.node.addChild(role.node);
-              role.node.setWorldPosition(selfPos2);
-              player.upMoveBoundary();
-
-              if (role.arms) {
-                role.arms.active = true;
-              } // EffectManager.instance.addShowEffect(selfPos, EffectEnum.up, 2)
-
-
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.V3 = selfPos2; // role.node.setPosition(selfPos);
-            }).setEndPosPre(prop => {
-              var curPos = player.getNextPos(index);
-              curPos.subtract(pos);
-              curPos.add(prop.worldPosition);
-              prop.setWorldPosition(curPos);
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.V3 = curPos;
-            }, null);
-            var propBrand = event.selfCollider.getComponent(_crd && PropBrand === void 0 ? (_reportPossibleCrUseOfPropBrand({
-              error: Error()
-            }), PropBrand) : PropBrand);
-            this.tempPropBrandList.splice(this.tempPropBrandList.indexOf(propBrand), 1);
             this.scheduleOnce(() => {
-              Tween.stopAllByTarget(this.node);
+              if (!propBrand) {
+                return;
+              }
+
               propBrand.node.active = false;
               (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
@@ -752,7 +451,131 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
               propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
             }, 0);
+            return;
           }
+
+          var pos = player.getNextPos();
+          var index = player.length - 1;
+          this.tempV3.set(selfPos);
+          this.tempV3.y += 1;
+          (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+            error: Error()
+          }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            error: Error()
+          }), SoundEnum) : SoundEnum).Sound_PlaceGold);
+          (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
+            error: Error()
+          }), EffectManager) : EffectManager).instance.addShowEffect(this.tempV3, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
+            error: Error()
+          }), EffectEnum) : EffectEnum).door, 2);
+          var cPos = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.V3.set(Vec3.ZERO);
+          cPos.z = (selfPos.z + pos.z) * 0.5;
+          var f = selfPos.x - pos.x;
+          f = f / Math.abs(f);
+          cPos.x = (selfPos.x + pos.x) * 0.5 - f * 3;
+          (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
+            error: Error()
+          }), EffectManager) : EffectManager).instance.addShowEffect_3(role.node, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
+            error: Error()
+          }), EffectEnum) : EffectEnum).up, 1);
+          var roleFBXNode = role.fbxManager.node;
+          var scaleR = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.V3.set(roleFBXNode.scale);
+          (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
+            error: Error()
+          }), FlashRedManager) : FlashRedManager).instance.flashRed(role.node, role.meshCreateDataList, 0.5);
+          var scale2 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.V3.set(scaleR).multiplyScalar(1.5);
+          tween(roleFBXNode).to(0.4, {
+            scale: scale2
+          }).to(0.2, {
+            scale: scaleR
+          }, {
+            easing: "backOut"
+          }).call(() => {
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.V3 = scaleR;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.V3 = scale2;
+          }).start();
+          role.attackIN = true;
+          (_crd && JumpManager === void 0 ? (_reportPossibleCrUseOfJumpManager({
+            error: Error()
+          }), JumpManager) : JumpManager).instance.jumpBezierByPoints(role.node, 3, cPos, pos).onComplete(() => {
+            (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+              error: Error()
+            }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+              error: Error()
+            }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
+            role.attackIN = false;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.V3 = pos;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.V3 = cPos;
+            var selfPos2 = player.getNextPos(index);
+            player.node.addChild(role.node);
+            role.node.setWorldPosition(selfPos2);
+            player.upMoveBoundary();
+
+            if (role.arms) {
+              role.arms.active = true;
+            }
+
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.V3 = selfPos2;
+          }).setEndPosPre(prop => {
+            var curPos = player.getNextPos(index);
+            curPos.subtract(pos);
+            curPos.add(prop.worldPosition);
+            prop.setWorldPosition(curPos);
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.V3 = curPos;
+          }, null);
+          this.tempPropBrandList.splice(this.tempPropBrandList.indexOf(propBrand), 1);
+          this.scheduleOnce(() => {
+            Tween.stopAllByTarget(this.node);
+            propBrand.node.active = false;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
+            propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+          }, 0);
+        }
+
+        findLalianGate(root) {
+          if (!root) {
+            return null;
+          }
+
+          var gate = root.getComponent(_crd && PropLalianGate === void 0 ? (_reportPossibleCrUseOfPropLalianGate({
+            error: Error()
+          }), PropLalianGate) : PropLalianGate);
+
+          if (gate) {
+            return gate;
+          }
+
+          for (var i = 0; i < root.children.length; i++) {
+            var result = this.findLalianGate(root.children[i]);
+
+            if (result) {
+              return result;
+            }
+          }
+
+          return null;
         }
 
       }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "showCount", [_dec2], {
@@ -790,94 +613,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 2;
         }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "pa", [_dec7], {
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "lalianGate", [_dec7], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "waveRoleList", [_dec8], {
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "propStartZ", [_dec8], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return [];
+          return 0;
         }
       }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec9], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "tireGateEnabled", [_dec10], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return false;
-        }
-      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "tireGateCount", [_dec11], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 3;
-        }
-      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "tireGateSpacing", [_dec12], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 4.2;
-        }
-      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "tireGateHp", [_dec13], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 1;
-        }
-      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "tireGateScale", [_dec14], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return new Vec3(1.44, 1.44, 1.44);
-        }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "propBackOffset", [_dec15], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 5.4;
-        }
-      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "tireGatePropGap", [_dec16], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 2.8;
-        }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "editorTireTailOffset", [_dec17], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 1.2;
-        }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "tireGateX", [_dec18], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 0.28;
-        }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class2.prototype, "editorTireGateNodes", [_dec19], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return [];
-        }
-      }), _descriptor19 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec20], {
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec10], {
         configurable: true,
         enumerable: true,
         writable: true,
