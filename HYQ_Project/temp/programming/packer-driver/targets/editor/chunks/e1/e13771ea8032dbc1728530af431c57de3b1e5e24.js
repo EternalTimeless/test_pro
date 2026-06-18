@@ -140,6 +140,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
 
         registerBullet(bullet) {
+          if (this._bullets.indexOf(bullet) !== -1) {
+            return;
+          }
+
           this._bullets.push(bullet);
         }
         /** 注销子弹 */
@@ -167,6 +171,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             this._targetGroups[type] = new CollisionTargetGroup(type);
           }
 
+          if (this._targetGroups[type].targets.indexOf(target) !== -1) {
+            return;
+          }
+
           this._targetGroups[type].targets.push(target);
 
           this._targetGroups[type].updateXRange();
@@ -189,6 +197,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           }
 
           group.updateXRange();
+        }
+
+        clearBullets() {
+          while (this._bullets.length > 0) {
+            const bullet = this._bullets[this._bullets.length - 1];
+
+            if (!bullet) {
+              this._bullets.pop();
+
+              continue;
+            }
+
+            bullet.forceRecycle();
+
+            if (this._bullets[this._bullets.length - 1] === bullet) {
+              this._bullets.pop();
+            }
+          }
+
+          for (let i = 0; i < this._bucketCount; i++) {
+            this._bulletBuckets[i].length = 0;
+          }
         }
 
         getNearestTarget(fromPos, targetTags = []) {

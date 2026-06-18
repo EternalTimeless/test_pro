@@ -88,6 +88,10 @@ export default class BulletBattle3D extends Component {
         }
     }
 
+    public forceRecycle(): void {
+        this.over();
+    }
+
     /**
      * 
      * @param rot 角度
@@ -136,6 +140,10 @@ export default class BulletBattle3D extends Component {
         battle.Hit(this._damage);
         battle.repelBattleTarget(this.node, this._repelPower);
         this._attackCount--;
+        if (this.triggerDieTime == -1 && this._attackCount <= 0) {
+            this.over();
+            return;
+        }
         const now = Date.now() * 0.001;
         if (now - BulletBattle3D._effectWindowStart >= BulletBattle3D._hitEffectWindow) {
             BulletBattle3D._effectWindowStart = now;

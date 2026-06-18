@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, EventType, EventManager, GameOverPanel, _dec, _class, _crd, ccclass, property, UIButtonEvent;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, EventType, EventManager, GameOverPanel, BulletMonsterCollisionManager, _dec, _class, _crd, ccclass, property, UIButtonEvent;
 
   function _reportPossibleCrUseOfEventType(extras) {
     _reporterNs.report("EventType", "../../../Base/EnumList", _context.meta, extras);
@@ -13,6 +13,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfGameOverPanel(extras) {
     _reporterNs.report("GameOverPanel", "./GameOverPanel", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfBulletMonsterCollisionManager(extras) {
+    _reporterNs.report("BulletMonsterCollisionManager", "../../Battle/BulletMonsterCollisionManager", _context.meta, extras);
   }
 
   return {
@@ -30,6 +34,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       EventManager = _unresolved_3.default;
     }, function (_unresolved_4) {
       GameOverPanel = _unresolved_4.GameOverPanel;
+    }, function (_unresolved_5) {
+      BulletMonsterCollisionManager = _unresolved_5.default;
     }],
     execute: function () {
       _crd = true;
@@ -48,6 +54,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_crd && GameOverPanel === void 0 ? (_reportPossibleCrUseOfGameOverPanel({
             error: Error()
           }), GameOverPanel) : GameOverPanel).instance.hide();
+          (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
+            error: Error()
+          }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.clearBullets();
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
           }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({

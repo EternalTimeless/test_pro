@@ -620,6 +620,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         TimeFlowsBackWard() {
+          this._attackTime = 0.5;
+          this.shootRoleStartIndex = 0;
+
           for (let i = 0; i < this.curCount; i++) {
             const role = this.role;
             this.roleList.push(role);

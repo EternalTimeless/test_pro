@@ -92,6 +92,9 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
     /** 注册子弹 */
     public registerBullet(bullet: BulletBattle3D): void {
+        if (this._bullets.indexOf(bullet) !== -1) {
+            return;
+        }
         this._bullets.push(bullet);
     }
 
@@ -113,6 +116,9 @@ export default class BulletMonsterCollisionManager extends Singleton {
         if (!this._targetGroups[type]) {
             this._targetGroups[type] = new CollisionTargetGroup(type);
         }
+        if (this._targetGroups[type].targets.indexOf(target) !== -1) {
+            return;
+        }
         this._targetGroups[type].targets.push(target);
         this._targetGroups[type].updateXRange();
     }
@@ -131,6 +137,23 @@ export default class BulletMonsterCollisionManager extends Singleton {
             group.targets.pop();
         }
         group.updateXRange();
+    }
+
+    public clearBullets(): void {
+        while (this._bullets.length > 0) {
+            const bullet = this._bullets[this._bullets.length - 1];
+            if (!bullet) {
+                this._bullets.pop();
+                continue;
+            }
+            bullet.forceRecycle();
+            if (this._bullets[this._bullets.length - 1] === bullet) {
+                this._bullets.pop();
+            }
+        }
+        for (let i = 0; i < this._bucketCount; i++) {
+            this._bulletBuckets[i].length = 0;
+        }
     }
 
     public getNearestTarget(fromPos: Vec3, targetTags: COLLIDE_TYPE[] = []): BattleTarget3D | null {

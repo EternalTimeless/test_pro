@@ -65,6 +65,13 @@ export class PropLalianGate extends BattleTarget3D {
         return this.propGapZ + Math.max(0, count) * this.nodeSpacingZ;
     }
 
+    public Hit(damage: number): number {
+        if (this.animating && !this.finished) {
+            return this.MaxHp > 0 ? this.curHp / this.MaxHp : 0;
+        }
+        return super.Hit(damage);
+    }
+
     public canLockBulletFromWorldX(worldX: number): boolean {
         if (this.finished || !this.cube || !this.cube.active || !this.cube.activeInHierarchy) {
             return false;
@@ -116,6 +123,7 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     private playHitStep(): void {
+        const animDuration = this.getHitAnimDuration();
         const closeSegmentIndex = this.segmentIndex + 1;
         const closeSegment = this.segments[closeSegmentIndex];
         if (!closeSegment) {
@@ -130,13 +138,13 @@ export class PropLalianGate extends BattleTarget3D {
         }
         this.flashRed();
 
-        this.applySegmentProgress(closeSegment, closeSegmentIndex, 1, true);
+        this.applySegmentProgress(closeSegment, closeSegmentIndex, 1, true, animDuration);
         this.segmentIndex = closeSegmentIndex;
 
         const previewSegmentIndex = this.segmentIndex + 1;
         const previewSegment = this.segments[previewSegmentIndex];
         if (previewSegment) {
-            this.applySegmentProgress(previewSegment, previewSegmentIndex, 0.5, true);
+            this.applySegmentProgress(previewSegment, previewSegmentIndex, 0.5, true, animDuration);
         }
 
         const remainHits = this.getRemainSegmentCount();
@@ -147,16 +155,23 @@ export class PropLalianGate extends BattleTarget3D {
             const cubePos = this.cube.position;
             Tween.stopAllByTarget(this.cube);
             tween(this.cube)
-                .to(this.hitAnimTime, { position: v3(cubePos.x, cubePos.y, closeSegment.position.z) }, { easing: 'cubicOut' })
+                .to(animDuration, { position: v3(cubePos.x, cubePos.y, closeSegment.position.z) }, { easing: 'sineOut' })
+                .call(() => {
+                    this.finishHitStep();
+                })
                 .start();
+        } else {
+            this.scheduleOnce(() => {
+                this.finishHitStep();
+            }, animDuration);
         }
+    }
 
-        this.scheduleOnce(() => {
-            this.animating = false;
-            if (this.segmentIndex >= this.segments.length - 1) {
-                this.completeGate();
-            }
-        }, this.hitAnimTime);
+    private finishHitStep(): void {
+        this.animating = false;
+        if (this.segmentIndex >= this.segments.length - 1) {
+            this.completeGate();
+        }
     }
 
     private completeGate(): void {
@@ -277,7 +292,7 @@ export class PropLalianGate extends BattleTarget3D {
         }
     }
 
-    private applySegmentProgress(segment: Node, segmentIndex: number, progress: number, useTween: boolean): void {
+    private applySegmentProgress(segment: Node, segmentIndex: number, progress: number, useTween: boolean, duration: number = this.getHitAnimDuration()): void {
         const startPosList = this.segmentChildStartPos[segmentIndex];
         if (!segment || !startPosList) {
             return;
@@ -298,12 +313,16 @@ export class PropLalianGate extends BattleTarget3D {
             const targetPos = v3(targetX, startPos.y, startPos.z);
             if (useTween) {
                 tween(part)
-                    .to(this.hitAnimTime, { position: targetPos }, { easing: 'cubicOut' })
+                    .to(duration, { position: targetPos }, { easing: 'sineOut' })
                     .start();
             } else {
                 part.setPosition(targetPos);
             }
         }
+    }
+
+    private getHitAnimDuration(): number {
+        return Math.max(0.16, this.hitAnimTime);
     }
 
     private getRemainSegmentCount(): number {

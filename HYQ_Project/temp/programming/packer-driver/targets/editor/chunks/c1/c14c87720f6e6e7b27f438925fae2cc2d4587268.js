@@ -189,6 +189,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return this.propGapZ + Math.max(0, count) * this.nodeSpacingZ;
         }
 
+        Hit(damage) {
+          if (this.animating && !this.finished) {
+            return this.MaxHp > 0 ? this.curHp / this.MaxHp : 0;
+          }
+
+          return super.Hit(damage);
+        }
+
         canLockBulletFromWorldX(worldX) {
           var _ref, _this$lalianRoot;
 
@@ -244,6 +252,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         playHitStep() {
           var _this$hpLabel;
 
+          const animDuration = this.getHitAnimDuration();
           const closeSegmentIndex = this.segmentIndex + 1;
           const closeSegment = this.segments[closeSegmentIndex];
 
@@ -266,13 +275,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           this.flashRed();
-          this.applySegmentProgress(closeSegment, closeSegmentIndex, 1, true);
+          this.applySegmentProgress(closeSegment, closeSegmentIndex, 1, true, animDuration);
           this.segmentIndex = closeSegmentIndex;
           const previewSegmentIndex = this.segmentIndex + 1;
           const previewSegment = this.segments[previewSegmentIndex];
 
           if (previewSegment) {
-            this.applySegmentProgress(previewSegment, previewSegmentIndex, 0.5, true);
+            this.applySegmentProgress(previewSegment, previewSegmentIndex, 0.5, true, animDuration);
           }
 
           const remainHits = this.getRemainSegmentCount();
@@ -282,20 +291,26 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (this.cube) {
             const cubePos = this.cube.position;
             Tween.stopAllByTarget(this.cube);
-            tween(this.cube).to(this.hitAnimTime, {
+            tween(this.cube).to(animDuration, {
               position: v3(cubePos.x, cubePos.y, closeSegment.position.z)
             }, {
-              easing: 'cubicOut'
+              easing: 'sineOut'
+            }).call(() => {
+              this.finishHitStep();
             }).start();
+          } else {
+            this.scheduleOnce(() => {
+              this.finishHitStep();
+            }, animDuration);
           }
+        }
 
-          this.scheduleOnce(() => {
-            this.animating = false;
+        finishHitStep() {
+          this.animating = false;
 
-            if (this.segmentIndex >= this.segments.length - 1) {
-              this.completeGate();
-            }
-          }, this.hitAnimTime);
+          if (this.segmentIndex >= this.segments.length - 1) {
+            this.completeGate();
+          }
         }
 
         completeGate() {
@@ -444,7 +459,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        applySegmentProgress(segment, segmentIndex, progress, useTween) {
+        applySegmentProgress(segment, segmentIndex, progress, useTween, duration = this.getHitAnimDuration()) {
           const startPosList = this.segmentChildStartPos[segmentIndex];
 
           if (!segment || !startPosList) {
@@ -470,15 +485,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             const targetPos = v3(targetX, startPos.y, startPos.z);
 
             if (useTween) {
-              tween(part).to(this.hitAnimTime, {
+              tween(part).to(duration, {
                 position: targetPos
               }, {
-                easing: 'cubicOut'
+                easing: 'sineOut'
               }).start();
             } else {
               part.setPosition(targetPos);
             }
           }
+        }
+
+        getHitAnimDuration() {
+          return Math.max(0.16, this.hitAnimTime);
         }
 
         getRemainSegmentCount() {

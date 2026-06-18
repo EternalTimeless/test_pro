@@ -199,6 +199,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this._registered = false;
           }
         }
+
+        forceRecycle() {
+          this.over();
+        }
         /**
          * 
          * @param rot 角度
@@ -247,6 +251,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           battle.Hit(this._damage);
           battle.repelBattleTarget(this.node, this._repelPower);
           this._attackCount--;
+
+          if (this.triggerDieTime == -1 && this._attackCount <= 0) {
+            this.over();
+            return;
+          }
+
           const now = Date.now() * 0.001;
 
           if (now - BulletBattle3D._effectWindowStart >= BulletBattle3D._hitEffectWindow) {
