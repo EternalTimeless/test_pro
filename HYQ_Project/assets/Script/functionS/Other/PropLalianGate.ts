@@ -45,6 +45,9 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: 'Cube消失时长', tooltip: '所有拉链段完成后，Cube 缩小消失动画的持续时间。' })
     public cubeHideTime: number = 0.08;
 
+    @property({ type: CCFloat, displayName: '子弹锁定范围X', tooltip: '玩家进入该拉链左右 X 范围后，子弹才会锁定 Cube；玩家在中间区域时不锁定。' })
+    public bulletLockRangeX: number = 2.5;
+
     private segments: Node[] = [];
     private segmentChildStartPos: Vec3[][] = [];
     private segmentIndex: number = 0;
@@ -60,6 +63,14 @@ export class PropLalianGate extends BattleTarget3D {
     public getPropStartZ(): number {
         const count = this.nodeCount > 0 ? this.nodeCount : this.getAuthoredSegmentCount();
         return this.propGapZ + Math.max(0, count) * this.nodeSpacingZ;
+    }
+
+    public canLockBulletFromWorldX(worldX: number): boolean {
+        if (this.finished || !this.cube || !this.cube.active || !this.cube.activeInHierarchy) {
+            return false;
+        }
+        const centerNode = this.lalianRoot ?? this.cube ?? this.node;
+        return Math.abs(worldX - centerNode.worldPosition.x) <= this.bulletLockRangeX;
     }
 
     protected start(): void {

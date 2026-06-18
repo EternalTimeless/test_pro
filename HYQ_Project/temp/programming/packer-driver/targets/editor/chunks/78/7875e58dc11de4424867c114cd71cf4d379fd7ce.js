@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -53,6 +53,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("AudioManager", "../../Base/AudioManager", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfBulletMonsterCollisionManager(extras) {
+    _reporterNs.report("BulletMonsterCollisionManager", "../Battle/BulletMonsterCollisionManager", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfBulletBattle3D(extras) {
+    _reporterNs.report("BulletBattle3D", "../Battle/Battle3D/Bullet/BulletBattle3D", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -66,6 +74,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       Component = _cc.Component;
       Node = _cc.Node;
       Quat = _cc.Quat;
+      Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
       FbxManager = _unresolved_2.FbxManager;
     }, function (_unresolved_3) {
@@ -85,13 +94,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       AttackParkPlay = _unresolved_8.AttackParkPlay;
     }, function (_unresolved_9) {
       AudioManager = _unresolved_9.default;
+    }, function (_unresolved_10) {
+      BulletMonsterCollisionManager = _unresolved_10.default;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "86381loO/lKPYw+1SpcYu+c", "Role", undefined);
 
-      __checkObsolete__(['_decorator', 'CCInteger', 'Color', 'Component', 'Node', 'Quat']);
+      __checkObsolete__(['_decorator', 'CCInteger', 'Color', 'Component', 'Node', 'Quat', 'Vec3']);
 
       ({
         ccclass,
@@ -176,7 +187,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return 1 + this.attackNum;
         }
 
-        attackEvent(num, visualBulletCount = this.visualBulletCount, damageScale = 1) {
+        attackEvent(num, visualBulletCount = this.visualBulletCount, damageScale = 1, lockWorldX = this.node.worldPosition.x) {
           var _this$effect;
 
           if (visualBulletCount <= 0) {
@@ -194,6 +205,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), BulletManager) : BulletManager).instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
           Role.bulletLayer.addChild(bullet.node);
           bullet.node.setWorldPosition(pos);
+          Role.aimBulletToCurrentTarget(bullet, lockWorldX);
           (_this$effect = this.effect) == null || _this$effect.play();
 
           for (let i = 1; i < visualBulletCount; i++) {
@@ -206,14 +218,37 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             bullet.node.x += x;
             const z = (Math.random() - 0.5) * 4;
             bullet.node.z += z;
+            Role.aimBulletToCurrentTarget(bullet, lockWorldX);
           }
+        }
+
+        static aimBulletToCurrentTarget(bullet, lockWorldX = bullet.node.worldPosition.x) {
+          const target = (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
+            error: Error()
+          }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.getLockableLalianTarget(bullet.node.worldPosition, lockWorldX, bullet.attackTargetTag);
+          const hitNode = target == null ? void 0 : target.hitNode;
+
+          if (!hitNode) {
+            return;
+          }
+
+          Vec3.subtract(Role.aimVector, hitNode.worldPosition, bullet.node.worldPosition);
+          Role.aimVector.y = 0;
+
+          if (Role.aimVector.lengthSqr() <= 0.0001) {
+            return;
+          }
+
+          Role.aimVector.normalize();
+          Quat.fromViewUp(Role.aimQuat, Role.aimVector, Vec3.UP);
+          bullet.node.setWorldRotation(Role.aimQuat);
         }
 
       }, _class3.soundType = (_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
         error: Error()
       }), SoundEnum) : SoundEnum).Sound_Gun, _class3.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
         error: Error()
-      }), BulletEnum) : BulletEnum).arrow, _class3.power = 1, _class3.repelPower = 0, _class3.bulletLayer = void 0, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec2], {
+      }), BulletEnum) : BulletEnum).arrow, _class3.power = 1, _class3.repelPower = 0, _class3.bulletLayer = void 0, _class3.aimVector = new Vec3(), _class3.aimQuat = new Quat(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,

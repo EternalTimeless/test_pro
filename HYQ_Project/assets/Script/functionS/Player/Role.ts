@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Color, Component, Node, Quat } from 'cc';
+import { _decorator, CCInteger, Color, Component, Node, Quat, Vec3 } from 'cc';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { BulletEnum, LayerEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import BulletManager from '../Battle/BulletManager';
@@ -7,6 +7,8 @@ import { MeshFlashData } from '../Battle/Base/BattleTargetBase';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 import { AttackParkPlay } from '../Battle/Battle3D/AttackParkPlay';
 import AudioManager from '../../Base/AudioManager';
+import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
+import BulletBattle3D from '../Battle/Battle3D/Bullet/BulletBattle3D';
 const { ccclass, property } = _decorator;
 
 @ccclass('Role')
@@ -41,6 +43,9 @@ export class Role extends Component {
 
     @property(AttackParkPlay)
     public effect: AttackParkPlay;
+
+    private static aimVector: Vec3 = new Vec3();
+    private static aimQuat: Quat = new Quat();
     // public attackTime: number = 0;
     // ==================== 闪红效果 ====================
     @property({ type: [MeshFlashData], tooltip: '闪红MeshRenderer配置列表，可在属性检查器中编辑' })
@@ -73,7 +78,7 @@ export class Role extends Component {
         return 1 + this.attackNum;
     }
 
-    public attackEvent(num: number, visualBulletCount: number = this.visualBulletCount, damageScale: number = 1) {
+    public attackEvent(num: number, visualBulletCount: number = this.visualBulletCount, damageScale: number = 1, lockWorldX: number = this.node.worldPosition.x) {
         if (visualBulletCount <= 0) {
             return;
         }
@@ -85,6 +90,7 @@ export class Role extends Component {
         const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
+        Role.aimBulletToCurrentTarget(bullet, lockWorldX);
         this.effect?.play();
 
         for (let i = 1; i < visualBulletCount; i++) {
@@ -95,8 +101,25 @@ export class Role extends Component {
             bullet.node.x += x;
             const z = (Math.random() - 0.5) * 4;
             bullet.node.z += z;
+            Role.aimBulletToCurrentTarget(bullet, lockWorldX);
         }
 
+    }
+
+    public static aimBulletToCurrentTarget(bullet: BulletBattle3D, lockWorldX: number = bullet.node.worldPosition.x): void {
+        const target = BulletMonsterCollisionManager.instance.getLockableLalianTarget(bullet.node.worldPosition, lockWorldX, bullet.attackTargetTag);
+        const hitNode = target?.hitNode;
+        if (!hitNode) {
+            return;
+        }
+        Vec3.subtract(Role.aimVector, hitNode.worldPosition, bullet.node.worldPosition);
+        Role.aimVector.y = 0;
+        if (Role.aimVector.lengthSqr() <= 0.0001) {
+            return;
+        }
+        Role.aimVector.normalize();
+        Quat.fromViewUp(Role.aimQuat, Role.aimVector, Vec3.UP);
+        bullet.node.setWorldRotation(Role.aimQuat);
     }
 
 

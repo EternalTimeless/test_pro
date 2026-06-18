@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, instantiate, Label, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, ColliderTag, COLLIDE_TYPE, EventType, SoundEnum, EventManager, AudioManager, TweenTool, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _crd, ccclass, property, PropLalianGate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, instantiate, Label, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, ColliderTag, COLLIDE_TYPE, EventType, SoundEnum, EventManager, AudioManager, TweenTool, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _crd, ccclass, property, PropLalianGate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -135,6 +135,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         type: CCFloat,
         displayName: 'Cube消失时长',
         tooltip: '所有拉链段完成后，Cube 缩小消失动画的持续时间。'
+      }), _dec13 = property({
+        type: CCFloat,
+        displayName: '子弹锁定范围X',
+        tooltip: '玩家进入该拉链左右 X 范围后，子弹才会锁定 Cube；玩家在中间区域时不锁定。'
       }), _dec(_class = (_class2 = class PropLalianGate extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
@@ -163,6 +167,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "cubeHideTime", _descriptor11, this);
 
+          _initializerDefineProperty(this, "bulletLockRangeX", _descriptor12, this);
+
           this.segments = [];
           this.segmentChildStartPos = [];
           this.segmentIndex = 0;
@@ -181,6 +187,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         getPropStartZ() {
           const count = this.nodeCount > 0 ? this.nodeCount : this.getAuthoredSegmentCount();
           return this.propGapZ + Math.max(0, count) * this.nodeSpacingZ;
+        }
+
+        canLockBulletFromWorldX(worldX) {
+          var _ref, _this$lalianRoot;
+
+          if (this.finished || !this.cube || !this.cube.active || !this.cube.activeInHierarchy) {
+            return false;
+          }
+
+          const centerNode = (_ref = (_this$lalianRoot = this.lalianRoot) != null ? _this$lalianRoot : this.cube) != null ? _ref : this.node;
+          return Math.abs(worldX - centerNode.worldPosition.x) <= this.bulletLockRangeX;
         }
 
         start() {
@@ -324,9 +341,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         prepareLalian() {
-          var _this$lalianRoot, _this$cube2;
+          var _this$lalianRoot2, _this$cube2;
 
-          this.lalianRoot = (_this$lalianRoot = this.lalianRoot) != null ? _this$lalianRoot : this.findNodeByName(this.node, 'Lalian');
+          this.lalianRoot = (_this$lalianRoot2 = this.lalianRoot) != null ? _this$lalianRoot2 : this.findNodeByName(this.node, 'Lalian');
           this.cube = (_this$cube2 = this.cube) != null ? _this$cube2 : this.findNodeByName(this.lalianRoot, 'Cube');
           this.segments.length = 0;
           this.segmentChildStartPos.length = 0;
@@ -390,9 +407,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getAuthoredSegmentCount() {
-          var _this$lalianRoot2, _this$cube3;
+          var _this$lalianRoot3, _this$cube3;
 
-          const root = (_this$lalianRoot2 = this.lalianRoot) != null ? _this$lalianRoot2 : this.findNodeByName(this.node, 'Lalian');
+          const root = (_this$lalianRoot3 = this.lalianRoot) != null ? _this$lalianRoot3 : this.findNodeByName(this.node, 'Lalian');
           const cube = (_this$cube3 = this.cube) != null ? _this$cube3 : this.findNodeByName(root, 'Cube');
 
           if (!root) {
@@ -608,6 +625,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         writable: true,
         initializer: function () {
           return 0.08;
+        }
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "bulletLockRangeX", [_dec13], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 2.5;
         }
       })), _class2)) || _class));
 

@@ -234,7 +234,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               var role = this.roleList[(this.shootRoleStartIndex + i) % this.roleList.length];
 
               if (!role.attackIN) {
-                role.attackEvent(0); // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
+                role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x); // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
                 // const animState = role.fbxManager.setAnimation(animIndex, false);
                 // const endTime = animState.duration;
                 // const animScale = endTime / attackTime;
@@ -739,7 +739,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
             error: Error()
           }), Role) : Role).bulletLayer.addChild(bullet.node);
-          bullet.node.setWorldPosition(pos); // this.effect?.play();
+          bullet.node.setWorldPosition(pos);
+          (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).aimBulletToCurrentTarget(bullet, this.node.worldPosition.x); // this.effect?.play();
         } // private _soundTime: number = 0;
         // // private soundInterval: number = 0.2;
         // private attackSound(dt: number) {

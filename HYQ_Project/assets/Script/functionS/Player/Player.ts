@@ -106,7 +106,7 @@ export class Player extends UnityUpComponent {
             for (let i = 0; i < shootCount; i++) {
                 const role = this.roleList[(this.shootRoleStartIndex + i) % this.roleList.length];
                 if (!role.attackIN) {
-                    role.attackEvent(0);
+                    role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x);
                     // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
                     // const animState = role.fbxManager.setAnimation(animIndex, false);
                     // const endTime = animState.duration;
@@ -444,6 +444,7 @@ export class Player extends UnityUpComponent {
         const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, Role.power, Role.repelPower);
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
+        Role.aimBulletToCurrentTarget(bullet, this.node.worldPosition.x);
         // this.effect?.play();
     }
 

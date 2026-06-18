@@ -12830,7 +12830,7 @@
     },
     "cube": null,
     "hpLabel": null,
-    "nodeCount": 4,
+    "nodeCount": 5,
     "hitPerNode": 1,
     "nodeSpacingZ": 0.8,
     "closeX": 0.1,
@@ -12838,6 +12838,7 @@
     "moveCount": 0,
     "hitAnimTime": 0.12,
     "cubeHideTime": 0.08,
+    "bulletLockRangeX": 2.5,
     "_id": "7dcN364+hKwK2mMelPSqVH"
   },
   {
@@ -21324,6 +21325,7 @@
     "moveCount": 0,
     "hitAnimTime": 0.12,
     "cubeHideTime": 0.08,
+    "bulletLockRangeX": 2.5,
     "_id": "afePEzgF9KsYT1zPVfAqP3"
   },
   {

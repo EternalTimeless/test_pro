@@ -133,7 +133,71 @@ export default class BulletMonsterCollisionManager extends Singleton {
         group.updateXRange();
     }
 
+    public getNearestTarget(fromPos: Vec3, targetTags: COLLIDE_TYPE[] = []): BattleTarget3D | null {
+        let nearest: BattleTarget3D = null;
+        let minDistSq = Number.MAX_VALUE;
+        const tags = targetTags && targetTags.length > 0 ? targetTags : this.getTargetTypeList();
+        for (let ti = 0; ti < tags.length; ti++) {
+            const group = this._targetGroups[tags[ti]];
+            if (!group) {
+                continue;
+            }
+            for (let i = 0; i < group.targets.length; i++) {
+                const target = group.targets[i];
+                if (!target || target.isDie || !target.node.active) {
+                    continue;
+                }
+                const hitPos = target.hitNode.worldPosition;
+                const dx = hitPos.x - fromPos.x;
+                const dy = hitPos.y - fromPos.y;
+                const dz = hitPos.z - fromPos.z;
+                const distSq = dx * dx + dy * dy + dz * dz;
+                if (distSq < minDistSq) {
+                    minDistSq = distSq;
+                    nearest = target;
+                }
+            }
+        }
+        return nearest;
+    }
+
     /** 获取桶索引 */
+    public getLockableLalianTarget(fromPos: Vec3, lockWorldX: number, targetTags: COLLIDE_TYPE[] = []): BattleTarget3D | null {
+        let nearest: BattleTarget3D = null;
+        let minDistSq = Number.MAX_VALUE;
+        const tags = targetTags && targetTags.length > 0 ? targetTags : this.getTargetTypeList();
+        for (let ti = 0; ti < tags.length; ti++) {
+            const group = this._targetGroups[tags[ti]];
+            if (!group) {
+                continue;
+            }
+            for (let i = 0; i < group.targets.length; i++) {
+                const target = group.targets[i];
+                if (!target || target.isDie || !target.node.active) {
+                    continue;
+                }
+                const lockChecker = (target as any).canLockBulletFromWorldX;
+                if (typeof lockChecker !== 'function' || !lockChecker.call(target, lockWorldX)) {
+                    continue;
+                }
+                const hitNode = target.hitNode;
+                if (!hitNode || !hitNode.active || !hitNode.activeInHierarchy) {
+                    continue;
+                }
+                const hitPos = hitNode.worldPosition;
+                const dx = hitPos.x - fromPos.x;
+                const dy = hitPos.y - fromPos.y;
+                const dz = hitPos.z - fromPos.z;
+                const distSq = dx * dx + dy * dy + dz * dz;
+                if (distSq < minDistSq) {
+                    minDistSq = distSq;
+                    nearest = target;
+                }
+            }
+        }
+        return nearest;
+    }
+
     private _getBucketIdx(z: number): number {
         const idx = ((z - this._zMin) / this._bucketSize) | 0;
         if (idx < 0) return 0;
@@ -263,4 +327,12 @@ export default class BulletMonsterCollisionManager extends Singleton {
     }
 
     private _frameCount: number = 0;
+
+    private getTargetTypeList(): COLLIDE_TYPE[] {
+        const list: COLLIDE_TYPE[] = [];
+        for (const typeStr in this._targetGroups) {
+            list.push(Number(typeStr) as COLLIDE_TYPE);
+        }
+        return list;
+    }
 }

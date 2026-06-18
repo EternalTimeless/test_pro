@@ -190,8 +190,90 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           group.updateXRange();
         }
+
+        getNearestTarget(fromPos, targetTags = []) {
+          let nearest = null;
+          let minDistSq = Number.MAX_VALUE;
+          const tags = targetTags && targetTags.length > 0 ? targetTags : this.getTargetTypeList();
+
+          for (let ti = 0; ti < tags.length; ti++) {
+            const group = this._targetGroups[tags[ti]];
+
+            if (!group) {
+              continue;
+            }
+
+            for (let i = 0; i < group.targets.length; i++) {
+              const target = group.targets[i];
+
+              if (!target || target.isDie || !target.node.active) {
+                continue;
+              }
+
+              const hitPos = target.hitNode.worldPosition;
+              const dx = hitPos.x - fromPos.x;
+              const dy = hitPos.y - fromPos.y;
+              const dz = hitPos.z - fromPos.z;
+              const distSq = dx * dx + dy * dy + dz * dz;
+
+              if (distSq < minDistSq) {
+                minDistSq = distSq;
+                nearest = target;
+              }
+            }
+          }
+
+          return nearest;
+        }
         /** 获取桶索引 */
 
+
+        getLockableLalianTarget(fromPos, lockWorldX, targetTags = []) {
+          let nearest = null;
+          let minDistSq = Number.MAX_VALUE;
+          const tags = targetTags && targetTags.length > 0 ? targetTags : this.getTargetTypeList();
+
+          for (let ti = 0; ti < tags.length; ti++) {
+            const group = this._targetGroups[tags[ti]];
+
+            if (!group) {
+              continue;
+            }
+
+            for (let i = 0; i < group.targets.length; i++) {
+              const target = group.targets[i];
+
+              if (!target || target.isDie || !target.node.active) {
+                continue;
+              }
+
+              const lockChecker = target.canLockBulletFromWorldX;
+
+              if (typeof lockChecker !== 'function' || !lockChecker.call(target, lockWorldX)) {
+                continue;
+              }
+
+              const hitNode = target.hitNode;
+
+              if (!hitNode || !hitNode.active || !hitNode.activeInHierarchy) {
+                continue;
+              }
+
+              const hitPos = hitNode.worldPosition;
+              const dx = hitPos.x - fromPos.x;
+              const dy = hitPos.y - fromPos.y;
+              const dz = hitPos.z - fromPos.z;
+              const distSq = dx * dx + dy * dy + dz * dz;
+
+              if (distSq < minDistSq) {
+                minDistSq = distSq;
+                nearest = target;
+              }
+            }
+          }
+
+          return nearest;
+        }
 
         _getBucketIdx(z) {
           const idx = (z - this._zMin) / this._bucketSize | 0;
@@ -328,6 +410,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           }
 
           this._frameCount++;
+        }
+
+        getTargetTypeList() {
+          const list = [];
+
+          for (const typeStr in this._targetGroups) {
+            list.push(Number(typeStr));
+          }
+
+          return list;
         }
 
       }) || _class2));

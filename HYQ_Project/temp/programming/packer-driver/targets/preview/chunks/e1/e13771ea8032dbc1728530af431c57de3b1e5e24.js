@@ -190,8 +190,98 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           group.updateXRange();
         }
+
+        getNearestTarget(fromPos, targetTags) {
+          if (targetTags === void 0) {
+            targetTags = [];
+          }
+
+          var nearest = null;
+          var minDistSq = Number.MAX_VALUE;
+          var tags = targetTags && targetTags.length > 0 ? targetTags : this.getTargetTypeList();
+
+          for (var ti = 0; ti < tags.length; ti++) {
+            var group = this._targetGroups[tags[ti]];
+
+            if (!group) {
+              continue;
+            }
+
+            for (var i = 0; i < group.targets.length; i++) {
+              var target = group.targets[i];
+
+              if (!target || target.isDie || !target.node.active) {
+                continue;
+              }
+
+              var hitPos = target.hitNode.worldPosition;
+              var dx = hitPos.x - fromPos.x;
+              var dy = hitPos.y - fromPos.y;
+              var dz = hitPos.z - fromPos.z;
+              var distSq = dx * dx + dy * dy + dz * dz;
+
+              if (distSq < minDistSq) {
+                minDistSq = distSq;
+                nearest = target;
+              }
+            }
+          }
+
+          return nearest;
+        }
         /** 获取桶索引 */
 
+
+        getLockableLalianTarget(fromPos, lockWorldX, targetTags) {
+          if (targetTags === void 0) {
+            targetTags = [];
+          }
+
+          var nearest = null;
+          var minDistSq = Number.MAX_VALUE;
+          var tags = targetTags && targetTags.length > 0 ? targetTags : this.getTargetTypeList();
+
+          for (var ti = 0; ti < tags.length; ti++) {
+            var group = this._targetGroups[tags[ti]];
+
+            if (!group) {
+              continue;
+            }
+
+            for (var i = 0; i < group.targets.length; i++) {
+              var target = group.targets[i];
+
+              if (!target || target.isDie || !target.node.active) {
+                continue;
+              }
+
+              var lockChecker = target.canLockBulletFromWorldX;
+
+              if (typeof lockChecker !== 'function' || !lockChecker.call(target, lockWorldX)) {
+                continue;
+              }
+
+              var hitNode = target.hitNode;
+
+              if (!hitNode || !hitNode.active || !hitNode.activeInHierarchy) {
+                continue;
+              }
+
+              var hitPos = hitNode.worldPosition;
+              var dx = hitPos.x - fromPos.x;
+              var dy = hitPos.y - fromPos.y;
+              var dz = hitPos.z - fromPos.z;
+              var distSq = dx * dx + dy * dy + dz * dz;
+
+              if (distSq < minDistSq) {
+                minDistSq = distSq;
+                nearest = target;
+              }
+            }
+          }
+
+          return nearest;
+        }
 
         _getBucketIdx(z) {
           var idx = (z - this._zMin) / this._bucketSize | 0;
@@ -330,6 +420,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           }
 
           this._frameCount++;
+        }
+
+        getTargetTypeList() {
+          var list = [];
+
+          for (var typeStr in this._targetGroups) {
+            list.push(Number(typeStr));
+          }
+
+          return list;
         }
 
       }) || _class2));
