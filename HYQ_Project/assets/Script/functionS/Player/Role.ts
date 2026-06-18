@@ -94,7 +94,7 @@ export class Role extends Component {
         bullet.node.setWorldPosition(pos);
         Role.aimBulletToCurrentTarget(bullet, lockWorldX);
         batchRenderer.registerBullet(bullet);
-        this.effect?.play();
+        // this.effect?.play();
 
         for (let i = 1; i < visualBulletCount; i++) {
             const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);

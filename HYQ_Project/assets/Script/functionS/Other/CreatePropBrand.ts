@@ -68,6 +68,12 @@ export class CreatePropBrand extends UnityUpComponent {
 
     private tempV3: Vec3 = new Vec3();
 
+    private modelVisualGroup: Node = null;
+
+    private spriteVisualGroup: Node = null;
+
+    private labelVisualGroup: Node = null;
+
     private get activeLalianGate() {
         if (!this.lalianGate) {
             this.lalianGate = this.findLalianGate(this.node);
@@ -84,6 +90,7 @@ export class CreatePropBrand extends UnityUpComponent {
 
     start() {
         const startZ = this.activePropStartZ;
+        this.ensureVisualGroups();
 
         for (let i = 0; i < this.showCount; i++) {
             const p = this.propBrand;
@@ -92,6 +99,7 @@ export class CreatePropBrand extends UnityUpComponent {
             p.node.x = 0;
             p.node.y = this.height;
             p.node.z = startZ + i * this.distance;
+            this.bindPropBrandVisuals(p);
         }
 
         const gate = this.activeLalianGate;
@@ -134,6 +142,7 @@ export class CreatePropBrand extends UnityUpComponent {
                         p.node.y = -0.753;
                     }
                 }
+                p.updateVisualTransform();
             }
         }
 
@@ -147,9 +156,11 @@ export class CreatePropBrand extends UnityUpComponent {
                     p.node.y = -0.753;
                 }
             }
+            p.updateVisualTransform();
 
             if (p.node.z <= -30) {
                 this.tempPropBrandList.splice(i, 1);
+                p.setVisualActive(false);
                 p.node.active = false;
                 PoolManager.instance.setPool(PoolEnum.Prop + this.type, p);
             }
@@ -165,6 +176,7 @@ export class CreatePropBrand extends UnityUpComponent {
             p.node.x = 0;
             p.node.y = this.height;
             p.node.z = appendStartZ + i * this.distance;
+            this.bindPropBrandVisuals(p);
             this.propBrandList.push(p);
         }
     }
@@ -212,6 +224,7 @@ export class CreatePropBrand extends UnityUpComponent {
         }
 
         p.node.active = true;
+        p.setVisualActive(true);
         p.init(this.count);
         return p;
     }
@@ -260,6 +273,7 @@ export class CreatePropBrand extends UnityUpComponent {
                 if (!propBrand) {
                     return;
                 }
+                propBrand.setVisualActive(false);
                 propBrand.node.active = false;
                 PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
                 propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
@@ -317,6 +331,7 @@ export class CreatePropBrand extends UnityUpComponent {
         }
         this.scheduleOnce(() => {
             Tween.stopAllByTarget(this.node);
+            propBrand.setVisualActive(false);
             propBrand.node.active = false;
             PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
             propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
@@ -328,9 +343,31 @@ export class CreatePropBrand extends UnityUpComponent {
         if (propBrandIndex !== -1) {
             this.tempPropBrandList.splice(propBrandIndex, 1);
         }
+        propBrand.setVisualActive(false);
         propBrand.node.active = false;
         PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
         propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+    }
+
+    private ensureVisualGroups(): void {
+        if (this.modelVisualGroup && this.spriteVisualGroup && this.labelVisualGroup) {
+            return;
+        }
+        this.modelVisualGroup = this.createVisualGroup("PropBrand_Model_Group");
+        this.spriteVisualGroup = this.createVisualGroup("PropBrand_Sprite_Group");
+        this.labelVisualGroup = this.createVisualGroup("PropBrand_Label_Group");
+    }
+
+    private createVisualGroup(name: string): Node {
+        const group = new Node(`${name}_${this.node.name}`);
+        this.wallNode.addChild(group);
+        group.setPosition(Vec3.ZERO);
+        return group;
+    }
+
+    private bindPropBrandVisuals(propBrand: PropBrand): void {
+        this.ensureVisualGroups();
+        propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
     }
 
     private getAddRoleMaxCount(player: Player): number {

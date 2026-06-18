@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 267268920.6718,
+      "mTimestamp": 269628559.6223,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -24526,7 +24526,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/CreatePropBrand.ts": {
       "mTimestamp": {
-        "mtime": 1781770838588.3125,
+        "mtime": 1781773962640.7617,
         "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
       },
       "chunkId": "e2cd37831230a7474a5c89ec9f0764c2d6ce1581",
@@ -25219,7 +25219,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropBrand.ts": {
       "mTimestamp": {
-        "mtime": 1781764199973.056,
+        "mtime": 1781774005656.2295,
         "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
       },
       "chunkId": "ac0e66d1df96447f3ea6b579b5067cb87a880d84",
@@ -25235,11 +25235,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 77
+              "column": 75
             },
             "end": {
               "line": 1,
-              "column": 81
+              "column": 79
             }
           }
         }
@@ -25775,7 +25775,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Role.ts": {
       "mTimestamp": {
-        "mtime": 1781769069159.3147,
+        "mtime": 1781773986543.8552,
         "uuid": "86381968-3bf9-4a3d-8c3e-d52a5c62ef9c"
       },
       "chunkId": "7875e58dc11de4424867c114cd71cf4d379fd7ce",

@@ -7899,5 +7899,12 @@
     "url": "db://assets/Script/functionS/Battle/BulletBatchRenderer.ts",
     "value": {},
     "versionCode": 1
+  },
+  "b74fc0c2-4c67-4dd4-8d74-9612ad56cfb1": {
+    "url": "db://assets/GameRes/Image/img/auto-atlas.pac",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
   }
 }

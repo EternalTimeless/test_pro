@@ -230,6 +230,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isMove = false;
           this.pendingReleaseCount = 0;
           this.tempV3 = new Vec3();
+          this.modelVisualGroup = null;
+          this.spriteVisualGroup = null;
+          this.labelVisualGroup = null;
         }
 
         get activeLalianGate() {
@@ -250,6 +253,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         start() {
           var startZ = this.activePropStartZ;
+          this.ensureVisualGroups();
 
           for (var i = 0; i < this.showCount; i++) {
             var p = this.propBrand;
@@ -258,6 +262,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             p.node.x = 0;
             p.node.y = this.height;
             p.node.z = startZ + i * this.distance;
+            this.bindPropBrandVisuals(p);
           }
 
           var gate = this.activeLalianGate;
@@ -315,6 +320,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                   p.node.y = -0.753;
                 }
               }
+
+              p.updateVisualTransform();
             }
           }
 
@@ -330,8 +337,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }
             }
 
+            _p.updateVisualTransform();
+
             if (_p.node.z <= -30) {
               this.tempPropBrandList.splice(_i, 1);
+
+              _p.setVisualActive(false);
+
               _p.node.active = false;
               (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
@@ -352,6 +364,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             p.node.x = 0;
             p.node.y = this.height;
             p.node.z = appendStartZ + i * this.distance;
+            this.bindPropBrandVisuals(p);
             this.propBrandList.push(p);
           }
         }
@@ -412,6 +425,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           p.node.active = true;
+          p.setVisualActive(true);
           p.init(this.count);
           return p;
         }
@@ -493,6 +507,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 return;
               }
 
+              propBrand.setVisualActive(false);
               propBrand.node.active = false;
               (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
@@ -599,6 +614,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.scheduleOnce(() => {
             Tween.stopAllByTarget(this.node);
+            propBrand.setVisualActive(false);
             propBrand.node.active = false;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
@@ -616,6 +632,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.tempPropBrandList.splice(propBrandIndex, 1);
           }
 
+          propBrand.setVisualActive(false);
           propBrand.node.active = false;
           (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
             error: Error()
@@ -623,6 +640,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
           propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+        }
+
+        ensureVisualGroups() {
+          if (this.modelVisualGroup && this.spriteVisualGroup && this.labelVisualGroup) {
+            return;
+          }
+
+          this.modelVisualGroup = this.createVisualGroup("PropBrand_Model_Group");
+          this.spriteVisualGroup = this.createVisualGroup("PropBrand_Sprite_Group");
+          this.labelVisualGroup = this.createVisualGroup("PropBrand_Label_Group");
+        }
+
+        createVisualGroup(name) {
+          var group = new Node(name + "_" + this.node.name);
+          this.wallNode.addChild(group);
+          group.setPosition(Vec3.ZERO);
+          return group;
+        }
+
+        bindPropBrandVisuals(propBrand) {
+          this.ensureVisualGroups();
+          propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
         }
 
         getAddRoleMaxCount(player) {

@@ -1,7 +1,7 @@
 System.register(["cc"], function (_export, _context) {
   "use strict";
 
-  var _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Collider, Component, Label, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _crd, ccclass, property, PropBrand;
+  var _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Collider, Component, Label, Sprite, Vec3, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _crd, ccclass, property, PropBrandVisualKind, PropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -18,18 +18,27 @@ System.register(["cc"], function (_export, _context) {
       Collider = _cc.Collider;
       Component = _cc.Component;
       Label = _cc.Label;
+      Sprite = _cc.Sprite;
+      Vec3 = _cc.Vec3;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "6cd5aN9EmlJw5P0fgCs+YC/", "PropBrand", undefined);
 
-      __checkObsolete__(['_decorator', 'Collider', 'Component', 'Label', 'labelAssembler', 'Node']);
+      __checkObsolete__(['_decorator', 'Collider', 'Component', 'Label', 'Node', 'Sprite', 'Vec3']);
 
       ({
         ccclass,
         property
       } = _decorator);
+
+      PropBrandVisualKind = /*#__PURE__*/function (PropBrandVisualKind) {
+        PropBrandVisualKind[PropBrandVisualKind["Model"] = 0] = "Model";
+        PropBrandVisualKind[PropBrandVisualKind["Sprite"] = 1] = "Sprite";
+        PropBrandVisualKind[PropBrandVisualKind["Label"] = 2] = "Label";
+        return PropBrandVisualKind;
+      }(PropBrandVisualKind || {});
 
       _export("PropBrand", PropBrand = (_dec = ccclass('PropBrand'), _dec2 = property(Label), _dec3 = property(Collider), _dec(_class = (_class2 = class PropBrand extends Component {
         constructor() {
@@ -40,6 +49,89 @@ System.register(["cc"], function (_export, _context) {
           this.count = 0;
 
           _initializerDefineProperty(this, "collide", _descriptor2, this);
+
+          this.visualActive = true;
+          this.visualRecords = [];
+        }
+
+        setVisualActive(active) {
+          if (this.visualActive === active) {
+            return;
+          }
+
+          this.visualActive = active;
+
+          if (this.visualRecords.length > 0) {
+            for (var i = 0; i < this.visualRecords.length; i++) {
+              this.visualRecords[i].node.active = active;
+            }
+
+            return;
+          }
+
+          for (var _i = 0; _i < this.node.children.length; _i++) {
+            this.node.children[_i].active = active;
+          }
+        }
+
+        bindVisualGroups(modelGroup, spriteGroup, labelGroup) {
+          if (this.visualRecords.length <= 0) {
+            var children = this.node.children.concat();
+
+            for (var i = 0; i < children.length; i++) {
+              var child = children[i];
+              var kind = this.getVisualKind(child);
+              this.visualRecords.push({
+                node: child,
+                offset: new Vec3(child.position.x, child.position.y, child.position.z),
+                kind
+              });
+            }
+          }
+
+          for (var _i2 = 0; _i2 < this.visualRecords.length; _i2++) {
+            var record = this.visualRecords[_i2];
+            var group = this.getVisualGroup(record.kind, modelGroup, spriteGroup, labelGroup);
+
+            if (record.node.parent !== group) {
+              record.node.setParent(group);
+            }
+          }
+
+          this.setVisualActive(this.node.active);
+          this.updateVisualTransform();
+        }
+
+        updateVisualTransform() {
+          for (var i = 0; i < this.visualRecords.length; i++) {
+            var record = this.visualRecords[i];
+            record.node.setPosition(this.node.position.x + record.offset.x, this.node.position.y + record.offset.y, this.node.position.z + record.offset.z);
+          }
+        }
+
+        getVisualKind(node) {
+          if (node.getComponent(Label)) {
+            return PropBrandVisualKind.Label;
+          }
+
+          if (node.getComponent(Sprite)) {
+            return PropBrandVisualKind.Sprite;
+          }
+
+          return PropBrandVisualKind.Model;
+        }
+
+        getVisualGroup(kind, modelGroup, spriteGroup, labelGroup) {
+          switch (kind) {
+            case PropBrandVisualKind.Sprite:
+              return spriteGroup;
+
+            case PropBrandVisualKind.Label:
+              return labelGroup;
+
+            default:
+              return modelGroup;
+          }
         }
 
         init(num) {

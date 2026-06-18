@@ -242,7 +242,7 @@
     "propertyPath": [
       "_shadowCastingMode"
     ],
-    "value": 1
+    "value": 0
   },
   {
     "__type__": "cc.Node",
@@ -408,7 +408,7 @@
     "propertyPath": [
       "_shadowCastingMode"
     ],
-    "value": 1
+    "value": 0
   },
   {
     "__type__": "cc.Node",
@@ -668,7 +668,7 @@
     "_isBold": true,
     "_isUnderline": false,
     "_underlineHeight": 2,
-    "_cacheMode": 0,
+    "_cacheMode": 2,
     "_enableOutline": true,
     "_outlineColor": {
       "__type__": "cc.Color",
