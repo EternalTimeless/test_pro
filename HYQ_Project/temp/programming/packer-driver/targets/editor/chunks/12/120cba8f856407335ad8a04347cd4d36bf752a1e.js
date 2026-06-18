@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, Quat, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, Quat, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -165,7 +165,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         type: CCInteger,
         displayName: '+1人数上限',
         tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。'
-      }), _dec5 = property(Node), _dec(_class = (_class2 = (_class3 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), _dec5 = property({
+        type: CCInteger,
+        displayName: '同时发射子弹人数上限',
+        tooltip: '每轮最多允许多少个角色同时发射子弹。只限制射击人数，不影响 +1 总人数。'
+      }), _dec6 = property({
+        type: CCInteger,
+        displayName: '枪口特效最大播放数',
+        tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。'
+      }), _dec7 = property(Node), _dec(_class = (_class2 = (_class3 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor(...args) {
@@ -186,12 +194,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "maxRoleCount", _descriptor3, this);
 
-          this.maxShootingRoleCount = 30;
+          _initializerDefineProperty(this, "maxShootingRoleCount", _descriptor4, this);
+
+          _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor5, this);
+
           this.shootRoleStartIndex = 0;
           this.isLock = false;
 
           // public MoveX: number = 8;
-          _initializerDefineProperty(this, "shootList", _descriptor4, this);
+          _initializerDefineProperty(this, "shootList", _descriptor6, this);
 
           this.shootIndex = 1;
           this.attackIn = false;
@@ -242,12 +253,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             // }
 
             const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
+            const outerLayer = this.getShootingOuterLayer(shootCount);
+            let effectPlayCount = 0;
 
             for (let i = 0; i < shootCount; i++) {
-              const role = this.roleList[(this.shootRoleStartIndex + i) % this.roleList.length];
+              const roleIndex = (this.shootRoleStartIndex + i) % this.roleList.length;
+              const role = this.roleList[roleIndex];
 
               if (!role.attackIN) {
-                role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x); // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
+                const playEffect = this.shouldPlayMuzzleEffect(roleIndex, outerLayer, effectPlayCount);
+
+                if (playEffect) {
+                  effectPlayCount++;
+                }
+
+                role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect); // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
                 // const animState = role.fbxManager.setAnimation(animIndex, false);
                 // const endTime = animState.duration;
                 // const animScale = endTime / attackTime;
@@ -264,6 +284,38 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           } else {
             this._attackTime -= dt;
           }
+        }
+
+        getShootingOuterLayer(shootCount) {
+          let outerLayer = 0;
+
+          for (let i = 0; i < shootCount; i++) {
+            const roleIndex = (this.shootRoleStartIndex + i) % this.roleList.length;
+            const layer = this.getRoleLayer(roleIndex);
+
+            if (layer > outerLayer) {
+              outerLayer = layer;
+            }
+          }
+
+          return outerLayer;
+        }
+
+        shouldPlayMuzzleEffect(roleIndex, outerLayer, effectPlayCount) {
+          if (this.maxMuzzleEffectCount <= 0 || effectPlayCount >= this.maxMuzzleEffectCount) {
+            return false;
+          }
+
+          return this.getRoleLayer(roleIndex) === outerLayer;
+        }
+
+        getRoleLayer(index) {
+          if (index <= 0) {
+            return 0;
+          }
+
+          const effectiveIndex = index - 1;
+          return Math.floor(Math.log2(effectiveIndex / this.LayerCount + 1));
         }
 
         upArms(armwType) {
@@ -770,7 +822,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 55;
         }
-      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "shootList", [_dec5], {
+      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "maxShootingRoleCount", [_dec5], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 30;
+        }
+      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "maxMuzzleEffectCount", [_dec6], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 8;
+        }
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "shootList", [_dec7], {
         configurable: true,
         enumerable: true,
         writable: true,

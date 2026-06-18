@@ -80,7 +80,7 @@ export class Role extends Component {
         return 1 + this.attackNum;
     }
 
-    public attackEvent(num: number, visualBulletCount: number = this.visualBulletCount, damageScale: number = 1, lockWorldX: number = this.node.worldPosition.x) {
+    public attackEvent(num: number, visualBulletCount: number = this.visualBulletCount, damageScale: number = 1, lockWorldX: number = this.node.worldPosition.x, playEffect: boolean = true) {
         if (visualBulletCount <= 0) {
             return;
         }
@@ -94,7 +94,9 @@ export class Role extends Component {
         bullet.node.setWorldPosition(pos);
         Role.aimBulletToCurrentTarget(bullet, lockWorldX);
         batchRenderer.registerBullet(bullet);
-        // this.effect?.play();
+        if (playEffect) {
+            this.effect?.play();
+        }
 
         for (let i = 1; i < visualBulletCount; i++) {
             const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
@@ -131,5 +133,4 @@ export class Role extends Component {
 
 
 }
-
 

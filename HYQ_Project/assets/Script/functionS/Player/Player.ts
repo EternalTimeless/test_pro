@@ -49,7 +49,11 @@ export class Player extends UnityUpComponent {
     @property({ type: CCInteger, displayName: '+1人数上限', tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。' })
     public maxRoleCount: number = 55;
 
+    @property({ type: CCInteger, displayName: '同时发射子弹人数上限', tooltip: '每轮最多允许多少个角色同时发射子弹。只限制射击人数，不影响 +1 总人数。' })
     public maxShootingRoleCount: number = 30;
+
+    @property({ type: CCInteger, displayName: '枪口特效最大播放数', tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。' })
+    public maxMuzzleEffectCount: number = 8;
 
     private shootRoleStartIndex: number = 0;
 
@@ -105,10 +109,17 @@ export class Player extends UnityUpComponent {
             // }
 
             const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
+            const outerLayer = this.getShootingOuterLayer(shootCount);
+            let effectPlayCount = 0;
             for (let i = 0; i < shootCount; i++) {
-                const role = this.roleList[(this.shootRoleStartIndex + i) % this.roleList.length];
+                const roleIndex = (this.shootRoleStartIndex + i) % this.roleList.length;
+                const role = this.roleList[roleIndex];
                 if (!role.attackIN) {
-                    role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x);
+                    const playEffect = this.shouldPlayMuzzleEffect(roleIndex, outerLayer, effectPlayCount);
+                    if (playEffect) {
+                        effectPlayCount++;
+                    }
+                    role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
                     // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
                     // const animState = role.fbxManager.setAnimation(animIndex, false);
                     // const endTime = animState.duration;
@@ -126,6 +137,33 @@ export class Player extends UnityUpComponent {
         } else {
             this._attackTime -= dt;
         }
+    }
+
+    private getShootingOuterLayer(shootCount: number): number {
+        let outerLayer = 0;
+        for (let i = 0; i < shootCount; i++) {
+            const roleIndex = (this.shootRoleStartIndex + i) % this.roleList.length;
+            const layer = this.getRoleLayer(roleIndex);
+            if (layer > outerLayer) {
+                outerLayer = layer;
+            }
+        }
+        return outerLayer;
+    }
+
+    private shouldPlayMuzzleEffect(roleIndex: number, outerLayer: number, effectPlayCount: number): boolean {
+        if (this.maxMuzzleEffectCount <= 0 || effectPlayCount >= this.maxMuzzleEffectCount) {
+            return false;
+        }
+        return this.getRoleLayer(roleIndex) === outerLayer;
+    }
+
+    private getRoleLayer(index: number): number {
+        if (index <= 0) {
+            return 0;
+        }
+        const effectiveIndex = index - 1;
+        return Math.floor(Math.log2(effectiveIndex / this.LayerCount + 1));
     }
 
     public upArms(armwType: ArmsTypeEnum) {

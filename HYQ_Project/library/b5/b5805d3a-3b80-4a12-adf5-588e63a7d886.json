@@ -15733,6 +15733,8 @@
     ],
     "attackSpeed": 2,
     "maxRoleCount": 55,
+    "maxShootingRoleCount": 40,
+    "maxMuzzleEffectCount": 10,
     "shootList": [
       {
         "__id__": 909

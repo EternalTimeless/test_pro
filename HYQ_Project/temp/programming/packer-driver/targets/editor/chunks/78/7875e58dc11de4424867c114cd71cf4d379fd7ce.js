@@ -197,7 +197,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return 1 + this.attackNum;
         }
 
-        attackEvent(num, visualBulletCount = this.visualBulletCount, damageScale = 1, lockWorldX = this.node.worldPosition.x) {
+        attackEvent(num, visualBulletCount = this.visualBulletCount, damageScale = 1, lockWorldX = this.node.worldPosition.x, playEffect = true) {
           if (visualBulletCount <= 0) {
             return;
           }
@@ -216,7 +216,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           Role.bulletLayer.addChild(bullet.node);
           bullet.node.setWorldPosition(pos);
           Role.aimBulletToCurrentTarget(bullet, lockWorldX);
-          batchRenderer.registerBullet(bullet); // this.effect?.play();
+          batchRenderer.registerBullet(bullet);
+
+          if (playEffect) {
+            var _this$effect;
+
+            (_this$effect = this.effect) == null || _this$effect.play();
+          }
 
           for (let i = 1; i < visualBulletCount; i++) {
             const bullet = (_crd && BulletManager === void 0 ? (_reportPossibleCrUseOfBulletManager({
