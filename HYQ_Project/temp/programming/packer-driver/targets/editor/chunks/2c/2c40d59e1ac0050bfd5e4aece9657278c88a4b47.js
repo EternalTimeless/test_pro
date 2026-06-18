@@ -181,6 +181,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "attackR", _descriptor6, this);
 
           this._hl = false;
+          this.runAnimSpeed = 1;
+          this.runAnimStartFrame = 0;
           // public dieTimeScale: number = 1;
           this.isDieD = true;
 
@@ -199,6 +201,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.move.autoMove = true;
           this._hl = false;
           this._hlIn = false;
+          this.runAnimSpeed = 0.9 + Math.random() * 0.25;
+          this.runAnimStartFrame = Math.random();
           (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
             error: Error()
           }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.registerTarget(this);
@@ -325,16 +329,31 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             if (this.move.isMove) {
               if (!this._hl && !this._hlIn) {
                 this.scheduleOnce(() => {
-                  const t = this.fbx.setAnimation(MonsterAnimEnum.run, true);
+                  this.playRunAnimation();
                   this._hl = true;
-                }, 0.2 * Math.random());
+                }, 0.45 * Math.random());
                 this._hlIn = true; // t.delay = Math.random() * 0.5;
               } else {
                 if (this._hl) {
-                  const t = this.fbx.setAnimation(MonsterAnimEnum.run, true);
+                  if (!this.fbx.isCurAnimation(MonsterAnimEnum.run)) {
+                    this.playRunAnimation();
+                  }
                 }
               }
             }
+          }
+        }
+
+        randomizeRunAnimation() {
+          this.runAnimSpeed = 0.9 + Math.random() * 0.25;
+          this.runAnimStartFrame = Math.random();
+        }
+
+        playRunAnimation() {
+          const state = this.fbx.setAnimation(MonsterAnimEnum.run, true, this.runAnimStartFrame);
+
+          if (state) {
+            state.speed = this.runAnimSpeed;
           }
         }
 

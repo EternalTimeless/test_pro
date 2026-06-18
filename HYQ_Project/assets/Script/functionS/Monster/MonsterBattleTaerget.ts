@@ -54,6 +54,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     public attackR: number = 4;
 
     private _hl: boolean = false;
+    private runAnimSpeed: number = 1;
+    private runAnimStartFrame: number = 0;
+
     /** 重写init，在初始化后注册到碰撞管理器 */
     public init(difficulty: number) {
 
@@ -65,6 +68,8 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         this.move.autoMove = true;
         this._hl = false;
         this._hlIn = false;
+        this.runAnimSpeed = 0.9 + Math.random() * 0.25;
+        this.runAnimStartFrame = Math.random();
         BulletMonsterCollisionManager.instance.registerTarget(this);
 
     }
@@ -173,15 +178,16 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             if (this.move.isMove) {
                 if (!this._hl && !this._hlIn) {
                     this.scheduleOnce(() => {
-                        const t = this.fbx.setAnimation(MonsterAnimEnum.run, true);
+                        this.playRunAnimation();
                         this._hl = true;
-                    }, 0.2 * Math.random())
+                    }, 0.45 * Math.random())
                     this._hlIn = true;
                     // t.delay = Math.random() * 0.5;
                 } else {
                     if (this._hl) {
-
-                        const t = this.fbx.setAnimation(MonsterAnimEnum.run, true);
+                        if (!this.fbx.isCurAnimation(MonsterAnimEnum.run)) {
+                            this.playRunAnimation();
+                        }
                     }
                 }
             }
@@ -189,6 +195,18 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     }
 
     private _hlIn: boolean = false;
+
+    public randomizeRunAnimation(): void {
+        this.runAnimSpeed = 0.9 + Math.random() * 0.25;
+        this.runAnimStartFrame = Math.random();
+    }
+
+    private playRunAnimation(): void {
+        const state = this.fbx.setAnimation(MonsterAnimEnum.run, true, this.runAnimStartFrame);
+        if (state) {
+            state.speed = this.runAnimSpeed;
+        }
+    }
 
     private attackEvent() {
         if (this.monsterType == MonsterType.ZombieBrother) {

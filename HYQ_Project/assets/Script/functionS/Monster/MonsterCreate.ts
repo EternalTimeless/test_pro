@@ -76,7 +76,7 @@ export class MonsterCreate extends UnityUpComponent {
     @property({ tooltip: '怪物X轴分布半宽，实际列间距=disX*2/rowCount' })
     public disX: number = 2.5;
 
-    @property({ tooltip: '怪物X轴分布半宽，实际列间距=disX*2/rowCount' })
+    @property({ tooltip: '怪物中路限位半宽，怪物进入左右石板区时会被限制在该范围内' })
     public disX2: number = 3;
 
     @property(CCFloat)
@@ -102,6 +102,18 @@ export class MonsterCreate extends UnityUpComponent {
 
     @property({ tooltip: '怪物Z轴每层间距' })
     public layerGapZ: number = 0.8;
+
+    @property({ type: CCFloat, displayName: '出生X随机扰动', tooltip: '怪物出生时在当前列位置基础上额外随机偏移，减少队列感。' })
+    public spawnRandomX: number = 0.28;
+
+    @property({ type: CCFloat, displayName: '出生Z随机扰动', tooltip: '怪物出生时在当前层位置基础上额外随机前后偏移，减少横排整齐感。' })
+    public spawnRandomZ: number = 0.25;
+
+    @property({ type: CCFloat, displayName: '出生缩放随机', tooltip: '怪物出生时随机缩放幅度，0.08 表示 0.92-1.08。' })
+    public spawnScaleRandom: number = 0.06;
+
+    @property({ type: CCFloat, displayName: '出生朝向随机', tooltip: '怪物出生时 Y 轴随机旋转角度，轻微打散朝向。' })
+    public spawnYawRandom: number = 8;
 
     private _monsterList: MonsterBattleTaerget[] = [];
 
@@ -690,6 +702,7 @@ export class MonsterCreate extends UnityUpComponent {
         monster.init((this._monsterBossCount * 2) + 1);
         monster.move.moveMod = MoveModEnum.PosMove;
         monster.node.setPosition(this.clampMonsterX(0), 0, z);
+        this.applySpawnVariation(monster);
         tempV3.set(monster.node.worldPosition);
         tempV3.z = this.stage_0;
         monster.move.pos = tempV3;
@@ -731,8 +744,8 @@ export class MonsterCreate extends UnityUpComponent {
         //         }
         //     }
         // }
-        const z = this._nextSpawnZ + (Math.random() - 0.5) * this.layerGapZ;
-        const rawX = (Math.random() - 0.5) * this.offX + (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
+        const z = this._nextSpawnZ + (Math.random() - 0.5) * (this.layerGapZ + this.spawnRandomZ * 2);
+        const rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
         const x = this.shouldLimitMonsterXAtZ(z) ? this.clampMonsterX(rawX) : rawX;
 
         this.posIndex = (this.posIndex + 1) % this.rowCount;
@@ -740,6 +753,7 @@ export class MonsterCreate extends UnityUpComponent {
         monster.move.moveMod = MoveModEnum.PosMove;
 
         monster.node.setPosition(x, 0, z);
+        this.applySpawnVariation(monster);
 
         tempV3.set(monster.node.worldPosition);
 
@@ -757,6 +771,13 @@ export class MonsterCreate extends UnityUpComponent {
             this._rowCount = 0;
         }
 
+    }
+
+    private applySpawnVariation(monster: MonsterBattleTaerget) {
+        const scale = 1 + (Math.random() - 0.5) * this.spawnScaleRandom * 2;
+        monster.node.setScale(scale, scale, scale);
+        monster.node.setRotationFromEuler(0, (Math.random() - 0.5) * this.spawnYawRandom * 2, 0);
+        monster.randomizeRunAnimation();
     }
 
     private shouldLimitMonsterXAtZ(z: number): boolean {
@@ -778,13 +799,18 @@ export class MonsterCreate extends UnityUpComponent {
     }
 
     private clampMonsterX(x: number): number {
-        if (x > this.middleLaneHalfX) {
-            return this.middleLaneHalfX;
+        const halfX = this.getMiddleLimitHalfX();
+        if (x > halfX) {
+            return halfX;
         }
-        if (x < -this.middleLaneHalfX) {
-            return -this.middleLaneHalfX;
+        if (x < -halfX) {
+            return -halfX;
         }
         return x;
+    }
+
+    private getMiddleLimitHalfX(): number {
+        return this.disX2 > 0 ? this.disX2 : this.middleLaneHalfX;
     }
 
     private limitMonsterToMiddleLane(monster: MonsterBattleTaerget) {
