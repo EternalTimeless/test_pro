@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, GameOverPanel, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -81,6 +81,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("PropLalianGate", "./PropLalianGate", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfGameOverPanel(extras) {
+    _reporterNs.report("GameOverPanel", "../UI/GameOver/GameOverPanel", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -126,6 +130,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       FlashRedManager = _unresolved_13.FlashRedManager;
     }, function (_unresolved_14) {
       PropLalianGate = _unresolved_14.PropLalianGate;
+    }, function (_unresolved_15) {
+      GameOverPanel = _unresolved_15.GameOverPanel;
     }],
     execute: function () {
       _crd = true;
@@ -425,6 +431,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), PropBrand) : PropBrand);
 
+          if ((propBrand == null ? void 0 : propBrand.count) >= 99) {
+            role.node.active = false;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).role + player.roleType, role);
+            this.recycleTriggeredProp(propBrand);
+            (_crd && GameOverPanel === void 0 ? (_reportPossibleCrUseOfGameOverPanel({
+              error: Error()
+            }), GameOverPanel) : GameOverPanel).instance.show(true);
+            return;
+          }
+
           if (!player.addRole(role)) {
             role.node.active = false;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
@@ -432,10 +452,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
               error: Error()
             }), PoolEnum) : PoolEnum).role + player.roleType, role);
-            var propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
 
-            if (propBrandIndex !== -1) {
-              this.tempPropBrandList.splice(propBrandIndex, 1);
+            var _propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
+
+            if (_propBrandIndex !== -1) {
+              this.tempPropBrandList.splice(_propBrandIndex, 1);
             }
 
             this.scheduleOnce(() => {
@@ -541,7 +562,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PoolManager) : PoolManager).instance.V3 = curPos;
           }, null);
-          this.tempPropBrandList.splice(this.tempPropBrandList.indexOf(propBrand), 1);
+          var propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
+
+          if (propBrandIndex !== -1) {
+            this.tempPropBrandList.splice(propBrandIndex, 1);
+          }
+
           this.scheduleOnce(() => {
             Tween.stopAllByTarget(this.node);
             propBrand.node.active = false;
@@ -552,6 +578,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
             propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
           }, 0);
+        }
+
+        recycleTriggeredProp(propBrand) {
+          var propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
+
+          if (propBrandIndex !== -1) {
+            this.tempPropBrandList.splice(propBrandIndex, 1);
+          }
+
+          propBrand.node.active = false;
+          (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+            error: Error()
+          }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
+          propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
         }
 
         findLalianGate(root) {

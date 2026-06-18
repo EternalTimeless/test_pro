@@ -12,6 +12,7 @@ import { EffectManager } from '../Effect/EffectManager';
 import AudioManager from '../../Base/AudioManager';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 import { PropLalianGate } from './PropLalianGate';
+import { GameOverPanel } from '../UI/GameOver/GameOverPanel';
 const { ccclass, property } = _decorator;
 
 type LalianDoneInfo = {
@@ -220,6 +221,13 @@ export class CreatePropBrand extends UnityUpComponent {
         role.node.active = true;
 
         const propBrand = event.selfCollider.getComponent(PropBrand);
+        if (propBrand?.count >= 99) {
+            role.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + player.roleType, role);
+            this.recycleTriggeredProp(propBrand);
+            GameOverPanel.instance.show(true);
+            return;
+        }
         if (!player.addRole(role)) {
             role.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + player.roleType, role);
@@ -282,13 +290,26 @@ export class CreatePropBrand extends UnityUpComponent {
             PoolManager.instance.V3 = curPos;
         }, null);
 
-        this.tempPropBrandList.splice(this.tempPropBrandList.indexOf(propBrand), 1);
+        const propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
+        if (propBrandIndex !== -1) {
+            this.tempPropBrandList.splice(propBrandIndex, 1);
+        }
         this.scheduleOnce(() => {
             Tween.stopAllByTarget(this.node);
             propBrand.node.active = false;
             PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
             propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
         }, 0);
+    }
+
+    private recycleTriggeredProp(propBrand: PropBrand): void {
+        const propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
+        if (propBrandIndex !== -1) {
+            this.tempPropBrandList.splice(propBrandIndex, 1);
+        }
+        propBrand.node.active = false;
+        PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
+        propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
     }
 
     private findLalianGate(root: Node): PropLalianGate | null {
