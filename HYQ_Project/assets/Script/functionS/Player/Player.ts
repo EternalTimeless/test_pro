@@ -47,7 +47,7 @@ export class Player extends UnityUpComponent {
 
     public maxRoleCount: number = 55;
 
-    public maxShootingRoleCount: number = 35;
+    public maxShootingRoleCount: number = 30;
 
     private shootRoleStartIndex: number = 0;
 

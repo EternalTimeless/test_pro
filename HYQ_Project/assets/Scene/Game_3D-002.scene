@@ -12839,6 +12839,7 @@
     "hitAnimTime": 0.12,
     "cubeHideTime": 0.08,
     "bulletLockRangeX": 2.5,
+    "bulletAimShrink": 0.92,
     "_id": "7dcN364+hKwK2mMelPSqVH"
   },
   {
@@ -21318,7 +21319,7 @@
     "cube": null,
     "hpLabel": null,
     "nodeCount": 25,
-    "hitPerNode": 3,
+    "hitPerNode": 4,
     "nodeSpacingZ": 0.8,
     "closeX": 0.1,
     "propGapZ": 1.2,
@@ -21326,6 +21327,7 @@
     "hitAnimTime": 0.12,
     "cubeHideTime": 0.08,
     "bulletLockRangeX": 2.5,
+    "bulletAimShrink": 0.92,
     "_id": "afePEzgF9KsYT1zPVfAqP3"
   },
   {
@@ -21346,7 +21348,7 @@
     "lalianGate": {
       "__id__": 1315
     },
-    "propStartZ": 0,
+    "propStartZ": -0.01,
     "wallNode": {
       "__id__": 776
     },

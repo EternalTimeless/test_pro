@@ -9,6 +9,7 @@ import { AttackParkPlay } from '../Battle/Battle3D/AttackParkPlay';
 import AudioManager from '../../Base/AudioManager';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import BulletBattle3D from '../Battle/Battle3D/Bullet/BulletBattle3D';
+import { PropLalianGate } from '../Other/PropLalianGate';
 const { ccclass, property } = _decorator;
 
 @ccclass('Role')
@@ -108,11 +109,14 @@ export class Role extends Component {
 
     public static aimBulletToCurrentTarget(bullet: BulletBattle3D, lockWorldX: number = bullet.node.worldPosition.x): void {
         const target = BulletMonsterCollisionManager.instance.getLockableLalianTarget(bullet.node.worldPosition, lockWorldX, bullet.attackTargetTag);
-        const hitNode = target?.hitNode;
-        if (!hitNode) {
+        if (!target) {
             return;
         }
-        Vec3.subtract(Role.aimVector, hitNode.worldPosition, bullet.node.worldPosition);
+        const gate = target as PropLalianGate;
+        const aimPos = gate.getLockAimWorldPosition
+            ? gate.getLockAimWorldPosition(bullet.node.worldPosition, Role.aimVector)
+            : target.hitNode.worldPosition;
+        Vec3.subtract(Role.aimVector, aimPos, bullet.node.worldPosition);
         Role.aimVector.y = 0;
         if (Role.aimVector.lengthSqr() <= 0.0001) {
             return;

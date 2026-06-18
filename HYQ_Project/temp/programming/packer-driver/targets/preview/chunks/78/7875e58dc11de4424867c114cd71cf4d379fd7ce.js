@@ -61,6 +61,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("BulletBattle3D", "../Battle/Battle3D/Bullet/BulletBattle3D", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfPropLalianGate(extras) {
+    _reporterNs.report("PropLalianGate", "../Other/PropLalianGate", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -245,13 +249,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var target = (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
             error: Error()
           }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.getLockableLalianTarget(bullet.node.worldPosition, lockWorldX, bullet.attackTargetTag);
-          var hitNode = target == null ? void 0 : target.hitNode;
 
-          if (!hitNode) {
+          if (!target) {
             return;
           }
 
-          Vec3.subtract(Role.aimVector, hitNode.worldPosition, bullet.node.worldPosition);
+          var gate = target;
+          var aimPos = gate.getLockAimWorldPosition ? gate.getLockAimWorldPosition(bullet.node.worldPosition, Role.aimVector) : target.hitNode.worldPosition;
+          Vec3.subtract(Role.aimVector, aimPos, bullet.node.worldPosition);
           Role.aimVector.y = 0;
 
           if (Role.aimVector.lengthSqr() <= 0.0001) {

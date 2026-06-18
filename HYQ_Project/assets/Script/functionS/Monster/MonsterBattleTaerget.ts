@@ -212,7 +212,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         if (this.monsterType == MonsterType.ZombieBrother) {
             CameraMove.instance.Shake2(1);
             AudioManager.inst.playOneShot(SoundEnum.Sound_boss_attack, 0.6);
-            EventManager.instance.emit(EventType.PLAYER_HIT, this.node.worldPosition, 4);
+            EventManager.instance.emit(EventType.PLAYER_HIT, this.node.worldPosition, 10);
         } else {
             const role = this.attackTarget?.getComponent(Role);
             if (role) {

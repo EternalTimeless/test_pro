@@ -48,10 +48,14 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '子弹锁定范围X', tooltip: '玩家进入该拉链左右 X 范围后，子弹才会锁定 Cube；玩家在中间区域时不锁定。' })
     public bulletLockRangeX: number = 2.5;
 
+    @property({ type: CCFloat, displayName: '锁定瞄准缩放', tooltip: '子弹锁定后，实际瞄准点只落在 Cube 可受击范围内的这部分比例，1=完整范围，0.92=略窄一点。' })
+    public bulletAimShrink: number = 0.92;
+
     private segments: Node[] = [];
     private segmentChildStartPos: Vec3[][] = [];
     private segmentIndex: number = 0;
     private cubeStartScale: Vec3 = new Vec3(1, 1, 1);
+    private tempLockAimPos: Vec3 = new Vec3();
     private animating: boolean = false;
     private finished: boolean = false;
     private registered: boolean = false;
@@ -80,6 +84,17 @@ export class PropLalianGate extends BattleTarget3D {
         return Math.abs(worldX - centerNode.worldPosition.x) <= this.bulletLockRangeX;
     }
 
+    public getLockAimWorldPosition(fromPos: Vec3, out: Vec3 = this.tempLockAimPos): Vec3 {
+        const hitNode = this.hitNode;
+        const center = hitNode?.worldPosition ?? this.node.worldPosition;
+        const shrink = Math.max(0.1, Math.min(1, this.bulletAimShrink));
+        const halfX = Math.max(0.02, this.collisionHalfX * shrink);
+        const halfZ = Math.max(0.02, this.collisionHalfZ * shrink);
+        const x = Math.min(center.x + halfX, Math.max(center.x - halfX, fromPos.x));
+        const z = Math.min(center.z + halfZ, Math.max(center.z - halfZ, fromPos.z));
+        return out.set(x, center.y, z);
+    }
+
     protected start(): void {
         this.initGate();
     }
@@ -97,6 +112,7 @@ export class PropLalianGate extends BattleTarget3D {
         if (this.segments.length <= 0 || !this.cube) {
             return;
         }
+        this.prepareCollisionSize();
 
         const totalHp = Math.max(1, this.segments.length - 1);
         this.MaxHp = totalHp;
@@ -106,6 +122,15 @@ export class PropLalianGate extends BattleTarget3D {
         this.animating = false;
         this.updateHpLabel(totalHp);
         this.registerTarget();
+    }
+
+    private prepareCollisionSize(): void {
+        if (this.collisionHalfX <= 0.24) {
+            this.collisionHalfX = 0.45;
+        }
+        if (this.collisionHalfZ <= 0.24) {
+            this.collisionHalfZ = 0.32;
+        }
     }
 
     protected damage(power: number): void {

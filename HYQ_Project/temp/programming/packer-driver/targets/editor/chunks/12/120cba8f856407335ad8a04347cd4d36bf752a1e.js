@@ -173,7 +173,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isDie = false;
           this.curCount = 1;
           this.maxRoleCount = 55;
-          this.maxShootingRoleCount = 35;
+          this.maxShootingRoleCount = 30;
           this.shootRoleStartIndex = 0;
           this.isLock = false;
 

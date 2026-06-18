@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, instantiate, Label, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, ColliderTag, COLLIDE_TYPE, EventType, SoundEnum, EventManager, AudioManager, TweenTool, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _crd, ccclass, property, PropLalianGate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, instantiate, Label, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, ColliderTag, COLLIDE_TYPE, EventType, SoundEnum, EventManager, AudioManager, TweenTool, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _crd, ccclass, property, PropLalianGate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -139,6 +139,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         type: CCFloat,
         displayName: '子弹锁定范围X',
         tooltip: '玩家进入该拉链左右 X 范围后，子弹才会锁定 Cube；玩家在中间区域时不锁定。'
+      }), _dec14 = property({
+        type: CCFloat,
+        displayName: '锁定瞄准缩放',
+        tooltip: '子弹锁定后，实际瞄准点只落在 Cube 可受击范围内的这部分比例，1=完整范围，0.92=略窄一点。'
       }), _dec(_class = (_class2 = class PropLalianGate extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
@@ -169,10 +173,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "bulletLockRangeX", _descriptor12, this);
 
+          _initializerDefineProperty(this, "bulletAimShrink", _descriptor13, this);
+
           this.segments = [];
           this.segmentChildStartPos = [];
           this.segmentIndex = 0;
           this.cubeStartScale = new Vec3(1, 1, 1);
+          this.tempLockAimPos = new Vec3();
           this.animating = false;
           this.finished = false;
           this.registered = false;
@@ -208,6 +215,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return Math.abs(worldX - centerNode.worldPosition.x) <= this.bulletLockRangeX;
         }
 
+        getLockAimWorldPosition(fromPos, out = this.tempLockAimPos) {
+          var _hitNode$worldPositio;
+
+          const hitNode = this.hitNode;
+          const center = (_hitNode$worldPositio = hitNode == null ? void 0 : hitNode.worldPosition) != null ? _hitNode$worldPositio : this.node.worldPosition;
+          const shrink = Math.max(0.1, Math.min(1, this.bulletAimShrink));
+          const halfX = Math.max(0.02, this.collisionHalfX * shrink);
+          const halfZ = Math.max(0.02, this.collisionHalfZ * shrink);
+          const x = Math.min(center.x + halfX, Math.max(center.x - halfX, fromPos.x));
+          const z = Math.min(center.z + halfZ, Math.max(center.z - halfZ, fromPos.z));
+          return out.set(x, center.y, z);
+        }
+
         start() {
           this.initGate();
         }
@@ -226,6 +246,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          this.prepareCollisionSize();
           const totalHp = Math.max(1, this.segments.length - 1);
           this.MaxHp = totalHp;
           this.curHp = totalHp;
@@ -234,6 +255,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.animating = false;
           this.updateHpLabel(totalHp);
           this.registerTarget();
+        }
+
+        prepareCollisionSize() {
+          if (this.collisionHalfX <= 0.24) {
+            this.collisionHalfX = 0.45;
+          }
+
+          if (this.collisionHalfZ <= 0.24) {
+            this.collisionHalfZ = 0.32;
+          }
         }
 
         damage(power) {
@@ -651,6 +682,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         writable: true,
         initializer: function () {
           return 2.5;
+        }
+      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "bulletAimShrink", [_dec14], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.92;
         }
       })), _class2)) || _class));
 

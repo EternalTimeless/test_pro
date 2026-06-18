@@ -373,7 +373,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
               error: Error()
-            }), EventType) : EventType).PLAYER_HIT, this.node.worldPosition, 4);
+            }), EventType) : EventType).PLAYER_HIT, this.node.worldPosition, 10);
           } else {
             var _this$attackTarget;
 
