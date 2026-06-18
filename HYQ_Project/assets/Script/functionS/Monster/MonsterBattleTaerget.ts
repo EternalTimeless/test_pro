@@ -1,4 +1,4 @@
-import { _decorator, CacheMode, CCFloat, Component, Label, labelAssembler, Node, tween, Vec3 } from 'cc';
+import { _decorator, CacheMode, CCFloat, Component, Label, labelAssembler, Node, Quat, tween, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
@@ -62,9 +62,10 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
         super.init(difficulty);
         this.attackIn = false;
-        if (this.monsterType == MonsterType.ZombieBrother)
-
+        if (this.monsterType == MonsterType.ZombieBrother) {
+            this.fixBossHpLabel();
             this.hpLab.string = Math.round(this.curHp).toString();
+        }
         this.move.autoMove = true;
         this._hl = false;
         this._hlIn = false;
@@ -81,8 +82,10 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     protected damage(power: number): void {
         this.flashRed(0.15, null, "monster_Hit" + this.monsterType);
         AudioManager.inst.playOneShot(SoundEnum.Sound_Monster_Hit, 0.25, 0.08);
-        if (this.monsterType == MonsterType.ZombieBrother)
+        if (this.monsterType == MonsterType.ZombieBrother) {
+            this.fixBossHpLabel();
             this.hpLab.string = Math.round(this.curHp).toString();
+        }
     }
 
 
@@ -150,6 +153,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         if (this.isDie) {
             return;
         }
+        if (this.monsterType == MonsterType.ZombieBrother) {
+            this.fixBossHpLabel();
+        }
 
         // if (this.monsterType == MonsterType.ZombieBrother) {
         if (this.attackTarget) {
@@ -199,6 +205,15 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     public randomizeRunAnimation(): void {
         this.runAnimSpeed = 0.9 + Math.random() * 0.25;
         this.runAnimStartFrame = Math.random();
+    }
+
+    private fixBossHpLabel(): void {
+        if (!this.hpLab?.node) {
+            return;
+        }
+        this.hpLab.node.setWorldRotation(Quat.IDENTITY);
+        const scale = this.hpLab.node.scale;
+        this.hpLab.node.setScale(-Math.abs(scale.x), Math.abs(scale.y), Math.abs(scale.z));
     }
 
     private playRunAnimation(): void {

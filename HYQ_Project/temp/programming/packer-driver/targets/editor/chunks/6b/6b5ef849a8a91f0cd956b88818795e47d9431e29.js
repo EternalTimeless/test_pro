@@ -93,6 +93,30 @@ System.register(["cc"], function (_export, _context) {
           return animState;
         }
 
+        prewarmAnimations() {
+          const sk = this.skeleta;
+
+          for (let i = 0; i < this._animName.length; i++) {
+            const aniName = this._animName[i];
+
+            if (!aniName) {
+              continue;
+            }
+
+            const animState = sk.getState(aniName);
+
+            if (!animState) {
+              continue;
+            }
+
+            sk.crossFade(aniName, 0);
+            animState.setTime(0);
+            animState.stop();
+          }
+
+          this._cur = -1;
+        }
+
         isCurAnimation(skT) {
           return this._cur == skT;
         }

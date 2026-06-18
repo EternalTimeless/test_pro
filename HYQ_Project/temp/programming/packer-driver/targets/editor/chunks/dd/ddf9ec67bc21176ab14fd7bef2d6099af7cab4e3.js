@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, EffectEnum, PoolEnum, PrefabsEnum, RoleEnum, PoolManager, PrefabsManager, Role, JumpManager, EffectManager, BezierCurve, JumpCurve3D, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, GuideManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, EffectEnum, PoolEnum, PrefabsEnum, RoleEnum, PoolManager, PrefabsManager, Role, JumpManager, EffectManager, BezierCurve, JumpCurve3D, FbxManager, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, GuideManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -69,6 +69,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("JumpCurve3D", "../Jump/JumpCurve3D", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfFbxManager(extras) {
+    _reporterNs.report("FbxManager", "../SkAnim/FbxManager", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -109,6 +113,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       BezierCurve = _unresolved_12.default;
     }, function (_unresolved_13) {
       JumpCurve3D = _unresolved_13.JumpCurve3D;
+    }, function (_unresolved_14) {
+      FbxManager = _unresolved_14.FbxManager;
     }],
     execute: function () {
       _crd = true;
@@ -171,7 +177,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.loadingProgress.fillRange = progress;
           }
 
-          if (progress >= 1) {
+          if (progress >= 1 && this.isWarmupComplete()) {
             this.loadingNode.active = false;
             this.finishGuide();
           }
@@ -270,7 +276,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             component: _crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
               error: Error()
             }), Role) : Role,
-            count: 40
+            count: 60
           }, {
             poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
               error: Error()
@@ -286,7 +292,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             component: _crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
               error: Error()
             }), Role) : Role,
-            count: 40
+            count: 60
           }, {
             poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
               error: Error()
@@ -302,7 +308,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             component: _crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
               error: Error()
             }), Role) : Role,
-            count: 40
+            count: 60
           }, {
             poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
               error: Error()
@@ -345,11 +351,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             const node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
               error: Error()
             }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns(task.prefabType, task.prefabIndex);
-            node.active = false;
             this.warmupRoot.addChild(node);
+            this.prewarmNode(node);
+            node.active = false;
+            const item = task.component ? node.getComponent(task.component) : node;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
-            }), PoolManager) : PoolManager).instance.setPool(task.poolKey, task.component ? node.getComponent(task.component) : node);
+            }), PoolManager) : PoolManager).instance.setPool(task.poolKey, item);
             task.count--;
             count--;
 
@@ -357,6 +365,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               this.warmupTaskIndex++;
             }
           }
+        }
+
+        prewarmNode(node) {
+          const fbxManagers = node.getComponentsInChildren(_crd && FbxManager === void 0 ? (_reportPossibleCrUseOfFbxManager({
+            error: Error()
+          }), FbxManager) : FbxManager);
+
+          for (let i = 0; i < fbxManagers.length; i++) {
+            fbxManagers[i].prewarmAnimations();
+          }
+        }
+
+        isWarmupComplete() {
+          return this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
         }
 
         findNodeByName(root, name) {

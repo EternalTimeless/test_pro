@@ -70,6 +70,9 @@ export class CreatePropBrand extends UnityUpComponent {
         return this.propStartZ + (this.activeLalianGate?.getPropStartZ() ?? 0);
     }
 
+    public setWaveRoleList(waveRoleList: Node[]): void {
+    }
+
     start() {
         const startZ = this.activePropStartZ;
 

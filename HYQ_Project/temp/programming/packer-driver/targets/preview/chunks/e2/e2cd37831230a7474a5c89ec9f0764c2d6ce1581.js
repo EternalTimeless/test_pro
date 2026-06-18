@@ -228,6 +228,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return this.propStartZ + ((_this$activeLalianGat = (_this$activeLalianGat2 = this.activeLalianGate) == null ? void 0 : _this$activeLalianGat2.getPropStartZ()) != null ? _this$activeLalianGat : 0);
         }
 
+        setWaveRoleList(waveRoleList) {}
+
         start() {
           var startZ = this.activePropStartZ;
 

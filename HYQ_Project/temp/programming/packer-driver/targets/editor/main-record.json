@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 248259606.4823,
+      "mTimestamp": 256756386.1617,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -22058,7 +22058,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Guide/GuideManager.ts": {
       "mTimestamp": {
-        "mtime": 1781677957074.1326,
+        "mtime": 1781753535538.2646,
         "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
       },
       "chunkId": "ddf9ec67bc21176ab14fd7bef2d6099af7cab4e3",
@@ -22253,6 +22253,20 @@
               "column": 49
             }
           }
+        },
+        {
+          "value": "../SkAnim/FbxManager",
+          "resolved": "__unresolved_13",
+          "loc": {
+            "start": {
+              "line": 14,
+              "column": 27
+            },
+            "end": {
+              "line": 14,
+              "column": 49
+            }
+          }
         }
       ],
       "type": "esm",
@@ -22366,6 +22380,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpCurve3D.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/FbxManager.ts"
           },
           "messages": []
         }
@@ -23476,7 +23497,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterBattleTaerget.ts": {
       "mTimestamp": {
-        "mtime": 1781751142948.7751,
+        "mtime": 1781755423240.2825,
         "uuid": "93b74258-97e4-4fcb-bfc0-851d38430b93"
       },
       "chunkId": "2c40d59e1ac0050bfd5e4aece9657278c88a4b47",
@@ -23496,11 +23517,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 100
+              "column": 106
             },
             "end": {
               "line": 1,
-              "column": 104
+              "column": 110
             }
           }
         },
@@ -23812,7 +23833,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts": {
       "mTimestamp": {
-        "mtime": 1781750668391.5132,
+        "mtime": 1781755074815.971,
         "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
       },
       "chunkId": "7cb3e78818d3ca7420c127c4f13ad5587e5cc5d3",
@@ -24442,7 +24463,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/CreatePropBrand.ts": {
       "mTimestamp": {
-        "mtime": 1781752640228.487,
+        "mtime": 1781752972623.7637,
         "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
       },
       "chunkId": "e2cd37831230a7474a5c89ec9f0764c2d6ce1581",
@@ -27056,7 +27077,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/FbxManager.ts": {
       "mTimestamp": {
-        "mtime": 1780287689945.7393,
+        "mtime": 1781753348637.9766,
         "uuid": "6f259595-5aee-41d8-9049-d7188fa1e78a"
       },
       "chunkId": "6b5ef849a8a91f0cd956b88818795e47d9431e29",

@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -83,6 +83,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       _decorator = _cc._decorator;
       CCFloat = _cc.CCFloat;
       Label = _cc.Label;
+      Quat = _cc.Quat;
       tween = _cc.tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -120,7 +121,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "93b74JYl+RPy7/AhR04QwuT", "MonsterBattleTaerget", undefined);
 
-      __checkObsolete__(['_decorator', 'CacheMode', 'CCFloat', 'Component', 'Label', 'labelAssembler', 'Node', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CacheMode', 'CCFloat', 'Component', 'Label', 'labelAssembler', 'Node', 'Quat', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -195,9 +196,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         init(difficulty) {
           super.init(difficulty);
           this.attackIn = false;
+
           if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
-          }), MonsterType) : MonsterType).ZombieBrother) this.hpLab.string = Math.round(this.curHp).toString();
+          }), MonsterType) : MonsterType).ZombieBrother) {
+            this.fixBossHpLabel();
+            this.hpLab.string = Math.round(this.curHp).toString();
+          }
+
           this.move.autoMove = true;
           this._hl = false;
           this._hlIn = false;
@@ -219,9 +225,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
             error: Error()
           }), SoundEnum) : SoundEnum).Sound_Monster_Hit, 0.25, 0.08);
+
           if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
-          }), MonsterType) : MonsterType).ZombieBrother) this.hpLab.string = Math.round(this.curHp).toString();
+          }), MonsterType) : MonsterType).ZombieBrother) {
+            this.fixBossHpLabel();
+            this.hpLab.string = Math.round(this.curHp).toString();
+          }
         }
 
         die() {
@@ -298,6 +308,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         _update(dt) {
           if (this.isDie) {
             return;
+          }
+
+          if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother) {
+            this.fixBossHpLabel();
           } // if (this.monsterType == MonsterType.ZombieBrother) {
 
 
@@ -348,6 +364,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         randomizeRunAnimation() {
           this.runAnimSpeed = 0.9 + Math.random() * 0.25;
           this.runAnimStartFrame = Math.random();
+        }
+
+        fixBossHpLabel() {
+          var _this$hpLab;
+
+          if (!((_this$hpLab = this.hpLab) != null && _this$hpLab.node)) {
+            return;
+          }
+
+          this.hpLab.node.setWorldRotation(Quat.IDENTITY);
+          var scale = this.hpLab.node.scale;
+          this.hpLab.node.setScale(-Math.abs(scale.x), Math.abs(scale.y), Math.abs(scale.z));
         }
 
         playRunAnimation() {

@@ -11,6 +11,7 @@ import { JumpManager } from '../Jump/JumpManager';
 import { EffectManager } from '../Effect/EffectManager';
 import BezierCurve from '../Jump/BezierCurve';
 import { JumpCurve3D } from '../Jump/JumpCurve3D';
+import { FbxManager } from '../SkAnim/FbxManager';
 const { ccclass, property } = _decorator;
 
 type WarmupTask = {
@@ -69,7 +70,7 @@ export class GuideManager extends Component {
             this.loadingProgress.fillRange = progress;
         }
 
-        if (progress >= 1) {
+        if (progress >= 1 && this.isWarmupComplete()) {
             this.loadingNode.active = false;
             this.finishGuide();
         }
@@ -119,9 +120,9 @@ export class GuideManager extends Component {
         PoolManager.instance.setPool(PoolEnum.JumpSequence + JumpCurve3D, new JumpCurve3D());
 
         this.warmupTasks = [
-            { poolKey: PoolEnum.role + RoleEnum.underling, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.underling, component: Role, count: 40 },
-            { poolKey: PoolEnum.role + RoleEnum.dazhuang, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.dazhuang, component: Role, count: 40 },
-            { poolKey: PoolEnum.role + RoleEnum.dazhuangPlus, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.dazhuangPlus, component: Role, count: 40 },
+            { poolKey: PoolEnum.role + RoleEnum.underling, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.underling, component: Role, count: 60 },
+            { poolKey: PoolEnum.role + RoleEnum.dazhuang, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.dazhuang, component: Role, count: 60 },
+            { poolKey: PoolEnum.role + RoleEnum.dazhuangPlus, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.dazhuangPlus, component: Role, count: 60 },
             { poolKey: PoolEnum.effect + EffectEnum.up, prefabType: PrefabsEnum.effect, prefabIndex: EffectEnum.up, count: 6 },
             { poolKey: PoolEnum.effect + EffectEnum.door, prefabType: PrefabsEnum.effect, prefabIndex: EffectEnum.door, count: 6 },
         ];
@@ -136,15 +137,28 @@ export class GuideManager extends Component {
         while (count > 0 && this.warmupTaskIndex < this.warmupTasks.length) {
             const task = this.warmupTasks[this.warmupTaskIndex];
             const node = PrefabsManager.instance.GetPrefabsIns(task.prefabType, task.prefabIndex);
-            node.active = false;
             this.warmupRoot.addChild(node);
-            PoolManager.instance.setPool(task.poolKey, task.component ? node.getComponent(task.component) : node);
+            this.prewarmNode(node);
+            node.active = false;
+            const item = task.component ? node.getComponent(task.component) : node;
+            PoolManager.instance.setPool(task.poolKey, item);
             task.count--;
             count--;
             if (task.count <= 0) {
                 this.warmupTaskIndex++;
             }
         }
+    }
+
+    private prewarmNode(node: Node): void {
+        const fbxManagers = node.getComponentsInChildren(FbxManager);
+        for (let i = 0; i < fbxManagers.length; i++) {
+            fbxManagers[i].prewarmAnimations();
+        }
+    }
+
+    private isWarmupComplete(): boolean {
+        return this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
     }
 
     private findNodeByName(root: Node, name: string): Node | null {

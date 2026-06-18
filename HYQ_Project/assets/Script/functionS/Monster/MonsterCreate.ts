@@ -776,7 +776,8 @@ export class MonsterCreate extends UnityUpComponent {
     private applySpawnVariation(monster: MonsterBattleTaerget) {
         const scale = 1 + (Math.random() - 0.5) * this.spawnScaleRandom * 2;
         monster.node.setScale(scale, scale, scale);
-        monster.node.setRotationFromEuler(0, (Math.random() - 0.5) * this.spawnYawRandom * 2, 0);
+        const yaw = monster.monsterType === MonsterType.ZombieBrother ? 0 : (Math.random() - 0.5) * this.spawnYawRandom * 2;
+        monster.node.setRotationFromEuler(0, yaw, 0);
         monster.randomizeRunAnimation();
     }
 

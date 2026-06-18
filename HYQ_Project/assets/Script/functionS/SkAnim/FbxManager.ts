@@ -67,6 +67,25 @@ export class FbxManager extends Component {
         let animState = sk.getState(aniName);
         return animState;
     }
+
+    public prewarmAnimations(): void {
+        const sk = this.skeleta;
+        for (let i = 0; i < this._animName.length; i++) {
+            const aniName = this._animName[i];
+            if (!aniName) {
+                continue;
+            }
+            const animState = sk.getState(aniName);
+            if (!animState) {
+                continue;
+            }
+            sk.crossFade(aniName, 0);
+            animState.setTime(0);
+            animState.stop();
+        }
+        this._cur = -1;
+    }
+
     public isCurAnimation(skT: number) {
         return this._cur == skT;
     }

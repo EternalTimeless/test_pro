@@ -1102,7 +1102,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         applySpawnVariation(monster) {
           var scale = 1 + (Math.random() - 0.5) * this.spawnScaleRandom * 2;
           monster.node.setScale(scale, scale, scale);
-          monster.node.setRotationFromEuler(0, (Math.random() - 0.5) * this.spawnYawRandom * 2, 0);
+          var yaw = monster.monsterType === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother ? 0 : (Math.random() - 0.5) * this.spawnYawRandom * 2;
+          monster.node.setRotationFromEuler(0, yaw, 0);
           monster.randomizeRunAnimation();
         }
 

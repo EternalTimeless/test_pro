@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1781752698906.2783,
+      "time": 1781761239858.3245,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -618,7 +618,7 @@
       "uuid": "31a7d71c-dbfe-4ce3-920b-07a58fd2c910"
     },
     "GameRes\\Prefab\\Monster_boss.prefab": {
-      "time": 1781231241032.5625,
+      "time": 1781755219386.5352,
       "uuid": "d16848b5-18b3-400e-8cad-f629e5124e7c"
     },
     "GameRes\\Prefab\\Prop_Brand.prefab": {
@@ -1622,7 +1622,7 @@
       "uuid": "3b47f7bf-91d0-40e1-8f86-30832c9f6191"
     },
     "Script\\functionS\\Guide\\GuideManager.ts": {
-      "time": 1781677957074.1326,
+      "time": 1781753535538.2646,
       "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
     },
     "Script\\functionS\\Jump\\BezierCurve.ts": {
@@ -1658,11 +1658,11 @@
       "uuid": "d8070158-7b59-48fe-b8e4-5b2009ffa4e2"
     },
     "Script\\functionS\\Monster\\MonsterBattleTaerget.ts": {
-      "time": 1781751142948.7751,
+      "time": 1781755423240.2825,
       "uuid": "93b74258-97e4-4fcb-bfc0-851d38430b93"
     },
     "Script\\functionS\\Monster\\MonsterCreate.ts": {
-      "time": 1781750668391.5132,
+      "time": 1781755074815.971,
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
@@ -1670,7 +1670,7 @@
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
-      "time": 1781752640228.487,
+      "time": 1781752972623.7637,
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
@@ -1718,7 +1718,7 @@
       "uuid": "09867ea2-0e46-443f-ab24-6b1c92a278f1"
     },
     "Script\\functionS\\SkAnim\\FbxManager.ts": {
-      "time": 1780287689945.7393,
+      "time": 1781753348637.9766,
       "uuid": "6f259595-5aee-41d8-9049-d7188fa1e78a"
     },
     "GameRes\\1219\\A-texiao\\mat\\baodian-add.mtl": {
