@@ -154,11 +154,35 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       _export("ArmsInfo", ArmsInfo = (_dec = ccclass('ArmsInfo'), _dec2 = property({
         type: _crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
           error: Error()
-        }), ArmsTypeEnum) : ArmsTypeEnum
-      }), _dec3 = property(_crd && FbxManager === void 0 ? (_reportPossibleCrUseOfFbxManager({
-        error: Error()
-      }), FbxManager) : FbxManager), _dec4 = property(CCInteger), _dec5 = property(CCInteger), _dec6 = property(CCInteger), _dec7 = property(CCBoolean), _dec8 = property({
+        }), ArmsTypeEnum) : ArmsTypeEnum,
+        displayName: '武器类型',
+        tooltip: '主角吃到该武器后切换到的武器类型，对应 Player.upArms 的 ArmsTypeEnum。'
+      }), _dec3 = property({
+        type: _crd && FbxManager === void 0 ? (_reportPossibleCrUseOfFbxManager({
+          error: Error()
+        }), FbxManager) : FbxManager,
+        displayName: '武器模型动画',
+        tooltip: '拖入武器节点上的 FbxManager。目标死亡后，这个武器节点会飞向主角。'
+      }), _dec4 = property({
+        type: CCInteger,
+        displayName: '底座/滚筒数量',
+        tooltip: '武器下方生成的底座数量。当前临时用轮胎表现，后续可替换为滚筒资源。'
+      }), _dec5 = property({
+        type: CCInteger,
+        displayName: '血量',
+        tooltip: '该阶段需要承受的攻击次数/伤害量。血量降低时会逐步销毁底座/滚筒。'
+      }), _dec6 = property({
+        type: CCInteger,
+        displayName: '完成后放出数量',
+        tooltip: '该武器被打爆后，关联通道放出的 +1/+99 数量。'
+      }), _dec7 = property({
+        type: CCBoolean,
+        displayName: '是否随底座抬升',
+        tooltip: '勾选时武器会随着底座/滚筒生成逐步抬高；不勾选时使用固定高度。'
+      }), _dec8 = property({
         type: CCFloat,
+        displayName: '固定武器高度',
+        tooltip: '当“是否随底座抬升”关闭时，武器模型固定在该高度。',
 
         visible() {
           return !this.isCanMove;
@@ -166,12 +190,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       }), _dec9 = property({
         type: CCFloat,
+        displayName: '固定保留底座数',
+        tooltip: '当“是否随底座抬升”关闭时，底座/滚筒数量高于该值才会下落调整。',
 
         visible() {
           return !this.isCanMove;
         }
 
-      }), _dec10 = property(CCFloat), _dec(_class = (_class2 = class ArmsInfo {
+      }), _dec10 = property({
+        type: CCFloat,
+        displayName: '石板/承载物高度偏移',
+        tooltip: 'wallNode 相对武器模型的高度偏移，用于让承载物跟随武器上下浮动。'
+      }), _dec(_class = (_class2 = class ArmsInfo {
         constructor() {
           _initializerDefineProperty(this, "armsType", _descriptor, this);
 
@@ -259,19 +289,75 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
       })), _class2)) || _class));
 
-      _export("PropArms", PropArms = (_dec11 = ccclass('PropArms'), _dec12 = property(ArmsInfo), _dec13 = property(Label), _dec14 = property(Vec3), _dec15 = property(CCFloat), _dec16 = property(CCFloat), _dec17 = property(CCFloat), _dec18 = property(CCFloat), _dec19 = property(CCFloat), _dec20 = property(Node), _dec21 = property({
+      _export("PropArms", PropArms = (_dec11 = ccclass('PropArms'), _dec12 = property({
+        type: ArmsInfo,
+        displayName: '武器阶段列表',
+        tooltip: '每一项代表一个武器阶段。受击死亡后会切到下一阶段或触发武器飞向主角。'
+      }), _dec13 = property({
+        type: Label,
+        displayName: '血量文本',
+        tooltip: '显示当前阶段剩余血量的 Label。'
+      }), _dec14 = property({
+        type: Vec3,
+        displayName: '底座/滚筒缩放',
+        tooltip: '运行时生成的底座/滚筒资源缩放。当前临时资源是 tire.prefab。'
+      }), _dec15 = property({
+        type: CCFloat,
+        displayName: '底座/滚筒间距',
+        tooltip: '多个底座/滚筒上下叠放时的 Y 轴间距。'
+      }), _dec16 = property({
+        type: CCFloat,
+        displayName: '受击弹跳高度',
+        tooltip: '底座/滚筒被打掉后，剩余底座和武器模型的弹跳高度。'
+      }), _dec17 = property({
+        type: CCFloat,
+        displayName: '波次前方间距',
+        tooltip: '多阶段武器跟随怪物波次刷新时，出现在最前方怪物前面的距离。'
+      }), _dec18 = property({
+        type: CCFloat,
+        displayName: '下一阶段延迟',
+        tooltip: '当前阶段死亡后，生成下一阶段武器前等待的时间。'
+      }), _dec19 = property({
+        type: CCFloat,
+        displayName: '动画速度倍率',
+        tooltip: '受击、底座消失、拉链收拢等动画的速度倍率。数值越大动画越慢。'
+      }), _dec20 = property({
+        type: Node,
+        displayName: '石板/承载节点',
+        tooltip: '武器下方跟随抬升、死亡后下砸的承载节点。没有该节点时只触发武器完成事件。'
+      }), _dec21 = property({
         type: CCInteger,
-        displayName: 'Lalian节点数量(0=全部)'
+        displayName: 'Lalian节点数量(0=全部)',
+        tooltip: '拉链模式下使用的 Node 数量。填 0 表示使用 Lalian 下已有的全部节点。'
       }), _dec22 = property({
         type: CCFloat,
-        displayName: 'Lalian节点Z间距'
+        displayName: 'Lalian节点Z间距',
+        tooltip: '需要自动补足 Lalian 节点时，新节点之间的 Z 轴间距。'
       }), _dec23 = property({
         type: CCFloat,
-        displayName: 'Lalian收拢X'
+        displayName: 'Lalian收拢X',
+        tooltip: '拉链子节点最终靠拢到中心时保留的 X 轴距离，例如左右最终为 +/-0.1。'
       }), _dec24 = property({
         type: CCInteger,
-        displayName: 'Lalian完成移动数量(0=节点数)'
-      }), _dec25 = property(Vec3), _dec26 = property(Node), _dec27 = property(CCFloat), _dec28 = property(CCFloat), _dec11(_class4 = (_class5 = class PropArms extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
+        displayName: 'Lalian完成移动数量(0=节点数)',
+        tooltip: '拉链全部打完后放出的 +1/+99 数量。填 0 表示使用拉链节点数量。'
+      }), _dec25 = property({
+        type: Vec3,
+        displayName: '石板跳跃位置',
+        tooltip: '预留字段：石板/承载节点跳跃时使用的位置参数。当前主要逻辑不依赖它。'
+      }), _dec26 = property({
+        type: Node,
+        displayName: '石板落地特效',
+        tooltip: '石板/承载节点死亡下砸落地时播放的特效节点。'
+      }), _dec27 = property({
+        type: CCFloat,
+        displayName: '承载物浮动速度',
+        tooltip: '武器存活时，石板/承载节点上下浮动的速度。'
+      }), _dec28 = property({
+        type: CCFloat,
+        displayName: '承载物浮动幅度',
+        tooltip: '武器存活时，石板/承载节点上下浮动的高度幅度。'
+      }), _dec11(_class4 = (_class5 = class PropArms extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
         constructor() {

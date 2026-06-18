@@ -25,23 +25,31 @@ enum AnimArms {
 
 @ccclass('ArmsInfo')
 export class ArmsInfo {
-    @property({ type: ArmsTypeEnum })
+    @property({ type: ArmsTypeEnum, displayName: '武器类型', tooltip: '主角吃到该武器后切换到的武器类型，对应 Player.upArms 的 ArmsTypeEnum。' })
     public armsType: ArmsTypeEnum = ArmsTypeEnum.bq;
-    @property(FbxManager)
+
+    @property({ type: FbxManager, displayName: '武器模型动画', tooltip: '拖入武器节点上的 FbxManager。目标死亡后，这个武器节点会飞向主角。' })
     public fbx: FbxManager = null;
-    @property(CCInteger)
+
+    @property({ type: CCInteger, displayName: '底座/滚筒数量', tooltip: '武器下方生成的底座数量。当前临时用轮胎表现，后续可替换为滚筒资源。' })
     public tireCount: number = 3;
-    @property(CCInteger)
+
+    @property({ type: CCInteger, displayName: '血量', tooltip: '该阶段需要承受的攻击次数/伤害量。血量降低时会逐步销毁底座/滚筒。' })
     public hp: number = 3;
-    @property(CCInteger)
+
+    @property({ type: CCInteger, displayName: '完成后放出数量', tooltip: '该武器被打爆后，关联通道放出的 +1/+99 数量。' })
     public moveCount: number = 5;
-    @property(CCBoolean)
+
+    @property({ type: CCBoolean, displayName: '是否随底座抬升', tooltip: '勾选时武器会随着底座/滚筒生成逐步抬高；不勾选时使用固定高度。' })
     public isCanMove: boolean = true;
-    @property({ type: CCFloat, visible(this: ArmsInfo) { return !this.isCanMove; } })
+
+    @property({ type: CCFloat, displayName: '固定武器高度', tooltip: '当“是否随底座抬升”关闭时，武器模型固定在该高度。', visible(this: ArmsInfo) { return !this.isCanMove; } })
     public canHeight: number = 0;
-    @property({ type: CCFloat, visible(this: ArmsInfo) { return !this.isCanMove; } })
+
+    @property({ type: CCFloat, displayName: '固定保留底座数', tooltip: '当“是否随底座抬升”关闭时，底座/滚筒数量高于该值才会下落调整。', visible(this: ArmsInfo) { return !this.isCanMove; } })
     public canTireCount: number = 0;
-    @property(CCFloat)
+
+    @property({ type: CCFloat, displayName: '石板/承载物高度偏移', tooltip: 'wallNode 相对武器模型的高度偏移，用于让承载物跟随武器上下浮动。' })
     public wallHeight: number = 0.5;
 
 }
@@ -50,10 +58,10 @@ export class ArmsInfo {
 @ccclass('PropArms')
 export class PropArms extends BattleTarget3D {
 
-    @property(ArmsInfo)
+    @property({ type: ArmsInfo, displayName: '武器阶段列表', tooltip: '每一项代表一个武器阶段。受击死亡后会切到下一阶段或触发武器飞向主角。' })
     public armsInfoList: ArmsInfo[] = [];
 
-    @property(Label)
+    @property({ type: Label, displayName: '血量文本', tooltip: '显示当前阶段剩余血量的 Label。' })
     public hpLabel: Label = null;
 
     private _curArms: ArmsInfo;
@@ -86,44 +94,46 @@ export class PropArms extends BattleTarget3D {
     private _tireBounceH: number[] = [];
     private _tireBounceTimer: number = -1;
 
-    @property(Vec3)
+    @property({ type: Vec3, displayName: '底座/滚筒缩放', tooltip: '运行时生成的底座/滚筒资源缩放。当前临时资源是 tire.prefab。' })
     private tireScale: Vec3 = new Vec3();
     // private
 
-    @property(CCFloat)
+    @property({ type: CCFloat, displayName: '底座/滚筒间距', tooltip: '多个底座/滚筒上下叠放时的 Y 轴间距。' })
     private tireSpacing: number = 0.2;
 
-    @property(CCFloat)
+    @property({ type: CCFloat, displayName: '受击弹跳高度', tooltip: '底座/滚筒被打掉后，剩余底座和武器模型的弹跳高度。' })
     public jumpHeight: number = 0.5;
 
-    @property(CCFloat)
+    @property({ type: CCFloat, displayName: '波次前方间距', tooltip: '多阶段武器跟随怪物波次刷新时，出现在最前方怪物前面的距离。' })
     public waveFrontGap: number = 2;
 
-    @property(CCFloat)
+    @property({ type: CCFloat, displayName: '下一阶段延迟', tooltip: '当前阶段死亡后，生成下一阶段武器前等待的时间。' })
     public nextStageDelay: number = 0.2;
 
     // @property(AttackParkPlay)
     // public effect: AttackParkPlay;
-    @property(CCFloat)
+    @property({ type: CCFloat, displayName: '动画速度倍率', tooltip: '受击、底座消失、拉链收拢等动画的速度倍率。数值越大动画越慢。' })
     public animScale: number = 1;
-    @property(Node)
+
+    @property({ type: Node, displayName: '石板/承载节点', tooltip: '武器下方跟随抬升、死亡后下砸的承载节点。没有该节点时只触发武器完成事件。' })
     public wallNode: Node;
 
-    @property({ type: CCInteger, displayName: 'Lalian节点数量(0=全部)' })
+    @property({ type: CCInteger, displayName: 'Lalian节点数量(0=全部)', tooltip: '拉链模式下使用的 Node 数量。填 0 表示使用 Lalian 下已有的全部节点。' })
     public lalianNodeCount: number = 0;
 
-    @property({ type: CCFloat, displayName: 'Lalian节点Z间距' })
+    @property({ type: CCFloat, displayName: 'Lalian节点Z间距', tooltip: '需要自动补足 Lalian 节点时，新节点之间的 Z 轴间距。' })
     public lalianNodeSpacingZ: number = 0.8;
 
-    @property({ type: CCFloat, displayName: 'Lalian收拢X' })
+    @property({ type: CCFloat, displayName: 'Lalian收拢X', tooltip: '拉链子节点最终靠拢到中心时保留的 X 轴距离，例如左右最终为 +/-0.1。' })
     public lalianCloseX: number = 0.1;
 
-    @property({ type: CCInteger, displayName: 'Lalian完成移动数量(0=节点数)' })
+    @property({ type: CCInteger, displayName: 'Lalian完成移动数量(0=节点数)', tooltip: '拉链全部打完后放出的 +1/+99 数量。填 0 表示使用拉链节点数量。' })
     public lalianMoveCount: number = 0;
 
-    @property(Vec3)
+    @property({ type: Vec3, displayName: '石板跳跃位置', tooltip: '预留字段：石板/承载节点跳跃时使用的位置参数。当前主要逻辑不依赖它。' })
     public jumpWallPos: Vec3 = new Vec3();
-    @property(Node)
+
+    @property({ type: Node, displayName: '石板落地特效', tooltip: '石板/承载节点死亡下砸落地时播放的特效节点。' })
     public wallEffect: Node;
 
     // @property(Node)
@@ -787,9 +797,10 @@ export class PropArms extends BattleTarget3D {
         // this.effect.node.active = false;
     }
 
-    @property(CCFloat)
+    @property({ type: CCFloat, displayName: '承载物浮动速度', tooltip: '武器存活时，石板/承载节点上下浮动的速度。' })
     public speed: number = 1;
-    @property(CCFloat)
+
+    @property({ type: CCFloat, displayName: '承载物浮动幅度', tooltip: '武器存活时，石板/承载节点上下浮动的高度幅度。' })
     public h: number = 0.2;
     private _time: number = 0;
     private isWallH: boolean = false;
