@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Vec3, v3, director, Director, CameraMove, PoolEnum, PrefabsEnum, LayerEnum, EventType, EventManager, LayerManager, PoolManager, PrefabsManager, Singleton, isPointInCameraView, distanceSquared, EffectTimePartRemove, EffectSequence, _dec, _class, _crd, ccclass, property, lDis, EffectManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Vec3, v3, director, Director, CameraMove, PoolEnum, PrefabsEnum, LayerEnum, EffectEnum, EventType, EventManager, LayerManager, PoolManager, PrefabsManager, Singleton, isPointInCameraView, distanceSquared, EffectTimePartRemove, EffectSequence, _dec, _class, _crd, ccclass, property, lDis, EffectManager;
 
   function _reportPossibleCrUseOfCameraMove(extras) {
     _reporterNs.report("CameraMove", "../../Base/CameraMove", _context.meta, extras);
@@ -77,6 +77,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       PoolEnum = _unresolved_3.PoolEnum;
       PrefabsEnum = _unresolved_3.PrefabsEnum;
       LayerEnum = _unresolved_3.LayerEnum;
+      EffectEnum = _unresolved_3.EffectEnum;
       EventType = _unresolved_3.EventType;
     }, function (_unresolved_4) {
       EventManager = _unresolved_4.default;
@@ -129,6 +130,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._directorCallback = void 0;
           this._effectListL = [];
           this._effectShowListL = [];
+          this._maxShowCountByType = {
+            [(_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
+              error: Error()
+            }), EffectEnum) : EffectEnum).Monsterhit]: 4,
+            [(_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
+              error: Error()
+            }), EffectEnum) : EffectEnum).door]: 2,
+            [(_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
+              error: Error()
+            }), EffectEnum) : EffectEnum).up]: 2
+          };
           this.coor = 0;
           this.frameCount = 5;
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
@@ -158,6 +170,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), isPointInCameraView) : isPointInCameraView)(pos, (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
             error: Error()
           }), CameraMove) : CameraMove).instance.camera)) {
+            return;
+          }
+
+          if (!this.canShowEffect(type)) {
             return;
           }
 
@@ -194,6 +210,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          if (!this.canShowEffect(type)) {
+            return;
+          }
+
           let effect = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
             error: Error()
           }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
@@ -218,6 +238,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           effect.setWorldPosition(pos);
           effect.active = true;
           effect.setScale(scale, scale, scale);
+          this.trackShowingEffect(effect, type);
         }
 
         addShowEffect_3(node, type, scale = 1) {
@@ -226,6 +247,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), isPointInCameraView) : isPointInCameraView)(node.worldPosition, (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
             error: Error()
           }), CameraMove) : CameraMove).instance.camera)) {
+            return;
+          }
+
+          if (!this.canShowEffect(type)) {
             return;
           }
 
@@ -248,9 +273,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           effect.setPosition(Vec3.ZERO);
           effect.active = true;
           effect.setScale(scale, scale, scale);
+          this.trackShowingEffect(effect, type);
         }
 
         showEffect(sq) {
+          if (!this.canShowEffect(sq.type)) {
+            return null;
+          }
+
           let effect = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
             error: Error()
           }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
@@ -281,6 +311,40 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return effect;
         }
 
+        canShowEffect(type) {
+          var _this$_effectShowList, _this$_effectShowList2, _this$_effectListL$ty, _this$_effectListL$ty2;
+
+          const max = this._maxShowCountByType[type];
+
+          if (!max || max <= 0) {
+            return true;
+          }
+
+          const showing = (_this$_effectShowList = (_this$_effectShowList2 = this._effectShowListL[type]) == null ? void 0 : _this$_effectShowList2.length) != null ? _this$_effectShowList : 0;
+          const queued = (_this$_effectListL$ty = (_this$_effectListL$ty2 = this._effectListL[type]) == null ? void 0 : _this$_effectListL$ty2.length) != null ? _this$_effectListL$ty : 0;
+          return showing + queued < max;
+        }
+
+        trackShowingEffect(effect, type) {
+          const er = effect.getComponent(_crd && EffectTimePartRemove === void 0 ? (_reportPossibleCrUseOfEffectTimePartRemove({
+            error: Error()
+          }), EffectTimePartRemove) : EffectTimePartRemove);
+
+          if (!er) {
+            return;
+          }
+
+          let showArr = this._effectShowListL[type];
+
+          if (!showArr) {
+            this._effectShowListL[type] = showArr = [];
+          }
+
+          if (showArr.indexOf(er) === -1) {
+            showArr.push(er);
+          }
+        }
+
         /**需要在任意地方 循环调用 */
         frameReleaseSpecialEffects() {
           if (this._effectListL.length > 0) {
@@ -308,10 +372,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
                   if (isShow) {
                     let effNode = this.showEffect(sq);
-                    let er = effNode.getComponent(_crd && EffectTimePartRemove === void 0 ? (_reportPossibleCrUseOfEffectTimePartRemove({
-                      error: Error()
-                    }), EffectTimePartRemove) : EffectTimePartRemove);
-                    showArr.push(er);
+
+                    if (effNode) {
+                      let er = effNode.getComponent(_crd && EffectTimePartRemove === void 0 ? (_reportPossibleCrUseOfEffectTimePartRemove({
+                        error: Error()
+                      }), EffectTimePartRemove) : EffectTimePartRemove);
+
+                      if (er) {
+                        showArr.push(er);
+                      }
+                    }
                   }
 
                   (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({

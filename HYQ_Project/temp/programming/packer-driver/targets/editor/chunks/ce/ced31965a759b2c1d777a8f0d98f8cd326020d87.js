@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, log, ParticleSystem, PoolManager, EventManager, EventType, EffectRemoveBase, _dec, _class, _crd, ccclass, property, EffectTimePartRemove;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, ParticleSystem, PoolManager, EventManager, EventType, EffectRemoveBase, _dec, _class, _crd, ccclass, property, EffectTimePartRemove;
 
   function _reportPossibleCrUseOfPoolManager(extras) {
     _reporterNs.report("PoolManager", "../../Base/PoolManager", _context.meta, extras);
@@ -27,7 +27,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
-      log = _cc.log;
       ParticleSystem = _cc.ParticleSystem;
     }, function (_unresolved_2) {
       PoolManager = _unresolved_2.default;
@@ -43,7 +42,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "acd07L1L4tACLJbS1JzCJvS", "EffectTimePartRemove", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'log', 'ParticleSystem']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'ParticleSystem']);
 
       ({
         ccclass,
@@ -76,7 +75,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         onEnable() {
-          log("effect");
           this._time = this.removeTime;
 
           for (let i = 0; i < this.part.length; i++) {

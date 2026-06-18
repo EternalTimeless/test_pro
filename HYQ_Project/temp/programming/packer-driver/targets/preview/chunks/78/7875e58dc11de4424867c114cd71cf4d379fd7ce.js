@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -65,6 +65,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("PropLalianGate", "../Other/PropLalianGate", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfBulletBatchRenderer(extras) {
+    _reporterNs.report("BulletBatchRenderer", "../Battle/BulletBatchRenderer", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -100,6 +104,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       AudioManager = _unresolved_9.default;
     }, function (_unresolved_10) {
       BulletMonsterCollisionManager = _unresolved_10.default;
+    }, function (_unresolved_11) {
+      BulletBatchRenderer = _unresolved_11.BulletBatchRenderer;
     }],
     execute: function () {
       _crd = true;
@@ -213,15 +219,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
             error: Error()
           }), AudioManager) : AudioManager).inst.playOneShot(Role.soundType, 0.3, 0.08);
-          console.log("攻击", num);
           var pos = this.shoot.worldPosition;
           var damage = Role.power * damageScale;
+          var batchRenderer = (_crd && BulletBatchRenderer === void 0 ? (_reportPossibleCrUseOfBulletBatchRenderer({
+            error: Error()
+          }), BulletBatchRenderer) : BulletBatchRenderer).getOrCreate(Role.bulletLayer);
           var bullet = (_crd && BulletManager === void 0 ? (_reportPossibleCrUseOfBulletManager({
             error: Error()
           }), BulletManager) : BulletManager).instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
           Role.bulletLayer.addChild(bullet.node);
           bullet.node.setWorldPosition(pos);
           Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+          batchRenderer.registerBullet(bullet);
           (_this$effect = this.effect) == null || _this$effect.play();
 
           for (var i = 1; i < visualBulletCount; i++) {
@@ -238,6 +247,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var z = (Math.random() - 0.5) * 4;
             _bullet.node.z += z;
             Role.aimBulletToCurrentTarget(_bullet, lockWorldX);
+            batchRenderer.registerBullet(_bullet);
           }
         }
 

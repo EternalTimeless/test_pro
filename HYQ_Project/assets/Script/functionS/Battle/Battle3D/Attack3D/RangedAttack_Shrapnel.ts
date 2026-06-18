@@ -5,6 +5,7 @@ import { vectorPower2 } from 'db://assets/Script/Tool/Index';
 import { AttackParkPlay } from '../AttackParkPlay';
 import { AttackTargetBase } from '../../Base/AttackTargetBase';
 import BulletManager from '../../BulletManager';
+import { BulletBatchRenderer } from '../../BulletBatchRenderer';
 const { ccclass, property } = _decorator;
 
 /**远程攻击 */
@@ -39,6 +40,7 @@ export class RangedAttack_Shrapnel extends AttackTargetBase {
             }
             Quat.fromViewUp(this.tempQ, targetVector, Vec3.UP);
             let Layer = LayerManager.instance.getLayer(LayerEnum.Layer_2_sky);
+            const batchRenderer = BulletBatchRenderer.getOrCreate(Layer);
             for (let i = 0; i < this.shootCount; i++) {
                 const randomAngle = math.randomRange(-this.bulletAngle, this.bulletAngle);
                 Quat.fromAxisAngle(this.tempQ2, Vec3.UP, math.toRadian(randomAngle));
@@ -46,6 +48,7 @@ export class RangedAttack_Shrapnel extends AttackTargetBase {
                 let bullet = BulletManager.instance.shootBullet3D(this.bulletEnum, this.tempQ2, power, reoel);
                 Layer.addChild(bullet.node);
                 bullet.node.setWorldPosition(this.bulletShootPos.worldPosition);
+                batchRenderer.registerBullet(bullet);
             }
 
         }

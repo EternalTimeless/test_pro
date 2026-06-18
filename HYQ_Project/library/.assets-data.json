@@ -7889,5 +7889,15 @@
     "url": "db://assets/Script/functionS/Other/PropLalianGate.ts",
     "value": {},
     "versionCode": 1
+  },
+  "6bb990d4-f2ca-40fd-8694-2eebda7e8f7f": {
+    "url": "db://assets/Script/functionS/Battle/BulletBatchRenderer.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "8f7ca5d8-7f0a-4d2a-aeb5-f58c8c86a5f5": {
+    "url": "db://assets/Script/functionS/Battle/BulletBatchRenderer.ts",
+    "value": {},
+    "versionCode": 1
   }
 }

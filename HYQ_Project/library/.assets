@@ -633,7 +633,8 @@
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts",
             "GameRes\\HYQ_map\\fbx\\左.fbx",
             "GameRes\\Prefab\\Lalian.prefab",
-            "Script\\functionS\\Other\\PropLalianGate.ts"
+            "Script\\functionS\\Other\\PropLalianGate.ts",
+            "Script\\functionS\\Battle\\BulletBatchRenderer.ts"
         ]
     }
 }

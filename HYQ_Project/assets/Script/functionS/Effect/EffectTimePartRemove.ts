@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, log, ParticleSystem } from 'cc';
+import { _decorator, CCFloat, ParticleSystem } from 'cc';
 import PoolManager from '../../Base/PoolManager';
 import EventManager from '../../Base/EventManager';
 import { EffectEnum, EventType } from '../../Base/EnumList';
@@ -24,7 +24,6 @@ export class EffectTimePartRemove extends EffectRemoveBase {
     }
 
     protected onEnable(): void {
-        log("effect");
         this._time = this.removeTime;
         for (let i = 0; i < this.part.length; i++) {
             let p = this.part[i];

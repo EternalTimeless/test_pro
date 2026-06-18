@@ -1,4 +1,4 @@
-import { _decorator, ccenum, CCFloat, CCInteger, Component, math, Vec3 } from "cc";
+import { _decorator, ccenum, CCFloat, CCInteger, Component, math, Sprite, Vec3 } from "cc";
 import { BulletEnum, EffectEnum, PoolEnum, SceneType } from "db://assets/Script/Base/EnumList";
 import PoolManager from "db://assets/Script/Base/PoolManager";
 import { EffectManager } from "../../../Effect/EffectManager";
@@ -6,6 +6,7 @@ import { MoveDrive, MoveModEnum } from "../../../../Base/MoveRot/MoveDrive";
 import { BattleTarget3D } from "../../BattleTarger/BattleTarget3D";
 import { COLLIDE_TYPE } from "../../CollectBattleTarger/ColliderTag";
 import BulletMonsterCollisionManager from "../../BulletMonsterCollisionManager";
+import type { BulletBatchRenderer } from "../../BulletBatchRenderer";
 const { ccclass, property } = _decorator;
 
 /**
@@ -52,6 +53,12 @@ export default class BulletBattle3D extends Component {
     @property({ type: MoveDrive, tooltip: '移动驱动组件' })
     public moveD: MoveDrive;
 
+    public batchSprite: Sprite | null = null;
+    public batchWidth: number = 0;
+    public batchHeight: number = 0;
+    public batchLocalEulerX: number = 0;
+    public batchRenderer: BulletBatchRenderer | null = null;
+
     /** 是否已注册到碰撞管理器 */
     private _registered: boolean = false;
 
@@ -81,6 +88,7 @@ export default class BulletBattle3D extends Component {
 
     private over() {
         this.node.active = false;
+        this.batchRenderer?.unregisterBullet(this);
         PoolManager.instance.setPool(PoolEnum.bullet + this.bulletEnum, this);
         if (this._registered) {
             BulletMonsterCollisionManager.instance.unregisterBullet(this);

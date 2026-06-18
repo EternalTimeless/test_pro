@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, GameOverPanel, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, GameOverPanel, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -162,24 +162,36 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         displayName: '每个道具数值',
         tooltip: '每个道具显示和生效的数值。左边 +1 填 1，右边 +99 填 99。'
       }), _dec6 = property({
+        type: CCInteger,
+        displayName: '+1生效人数上限(0=使用玩家)',
+        tooltip: '当前通道为 +1 时，玩家人数达到该值后继续吃 +1 不再增加角色。填 0 时使用 Player 上的 +1人数上限。'
+      }), _dec7 = property({
+        type: CCInteger,
+        displayName: '+99胜利阈值',
+        tooltip: '道具数值达到该值时，吃到后直接胜利。默认 99。'
+      }), _dec8 = property({
+        type: CCInteger,
+        displayName: '+1/+99单次放出上限(0=不限制)',
+        tooltip: '拉链完成后，本通道单次最多放出多少个 +1/+99。填 0 表示不额外限制，使用拉链组件传来的数量。'
+      }), _dec9 = property({
         type: CCFloat,
         displayName: '移动速度',
         tooltip: '拉链完成后，道具队列向玩家移动的速度。'
-      }), _dec7 = property({
+      }), _dec10 = property({
         type: _crd && PropLalianGate === void 0 ? (_reportPossibleCrUseOfPropLalianGate({
           error: Error()
         }), PropLalianGate) : PropLalianGate,
         displayName: 'Lalian拉链组件',
         tooltip: '拖入同一侧 Prop_arms 上的 PropLalianGate。为空时会自动在当前节点子级查找。'
-      }), _dec8 = property({
+      }), _dec11 = property({
         type: CCFloat,
         displayName: '道具起始Z额外偏移',
         tooltip: '在拉链自动计算的起始 Z 基础上额外加的偏移。用于微调 +1/+99 队列离拉链的远近。'
-      }), _dec9 = property({
+      }), _dec12 = property({
         type: Node,
         displayName: '道具挂载父节点',
         tooltip: '生成出来的 +1/+99 道具会挂到这个节点下面。通常填当前通道的 wall/root 节点。'
-      }), _dec10 = property({
+      }), _dec13 = property({
         type: CCInteger,
         displayName: '道具类型',
         tooltip: '对应 PrefabsEnum.prop 的预制体类型编号。保持和原来左/右道具类型一致。'
@@ -197,15 +209,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "count", _descriptor4, this);
 
-          _initializerDefineProperty(this, "moveSpeed", _descriptor5, this);
+          _initializerDefineProperty(this, "addRoleMaxCount", _descriptor5, this);
 
-          _initializerDefineProperty(this, "lalianGate", _descriptor6, this);
+          _initializerDefineProperty(this, "winPropCountThreshold", _descriptor6, this);
 
-          _initializerDefineProperty(this, "propStartZ", _descriptor7, this);
+          _initializerDefineProperty(this, "releaseCountLimit", _descriptor7, this);
 
-          _initializerDefineProperty(this, "wallNode", _descriptor8, this);
+          _initializerDefineProperty(this, "moveSpeed", _descriptor8, this);
 
-          _initializerDefineProperty(this, "type", _descriptor9, this);
+          _initializerDefineProperty(this, "lalianGate", _descriptor9, this);
+
+          _initializerDefineProperty(this, "propStartZ", _descriptor10, this);
+
+          _initializerDefineProperty(this, "wallNode", _descriptor11, this);
+
+          _initializerDefineProperty(this, "type", _descriptor12, this);
 
           this.propBrandList = [];
           this.tempPropBrandList = [];
@@ -265,7 +283,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         lalianDoneEvent(info) {
           var _info$moveCount;
 
-          const count = ((_info$moveCount = info == null ? void 0 : info.moveCount) != null ? _info$moveCount : 0) > 0 ? info.moveCount : -1;
+          let count = ((_info$moveCount = info == null ? void 0 : info.moveCount) != null ? _info$moveCount : 0) > 0 ? info.moveCount : -1;
+
+          if (this.releaseCountLimit > 0) {
+            count = count < 0 ? this.releaseCountLimit : Math.min(count, this.releaseCountLimit);
+          }
+
           this.move(count);
         }
 
@@ -402,6 +425,27 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          const propBrand = event.selfCollider.getComponent(_crd && PropBrand === void 0 ? (_reportPossibleCrUseOfPropBrand({
+            error: Error()
+          }), PropBrand) : PropBrand);
+
+          if (!propBrand) {
+            return;
+          }
+
+          if (!this.isWinPropBrand(propBrand) && player.length >= this.getAddRoleMaxCount(player)) {
+            this.recycleTriggeredProp(propBrand);
+            return;
+          }
+
+          if (this.isWinPropBrand(propBrand)) {
+            this.recycleTriggeredProp(propBrand);
+            (_crd && GameOverPanel === void 0 ? (_reportPossibleCrUseOfGameOverPanel({
+              error: Error()
+            }), GameOverPanel) : GameOverPanel).instance.show(true);
+            return;
+          }
+
           let role = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
             error: Error()
           }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
@@ -429,23 +473,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           role.node.setWorldPosition(selfPos);
           role.hp = 2;
           role.node.active = true;
-          const propBrand = event.selfCollider.getComponent(_crd && PropBrand === void 0 ? (_reportPossibleCrUseOfPropBrand({
-            error: Error()
-          }), PropBrand) : PropBrand);
-
-          if ((propBrand == null ? void 0 : propBrand.count) >= 99) {
-            role.node.active = false;
-            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-              error: Error()
-            }), PoolEnum) : PoolEnum).role + player.roleType, role);
-            this.recycleTriggeredProp(propBrand);
-            (_crd && GameOverPanel === void 0 ? (_reportPossibleCrUseOfGameOverPanel({
-              error: Error()
-            }), GameOverPanel) : GameOverPanel).instance.show(true);
-            return;
-          }
 
           if (!player.addRole(role)) {
             role.node.active = false;
@@ -597,6 +624,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
         }
 
+        getAddRoleMaxCount(player) {
+          return this.addRoleMaxCount > 0 ? Math.min(this.addRoleMaxCount, player.maxRoleCount) : player.maxRoleCount;
+        }
+
+        isWinPropBrand(propBrand) {
+          return propBrand.count >= this.winPropCountThreshold;
+        }
+
         findLalianGate(root) {
           if (!root) {
             return null;
@@ -649,31 +684,52 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 1;
         }
-      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "moveSpeed", [_dec6], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function () {
-          return 2;
-        }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "lalianGate", [_dec7], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: null
-      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "propStartZ", [_dec8], {
+      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "addRoleMaxCount", [_dec6], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0;
         }
-      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec9], {
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "winPropCountThreshold", [_dec7], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 99;
+        }
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "releaseCountLimit", [_dec8], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0;
+        }
+      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "moveSpeed", [_dec9], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 2;
+        }
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "lalianGate", [_dec10], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec10], {
+      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "propStartZ", [_dec11], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0;
+        }
+      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec12], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: null
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec13], {
         configurable: true,
         enumerable: true,
         writable: true,

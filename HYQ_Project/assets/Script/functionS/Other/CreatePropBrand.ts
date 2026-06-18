@@ -34,6 +34,15 @@ export class CreatePropBrand extends UnityUpComponent {
     @property({ type: CCInteger, displayName: '每个道具数值', tooltip: '每个道具显示和生效的数值。左边 +1 填 1，右边 +99 填 99。' })
     public count: number = 1;
 
+    @property({ type: CCInteger, displayName: '+1生效人数上限(0=使用玩家)', tooltip: '当前通道为 +1 时，玩家人数达到该值后继续吃 +1 不再增加角色。填 0 时使用 Player 上的 +1人数上限。' })
+    public addRoleMaxCount: number = 0;
+
+    @property({ type: CCInteger, displayName: '+99胜利阈值', tooltip: '道具数值达到该值时，吃到后直接胜利。默认 99。' })
+    public winPropCountThreshold: number = 99;
+
+    @property({ type: CCInteger, displayName: '+1/+99单次放出上限(0=不限制)', tooltip: '拉链完成后，本通道单次最多放出多少个 +1/+99。填 0 表示不额外限制，使用拉链组件传来的数量。' })
+    public releaseCountLimit: number = 0;
+
     @property({ type: CCFloat, displayName: '移动速度', tooltip: '拉链完成后，道具队列向玩家移动的速度。' })
     public moveSpeed: number = 2;
 
@@ -97,7 +106,10 @@ export class CreatePropBrand extends UnityUpComponent {
     }
 
     private lalianDoneEvent(info: LalianDoneInfo) {
-        const count = (info?.moveCount ?? 0) > 0 ? info.moveCount : -1;
+        let count = (info?.moveCount ?? 0) > 0 ? info.moveCount : -1;
+        if (this.releaseCountLimit > 0) {
+            count = count < 0 ? this.releaseCountLimit : Math.min(count, this.releaseCountLimit);
+        }
         this.move(count);
     }
 
@@ -210,6 +222,21 @@ export class CreatePropBrand extends UnityUpComponent {
             return;
         }
 
+        const propBrand = event.selfCollider.getComponent(PropBrand);
+        if (!propBrand) {
+            return;
+        }
+        if (!this.isWinPropBrand(propBrand) && player.length >= this.getAddRoleMaxCount(player)) {
+            this.recycleTriggeredProp(propBrand);
+            return;
+        }
+
+        if (this.isWinPropBrand(propBrand)) {
+            this.recycleTriggeredProp(propBrand);
+            GameOverPanel.instance.show(true);
+            return;
+        }
+
         let role = PoolManager.instance.getPool<Role>(PoolEnum.role + player.roleType);
         if (!role) {
             const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, player.roleType);
@@ -222,15 +249,6 @@ export class CreatePropBrand extends UnityUpComponent {
         role.node.setWorldPosition(selfPos);
         role.hp = 2;
         role.node.active = true;
-
-        const propBrand = event.selfCollider.getComponent(PropBrand);
-        if (propBrand?.count >= 99) {
-            role.node.active = false;
-            PoolManager.instance.setPool(PoolEnum.role + player.roleType, role);
-            this.recycleTriggeredProp(propBrand);
-            GameOverPanel.instance.show(true);
-            return;
-        }
         if (!player.addRole(role)) {
             role.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + player.roleType, role);
@@ -313,6 +331,14 @@ export class CreatePropBrand extends UnityUpComponent {
         propBrand.node.active = false;
         PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
         propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+    }
+
+    private getAddRoleMaxCount(player: Player): number {
+        return this.addRoleMaxCount > 0 ? Math.min(this.addRoleMaxCount, player.maxRoleCount) : player.maxRoleCount;
+    }
+
+    private isWinPropBrand(propBrand: PropBrand): boolean {
+        return propBrand.count >= this.winPropCountThreshold;
     }
 
     private findLalianGate(root: Node): PropLalianGate | null {

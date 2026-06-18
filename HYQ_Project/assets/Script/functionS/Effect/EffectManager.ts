@@ -23,6 +23,12 @@ export class EffectManager extends Singleton {
 
     private _effectShowListL: EffectTimePartRemove[][] = []
 
+    private readonly _maxShowCountByType: { [key: number]: number } = {
+        [EffectEnum.Monsterhit]: 4,
+        [EffectEnum.door]: 2,
+        [EffectEnum.up]: 2,
+    };
+
     private effectPlayOver(remove: EffectTimePartRemove, effect: EffectEnum) {
         let ef = this._effectShowListL[effect];
         if (ef) {
@@ -58,6 +64,9 @@ export class EffectManager extends Singleton {
         if (!isPointInCameraView(pos, CameraMove.instance.camera)) {
             return;
         }
+        if (!this.canShowEffect(type)) {
+            return;
+        }
         let ef = this._effectListL[type];
         if (!ef) {
             this._effectListL[type] = ef = [];
@@ -80,6 +89,9 @@ export class EffectManager extends Singleton {
         if (!isPointInCameraView(pos, CameraMove.instance.camera)) {
             return;
         }
+        if (!this.canShowEffect(type)) {
+            return;
+        }
         let effect = PoolManager.instance.getPool<Node>(PoolEnum.effect + type);
         if (!effect) {
             effect = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.effect, type);
@@ -90,10 +102,14 @@ export class EffectManager extends Singleton {
         effect.setWorldPosition(pos);
         effect.active = true;
         effect.setScale(scale, scale, scale);
+        this.trackShowingEffect(effect, type);
     }
 
     public addShowEffect_3(node: Node, type: EffectEnum, scale: number = 1) {
         if (!isPointInCameraView(node.worldPosition, CameraMove.instance.camera)) {
+            return;
+        }
+        if (!this.canShowEffect(type)) {
             return;
         }
         let effect = PoolManager.instance.getPool<Node>(PoolEnum.effect + type);
@@ -105,12 +121,16 @@ export class EffectManager extends Singleton {
         effect.setPosition(Vec3.ZERO);
         effect.active = true;
         effect.setScale(scale, scale, scale);
+        this.trackShowingEffect(effect, type);
     }
 
 
 
 
     private showEffect(sq: EffectSequence) {
+        if (!this.canShowEffect(sq.type)) {
+            return null;
+        }
         let effect = PoolManager.instance.getPool<Node>(PoolEnum.effect + sq.type);
         if (!effect) {
             effect = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.effect, sq.type);
@@ -127,6 +147,30 @@ export class EffectManager extends Singleton {
 
 
         return effect;
+    }
+
+    private canShowEffect(type: EffectEnum): boolean {
+        const max = this._maxShowCountByType[type];
+        if (!max || max <= 0) {
+            return true;
+        }
+        const showing = this._effectShowListL[type]?.length ?? 0;
+        const queued = this._effectListL[type]?.length ?? 0;
+        return showing + queued < max;
+    }
+
+    private trackShowingEffect(effect: Node, type: EffectEnum): void {
+        const er = effect.getComponent(EffectTimePartRemove);
+        if (!er) {
+            return;
+        }
+        let showArr = this._effectShowListL[type];
+        if (!showArr) {
+            this._effectShowListL[type] = showArr = [];
+        }
+        if (showArr.indexOf(er) === -1) {
+            showArr.push(er);
+        }
     }
 
     private coor: number = 0;
@@ -154,8 +198,12 @@ export class EffectManager extends Singleton {
                         }
                         if (isShow) {
                             let effNode = this.showEffect(sq);
-                            let er = effNode.getComponent(EffectTimePartRemove);
-                            showArr.push(er);
+                            if (effNode) {
+                                let er = effNode.getComponent(EffectTimePartRemove);
+                                if (er) {
+                                    showArr.push(er);
+                                }
+                            }
                         }
                         PoolManager.instance.setPool(PoolEnum.EffectSq, sq);
                     }

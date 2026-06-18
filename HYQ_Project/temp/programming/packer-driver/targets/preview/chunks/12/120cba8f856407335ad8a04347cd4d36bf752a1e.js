@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Node, Quat, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, Quat, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -85,6 +85,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("FlashRedManager", "../Battle/Base/FlashRedManager", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfBulletBatchRenderer(extras) {
+    _reporterNs.report("BulletBatchRenderer", "../Battle/BulletBatchRenderer", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -94,6 +98,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
       CCFloat = _cc.CCFloat;
+      CCInteger = _cc.CCInteger;
       Node = _cc.Node;
       Quat = _cc.Quat;
       tween = _cc.tween;
@@ -130,13 +135,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       BulletManager = _unresolved_13.default;
     }, function (_unresolved_14) {
       FlashRedManager = _unresolved_14.FlashRedManager;
+    }, function (_unresolved_15) {
+      BulletBatchRenderer = _unresolved_15.BulletBatchRenderer;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "b41f7vy1r5GDYGyMwUkQXm3", "Player", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'Component', 'Node', 'Quat', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Component', 'Node', 'Quat', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -154,7 +161,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("Player", Player = (_dec = ccclass('Player'), _dec2 = property(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
         error: Error()
-      }), Role) : Role), _dec3 = property(CCFloat), _dec4 = property(Node), _dec(_class = (_class2 = (_class3 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), Role) : Role), _dec3 = property(CCFloat), _dec4 = property({
+        type: CCInteger,
+        displayName: '+1人数上限',
+        tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。'
+      }), _dec5 = property(Node), _dec(_class = (_class2 = (_class3 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
@@ -172,13 +183,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.isDie = false;
           this.curCount = 1;
-          this.maxRoleCount = 55;
+
+          _initializerDefineProperty(this, "maxRoleCount", _descriptor3, this);
+
           this.maxShootingRoleCount = 30;
           this.shootRoleStartIndex = 0;
           this.isLock = false;
 
           // public MoveX: number = 8;
-          _initializerDefineProperty(this, "shootList", _descriptor3, this);
+          _initializerDefineProperty(this, "shootList", _descriptor4, this);
 
           this.shootIndex = 1;
           this.attackIn = false;
@@ -745,7 +758,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           bullet.node.setWorldPosition(pos);
           (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
             error: Error()
-          }), Role) : Role).aimBulletToCurrentTarget(bullet, this.node.worldPosition.x); // this.effect?.play();
+          }), Role) : Role).aimBulletToCurrentTarget(bullet, this.node.worldPosition.x);
+          (_crd && BulletBatchRenderer === void 0 ? (_reportPossibleCrUseOfBulletBatchRenderer({
+            error: Error()
+          }), BulletBatchRenderer) : BulletBatchRenderer).getOrCreate((_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).bulletLayer).registerBullet(bullet); // this.effect?.play();
         } // private _soundTime: number = 0;
         // // private soundInterval: number = 0.2;
         // private attackSound(dt: number) {
@@ -769,7 +787,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 2;
         }
-      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "shootList", [_dec4], {
+      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "maxRoleCount", [_dec4], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 55;
+        }
+      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "shootList", [_dec5], {
         configurable: true,
         enumerable: true,
         writable: true,

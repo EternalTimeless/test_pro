@@ -45,6 +45,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("BulletMonsterCollisionManager", "../../BulletMonsterCollisionManager", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfBulletBatchRenderer(extras) {
+    _reporterNs.report("BulletBatchRenderer", "../../BulletBatchRenderer", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -77,7 +81,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "aa252aLyzxMioFEmUwKaLO2", "BulletBattle3D", undefined);
 
-      __checkObsolete__(['_decorator', 'ccenum', 'CCFloat', 'CCInteger', 'Component', 'math', 'Vec3']);
+      __checkObsolete__(['_decorator', 'ccenum', 'CCFloat', 'CCInteger', 'Component', 'math', 'Sprite', 'Vec3']);
 
       ({
         ccclass,
@@ -149,6 +153,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "moveD", _descriptor8, this);
 
+          this.batchSprite = null;
+          this.batchWidth = 0;
+          this.batchHeight = 0;
+          this.batchLocalEulerX = 0;
+          this.batchRenderer = null;
+
           /** 是否已注册到碰撞管理器 */
           this._registered = false;
           this.temp = new Vec3();
@@ -185,7 +195,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         over() {
+          var _this$batchRenderer;
+
           this.node.active = false;
+          (_this$batchRenderer = this.batchRenderer) == null || _this$batchRenderer.unregisterBullet(this);
           (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
             error: Error()
           }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({

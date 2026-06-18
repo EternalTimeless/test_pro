@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, Component, Node, Quat, tween, Vec3 } from 'cc';
+import { _decorator, CCFloat, CCInteger, Component, Node, Quat, tween, Vec3 } from 'cc';
 import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { Role } from './Role';
@@ -14,6 +14,7 @@ import RockerManager from '../Rocker/RockerManager';
 import AudioManager from '../../Base/AudioManager';
 import BulletManager from '../Battle/BulletManager';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
+import { BulletBatchRenderer } from '../Battle/BulletBatchRenderer';
 const { ccclass, property } = _decorator;
 
 
@@ -45,6 +46,7 @@ export class Player extends UnityUpComponent {
     public isDie: boolean = false;
     private curCount: number = 1;
 
+    @property({ type: CCInteger, displayName: '+1人数上限', tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。' })
     public maxRoleCount: number = 55;
 
     public maxShootingRoleCount: number = 30;
@@ -447,6 +449,7 @@ export class Player extends UnityUpComponent {
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
         Role.aimBulletToCurrentTarget(bullet, this.node.worldPosition.x);
+        BulletBatchRenderer.getOrCreate(Role.bulletLayer).registerBullet(bullet);
         // this.effect?.play();
     }
 

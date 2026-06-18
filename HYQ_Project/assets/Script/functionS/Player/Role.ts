@@ -10,6 +10,7 @@ import AudioManager from '../../Base/AudioManager';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import BulletBattle3D from '../Battle/Battle3D/Bullet/BulletBattle3D';
 import { PropLalianGate } from '../Other/PropLalianGate';
+import { BulletBatchRenderer } from '../Battle/BulletBatchRenderer';
 const { ccclass, property } = _decorator;
 
 @ccclass('Role')
@@ -84,14 +85,15 @@ export class Role extends Component {
             return;
         }
         AudioManager.inst.playOneShot(Role.soundType, 0.3, 0.08);
-        console.log("攻击", num);
         const pos = this.shoot.worldPosition;
         const damage = Role.power * damageScale;
+        const batchRenderer = BulletBatchRenderer.getOrCreate(Role.bulletLayer);
 
         const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
         Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+        batchRenderer.registerBullet(bullet);
         this.effect?.play();
 
         for (let i = 1; i < visualBulletCount; i++) {
@@ -103,6 +105,7 @@ export class Role extends Component {
             const z = (Math.random() - 0.5) * 4;
             bullet.node.z += z;
             Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+            batchRenderer.registerBullet(bullet);
         }
 
     }

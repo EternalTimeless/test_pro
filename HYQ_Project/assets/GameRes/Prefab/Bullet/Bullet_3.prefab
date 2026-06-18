@@ -224,7 +224,7 @@
       "z": 1
     },
     "moveMod": 5,
-    "speed": 50,
+    "speed": 60,
     "vector": {
       "__type__": "cc.Vec3",
       "x": 0,

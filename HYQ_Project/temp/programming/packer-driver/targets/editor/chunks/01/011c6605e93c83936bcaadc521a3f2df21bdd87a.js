@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, math, Node, Quat, Vec3, BulletEnum, LayerEnum, LayerManager, vectorPower2, AttackParkPlay, AttackTargetBase, BulletManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _crd, ccclass, property, RangedAttack_Shrapnel;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, math, Node, Quat, Vec3, BulletEnum, LayerEnum, LayerManager, vectorPower2, AttackParkPlay, AttackTargetBase, BulletManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _crd, ccclass, property, RangedAttack_Shrapnel;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -37,6 +37,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("BulletManager", "../../BulletManager", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfBulletBatchRenderer(extras) {
+    _reporterNs.report("BulletBatchRenderer", "../../BulletBatchRenderer", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -63,6 +67,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       AttackTargetBase = _unresolved_6.AttackTargetBase;
     }, function (_unresolved_7) {
       BulletManager = _unresolved_7.default;
+    }, function (_unresolved_8) {
+      BulletBatchRenderer = _unresolved_8.BulletBatchRenderer;
     }],
     execute: function () {
       _crd = true;
@@ -122,6 +128,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
               error: Error()
             }), LayerEnum) : LayerEnum).Layer_2_sky);
+            const batchRenderer = (_crd && BulletBatchRenderer === void 0 ? (_reportPossibleCrUseOfBulletBatchRenderer({
+              error: Error()
+            }), BulletBatchRenderer) : BulletBatchRenderer).getOrCreate(Layer);
 
             for (let i = 0; i < this.shootCount; i++) {
               const randomAngle = math.randomRange(-this.bulletAngle, this.bulletAngle);
@@ -132,6 +141,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), BulletManager) : BulletManager).instance.shootBullet3D(this.bulletEnum, this.tempQ2, power, reoel);
               Layer.addChild(bullet.node);
               bullet.node.setWorldPosition(this.bulletShootPos.worldPosition);
+              batchRenderer.registerBullet(bullet);
             }
           }
         }
