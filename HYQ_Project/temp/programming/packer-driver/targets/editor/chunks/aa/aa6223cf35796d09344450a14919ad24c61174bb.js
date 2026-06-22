@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, instantiate, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -92,6 +92,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCBoolean = _cc.CCBoolean;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
+      Color = _cc.Color;
       instantiate = _cc.instantiate;
       Label = _cc.Label;
       MeshRenderer = _cc.MeshRenderer;
@@ -421,6 +422,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "wallEffect", _descriptor24, this);
 
+          this.bottomBasePrefab = (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
+            error: Error()
+          }), OtherPrefabsEnum) : OtherPrefabsEnum).youtong;
+          this.bottomBaseScaleMultiplier = 3.6;
+          this.bottomBaseChildScaleMap = new Map();
+          this.bottomBaseChildPosMap = new Map();
+          this.bottomBaseChildEulerMap = new Map();
+          this.bottomBaseRollDegreesPerUnit = 260;
+          this.bottomBaseRollAxis = new Vec3(1, 0, 0);
+          this.bottomBaseHitFlashColor = new Color(255, 194, 36, 255);
+          this.roleLayoutTemplateName = "Role_t";
+          this.roleTemplateBottomBasePos = new Vec3();
+          this.roleTemplateArmsPos = new Vec3();
+          this.roleTemplateLayoutLoaded = false;
+          this.hasRoleTemplateLayout = false;
+          this.bottomBaseRollAngle = 0;
+          this.lastBottomBaseWorldZ = 0;
+          this.hasLastBottomBaseWorldZ = false;
+
           _initializerDefineProperty(this, "speed", _descriptor25, this);
 
           _initializerDefineProperty(this, "h", _descriptor26, this);
@@ -501,11 +521,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               tire.setScale(Vec3.ONE);
               (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
-              }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-                error: Error()
-              }), PoolEnum) : PoolEnum).Other + (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
-                error: Error()
-              }), OtherPrefabsEnum) : OtherPrefabsEnum).tire, tire);
+              }), PoolManager) : PoolManager).instance.setPool(this.bottomBasePoolKey, tire);
             }).start();
           }
 
@@ -617,25 +633,26 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           for (let i = 0; i < this.tireList.length; i++) {
             const tire = this.tireList[i];
             Tween.stopAllByTarget(tire);
-            tire.setScale(Vec3.ONE); // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
+            tire.setScale(Vec3.ONE);
+            this.playBottomBaseGoldWrap(tire); // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
 
             const s2 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(Vec3.ONE).multiplyScalar(1.3);
+            }), PoolManager) : PoolManager).instance.V3.set(Vec3.ONE).multiplyScalar(1.08);
             const s3 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(Vec3.ONE).multiplyScalar(0.8); // s3.x = 0.8; s3.y = 0.8; s3.z = 0.8;
+            }), PoolManager) : PoolManager).instance.V3.set(Vec3.ONE).multiplyScalar(0.96); // s3.x = 0.8; s3.y = 0.8; s3.z = 0.8;
 
             const isLast = i >= lastIdx;
-            tween(tire).delay(i * staggerDelay).to(0.1, {
+            tween(tire).delay(i * staggerDelay).to(0.08, {
               scale: s2
             }, {
               easing: 'cubicOut'
-            }).to(0.1, {
+            }).to(0.08, {
               scale: s3
             }, {
               easing: 'cubicOut'
-            }).to(0.1, {
+            }).to(0.08, {
               scale: Vec3.ONE
             }, {
               easing: 'backOut'
@@ -655,8 +672,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }).start();
           }
         }
-        /** 销毁一个轮胎：被销毁轮胎做果冻缩放→消失，剩余轮胎弹跳→下落 */
+        /** 油桶普通受击时的金色包裹短闪 */
 
+
+        playBottomBaseGoldWrap(tire) {
+          const meshRenderer = this.findFirstMeshRenderer(tire);
+
+          if (!meshRenderer || !this.meshFlashDataList[0]) {
+            return;
+          }
+
+          (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
+            error: Error()
+          }), FlashRedManager) : FlashRedManager).instance.flashRed(tire, [{
+            meshRender: meshRenderer,
+            colorProps: this.meshFlashDataList[0].colorProps,
+            switchProps: this.meshFlashDataList[0].switchProps
+          }], 0.12, this.bottomBaseHitFlashColor, 'bottom_base_gold_wrap');
+        }
 
         playLalianHit() {
           var _this$hpLabel;
@@ -828,7 +861,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           const oldMR = this.meshFlashDataList[0].meshRender; // 更新底部轮胎mesh引用
 
-          if (this.tireList.length) this.meshFlashDataList[0].meshRender = this.tireList[0].children[0].children[0].getComponent(MeshRenderer); // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
+          if (this.tireList.length) {
+            const tireMeshRenderer = this.findFirstMeshRenderer(this.tireList[0]);
+
+            if (tireMeshRenderer) {
+              this.meshFlashDataList[0].meshRender = tireMeshRenderer;
+            }
+          } // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
+
 
           if (oldMR && oldMR.isValid) {
             (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
@@ -885,11 +925,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             tire.setScale(Vec3.ONE);
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
-            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-              error: Error()
-            }), PoolEnum) : PoolEnum).Other + (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
-              error: Error()
-            }), OtherPrefabsEnum) : OtherPrefabsEnum).tire, tire);
+            }), PoolManager) : PoolManager).instance.setPool(this.bottomBasePoolKey, tire);
             this._isShake = false;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
@@ -1017,6 +1053,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           } else {
             var _this$_curArms7;
 
+            this.loadRoleTemplateLayout();
+
             for (let i = 0; i < this.armsInfoList.length; i++) {
               const fbx = this.armsInfoList[i].fbx;
 
@@ -1062,15 +1100,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             this._curArms.fbx.setAnimation(AnimArms.idle, true);
 
-            this.isWallH = false; // 生成所有轮胎（起始在地底）
+            this.isWallH = false;
+            this.resetBottomBaseRollState(); // 生成所有轮胎（起始在地底）
 
             if (!this.hasLalian) {
               for (let i = 0; i < tireCount; i++) {
                 const tire = this.tire;
                 this.tireList.push(tire);
                 this.node.addChild(tire);
-                tire.setPosition(0, -tireSpacing, 0);
-                if (!i) this.meshFlashDataList[0].meshRender = tire.children[0].children[0].getComponent(MeshRenderer);
+                const tireTargetY = this.getBottomBaseTargetY(i);
+                tire.setPosition(0, tireTargetY - tireSpacing, 0);
+
+                if (!i) {
+                  const tireMeshRenderer = this.findFirstMeshRenderer(tire);
+
+                  if (tireMeshRenderer) {
+                    this.meshFlashDataList[0].meshRender = tireMeshRenderer;
+                  }
+                }
               }
             }
 
@@ -1083,7 +1130,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             let needTireLift;
 
             if (this._curArms.isCanMove) {
-              fbxPhase1TargetY = 0;
+              fbxPhase1TargetY = this.getArmsTargetY(0);
               wallPhase1TargetY = wallHeight;
               needTireLift = true;
             } else {
@@ -1117,7 +1164,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             for (let i = 0; i < tireCount; i++) {
               const tire = this.tireList[i];
-              const tireY = i * tireSpacing;
+              const tireY = this.getBottomBaseTargetY(i);
               const tireDelay = tireStartDelay + i * tireInterval; // 轮胎升起
 
               tween(tire).delay(tireDelay).to(tireRiseTime, {
@@ -1130,7 +1177,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 // FBX被顶起：轮胎先升起一点再顶FBX
                 const liftDelay = tireDelay - 0.02;
                 const liftTime = 0.08;
-                const targetFbxY = (i + 1) * tireSpacing;
+                const targetFbxY = this.getArmsTargetY(i + 1);
                 const targetWallY = targetFbxY + wallHeight;
                 tween(this._curArms.fbx.node).delay(liftDelay).to(liftTime, {
                   y: targetFbxY
@@ -1169,27 +1216,152 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         get tire() {
           let tire = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
             error: Error()
-          }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-            error: Error()
-          }), PoolEnum) : PoolEnum).Other + (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
-            error: Error()
-          }), OtherPrefabsEnum) : OtherPrefabsEnum).tire);
+          }), PoolManager) : PoolManager).instance.getPool(this.bottomBasePoolKey);
 
           if (!tire) {
             tire = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
               error: Error()
             }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
               error: Error()
-            }), PrefabsEnum) : PrefabsEnum).other, (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
-              error: Error()
-            }), OtherPrefabsEnum) : OtherPrefabsEnum).tire);
+            }), PrefabsEnum) : PrefabsEnum).other, this.bottomBasePrefab);
           }
 
           tire.active = true;
-          tire.children[0].setScale(this.tireScale);
+          this.getBottomBaseOriginalEuler(tire);
           tire.setScale(Vec3.ONE); // Set tire scale to one
 
+          tire.eulerAngles = this.getBottomBaseOriginalEuler(tire);
+          this.applyBottomBaseVisualTransform(tire);
+          this.applyBottomBaseRoll(tire);
           return tire;
+        }
+
+        get bottomBasePoolKey() {
+          return (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+            error: Error()
+          }), PoolEnum) : PoolEnum).Other + this.bottomBasePrefab;
+        }
+
+        applyBottomBaseVisualTransform(node) {
+          if (!node) {
+            return;
+          }
+
+          if (node.children.length <= 0) {
+            this.applyBottomBaseChildVisualTransform(node);
+            return;
+          }
+
+          for (let i = 0; i < node.children.length; i++) {
+            this.applyBottomBaseChildVisualTransform(node.children[i]);
+          }
+        }
+
+        applyBottomBaseChildVisualTransform(node) {
+          const originalScale = this.getBottomBaseOriginalScale(node);
+          const originalPos = this.getBottomBaseOriginalPos(node);
+          const originalEuler = this.getBottomBaseOriginalEuler(node);
+          node.setScale(originalScale.x * this.tireScale.x * this.bottomBaseScaleMultiplier, originalScale.y * this.tireScale.y * this.bottomBaseScaleMultiplier, originalScale.z * this.tireScale.z * this.bottomBaseScaleMultiplier);
+          node.setPosition(originalPos);
+          node.eulerAngles = originalEuler;
+        }
+
+        getBottomBaseOriginalScale(node) {
+          let originalScale = this.bottomBaseChildScaleMap.get(node);
+
+          if (!originalScale) {
+            originalScale = node.scale.clone();
+            this.bottomBaseChildScaleMap.set(node, originalScale);
+          }
+
+          return originalScale;
+        }
+
+        getBottomBaseOriginalPos(node) {
+          let originalPos = this.bottomBaseChildPosMap.get(node);
+
+          if (!originalPos) {
+            originalPos = node.position.clone();
+            this.bottomBaseChildPosMap.set(node, originalPos);
+          }
+
+          return originalPos;
+        }
+
+        getBottomBaseOriginalEuler(node) {
+          let originalEuler = this.bottomBaseChildEulerMap.get(node);
+
+          if (!originalEuler) {
+            originalEuler = node.eulerAngles.clone();
+            this.bottomBaseChildEulerMap.set(node, originalEuler);
+          }
+
+          return originalEuler;
+        }
+
+        resetBottomBaseRollState() {
+          this.bottomBaseRollAngle = 0;
+          this.lastBottomBaseWorldZ = this.node.worldPositionZ;
+          this.hasLastBottomBaseWorldZ = true;
+        }
+
+        updateBottomBaseRoll() {
+          if (this.tireList.length <= 0) {
+            this.hasLastBottomBaseWorldZ = false;
+            return;
+          }
+
+          const curWorldZ = this.node.worldPositionZ;
+
+          if (!this.hasLastBottomBaseWorldZ) {
+            this.lastBottomBaseWorldZ = curWorldZ;
+            this.hasLastBottomBaseWorldZ = true;
+            return;
+          }
+
+          const deltaZ = curWorldZ - this.lastBottomBaseWorldZ;
+          this.lastBottomBaseWorldZ = curWorldZ;
+
+          if (Math.abs(deltaZ) <= 0.0001) {
+            return;
+          }
+
+          this.bottomBaseRollAngle += deltaZ * this.bottomBaseRollDegreesPerUnit;
+
+          for (let i = 0; i < this.tireList.length; i++) {
+            this.applyBottomBaseRoll(this.tireList[i]);
+          }
+        }
+
+        applyBottomBaseRoll(node) {
+          if (!node) {
+            return;
+          }
+
+          const originalEuler = this.getBottomBaseOriginalEuler(node);
+          node.eulerAngles = v3(originalEuler.x + this.bottomBaseRollAxis.x * this.bottomBaseRollAngle, originalEuler.y + this.bottomBaseRollAxis.y * this.bottomBaseRollAngle, originalEuler.z + this.bottomBaseRollAxis.z * this.bottomBaseRollAngle);
+        }
+
+        findFirstMeshRenderer(node) {
+          if (!node) {
+            return null;
+          }
+
+          const meshRenderer = node.getComponent(MeshRenderer);
+
+          if (meshRenderer) {
+            return meshRenderer;
+          }
+
+          for (let i = 0; i < node.children.length; i++) {
+            const childMeshRenderer = this.findFirstMeshRenderer(node.children[i]);
+
+            if (childMeshRenderer) {
+              return childMeshRenderer;
+            }
+          }
+
+          return null;
         }
 
         initLalian() {
@@ -1334,8 +1506,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           } // 轮胎平滑插值到正确位置
 
 
-          this._updateTireDrop(dt); // _isShake冷却（非销毁受击用）
+          this._updateTireDrop(dt);
 
+          this.updateBottomBaseRoll(); // _isShake冷却（非销毁受击用）
 
           if (this._shakeCooldown > 0) {
             this._shakeCooldown -= dt;

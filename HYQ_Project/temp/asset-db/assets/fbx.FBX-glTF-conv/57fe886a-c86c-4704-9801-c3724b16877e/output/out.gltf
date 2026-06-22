@@ -1,0 +1,141 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 278,
+      "max": [
+        0.32892045378685,
+        0.518637478351593,
+        0.09722688049077988
+      ],
+      "min": [
+        -0.3252182900905609,
+        -0.9021736979484558,
+        -0.09722689539194107
+      ],
+      "name": "拉链_锯齿002/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 278,
+      "name": "拉链_锯齿002/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 278,
+      "name": "拉链_锯齿002/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5123,
+      "count": 1236,
+      "name": "拉链_锯齿002/INDICES",
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "copyright": "Copyright (c) 2018-2020 Chukong Technologies Inc.",
+    "generator": "FBX-glTF-conv",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 8896,
+      "byteStride": 32,
+      "name": "拉链_锯齿002",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2472,
+      "byteOffset": 8896,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 11368,
+      "uri": "out.bin"
+    }
+  ],
+  "extras": {
+    "FBX-glTF-conv": {
+      "animationFrameRate": 30.0,
+      "fbxFileHeaderInfo": {
+        "creationTimeStamp": {
+          "day": 16,
+          "hour": 11,
+          "millisecond": 89,
+          "minute": 28,
+          "month": 6,
+          "second": 47,
+          "year": 2026
+        },
+        "creator": "FBX SDK/FBX Plugins version 2020.1.1",
+        "sceneInfo": {
+          "author": "",
+          "comment": "",
+          "keywords": "",
+          "original": {
+            "applicationName": "3ds Max",
+            "applicationVendor": "Autodesk",
+            "applicationVersion": "2022",
+            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\SM_lalian.fbx"
+          },
+          "revision": "",
+          "subject": "",
+          "title": "",
+          "url": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\assets\\GameRes\\SLLYT_map\\fbx\\SM_lalian.fbx"
+        }
+      }
+    }
+  },
+  "meshes": [
+    {
+      "name": "拉链_锯齿002",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "拉链_锯齿002",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ],
+      "translation": [
+        0.0,
+        -1.5036375700105964e-08,
+        0.0
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 928,
+      "max": [
+        0.2053883969783783,
+        0.12692323327064514,
+        -0.00023399418569169939
+      ],
+      "min": [
+        -0.20421843230724335,
+        -0.12629836797714233,
+        -0.45833611488342285
+      ],
+      "name": "lalian/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 928,
+      "name": "lalian/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 928,
+      "name": "lalian/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5123,
+      "count": 3408,
+      "name": "lalian/INDICES",
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 421,
+      "max": [
+        0.0669437050819397,
+        -0.033511608839035034,
+        -0.3503464162349701
+      ],
+      "min": [
+        -0.07781246304512024,
+        -0.05124484375119209,
+        -0.5346547961235046
+      ],
+      "name": "对象001/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 421,
+      "name": "对象001/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 421,
+      "name": "对象001/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 1272,
+      "name": "对象001/INDICES",
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 694,
+      "max": [
+        0.07357338070869446,
+        -0.024407198652625084,
+        -0.5149040818214417
+      ],
+      "min": [
+        -0.0830502063035965,
+        -0.060828663408756256,
+        -1.0050486326217651
+      ],
+      "name": "对象002/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 4,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 694,
+      "name": "对象002/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 4,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 694,
+      "name": "对象002/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5123,
+      "count": 2196,
+      "name": "对象002/INDICES",
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "copyright": "Copyright (c) 2018-2020 Chukong Technologies Inc.",
+    "generator": "FBX-glTF-conv",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 29696,
+      "byteStride": 32,
+      "name": "lalian",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 6816,
+      "byteOffset": 29696,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 13472,
+      "byteOffset": 36512,
+      "byteStride": 32,
+      "name": "对象001",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2544,
+      "byteOffset": 49984,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 22208,
+      "byteOffset": 52528,
+      "byteStride": 32,
+      "name": "对象002",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4392,
+      "byteOffset": 74736,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 79128,
+      "uri": "out.bin"
+    }
+  ],
+  "extras": {
+    "FBX-glTF-conv": {
+      "animationFrameRate": 30.0,
+      "fbxFileHeaderInfo": {
+        "creationTimeStamp": {
+          "day": 18,
+          "hour": 14,
+          "millisecond": 328,
+          "minute": 42,
+          "month": 6,
+          "second": 10,
+          "year": 2026
+        },
+        "creator": "FBX SDK/FBX Plugins version 2020.1.1",
+        "sceneInfo": {
+          "author": "",
+          "comment": "",
+          "keywords": "",
+          "original": {
+            "applicationName": "3ds Max",
+            "applicationVendor": "Autodesk",
+            "applicationVersion": "2022",
+            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\SM_lalian_02.fbx"
+          },
+          "revision": "",
+          "subject": "",
+          "title": "",
+          "url": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\assets\\GameRes\\SLLYT_map\\fbx\\SM_laliantou_02.fbx"
+        }
+      }
+    }
+  },
+  "meshes": [
+    {
+      "name": "lalian",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3
+        }
+      ]
+    },
+    {
+      "name": "对象001",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7
+        }
+      ]
+    },
+    {
+      "name": "对象002",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "lalian",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
+    },
+    {
+      "mesh": 1,
+      "name": "对象001",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
+    },
+    {
+      "mesh": 2,
+      "name": "对象002",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "nodes": [
+        0,
+        1,
+        2
+      ]
+    }
+  ]
+}

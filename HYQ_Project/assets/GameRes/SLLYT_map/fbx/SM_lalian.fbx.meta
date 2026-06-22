@@ -1,0 +1,78 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "57fe886a-c86c-4704-9801-c3724b16877e",
+  "files": [],
+  "subMetas": {
+    "98603": {
+      "importer": "gltf-scene",
+      "uuid": "57fe886a-c86c-4704-9801-c3724b16877e@98603",
+      "displayName": "",
+      "id": "98603",
+      "name": "SM_lalian.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "0c40b": {
+      "importer": "gltf-mesh",
+      "uuid": "57fe886a-c86c-4704-9801-c3724b16877e@0c40b",
+      "displayName": "",
+      "id": "0c40b",
+      "name": "拉链_锯齿002.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 412
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "57fe886a-c86c-4704-9801-c3724b16877e@0c40b"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "57fe886a-c86c-4704-9801-c3724b16877e@98603"
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Camera, Component, Node, tween, Vec3, view, LayerManager, SceneType, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _class3, _crd, ccclass, property, CameraMove;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Camera, Component, Node, tween, Vec3, view, LayerManager, SceneType, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _class3, _crd, ccclass, property, CameraMove;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -62,9 +62,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
 
           _initializerDefineProperty(this, "OffVector3D", _descriptor2, this);
 
+          _initializerDefineProperty(this, "useEditorStartOffset", _descriptor3, this);
+
+          _initializerDefineProperty(this, "followXFactor", _descriptor4, this);
+
           this.sceneType = (_crd && SceneType === void 0 ? (_reportPossibleCrUseOfSceneType({
             error: Error()
           }), SceneType) : SceneType).D2;
+          this.startCameraWorldPos = new Vec3();
+          this.startTargetWorldPos = new Vec3();
+          this.hasFollowStartPos = false;
           this.shakeIn = false;
           this.moveX = 3;
           CameraMove.instance = this;
@@ -98,6 +105,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
 
         start() {
           this.camera = this.getComponent(Camera);
+          this.initEditorStartOffset(this.targetNode);
         }
 
         update(deltaTime) {
@@ -159,13 +167,33 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
          */
         move32D(target) {
           // 获取目标节点的世界坐标
+          this.initEditorStartOffset(target);
           var pv = target.worldPosition; // 获取当前节点的世界坐标
 
           var pos = this.node.worldPosition;
-          var targetX = pv.x * 0.6;
+          var targetX = this.startCameraWorldPos.x + (pv.x - this.startTargetWorldPos.x) * this.followXFactor;
           var moveX = targetX - pos.x;
-          this.node.setWorldPosition(pos.x + moveX * 0.1, this.OffVector3D.y, this.OffVector3D.z); // this.node.setWorldPosition(pos.x + dx * 0.1, this.OffVector3D.y, pos.z + dy * 0.1)
+          var nextX = Math.abs(moveX) < 0.05 ? pos.x : pos.x + moveX * 0.1;
+          this.node.setWorldPosition(nextX, this.startCameraWorldPos.y, this.startCameraWorldPos.z); // this.node.setWorldPosition(pos.x + dx * 0.1, this.OffVector3D.y, pos.z + dy * 0.1)
           // this.node.setWorldPosition(pv.x, this.OffVector3D.y, pos.z )
+        }
+
+        initEditorStartOffset(target) {
+          if (this.hasFollowStartPos || this.sceneType == (_crd && SceneType === void 0 ? (_reportPossibleCrUseOfSceneType({
+            error: Error()
+          }), SceneType) : SceneType).D2 || !target) {
+            return;
+          }
+
+          var cameraPos = this.node.worldPosition;
+          var targetPos = target.worldPosition;
+          this.startCameraWorldPos.set(cameraPos);
+          this.startTargetWorldPos.set(targetPos);
+          this.hasFollowStartPos = true;
+
+          if (this.useEditorStartOffset) {
+            this.OffVector3D.set(cameraPos.x - targetPos.x, cameraPos.y - targetPos.y, cameraPos.z - targetPos.z);
+          }
         }
         /**摄像机 抖动 */
 
@@ -239,6 +267,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
         writable: true,
         initializer: function initializer() {
           return new Vec3();
+        }
+      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "useEditorStartOffset", [property], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return true;
+        }
+      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "followXFactor", [property], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.6;
         }
       })), _class2)) || _class));
 

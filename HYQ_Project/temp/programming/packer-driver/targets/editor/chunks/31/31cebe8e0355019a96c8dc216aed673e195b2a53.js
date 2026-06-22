@@ -155,6 +155,7 @@ System.register(["cc"], function (_export, _context) {
 
       _export("OtherPrefabsEnum", OtherPrefabsEnum = /*#__PURE__*/function (OtherPrefabsEnum) {
         OtherPrefabsEnum[OtherPrefabsEnum["tire"] = 0] = "tire";
+        OtherPrefabsEnum[OtherPrefabsEnum["youtong"] = 1] = "youtong";
         return OtherPrefabsEnum;
       }({}));
 

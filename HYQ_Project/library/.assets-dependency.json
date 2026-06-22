@@ -2003,6 +2003,35 @@
         "..\\extensions\\super-packager\\package_assets\\chunks\\legacy\\output.chunk",
         "..\\extensions\\super-packager\\package_assets\\chunks\\common\\color\\gamma.chunk",
         "..\\extensions\\super-packager\\package_assets\\chunks\\legacy\\fog-fs.chunk"
+      ],
+      "GameRes\\SLLYT_map\\mat\\ocean_realistic.effect": [
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\ocean-vs.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\cc-global.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\cc-local.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\ocean-ubos.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\ocean-waves.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\ocean-helpers.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\ocean-fs.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\ocean-lighting.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\ocean-foam.chunk",
+        "chunks\\ocean-vs.chunk",
+        "chunks\\cc-global.chunk",
+        "chunks\\cc-local.chunk",
+        "chunks\\ocean-ubos.chunk",
+        "chunks\\ocean-waves.chunk",
+        "chunks\\ocean-helpers.chunk",
+        "chunks\\ocean-fs.chunk",
+        "chunks\\ocean-lighting.chunk",
+        "chunks\\ocean-foam.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-vs.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\cc-global.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\cc-local.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-ubos.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-waves.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-helpers.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-fs.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-lighting.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-foam.chunk"
       ]
     },
     "uuid": {
@@ -2412,6 +2441,66 @@
         "cf33035a-7405-4c8c-9699-c1ee782e41b6"
       ],
       "GameRes\\HYQ_map\\mat\\yinying.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_baixian.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_beizengmen.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_beizengmen_yellow.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_blue.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_gelidun.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_hd.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_lalian.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_laliantou.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_laliantou_02.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_luzhuang.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_luzhuang_04.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_luzhuang_04_02.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_qiang.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_qiao.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_shizhu_04_01.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_youtong.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_youtong_02.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\ocean_realistic.mtl": [
+        "eb9cc796-e90c-4759-a0c4-a04ce69a4ae7"
+      ],
+      "GameRes\\SLLYT_map\\zhujue\\zhujue-001.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\zhujue\\zhujue.mtl": [
         "c8f66d17-351a-48da-a12c-0212d28575c4"
       ]
     }

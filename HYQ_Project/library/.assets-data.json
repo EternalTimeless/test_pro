@@ -763,16 +763,13 @@
     "value": {
       "depends": [
         "b5805d3a-3b80-4a12-adf5-588e63a7d886",
-        "f662e3c5-87ed-44be-8d8e-dc1a26ed1272",
-        "d3dbdd89-bce8-43ec-9708-17fd28f6efdb",
-        "1263d74c-8167-4928-91a6-4e2672411f47@2e76e",
-        "b46f5d80-b298-4ee3-b55f-04cf6ba54a87",
-        "1594d569-5fd8-4c03-81df-8996298cb0ca",
+        "e6af3f17-33aa-436a-a9ab-c1cd0b218868",
         "dea19d00-1fd6-4699-a3f7-2c8aae96e8cb",
         "dd955aad-9fb4-43f7-93d3-04f3ebdefbbb@f9941",
-        "03189dd5-73dd-4e52-8644-1ff1a122b972@2e1cf",
+        "1dd89136-12dc-4b20-9296-810b3dc0ca2c",
         "df892961-7da4-4f4d-8b24-7963cfcd3df7@97cb5",
         "29cb620a-6a6f-4137-9526-751deb1882ad",
+        "03189dd5-73dd-4e52-8644-1ff1a122b972@2e1cf",
         "cc1ba55d-5314-4c01-ba6d-b71fae6946a4",
         "ba379bbc-987c-4bbc-a296-3cabc67825bb@73b7f",
         "c6316384-dbb5-4431-ad4a-4c00d3092298@73b7f",
@@ -831,8 +828,8 @@
         "4c579f82-105c-430a-bfd7-23b68345d492",
         "da648bf8-ab14-4a6a-a474-9832df4b466c",
         "a3fc851d-1125-44b5-aa5b-0bc582d46016",
-        "1bf3438b-1da7-4434-930b-814432d521fc",
         "7ab0ec49-7b52-4369-a342-a29db05785c6",
+        "1bf3438b-1da7-4434-930b-814432d521fc",
         "1f73fffa-7e0b-4275-921e-97239d52dd3a",
         "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0",
         "b41f7bf2-d6be-460d-81b2-3305244179b7",
@@ -898,6 +895,7 @@
         "0138029d-bfaa-4d43-aa1c-63b3be01e8e5",
         "09f7d7d0-5529-499d-8bbb-e3e6a9394677",
         "b836b03f-f23c-4801-87e2-8742f0f6477c",
+        "1dd89136-12dc-4b20-9296-810b3dc0ca2c",
         "22df2732-7376-4d1e-b3ec-198dc70edfad",
         "990960bd-9301-4607-aca1-7c65a19e12bc",
         "ac2e0ce8-427b-413a-b957-031450d6f06c",
@@ -7906,6 +7904,1587 @@
     "url": "db://assets/GameRes/Image/img/auto-atlas.pac",
     "value": {
       "depends": []
+    },
+    "versionCode": 1
+  },
+  "d507980d-0a9a-4dd5-a65f-99c4452efe39": {
+    "url": "db://assets/Scene/SLLYT.scene",
+    "value": {
+      "depends": [
+        "d507980d-0a9a-4dd5-a65f-99c4452efe39",
+        "e6af3f17-33aa-436a-a9ab-c1cd0b218868",
+        "d032ac98-05e1-4090-88bb-eb640dcb5fc1@b47c0",
+        "6f01cf7f-81bf-4a7e-bd5d-0afc19696480@b47c0"
+      ],
+      "dependScripts": [
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "81aa95e0-c269-4b18-8696-ffc181d7f4a4": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx",
+    "value": {},
+    "versionCode": 1
+  },
+  "04cf2e46-a468-425b-9d02-6803b10f18fa": {
+    "url": "db://assets/GameRes/SLLYT_map/mat",
+    "value": {},
+    "versionCode": 1
+  },
+  "c588152e-c314-4759-a79c-e0c841054311": {
+    "url": "db://assets/GameRes/SLLYT_map/pre",
+    "value": {},
+    "versionCode": 1
+  },
+  "1ae86c67-30a0-4d39-9163-71d38ebcff29": {
+    "url": "db://assets/GameRes/SLLYT_map",
+    "value": {},
+    "versionCode": 1
+  },
+  "e6af3f17-33aa-436a-a9ab-c1cd0b218868": {
+    "url": "db://assets/GameRes/SLLYT_map/SLLYT_map.prefab",
+    "value": {
+      "depends": [
+        "d1ffc78b-2a92-4489-893c-da76f48fc2ba",
+        "822048d4-d5c9-4ed6-93b2-aa63e4139bac@16a87",
+        "a539b575-9537-49b0-ac27-43f709d42224",
+        "0df93e8a-6b92-4fe1-9f75-248833974c1c",
+        "ebca9632-c8e2-4736-bb73-79706c01cd19",
+        "1dd89136-12dc-4b20-9296-810b3dc0ca2c",
+        "2e9d5c03-2005-4a97-8a0a-99318171a55f",
+        "ab01cbc5-abce-431e-8d91-6dea04e77138",
+        "5dd55190-0099-4d7b-8c86-c44951c27e0a"
+      ],
+      "dependScripts": [
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "a2aaa93c-14a1-49a5-ac32-93c7c78d26f0": {
+    "url": "db://assets/GameRes/SLLYT_map/tex",
+    "value": {},
+    "versionCode": 1
+  },
+  "c42e05e7-a291-45ec-9676-11e24c114b1c": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue",
+    "value": {},
+    "versionCode": 1
+  },
+  "a8727188-248b-4058-b625-0e5c00126864": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "96744e74-4122-48b2-b8eb-4e7defada28f": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_02.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "b5582b0d-14d3-4712-b97d-4ef39205c064": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_03.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "068e5021-13db-4da1-ac2f-e8c66e8dbc33": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_04.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "3b7e3612-3e96-419f-8d0c-60829551f67a": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_04_02.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "3b7e3612-3e96-419f-8d0c-60829551f67a@49b18": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_04_02.fbx@49b18",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "068e5021-13db-4da1-ac2f-e8c66e8dbc33@49b18": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_04.fbx@49b18",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "b5582b0d-14d3-4712-b97d-4ef39205c064@a0fee": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_03.fbx@a0fee",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "96744e74-4122-48b2-b8eb-4e7defada28f@df11f": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_02.fbx@df11f",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "a8727188-248b-4058-b625-0e5c00126864@f1fcd": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu.fbx@f1fcd",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "068e5021-13db-4da1-ac2f-e8c66e8dbc33@f1de9": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_04.fbx@f1de9",
+    "value": {
+      "depends": [
+        "068e5021-13db-4da1-ac2f-e8c66e8dbc33@49b18"
+      ]
+    },
+    "versionCode": 1
+  },
+  "36cb1ca2-3c58-4c62-9e5d-dd515dce6967": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_beizengmen_03.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "3b7e3612-3e96-419f-8d0c-60829551f67a@1c288": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_04_02.fbx@1c288",
+    "value": {
+      "depends": [
+        "3b7e3612-3e96-419f-8d0c-60829551f67a@49b18"
+      ]
+    },
+    "versionCode": 1
+  },
+  "b5582b0d-14d3-4712-b97d-4ef39205c064@8849f": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_03.fbx@8849f",
+    "value": {
+      "depends": [
+        "b5582b0d-14d3-4712-b97d-4ef39205c064@a0fee"
+      ]
+    },
+    "versionCode": 1
+  },
+  "96744e74-4122-48b2-b8eb-4e7defada28f@a8069": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu_02.fbx@a8069",
+    "value": {
+      "depends": [
+        "96744e74-4122-48b2-b8eb-4e7defada28f@df11f"
+      ]
+    },
+    "versionCode": 1
+  },
+  "d6a561b4-f833-4ae9-b81f-183ffb0a07ad": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_gelidun_03.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "57fe886a-c86c-4704-9801-c3724b16877e": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_lalian.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "4ae4f5f2-7fef-491b-b4f2-ad980e83253f": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_laliantou.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "a8727188-248b-4058-b625-0e5c00126864@2bd58": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/shizhu.fbx@2bd58",
+    "value": {
+      "depends": [
+        "a8727188-248b-4058-b625-0e5c00126864@f1fcd"
+      ]
+    },
+    "versionCode": 1
+  },
+  "42e81c72-7efd-4eed-b98f-f40bb033b5d4": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_laliantou_02.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_beizengmen_03.fbx@c6160",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@1cf44": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_beizengmen_03.fbx@1cf44",
+    "value": {
+      "depends": [
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160"
+      ]
+    },
+    "versionCode": 1
+  },
+  "ddb19200-34a6-4322-a151-125f435671a4": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_luzhang_03.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "d6a561b4-f833-4ae9-b81f-183ffb0a07ad@46540": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_gelidun_03.fbx@46540",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "d6a561b4-f833-4ae9-b81f-183ffb0a07ad@8e808": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_gelidun_03.fbx@8e808",
+    "value": {
+      "depends": [
+        "d6a561b4-f833-4ae9-b81f-183ffb0a07ad@46540"
+      ]
+    },
+    "versionCode": 1
+  },
+  "a989efe3-4627-4b0d-923a-453c7221285e": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_luzhang_04.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "57fe886a-c86c-4704-9801-c3724b16877e@98603": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_lalian.fbx@98603",
+    "value": {
+      "depends": [
+        "57fe886a-c86c-4704-9801-c3724b16877e@0c40b"
+      ]
+    },
+    "versionCode": 1
+  },
+  "57fe886a-c86c-4704-9801-c3724b16877e@0c40b": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_lalian.fbx@0c40b",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "4f1d0382-886a-4e0b-9e5e-a465b36661b2": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_qiang_01.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "42e81c72-7efd-4eed-b98f-f40bb033b5d4@11e06": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_laliantou_02.fbx@11e06",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "42e81c72-7efd-4eed-b98f-f40bb033b5d4@035c0": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_laliantou_02.fbx@035c0",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "42e81c72-7efd-4eed-b98f-f40bb033b5d4@44baf": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_laliantou_02.fbx@44baf",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "42e81c72-7efd-4eed-b98f-f40bb033b5d4@9400b": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_laliantou_02.fbx@9400b",
+    "value": {
+      "depends": [
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@11e06",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@035c0",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@44baf"
+      ]
+    },
+    "versionCode": 1
+  },
+  "1b582930-d871-4c23-a84a-b4a557c68ea5": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_qiao_01.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "4f1d0382-886a-4e0b-9e5e-a465b36661b2@3ac76": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_qiang_01.fbx@3ac76",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "4f1d0382-886a-4e0b-9e5e-a465b36661b2@3c2cb": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_qiang_01.fbx@3c2cb",
+    "value": {
+      "depends": [
+        "4f1d0382-886a-4e0b-9e5e-a465b36661b2@3ac76"
+      ]
+    },
+    "versionCode": 1
+  },
+  "770cbaa6-d608-4fec-b4b7-e24ce0490600": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "ddb19200-34a6-4322-a151-125f435671a4@46540": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_luzhang_03.fbx@46540",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "ddb19200-34a6-4322-a151-125f435671a4@1b5b6": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_luzhang_03.fbx@1b5b6",
+    "value": {
+      "depends": [
+        "ddb19200-34a6-4322-a151-125f435671a4@46540"
+      ]
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx",
+    "value": {},
+    "versionCode": 3
+  },
+  "a989efe3-4627-4b0d-923a-453c7221285e@a387a": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_luzhang_04.fbx@a387a",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "a989efe3-4627-4b0d-923a-453c7221285e@035c0": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_luzhang_04.fbx@035c0",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "a989efe3-4627-4b0d-923a-453c7221285e@075c6": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_luzhang_04.fbx@075c6",
+    "value": {
+      "depends": [
+        "a989efe3-4627-4b0d-923a-453c7221285e@a387a",
+        "a989efe3-4627-4b0d-923a-453c7221285e@035c0"
+      ]
+    },
+    "versionCode": 1
+  },
+  "39581f2d-beba-470c-ae42-9095177585a7": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_baixian.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "3b5650d7-acf5-44f1-8c11-9e451ebbf727@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "c63cfac0-c992-4054-ab47-56d165a770b9": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_beizengmen.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "e12799fc-42f3-44f1-b985-91d1ee1cb0a5@6c48a",
+        "85a47c6f-4da1-4157-94e2-8435d3349d09@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "1b582930-d871-4c23-a84a-b4a557c68ea5@17065": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_qiao_01.fbx@17065",
+    "value": {
+      "depends": [
+        "1b582930-d871-4c23-a84a-b4a557c68ea5@7a922"
+      ]
+    },
+    "versionCode": 1
+  },
+  "d32b94c0-802d-4996-a48c-f70d922c1083": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_beizengmen_yellow.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "7f8239c4-4b3d-4c75-b047-5c0d810287fc@6c48a",
+        "3964cc34-3094-4161-98e4-a79590088632@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "c02ceeff-80c7-4bbe-a955-798195f842a6": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_blue.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ]
+    },
+    "versionCode": 1
+  },
+  "1b582930-d871-4c23-a84a-b4a557c68ea5@7a922": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_qiao_01.fbx@7a922",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "716e69ac-31c7-4763-841b-c7cdc71f57a9": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_gelidun.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "16c1e869-29e7-4feb-94e3-5ea1cef67864@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "9e31a82d-6bed-48b8-a663-f75aeaf35487": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_hd.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ]
+    },
+    "versionCode": 1
+  },
+  "bcf2a6f9-6e11-4e6a-a1ab-5dcd7fa75e76": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_lalian.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "f1b8abcf-82e9-4699-ba56-d486e4288457@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "11974897-a91c-42c2-9452-127c4f679db8": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_laliantou.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "f1b8abcf-82e9-4699-ba56-d486e4288457@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e91aa9cd-2a16-410b-9a43-f0016c14d029": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_laliantou_02.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "f1b8abcf-82e9-4699-ba56-d486e4288457@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "c08a2c85-0421-47e8-9696-c9feb7ca52d2": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_luzhuang.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "9f6671df-64a0-4174-a557-5ef019ad6857@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "9e734898-3d6f-4886-a5f0-47fcbb1c6ccf": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_luzhuang_04.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "7ea6ba60-152d-42db-a869-5f695051cd82@6c48a",
+        "e61280a6-c9bc-49c6-98cd-87e8d9efbb19@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "b601c79c-4967-4c08-9195-90be04fcdf59": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_luzhuang_04_02.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "1301dccb-c351-42bb-a0cc-c75cf692425e@6c48a",
+        "e61280a6-c9bc-49c6-98cd-87e8d9efbb19@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "54f70ea4-5f33-45d7-a1b6-dd241986cf65": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_qiang.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "16c1e869-29e7-4feb-94e3-5ea1cef67864@6c48a",
+        "f6121232-6cbf-4d29-b777-1fafb426e96c@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "c50fd25f-793b-4102-addc-457618fd2179": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_qiao.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "3787575d-5d0a-4544-b2c8-00eb8360fe27@6c48a",
+        "4d65f42c-8c92-4837-aae4-28f834150cf2@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "57e1605b-26cc-40c6-b89f-70fe81b132c6": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_shizhu_04_01.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "b0a07a48-a070-4f7e-98ef-db4af78571eb@6c48a",
+        "f28fbe17-cc8b-4a4d-b96f-97763c32859d@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "96a0e69e-e7ed-42d4-b597-f12ac6c6bad3": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_youtong.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "014ecdaa-a5a2-4340-9c31-c7571e3808b8@6c48a",
+        "9e277dc1-576d-47e4-9508-4b4eef83e3a5@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "2e9d5c03-2005-4a97-8a0a-99318171a55f": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_youtong_02.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "014ecdaa-a5a2-4340-9c31-c7571e3808b8@6c48a",
+        "9e277dc1-576d-47e4-9508-4b4eef83e3a5@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "659d6153-7e53-4de3-9556-3217c172e1d1": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/ocean_realistic.effect",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "5d9850d6-484f-45c8-b39f-33a8e1ba1b13": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/ocean_realistic.mtl",
+    "value": {
+      "depends": [
+        "eb9cc796-e90c-4759-a0c4-a04ce69a4ae7"
+      ]
+    },
+    "versionCode": 1
+  },
+  "84532440-0322-4e78-b4fc-46a9b774a75b": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/gld.prefab",
+    "value": {
+      "depends": [
+        "dfb7ae1c-5c79-4139-ae34-439dc306d970"
+      ],
+      "dependScripts": [
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "c4a0e76d-17ef-4f23-9fe9-4b25c572034f": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/haimian.prefab",
+    "value": {
+      "depends": [
+        "5d9850d6-484f-45c8-b39f-33a8e1ba1b13",
+        "1263d74c-8167-4928-91a6-4e2672411f47@2e76e",
+        "9e31a82d-6bed-48b8-a663-f75aeaf35487",
+        "1263d74c-8167-4928-91a6-4e2672411f47@a804a"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "d1ffc78b-2a92-4489-893c-da76f48fc2ba": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/huanjing.prefab",
+    "value": {
+      "depends": [
+        "d9ae9902-2a2e-4317-8ae1-83a0b679ab82",
+        "43211718-4192-4a72-b1a9-63a052d6be13@f9941",
+        "32ca9dbe-ec30-41f4-99f4-b4fcc854a863@f9941",
+        "e81a09af-fadd-469e-ac63-bc59eec7ce05@f9941",
+        "745647e2-8cb6-4031-ab9f-93ba708d8cd1",
+        "c4a0e76d-17ef-4f23-9fe9-4b25c572034f",
+        "c02ceeff-80c7-4bbe-a955-798195f842a6",
+        "1263d74c-8167-4928-91a6-4e2672411f47@a804a",
+        "84532440-0322-4e78-b4fc-46a9b774a75b"
+      ],
+      "dependScripts": [
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "0df93e8a-6b92-4fe1-9f75-248833974c1c": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/lalian_01.prefab",
+    "value": {
+      "depends": [
+        "732609be-090b-4ad7-9e8e-4ec04d8e29ed",
+        "b2959ad2-9af1-42b4-b5a3-1009f4f17b21"
+      ],
+      "dependScripts": [
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "ebca9632-c8e2-4736-bb73-79706c01cd19": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/lalian_02.prefab",
+    "value": {
+      "depends": [
+        "732609be-090b-4ad7-9e8e-4ec04d8e29ed",
+        "b2959ad2-9af1-42b4-b5a3-1009f4f17b21"
+      ],
+      "dependScripts": [
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "745647e2-8cb6-4031-ab9f-93ba708d8cd1": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/qiao.prefab",
+    "value": {
+      "depends": [
+        "96b3c708-ae8a-4df2-af78-64fa68beafe3",
+        "38afd98c-7249-42cc-aff9-ad8736a4ec39",
+        "f5db90de-3ffd-4f64-abc4-440eb4586fdb",
+        "39581f2d-beba-470c-ae42-9095177585a7",
+        "1263d74c-8167-4928-91a6-4e2672411f47@2e76e"
+      ],
+      "dependScripts": [
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "96b3c708-ae8a-4df2-af78-64fa68beafe3": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/shizhu_04.prefab",
+    "value": {
+      "depends": [
+        "57e1605b-26cc-40c6-b89f-70fe81b132c6",
+        "068e5021-13db-4da1-ac2f-e8c66e8dbc33@49b18"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "ab01cbc5-abce-431e-8d91-6dea04e77138": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_beizengmen_03.prefab",
+    "value": {
+      "depends": [
+        "c63cfac0-c992-4054-ab47-56d165a770b9",
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@684db": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@684db",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "770cbaa6-d608-4fec-b4b7-e24ce0490600@29651": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong.fbx@29651",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "4ae4f5f2-7fef-491b-b4f2-ad980e83253f@067d2": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_laliantou.fbx@067d2",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "4ae4f5f2-7fef-491b-b4f2-ad980e83253f@e44a0": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_laliantou.fbx@e44a0",
+    "value": {
+      "depends": [
+        "4ae4f5f2-7fef-491b-b4f2-ad980e83253f@067d2"
+      ]
+    },
+    "versionCode": 1
+  },
+  "770cbaa6-d608-4fec-b4b7-e24ce0490600@ce9d5": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong.fbx@ce9d5",
+    "value": {
+      "depends": [
+        "770cbaa6-d608-4fec-b4b7-e24ce0490600@29651"
+      ]
+    },
+    "versionCode": 1
+  },
+  "5dd55190-0099-4d7b-8c86-c44951c27e0a": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_beizengmen_yellow.prefab",
+    "value": {
+      "depends": [
+        "d32b94c0-802d-4996-a48c-f70d922c1083",
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "dfb7ae1c-5c79-4139-ae34-439dc306d970": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_gelidun_03.prefab",
+    "value": {
+      "depends": [
+        "716e69ac-31c7-4763-841b-c7cdc71f57a9",
+        "d6a561b4-f833-4ae9-b81f-183ffb0a07ad@46540"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "732609be-090b-4ad7-9e8e-4ec04d8e29ed": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_lalian.prefab",
+    "value": {
+      "depends": [
+        "bcf2a6f9-6e11-4e6a-a1ab-5dcd7fa75e76",
+        "57fe886a-c86c-4704-9801-c3724b16877e@0c40b"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "b2959ad2-9af1-42b4-b5a3-1009f4f17b21": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_laliantou_02.prefab",
+    "value": {
+      "depends": [
+        "11974897-a91c-42c2-9452-127c4f679db8",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@11e06",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@035c0",
+        "e91aa9cd-2a16-410b-9a43-f0016c14d029",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@44baf"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@035c0",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "e3649be8-16b6-4c66-bd04-da04407047be": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_lalian_02.prefab",
+    "value": {
+      "depends": [
+        "11974897-a91c-42c2-9452-127c4f679db8",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@11e06",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@035c0",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@44baf"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "c24c5a6b-72f1-4a16-9941-cc7cb8f3353f": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_luzhang_04.prefab",
+    "value": {
+      "depends": [
+        "b601c79c-4967-4c08-9195-90be04fcdf59",
+        "a989efe3-4627-4b0d-923a-453c7221285e@a387a",
+        "9e734898-3d6f-4886-a5f0-47fcbb1c6ccf",
+        "a989efe3-4627-4b0d-923a-453c7221285e@035c0"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "f5db90de-3ffd-4f64-abc4-440eb4586fdb": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_qiang_01.prefab",
+    "value": {
+      "depends": [
+        "54f70ea4-5f33-45d7-a1b6-dd241986cf65",
+        "4f1d0382-886a-4e0b-9e5e-a465b36661b2@3ac76"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@961bc": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@961bc",
+    "value": {
+      "depends": [
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@684db",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0"
+      ]
+    },
+    "versionCode": 1
+  },
+  "38afd98c-7249-42cc-aff9-ad8736a4ec39": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_qiao_01.prefab",
+    "value": {
+      "depends": [
+        "c50fd25f-793b-4102-addc-457618fd2179",
+        "1b582930-d871-4c23-a84a-b4a557c68ea5@7a922"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "1dd89136-12dc-4b20-9296-810b3dc0ca2c": {
+    "url": "db://assets/GameRes/SLLYT_map/pre/SM_youtong_02.prefab",
+    "value": {
+      "depends": [
+        "96a0e69e-e7ed-42d4-b597-f12ac6c6bad3",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@684db",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "5930c5a2-6e1c-4f8e-9d06-4a615b012924": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/banxian.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "3b5650d7-acf5-44f1-8c11-9e451ebbf727": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/banxian_02.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "43211718-4192-4a72-b1a9-63a052d6be13": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/beijing.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "9c1879ae-6552-4f29-9731-d41eeac35ffa": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/beijing.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "32ca9dbe-ec30-41f4-99f4-b4fcc854a863": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/huaban-1266235567.webp",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "3b5650d7-acf5-44f1-8c11-9e451ebbf727@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/banxian_02.png@6c48a",
+    "value": {
+      "depends": [
+        "3b5650d7-acf5-44f1-8c11-9e451ebbf727"
+      ]
+    },
+    "versionCode": 1
+  },
+  "9c1879ae-6552-4f29-9731-d41eeac35ffa@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/beijing.png@6c48a",
+    "value": {
+      "depends": [
+        "9c1879ae-6552-4f29-9731-d41eeac35ffa"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e81a09af-fadd-469e-ac63-bc59eec7ce05": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/lunchuan.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "5930c5a2-6e1c-4f8e-9d06-4a615b012924@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/banxian.png@6c48a",
+    "value": {
+      "depends": [
+        "5930c5a2-6e1c-4f8e-9d06-4a615b012924"
+      ]
+    },
+    "versionCode": 1
+  },
+  "b0a07a48-a070-4f7e-98ef-db4af78571eb": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/shizhu_albedo.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "32ca9dbe-ec30-41f4-99f4-b4fcc854a863@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/huaban-1266235567.webp@6c48a",
+    "value": {
+      "depends": [
+        "32ca9dbe-ec30-41f4-99f4-b4fcc854a863"
+      ]
+    },
+    "versionCode": 1
+  },
+  "43211718-4192-4a72-b1a9-63a052d6be13@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/beijing.jpg@6c48a",
+    "value": {
+      "depends": [
+        "43211718-4192-4a72-b1a9-63a052d6be13"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e81a09af-fadd-469e-ac63-bc59eec7ce05@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/lunchuan.png@6c48a",
+    "value": {
+      "depends": [
+        "e81a09af-fadd-469e-ac63-bc59eec7ce05"
+      ]
+    },
+    "versionCode": 1
+  },
+  "b0a07a48-a070-4f7e-98ef-db4af78571eb@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/shizhu_albedo.jpg@6c48a",
+    "value": {
+      "depends": [
+        "b0a07a48-a070-4f7e-98ef-db4af78571eb"
+      ]
+    },
+    "versionCode": 1
+  },
+  "f28fbe17-cc8b-4a4d-b96f-97763c32859d": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/shizhu_normal.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "9c1879ae-6552-4f29-9731-d41eeac35ffa@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/beijing.png@f9941",
+    "value": {
+      "depends": [
+        "9c1879ae-6552-4f29-9731-d41eeac35ffa@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "f1b8abcf-82e9-4699-ba56-d486e4288457": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/SM_lalian_02_A.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "32ca9dbe-ec30-41f4-99f4-b4fcc854a863@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/huaban-1266235567.webp@f9941",
+    "value": {
+      "depends": [
+        "32ca9dbe-ec30-41f4-99f4-b4fcc854a863@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "cb8ad35c-6693-4e18-9fd4-ffcc393beabb": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "e81a09af-fadd-469e-ac63-bc59eec7ce05@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/lunchuan.png@f9941",
+    "value": {
+      "depends": [
+        "e81a09af-fadd-469e-ac63-bc59eec7ce05@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e12799fc-42f3-44f1-b985-91d1ee1cb0a5": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen_a.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "43211718-4192-4a72-b1a9-63a052d6be13@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/beijing.jpg@f9941",
+    "value": {
+      "depends": [
+        "43211718-4192-4a72-b1a9-63a052d6be13@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "7f8239c4-4b3d-4c75-b047-5c0d810287fc": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen_a_02.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "f1b8abcf-82e9-4699-ba56-d486e4288457@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/SM_lalian_02_A.png@6c48a",
+    "value": {
+      "depends": [
+        "f1b8abcf-82e9-4699-ba56-d486e4288457"
+      ]
+    },
+    "versionCode": 1
+  },
+  "85a47c6f-4da1-4157-94e2-8435d3349d09": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen_e.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "f28fbe17-cc8b-4a4d-b96f-97763c32859d@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/shizhu_normal.jpg@6c48a",
+    "value": {
+      "depends": [
+        "f28fbe17-cc8b-4a4d-b96f-97763c32859d"
+      ]
+    },
+    "versionCode": 1
+  },
+  "3964cc34-3094-4161-98e4-a79590088632": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen_e_02.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "e12799fc-42f3-44f1-b985-91d1ee1cb0a5@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen_a.jpg@6c48a",
+    "value": {
+      "depends": [
+        "e12799fc-42f3-44f1-b985-91d1ee1cb0a5"
+      ]
+    },
+    "versionCode": 1
+  },
+  "cd7b2fb0-d421-404f-80d6-24c8bb3b45ea": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "cb8ad35c-6693-4e18-9fd4-ffcc393beabb@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen.png@6c48a",
+    "value": {
+      "depends": [
+        "cb8ad35c-6693-4e18-9fd4-ffcc393beabb"
+      ]
+    },
+    "versionCode": 1
+  },
+  "9f6671df-64a0-4174-a557-5ef019ad6857": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "7f8239c4-4b3d-4c75-b047-5c0d810287fc@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen_a_02.jpg@6c48a",
+    "value": {
+      "depends": [
+        "7f8239c4-4b3d-4c75-b047-5c0d810287fc"
+      ]
+    },
+    "versionCode": 1
+  },
+  "7ea6ba60-152d-42db-a869-5f695051cd82": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_02.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "85a47c6f-4da1-4157-94e2-8435d3349d09@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen_e.jpg@6c48a",
+    "value": {
+      "depends": [
+        "85a47c6f-4da1-4157-94e2-8435d3349d09"
+      ]
+    },
+    "versionCode": 1
+  },
+  "19d1d342-72a5-4f98-8b5e-ce5b293779a3": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_04_a.jpeg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "3964cc34-3094-4161-98e4-a79590088632@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_beizengmen_e_02.jpg@6c48a",
+    "value": {
+      "depends": [
+        "3964cc34-3094-4161-98e4-a79590088632"
+      ]
+    },
+    "versionCode": 1
+  },
+  "1301dccb-c351-42bb-a0cc-c75cf692425e": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_04_a.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "cd7b2fb0-d421-404f-80d6-24c8bb3b45ea@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang.jpg@6c48a",
+    "value": {
+      "depends": [
+        "cd7b2fb0-d421-404f-80d6-24c8bb3b45ea"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e61280a6-c9bc-49c6-98cd-87e8d9efbb19": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_04_n.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "7ea6ba60-152d-42db-a869-5f695051cd82@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_02.jpg@6c48a",
+    "value": {
+      "depends": [
+        "7ea6ba60-152d-42db-a869-5f695051cd82"
+      ]
+    },
+    "versionCode": 1
+  },
+  "6c760092-3c00-4d45-92d9-d115621dc1dc": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_04_n.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "9f6671df-64a0-4174-a557-5ef019ad6857@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang.png@6c48a",
+    "value": {
+      "depends": [
+        "9f6671df-64a0-4174-a557-5ef019ad6857"
+      ]
+    },
+    "versionCode": 1
+  },
+  "3ce0cc92-de3a-46aa-a83b-052ee8891351": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_05_a.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "1301dccb-c351-42bb-a0cc-c75cf692425e@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_04_a.jpg@6c48a",
+    "value": {
+      "depends": [
+        "1301dccb-c351-42bb-a0cc-c75cf692425e"
+      ]
+    },
+    "versionCode": 1
+  },
+  "935f299c-cdb4-4692-8aef-f98e49c06d80": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_06_a.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "e61280a6-c9bc-49c6-98cd-87e8d9efbb19@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_04_n.jpg@6c48a",
+    "value": {
+      "depends": [
+        "e61280a6-c9bc-49c6-98cd-87e8d9efbb19"
+      ]
+    },
+    "versionCode": 1
+  },
+  "f6121232-6cbf-4d29-b777-1fafb426e96c": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_qiao_01_ao.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "19d1d342-72a5-4f98-8b5e-ce5b293779a3@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_04_a.jpeg@6c48a",
+    "value": {
+      "depends": [
+        "19d1d342-72a5-4f98-8b5e-ce5b293779a3"
+      ]
+    },
+    "versionCode": 1
+  },
+  "16c1e869-29e7-4feb-94e3-5ea1cef67864": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_qiao_01_d.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "3ce0cc92-de3a-46aa-a83b-052ee8891351@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_05_a.jpg@6c48a",
+    "value": {
+      "depends": [
+        "3ce0cc92-de3a-46aa-a83b-052ee8891351"
+      ]
+    },
+    "versionCode": 1
+  },
+  "3787575d-5d0a-4544-b2c8-00eb8360fe27": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_qiao_02_d.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "f6121232-6cbf-4d29-b777-1fafb426e96c@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_qiao_01_ao.jpg@6c48a",
+    "value": {
+      "depends": [
+        "f6121232-6cbf-4d29-b777-1fafb426e96c"
+      ]
+    },
+    "versionCode": 1
+  },
+  "d4953be9-7be8-42f9-9184-b4a014fad9c0": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_qiao_02_d_04.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "935f299c-cdb4-4692-8aef-f98e49c06d80@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_06_a.jpg@6c48a",
+    "value": {
+      "depends": [
+        "935f299c-cdb4-4692-8aef-f98e49c06d80"
+      ]
+    },
+    "versionCode": 1
+  },
+  "c54d6089-2ef8-41e0-90b0-3e5849d76dd9": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_a.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "16c1e869-29e7-4feb-94e3-5ea1cef67864@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_qiao_01_d.jpg@6c48a",
+    "value": {
+      "depends": [
+        "16c1e869-29e7-4feb-94e3-5ea1cef67864"
+      ]
+    },
+    "versionCode": 1
+  },
+  "7cf0cf4c-0133-4fd5-94a4-a1e099a13972": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_a.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "6c760092-3c00-4d45-92d9-d115621dc1dc@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_luzhuang_04_n.png@6c48a",
+    "value": {
+      "depends": [
+        "6c760092-3c00-4d45-92d9-d115621dc1dc"
+      ]
+    },
+    "versionCode": 1
+  },
+  "014ecdaa-a5a2-4340-9c31-c7571e3808b8": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_a_02.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "3787575d-5d0a-4544-b2c8-00eb8360fe27@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_qiao_02_d.jpg@6c48a",
+    "value": {
+      "depends": [
+        "3787575d-5d0a-4544-b2c8-00eb8360fe27"
+      ]
+    },
+    "versionCode": 1
+  },
+  "9e277dc1-576d-47e4-9508-4b4eef83e3a5": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_n.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "d4953be9-7be8-42f9-9184-b4a014fad9c0@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_qiao_02_d_04.jpg@6c48a",
+    "value": {
+      "depends": [
+        "d4953be9-7be8-42f9-9184-b4a014fad9c0"
+      ]
+    },
+    "versionCode": 1
+  },
+  "884bcae3-32d7-4e08-b008-489e1b3fb7f2": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_n.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "c54d6089-2ef8-41e0-90b0-3e5849d76dd9@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_a.jpg@6c48a",
+    "value": {
+      "depends": [
+        "c54d6089-2ef8-41e0-90b0-3e5849d76dd9"
+      ]
+    },
+    "versionCode": 1
+  },
+  "a539b575-9537-49b0-ac27-43f709d42224": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue-001.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "970148a4-ffe6-4e24-9806-e8bd054ccd09@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "014ecdaa-a5a2-4340-9c31-c7571e3808b8@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_a_02.jpg@6c48a",
+    "value": {
+      "depends": [
+        "014ecdaa-a5a2-4340-9c31-c7571e3808b8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "f0e31d97-a617-4b3a-a52e-a2bd8d5acda7": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "970148a4-ffe6-4e24-9806-e8bd054ccd09@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "9e277dc1-576d-47e4-9508-4b4eef83e3a5@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_n.jpg@6c48a",
+    "value": {
+      "depends": [
+        "9e277dc1-576d-47e4-9508-4b4eef83e3a5"
+      ]
+    },
+    "versionCode": 1
+  },
+  "12812ae0-38d8-4d47-95d2-1d84b51da66a": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_D.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "7cf0cf4c-0133-4fd5-94a4-a1e099a13972@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_a.png@6c48a",
+    "value": {
+      "depends": [
+        "7cf0cf4c-0133-4fd5-94a4-a1e099a13972"
+      ]
+    },
+    "versionCode": 1
+  },
+  "07389947-efce-47d2-bf8d-c60629e1f73e": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_N.jpg",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "822048d4-d5c9-4ed6-93b2-aa63e4139bac": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_skin.fbx",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "e581669c-935d-411a-8100-750cbf75fb6a": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/攻击.fbx",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "884bcae3-32d7-4e08-b008-489e1b3fb7f2@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_youtong_n.png@6c48a",
+    "value": {
+      "depends": [
+        "884bcae3-32d7-4e08-b008-489e1b3fb7f2"
+      ]
+    },
+    "versionCode": 1
+  },
+  "ab7abdcf-b909-4592-9fb0-7cd276e7dfe5": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/死亡.fbx",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "12812ae0-38d8-4d47-95d2-1d84b51da66a@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_D.jpg@6c48a",
+    "value": {
+      "depends": [
+        "12812ae0-38d8-4d47-95d2-1d84b51da66a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e9358ecd-c8c9-414f-a348-ad96df430b81": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/跑.fbx",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "07389947-efce-47d2-bf8d-c60629e1f73e@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_N.jpg@6c48a",
+    "value": {
+      "depends": [
+        "07389947-efce-47d2-bf8d-c60629e1f73e"
+      ]
+    },
+    "versionCode": 1
+  },
+  "c42f5a1c-957b-45e0-8edf-c9d1e7433afb": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/跑攻击.fbx",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "e581669c-935d-411a-8100-750cbf75fb6a@73b7f": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/攻击.fbx@73b7f",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "e581669c-935d-411a-8100-750cbf75fb6a@cd076": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/攻击.fbx@cd076",
+    "value": {
+      "depends": [
+        "e581669c-935d-411a-8100-750cbf75fb6a@73b7f"
+      ]
+    },
+    "versionCode": 1
+  },
+  "822048d4-d5c9-4ed6-93b2-aa63e4139bac@83767": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_skin.fbx@83767",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "ab7abdcf-b909-4592-9fb0-7cd276e7dfe5@73b7f": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/死亡.fbx@73b7f",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "e9358ecd-c8c9-414f-a348-ad96df430b81@73b7f": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/跑.fbx@73b7f",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "c42f5a1c-957b-45e0-8edf-c9d1e7433afb@73b7f": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/跑攻击.fbx@73b7f",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "ab7abdcf-b909-4592-9fb0-7cd276e7dfe5@1393f": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/死亡.fbx@1393f",
+    "value": {
+      "depends": [
+        "ab7abdcf-b909-4592-9fb0-7cd276e7dfe5@73b7f"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e9358ecd-c8c9-414f-a348-ad96df430b81@0b080": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/跑.fbx@0b080",
+    "value": {
+      "depends": [
+        "e9358ecd-c8c9-414f-a348-ad96df430b81@73b7f"
+      ]
+    },
+    "versionCode": 1
+  },
+  "822048d4-d5c9-4ed6-93b2-aa63e4139bac@74d97": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_skin.fbx@74d97",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "c42f5a1c-957b-45e0-8edf-c9d1e7433afb@d7f90": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/跑攻击.fbx@d7f90",
+    "value": {
+      "depends": [
+        "c42f5a1c-957b-45e0-8edf-c9d1e7433afb@73b7f"
+      ]
+    },
+    "versionCode": 1
+  },
+  "822048d4-d5c9-4ed6-93b2-aa63e4139bac@73b7f": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_skin.fbx@73b7f",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 3
+  },
+  "822048d4-d5c9-4ed6-93b2-aa63e4139bac@438fe": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_skin.fbx@438fe",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "822048d4-d5c9-4ed6-93b2-aa63e4139bac@16a87": {
+    "url": "db://assets/GameRes/SLLYT_map/zhujue/zhujue_skin.fbx@16a87",
+    "value": {
+      "depends": [
+        "822048d4-d5c9-4ed6-93b2-aa63e4139bac@74d97",
+        "822048d4-d5c9-4ed6-93b2-aa63e4139bac@438fe",
+        "822048d4-d5c9-4ed6-93b2-aa63e4139bac@83767",
+        "822048d4-d5c9-4ed6-93b2-aa63e4139bac@73b7f"
+      ]
     },
     "versionCode": 1
   }

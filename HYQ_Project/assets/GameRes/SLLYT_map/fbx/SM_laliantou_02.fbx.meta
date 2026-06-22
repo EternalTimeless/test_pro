@@ -1,0 +1,116 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "42e81c72-7efd-4eed-b98f-f40bb033b5d4",
+  "files": [],
+  "subMetas": {
+    "11e06": {
+      "importer": "gltf-mesh",
+      "uuid": "42e81c72-7efd-4eed-b98f-f40bb033b5d4@11e06",
+      "displayName": "",
+      "id": "11e06",
+      "name": "lalian.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 1136
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "035c0": {
+      "importer": "gltf-mesh",
+      "uuid": "42e81c72-7efd-4eed-b98f-f40bb033b5d4@035c0",
+      "displayName": "",
+      "id": "035c0",
+      "name": "对象001.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 424
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "44baf": {
+      "importer": "gltf-mesh",
+      "uuid": "42e81c72-7efd-4eed-b98f-f40bb033b5d4@44baf",
+      "displayName": "",
+      "id": "44baf",
+      "name": "对象002.mesh",
+      "userData": {
+        "gltfIndex": 2,
+        "triangleCount": 732
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "9400b": {
+      "importer": "gltf-scene",
+      "uuid": "42e81c72-7efd-4eed-b98f-f40bb033b5d4@9400b",
+      "displayName": "",
+      "id": "9400b",
+      "name": "SM_laliantou_02.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@11e06",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@035c0",
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@44baf"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "42e81c72-7efd-4eed-b98f-f40bb033b5d4@9400b"
+      ]
+    }
+  }
+}

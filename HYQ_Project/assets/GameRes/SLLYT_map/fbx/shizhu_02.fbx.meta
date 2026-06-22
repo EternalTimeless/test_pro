@@ -1,0 +1,78 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "96744e74-4122-48b2-b8eb-4e7defada28f",
+  "files": [],
+  "subMetas": {
+    "df11f": {
+      "importer": "gltf-mesh",
+      "uuid": "96744e74-4122-48b2-b8eb-4e7defada28f@df11f",
+      "displayName": "",
+      "id": "df11f",
+      "name": "D04Floor05A_E06.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 394
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a8069": {
+      "importer": "gltf-scene",
+      "uuid": "96744e74-4122-48b2-b8eb-4e7defada28f@a8069",
+      "displayName": "",
+      "id": "a8069",
+      "name": "shizhu_02.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "96744e74-4122-48b2-b8eb-4e7defada28f@df11f"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "96744e74-4122-48b2-b8eb-4e7defada28f@a8069"
+      ]
+    }
+  }
+}

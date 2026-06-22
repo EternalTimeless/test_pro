@@ -1,0 +1,97 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "610c8773-92fc-4d6b-a446-cb0b7b06352e",
+  "files": [],
+  "subMetas": {
+    "684db": {
+      "importer": "gltf-mesh",
+      "uuid": "610c8773-92fc-4d6b-a446-cb0b7b06352e@684db",
+      "displayName": "",
+      "id": "684db",
+      "name": "Cylinder002.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 624
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "035c0": {
+      "importer": "gltf-mesh",
+      "uuid": "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0",
+      "displayName": "",
+      "id": "035c0",
+      "name": "对象001.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 260
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "961bc": {
+      "importer": "gltf-scene",
+      "uuid": "610c8773-92fc-4d6b-a446-cb0b7b06352e@961bc",
+      "displayName": "",
+      "id": "961bc",
+      "name": "SM_youtong_02.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@684db",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@961bc"
+      ]
+    }
+  }
+}

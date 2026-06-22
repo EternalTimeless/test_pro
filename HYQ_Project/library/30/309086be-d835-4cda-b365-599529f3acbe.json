@@ -102,7 +102,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 23.5,
-      "z": -26.7
+      "z": -31.5
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -190,7 +190,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 23.5,
-      "z": -26.7
+      "z": -31.5
     },
     "_id": "d6zHRFdD5M8YnCnTiZ1fwz"
   },
@@ -13419,6 +13419,10 @@
     "prefabList": [
       {
         "__uuid__": "b836b03f-f23c-4801-87e2-8742f0f6477c",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "1dd89136-12dc-4b20-9296-810b3dc0ca2c",
         "__expectedType__": "cc.Prefab"
       }
     ]

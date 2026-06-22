@@ -1,0 +1,136 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 11171,
+      "max": [
+        0.003510999958962202,
+        0.002174000022932887,
+        -3.999999989900971e-06
+      ],
+      "min": [
+        -0.003510999958962202,
+        -0.002174000022932887,
+        -0.01721831038594246
+      ],
+      "name": "S_01/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 11171,
+      "name": "S_01/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 11171,
+      "name": "S_01/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5123,
+      "count": 58200,
+      "name": "S_01/INDICES",
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "copyright": "Copyright (c) 2018-2020 Chukong Technologies Inc.",
+    "generator": "FBX-glTF-conv",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 357472,
+      "byteStride": 32,
+      "name": "S_01",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 116400,
+      "byteOffset": 357472,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 473872,
+      "uri": "out.bin"
+    }
+  ],
+  "extras": {
+    "FBX-glTF-conv": {
+      "animationFrameRate": 30.0,
+      "fbxFileHeaderInfo": {
+        "creationTimeStamp": {
+          "day": 16,
+          "hour": 11,
+          "millisecond": 926,
+          "minute": 59,
+          "month": 6,
+          "second": 26,
+          "year": 2026
+        },
+        "creator": "FBX SDK/FBX Plugins version 2020.1.1",
+        "sceneInfo": {
+          "author": "",
+          "comment": "",
+          "keywords": "",
+          "original": {
+            "applicationName": "3ds Max",
+            "applicationVendor": "Autodesk",
+            "applicationVersion": "2022",
+            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\SM_laliantou.fbx"
+          },
+          "revision": "",
+          "subject": "",
+          "title": "",
+          "url": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\assets\\GameRes\\SLLYT_map\\fbx\\SM_laliantou.fbx"
+        }
+      }
+    }
+  },
+  "meshes": [
+    {
+      "name": "S_01",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "S_01",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

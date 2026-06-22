@@ -25,8 +25,17 @@ export class CameraMove extends Component {
     @property(Vec3)
     public OffVector3D: Vec3 = new Vec3();
 
+    @property
+    public useEditorStartOffset: boolean = true;
+
+    @property
+    public followXFactor: number = 0.6;
+
 
     private sceneType: SceneType = SceneType.D2;
+    private startCameraWorldPos: Vec3 = new Vec3();
+    private startTargetWorldPos: Vec3 = new Vec3();
+    private hasFollowStartPos: boolean = false;
 
 
     public get sceneCW() {
@@ -52,6 +61,7 @@ export class CameraMove extends Component {
     }
     start() {
         this.camera = this.getComponent(Camera);
+        this.initEditorStartOffset(this.targetNode);
 
     }
 
@@ -113,15 +123,36 @@ export class CameraMove extends Component {
      */
     private move32D(target: Node) {
         // 获取目标节点的世界坐标
+        this.initEditorStartOffset(target);
         let pv = target.worldPosition;
         // 获取当前节点的世界坐标
         let pos = this.node.worldPosition;
-        let targetX = pv.x * 0.6;
+        const targetX = this.startCameraWorldPos.x + (pv.x - this.startTargetWorldPos.x) * this.followXFactor;
         const moveX = targetX - pos.x;
-        this.node.setWorldPosition(pos.x + moveX * 0.1, this.OffVector3D.y, this.OffVector3D.z)
+        const nextX = Math.abs(moveX) < 0.05 ? pos.x : pos.x + moveX * 0.1;
+        this.node.setWorldPosition(nextX, this.startCameraWorldPos.y, this.startCameraWorldPos.z);
         // this.node.setWorldPosition(pos.x + dx * 0.1, this.OffVector3D.y, pos.z + dy * 0.1)
         // this.node.setWorldPosition(pv.x, this.OffVector3D.y, pos.z )
 
+    }
+
+    private initEditorStartOffset(target: Node): void {
+        if (this.hasFollowStartPos || this.sceneType == SceneType.D2 || !target) {
+            return;
+        }
+
+        const cameraPos = this.node.worldPosition;
+        const targetPos = target.worldPosition;
+        this.startCameraWorldPos.set(cameraPos);
+        this.startTargetWorldPos.set(targetPos);
+        this.hasFollowStartPos = true;
+        if (this.useEditorStartOffset) {
+            this.OffVector3D.set(
+                cameraPos.x - targetPos.x,
+                cameraPos.y - targetPos.y,
+                cameraPos.z - targetPos.z,
+            );
+        }
     }
 
     /**摄像机 抖动 */

@@ -133,6 +133,7 @@ ccenum(RoleEnum)
 
 export enum OtherPrefabsEnum {
     tire,
+    youtong,
 }
 
 export enum ArmsTypeEnum {
