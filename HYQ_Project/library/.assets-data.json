@@ -1175,7 +1175,8 @@
         "06ccd6bf-6c20-475e-a1e9-4769cec74cb6@ba9d2",
         "af858f76-80d6-480e-92e9-5d1106503555",
         "f98437b4-4680-4f47-b90d-a0c7b826005b",
-        "d721c99c-6745-434c-900e-6182785622ea@f9941"
+        "d721c99c-6745-434c-900e-6182785622ea@f9941",
+        "ab01cbc5-abce-431e-8d91-6dea04e77138"
       ],
       "dependScripts": [
         "CC3eba29-7abb-723a-f7ab-ae275e2277e8",
@@ -1189,10 +1190,9 @@
     "url": "db://assets/GameRes/Prefab/Prop_Brand_2.prefab",
     "value": {
       "depends": [
-        "06ccd6bf-6c20-475e-a1e9-4769cec74cb6@ba9d2",
-        "23c4fd15-ed5c-4985-bb9b-da57952cde67",
         "f98437b4-4680-4f47-b90d-a0c7b826005b",
-        "ef7c10c2-a068-41bd-a6f0-5777121982ff@f9941"
+        "ef7c10c2-a068-41bd-a6f0-5777121982ff@f9941",
+        "5dd55190-0099-4d7b-8c86-c44951c27e0a"
       ],
       "dependScripts": [
         "CC3eba29-7abb-723a-f7ab-ae275e2277e8",

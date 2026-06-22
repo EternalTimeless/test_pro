@@ -161,6 +161,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           /** 是否已注册到碰撞管理器 */
           this._registered = false;
+          this._pooled = false;
           this.temp = new Vec3();
         }
 
@@ -197,6 +198,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         over() {
           var _this$batchRenderer;
 
+          if (this._pooled) {
+            return;
+          }
+
+          this._pooled = true;
           this.node.active = false;
           (_this$batchRenderer = this.batchRenderer) == null || _this$batchRenderer.unregisterBullet(this);
           (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
@@ -225,6 +231,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
 
         setBulletInfo(rot, damage, repelPower) {
+          this._pooled = false;
           this.node.setWorldRotation(rot);
           this.moveD.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
             error: Error()

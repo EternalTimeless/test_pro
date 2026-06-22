@@ -28,7 +28,13 @@ export default class PoolManager extends Singleton {
             return null;
         }
         if (arr.length) {
-            return arr.pop();
+            const item = arr.pop();
+            for (let i = arr.length - 1; i >= 0; i--) {
+                if (arr[i] === item) {
+                    arr.splice(i, 1);
+                }
+            }
+            return item;
         }
         return null;
     }
@@ -41,6 +47,9 @@ export default class PoolManager extends Singleton {
         let arr = this._pool[key];
         if (!arr) {
             arr = this._pool[key] = [];
+        }
+        if (arr.indexOf(node) !== -1) {
+            return;
         }
         arr.push(node);
     }

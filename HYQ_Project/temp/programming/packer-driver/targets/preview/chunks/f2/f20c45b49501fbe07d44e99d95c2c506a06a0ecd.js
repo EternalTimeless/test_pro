@@ -58,7 +58,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           }
 
           if (arr.length) {
-            return arr.pop();
+            var item = arr.pop();
+
+            for (var i = arr.length - 1; i >= 0; i--) {
+              if (arr[i] === item) {
+                arr.splice(i, 1);
+              }
+            }
+
+            return item;
           }
 
           return null;
@@ -75,6 +83,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           if (!arr) {
             arr = this._pool[key] = [];
+          }
+
+          if (arr.indexOf(node) !== -1) {
+            return;
           }
 
           arr.push(node);

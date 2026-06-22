@@ -61,6 +61,7 @@ export default class BulletBattle3D extends Component {
 
     /** 是否已注册到碰撞管理器 */
     private _registered: boolean = false;
+    private _pooled: boolean = false;
 
     protected start(): void {
         this.moveD = this.node.getComponent(MoveDrive);
@@ -87,6 +88,10 @@ export default class BulletBattle3D extends Component {
     }
 
     private over() {
+        if (this._pooled) {
+            return;
+        }
+        this._pooled = true;
         this.node.active = false;
         this.batchRenderer?.unregisterBullet(this);
         PoolManager.instance.setPool(PoolEnum.bullet + this.bulletEnum, this);
@@ -107,6 +112,7 @@ export default class BulletBattle3D extends Component {
      * @param repelPower 击退力度
      */
     public setBulletInfo(rot: math.Quat, damage: number, repelPower: number) {
+        this._pooled = false;
         this.node.setWorldRotation(rot);
         this.moveD.moveMod = MoveModEnum.forwardMove;
         this._damage = damage;

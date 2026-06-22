@@ -101,6 +101,9 @@ export class PropArms extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '底座/滚筒间距', tooltip: '多个底座/滚筒上下叠放时的 Y 轴间距。' })
     private tireSpacing: number = 0.2;
 
+    @property({ type: CCFloat, displayName: '油桶视觉X微调', tooltip: '只微调油桶模型子节点的 X，不移动血量、受击中心和根节点。正值向右，负值向左。' })
+    public bottomBaseOffsetX: number = 0;
+
     @property({ type: CCFloat, displayName: '受击弹跳高度', tooltip: '底座/滚筒被打掉后，剩余底座和武器模型的弹跳高度。' })
     public jumpHeight: number = 0.5;
 
@@ -752,6 +755,7 @@ export class PropArms extends BattleTarget3D {
         tire.setScale(Vec3.ONE); // Set tire scale to one
         tire.eulerAngles = this.getBottomBaseOriginalEuler(tire);
         this.applyBottomBaseVisualTransform(tire);
+        this.fitBottomBaseVisualXToRoot(tire);
         this.applyBottomBaseRoll(tire);
         return tire;
     }
@@ -919,45 +923,36 @@ export class PropArms extends BattleTarget3D {
         );
     }
 
-    private fitAllBottomBaseVisuals(): void {
-        for (let i = 0; i < this.tireList.length; i++) {
-            this.fitBottomBaseVisualToGroundAndCenter(this.tireList[i]);
-        }
-    }
-
-    private fitBottomBaseVisualToGroundAndCenter(root: Node): void {
+    private fitBottomBaseVisualXToRoot(root: Node): void {
         if (!root || !root.activeInHierarchy) {
             return;
         }
-        const bounds = this.getBottomBaseWorldBounds(root);
-        if (!bounds) {
+        const centerX = this.getBottomBaseWorldCenterX(root);
+        if (centerX === null) {
             return;
         }
 
-        const deltaX = root.worldPositionX - bounds.centerX;
-        const deltaY = this.node.worldPositionY - bounds.bottomY;
-        if (Math.abs(deltaX) <= 0.001 && Math.abs(deltaY) <= 0.001) {
+        const deltaX = root.worldPositionX + this.bottomBaseOffsetX - centerX;
+        if (Math.abs(deltaX) <= 0.001) {
             return;
         }
 
         const rootScale = root.worldScale;
         const localDeltaX = deltaX / (rootScale.x || 1);
-        const localDeltaY = deltaY / (rootScale.y || 1);
         if (root.children.length <= 0) {
-            root.setPosition(root.position.x + localDeltaX, root.position.y + localDeltaY, root.position.z);
+            root.setPosition(root.position.x + localDeltaX, root.position.y, root.position.z);
             return;
         }
 
         for (let i = 0; i < root.children.length; i++) {
             const child = root.children[i];
-            child.setPosition(child.position.x + localDeltaX, child.position.y + localDeltaY, child.position.z);
+            child.setPosition(child.position.x + localDeltaX, child.position.y, child.position.z);
         }
     }
 
-    private getBottomBaseWorldBounds(root: Node): { centerX: number; bottomY: number } | null {
+    private getBottomBaseWorldCenterX(root: Node): number | null {
         let minX = Number.POSITIVE_INFINITY;
         let maxX = Number.NEGATIVE_INFINITY;
-        let minY = Number.POSITIVE_INFINITY;
         let found = false;
         const stack: Node[] = [root];
         while (stack.length > 0) {
@@ -972,20 +967,13 @@ export class PropArms extends BattleTarget3D {
             if (center && halfExtents) {
                 minX = Math.min(minX, center.x - halfExtents.x);
                 maxX = Math.max(maxX, center.x + halfExtents.x);
-                minY = Math.min(minY, center.y - halfExtents.y);
                 found = true;
             }
             for (let i = 0; i < node.children.length; i++) {
                 stack.push(node.children[i]);
             }
         }
-        if (!found) {
-            return null;
-        }
-        return {
-            centerX: (minX + maxX) * 0.5,
-            bottomY: minY,
-        };
+        return found ? (minX + maxX) * 0.5 : null;
     }
 
     private findFirstMeshRenderer(node: Node): MeshRenderer | null {
@@ -1141,7 +1129,6 @@ export class PropArms extends BattleTarget3D {
         // 轮胎平滑插值到正确位置
         this._updateTireDrop(dt);
         this.updateBottomBaseRoll();
-        this.fitAllBottomBaseVisuals();
 
         // _isShake冷却（非销毁受击用）
         if (this._shakeCooldown > 0) {

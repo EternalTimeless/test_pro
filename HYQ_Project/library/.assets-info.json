@@ -58,7 +58,7 @@
       "uuid": "d82f0132-cc7a-4ab8-b19c-f6a874dbebc6"
     },
     "GameRes\\Prefab": {
-      "time": 1781682038391.8308,
+      "time": 1782120022305.2407,
       "uuid": "1029672c-2441-4553-9cff-34a1dae006d8"
     },
     "GameRes\\Prefabs": {
@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782118005979.5894,
+      "time": 1782120401971.1348,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -622,11 +622,11 @@
       "uuid": "d16848b5-18b3-400e-8cad-f629e5124e7c"
     },
     "GameRes\\Prefab\\Prop_Brand.prefab": {
-      "time": 1781772773319.9575,
+      "time": 1782120022203.386,
       "uuid": "0138029d-bfaa-4d43-aa1c-63b3be01e8e5"
     },
     "GameRes\\Prefab\\Prop_Brand_2.prefab": {
-      "time": 1781772777821.791,
+      "time": 1782120022304.2434,
       "uuid": "09f7d7d0-5529-499d-8bbb-e3e6a9394677"
     },
     "GameRes\\Prefab\\Role.prefab": {
@@ -766,7 +766,7 @@
       "uuid": "d0985bd0-e138-4615-b805-a38923e6194b"
     },
     "Script\\Base\\PoolManager.ts": {
-      "time": 1780287689117.517,
+      "time": 1782119576305.6826,
       "uuid": "d7997931-d633-4991-8104-5260d342fbee"
     },
     "Script\\Base\\PrefabsManager.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782116437707.0476,
+      "time": 1782119315821.8777,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -2274,7 +2274,7 @@
       "uuid": "ca0fd3d6-55e4-45ca-80e4-4c8243a063fd"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts": {
-      "time": 1781769283469.9788,
+      "time": 1782119425262.3176,
       "uuid": "aa25268b-cb3c-4c8a-8144-994c0a68b3b6"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts": {
