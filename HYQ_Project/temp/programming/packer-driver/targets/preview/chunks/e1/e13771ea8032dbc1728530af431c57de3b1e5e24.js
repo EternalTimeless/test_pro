@@ -72,7 +72,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           for (var i = 0; i < this.targets.length; i++) {
             var t = this.targets[i];
             if (t.isDie) continue;
-            var x = t.hitNode.worldPosition.x;
+            var x = t.getCollisionWorldPosition().x;
             if (x < minX) minX = x - t.collisionHalfX;
             if (x > maxX) maxX = x + t.collisionHalfX;
           } // 扩展半个碰撞体宽度作为预过滤容差
@@ -244,7 +244,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              var hitPos = target.hitNode.worldPosition;
+              var hitPos = target.getCollisionWorldPosition(this._tempVec3);
               var dx = hitPos.x - fromPos.x;
               var dy = hitPos.y - fromPos.y;
               var dz = hitPos.z - fromPos.z;
@@ -297,7 +297,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              var hitPos = hitNode.worldPosition;
+              var hitPos = target.getCollisionWorldPosition(this._tempVec3);
               var dx = hitPos.x - fromPos.x;
               var dy = hitPos.y - fromPos.y;
               var dz = hitPos.z - fromPos.z;
@@ -381,7 +381,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              var _z = target.hitNode.worldPosition.z;
+              var _z = target.getCollisionWorldPosition(this._tempVec3).z;
 
               var _bIdx = this._getBucketIdx(_z);
 
@@ -424,8 +424,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                   var _target = bucketTargets[mj];
                   if (_target.isDie) continue; // AABB碰撞判定
 
-                  var tx = _target.hitNode.worldPosition.x;
-                  var tz = _target.hitNode.worldPosition.z;
+                  var targetPos = _target.getCollisionWorldPosition(this._tempVec3);
+
+                  var tx = targetPos.x;
+                  var tz = targetPos.z;
                   var tHalfX = _target.collisionHalfX;
                   var tHalfZ = _target.collisionHalfZ;
                   var dx = bx - tx;

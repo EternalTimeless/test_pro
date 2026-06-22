@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, CCFloat, CCInteger, Label, Node, Tween, tween, v3, Vec3 } from 'cc';
+import { _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import ColliderTag, { COLLIDE_TYPE } from '../Battle/CollectBattleTarger/ColliderTag';
@@ -111,6 +111,12 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '锁定瞄准缩放', tooltip: '子弹锁定后，实际瞄准点落在滑块可受击范围内的比例。1=完整范围，0.92=略窄一点。' })
     public bulletAimShrink: number = 0.92;
 
+    @property({ type: CCFloat, displayName: '受击区域Z偏移', tooltip: '只调整子弹锁定/碰撞中心，不移动滑块模型。负值通常是往玩家方向提前，正值是往远离玩家方向延后。' })
+    public hitAreaOffsetZ: number = -0.18;
+
+    @property({ type: CCBoolean, displayName: '使用滑块模型中心', tooltip: '开启后用滑块模型的渲染包围盒中心作为受击中心，避免滑块节点锚点偏后导致子弹穿过模型后才命中。' })
+    public useCubeBoundsHitCenter: boolean = true;
+
     private teeth: Node[] = [];
     private toothStartPos: Vec3[] = [];
     private toothClosedPos: Vec3[] = [];
@@ -126,8 +132,10 @@ export class PropLalianGate extends BattleTarget3D {
     private pullRingStageIndex: number = 0;
     private runtimeSliderOffsetZ: number = 0;
     private tempLockAimPos: Vec3 = new Vec3();
+    private tempCollisionWorldPos: Vec3 = new Vec3();
     private tempSliderTargetPos: Vec3 = new Vec3();
     private tempWorldPos: Vec3 = new Vec3();
+    private cubeMeshRenderers: MeshRenderer[] = [];
     private originalToothPositions: Map<Node, Vec3> = new Map();
     private closeCenter: number = 0;
     private animating: boolean = false;
@@ -139,6 +147,16 @@ export class PropLalianGate extends BattleTarget3D {
 
     public get hitNode() {
         return this.cube ?? super.hitNode;
+    }
+
+    public getCollisionWorldPosition(out: Vec3 = this.tempCollisionWorldPos): Vec3 {
+        const hitNode = this.hitNode;
+        const center = hitNode?.worldPosition ?? this.node.worldPosition;
+        if (this.useCubeBoundsHitCenter && this.setCubeBoundsCenter(out)) {
+            out.z += this.hitAreaOffsetZ;
+            return out;
+        }
+        return out.set(center.x, center.y, center.z + this.hitAreaOffsetZ);
     }
 
     public getPropStartZ(): number {
@@ -178,8 +196,7 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     public getLockAimWorldPosition(fromPos: Vec3, out: Vec3 = this.tempLockAimPos): Vec3 {
-        const hitNode = this.hitNode;
-        const center = hitNode?.worldPosition ?? this.node.worldPosition;
+        const center = this.getCollisionWorldPosition(out);
         const shrink = Math.max(0.1, Math.min(1, this.bulletAimShrink));
         const halfX = Math.max(0.02, this.collisionHalfX * shrink);
         const halfZ = Math.max(0.02, this.collisionHalfZ * shrink);
@@ -222,7 +239,7 @@ export class PropLalianGate extends BattleTarget3D {
         if (this.collisionHalfX <= 0.24) {
             this.collisionHalfX = 0.45;
         }
-        if (this.collisionHalfZ <= 0.24) {
+        if (this.collisionHalfZ <= 0) {
             this.collisionHalfZ = 0.32;
         }
     }
@@ -345,6 +362,7 @@ export class PropLalianGate extends BattleTarget3D {
 
         Tween.stopAllByTarget(this.cube);
         this.cacheCubeStartData();
+        this.cacheCubeMeshRenderers();
         this.preparePullRingHierarchy();
         this.cachePullRingStartData();
         this.resetPullRing();
@@ -487,6 +505,60 @@ export class PropLalianGate extends BattleTarget3D {
         this.cubeStartPos.set(this.cube.position);
         this.cubeStartScale.set(this.cube.scale);
         this.hasCubeStartData = true;
+    }
+
+    private cacheCubeMeshRenderers(): void {
+        this.cubeMeshRenderers.length = 0;
+        if (!this.cube) {
+            return;
+        }
+        this.collectMeshRenderers(this.cube, this.cubeMeshRenderers);
+    }
+
+    private collectMeshRenderers(node: Node, out: MeshRenderer[]): void {
+        const meshRenderer = node.getComponent(MeshRenderer);
+        if (meshRenderer) {
+            out.push(meshRenderer);
+        }
+        for (let i = 0; i < node.children.length; i++) {
+            this.collectMeshRenderers(node.children[i], out);
+        }
+    }
+
+    private setCubeBoundsCenter(out: Vec3): boolean {
+        let minX = Number.POSITIVE_INFINITY;
+        let maxX = Number.NEGATIVE_INFINITY;
+        let minY = Number.POSITIVE_INFINITY;
+        let maxY = Number.NEGATIVE_INFINITY;
+        let minZ = Number.POSITIVE_INFINITY;
+        let maxZ = Number.NEGATIVE_INFINITY;
+        let found = false;
+
+        for (let i = 0; i < this.cubeMeshRenderers.length; i++) {
+            const worldBounds = (this.cubeMeshRenderers[i] as any)?.model?.worldBounds;
+            const center = worldBounds?.center;
+            const halfExtents = worldBounds?.halfExtents;
+            if (!center || !halfExtents) {
+                continue;
+            }
+            minX = Math.min(minX, center.x - halfExtents.x);
+            maxX = Math.max(maxX, center.x + halfExtents.x);
+            minY = Math.min(minY, center.y - halfExtents.y);
+            maxY = Math.max(maxY, center.y + halfExtents.y);
+            minZ = Math.min(minZ, center.z - halfExtents.z);
+            maxZ = Math.max(maxZ, center.z + halfExtents.z);
+            found = true;
+        }
+
+        if (!found) {
+            return false;
+        }
+        out.set(
+            (minX + maxX) * 0.5,
+            (minY + maxY) * 0.5,
+            (minZ + maxZ) * 0.5,
+        );
+        return true;
     }
 
     private preparePullRingHierarchy(): void {

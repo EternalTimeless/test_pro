@@ -83,6 +83,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
           this._tempPos = new Vec3();
         }
 
+        getCollisionWorldPosition(out) {
+          const pos = this.hitNode.worldPosition;
+
+          if (out) {
+            return out.set(pos);
+          }
+
+          return pos;
+        }
+
         repelBattleTarget(target, reoel = 0) {
           if (!this.repelEnabled) return; // 计算击退方向（从攻击者指向自己）
 

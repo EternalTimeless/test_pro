@@ -3,10 +3,10 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 928,
+      "count": 896,
       "max": [
         0.2053883969783783,
-        0.12692323327064514,
+        0.12692321836948395,
         -0.00023399418569169939
       ],
       "min": [
@@ -21,7 +21,7 @@
       "bufferView": 0,
       "byteOffset": 12,
       "componentType": 5126,
-      "count": 928,
+      "count": 896,
       "name": "lalian/NORMAL",
       "type": "VEC3"
     },
@@ -29,7 +29,7 @@
       "bufferView": 0,
       "byteOffset": 24,
       "componentType": 5126,
-      "count": 928,
+      "count": 896,
       "name": "lalian/TEXCOORD_0",
       "type": "VEC2"
     },
@@ -45,14 +45,14 @@
       "componentType": 5126,
       "count": 421,
       "max": [
-        0.0669437050819397,
-        -0.033511608839035034,
-        -0.3503464162349701
+        0.09531080722808838,
+        0.008597122505307198,
+        0.014996703714132309
       ],
       "min": [
-        -0.07781246304512024,
-        -0.05124484375119209,
-        -0.5346547961235046
+        -0.09825996309518814,
+        -0.00913611613214016,
+        -0.20988348126411438
       ],
       "name": "对象001/POSITION",
       "type": "VEC3"
@@ -83,16 +83,16 @@
     {
       "bufferView": 4,
       "componentType": 5126,
-      "count": 694,
+      "count": 691,
       "max": [
-        0.07357338070869446,
-        -0.024407198652625084,
-        -0.5149040818214417
+        0.07831179350614548,
+        0.016226988285779953,
+        0.007171996869146824
       ],
       "min": [
-        -0.0830502063035965,
-        -0.060828663408756256,
-        -1.0050486326217651
+        -0.07831179350614548,
+        -0.02019447647035122,
+        -0.48297253251075745
       ],
       "name": "对象002/POSITION",
       "type": "VEC3"
@@ -101,7 +101,7 @@
       "bufferView": 4,
       "byteOffset": 12,
       "componentType": 5126,
-      "count": 694,
+      "count": 691,
       "name": "对象002/NORMAL",
       "type": "VEC3"
     },
@@ -109,7 +109,7 @@
       "bufferView": 4,
       "byteOffset": 24,
       "componentType": 5126,
-      "count": 694,
+      "count": 691,
       "name": "对象002/TEXCOORD_0",
       "type": "VEC2"
     },
@@ -129,7 +129,7 @@
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 29696,
+      "byteLength": 28672,
       "byteStride": 32,
       "name": "lalian",
       "target": 34962
@@ -137,13 +137,13 @@
     {
       "buffer": 0,
       "byteLength": 6816,
-      "byteOffset": 29696,
+      "byteOffset": 28672,
       "target": 34963
     },
     {
       "buffer": 0,
       "byteLength": 13472,
-      "byteOffset": 36512,
+      "byteOffset": 35488,
       "byteStride": 32,
       "name": "对象001",
       "target": 34962
@@ -151,13 +151,13 @@
     {
       "buffer": 0,
       "byteLength": 2544,
-      "byteOffset": 49984,
+      "byteOffset": 48960,
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 22208,
-      "byteOffset": 52528,
+      "byteLength": 22112,
+      "byteOffset": 51504,
       "byteStride": 32,
       "name": "对象002",
       "target": 34962
@@ -165,13 +165,13 @@
     {
       "buffer": 0,
       "byteLength": 4392,
-      "byteOffset": 74736,
+      "byteOffset": 73616,
       "target": 34963
     }
   ],
   "buffers": [
     {
-      "byteLength": 79128,
+      "byteLength": 78008,
       "uri": "out.bin"
     }
   ],
@@ -180,12 +180,12 @@
       "animationFrameRate": 30.0,
       "fbxFileHeaderInfo": {
         "creationTimeStamp": {
-          "day": 18,
-          "hour": 14,
-          "millisecond": 328,
-          "minute": 42,
+          "day": 22,
+          "hour": 15,
+          "millisecond": 220,
+          "minute": 14,
           "month": 6,
-          "second": 10,
+          "second": 3,
           "year": 2026
         },
         "creator": "FBX SDK/FBX Plugins version 2020.1.1",
@@ -197,7 +197,7 @@
             "applicationName": "3ds Max",
             "applicationVendor": "Autodesk",
             "applicationVersion": "2022",
-            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\SM_lalian_02.fbx"
+            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\教网店学徒各种副业vx-Rshgzs666-3dmax室外藤曼爬山虎花藤植物3d模型素材cr vr渲染带贴图藤曼fbx\\SM_laliantou_02.fbx"
           },
           "revision": "",
           "subject": "",
@@ -267,6 +267,11 @@
         -0.0,
         0.0,
         0.7071067690849304
+      ],
+      "translation": [
+        -0.003956545609980822,
+        -0.3424012362957001,
+        0.04210873320698738
       ]
     },
     {
@@ -277,6 +282,11 @@
         -0.0,
         0.0,
         0.7071067690849304
+      ],
+      "translation": [
+        -0.004738411866128445,
+        -0.5397058725357056,
+        0.04063418507575989
       ]
     }
   ],

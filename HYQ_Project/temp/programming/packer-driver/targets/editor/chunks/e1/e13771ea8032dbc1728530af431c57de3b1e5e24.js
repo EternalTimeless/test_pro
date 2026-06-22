@@ -72,7 +72,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           for (let i = 0; i < this.targets.length; i++) {
             const t = this.targets[i];
             if (t.isDie) continue;
-            const x = t.hitNode.worldPosition.x;
+            const x = t.getCollisionWorldPosition().x;
             if (x < minX) minX = x - t.collisionHalfX;
             if (x > maxX) maxX = x + t.collisionHalfX;
           } // 扩展半个碰撞体宽度作为预过滤容差
@@ -240,7 +240,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              const hitPos = target.hitNode.worldPosition;
+              const hitPos = target.getCollisionWorldPosition(this._tempVec3);
               const dx = hitPos.x - fromPos.x;
               const dy = hitPos.y - fromPos.y;
               const dz = hitPos.z - fromPos.z;
@@ -289,7 +289,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              const hitPos = hitNode.worldPosition;
+              const hitPos = target.getCollisionWorldPosition(this._tempVec3);
               const dx = hitPos.x - fromPos.x;
               const dy = hitPos.y - fromPos.y;
               const dz = hitPos.z - fromPos.z;
@@ -373,7 +373,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              const z = target.hitNode.worldPosition.z;
+              const z = target.getCollisionWorldPosition(this._tempVec3).z;
 
               const bIdx = this._getBucketIdx(z);
 
@@ -414,8 +414,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                   const target = bucketTargets[mj];
                   if (target.isDie) continue; // AABB碰撞判定
 
-                  const tx = target.hitNode.worldPosition.x;
-                  const tz = target.hitNode.worldPosition.z;
+                  const targetPos = target.getCollisionWorldPosition(this._tempVec3);
+                  const tx = targetPos.x;
+                  const tz = targetPos.z;
                   const tHalfX = target.collisionHalfX;
                   const tHalfZ = target.collisionHalfZ;
                   const dx = bx - tx;

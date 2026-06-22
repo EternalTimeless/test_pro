@@ -3,16 +3,16 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 139,
+      "count": 100,
       "max": [
-        8.450763702392578,
-        338.6977844238281,
-        0.190327987074852
+        8.450772285461426,
+        338.6981201171875,
+        0.1903281807899475
       ],
       "min": [
-        -8.001129150390625,
-        0.040751341730356216,
-        0.07119371742010117
+        -8.001136779785156,
+        -11.247197151184082,
+        0.07119378447532654
       ],
       "name": "daqiao01_01/POSITION",
       "type": "VEC3"
@@ -21,7 +21,7 @@
       "bufferView": 0,
       "byteOffset": 12,
       "componentType": 5126,
-      "count": 139,
+      "count": 100,
       "name": "daqiao01_01/NORMAL",
       "type": "VEC3"
     },
@@ -29,14 +29,14 @@
       "bufferView": 0,
       "byteOffset": 24,
       "componentType": 5126,
-      "count": 139,
+      "count": 100,
       "name": "daqiao01_01/TEXCOORD_0",
       "type": "VEC2"
     },
     {
       "bufferView": 1,
       "componentType": 5123,
-      "count": 270,
+      "count": 234,
       "name": "daqiao01_01/INDICES",
       "type": "SCALAR"
     }
@@ -49,21 +49,21 @@
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 4448,
+      "byteLength": 3200,
       "byteStride": 32,
       "name": "daqiao01_01",
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 540,
-      "byteOffset": 4448,
+      "byteLength": 468,
+      "byteOffset": 3200,
       "target": 34963
     }
   ],
   "buffers": [
     {
-      "byteLength": 4988,
+      "byteLength": 3668,
       "uri": "out.bin"
     }
   ],
@@ -72,12 +72,12 @@
       "animationFrameRate": 30.0,
       "fbxFileHeaderInfo": {
         "creationTimeStamp": {
-          "day": 16,
-          "hour": 18,
-          "millisecond": 266,
-          "minute": 30,
+          "day": 22,
+          "hour": 15,
+          "millisecond": 706,
+          "minute": 2,
           "month": 6,
-          "second": 34,
+          "second": 59,
           "year": 2026
         },
         "creator": "FBX SDK/FBX Plugins version 2020.1.1",
@@ -89,7 +89,7 @@
             "applicationName": "3ds Max",
             "applicationVendor": "Autodesk",
             "applicationVersion": "2022",
-            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\SM_qiao_01.fbx"
+            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\教网店学徒各种副业vx-Rshgzs666-3dmax室外藤曼爬山虎花藤植物3d模型素材cr vr渲染带贴图藤曼fbx\\SM_qiao_01.fbx"
           },
           "revision": "",
           "subject": "",
@@ -123,11 +123,6 @@
         -0.0,
         0.0,
         0.7071067690849304
-      ],
-      "scale": [
-        1.0000009536743164,
-        1.0000009536743164,
-        1.0000009536743164
       ],
       "translation": [
         2.81770297760886e-07,

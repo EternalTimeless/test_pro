@@ -30,7 +30,7 @@ class CollisionTargetGroup {
         for (let i = 0; i < this.targets.length; i++) {
             const t = this.targets[i];
             if (t.isDie) continue;
-            const x = t.hitNode.worldPosition.x;
+            const x = t.getCollisionWorldPosition().x;
             if (x < minX) minX = x - t.collisionHalfX;
             if (x > maxX) maxX = x + t.collisionHalfX;
         }
@@ -170,7 +170,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
                 if (!target || target.isDie || !target.node.active) {
                     continue;
                 }
-                const hitPos = target.hitNode.worldPosition;
+                const hitPos = target.getCollisionWorldPosition(this._tempVec3);
                 const dx = hitPos.x - fromPos.x;
                 const dy = hitPos.y - fromPos.y;
                 const dz = hitPos.z - fromPos.z;
@@ -207,7 +207,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
                 if (!hitNode || !hitNode.active || !hitNode.activeInHierarchy) {
                     continue;
                 }
-                const hitPos = hitNode.worldPosition;
+                const hitPos = target.getCollisionWorldPosition(this._tempVec3);
                 const dx = hitPos.x - fromPos.x;
                 const dy = hitPos.y - fromPos.y;
                 const dz = hitPos.z - fromPos.z;
@@ -278,7 +278,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
                     group.targets.pop();
                     continue;
                 }
-                const z = target.hitNode.worldPosition.z;
+                const z = target.getCollisionWorldPosition(this._tempVec3).z;
                 const bIdx = this._getBucketIdx(z);
                 tBuckets[bIdx].push(target);
                 // 放入相邻桶防止边界遗漏
@@ -321,8 +321,9 @@ export default class BulletMonsterCollisionManager extends Singleton {
                         if (target.isDie) continue;
 
                         // AABB碰撞判定
-                        const tx = target.hitNode.worldPosition.x;
-                        const tz = target.hitNode.worldPosition.z;
+                        const targetPos = target.getCollisionWorldPosition(this._tempVec3);
+                        const tx = targetPos.x;
+                        const tz = targetPos.z;
                         const tHalfX = target.collisionHalfX;
                         const tHalfZ = target.collisionHalfZ;
 

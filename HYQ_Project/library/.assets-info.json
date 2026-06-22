@@ -10,7 +10,7 @@
       "uuid": "caffc481-8e86-4f96-8867-9213f3a378f4"
     },
     "Scene": {
-      "time": 1781778500683.3052,
+      "time": 1782114278862.5383,
       "uuid": "e72949cf-3923-4906-b42c-4ca5bc00f29a"
     },
     "Script": {
@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782114150960.7727,
+      "time": 1782118005979.5894,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1594,7 +1594,7 @@
       "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
     },
     "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
-      "time": 1781749829688.6394,
+      "time": 1782116877601.2068,
       "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
     },
     "Script\\functionS\\Battle\\HpComponent.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782113895648.016,
+      "time": 1782116437707.0476,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -1970,7 +1970,7 @@
       "uuid": "ce18d9a1-ffb3-4c20-ba16-b33bd8309509"
     },
     "Script\\functionS\\Battle\\BattleTarger\\BattleTarget3D.ts": {
-      "time": 1780287689555.106,
+      "time": 1782116806543.4634,
       "uuid": "d490fc41-2b7f-4209-a6b1-dca139d03fef"
     },
     "Script\\functionS\\Battle\\CollectBattleTarger\\CollectGetTarget.ts": {
@@ -4422,7 +4422,7 @@
       "time": 1781689576517.3992
     },
     "Script\\functionS\\Other\\PropLalianGate.ts": {
-      "time": 1782099320441.4329,
+      "time": 1782117894156.627,
       "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts.meta": {
@@ -4463,20 +4463,8 @@
     "GameRes\\SLLYT_map\\zhujue.meta": {
       "time": 1781778500666.8396
     },
-    "GameRes\\SLLYT_map\\fbx\\shizhu.fbx.meta": {
-      "time": 1781778499181.3555
-    },
-    "GameRes\\SLLYT_map\\fbx\\shizhu_02.fbx.meta": {
-      "time": 1781778499184.348
-    },
-    "GameRes\\SLLYT_map\\fbx\\shizhu_03.fbx.meta": {
-      "time": 1781778499188.3389
-    },
     "GameRes\\SLLYT_map\\fbx\\shizhu_04.fbx.meta": {
       "time": 1781778499192.3264
-    },
-    "GameRes\\SLLYT_map\\fbx\\shizhu_04_02.fbx.meta": {
-      "time": 1781778499195.3188
     },
     "GameRes\\SLLYT_map\\fbx\\SM_beizengmen_03.fbx.meta": {
       "time": 1781778499115.903
@@ -4486,9 +4474,6 @@
     },
     "GameRes\\SLLYT_map\\fbx\\SM_lalian.fbx.meta": {
       "time": 1781778499132.9734
-    },
-    "GameRes\\SLLYT_map\\fbx\\SM_laliantou.fbx.meta": {
-      "time": 1781778499139.9539
     },
     "GameRes\\SLLYT_map\\fbx\\SM_laliantou_02.fbx.meta": {
       "time": 1781778499144.942
@@ -4503,10 +4488,7 @@
       "time": 1781778499167.3933
     },
     "GameRes\\SLLYT_map\\fbx\\SM_qiao_01.fbx.meta": {
-      "time": 1781778499170.385
-    },
-    "GameRes\\SLLYT_map\\fbx\\SM_youtong.fbx.meta": {
-      "time": 1781778499173.3772
+      "time": 1782114278388.2827
     },
     "GameRes\\SLLYT_map\\fbx\\SM_youtong_02.fbx.meta": {
       "time": 1781778499176.3691
@@ -4604,9 +4586,6 @@
     "GameRes\\SLLYT_map\\pre\\SM_laliantou_02.prefab.meta": {
       "time": 1781778499681.0493
     },
-    "GameRes\\SLLYT_map\\pre\\SM_lalian_02.prefab.meta": {
-      "time": 1781778499679.0542
-    },
     "GameRes\\SLLYT_map\\pre\\SM_luzhang_04.prefab.meta": {
       "time": 1781778499683.0442
     },
@@ -4617,19 +4596,13 @@
       "time": 1781778499688.9897
     },
     "GameRes\\SLLYT_map\\pre\\SM_youtong_02.prefab.meta": {
-      "time": 1781778499690.9834
-    },
-    "GameRes\\SLLYT_map\\tex\\banxian.png.meta": {
-      "time": 1781778500422.12
+      "time": 1782115264651.767
     },
     "GameRes\\SLLYT_map\\tex\\banxian_02.png.meta": {
       "time": 1781778500440.5774
     },
     "GameRes\\SLLYT_map\\tex\\beijing.jpg.meta": {
       "time": 1781778500443.5703
-    },
-    "GameRes\\SLLYT_map\\tex\\beijing.png.meta": {
-      "time": 1781778500447.5588
     },
     "GameRes\\SLLYT_map\\tex\\huaban-1266235567.webp.meta": {
       "time": 1781778500450.5813
@@ -4646,9 +4619,6 @@
     "GameRes\\SLLYT_map\\tex\\SM_lalian_02_A.png.meta": {
       "time": 1781778500239.4736
     },
-    "GameRes\\SLLYT_map\\tex\\T_beizengmen.png.meta": {
-      "time": 1781778500245.46
-    },
     "GameRes\\SLLYT_map\\tex\\T_beizengmen_a.jpg.meta": {
       "time": 1781778500248.4502
     },
@@ -4661,32 +4631,17 @@
     "GameRes\\SLLYT_map\\tex\\T_beizengmen_e_02.jpg.meta": {
       "time": 1781778500258.4495
     },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang.jpg.meta": {
-      "time": 1781778500260.4436
-    },
     "GameRes\\SLLYT_map\\tex\\T_luzhuang.png.meta": {
       "time": 1781778500271.601
     },
     "GameRes\\SLLYT_map\\tex\\T_luzhuang_02.jpg.meta": {
       "time": 1781778500274.5903
     },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang_04_a.jpeg.meta": {
-      "time": 1781778500288.5723
-    },
     "GameRes\\SLLYT_map\\tex\\T_luzhuang_04_a.jpg.meta": {
       "time": 1781778500292.6084
     },
     "GameRes\\SLLYT_map\\tex\\T_luzhuang_04_n.jpg.meta": {
       "time": 1781778500295.6018
-    },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang_04_n.png.meta": {
-      "time": 1781778500324.1416
-    },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang_05_a.jpg.meta": {
-      "time": 1781778500326.302
-    },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang_06_a.jpg.meta": {
-      "time": 1781778500329.2905
     },
     "GameRes\\SLLYT_map\\tex\\T_qiao_01_ao.jpg.meta": {
       "time": 1781778500341.258
@@ -4697,23 +4652,11 @@
     "GameRes\\SLLYT_map\\tex\\T_qiao_02_d.jpg.meta": {
       "time": 1781778500353.4316
     },
-    "GameRes\\SLLYT_map\\tex\\T_qiao_02_d_04.jpg.meta": {
-      "time": 1781778500392.2847
-    },
-    "GameRes\\SLLYT_map\\tex\\T_youtong_a.jpg.meta": {
-      "time": 1781778500396.7969
-    },
-    "GameRes\\SLLYT_map\\tex\\T_youtong_a.png.meta": {
-      "time": 1781778500403.7822
-    },
     "GameRes\\SLLYT_map\\tex\\T_youtong_a_02.jpg.meta": {
       "time": 1781778500405.7769
     },
     "GameRes\\SLLYT_map\\tex\\T_youtong_n.jpg.meta": {
       "time": 1781778500410.1538
-    },
-    "GameRes\\SLLYT_map\\tex\\T_youtong_n.png.meta": {
-      "time": 1781778500419.1274
     },
     "GameRes\\SLLYT_map\\zhujue\\zhujue-001.mtl.meta": {
       "time": 1781778500564.851
@@ -4743,15 +4686,15 @@
       "time": 1781778500658.8596
     },
     "GameRes\\SLLYT_map\\fbx": {
-      "time": 1781778499195.3188,
+      "time": 1782114278390.276,
       "uuid": "81aa95e0-c269-4b18-8696-ffc181d7f4a4"
     },
     "GameRes\\SLLYT_map\\mat": {
-      "time": 1781778499494.021,
+      "time": 1782114278472.9116,
       "uuid": "04cf2e46-a468-425b-9d02-6803b10f18fa"
     },
     "GameRes\\SLLYT_map\\pre": {
-      "time": 1781778499713.5774,
+      "time": 1782114278633.0884,
       "uuid": "c588152e-c314-4759-a79c-e0c841054311"
     },
     "GameRes\\SLLYT_map": {
@@ -4759,11 +4702,11 @@
       "uuid": "1ae86c67-30a0-4d39-9163-71d38ebcff29"
     },
     "GameRes\\SLLYT_map\\tex": {
-      "time": 1781778500480.5735,
+      "time": 1782114278779.737,
       "uuid": "a2aaa93c-14a1-49a5-ac32-93c7c78d26f0"
     },
     "GameRes\\SLLYT_map\\zhujue": {
-      "time": 1781778500658.8596,
+      "time": 1782114278834.0151,
       "uuid": "c42e05e7-a291-45ec-9676-11e24c114b1c"
     },
     "GameRes\\SLLYT_map\\SLLYT_map.prefab": {
@@ -4771,28 +4714,12 @@
       "uuid": "e6af3f17-33aa-436a-a9ab-c1cd0b218868"
     },
     "Scene\\SLLYT.scene": {
-      "time": 1781778500680.3145,
+      "time": 1782114278861.7278,
       "uuid": "d507980d-0a9a-4dd5-a65f-99c4452efe39"
     },
     "GameRes\\SLLYT_map\\fbx\\shizhu_04.fbx": {
       "time": 1781778499190.3323,
       "uuid": "068e5021-13db-4da1-ac2f-e8c66e8dbc33"
-    },
-    "GameRes\\SLLYT_map\\fbx\\shizhu_04_02.fbx": {
-      "time": 1781778499194.3215,
-      "uuid": "3b7e3612-3e96-419f-8d0c-60829551f67a"
-    },
-    "GameRes\\SLLYT_map\\fbx\\shizhu_03.fbx": {
-      "time": 1781778499186.3425,
-      "uuid": "b5582b0d-14d3-4712-b97d-4ef39205c064"
-    },
-    "GameRes\\SLLYT_map\\fbx\\shizhu_02.fbx": {
-      "time": 1781778499183.3518,
-      "uuid": "96744e74-4122-48b2-b8eb-4e7defada28f"
-    },
-    "GameRes\\SLLYT_map\\fbx\\shizhu.fbx": {
-      "time": 1781778499179.3606,
-      "uuid": "a8727188-248b-4058-b625-0e5c00126864"
     },
     "GameRes\\SLLYT_map\\fbx\\SM_beizengmen_03.fbx": {
       "time": 1781778499113.9082,
@@ -4807,7 +4734,7 @@
       "uuid": "57fe886a-c86c-4704-9801-c3724b16877e"
     },
     "GameRes\\SLLYT_map\\fbx\\SM_laliantou_02.fbx": {
-      "time": 1781778499141.9492,
+      "time": 1782114278384.292,
       "uuid": "42e81c72-7efd-4eed-b98f-f40bb033b5d4"
     },
     "GameRes\\SLLYT_map\\fbx\\SM_qiang_01.fbx": {
@@ -4823,75 +4750,75 @@
       "uuid": "a989efe3-4627-4b0d-923a-453c7221285e"
     },
     "GameRes\\SLLYT_map\\mat\\M_baixian.mtl": {
-      "time": 1781778499419.7407,
+      "time": 1782117868777.6653,
       "uuid": "39581f2d-beba-470c-ae42-9095177585a7"
     },
     "GameRes\\SLLYT_map\\mat\\M_beizengmen.mtl": {
-      "time": 1781778499421.4,
+      "time": 1782117875315.367,
       "uuid": "c63cfac0-c992-4054-ab47-56d165a770b9"
     },
     "GameRes\\SLLYT_map\\mat\\M_beizengmen_yellow.mtl": {
-      "time": 1781778499423.938,
+      "time": 1782117886813.3748,
       "uuid": "d32b94c0-802d-4996-a48c-f70d922c1083"
     },
     "GameRes\\SLLYT_map\\fbx\\SM_qiao_01.fbx": {
-      "time": 1781778499168.3909,
+      "time": 1782114278386.2878,
       "uuid": "1b582930-d871-4c23-a84a-b4a557c68ea5"
     },
     "GameRes\\SLLYT_map\\mat\\M_blue.mtl": {
-      "time": 1781778499425.931,
+      "time": 1782117893445.9753,
       "uuid": "c02ceeff-80c7-4bbe-a955-798195f842a6"
     },
     "GameRes\\SLLYT_map\\mat\\M_gelidun.mtl": {
-      "time": 1781778499428.9226,
+      "time": 1782117900193.6848,
       "uuid": "716e69ac-31c7-4763-841b-c7cdc71f57a9"
     },
     "GameRes\\SLLYT_map\\mat\\M_hd.mtl": {
-      "time": 1781778499430.9177,
+      "time": 1782117907661.5002,
       "uuid": "9e31a82d-6bed-48b8-a663-f75aeaf35487"
     },
     "GameRes\\SLLYT_map\\mat\\M_lalian.mtl": {
-      "time": 1781778499433.9102,
+      "time": 1782117921948.9634,
       "uuid": "bcf2a6f9-6e11-4e6a-a1ab-5dcd7fa75e76"
     },
     "GameRes\\SLLYT_map\\mat\\M_laliantou.mtl": {
-      "time": 1781778499435.9048,
+      "time": 1782117861050.0295,
       "uuid": "11974897-a91c-42c2-9452-127c4f679db8"
     },
     "GameRes\\SLLYT_map\\mat\\M_laliantou_02.mtl": {
-      "time": 1781778499437.8992,
+      "time": 1782117927954.076,
       "uuid": "e91aa9cd-2a16-410b-9a43-f0016c14d029"
     },
     "GameRes\\SLLYT_map\\mat\\M_luzhuang.mtl": {
-      "time": 1781778499439.8933,
+      "time": 1782117949397.226,
       "uuid": "c08a2c85-0421-47e8-9696-c9feb7ca52d2"
     },
     "GameRes\\SLLYT_map\\mat\\M_luzhuang_04.mtl": {
-      "time": 1781778499441.8877,
+      "time": 1782117944314.0793,
       "uuid": "9e734898-3d6f-4886-a5f0-47fcbb1c6ccf"
     },
     "GameRes\\SLLYT_map\\mat\\M_luzhuang_04_02.mtl": {
-      "time": 1781778499444.8801,
+      "time": 1782117938446.0708,
       "uuid": "b601c79c-4967-4c08-9195-90be04fcdf59"
     },
     "GameRes\\SLLYT_map\\mat\\M_qiang.mtl": {
-      "time": 1781778499446.922,
+      "time": 1782117953670.8733,
       "uuid": "54f70ea4-5f33-45d7-a1b6-dd241986cf65"
     },
     "GameRes\\SLLYT_map\\mat\\M_shizhu_04_01.mtl": {
-      "time": 1781778499460.4944,
+      "time": 1782117965577.01,
       "uuid": "57e1605b-26cc-40c6-b89f-70fe81b132c6"
     },
     "GameRes\\SLLYT_map\\mat\\M_qiao.mtl": {
-      "time": 1781778499448.9165,
+      "time": 1782117959515.3694,
       "uuid": "c50fd25f-793b-4102-addc-457618fd2179"
     },
     "GameRes\\SLLYT_map\\mat\\M_youtong.mtl": {
-      "time": 1781778499462.4897,
+      "time": 1782117980009.6414,
       "uuid": "96a0e69e-e7ed-42d4-b597-f12ac6c6bad3"
     },
     "GameRes\\SLLYT_map\\mat\\M_youtong_02.mtl": {
-      "time": 1781778499464.4846,
+      "time": 1782117975591.4636,
       "uuid": "2e9d5c03-2005-4a97-8a0a-99318171a55f"
     },
     "GameRes\\SLLYT_map\\mat\\ocean_realistic.effect": {
@@ -4903,7 +4830,7 @@
       "uuid": "5d9850d6-484f-45c8-b39f-33a8e1ba1b13"
     },
     "GameRes\\SLLYT_map\\pre\\gld.prefab": {
-      "time": 1781778499692.978,
+      "time": 1782114278601.5483,
       "uuid": "84532440-0322-4e78-b4fc-46a9b774a75b"
     },
     "GameRes\\SLLYT_map\\pre\\haimian.prefab": {
@@ -4911,7 +4838,7 @@
       "uuid": "c4a0e76d-17ef-4f23-9fe9-4b25c572034f"
     },
     "GameRes\\SLLYT_map\\pre\\huanjing.prefab": {
-      "time": 1781778499698.6167,
+      "time": 1782114278603.14,
       "uuid": "d1ffc78b-2a92-4489-893c-da76f48fc2ba"
     },
     "GameRes\\SLLYT_map\\pre\\lalian_01.prefab": {
@@ -4923,16 +4850,8 @@
       "uuid": "ebca9632-c8e2-4736-bb73-79706c01cd19"
     },
     "GameRes\\SLLYT_map\\pre\\qiao.prefab": {
-      "time": 1781778499708.5906,
+      "time": 1782114278629.099,
       "uuid": "745647e2-8cb6-4031-ab9f-93ba708d8cd1"
-    },
-    "GameRes\\SLLYT_map\\fbx\\SM_laliantou.fbx": {
-      "time": 1781778499137.9592,
-      "uuid": "4ae4f5f2-7fef-491b-b4f2-ad980e83253f"
-    },
-    "GameRes\\SLLYT_map\\fbx\\SM_youtong.fbx": {
-      "time": 1781778499172.381,
-      "uuid": "770cbaa6-d608-4fec-b4b7-e24ce0490600"
     },
     "GameRes\\SLLYT_map\\pre\\shizhu_04.prefab": {
       "time": 1781778499711.5835,
@@ -4955,16 +4874,12 @@
       "uuid": "732609be-090b-4ad7-9e8e-4ec04d8e29ed"
     },
     "GameRes\\SLLYT_map\\fbx\\SM_youtong_02.fbx": {
-      "time": 1781778499175.372,
+      "time": 1782114278390.276,
       "uuid": "610c8773-92fc-4d6b-a446-cb0b7b06352e"
     },
     "GameRes\\SLLYT_map\\pre\\SM_laliantou_02.prefab": {
-      "time": 1781778499680.0522,
+      "time": 1782114278599.5554,
       "uuid": "b2959ad2-9af1-42b4-b5a3-1009f4f17b21"
-    },
-    "GameRes\\SLLYT_map\\pre\\SM_lalian_02.prefab": {
-      "time": 1781778499678.0579,
-      "uuid": "e3649be8-16b6-4c66-bd04-da04407047be"
     },
     "GameRes\\SLLYT_map\\pre\\SM_luzhang_04.prefab": {
       "time": 1781778499682.0466,
@@ -4979,24 +4894,16 @@
       "uuid": "38afd98c-7249-42cc-aff9-ad8736a4ec39"
     },
     "GameRes\\SLLYT_map\\pre\\SM_youtong_02.prefab": {
-      "time": 1782108660279.8684,
+      "time": 1782115265118.9805,
       "uuid": "1dd89136-12dc-4b20-9296-810b3dc0ca2c"
     },
     "GameRes\\SLLYT_map\\tex\\banxian_02.png": {
       "time": 1781778500438.583,
       "uuid": "3b5650d7-acf5-44f1-8c11-9e451ebbf727"
     },
-    "GameRes\\SLLYT_map\\tex\\banxian.png": {
-      "time": 1781778500420.1248,
-      "uuid": "5930c5a2-6e1c-4f8e-9d06-4a615b012924"
-    },
     "GameRes\\SLLYT_map\\tex\\shizhu_albedo.jpg": {
       "time": 1781778500473.5925,
       "uuid": "b0a07a48-a070-4f7e-98ef-db4af78571eb"
-    },
-    "GameRes\\SLLYT_map\\tex\\beijing.png": {
-      "time": 1781778500445.5647,
-      "uuid": "9c1879ae-6552-4f29-9731-d41eeac35ffa"
     },
     "GameRes\\SLLYT_map\\tex\\huaban-1266235567.webp": {
       "time": 1781778500448.5566,
@@ -5022,10 +4929,6 @@
       "time": 1781778500247.4534,
       "uuid": "e12799fc-42f3-44f1-b985-91d1ee1cb0a5"
     },
-    "GameRes\\SLLYT_map\\tex\\T_beizengmen.png": {
-      "time": 1781778500243.4631,
-      "uuid": "cb8ad35c-6693-4e18-9fd4-ffcc393beabb"
-    },
     "GameRes\\SLLYT_map\\tex\\T_beizengmen_a_02.jpg": {
       "time": 1781778500250.4453,
       "uuid": "7f8239c4-4b3d-4c75-b047-5c0d810287fc"
@@ -5037,10 +4940,6 @@
     "GameRes\\SLLYT_map\\tex\\T_beizengmen_e_02.jpg": {
       "time": 1781778500256.9414,
       "uuid": "3964cc34-3094-4161-98e4-a79590088632"
-    },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang.jpg": {
-      "time": 1781778500259.4465,
-      "uuid": "cd7b2fb0-d421-404f-80d6-24c8bb3b45ea"
     },
     "GameRes\\SLLYT_map\\tex\\T_luzhuang_02.jpg": {
       "time": 1781778500273.5928,
@@ -5058,41 +4957,17 @@
       "time": 1781778500294.6035,
       "uuid": "e61280a6-c9bc-49c6-98cd-87e8d9efbb19"
     },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang_04_a.jpeg": {
-      "time": 1781778500286.5764,
-      "uuid": "19d1d342-72a5-4f98-8b5e-ce5b293779a3"
-    },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang_05_a.jpg": {
-      "time": 1781778500325.139,
-      "uuid": "3ce0cc92-de3a-46aa-a83b-052ee8891351"
-    },
     "GameRes\\SLLYT_map\\tex\\T_qiao_01_ao.jpg": {
       "time": 1781778500340.262,
       "uuid": "f6121232-6cbf-4d29-b777-1fafb426e96c"
-    },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang_06_a.jpg": {
-      "time": 1781778500328.2932,
-      "uuid": "935f299c-cdb4-4692-8aef-f98e49c06d80"
     },
     "GameRes\\SLLYT_map\\tex\\T_qiao_01_d.jpg": {
       "time": 1781778500349.4414,
       "uuid": "16c1e869-29e7-4feb-94e3-5ea1cef67864"
     },
-    "GameRes\\SLLYT_map\\tex\\T_luzhuang_04_n.png": {
-      "time": 1781778500322.1465,
-      "uuid": "6c760092-3c00-4d45-92d9-d115621dc1dc"
-    },
     "GameRes\\SLLYT_map\\tex\\T_qiao_02_d.jpg": {
       "time": 1781778500351.4365,
       "uuid": "3787575d-5d0a-4544-b2c8-00eb8360fe27"
-    },
-    "GameRes\\SLLYT_map\\tex\\T_qiao_02_d_04.jpg": {
-      "time": 1781778500384.306,
-      "uuid": "d4953be9-7be8-42f9-9184-b4a014fad9c0"
-    },
-    "GameRes\\SLLYT_map\\tex\\T_youtong_a.jpg": {
-      "time": 1781778500395.2795,
-      "uuid": "c54d6089-2ef8-41e0-90b0-3e5849d76dd9"
     },
     "GameRes\\SLLYT_map\\tex\\T_youtong_a_02.jpg": {
       "time": 1781778500404.7795,
@@ -5102,10 +4977,6 @@
       "time": 1781778500408.1575,
       "uuid": "9e277dc1-576d-47e4-9508-4b4eef83e3a5"
     },
-    "GameRes\\SLLYT_map\\tex\\T_youtong_a.png": {
-      "time": 1781778500401.7917,
-      "uuid": "7cf0cf4c-0133-4fd5-94a4-a1e099a13972"
-    },
     "GameRes\\SLLYT_map\\zhujue\\zhujue-001.mtl": {
       "time": 1781778500563.8542,
       "uuid": "a539b575-9537-49b0-ac27-43f709d42224"
@@ -5113,10 +4984,6 @@
     "GameRes\\SLLYT_map\\zhujue\\zhujue.mtl": {
       "time": 1781778500573.8262,
       "uuid": "f0e31d97-a617-4b3a-a52e-a2bd8d5acda7"
-    },
-    "GameRes\\SLLYT_map\\tex\\T_youtong_n.png": {
-      "time": 1781778500418.1304,
-      "uuid": "884bcae3-32d7-4e08-b008-489e1b3fb7f2"
     },
     "GameRes\\SLLYT_map\\zhujue\\zhujue_D.jpg": {
       "time": 1781778500584.3062,
@@ -5145,6 +5012,90 @@
     "GameRes\\SLLYT_map\\zhujue\\zhujue_skin.fbx": {
       "time": 1781778500608.4438,
       "uuid": "822048d4-d5c9-4ed6-93b2-aa63e4139bac"
+    },
+    "GameRes\\SLLYT_map\\fbx\\3.fbx.meta": {
+      "time": 1782114278379.304
+    },
+    "GameRes\\SLLYT_map\\fbx\\4.fbx.meta": {
+      "time": 1782114278382.2974
+    },
+    "GameRes\\SLLYT_map\\mat\\M_tengman.mtl.meta": {
+      "time": 1782114278472.9116
+    },
+    "GameRes\\SLLYT_map\\pre\\3.prefab.meta": {
+      "time": 1782114278595.5645
+    },
+    "GameRes\\SLLYT_map\\pre\\4.prefab.meta": {
+      "time": 1782114278598.557
+    },
+    "GameRes\\SLLYT_map\\pre\\tengman.prefab.meta": {
+      "time": 1782114278633.0884
+    },
+    "GameRes\\SLLYT_map\\tex\\Actinidia kolomikta_leaves_3.png.meta": {
+      "time": 1782114278766.1719
+    },
+    "GameRes\\SLLYT_map\\tex\\Actinidia kolomikta_leaves_n.png.meta": {
+      "time": 1782114278771.542
+    },
+    "GameRes\\SLLYT_map\\tex\\SM_lalian_02_A3.png.meta": {
+      "time": 1782114278776.5264
+    },
+    "GameRes\\SLLYT_map\\tex\\SM_lalian_02_N3.png.meta": {
+      "time": 1782114278779.737
+    },
+    "GameRes\\SLLYT_map\\zhujue\\AK.PNG.meta": {
+      "time": 1782114278831.0703
+    },
+    "GameRes\\SLLYT_map\\zhujue\\M_ak.mtl.meta": {
+      "time": 1782114278834.0151
+    },
+    "GameRes\\SLLYT_map\\mat\\M_tengman.mtl": {
+      "time": 1782117970840.0774,
+      "uuid": "7dc4f6bb-0423-4b4d-89f5-d62a342d10ab"
+    },
+    "GameRes\\SLLYT_map\\pre\\3.prefab": {
+      "time": 1782114278594.5674,
+      "uuid": "3ecdd1fe-1135-4e79-821e-7603da86785f"
+    },
+    "GameRes\\SLLYT_map\\pre\\4.prefab": {
+      "time": 1782114278596.5625,
+      "uuid": "4795d722-33bc-4b06-80ba-b29aee121f19"
+    },
+    "GameRes\\SLLYT_map\\pre\\tengman.prefab": {
+      "time": 1782114278631.094,
+      "uuid": "323e7b95-835d-46c8-b339-4f3ea4aa1fe3"
+    },
+    "GameRes\\SLLYT_map\\tex\\SM_lalian_02_A3.png": {
+      "time": 1782114278774.5317,
+      "uuid": "0552b58e-1abe-4274-96e8-b12744fd55eb"
+    },
+    "GameRes\\SLLYT_map\\tex\\Actinidia kolomikta_leaves_n.png": {
+      "time": 1782114278770.516,
+      "uuid": "b89873aa-31c3-4fd6-9cb9-eeb642110378"
+    },
+    "GameRes\\SLLYT_map\\tex\\Actinidia kolomikta_leaves_3.png": {
+      "time": 1782114278765.176,
+      "uuid": "08cd4a31-96fc-43f6-b717-623fc524c8d8"
+    },
+    "GameRes\\SLLYT_map\\zhujue\\M_ak.mtl": {
+      "time": 1782114278833.0195,
+      "uuid": "b1df4af2-2e5d-49c0-82e8-3d405d8cda7f"
+    },
+    "GameRes\\SLLYT_map\\tex\\SM_lalian_02_N3.png": {
+      "time": 1782114278777.7473,
+      "uuid": "bd076031-f303-41c0-99ca-65d6e0f3c784"
+    },
+    "GameRes\\SLLYT_map\\zhujue\\AK.PNG": {
+      "time": 1782114278819.1501,
+      "uuid": "0f0657da-4c65-4bf0-8edd-9ce3be0fa8a9"
+    },
+    "GameRes\\SLLYT_map\\fbx\\3.fbx": {
+      "time": 1782114278378.3083,
+      "uuid": "b0b79582-ae8f-4772-a003-6d3c178d17f8"
+    },
+    "GameRes\\SLLYT_map\\fbx\\4.fbx": {
+      "time": 1782114278381.3022,
+      "uuid": "2ae9dac5-d0be-40bf-9e31-90c141c0bb3d"
     }
   },
   "missing": {}

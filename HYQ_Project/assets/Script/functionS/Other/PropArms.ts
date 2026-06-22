@@ -141,8 +141,8 @@ export class PropArms extends BattleTarget3D {
     private readonly bottomBaseChildScaleMap: Map<Node, Vec3> = new Map();
     private readonly bottomBaseChildPosMap: Map<Node, Vec3> = new Map();
     private readonly bottomBaseChildEulerMap: Map<Node, Vec3> = new Map();
-    private readonly bottomBaseRollDegreesPerUnit: number = 260;
-    private readonly bottomBaseRollAxis: Vec3 = new Vec3(1, 0, 0);
+    private readonly bottomBaseRollDegreesPerUnit: number = -160;
+    private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 0, 1);
     private readonly bottomBaseHitFlashColor: Color = new Color(255, 194, 36, 255);
     private readonly roleLayoutTemplateName: string = "Role_t";
     private readonly roleTemplateBottomBasePos: Vec3 = new Vec3();
@@ -508,14 +508,14 @@ export class PropArms extends BattleTarget3D {
         const delay = 0.05 + this.tireList.length * 0.05;
         const fbxY = fbxNode.y;
         const bounceH = this.jumpHeight + this.tireList.length * 0.1 * this.jumpHeight;
-        let dropOffset = -this.tireSpacing;
+        let dropTargetY = this.getArmsTargetY(this.tireList.length);
         if (!this._curArms.isCanMove && this.tireList.length > this._curArms.canTireCount) {
-            dropOffset = 0;
+            dropTargetY = fbxY;
         }
         tween(fbxNode)
             .delay(delay)
             .to(0.04 * this.animScale, { y: fbxY + bounceH }, { easing: 'sineOut' })
-            .to(0.06 * this.animScale, { y: fbxY + dropOffset }, { easing: 'quadIn' })
+            .to(0.06 * this.animScale, { y: dropTargetY }, { easing: 'quadIn' })
             .start();
 
         AudioManager.inst.playOneShot(SoundEnum.sound_met_die);
@@ -531,7 +531,7 @@ export class PropArms extends BattleTarget3D {
         this._tireBounceH.length = 0;
         for (let i = 0; i < len; i++) {
             this._tireBounceStartY.push(this.tireList[i].position.y);
-            this._tireBounceTargetY.push(i * this.tireSpacing);
+            this._tireBounceTargetY.push(this.getBottomBaseTargetY(i));
             this._tireBounceH.push(this.jumpHeight + i * 0.1 * this.jumpHeight);
         }
         this._tireBounceTimer = 0;
@@ -547,17 +547,19 @@ export class PropArms extends BattleTarget3D {
             const perDelay = 0.05;
             for (let i = 0; i < this.tireList.length && i < this._tireBounceStartY.length; i++) {
                 const tire = this.tireList[i];
+                const targetX = this.getBottomBaseTargetX();
+                const targetZ = this.getBottomBaseTargetZ();
                 const localT = this._tireBounceTimer - perDelay * i;
                 if (localT <= 0) continue;
                 if (localT < bounceUp) {
                     const t = localT / bounceUp;
-                    tire.setPosition(0, this._tireBounceStartY[i] + this._tireBounceH[i] * Math.sin(t * Math.PI * 0.5), 0);
+                    tire.setPosition(targetX, this._tireBounceStartY[i] + this._tireBounceH[i] * Math.sin(t * Math.PI * 0.5), targetZ);
                 } else if (localT < bounceUp + fallDown) {
                     const t = (localT - bounceUp) / fallDown;
                     const peak = this._tireBounceStartY[i] + this._tireBounceH[i];
-                    tire.setPosition(0, peak + (this._tireBounceTargetY[i] - peak) * (t * t), 0);
+                    tire.setPosition(targetX, peak + (this._tireBounceTargetY[i] - peak) * (t * t), targetZ);
                 } else {
-                    tire.setPosition(0, this._tireBounceTargetY[i], 0);
+                    tire.setPosition(targetX, this._tireBounceTargetY[i], targetZ);
                 }
             }
             if (this._tireBounceTimer > perDelay * this.tireList.length + bounceUp + fallDown) {
@@ -567,13 +569,15 @@ export class PropArms extends BattleTarget3D {
             // 平滑插值模式
             for (let i = 0; i < this.tireList.length; i++) {
                 const tire = this.tireList[i];
-                const targetY = i * this.tireSpacing;
+                const targetY = this.getBottomBaseTargetY(i);
+                const targetX = this.getBottomBaseTargetX();
+                const targetZ = this.getBottomBaseTargetZ();
                 const curY = tire.position.y;
                 const diff = targetY - curY;
                 if (Math.abs(diff) > 0.001) {
-                    tire.setPosition(0, curY + diff * Math.min(1, dt * 8), 0);
+                    tire.setPosition(targetX, curY + diff * Math.min(1, dt * 8), targetZ);
                 } else {
-                    tire.setPosition(0, targetY, 0);
+                    tire.setPosition(targetX, targetY, targetZ);
                 }
             }
         }
@@ -625,7 +629,11 @@ export class PropArms extends BattleTarget3D {
             const scale = PoolManager.instance.V3.set(this._curArms.fbx.node.scale);
 
             // 初始位置: FBX在地下
-            this._curArms.fbx.node.y = -1;
+            if (this.hasRoleTemplateLayout) {
+                this._curArms.fbx.node.setPosition(this.roleTemplateArmsPos.x, -1, this.roleTemplateArmsPos.z);
+            } else {
+                this._curArms.fbx.node.y = -1;
+            }
             this._curArms.fbx.node.setScale(Vec3.ZERO);
             this._curArms.fbx.setAnimation(AnimArms.idle, true);
             this.isWallH = false;
@@ -638,7 +646,7 @@ export class PropArms extends BattleTarget3D {
                     this.tireList.push(tire);
                     this.node.addChild(tire);
                     const tireTargetY = this.getBottomBaseTargetY(i);
-                    tire.setPosition(0, tireTargetY - tireSpacing, 0);
+                    tire.setPosition(this.getBottomBaseTargetX(), tireTargetY - tireSpacing, this.getBottomBaseTargetZ());
                     if (!i) {
                         const tireMeshRenderer = this.findFirstMeshRenderer(tire);
                         if (tireMeshRenderer) {
@@ -660,11 +668,11 @@ export class PropArms extends BattleTarget3D {
 
             if (this._curArms.isCanMove) {
                 fbxPhase1TargetY = this.getArmsTargetY(0);
-                wallPhase1TargetY = wallHeight;
+                wallPhase1TargetY = fbxPhase1TargetY + wallHeight;
                 needTireLift = true;
             } else {
-                fbxPhase1TargetY = this._curArms.canHeight;
-                wallPhase1TargetY = this._curArms.canHeight + wallHeight;
+                fbxPhase1TargetY = this.hasRoleTemplateLayout ? this.getArmsTargetY(0) : this._curArms.canHeight;
+                wallPhase1TargetY = fbxPhase1TargetY + wallHeight;
                 needTireLift = false;
             }
 
@@ -750,6 +758,59 @@ export class PropArms extends BattleTarget3D {
 
     private get bottomBasePoolKey(): string {
         return PoolEnum.Other + this.bottomBasePrefab;
+    }
+
+    private loadRoleTemplateLayout(): void {
+        if (this.roleTemplateLayoutLoaded) {
+            return;
+        }
+        this.roleTemplateLayoutLoaded = true;
+
+        let root = this.node;
+        while (root.parent) {
+            root = root.parent;
+        }
+
+        const template = this.findNodeByName(root, this.roleLayoutTemplateName);
+        if (!template || template === this.node || template.children.length < 2) {
+            return;
+        }
+
+        const bottomBase = template.children[0];
+        const arms = template.children[1];
+        if (!bottomBase || !arms) {
+            return;
+        }
+
+        this.roleTemplateBottomBasePos.set(bottomBase.position);
+        this.roleTemplateArmsPos.set(arms.position);
+        this.hasRoleTemplateLayout = true;
+    }
+
+    private getBottomBaseTargetX(): number {
+        this.loadRoleTemplateLayout();
+        return this.hasRoleTemplateLayout ? this.roleTemplateBottomBasePos.x : 0;
+    }
+
+    private getBottomBaseTargetY(index: number): number {
+        this.loadRoleTemplateLayout();
+        if (this.hasRoleTemplateLayout) {
+            return this.roleTemplateBottomBasePos.y + index * this.tireSpacing;
+        }
+        return index * this.tireSpacing;
+    }
+
+    private getBottomBaseTargetZ(): number {
+        this.loadRoleTemplateLayout();
+        return this.hasRoleTemplateLayout ? this.roleTemplateBottomBasePos.z : 0;
+    }
+
+    private getArmsTargetY(liftCount: number): number {
+        this.loadRoleTemplateLayout();
+        if (this.hasRoleTemplateLayout) {
+            return this.roleTemplateArmsPos.y + Math.max(0, liftCount - 1) * this.tireSpacing;
+        }
+        return liftCount * this.tireSpacing;
     }
 
     private applyBottomBaseVisualTransform(node: Node): void {
@@ -840,12 +901,91 @@ export class PropArms extends BattleTarget3D {
         if (!node) {
             return;
         }
+        if (node.children.length <= 0) {
+            this.applyBottomBaseResourceRoll(node);
+            return;
+        }
+        for (let i = 0; i < node.children.length; i++) {
+            this.applyBottomBaseResourceRoll(node.children[i]);
+        }
+    }
+
+    private applyBottomBaseResourceRoll(node: Node): void {
         const originalEuler = this.getBottomBaseOriginalEuler(node);
         node.eulerAngles = v3(
             originalEuler.x + this.bottomBaseRollAxis.x * this.bottomBaseRollAngle,
             originalEuler.y + this.bottomBaseRollAxis.y * this.bottomBaseRollAngle,
             originalEuler.z + this.bottomBaseRollAxis.z * this.bottomBaseRollAngle,
         );
+    }
+
+    private fitAllBottomBaseVisuals(): void {
+        for (let i = 0; i < this.tireList.length; i++) {
+            this.fitBottomBaseVisualToGroundAndCenter(this.tireList[i]);
+        }
+    }
+
+    private fitBottomBaseVisualToGroundAndCenter(root: Node): void {
+        if (!root || !root.activeInHierarchy) {
+            return;
+        }
+        const bounds = this.getBottomBaseWorldBounds(root);
+        if (!bounds) {
+            return;
+        }
+
+        const deltaX = root.worldPositionX - bounds.centerX;
+        const deltaY = this.node.worldPositionY - bounds.bottomY;
+        if (Math.abs(deltaX) <= 0.001 && Math.abs(deltaY) <= 0.001) {
+            return;
+        }
+
+        const rootScale = root.worldScale;
+        const localDeltaX = deltaX / (rootScale.x || 1);
+        const localDeltaY = deltaY / (rootScale.y || 1);
+        if (root.children.length <= 0) {
+            root.setPosition(root.position.x + localDeltaX, root.position.y + localDeltaY, root.position.z);
+            return;
+        }
+
+        for (let i = 0; i < root.children.length; i++) {
+            const child = root.children[i];
+            child.setPosition(child.position.x + localDeltaX, child.position.y + localDeltaY, child.position.z);
+        }
+    }
+
+    private getBottomBaseWorldBounds(root: Node): { centerX: number; bottomY: number } | null {
+        let minX = Number.POSITIVE_INFINITY;
+        let maxX = Number.NEGATIVE_INFINITY;
+        let minY = Number.POSITIVE_INFINITY;
+        let found = false;
+        const stack: Node[] = [root];
+        while (stack.length > 0) {
+            const node = stack.pop();
+            if (!node) {
+                continue;
+            }
+            const meshRenderer = node.getComponent(MeshRenderer);
+            const worldBounds = (meshRenderer as any)?.model?.worldBounds;
+            const center = worldBounds?.center;
+            const halfExtents = worldBounds?.halfExtents;
+            if (center && halfExtents) {
+                minX = Math.min(minX, center.x - halfExtents.x);
+                maxX = Math.max(maxX, center.x + halfExtents.x);
+                minY = Math.min(minY, center.y - halfExtents.y);
+                found = true;
+            }
+            for (let i = 0; i < node.children.length; i++) {
+                stack.push(node.children[i]);
+            }
+        }
+        if (!found) {
+            return null;
+        }
+        return {
+            centerX: (minX + maxX) * 0.5,
+            bottomY: minY,
+        };
     }
 
     private findFirstMeshRenderer(node: Node): MeshRenderer | null {
@@ -1001,6 +1141,7 @@ export class PropArms extends BattleTarget3D {
         // 轮胎平滑插值到正确位置
         this._updateTireDrop(dt);
         this.updateBottomBaseRoll();
+        this.fitAllBottomBaseVisuals();
 
         // _isShake冷却（非销毁受击用）
         if (this._shakeCooldown > 0) {

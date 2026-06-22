@@ -7,12 +7,12 @@
       "max": [
         0.2989644706249237,
         0.2989644706249237,
-        0.8723523020744324
+        0.4288434088230133
       ],
       "min": [
         -0.2989644706249237,
         -0.2989644706249237,
-        0.014665374532341957
+        -0.42884349822998047
       ],
       "name": "Cylinder002/POSITION",
       "type": "VEC3"
@@ -43,16 +43,16 @@
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 272,
+      "count": 256,
       "max": [
         0.3055746853351593,
         0.3055746257305145,
-        0.8870176672935486
+        0.44350770115852356
       ],
       "min": [
-        -0.3055746555328369,
-        -0.3055746555328369,
-        0.0
+        -0.3055746853351593,
+        -0.3055746853351593,
+        -0.4435099959373474
       ],
       "name": "对象001/POSITION",
       "type": "VEC3"
@@ -61,7 +61,7 @@
       "bufferView": 2,
       "byteOffset": 12,
       "componentType": 5126,
-      "count": 272,
+      "count": 256,
       "name": "对象001/NORMAL",
       "type": "VEC3"
     },
@@ -69,7 +69,7 @@
       "bufferView": 2,
       "byteOffset": 24,
       "componentType": 5126,
-      "count": 272,
+      "count": 256,
       "name": "对象001/TEXCOORD_0",
       "type": "VEC2"
     },
@@ -102,7 +102,7 @@
     },
     {
       "buffer": 0,
-      "byteLength": 8704,
+      "byteLength": 8192,
       "byteOffset": 14976,
       "byteStride": 32,
       "name": "对象001",
@@ -111,13 +111,13 @@
     {
       "buffer": 0,
       "byteLength": 1560,
-      "byteOffset": 23680,
+      "byteOffset": 23168,
       "target": 34963
     }
   ],
   "buffers": [
     {
-      "byteLength": 25240,
+      "byteLength": 24728,
       "uri": "out.bin"
     }
   ],
@@ -126,12 +126,12 @@
       "animationFrameRate": 30.0,
       "fbxFileHeaderInfo": {
         "creationTimeStamp": {
-          "day": 17,
+          "day": 22,
           "hour": 15,
-          "millisecond": 757,
-          "minute": 7,
+          "millisecond": 980,
+          "minute": 6,
           "month": 6,
-          "second": 43,
+          "second": 39,
           "year": 2026
         },
         "creator": "FBX SDK/FBX Plugins version 2020.1.1",
@@ -143,7 +143,7 @@
             "applicationName": "3ds Max",
             "applicationVendor": "Autodesk",
             "applicationVersion": "2022",
-            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\SM_youtong_02.fbx"
+            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\教网店学徒各种副业vx-Rshgzs666-3dmax室外藤曼爬山虎花藤植物3d模型素材cr vr渲染带贴图藤曼fbx\\SM_youtong_02.fbx"
           },
           "revision": "",
           "subject": "",

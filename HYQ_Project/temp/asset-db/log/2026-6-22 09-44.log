@@ -5152,3 +5152,292 @@
 2026-6-22 15:42:47-debug: asset-db:refresh-all-database (249ms)
 2026-6-22 15:42:47-debug: asset-db:worker-effect-data-processing (1ms)
 2026-6-22 15:42:47-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-22 15:44:10-debug: refresh db internal success
+2026-6-22 15:44:10-debug: refresh db assets success
+2026-6-22 15:44:10-debug: refresh db super-packager success
+2026-6-22 15:44:10-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-22 15:44:10-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-22 15:44:10-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-22 15:44:10-debug: asset-db:refresh-all-database (187ms)
+2026-6-22 15:44:10-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-6-22 15:44:42-debug: refresh db internal success
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu.fbx@f1fcdbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_02.fbx@df11fbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_03.fbx@a0feebackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_04_02.fbx@49b18background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_laliantou.fbx@067d2background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_03.fbx@8849fbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_04_02.fbx@1c288background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_02.fbx@a8069background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu.fbx@2bd58background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_laliantou.fbx@e44a0background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_04_02.fbxbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_youtong.fbx@29651background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_03.fbxbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu_02.fbxbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_laliantou.fbxbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\shizhu.fbxbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\banxian.png@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\pre\SM_lalian_02.prefabbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\beijing.png@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_beizengmen.png@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\banxian.pngbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_beizengmen.pngbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang.jpg@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\beijing.png@f9941background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_youtong.fbx@ce9d5background: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang.jpgbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\beijing.pngbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_youtong.fbxbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang_04_a.jpeg@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang_04_n.png@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang_05_a.jpg@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang_04_a.jpegbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang_04_n.pngbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang_06_a.jpg@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_qiao_02_d_04.jpg@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang_05_a.jpgbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_luzhuang_06_a.jpgbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_qiao_02_d_04.jpgbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_youtong_a.jpg@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_youtong_a.png@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_youtong_n.png@6c48abackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_youtong_a.jpgbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_youtong_a.pngbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cDestroy%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\T_youtong_n.pngbackground: #ffb8b8; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\mat\M_tengman.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\3.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\4.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\pre\3.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\pre\4.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:42-debug: Status file D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\asset-db\assets\fbx.FBX-glTF-conv\b0b79582-ae8f-4772-a003-6d3c178d17f8\status.json: Error: ENOENT: no such file or directory, open 'D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\asset-db\assets\fbx.FBX-glTF-conv\b0b79582-ae8f-4772-a003-6d3c178d17f8\status.json'
+2026-6-22 15:44:42-debug: Status file D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\asset-db\assets\fbx.FBX-glTF-conv\2ae9dac5-d0be-40bf-9e31-90c141c0bb3d\status.json: Error: ENOENT: no such file or directory, open 'D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\asset-db\assets\fbx.FBX-glTF-conv\2ae9dac5-d0be-40bf-9e31-90c141c0bb3d\status.json'
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\pre\tengman.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\Actinidia kolomikta_leaves_3.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\Actinidia kolomikta_leaves_n.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:42-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\SM_lalian_02_A3.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\SM_lalian_02_A3.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\Actinidia kolomikta_leaves_n.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\SM_lalian_02_N3.pngbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\Actinidia kolomikta_leaves_3.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\zhujue\AK.PNGbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\zhujue\M_ak.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\tex\SM_lalian_02_N3.png@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\zhujue\AK.PNG@6c48abackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_qiao_01.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scenebackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\SLLYT.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\matbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\prebackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\texbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\zhujuebackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_youtong_02.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_laliantou_02.fbxbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: Frame rate: 30 [{asset(1b582930-d871-4c23-a84a-b4a557c68ea5)}]
+2026-6-22 15:44:43-debug: Frame rate: 30 [{asset(b0b79582-ae8f-4772-a003-6d3c178d17f8)}]
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\3.fbx@1bd47background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_qiao_01.fbx@17065background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: Frame rate: 30 [{asset(2ae9dac5-d0be-40bf-9e31-90c141c0bb3d)}]
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_qiao_01.fbx@7a922background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\3.fbx@e1752background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\4.fbx@56552background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: Frame rate: 30 [{asset(610c8773-92fc-4d6b-a446-cb0b7b06352e)}]
+2026-6-22 15:44:43-debug: Frame rate: 30 [{asset(42e81c72-7efd-4eed-b98f-f40bb033b5d4)}]
+2026-6-22 15:44:43-debug: %cReImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_youtong_02.fbx@684dbbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\mat\M_laliantou.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\4.fbx@d5a24background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cReImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_laliantou_02.fbx@11e06background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\mat\M_laliantou_02.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\pre\gld.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cReImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_youtong_02.fbx@035c0background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\pre\huanjing.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cReImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_laliantou_02.fbx@035c0background: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cReImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_youtong_02.fbx@961bcbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\pre\qiao.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cReImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_laliantou_02.fbx@44bafbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\pre\SM_laliantou_02.prefabbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: %cReImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\SLLYT_map\fbx\SM_laliantou_02.fbx@9400bbackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:44:43-debug: refresh db assets success
+2026-6-22 15:44:43-debug: refresh db super-packager success
+2026-6-22 15:44:43-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-22 15:44:43-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-22 15:44:43-debug: asset-db:refresh-all-database (1336ms)
+2026-6-22 15:44:43-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-22 15:44:43-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-22 15:45:25-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:45:25-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (35ms)
+2026-6-22 15:45:25-debug: Query all assets info in project
+2026-6-22 15:45:26-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-22 15:45:26-debug: Skip compress image, progress: 0%
+2026-6-22 15:45:26-debug: Init all bundles start..., progress: 0%
+2026-6-22 15:45:26-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-22 15:45:26-debug: Init bundle root assets start..., progress: 0%
+2026-6-22 15:45:26-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-22 15:45:26-debug: Num of bundles: 3..., progress: 0%
+2026-6-22 15:45:26-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-22 15:45:26-debug:   Number of all scenes: 4
+2026-6-22 15:45:26-debug:   Number of other assets: 1141
+2026-6-22 15:45:26-debug:   Number of all scripts: 109
+2026-6-22 15:45:26-debug: Init bundle root assets success..., progress: 0%
+2026-6-22 15:45:26-debug: // ---- build task 查询 Asset Bundle ---- (12ms)
+2026-6-22 15:45:26-log: run build task 查询 Asset Bundle success in 12 ms√, progress: 5%
+2026-6-22 15:45:26-debug: [Build Memory track]: 查询 Asset Bundle start:260.86MB, end 260.73MB, increase: -126.03KB
+2026-6-22 15:45:26-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-22 15:45:26-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-22 15:45:26-debug: // ---- build task 查询 Asset Bundle ---- (5ms)
+2026-6-22 15:45:26-log: run build task 查询 Asset Bundle success in 5 ms√, progress: 10%
+2026-6-22 15:45:26-debug: [Build Memory track]: 查询 Asset Bundle start:260.50MB, end 259.93MB, increase: -579.45KB
+2026-6-22 15:45:26-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-22 15:45:26-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-22 15:45:26-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (1ms)
+2026-6-22 15:45:26-log: run build task 整理部分构建选项内数据到 settings.json success in 1 ms√, progress: 12%
+2026-6-22 15:45:26-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-22 15:45:26-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:259.97MB, end 260.00MB, increase: 28.65KB
+2026-6-22 15:45:26-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-22 15:45:26-debug: // ---- build task 填充脚本数据到 settings.json ---- (1ms)
+2026-6-22 15:45:26-log: run build task 填充脚本数据到 settings.json success in 1 ms√, progress: 13%
+2026-6-22 15:45:26-debug: [Build Memory track]: 填充脚本数据到 settings.json start:260.03MB, end 260.06MB, increase: 28.01KB
+2026-6-22 15:45:26-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-22 15:45:26-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-22 15:45:26-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (5ms)
+2026-6-22 15:45:26-log: run build task 整理部分构建选项内数据到 settings.json success in 5 ms√, progress: 15%
+2026-6-22 15:45:26-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:260.09MB, end 260.15MB, increase: 64.16KB
+2026-6-22 15:45:34-debug: refresh db internal success
+2026-6-22 15:45:34-debug: refresh db assets success
+2026-6-22 15:45:34-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-22 15:45:34-debug: refresh db super-packager success
+2026-6-22 15:45:34-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-22 15:45:34-debug: asset-db:refresh-all-database (216ms)
+2026-6-22 15:45:34-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-22 15:45:34-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-22 15:45:34-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:45:34-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (33ms)
+2026-6-22 15:45:35-debug: Query all assets info in project
+2026-6-22 15:45:35-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-22 15:45:35-debug: Skip compress image, progress: 0%
+2026-6-22 15:45:35-debug: Init all bundles start..., progress: 0%
+2026-6-22 15:45:35-debug: Num of bundles: 3..., progress: 0%
+2026-6-22 15:45:35-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-22 15:45:35-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-22 15:45:35-debug: Init bundle root assets start..., progress: 0%
+2026-6-22 15:45:35-debug:   Number of other assets: 1141
+2026-6-22 15:45:35-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-22 15:45:35-debug:   Number of all scenes: 4
+2026-6-22 15:45:35-debug: Init bundle root assets success..., progress: 0%
+2026-6-22 15:45:35-debug:   Number of all scripts: 109
+2026-6-22 15:45:35-debug: // ---- build task 查询 Asset Bundle ---- (12ms)
+2026-6-22 15:45:35-log: run build task 查询 Asset Bundle success in 12 ms√, progress: 5%
+2026-6-22 15:45:35-debug: [Build Memory track]: 查询 Asset Bundle start:244.68MB, end 246.23MB, increase: 1.55MB
+2026-6-22 15:45:35-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-22 15:45:35-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-22 15:45:35-debug: // ---- build task 查询 Asset Bundle ---- (5ms)
+2026-6-22 15:45:35-log: run build task 查询 Asset Bundle success in 5 ms√, progress: 10%
+2026-6-22 15:45:35-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-22 15:45:35-debug: [Build Memory track]: 查询 Asset Bundle start:246.26MB, end 246.48MB, increase: 228.90KB
+2026-6-22 15:45:35-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-22 15:45:35-log: run build task 整理部分构建选项内数据到 settings.json success in 1 ms√, progress: 12%
+2026-6-22 15:45:35-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:246.52MB, end 246.54MB, increase: 28.27KB
+2026-6-22 15:45:35-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (1ms)
+2026-6-22 15:45:35-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-22 15:45:35-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-22 15:45:35-debug: // ---- build task 填充脚本数据到 settings.json ---- (3ms)
+2026-6-22 15:45:35-log: run build task 填充脚本数据到 settings.json success in 3 ms√, progress: 13%
+2026-6-22 15:45:35-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-22 15:45:35-debug: [Build Memory track]: 填充脚本数据到 settings.json start:246.58MB, end 246.61MB, increase: 29.90KB
+2026-6-22 15:45:35-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-22 15:45:35-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (8ms)
+2026-6-22 15:45:35-log: run build task 整理部分构建选项内数据到 settings.json success in 8 ms√, progress: 15%
+2026-6-22 15:45:35-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:246.64MB, end 246.71MB, increase: 71.54KB
+2026-6-22 15:45:56-debug: refresh db internal success
+2026-6-22 15:45:56-debug: refresh db assets success
+2026-6-22 15:45:56-debug: refresh db super-packager success
+2026-6-22 15:45:56-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-22 15:45:56-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-22 15:45:56-debug: asset-db:refresh-all-database (201ms)
+2026-6-22 15:45:56-debug: asset-db:worker-effect-data-processing (2ms)
+2026-6-22 15:45:56-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-6-22 15:45:57-debug: refresh db internal success
+2026-6-22 15:45:57-debug: refresh db assets success
+2026-6-22 15:45:57-debug: refresh db super-packager success
+2026-6-22 15:45:57-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-22 15:45:57-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-22 15:45:57-debug: asset-db:refresh-all-database (250ms)
+2026-6-22 15:45:57-debug: asset-db:worker-effect-data-processing (3ms)
+2026-6-22 15:45:57-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-6-22 15:45:59-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:45:59-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (33ms)
+2026-6-22 15:46:00-debug: Query all assets info in project
+2026-6-22 15:46:00-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-22 15:46:00-debug: Skip compress image, progress: 0%
+2026-6-22 15:46:00-debug: Init all bundles start..., progress: 0%
+2026-6-22 15:46:00-debug: Num of bundles: 3..., progress: 0%
+2026-6-22 15:46:00-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-22 15:46:00-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-22 15:46:00-debug: Init bundle root assets start..., progress: 0%
+2026-6-22 15:46:00-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-22 15:46:00-debug:   Number of all scenes: 4
+2026-6-22 15:46:00-debug:   Number of all scripts: 109
+2026-6-22 15:46:00-debug: Init bundle root assets success..., progress: 0%
+2026-6-22 15:46:00-debug:   Number of other assets: 1141
+2026-6-22 15:46:00-debug: // ---- build task 查询 Asset Bundle ---- (12ms)
+2026-6-22 15:46:00-log: run build task 查询 Asset Bundle success in 12 ms√, progress: 5%
+2026-6-22 15:46:00-debug: [Build Memory track]: 查询 Asset Bundle start:250.80MB, end 247.90MB, increase: -2968.97KB
+2026-6-22 15:46:00-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-22 15:46:00-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-22 15:46:00-debug: // ---- build task 查询 Asset Bundle ---- (4ms)
+2026-6-22 15:46:00-log: run build task 查询 Asset Bundle success in 4 ms√, progress: 10%
+2026-6-22 15:46:00-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-22 15:46:00-debug: [Build Memory track]: 查询 Asset Bundle start:247.94MB, end 248.16MB, increase: 228.51KB
+2026-6-22 15:46:00-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-22 15:46:00-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-6-22 15:46:00-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-6-22 15:46:00-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:248.19MB, end 248.22MB, increase: 28.70KB
+2026-6-22 15:46:00-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-22 15:46:00-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-22 15:46:00-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-6-22 15:46:00-debug: [Build Memory track]: 填充脚本数据到 settings.json start:248.26MB, end 248.28MB, increase: 28.05KB
+2026-6-22 15:46:00-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-22 15:46:00-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-6-22 15:46:00-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-22 15:46:00-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (4ms)
+2026-6-22 15:46:00-log: run build task 整理部分构建选项内数据到 settings.json success in 4 ms√, progress: 15%
+2026-6-22 15:46:00-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:248.32MB, end 248.38MB, increase: 64.16KB
+2026-6-22 15:46:18-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-6-22 15:46:18-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (28ms)
+2026-6-22 15:46:19-debug: Query all assets info in project
+2026-6-22 15:46:19-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-6-22 15:46:19-debug: Skip compress image, progress: 0%
+2026-6-22 15:46:19-debug: Init all bundles start..., progress: 0%
+2026-6-22 15:46:19-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-22 15:46:19-debug: Init bundle root assets start..., progress: 0%
+2026-6-22 15:46:19-debug: 查询 Asset Bundle start, progress: 0%
+2026-6-22 15:46:19-debug: Num of bundles: 3..., progress: 0%
+2026-6-22 15:46:19-debug:   Number of all scenes: 4
+2026-6-22 15:46:19-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-6-22 15:46:19-debug:   Number of other assets: 1141
+2026-6-22 15:46:19-debug: Init bundle root assets success..., progress: 0%
+2026-6-22 15:46:19-debug:   Number of all scripts: 109
+2026-6-22 15:46:19-debug: // ---- build task 查询 Asset Bundle ---- (12ms)
+2026-6-22 15:46:19-log: run build task 查询 Asset Bundle success in 12 ms√, progress: 5%
+2026-6-22 15:46:19-debug: [Build Memory track]: 查询 Asset Bundle start:250.03MB, end 249.67MB, increase: -366.09KB
+2026-6-22 15:46:19-debug: 查询 Asset Bundle start, progress: 5%
+2026-6-22 15:46:19-debug: // ---- build task 查询 Asset Bundle ----
+2026-6-22 15:46:19-debug: // ---- build task 查询 Asset Bundle ---- (6ms)
+2026-6-22 15:46:19-log: run build task 查询 Asset Bundle success in 6 ms√, progress: 10%
+2026-6-22 15:46:19-debug: [Build Memory track]: 查询 Asset Bundle start:249.71MB, end 249.15MB, increase: -571.29KB
+2026-6-22 15:46:19-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-6-22 15:46:19-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-22 15:46:19-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-6-22 15:46:19-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:249.18MB, end 249.21MB, increase: 27.93KB
+2026-6-22 15:46:19-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-6-22 15:46:19-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-6-22 15:46:19-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-6-22 15:46:19-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-6-22 15:46:19-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-6-22 15:46:19-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-6-22 15:46:19-debug: [Build Memory track]: 填充脚本数据到 settings.json start:249.24MB, end 249.27MB, increase: 28.68KB
+2026-6-22 15:46:19-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-6-22 15:46:19-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (6ms)
+2026-6-22 15:46:19-log: run build task 整理部分构建选项内数据到 settings.json success in 6 ms√, progress: 15%
+2026-6-22 15:46:19-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:249.30MB, end 249.37MB, increase: 65.81KB

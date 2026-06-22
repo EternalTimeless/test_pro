@@ -20,6 +20,14 @@ export abstract class BattleTarget3D extends BattleTargetBase {
     @property({ tooltip: '是否受击退影响（静态物体取消勾选）' })
     public repelEnabled: boolean = true;
 
+    public getCollisionWorldPosition(out?: Vec3): Vec3 {
+        const pos = this.hitNode.worldPosition;
+        if (out) {
+            return out.set(pos);
+        }
+        return pos;
+    }
+
     /** 击退速度向量（预分配，避免每帧new） */
     private _repelVel: Vec3 = new Vec3();
 

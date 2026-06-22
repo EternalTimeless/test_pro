@@ -429,8 +429,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseChildScaleMap = new Map();
           this.bottomBaseChildPosMap = new Map();
           this.bottomBaseChildEulerMap = new Map();
-          this.bottomBaseRollDegreesPerUnit = 260;
-          this.bottomBaseRollAxis = new Vec3(1, 0, 0);
+          this.bottomBaseRollDegreesPerUnit = -160;
+          this.bottomBaseRollAxis = new Vec3(0, 0, 1);
           this.bottomBaseHitFlashColor = new Color(255, 194, 36, 255);
           this.roleLayoutTemplateName = "Role_t";
           this.roleTemplateBottomBasePos = new Vec3();
@@ -975,10 +975,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var delay = 0.05 + this.tireList.length * 0.05;
           var fbxY = fbxNode.y;
           var bounceH = this.jumpHeight + this.tireList.length * 0.1 * this.jumpHeight;
-          var dropOffset = -this.tireSpacing;
+          var dropTargetY = this.getArmsTargetY(this.tireList.length);
 
           if (!this._curArms.isCanMove && this.tireList.length > this._curArms.canTireCount) {
-            dropOffset = 0;
+            dropTargetY = fbxY;
           }
 
           tween(fbxNode).delay(delay).to(0.04 * this.animScale, {
@@ -986,7 +986,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }, {
             easing: 'sineOut'
           }).to(0.06 * this.animScale, {
-            y: fbxY + dropOffset
+            y: dropTargetY
           }, {
             easing: 'quadIn'
           }).start();
@@ -1009,7 +1009,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           for (var i = 0; i < len; i++) {
             this._tireBounceStartY.push(this.tireList[i].position.y);
 
-            this._tireBounceTargetY.push(i * this.tireSpacing);
+            this._tireBounceTargetY.push(this.getBottomBaseTargetY(i));
 
             this._tireBounceH.push(this.jumpHeight + i * 0.1 * this.jumpHeight);
           }
@@ -1029,19 +1029,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             for (var i = 0; i < this.tireList.length && i < this._tireBounceStartY.length; i++) {
               var tire = this.tireList[i];
+              var targetX = this.getBottomBaseTargetX();
+              var targetZ = this.getBottomBaseTargetZ();
               var localT = this._tireBounceTimer - perDelay * i;
               if (localT <= 0) continue;
 
               if (localT < bounceUp) {
                 var t = localT / bounceUp;
-                tire.setPosition(0, this._tireBounceStartY[i] + this._tireBounceH[i] * Math.sin(t * Math.PI * 0.5), 0);
+                tire.setPosition(targetX, this._tireBounceStartY[i] + this._tireBounceH[i] * Math.sin(t * Math.PI * 0.5), targetZ);
               } else if (localT < bounceUp + fallDown) {
                 var _t = (localT - bounceUp) / fallDown;
 
                 var peak = this._tireBounceStartY[i] + this._tireBounceH[i];
-                tire.setPosition(0, peak + (this._tireBounceTargetY[i] - peak) * (_t * _t), 0);
+                tire.setPosition(targetX, peak + (this._tireBounceTargetY[i] - peak) * (_t * _t), targetZ);
               } else {
-                tire.setPosition(0, this._tireBounceTargetY[i], 0);
+                tire.setPosition(targetX, this._tireBounceTargetY[i], targetZ);
               }
             }
 
@@ -1052,14 +1054,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             // 平滑插值模式
             for (var _i2 = 0; _i2 < this.tireList.length; _i2++) {
               var _tire = this.tireList[_i2];
-              var targetY = _i2 * this.tireSpacing;
+              var targetY = this.getBottomBaseTargetY(_i2);
+
+              var _targetX = this.getBottomBaseTargetX();
+
+              var _targetZ = this.getBottomBaseTargetZ();
+
               var curY = _tire.position.y;
               var diff = targetY - curY;
 
               if (Math.abs(diff) > 0.001) {
-                _tire.setPosition(0, curY + diff * Math.min(1, dt * 8), 0);
+                _tire.setPosition(_targetX, curY + diff * Math.min(1, dt * 8), _targetZ);
               } else {
-                _tire.setPosition(0, targetY, 0);
+                _tire.setPosition(_targetX, targetY, _targetZ);
               }
             }
           }
@@ -1124,7 +1131,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PoolManager) : PoolManager).instance.V3.set(this._curArms.fbx.node.scale); // 初始位置: FBX在地下
 
-            this._curArms.fbx.node.y = -1;
+            if (this.hasRoleTemplateLayout) {
+              this._curArms.fbx.node.setPosition(this.roleTemplateArmsPos.x, -1, this.roleTemplateArmsPos.z);
+            } else {
+              this._curArms.fbx.node.y = -1;
+            }
 
             this._curArms.fbx.node.setScale(Vec3.ZERO);
 
@@ -1139,7 +1150,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 this.tireList.push(tire);
                 this.node.addChild(tire);
                 var tireTargetY = this.getBottomBaseTargetY(_i3);
-                tire.setPosition(0, tireTargetY - tireSpacing, 0);
+                tire.setPosition(this.getBottomBaseTargetX(), tireTargetY - tireSpacing, this.getBottomBaseTargetZ());
 
                 if (!_i3) {
                   var tireMeshRenderer = this.findFirstMeshRenderer(tire);
@@ -1161,11 +1172,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             if (this._curArms.isCanMove) {
               fbxPhase1TargetY = this.getArmsTargetY(0);
-              wallPhase1TargetY = wallHeight;
+              wallPhase1TargetY = fbxPhase1TargetY + wallHeight;
               needTireLift = true;
             } else {
-              fbxPhase1TargetY = this._curArms.canHeight;
-              wallPhase1TargetY = this._curArms.canHeight + wallHeight;
+              fbxPhase1TargetY = this.hasRoleTemplateLayout ? this.getArmsTargetY(0) : this._curArms.canHeight;
+              wallPhase1TargetY = fbxPhase1TargetY + wallHeight;
               needTireLift = false;
             } // FBX快速升起
 
@@ -1272,6 +1283,66 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), PoolEnum) : PoolEnum).Other + this.bottomBasePrefab;
         }
 
+        loadRoleTemplateLayout() {
+          if (this.roleTemplateLayoutLoaded) {
+            return;
+          }
+
+          this.roleTemplateLayoutLoaded = true;
+          var root = this.node;
+
+          while (root.parent) {
+            root = root.parent;
+          }
+
+          var template = this.findNodeByName(root, this.roleLayoutTemplateName);
+
+          if (!template || template === this.node || template.children.length < 2) {
+            return;
+          }
+
+          var bottomBase = template.children[0];
+          var arms = template.children[1];
+
+          if (!bottomBase || !arms) {
+            return;
+          }
+
+          this.roleTemplateBottomBasePos.set(bottomBase.position);
+          this.roleTemplateArmsPos.set(arms.position);
+          this.hasRoleTemplateLayout = true;
+        }
+
+        getBottomBaseTargetX() {
+          this.loadRoleTemplateLayout();
+          return this.hasRoleTemplateLayout ? this.roleTemplateBottomBasePos.x : 0;
+        }
+
+        getBottomBaseTargetY(index) {
+          this.loadRoleTemplateLayout();
+
+          if (this.hasRoleTemplateLayout) {
+            return this.roleTemplateBottomBasePos.y + index * this.tireSpacing;
+          }
+
+          return index * this.tireSpacing;
+        }
+
+        getBottomBaseTargetZ() {
+          this.loadRoleTemplateLayout();
+          return this.hasRoleTemplateLayout ? this.roleTemplateBottomBasePos.z : 0;
+        }
+
+        getArmsTargetY(liftCount) {
+          this.loadRoleTemplateLayout();
+
+          if (this.hasRoleTemplateLayout) {
+            return this.roleTemplateArmsPos.y + Math.max(0, liftCount - 1) * this.tireSpacing;
+          }
+
+          return liftCount * this.tireSpacing;
+        }
+
         applyBottomBaseVisualTransform(node) {
           if (!node) {
             return;
@@ -1368,8 +1439,101 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          if (node.children.length <= 0) {
+            this.applyBottomBaseResourceRoll(node);
+            return;
+          }
+
+          for (var i = 0; i < node.children.length; i++) {
+            this.applyBottomBaseResourceRoll(node.children[i]);
+          }
+        }
+
+        applyBottomBaseResourceRoll(node) {
           var originalEuler = this.getBottomBaseOriginalEuler(node);
           node.eulerAngles = v3(originalEuler.x + this.bottomBaseRollAxis.x * this.bottomBaseRollAngle, originalEuler.y + this.bottomBaseRollAxis.y * this.bottomBaseRollAngle, originalEuler.z + this.bottomBaseRollAxis.z * this.bottomBaseRollAngle);
+        }
+
+        fitAllBottomBaseVisuals() {
+          for (var i = 0; i < this.tireList.length; i++) {
+            this.fitBottomBaseVisualToGroundAndCenter(this.tireList[i]);
+          }
+        }
+
+        fitBottomBaseVisualToGroundAndCenter(root) {
+          if (!root || !root.activeInHierarchy) {
+            return;
+          }
+
+          var bounds = this.getBottomBaseWorldBounds(root);
+
+          if (!bounds) {
+            return;
+          }
+
+          var deltaX = root.worldPositionX - bounds.centerX;
+          var deltaY = this.node.worldPositionY - bounds.bottomY;
+
+          if (Math.abs(deltaX) <= 0.001 && Math.abs(deltaY) <= 0.001) {
+            return;
+          }
+
+          var rootScale = root.worldScale;
+          var localDeltaX = deltaX / (rootScale.x || 1);
+          var localDeltaY = deltaY / (rootScale.y || 1);
+
+          if (root.children.length <= 0) {
+            root.setPosition(root.position.x + localDeltaX, root.position.y + localDeltaY, root.position.z);
+            return;
+          }
+
+          for (var i = 0; i < root.children.length; i++) {
+            var child = root.children[i];
+            child.setPosition(child.position.x + localDeltaX, child.position.y + localDeltaY, child.position.z);
+          }
+        }
+
+        getBottomBaseWorldBounds(root) {
+          var minX = Number.POSITIVE_INFINITY;
+          var maxX = Number.NEGATIVE_INFINITY;
+          var minY = Number.POSITIVE_INFINITY;
+          var found = false;
+          var stack = [root];
+
+          while (stack.length > 0) {
+            var _model;
+
+            var node = stack.pop();
+
+            if (!node) {
+              continue;
+            }
+
+            var meshRenderer = node.getComponent(MeshRenderer);
+            var worldBounds = meshRenderer == null || (_model = meshRenderer.model) == null ? void 0 : _model.worldBounds;
+            var center = worldBounds == null ? void 0 : worldBounds.center;
+            var halfExtents = worldBounds == null ? void 0 : worldBounds.halfExtents;
+
+            if (center && halfExtents) {
+              minX = Math.min(minX, center.x - halfExtents.x);
+              maxX = Math.max(maxX, center.x + halfExtents.x);
+              minY = Math.min(minY, center.y - halfExtents.y);
+              found = true;
+            }
+
+            for (var i = 0; i < node.children.length; i++) {
+              stack.push(node.children[i]);
+            }
+          }
+
+          if (!found) {
+            return null;
+          }
+
+          return {
+            centerX: (minX + maxX) * 0.5,
+            bottomY: minY
+          };
         }
 
         findFirstMeshRenderer(node) {
@@ -1538,7 +1702,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this._updateTireDrop(dt);
 
-          this.updateBottomBaseRoll(); // _isShake冷却（非销毁受击用）
+          this.updateBottomBaseRoll();
+          this.fitAllBottomBaseVisuals(); // _isShake冷却（非销毁受击用）
 
           if (this._shakeCooldown > 0) {
             this._shakeCooldown -= dt;

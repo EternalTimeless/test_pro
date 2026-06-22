@@ -83,6 +83,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
           this._tempPos = new Vec3();
         }
 
+        getCollisionWorldPosition(out) {
+          var pos = this.hitNode.worldPosition;
+
+          if (out) {
+            return out.set(pos);
+          }
+
+          return pos;
+        }
+
         repelBattleTarget(target, reoel) {
           if (reoel === void 0) {
             reoel = 0;
