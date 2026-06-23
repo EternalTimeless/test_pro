@@ -3622,7 +3622,7 @@
       "z": 1.44
     },
     "tireSpacing": 1.232,
-    "bottomBaseOffsetX": 0.5,
+    "bottomBaseOffsetX": 0,
     "jumpHeight": 0.7,
     "waveFrontGap": 2,
     "nextStageDelay": 0.2,

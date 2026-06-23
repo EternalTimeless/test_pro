@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, instantiate, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -92,7 +92,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCBoolean = _cc.CCBoolean;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
-      Color = _cc.Color;
       instantiate = _cc.instantiate;
       Label = _cc.Label;
       MeshRenderer = _cc.MeshRenderer;
@@ -437,7 +436,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseChildEulerMap = new Map();
           this.bottomBaseRollDegreesPerUnit = -160;
           this.bottomBaseRollAxis = new Vec3(0, 0, 1);
-          this.bottomBaseHitFlashColor = new Color(255, 194, 36, 255);
           this.roleLayoutTemplateName = "Role_t";
           this.roleTemplateBottomBasePos = new Vec3();
           this.roleTemplateArmsPos = new Vec3();
@@ -491,7 +489,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
               error: Error()
             }), TweenTool) : TweenTool).scaleShake(this.hpLabel.node);
-            this.flashRed();
           }
 
           this.hpLabel.string = Math.round(this.curHp).toString();
@@ -658,10 +655,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var _loop2 = function _loop2() {
             var tire = _this2.tireList[i];
             Tween.stopAllByTarget(tire);
-            tire.setScale(Vec3.ONE);
-
-            _this2.playBottomBaseGoldWrap(tire); // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
-
+            tire.setScale(Vec3.ONE); // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
 
             var s2 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
@@ -702,24 +696,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           for (var i = 0; i < this.tireList.length; i++) {
             _loop2();
           }
-        }
-        /** 油桶普通受击时的金色包裹短闪 */
-
-
-        playBottomBaseGoldWrap(tire) {
-          var meshRenderer = this.findFirstMeshRenderer(tire);
-
-          if (!meshRenderer || !this.meshFlashDataList[0]) {
-            return;
-          }
-
-          (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
-            error: Error()
-          }), FlashRedManager) : FlashRedManager).instance.flashRed(tire, [{
-            meshRender: meshRenderer,
-            colorProps: this.meshFlashDataList[0].colorProps,
-            switchProps: this.meshFlashDataList[0].switchProps
-          }], 0.12, this.bottomBaseHitFlashColor, 'bottom_base_gold_wrap');
         }
 
         playLalianHit() {

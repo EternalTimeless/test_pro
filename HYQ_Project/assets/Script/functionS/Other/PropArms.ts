@@ -146,7 +146,6 @@ export class PropArms extends BattleTarget3D {
     private readonly bottomBaseChildEulerMap: Map<Node, Vec3> = new Map();
     private readonly bottomBaseRollDegreesPerUnit: number = -160;
     private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 0, 1);
-    private readonly bottomBaseHitFlashColor: Color = new Color(255, 194, 36, 255);
     private readonly roleLayoutTemplateName: string = "Role_t";
     private readonly roleTemplateBottomBasePos: Vec3 = new Vec3();
     private readonly roleTemplateArmsPos: Vec3 = new Vec3();
@@ -181,7 +180,6 @@ export class PropArms extends BattleTarget3D {
             this._isShake = true;
             this._playBottomTireHit();
             TweenTool.scaleShake(this.hpLabel.node);
-            this.flashRed();
         }
         this.hpLabel.string = Math.round(this.curHp).toString();
     }
@@ -285,7 +283,6 @@ export class PropArms extends BattleTarget3D {
             const tire = this.tireList[i];
             Tween.stopAllByTarget(tire);
             tire.setScale(Vec3.ONE);
-            this.playBottomBaseGoldWrap(tire);
 
             // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
 
@@ -311,20 +308,6 @@ export class PropArms extends BattleTarget3D {
                 })
                 .start();
         }
-    }
-
-    /** 油桶普通受击时的金色包裹短闪 */
-    private playBottomBaseGoldWrap(tire: Node): void {
-        const meshRenderer = this.findFirstMeshRenderer(tire);
-        if (!meshRenderer || !this.meshFlashDataList[0]) {
-            return;
-        }
-
-        FlashRedManager.instance.flashRed(tire, [{
-            meshRender: meshRenderer,
-            colorProps: this.meshFlashDataList[0].colorProps,
-            switchProps: this.meshFlashDataList[0].switchProps,
-        }], 0.12, this.bottomBaseHitFlashColor, 'bottom_base_gold_wrap');
     }
 
     private playLalianHit(): void {
