@@ -233,6 +233,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.modelVisualGroup = null;
           this.spriteVisualGroup = null;
           this.labelVisualGroup = null;
+          this.groundHeight = 0;
         }
 
         get activeLalianGate() {
@@ -313,11 +314,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
               p.node.z -= this.moveSpeed * deltaTime;
 
-              if (p.node.z <= -0.614 && p.node.y > -0.753) {
+              if (p.node.z <= -0.614 && p.node.y > this.groundHeight) {
                 p.node.y -= this.moveSpeed * deltaTime * 0.5;
 
-                if (p.node.y <= -0.753) {
-                  p.node.y = -0.753;
+                if (p.node.y <= this.groundHeight) {
+                  p.node.y = this.groundHeight;
                 }
               }
 
@@ -332,8 +333,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             if (p.node.z <= -0.614) {
               p.node.y -= this.moveSpeed * deltaTime * 0.35;
 
-              if (p.node.y <= -0.753) {
-                p.node.y = -0.753;
+              if (p.node.y <= this.groundHeight) {
+                p.node.y = this.groundHeight;
               }
             }
 
@@ -712,7 +713,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function () {
-          return 1.665;
+          return 0;
         }
       }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "count", [_dec5], {
         configurable: true,

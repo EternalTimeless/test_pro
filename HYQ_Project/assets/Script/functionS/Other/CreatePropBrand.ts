@@ -29,7 +29,7 @@ export class CreatePropBrand extends UnityUpComponent {
     public distance: number = 1.5;
 
     @property({ type: CCFloat, displayName: '道具高度', tooltip: '道具生成时的 Y 轴高度。' })
-    public height: number = 1.665;
+    public height: number = 0;
 
     @property({ type: CCInteger, displayName: '每个道具数值', tooltip: '每个道具显示和生效的数值。左边 +1 填 1，右边 +99 填 99。' })
     public count: number = 1;
@@ -73,6 +73,8 @@ export class CreatePropBrand extends UnityUpComponent {
     private spriteVisualGroup: Node = null;
 
     private labelVisualGroup: Node = null;
+
+    private readonly groundHeight: number = 0;
 
     private get activeLalianGate() {
         if (!this.lalianGate) {
@@ -136,10 +138,10 @@ export class CreatePropBrand extends UnityUpComponent {
 
                 p.node.z -= this.moveSpeed * deltaTime;
 
-                if (p.node.z <= -0.614 && p.node.y > -0.753) {
+                if (p.node.z <= -0.614 && p.node.y > this.groundHeight) {
                     p.node.y -= this.moveSpeed * deltaTime * 0.5;
-                    if (p.node.y <= -0.753) {
-                        p.node.y = -0.753;
+                    if (p.node.y <= this.groundHeight) {
+                        p.node.y = this.groundHeight;
                     }
                 }
                 p.updateVisualTransform();
@@ -152,8 +154,8 @@ export class CreatePropBrand extends UnityUpComponent {
 
             if (p.node.z <= -0.614) {
                 p.node.y -= this.moveSpeed * deltaTime * 0.35;
-                if (p.node.y <= -0.753) {
-                    p.node.y = -0.753;
+                if (p.node.y <= this.groundHeight) {
+                    p.node.y = this.groundHeight;
                 }
             }
             p.updateVisualTransform();
