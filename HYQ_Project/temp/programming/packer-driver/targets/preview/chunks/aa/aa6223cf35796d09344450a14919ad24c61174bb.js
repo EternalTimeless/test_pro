@@ -434,11 +434,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseChildScaleMap = new Map();
           this.bottomBaseChildPosMap = new Map();
           this.bottomBaseChildEulerMap = new Map();
+          this.bottomBaseTargetPosMap = new Map();
+          this.manualBottomBaseNodeSet = new Set();
           this.bottomBaseRollDegreesPerUnit = -160;
           this.bottomBaseRollAxis = new Vec3(0, 0, 1);
           this.roleLayoutTemplateName = "Role_t";
           this.roleTemplateBottomBasePos = new Vec3();
           this.roleTemplateArmsPos = new Vec3();
+          this.tempBottomBaseTargetPos = new Vec3();
           this.roleTemplateLayoutLoaded = false;
           this.hasRoleTemplateLayout = false;
           this.bottomBaseRollAngle = 0;
@@ -525,7 +528,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var tire = _this.tireList[i];
             Tween.stopAllByTarget(tire);
             tween(tire).delay(i * 0.05).to(0.07, {
-              scale: v3(1.4, 1.5, 1.4)
+              scale: _this.getBottomBaseRootScale(tire, 1.4, 1.5, 1.4)
             }, {
               easing: 'sineOut'
             }).to(0.08, {
@@ -533,11 +536,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }, {
               easing: 'sineIn'
             }).call(() => {
-              tire.active = false;
-              tire.setScale(Vec3.ONE);
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.setPool(_this.bottomBasePoolKey, tire);
+              _this.releaseBottomBase(tire);
             }).start();
           };
 
@@ -655,14 +654,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var _loop2 = function _loop2() {
             var tire = _this2.tireList[i];
             Tween.stopAllByTarget(tire);
-            tire.setScale(Vec3.ONE); // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
 
-            var s2 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(Vec3.ONE).multiplyScalar(1.08);
-            var s3 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(Vec3.ONE).multiplyScalar(0.96); // s3.x = 0.8; s3.y = 0.8; s3.z = 0.8;
+            _this2.resetBottomBaseRootScale(tire); // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
+
+
+            var s1 = _this2.getBottomBaseRootScale(tire);
+
+            var s2 = _this2.getBottomBaseRootScale(tire, 1.08);
+
+            var s3 = _this2.getBottomBaseRootScale(tire, 0.96); // s3.x = 0.8; s3.y = 0.8; s3.z = 0.8;
+
 
             var isLast = i >= lastIdx;
             tween(tire).delay(i * staggerDelay).to(0.08, {
@@ -674,18 +675,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }, {
               easing: 'cubicOut'
             }).to(0.08, {
-              scale: Vec3.ONE
+              scale: s1
             }, {
               easing: 'backOut'
             }).call(() => {
-              // PoolManager.instance.V3 = s1;
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.V3 = s2;
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.V3 = s3;
-
               if (isLast) {
                 _this2._isShake = false;
                 _this2._shakeCooldown = 0;
@@ -864,7 +857,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (!tire) return; // 停止残留缩放动画并重置到原始大小
 
           Tween.stopAllByTarget(tire);
-          tire.setScale(Vec3.ONE); // 捕获被销毁轮胎的MeshRenderer（flashRed是延迟应用的，必须在更新mesh引用前捕获）
+          this.resetBottomBaseRootScale(tire); // 捕获被销毁轮胎的MeshRenderer（flashRed是延迟应用的，必须在更新mesh引用前捕获）
 
           var oldMR = this.meshFlashDataList[0].meshRender; // 更新底部轮胎mesh引用
 
@@ -891,26 +884,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), TweenTool) : TweenTool).scaleShake(this.hpLabel.node); // 被销毁轮胎：果冻缩放→缩小消失
 
-          var s1 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-            error: Error()
-          }), PoolManager) : PoolManager).instance.V3.set(Vec3.ONE);
-          var s2 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-            error: Error()
-          }), PoolManager) : PoolManager).instance.V3;
-          s2.set(Vec3.ONE);
-          s2.x = 1.3;
-          s2.y = 1.3;
-          s2.z = 1.3;
-          var s3 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-            error: Error()
-          }), PoolManager) : PoolManager).instance.V3;
-          s3.set(Vec3.ONE);
-          s3.x = 0.6;
-          s3.y = 0.6;
-          s3.z = 0.6;
-          var s0 = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-            error: Error()
-          }), PoolManager) : PoolManager).instance.V3.set(Vec3.ZERO);
+          var s1 = this.getBottomBaseRootScale(tire);
+          var s2 = this.getBottomBaseRootScale(tire, 1.3);
+          var s3 = this.getBottomBaseRootScale(tire, 0.6);
+          var s0 = v3(0, 0, 0);
           tween(tire).to(0.06 * this.animScale, {
             scale: s2
           }, {
@@ -928,24 +905,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }, {
             easing: 'sineIn'
           }).call(() => {
-            tire.active = false;
-            tire.setScale(Vec3.ONE);
-            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.setPool(this.bottomBasePoolKey, tire);
+            this.releaseBottomBase(tire);
             this._isShake = false;
-            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3 = s1;
-            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3 = s2;
-            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3 = s3;
-            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.V3 = s0;
           }).start(); // 剩余轮胎弹跳下落（上面的轮胎先跳再落）
 
           this._setupTireBounce(); // FBX弹跳一下
@@ -991,7 +952,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           for (var i = 0; i < len; i++) {
             this._tireBounceStartY.push(this.tireList[i].position.y);
 
-            this._tireBounceTargetY.push(this.getBottomBaseTargetY(i));
+            this._tireBounceTargetY.push(this.getBottomBaseTargetPosition(i, this.tireList[i]).y);
 
             this._tireBounceH.push(this.jumpHeight + i * 0.1 * this.jumpHeight);
           }
@@ -1011,8 +972,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             for (var i = 0; i < this.tireList.length && i < this._tireBounceStartY.length; i++) {
               var tire = this.tireList[i];
-              var targetX = this.getBottomBaseTargetX();
-              var targetZ = this.getBottomBaseTargetZ();
+              var targetPos = this.getBottomBaseTargetPosition(i, tire);
+              var targetX = targetPos.x;
+              var targetZ = targetPos.z;
               var localT = this._tireBounceTimer - perDelay * i;
               if (localT <= 0) continue;
 
@@ -1036,12 +998,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             // 平滑插值模式
             for (var _i2 = 0; _i2 < this.tireList.length; _i2++) {
               var _tire = this.tireList[_i2];
-              var targetY = this.getBottomBaseTargetY(_i2);
 
-              var _targetX = this.getBottomBaseTargetX();
+              var _targetPos = this.getBottomBaseTargetPosition(_i2, _tire);
 
-              var _targetZ = this.getBottomBaseTargetZ();
-
+              var targetY = _targetPos.y;
+              var _targetX = _targetPos.x;
+              var _targetZ = _targetPos.z;
               var curY = _tire.position.y;
               var diff = targetY - curY;
 
@@ -1094,6 +1056,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var tireSpacing = this.tireSpacing;
             var wallHeight = this._curArms.wallHeight;
             var tireCount = this.hasLalian ? 0 : this._curArms.tireCount;
+            var manualBottomBases = !this.hasLalian ? this.collectManualBottomBases(tireCount) : [];
             this.initHp(this._curArms.hp);
 
             if (this.hasLalian) {
@@ -1128,11 +1091,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             if (!this.hasLalian) {
               for (var _i3 = 0; _i3 < tireCount; _i3++) {
-                var tire = this.tire;
+                var _manualBottomBases$_i;
+
+                var tire = (_manualBottomBases$_i = manualBottomBases[_i3]) != null ? _manualBottomBases$_i : this.tire;
                 this.tireList.push(tire);
-                this.node.addChild(tire);
-                var tireTargetY = this.getBottomBaseTargetY(_i3);
-                tire.setPosition(this.getBottomBaseTargetX(), tireTargetY - tireSpacing, this.getBottomBaseTargetZ());
+
+                if (tire.parent !== this.node) {
+                  this.node.addChild(tire);
+                }
+
+                var tireTargetPos = this.getBottomBaseTargetPosition(_i3, tire);
+                tire.setPosition(tireTargetPos.x, tireTargetPos.y - tireSpacing, tireTargetPos.z);
 
                 if (!_i3) {
                   var tireMeshRenderer = this.findFirstMeshRenderer(tire);
@@ -1187,11 +1156,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             for (var _i4 = 0; _i4 < tireCount; _i4++) {
               var _tire2 = this.tireList[_i4];
-              var tireY = this.getBottomBaseTargetY(_i4);
+
+              var _tireTargetPos = this.getBottomBaseTargetPosition(_i4, _tire2);
+
               var tireDelay = tireStartDelay + _i4 * tireInterval; // 轮胎升起
 
               tween(_tire2).delay(tireDelay).to(tireRiseTime, {
-                y: tireY
+                position: _tireTargetPos.clone()
               }, {
                 easing: "backOut"
               }).start();
@@ -1266,6 +1237,115 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), PoolEnum) : PoolEnum).Other + this.bottomBasePrefab;
         }
 
+        collectManualBottomBases(maxCount) {
+          var _this$_curArms8;
+
+          var result = [];
+          var roleNode = (_this$_curArms8 = this._curArms) == null || (_this$_curArms8 = _this$_curArms8.fbx) == null ? void 0 : _this$_curArms8.node;
+
+          if (roleNode) {
+            this.collectBottomBaseNodes(roleNode, result, true);
+          }
+
+          if (result.length <= 0) {
+            this.collectBottomBaseNodes(this.node, result, false);
+          }
+
+          result.sort((a, b) => a.worldPosition.y - b.worldPosition.y);
+          var count = maxCount > 0 ? Math.min(maxCount, result.length) : result.length;
+          var selected = result.slice(0, count);
+
+          for (var i = 0; i < selected.length; i++) {
+            var node = selected[i];
+            Tween.stopAllByTarget(node);
+            node.active = true;
+
+            if (node.parent !== this.node) {
+              node.setParent(this.node, true);
+            }
+
+            this.manualBottomBaseNodeSet.add(node);
+            this.getBottomBaseOriginalScale(node);
+            this.getBottomBaseOriginalPos(node);
+            this.getBottomBaseOriginalEuler(node);
+            this.bottomBaseTargetPosMap.set(node, node.position.clone());
+          }
+
+          return selected;
+        }
+
+        collectBottomBaseNodes(root, out, recursive) {
+          if (!root) {
+            return;
+          }
+
+          for (var i = 0; i < root.children.length; i++) {
+            var child = root.children[i];
+
+            if (!child.active) {
+              continue;
+            }
+
+            if (this.isBottomBaseNode(child)) {
+              if (out.indexOf(child) === -1) {
+                out.push(child);
+              }
+
+              continue;
+            }
+
+            if (recursive) {
+              this.collectBottomBaseNodes(child, out, recursive);
+            }
+          }
+        }
+
+        isBottomBaseNode(node) {
+          if (!node) {
+            return false;
+          }
+
+          var name = node.name.toLowerCase();
+          return name.indexOf("youtong") >= 0 || name.indexOf("oil") >= 0;
+        }
+
+        getBottomBaseRootScale(node, x, y, z) {
+          if (x === void 0) {
+            x = 1;
+          }
+
+          if (y === void 0) {
+            y = x;
+          }
+
+          if (z === void 0) {
+            z = x;
+          }
+
+          var original = this.getBottomBaseOriginalScale(node);
+          return v3(original.x * x, original.y * y, original.z * z);
+        }
+
+        resetBottomBaseRootScale(node) {
+          var original = this.getBottomBaseOriginalScale(node);
+          node.setScale(original);
+        }
+
+        releaseBottomBase(node) {
+          node.active = false;
+          this.resetBottomBaseRootScale(node);
+          this.bottomBaseTargetPosMap.delete(node);
+
+          if (this.manualBottomBaseNodeSet.has(node)) {
+            this.manualBottomBaseNodeSet.delete(node);
+            return;
+          }
+
+          (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.setPool(this.bottomBasePoolKey, node);
+        }
+
         loadRoleTemplateLayout() {
           if (this.roleTemplateLayoutLoaded) {
             return;
@@ -1314,6 +1394,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         getBottomBaseTargetZ() {
           this.loadRoleTemplateLayout();
           return this.hasRoleTemplateLayout ? this.roleTemplateBottomBasePos.z : 0;
+        }
+
+        getBottomBaseTargetPosition(index, node) {
+          var nodeTarget = node ? this.bottomBaseTargetPosMap.get(node) : null;
+
+          if (nodeTarget) {
+            return this.tempBottomBaseTargetPos.set(nodeTarget);
+          }
+
+          return this.tempBottomBaseTargetPos.set(this.getBottomBaseTargetX(), this.getBottomBaseTargetY(index), this.getBottomBaseTargetZ());
         }
 
         getArmsTargetY(liftCount) {
@@ -1655,11 +1745,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         _update(deltaTime) {
-          var _this$_curArms8;
+          var _this$_curArms9;
 
           var dt = deltaTime; // 石板浮动
 
-          if (this.isWallH && this.wallNode && (_this$_curArms8 = this._curArms) != null && (_this$_curArms8 = _this$_curArms8.fbx) != null && _this$_curArms8.node) {
+          if (this.isWallH && this.wallNode && (_this$_curArms9 = this._curArms) != null && (_this$_curArms9 = _this$_curArms9.fbx) != null && _this$_curArms9.node) {
             this._time += dt * this.speed;
             var curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;
