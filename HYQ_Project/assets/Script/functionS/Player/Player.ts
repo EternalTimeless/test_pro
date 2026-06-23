@@ -1,9 +1,9 @@
-import { _decorator, CCFloat, CCInteger, Component, Node, Quat, tween, Vec3 } from 'cc';
+import { _decorator, CCFloat, CCInteger, Component, Node, Quat, Tween, tween, Vec3 } from 'cc';
 import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { Role } from './Role';
 import { getCirclePosition } from '../../Tool/Index';
-import { ArmsTypeEnum, BulletEnum, EventType, PoolEnum, PrefabsEnum, PropEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
+import { ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, PropEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import PoolManager from '../../Base/PoolManager';
 import EventManager from '../../Base/EventManager';
 import { PrefabsManager } from '../../Base/PrefabsManager';
@@ -15,6 +15,7 @@ import AudioManager from '../../Base/AudioManager';
 import BulletManager from '../Battle/BulletManager';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 import { BulletBatchRenderer } from '../Battle/BulletBatchRenderer';
+import LayerManager from '../../Base/LayerManager';
 const { ccclass, property } = _decorator;
 
 
@@ -56,6 +57,17 @@ export class Player extends UnityUpComponent {
     public maxMuzzleEffectCount: number = 8;
 
     private shootRoleStartIndex: number = 0;
+    private pendingRoleSwitchType: RoleEnum = null;
+    private pendingRoleSwitchIndex: number = 0;
+    private readonly roleSwitchPerFrame: number = 6;
+    private pendingRolePrewarmType: RoleEnum = null;
+    private pendingRolePrewarmCount: number = 0;
+    private readonly rolePrewarmPerFrame: number = 4;
+    private pendingBulletPrewarmType: BulletEnum = null;
+    private pendingBulletPrewarmCount: number = 0;
+    private pendingBulletBatchWarmType: BulletEnum = null;
+    private readonly bulletPrewarmPerFrame: number = 2;
+    private roleLayoutDirty: boolean = false;
 
     public isLock: boolean = false;
 
@@ -89,6 +101,9 @@ export class Player extends UnityUpComponent {
 
             this.roleAttack(dt);
         }
+        this.processPendingRolePrewarm();
+        this.processPendingBulletPrewarm();
+        this.processPendingRoleSwitch();
         this.roleMove();
     }
 
@@ -184,41 +199,19 @@ export class Player extends UnityUpComponent {
                 Role.power = 0.5;
                 this.attackSpeed = 10;
                 Role.bulletType = BulletEnum.arrow_3;
-                const newRoleType = RoleEnum.dazhuang;
-                this.roleType = newRoleType;
-                const count = this.roleList.length;
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
-                for (let i = 0; i < count; i++) {
-                    const role = this.roleList[i];
-                    const newRole = this.getRoleByType(newRoleType);
-                    this.roleList[i] = newRole;
-                    this.node.addChild(newRole.node);
-                    newRole.node.setPosition(role.node.position);
-                    role.node.active = false;
-                }
-                this.upPos();
+                this.startRoleSwitch(RoleEnum.dazhuang);
                 break;
             case ArmsTypeEnum.jtl2: {
                 Role.power = 0.3;
                 Role.bulletType = BulletEnum.arrow_4;
                 this.attackSpeed = 20;
-                const newRoleType = RoleEnum.dazhuangPlus;
-                this.roleType = newRoleType;
-                const count = this.roleList.length;
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
-                for (let i = 0; i < count; i++) {
-                    const role = this.roleList[i];
-                    const newRole = this.getRoleByType(newRoleType);
-                    this.roleList[i] = newRole;
-                    this.node.addChild(newRole.node);
-                    newRole.node.setPosition(role.node.position);
-                    role.node.active = false;
-                }
-                this.upPos();
+                this.startRoleSwitch(RoleEnum.dazhuangPlus);
                 break;
             }
             case ArmsTypeEnum.tk:
@@ -227,6 +220,202 @@ export class Player extends UnityUpComponent {
             case ArmsTypeEnum.jj:
                 GameOverPanel.instance.show(true);
                 break;
+        }
+    }
+
+    public prepareArmsUpgrade(armwType: ArmsTypeEnum) {
+        AudioManager.inst.preload(SoundEnum.Sound_Ship_UpLevel);
+        const bulletType = this.getBulletTypeByArms(armwType);
+        if (bulletType !== null) {
+            this.startBulletPrewarm(bulletType, this.getWeaponPrewarmBulletCount());
+        }
+        const soundType = this.getSoundTypeByArms(armwType);
+        if (soundType !== null) {
+            AudioManager.inst.preload(soundType);
+        }
+
+        const targetRoleType = this.getRoleTypeByArms(armwType);
+        if (targetRoleType === null) {
+            return;
+        }
+        this.startRolePrewarm(targetRoleType, this.roleList.length);
+    }
+
+    private getRoleTypeByArms(armwType: ArmsTypeEnum): RoleEnum | null {
+        switch (armwType) {
+            case ArmsTypeEnum.jtl:
+                return RoleEnum.dazhuang;
+            case ArmsTypeEnum.jtl2:
+                return RoleEnum.dazhuangPlus;
+        }
+        return null;
+    }
+
+    private getBulletTypeByArms(armwType: ArmsTypeEnum): BulletEnum | null {
+        switch (armwType) {
+            case ArmsTypeEnum.bq:
+                return BulletEnum.arrow_1;
+            case ArmsTypeEnum.jq:
+                return BulletEnum.arrow_2;
+            case ArmsTypeEnum.jtl:
+                return BulletEnum.arrow_3;
+            case ArmsTypeEnum.jtl2:
+                return BulletEnum.arrow_4;
+        }
+        return null;
+    }
+
+    private getSoundTypeByArms(armwType: ArmsTypeEnum): SoundEnum | null {
+        switch (armwType) {
+            case ArmsTypeEnum.jtl:
+            case ArmsTypeEnum.jtl2:
+                return SoundEnum.Sound_FireGun;
+        }
+        return null;
+    }
+
+    private getWeaponPrewarmBulletCount(): number {
+        const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
+        let count = 0;
+        for (let i = 0; i < shootCount; i++) {
+            const role = this.roleList[i];
+            count += role ? role.visualBulletCount : 1;
+        }
+        return Math.max(1, Math.min(count, 8));
+    }
+
+    private startBulletPrewarm(bulletType: BulletEnum, needCount: number) {
+        const poolKey = PoolEnum.bullet + bulletType;
+        this.pendingBulletPrewarmType = bulletType;
+        this.pendingBulletPrewarmCount = Math.max(0, needCount - PoolManager.instance.getPoolSize(poolKey));
+        this.pendingBulletBatchWarmType = bulletType;
+    }
+
+    private processPendingBulletPrewarm() {
+        if (this.pendingBulletPrewarmType === null && this.pendingBulletBatchWarmType === null) {
+            return;
+        }
+
+        const bulletLayer = this.getBulletLayer();
+        if (!bulletLayer) {
+            return;
+        }
+
+        let count = this.bulletPrewarmPerFrame;
+        while (count > 0 && this.pendingBulletPrewarmType !== null && this.pendingBulletPrewarmCount > 0) {
+            const bullet = BulletManager.instance.prewarmBullet3D(this.pendingBulletPrewarmType, bulletLayer, true);
+            BulletBatchRenderer.getOrCreate(bulletLayer).prewarmBullet(bullet);
+            this.pendingBulletPrewarmCount--;
+            count--;
+        }
+
+        if (this.pendingBulletPrewarmCount <= 0) {
+            this.pendingBulletPrewarmType = null;
+        }
+
+        if (this.pendingBulletBatchWarmType !== null) {
+            const bullet = BulletManager.instance.prewarmBullet3D(this.pendingBulletBatchWarmType, bulletLayer, false);
+            BulletBatchRenderer.getOrCreate(bulletLayer).prewarmBullet(bullet);
+            this.pendingBulletBatchWarmType = null;
+        }
+    }
+
+    private getBulletLayer(): Node {
+        if (Role.bulletLayer && Role.bulletLayer.isValid) {
+            return Role.bulletLayer;
+        }
+        Role.bulletLayer = LayerManager.instance.getLayer(LayerEnum.BulletLayer);
+        return Role.bulletLayer;
+    }
+
+    private startRolePrewarm(roleType: RoleEnum, needCount: number) {
+        const poolKey = PoolEnum.role + roleType;
+        const missingCount = Math.max(0, needCount - PoolManager.instance.getPoolSize(poolKey));
+        if (missingCount <= 0) {
+            this.pendingRolePrewarmType = null;
+            this.pendingRolePrewarmCount = 0;
+            return;
+        }
+        this.pendingRolePrewarmType = roleType;
+        this.pendingRolePrewarmCount = missingCount;
+    }
+
+    private processPendingRolePrewarm() {
+        if (this.pendingRolePrewarmType === null) {
+            return;
+        }
+        if (this.pendingRolePrewarmCount <= 0) {
+            this.pendingRolePrewarmType = null;
+            return;
+        }
+
+        let count = Math.min(this.rolePrewarmPerFrame, this.pendingRolePrewarmCount);
+        while (count > 0) {
+            const role = this.createRoleByType(this.pendingRolePrewarmType);
+            role.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + this.pendingRolePrewarmType, role);
+            this.pendingRolePrewarmCount--;
+            count--;
+        }
+
+        if (this.pendingRolePrewarmCount <= 0) {
+            this.pendingRolePrewarmType = null;
+        }
+    }
+
+    private startRoleSwitch(roleType: RoleEnum) {
+        this.roleType = roleType;
+        this.pendingRoleSwitchType = roleType;
+        this.pendingRoleSwitchIndex = 0;
+        this.roleLayoutDirty = false;
+        this.startRolePrewarm(roleType, this.roleList.length);
+    }
+
+    private processPendingRoleSwitch() {
+        if (this.pendingRoleSwitchType === null) {
+            return;
+        }
+
+        let count = this.roleSwitchPerFrame;
+        while (count > 0 && this.pendingRoleSwitchIndex < this.roleList.length) {
+            const index = this.pendingRoleSwitchIndex;
+            const oldRole = this.roleList[index];
+            if (!oldRole) {
+                this.pendingRoleSwitchIndex++;
+                count--;
+                continue;
+            }
+            if (oldRole.type === this.pendingRoleSwitchType) {
+                this.pendingRoleSwitchIndex++;
+                count--;
+                continue;
+            }
+
+            if (PoolManager.instance.getPoolSize(PoolEnum.role + this.pendingRoleSwitchType) <= 0) {
+                break;
+            }
+            const newRole = this.getRoleByType(this.pendingRoleSwitchType);
+            Tween.stopAllByTarget(oldRole.node);
+            Tween.stopAllByTarget(newRole.node);
+            this.roleList[index] = newRole;
+            this.node.addChild(newRole.node);
+            newRole.node.setPosition(oldRole.node.position);
+            newRole.node.setScale(oldRole.node.scale);
+            newRole.attackIN = oldRole.attackIN;
+            oldRole.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + oldRole.type, oldRole);
+            this.roleLayoutDirty = true;
+            this.pendingRoleSwitchIndex++;
+            count--;
+        }
+
+        if (this.pendingRoleSwitchIndex >= this.roleList.length) {
+            this.pendingRoleSwitchType = null;
+            this.pendingRoleSwitchIndex = 0;
+            if (this.roleLayoutDirty) {
+                this.roleLayoutDirty = false;
+                this.upPos();
+            }
         }
     }
 
@@ -470,12 +659,16 @@ export class Player extends UnityUpComponent {
     private getRoleByType(roleType: RoleEnum) {
         let role = PoolManager.instance.getPool<Role>(PoolEnum.role + roleType);
         if (!role) {
-            const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, roleType);
-            role = node.getComponent(Role);
+            role = this.createRoleByType(roleType);
         }
         role.hp = 2;
         role.node.active = true;
         return role;
+    }
+
+    private createRoleByType(roleType: RoleEnum) {
+        const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, roleType);
+        return node.getComponent(Role);
     }
 
 

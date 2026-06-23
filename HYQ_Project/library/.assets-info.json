@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782206895007.8367,
+      "time": 1782209560701.101,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -746,7 +746,7 @@
       "uuid": "98ed4bea-d9d8-4d5f-8090-4daef727eb3e"
     },
     "Script\\Base\\AudioManager.ts": {
-      "time": 1781231241753.6729,
+      "time": 1782208959129.6147,
       "uuid": "fd17f062-881f-41a5-a1eb-4f8151149b53"
     },
     "Script\\Base\\CameraMove.ts": {
@@ -766,7 +766,7 @@
       "uuid": "d0985bd0-e138-4615-b805-a38923e6194b"
     },
     "Script\\Base\\PoolManager.ts": {
-      "time": 1782119576305.6826,
+      "time": 1782207254721.4988,
       "uuid": "d7997931-d633-4991-8104-5260d342fbee"
     },
     "Script\\Base\\PrefabsManager.ts": {
@@ -1590,7 +1590,7 @@
       "uuid": "78192de4-419d-473e-b57d-fd8f4fc5361b"
     },
     "Script\\functionS\\Battle\\BulletManager.ts": {
-      "time": 1781765522336.7715,
+      "time": 1782208311214.8738,
       "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
     },
     "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
@@ -1622,7 +1622,7 @@
       "uuid": "3b47f7bf-91d0-40e1-8f86-30832c9f6191"
     },
     "Script\\functionS\\Guide\\GuideManager.ts": {
-      "time": 1781753535538.2646,
+      "time": 1782209055317.5723,
       "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
     },
     "Script\\functionS\\Jump\\BezierCurve.ts": {
@@ -1666,7 +1666,7 @@
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
-      "time": 1782196960279.3284,
+      "time": 1782207328890.402,
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
@@ -1682,7 +1682,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1781775039184.9033,
+      "time": 1782208349460.481,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
@@ -4429,7 +4429,7 @@
       "time": 1781768620735.1758
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts": {
-      "time": 1781769013840.0476,
+      "time": 1782208283674.604,
       "uuid": "8f7ca5d8-7f0a-4d2a-aeb5-f58c8c86a5f5"
     },
     "GameRes\\Image\\img\\auto-atlas.pac.meta": {

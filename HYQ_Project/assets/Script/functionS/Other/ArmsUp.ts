@@ -35,6 +35,7 @@ export class ArmsUp extends UnityUpComponent {
             return;
         }
         PropArms.prepareSpriteWeaponVisual(fbxNode);
+        this.player.prepareArmsUpgrade(armsInfo.armsType);
         const startPos = fbxNode.worldPosition.clone();
         this.scheduleOnce(() => {
             Tween.stopAllByTarget(fbxNode);

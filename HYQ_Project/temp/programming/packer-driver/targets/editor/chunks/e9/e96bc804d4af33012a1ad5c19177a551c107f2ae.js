@@ -59,6 +59,9 @@ System.register(["cc"], function (_export, _context) {
 
           /** 每个音效上次播放的时间戳（含冷却间隔） */
           this._lastPlayTimeMap = new Map();
+          this._clipCache = new Map();
+          this._loadingClipSet = new Set();
+          this._loadingCallbackMap = new Map();
           //@en create a node as audioMgr
           //@zh 创建一个节点作为 audioMgr
           let audioMgr = new Node();
@@ -102,6 +105,70 @@ System.register(["cc"], function (_export, _context) {
           }
 
           return sound;
+        }
+
+        preload(sound, onComplete = null) {
+          if (sound instanceof AudioClip) {
+            this._clipCache.set(this._getSoundKey(sound), sound);
+
+            onComplete == null || onComplete(sound);
+            return;
+          }
+
+          const cachedClip = this._clipCache.get(sound);
+
+          if (cachedClip) {
+            onComplete == null || onComplete(cachedClip);
+            return;
+          }
+
+          if (onComplete) {
+            let callbacks = this._loadingCallbackMap.get(sound);
+
+            if (!callbacks) {
+              callbacks = [];
+
+              this._loadingCallbackMap.set(sound, callbacks);
+            }
+
+            callbacks.push(onComplete);
+          }
+
+          if (this._loadingClipSet.has(sound)) {
+            return;
+          }
+
+          this._loadingClipSet.add(sound);
+
+          resources.load(sound, (err, clip) => {
+            this._loadingClipSet.delete(sound);
+
+            if (err) {
+              console.log(err);
+
+              this._completePreloadCallbacks(sound, null);
+
+              return;
+            }
+
+            this._clipCache.set(sound, clip);
+
+            this._completePreloadCallbacks(sound, clip);
+          });
+        }
+
+        _completePreloadCallbacks(sound, clip) {
+          const callbacks = this._loadingCallbackMap.get(sound);
+
+          if (!callbacks) {
+            return;
+          }
+
+          this._loadingCallbackMap.delete(sound);
+
+          for (let i = 0; i < callbacks.length; i++) {
+            callbacks[i](clip);
+          }
         }
         /** 清理过期的播放时间记录（O(1) 环形缓冲区操作，无 shift） */
 
@@ -190,10 +257,20 @@ System.register(["cc"], function (_export, _context) {
           if (sound instanceof AudioClip) {
             this._audioSource.playOneShot(sound, volume);
           } else {
+            const clip = this._clipCache.get(sound);
+
+            if (clip) {
+              this._audioSource.playOneShot(clip, volume);
+
+              return;
+            }
+
             resources.load(sound, (err, clip) => {
               if (err) {
                 console.log(err);
               } else {
+                this._clipCache.set(sound, clip);
+
                 this._audioSource.playOneShot(clip, volume);
               }
             });

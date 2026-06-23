@@ -63,7 +63,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "77055F7mqxGTKxT5Thp+szf", "BulletManager", undefined);
 
-      __checkObsolete__(['math']);
+      __checkObsolete__(['math', 'Node']);
 
       _export("default", BulletManager = class BulletManager extends (_crd && Singleton === void 0 ? (_reportPossibleCrUseOfSingleton({
         error: Error()
@@ -133,6 +133,48 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           bullet.setBulletInfo(rot, damage, repelPower);
           bullet.node.active = true;
+          return bullet;
+        }
+
+        prewarmBullet3D(bulletEnum, parent, forceCreate) {
+          if (parent === void 0) {
+            parent = null;
+          }
+
+          if (forceCreate === void 0) {
+            forceCreate = false;
+          }
+
+          var poolKey = (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+            error: Error()
+          }), PoolEnum) : PoolEnum).bullet + bulletEnum;
+          var bullet = null;
+
+          if (!forceCreate) {
+            bullet = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.getPool(poolKey);
+          }
+
+          if (!bullet) {
+            var node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
+              error: Error()
+            }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+              error: Error()
+            }), PrefabsEnum) : PrefabsEnum).bullet, bulletEnum);
+            bullet = node.getComponent(_crd && BulletBattle3D === void 0 ? (_reportPossibleCrUseOfBulletBattle3D({
+              error: Error()
+            }), BulletBattle3D) : BulletBattle3D);
+          }
+
+          if (parent && bullet.node.parent !== parent) {
+            parent.addChild(bullet.node);
+          }
+
+          bullet.node.active = false;
+          (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.setPool(poolKey, bullet);
           return bullet;
         }
 

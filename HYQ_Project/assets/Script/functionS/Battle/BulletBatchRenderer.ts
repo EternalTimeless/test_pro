@@ -90,6 +90,50 @@ export class BulletBatchRenderer extends Component {
         bullet.batchRenderer = this;
     }
 
+    public prewarmBullet(bullet: BulletBattle3D): void {
+        const visual = this._prepareBulletVisual(bullet);
+        if (!visual.spriteFrame) {
+            return;
+        }
+
+        const batch = this._getBatch(bullet.bulletEnum as number, visual);
+        if (batch.mesh) {
+            return;
+        }
+
+        const halfWidth = batch.width * 0.5;
+        const halfHeight = batch.height * 0.5;
+        const uv = this._getUV(batch.spriteFrame);
+
+        batch.positions.length = 12;
+        batch.uvs.length = 8;
+        batch.indices.length = 6;
+
+        this._setPosition(batch.positions, 0, -halfWidth, -halfHeight, 0);
+        this._setPosition(batch.positions, 3, halfWidth, -halfHeight, 0);
+        this._setPosition(batch.positions, 6, -halfWidth, halfHeight, 0);
+        this._setPosition(batch.positions, 9, halfWidth, halfHeight, 0);
+        for (let i = 0; i < 8; i++) {
+            batch.uvs[i] = uv[i];
+        }
+        batch.indices[0] = 0;
+        batch.indices[1] = 1;
+        batch.indices[2] = 2;
+        batch.indices[3] = 2;
+        batch.indices[4] = 1;
+        batch.indices[5] = 3;
+
+        batch.mesh = utils.createMesh({
+            positions: batch.positions,
+            uvs: batch.uvs,
+            indices: batch.indices,
+            minPos: { x: -100, y: -10, z: -100 },
+            maxPos: { x: 100, y: 20, z: 200 },
+        });
+        batch.renderer.mesh = batch.mesh;
+        batch.node.active = false;
+    }
+
     public unregisterBullet(bullet: BulletBattle3D): void {
         const batch = this._batches[bullet.bulletEnum as number];
         if (!batch) {

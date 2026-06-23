@@ -92,6 +92,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           arr.push(node);
         }
 
+        getPoolSize(key) {
+          var arr = this._pool[key];
+          return arr ? arr.length : 0;
+        }
+
         get V3() {
           var v = this.getPool('V3');
           this._ve3C--; // console.log("get" + this._ve3C);

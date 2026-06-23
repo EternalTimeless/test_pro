@@ -155,6 +155,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
             error: Error()
           }), PropArms) : PropArms).prepareSpriteWeaponVisual(fbxNode);
+          this.player.prepareArmsUpgrade(armsInfo.armsType);
           const startPos = fbxNode.worldPosition.clone();
           this.scheduleOnce(() => {
             Tween.stopAllByTarget(fbxNode);

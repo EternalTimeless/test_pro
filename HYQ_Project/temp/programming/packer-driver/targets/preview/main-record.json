@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 91418646.9064,
+      "mTimestamp": 95292681.267,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -15348,7 +15348,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/AudioManager.ts": {
       "mTimestamp": {
-        "mtime": 1781231241753.6729,
+        "mtime": 1782208959129.6147,
         "uuid": "fd17f062-881f-41a5-a1eb-4f8151149b53"
       },
       "chunkId": "e96bc804d4af33012a1ad5c19177a551c107f2ae",
@@ -16041,7 +16041,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/PoolManager.ts": {
       "mTimestamp": {
-        "mtime": 1782119576305.6826,
+        "mtime": 1782207254721.4988,
         "uuid": "d7997931-d633-4991-8104-5260d342fbee"
       },
       "chunkId": "f20c45b49501fbe07d44e99d95c2c506a06a0ecd",
@@ -20430,7 +20430,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletManager.ts": {
       "mTimestamp": {
-        "mtime": 1781765522336.7715,
+        "mtime": 1782208311214.8738,
         "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
       },
       "chunkId": "4314f54defc530df4c3d4a14e3561038b8628ff3",
@@ -21554,7 +21554,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Guide/GuideManager.ts": {
       "mTimestamp": {
-        "mtime": 1781753535538.2646,
+        "mtime": 1782209055317.5723,
         "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
       },
       "chunkId": "ddf9ec67bc21176ab14fd7bef2d6099af7cab4e3",
@@ -21644,11 +21644,11 @@
           "loc": {
             "start": {
               "line": 6,
-              "column": 60
+              "column": 94
             },
             "end": {
               "line": 6,
-              "column": 81
+              "column": 115
             }
           }
         },
@@ -21761,6 +21761,62 @@
             "end": {
               "line": 14,
               "column": 49
+            }
+          }
+        },
+        {
+          "value": "../Battle/Battle3D/Bullet/BulletBattle3D",
+          "resolved": "__unresolved_14",
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 27
+            },
+            "end": {
+              "line": 15,
+              "column": 69
+            }
+          }
+        },
+        {
+          "value": "../Battle/BulletBatchRenderer",
+          "resolved": "__unresolved_15",
+          "loc": {
+            "start": {
+              "line": 16,
+              "column": 36
+            },
+            "end": {
+              "line": 16,
+              "column": 67
+            }
+          }
+        },
+        {
+          "value": "../../Base/LayerManager",
+          "resolved": "__unresolved_16",
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 25
+            },
+            "end": {
+              "line": 17,
+              "column": 50
+            }
+          }
+        },
+        {
+          "value": "../../Base/AudioManager",
+          "resolved": "__unresolved_17",
+          "loc": {
+            "start": {
+              "line": 18,
+              "column": 25
+            },
+            "end": {
+              "line": 18,
+              "column": 50
             }
           }
         }
@@ -21883,6 +21939,34 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/FbxManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Bullet/BulletBattle3D.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletBatchRenderer.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/LayerManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/AudioManager.ts"
           },
           "messages": []
         }
@@ -23707,7 +23791,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/ArmsUp.ts": {
       "mTimestamp": {
-        "mtime": 1782196960279.3284,
+        "mtime": 1782207328890.402,
         "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
       },
       "chunkId": "7d88e9fa4d49091167d5648112015c50cab8c311",
@@ -24872,7 +24956,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Player.ts": {
       "mTimestamp": {
-        "mtime": 1781775039184.9033,
+        "mtime": 1782208349460.481,
         "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
       },
       "chunkId": "120cba8f856407335ad8a04347cd4d36bf752a1e",
@@ -24892,11 +24976,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 83
+              "column": 90
             },
             "end": {
               "line": 1,
-              "column": 87
+              "column": 94
             }
           }
         },
@@ -24948,11 +25032,11 @@
           "loc": {
             "start": {
               "line": 6,
-              "column": 106
+              "column": 117
             },
             "end": {
               "line": 6,
-              "column": 127
+              "column": 138
             }
           }
         },
@@ -25095,6 +25179,20 @@
               "column": 67
             }
           }
+        },
+        {
+          "value": "../../Base/LayerManager",
+          "resolved": "__unresolved_15",
+          "loc": {
+            "start": {
+              "line": 18,
+              "column": 25
+            },
+            "end": {
+              "line": 18,
+              "column": 50
+            }
+          }
         }
       ],
       "type": "esm",
@@ -25222,6 +25320,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletBatchRenderer.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/LayerManager.ts"
           },
           "messages": []
         }
@@ -27954,7 +28059,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletBatchRenderer.ts": {
       "mTimestamp": {
-        "mtime": 1781769013840.0476,
+        "mtime": 1782208283674.604,
         "uuid": "8f7ca5d8-7f0a-4d2a-aeb5-f58c8c86a5f5"
       },
       "chunkId": "f05038aedf4d7805ad91dbf59f1c87fe35c23bb5",

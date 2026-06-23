@@ -38,6 +38,9 @@ export default class AudioManager {
     private _saturatedUntil: number = 0;
     /** 每个音效上次播放的时间戳（含冷却间隔） */
     private _lastPlayTimeMap: Map<string, number> = new Map();
+    private _clipCache: Map<string, AudioClip> = new Map();
+    private _loadingClipSet: Set<string> = new Set();
+    private _loadingCallbackMap: Map<string, ((clip: AudioClip | null) => void)[]> = new Map();
 
     constructor() {
         //@en create a node as audioMgr
@@ -86,6 +89,52 @@ export default class AudioManager {
             return '__clip__' + sound.name;
         }
         return sound;
+    }
+
+    public preload(sound: AudioClip | string, onComplete: ((clip: AudioClip | null) => void) = null): void {
+        if (sound instanceof AudioClip) {
+            this._clipCache.set(this._getSoundKey(sound), sound);
+            onComplete?.(sound);
+            return;
+        }
+        const cachedClip = this._clipCache.get(sound);
+        if (cachedClip) {
+            onComplete?.(cachedClip);
+            return;
+        }
+        if (onComplete) {
+            let callbacks = this._loadingCallbackMap.get(sound);
+            if (!callbacks) {
+                callbacks = [];
+                this._loadingCallbackMap.set(sound, callbacks);
+            }
+            callbacks.push(onComplete);
+        }
+        if (this._loadingClipSet.has(sound)) {
+            return;
+        }
+        this._loadingClipSet.add(sound);
+        resources.load(sound, (err, clip: AudioClip) => {
+            this._loadingClipSet.delete(sound);
+            if (err) {
+                console.log(err);
+                this._completePreloadCallbacks(sound, null);
+                return;
+            }
+            this._clipCache.set(sound, clip);
+            this._completePreloadCallbacks(sound, clip);
+        });
+    }
+
+    private _completePreloadCallbacks(sound: string, clip: AudioClip | null): void {
+        const callbacks = this._loadingCallbackMap.get(sound);
+        if (!callbacks) {
+            return;
+        }
+        this._loadingCallbackMap.delete(sound);
+        for (let i = 0; i < callbacks.length; i++) {
+            callbacks[i](clip);
+        }
     }
 
     /** 清理过期的播放时间记录（O(1) 环形缓冲区操作，无 shift） */
@@ -169,11 +218,17 @@ export default class AudioManager {
             this._audioSource.playOneShot(sound, volume);
         }
         else {
+            const clip = this._clipCache.get(sound);
+            if (clip) {
+                this._audioSource.playOneShot(clip, volume);
+                return;
+            }
             resources.load(sound, (err, clip: AudioClip) => {
                 if (err) {
                     console.log(err);
                 }
                 else {
+                    this._clipCache.set(sound, clip);
                     this._audioSource.playOneShot(clip, volume);
                 }
             });

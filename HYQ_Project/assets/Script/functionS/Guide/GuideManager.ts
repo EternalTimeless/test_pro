@@ -3,7 +3,7 @@ import { GuideLine } from './GuideLine';
 import { Player } from '../Player/Player';
 import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
 import { MonsterCreate } from '../Monster/MonsterCreate';
-import { EffectEnum, PoolEnum, PrefabsEnum, RoleEnum } from '../../Base/EnumList';
+import { BulletEnum, EffectEnum, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import PoolManager from '../../Base/PoolManager';
 import { PrefabsManager } from '../../Base/PrefabsManager';
 import { Role } from '../Player/Role';
@@ -12,6 +12,10 @@ import { EffectManager } from '../Effect/EffectManager';
 import BezierCurve from '../Jump/BezierCurve';
 import { JumpCurve3D } from '../Jump/JumpCurve3D';
 import { FbxManager } from '../SkAnim/FbxManager';
+import BulletBattle3D from '../Battle/Battle3D/Bullet/BulletBattle3D';
+import { BulletBatchRenderer } from '../Battle/BulletBatchRenderer';
+import LayerManager from '../../Base/LayerManager';
+import AudioManager from '../../Base/AudioManager';
 const { ccclass, property } = _decorator;
 
 type WarmupTask = {
@@ -20,6 +24,7 @@ type WarmupTask = {
     prefabIndex: number;
     component?: any;
     count: number;
+    bullet3D?: boolean;
 };
 
 @ccclass('GuideManager')
@@ -45,6 +50,7 @@ export class GuideManager extends Component {
     private warmupTaskIndex: number = 0;
     private warmupPerFrame: number = 4;
     private warmupRoot: Node = null;
+    private pendingSoundWarmupCount: number = 0;
 
     start() {
         GuideManager.instance = this;
@@ -118,15 +124,35 @@ export class GuideManager extends Component {
         EffectManager.instance;
         PoolManager.instance.setPool(PoolEnum.JumpSequence + BezierCurve, new BezierCurve());
         PoolManager.instance.setPool(PoolEnum.JumpSequence + JumpCurve3D, new JumpCurve3D());
+        this.preloadSounds();
 
         this.warmupTasks = [
             { poolKey: PoolEnum.role + RoleEnum.underling, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.underling, component: Role, count: 60 },
             { poolKey: PoolEnum.role + RoleEnum.dazhuang, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.dazhuang, component: Role, count: 60 },
             { poolKey: PoolEnum.role + RoleEnum.dazhuangPlus, prefabType: PrefabsEnum.hero, prefabIndex: RoleEnum.dazhuangPlus, component: Role, count: 60 },
+            { poolKey: PoolEnum.bullet + BulletEnum.arrow, prefabType: PrefabsEnum.bullet, prefabIndex: BulletEnum.arrow, component: BulletBattle3D, count: 8, bullet3D: true },
+            { poolKey: PoolEnum.bullet + BulletEnum.arrow_1, prefabType: PrefabsEnum.bullet, prefabIndex: BulletEnum.arrow_1, component: BulletBattle3D, count: 8, bullet3D: true },
+            { poolKey: PoolEnum.bullet + BulletEnum.arrow_2, prefabType: PrefabsEnum.bullet, prefabIndex: BulletEnum.arrow_2, component: BulletBattle3D, count: 8, bullet3D: true },
+            { poolKey: PoolEnum.bullet + BulletEnum.arrow_3, prefabType: PrefabsEnum.bullet, prefabIndex: BulletEnum.arrow_3, component: BulletBattle3D, count: 8, bullet3D: true },
+            { poolKey: PoolEnum.bullet + BulletEnum.arrow_4, prefabType: PrefabsEnum.bullet, prefabIndex: BulletEnum.arrow_4, component: BulletBattle3D, count: 8, bullet3D: true },
             { poolKey: PoolEnum.effect + EffectEnum.up, prefabType: PrefabsEnum.effect, prefabIndex: EffectEnum.up, count: 6 },
             { poolKey: PoolEnum.effect + EffectEnum.door, prefabType: PrefabsEnum.effect, prefabIndex: EffectEnum.door, count: 6 },
         ];
         this.warmupTaskIndex = 0;
+    }
+
+    private preloadSounds(): void {
+        const sounds = [
+            SoundEnum.Sound_Gun,
+            SoundEnum.Sound_FireGun,
+            SoundEnum.Sound_Ship_UpLevel,
+        ];
+        this.pendingSoundWarmupCount = sounds.length;
+        for (let i = 0; i < sounds.length; i++) {
+            AudioManager.inst.preload(sounds[i], () => {
+                this.pendingSoundWarmupCount--;
+            });
+        }
     }
 
     private runWarmup() {
@@ -139,8 +165,11 @@ export class GuideManager extends Component {
             const node = PrefabsManager.instance.GetPrefabsIns(task.prefabType, task.prefabIndex);
             this.warmupRoot.addChild(node);
             this.prewarmNode(node);
-            node.active = false;
             const item = task.component ? node.getComponent(task.component) : node;
+            if (task.bullet3D && item) {
+                this.prewarmBulletBatch(item);
+            }
+            node.active = false;
             PoolManager.instance.setPool(task.poolKey, item);
             task.count--;
             count--;
@@ -157,8 +186,18 @@ export class GuideManager extends Component {
         }
     }
 
+    private prewarmBulletBatch(bullet: BulletBattle3D): void {
+        const bulletLayer = LayerManager.instance?.getLayer(LayerEnum.BulletLayer);
+        if (!bulletLayer) {
+            return;
+        }
+        Role.bulletLayer = bulletLayer;
+        BulletBatchRenderer.getOrCreate(bulletLayer).prewarmBullet(bullet);
+    }
+
     private isWarmupComplete(): boolean {
-        return this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
+        const prefabWarmupComplete = this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
+        return prefabWarmupComplete && this.pendingSoundWarmupCount <= 0;
     }
 
     private findNodeByName(root: Node, name: string): Node | null {

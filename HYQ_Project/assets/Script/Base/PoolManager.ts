@@ -54,6 +54,11 @@ export default class PoolManager extends Singleton {
         arr.push(node);
     }
 
+    public getPoolSize(key: string): number {
+        const arr = this._pool[key];
+        return arr ? arr.length : 0;
+    }
+
     private _ve3C: number = 0;
     public get V3() {
         const v = this.getPool<Vec3>('V3');

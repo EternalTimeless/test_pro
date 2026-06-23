@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16", "__unresolved_17"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, EffectEnum, PoolEnum, PrefabsEnum, RoleEnum, PoolManager, PrefabsManager, Role, JumpManager, EffectManager, BezierCurve, JumpCurve3D, FbxManager, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, GuideManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, BulletEnum, EffectEnum, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, PrefabsManager, Role, JumpManager, EffectManager, BezierCurve, JumpCurve3D, FbxManager, BulletBattle3D, BulletBatchRenderer, LayerManager, AudioManager, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, GuideManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -25,8 +25,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("MonsterCreate", "../Monster/MonsterCreate", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfBulletEnum(extras) {
+    _reporterNs.report("BulletEnum", "../../Base/EnumList", _context.meta, extras);
+  }
+
   function _reportPossibleCrUseOfEffectEnum(extras) {
     _reporterNs.report("EffectEnum", "../../Base/EnumList", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfLayerEnum(extras) {
+    _reporterNs.report("LayerEnum", "../../Base/EnumList", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfPoolEnum(extras) {
@@ -39,6 +47,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfRoleEnum(extras) {
     _reporterNs.report("RoleEnum", "../../Base/EnumList", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfSoundEnum(extras) {
+    _reporterNs.report("SoundEnum", "../../Base/EnumList", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfPoolManager(extras) {
@@ -73,6 +85,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("FbxManager", "../SkAnim/FbxManager", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfBulletBattle3D(extras) {
+    _reporterNs.report("BulletBattle3D", "../Battle/Battle3D/Bullet/BulletBattle3D", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfBulletBatchRenderer(extras) {
+    _reporterNs.report("BulletBatchRenderer", "../Battle/BulletBatchRenderer", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfLayerManager(extras) {
+    _reporterNs.report("LayerManager", "../../Base/LayerManager", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfAudioManager(extras) {
+    _reporterNs.report("AudioManager", "../../Base/AudioManager", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -95,10 +123,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_5) {
       MonsterCreate = _unresolved_5.MonsterCreate;
     }, function (_unresolved_6) {
+      BulletEnum = _unresolved_6.BulletEnum;
       EffectEnum = _unresolved_6.EffectEnum;
+      LayerEnum = _unresolved_6.LayerEnum;
       PoolEnum = _unresolved_6.PoolEnum;
       PrefabsEnum = _unresolved_6.PrefabsEnum;
       RoleEnum = _unresolved_6.RoleEnum;
+      SoundEnum = _unresolved_6.SoundEnum;
     }, function (_unresolved_7) {
       PoolManager = _unresolved_7.default;
     }, function (_unresolved_8) {
@@ -115,6 +146,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       JumpCurve3D = _unresolved_13.JumpCurve3D;
     }, function (_unresolved_14) {
       FbxManager = _unresolved_14.FbxManager;
+    }, function (_unresolved_15) {
+      BulletBattle3D = _unresolved_15.default;
+    }, function (_unresolved_16) {
+      BulletBatchRenderer = _unresolved_16.BulletBatchRenderer;
+    }, function (_unresolved_17) {
+      LayerManager = _unresolved_17.default;
+    }, function (_unresolved_18) {
+      AudioManager = _unresolved_18.default;
     }],
     execute: function () {
       _crd = true;
@@ -150,6 +189,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.warmupTaskIndex = 0;
           this.warmupPerFrame = 4;
           this.warmupRoot = null;
+          this.pendingSoundWarmupCount = 0;
         }
 
         start() {
@@ -261,6 +301,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), JumpCurve3D) : JumpCurve3D), new (_crd && JumpCurve3D === void 0 ? (_reportPossibleCrUseOfJumpCurve3D({
             error: Error()
           }), JumpCurve3D) : JumpCurve3D)());
+          this.preloadSounds();
           this.warmupTasks = [{
             poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
               error: Error()
@@ -312,6 +353,91 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }, {
             poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
               error: Error()
+            }), PoolEnum) : PoolEnum).bullet + (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow,
+            prefabType: (_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+              error: Error()
+            }), PrefabsEnum) : PrefabsEnum).bullet,
+            prefabIndex: (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow,
+            component: _crd && BulletBattle3D === void 0 ? (_reportPossibleCrUseOfBulletBattle3D({
+              error: Error()
+            }), BulletBattle3D) : BulletBattle3D,
+            count: 8,
+            bullet3D: true
+          }, {
+            poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).bullet + (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_1,
+            prefabType: (_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+              error: Error()
+            }), PrefabsEnum) : PrefabsEnum).bullet,
+            prefabIndex: (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_1,
+            component: _crd && BulletBattle3D === void 0 ? (_reportPossibleCrUseOfBulletBattle3D({
+              error: Error()
+            }), BulletBattle3D) : BulletBattle3D,
+            count: 8,
+            bullet3D: true
+          }, {
+            poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).bullet + (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_2,
+            prefabType: (_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+              error: Error()
+            }), PrefabsEnum) : PrefabsEnum).bullet,
+            prefabIndex: (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_2,
+            component: _crd && BulletBattle3D === void 0 ? (_reportPossibleCrUseOfBulletBattle3D({
+              error: Error()
+            }), BulletBattle3D) : BulletBattle3D,
+            count: 8,
+            bullet3D: true
+          }, {
+            poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).bullet + (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_3,
+            prefabType: (_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+              error: Error()
+            }), PrefabsEnum) : PrefabsEnum).bullet,
+            prefabIndex: (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_3,
+            component: _crd && BulletBattle3D === void 0 ? (_reportPossibleCrUseOfBulletBattle3D({
+              error: Error()
+            }), BulletBattle3D) : BulletBattle3D,
+            count: 8,
+            bullet3D: true
+          }, {
+            poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).bullet + (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_4,
+            prefabType: (_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+              error: Error()
+            }), PrefabsEnum) : PrefabsEnum).bullet,
+            prefabIndex: (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_4,
+            component: _crd && BulletBattle3D === void 0 ? (_reportPossibleCrUseOfBulletBattle3D({
+              error: Error()
+            }), BulletBattle3D) : BulletBattle3D,
+            count: 8,
+            bullet3D: true
+          }, {
+            poolKey: (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
             }), PoolEnum) : PoolEnum).effect + (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
               error: Error()
             }), EffectEnum) : EffectEnum).up,
@@ -339,6 +465,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.warmupTaskIndex = 0;
         }
 
+        preloadSounds() {
+          const sounds = [(_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            error: Error()
+          }), SoundEnum) : SoundEnum).Sound_Gun, (_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            error: Error()
+          }), SoundEnum) : SoundEnum).Sound_FireGun, (_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            error: Error()
+          }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel];
+          this.pendingSoundWarmupCount = sounds.length;
+
+          for (let i = 0; i < sounds.length; i++) {
+            (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+              error: Error()
+            }), AudioManager) : AudioManager).inst.preload(sounds[i], () => {
+              this.pendingSoundWarmupCount--;
+            });
+          }
+        }
+
         runWarmup() {
           if (!this.warmupRoot) {
             return;
@@ -353,8 +498,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns(task.prefabType, task.prefabIndex);
             this.warmupRoot.addChild(node);
             this.prewarmNode(node);
-            node.active = false;
             const item = task.component ? node.getComponent(task.component) : node;
+
+            if (task.bullet3D && item) {
+              this.prewarmBulletBatch(item);
+            }
+
+            node.active = false;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
             }), PoolManager) : PoolManager).instance.setPool(task.poolKey, item);
@@ -377,8 +527,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
+        prewarmBulletBatch(bullet) {
+          var _instance;
+
+          const bulletLayer = (_instance = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
+            error: Error()
+          }), LayerManager) : LayerManager).instance) == null ? void 0 : _instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
+            error: Error()
+          }), LayerEnum) : LayerEnum).BulletLayer);
+
+          if (!bulletLayer) {
+            return;
+          }
+
+          (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).bulletLayer = bulletLayer;
+          (_crd && BulletBatchRenderer === void 0 ? (_reportPossibleCrUseOfBulletBatchRenderer({
+            error: Error()
+          }), BulletBatchRenderer) : BulletBatchRenderer).getOrCreate(bulletLayer).prewarmBullet(bullet);
+        }
+
         isWarmupComplete() {
-          return this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
+          const prefabWarmupComplete = this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
+          return prefabWarmupComplete && this.pendingSoundWarmupCount <= 0;
         }
 
         findNodeByName(root, name) {
@@ -402,7 +574,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         finishGuide() {
-          var _this$handAnim, _instance;
+          var _this$handAnim, _instance2;
 
           if (this.isLock) {
             return;
@@ -418,9 +590,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.handAnim.node.active = false;
           }
 
-          (_instance = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
+          (_instance2 = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
             error: Error()
-          }), GuideLine) : GuideLine).instance) == null || _instance.setLineNode();
+          }), GuideLine) : GuideLine).instance) == null || _instance2.setLineNode();
 
           if ((_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
             error: Error()

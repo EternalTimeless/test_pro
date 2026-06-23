@@ -1,4 +1,4 @@
-import { math } from "cc";
+import { math, Node } from "cc";
 import { BulletEnum, PoolEnum, PrefabsEnum } from "db://assets/Script/Base/EnumList";
 import PoolManager from "db://assets/Script/Base/PoolManager";
 import { PrefabsManager } from "db://assets/Script/Base/PrefabsManager";
@@ -51,6 +51,24 @@ export default class BulletManager extends Singleton {
         }
         bullet.setBulletInfo(rot, damage, repelPower);
         bullet.node.active = true;
+        return bullet;
+    }
+
+    public prewarmBullet3D(bulletEnum: BulletEnum, parent: Node = null, forceCreate: boolean = false): BulletBattle3D {
+        const poolKey = PoolEnum.bullet + bulletEnum;
+        let bullet: BulletBattle3D = null;
+        if (!forceCreate) {
+            bullet = PoolManager.instance.getPool<BulletBattle3D>(poolKey);
+        }
+        if (!bullet) {
+            const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.bullet, bulletEnum);
+            bullet = node.getComponent(BulletBattle3D);
+        }
+        if (parent && bullet.node.parent !== parent) {
+            parent.addChild(bullet.node);
+        }
+        bullet.node.active = false;
+        PoolManager.instance.setPool(poolKey, bullet);
         return bullet;
     }
 

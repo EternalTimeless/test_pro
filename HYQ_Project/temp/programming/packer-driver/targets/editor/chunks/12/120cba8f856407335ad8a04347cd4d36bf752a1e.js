@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, Quat, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -31,6 +31,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfEventType(extras) {
     _reporterNs.report("EventType", "../../Base/EnumList", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfLayerEnum(extras) {
+    _reporterNs.report("LayerEnum", "../../Base/EnumList", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfPoolEnum(extras) {
@@ -89,6 +93,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("BulletBatchRenderer", "../Battle/BulletBatchRenderer", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfLayerManager(extras) {
+    _reporterNs.report("LayerManager", "../../Base/LayerManager", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -101,6 +109,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCInteger = _cc.CCInteger;
       Node = _cc.Node;
       Quat = _cc.Quat;
+      Tween = _cc.Tween;
       tween = _cc.tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -113,6 +122,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       ArmsTypeEnum = _unresolved_5.ArmsTypeEnum;
       BulletEnum = _unresolved_5.BulletEnum;
       EventType = _unresolved_5.EventType;
+      LayerEnum = _unresolved_5.LayerEnum;
       PoolEnum = _unresolved_5.PoolEnum;
       PrefabsEnum = _unresolved_5.PrefabsEnum;
       RoleEnum = _unresolved_5.RoleEnum;
@@ -137,13 +147,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       FlashRedManager = _unresolved_14.FlashRedManager;
     }, function (_unresolved_15) {
       BulletBatchRenderer = _unresolved_15.BulletBatchRenderer;
+    }, function (_unresolved_16) {
+      LayerManager = _unresolved_16.default;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "b41f7vy1r5GDYGyMwUkQXm3", "Player", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Component', 'Node', 'Quat', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Component', 'Node', 'Quat', 'Tween', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -199,6 +211,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor5, this);
 
           this.shootRoleStartIndex = 0;
+          this.pendingRoleSwitchType = null;
+          this.pendingRoleSwitchIndex = 0;
+          this.roleSwitchPerFrame = 6;
+          this.pendingRolePrewarmType = null;
+          this.pendingRolePrewarmCount = 0;
+          this.rolePrewarmPerFrame = 4;
+          this.pendingBulletPrewarmType = null;
+          this.pendingBulletPrewarmCount = 0;
+          this.pendingBulletBatchWarmType = null;
+          this.bulletPrewarmPerFrame = 2;
+          this.roleLayoutDirty = false;
           this.isLock = false;
 
           // public MoveX: number = 8;
@@ -240,6 +263,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.roleAttack(dt);
           }
 
+          this.processPendingRolePrewarm();
+          this.processPendingBulletPrewarm();
+          this.processPendingRoleSwitch();
           this.roleMove();
         }
 
@@ -358,11 +384,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), Role) : Role).bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
                 error: Error()
               }), BulletEnum) : BulletEnum).arrow_3;
-              const newRoleType = (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
-                error: Error()
-              }), RoleEnum) : RoleEnum).dazhuang;
-              this.roleType = newRoleType;
-              const count = this.roleList.length;
               (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
                 error: Error()
               }), TweenTool) : TweenTool).scaleShake(this.node);
@@ -372,17 +393,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), Role) : Role).soundType = (_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
                 error: Error()
               }), SoundEnum) : SoundEnum).Sound_FireGun;
-
-              for (let i = 0; i < count; i++) {
-                const role = this.roleList[i];
-                const newRole = this.getRoleByType(newRoleType);
-                this.roleList[i] = newRole;
-                this.node.addChild(newRole.node);
-                newRole.node.setPosition(role.node.position);
-                role.node.active = false;
-              }
-
-              this.upPos();
+              this.startRoleSwitch((_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
+                error: Error()
+              }), RoleEnum) : RoleEnum).dazhuang);
               break;
 
             case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
@@ -398,11 +411,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                   error: Error()
                 }), BulletEnum) : BulletEnum).arrow_4;
                 this.attackSpeed = 20;
-                const newRoleType = (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
-                  error: Error()
-                }), RoleEnum) : RoleEnum).dazhuangPlus;
-                this.roleType = newRoleType;
-                const count = this.roleList.length;
                 (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
                   error: Error()
                 }), TweenTool) : TweenTool).scaleShake(this.node);
@@ -412,17 +420,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 }), Role) : Role).soundType = (_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
                   error: Error()
                 }), SoundEnum) : SoundEnum).Sound_FireGun;
-
-                for (let i = 0; i < count; i++) {
-                  const role = this.roleList[i];
-                  const newRole = this.getRoleByType(newRoleType);
-                  this.roleList[i] = newRole;
-                  this.node.addChild(newRole.node);
-                  newRole.node.setPosition(role.node.position);
-                  role.node.active = false;
-                }
-
-                this.upPos();
+                this.startRoleSwitch((_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
+                  error: Error()
+                }), RoleEnum) : RoleEnum).dazhuangPlus);
                 break;
               }
 
@@ -441,6 +441,306 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 error: Error()
               }), GameOverPanel) : GameOverPanel).instance.show(true);
               break;
+          }
+        }
+
+        prepareArmsUpgrade(armwType) {
+          (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+            error: Error()
+          }), AudioManager) : AudioManager).inst.preload((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            error: Error()
+          }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
+          const bulletType = this.getBulletTypeByArms(armwType);
+
+          if (bulletType !== null) {
+            this.startBulletPrewarm(bulletType, this.getWeaponPrewarmBulletCount());
+          }
+
+          const soundType = this.getSoundTypeByArms(armwType);
+
+          if (soundType !== null) {
+            (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+              error: Error()
+            }), AudioManager) : AudioManager).inst.preload(soundType);
+          }
+
+          const targetRoleType = this.getRoleTypeByArms(armwType);
+
+          if (targetRoleType === null) {
+            return;
+          }
+
+          this.startRolePrewarm(targetRoleType, this.roleList.length);
+        }
+
+        getRoleTypeByArms(armwType) {
+          switch (armwType) {
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl:
+              return (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
+                error: Error()
+              }), RoleEnum) : RoleEnum).dazhuang;
+
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl2:
+              return (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
+                error: Error()
+              }), RoleEnum) : RoleEnum).dazhuangPlus;
+          }
+
+          return null;
+        }
+
+        getBulletTypeByArms(armwType) {
+          switch (armwType) {
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).bq:
+              return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+                error: Error()
+              }), BulletEnum) : BulletEnum).arrow_1;
+
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jq:
+              return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+                error: Error()
+              }), BulletEnum) : BulletEnum).arrow_2;
+
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl:
+              return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+                error: Error()
+              }), BulletEnum) : BulletEnum).arrow_3;
+
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl2:
+              return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+                error: Error()
+              }), BulletEnum) : BulletEnum).arrow_4;
+          }
+
+          return null;
+        }
+
+        getSoundTypeByArms(armwType) {
+          switch (armwType) {
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl:
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl2:
+              return (_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+                error: Error()
+              }), SoundEnum) : SoundEnum).Sound_FireGun;
+          }
+
+          return null;
+        }
+
+        getWeaponPrewarmBulletCount() {
+          const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
+          let count = 0;
+
+          for (let i = 0; i < shootCount; i++) {
+            const role = this.roleList[i];
+            count += role ? role.visualBulletCount : 1;
+          }
+
+          return Math.max(1, Math.min(count, 8));
+        }
+
+        startBulletPrewarm(bulletType, needCount) {
+          const poolKey = (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+            error: Error()
+          }), PoolEnum) : PoolEnum).bullet + bulletType;
+          this.pendingBulletPrewarmType = bulletType;
+          this.pendingBulletPrewarmCount = Math.max(0, needCount - (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.getPoolSize(poolKey));
+          this.pendingBulletBatchWarmType = bulletType;
+        }
+
+        processPendingBulletPrewarm() {
+          if (this.pendingBulletPrewarmType === null && this.pendingBulletBatchWarmType === null) {
+            return;
+          }
+
+          const bulletLayer = this.getBulletLayer();
+
+          if (!bulletLayer) {
+            return;
+          }
+
+          let count = this.bulletPrewarmPerFrame;
+
+          while (count > 0 && this.pendingBulletPrewarmType !== null && this.pendingBulletPrewarmCount > 0) {
+            const bullet = (_crd && BulletManager === void 0 ? (_reportPossibleCrUseOfBulletManager({
+              error: Error()
+            }), BulletManager) : BulletManager).instance.prewarmBullet3D(this.pendingBulletPrewarmType, bulletLayer, true);
+            (_crd && BulletBatchRenderer === void 0 ? (_reportPossibleCrUseOfBulletBatchRenderer({
+              error: Error()
+            }), BulletBatchRenderer) : BulletBatchRenderer).getOrCreate(bulletLayer).prewarmBullet(bullet);
+            this.pendingBulletPrewarmCount--;
+            count--;
+          }
+
+          if (this.pendingBulletPrewarmCount <= 0) {
+            this.pendingBulletPrewarmType = null;
+          }
+
+          if (this.pendingBulletBatchWarmType !== null) {
+            const bullet = (_crd && BulletManager === void 0 ? (_reportPossibleCrUseOfBulletManager({
+              error: Error()
+            }), BulletManager) : BulletManager).instance.prewarmBullet3D(this.pendingBulletBatchWarmType, bulletLayer, false);
+            (_crd && BulletBatchRenderer === void 0 ? (_reportPossibleCrUseOfBulletBatchRenderer({
+              error: Error()
+            }), BulletBatchRenderer) : BulletBatchRenderer).getOrCreate(bulletLayer).prewarmBullet(bullet);
+            this.pendingBulletBatchWarmType = null;
+          }
+        }
+
+        getBulletLayer() {
+          if ((_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).bulletLayer && (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).bulletLayer.isValid) {
+            return (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+              error: Error()
+            }), Role) : Role).bulletLayer;
+          }
+
+          (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).bulletLayer = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
+            error: Error()
+          }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
+            error: Error()
+          }), LayerEnum) : LayerEnum).BulletLayer);
+          return (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).bulletLayer;
+        }
+
+        startRolePrewarm(roleType, needCount) {
+          const poolKey = (_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+            error: Error()
+          }), PoolEnum) : PoolEnum).role + roleType;
+          const missingCount = Math.max(0, needCount - (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.getPoolSize(poolKey));
+
+          if (missingCount <= 0) {
+            this.pendingRolePrewarmType = null;
+            this.pendingRolePrewarmCount = 0;
+            return;
+          }
+
+          this.pendingRolePrewarmType = roleType;
+          this.pendingRolePrewarmCount = missingCount;
+        }
+
+        processPendingRolePrewarm() {
+          if (this.pendingRolePrewarmType === null) {
+            return;
+          }
+
+          if (this.pendingRolePrewarmCount <= 0) {
+            this.pendingRolePrewarmType = null;
+            return;
+          }
+
+          let count = Math.min(this.rolePrewarmPerFrame, this.pendingRolePrewarmCount);
+
+          while (count > 0) {
+            const role = this.createRoleByType(this.pendingRolePrewarmType);
+            role.node.active = false;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).role + this.pendingRolePrewarmType, role);
+            this.pendingRolePrewarmCount--;
+            count--;
+          }
+
+          if (this.pendingRolePrewarmCount <= 0) {
+            this.pendingRolePrewarmType = null;
+          }
+        }
+
+        startRoleSwitch(roleType) {
+          this.roleType = roleType;
+          this.pendingRoleSwitchType = roleType;
+          this.pendingRoleSwitchIndex = 0;
+          this.roleLayoutDirty = false;
+          this.startRolePrewarm(roleType, this.roleList.length);
+        }
+
+        processPendingRoleSwitch() {
+          if (this.pendingRoleSwitchType === null) {
+            return;
+          }
+
+          let count = this.roleSwitchPerFrame;
+
+          while (count > 0 && this.pendingRoleSwitchIndex < this.roleList.length) {
+            const index = this.pendingRoleSwitchIndex;
+            const oldRole = this.roleList[index];
+
+            if (!oldRole) {
+              this.pendingRoleSwitchIndex++;
+              count--;
+              continue;
+            }
+
+            if (oldRole.type === this.pendingRoleSwitchType) {
+              this.pendingRoleSwitchIndex++;
+              count--;
+              continue;
+            }
+
+            if ((_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.getPoolSize((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).role + this.pendingRoleSwitchType) <= 0) {
+              break;
+            }
+
+            const newRole = this.getRoleByType(this.pendingRoleSwitchType);
+            Tween.stopAllByTarget(oldRole.node);
+            Tween.stopAllByTarget(newRole.node);
+            this.roleList[index] = newRole;
+            this.node.addChild(newRole.node);
+            newRole.node.setPosition(oldRole.node.position);
+            newRole.node.setScale(oldRole.node.scale);
+            newRole.attackIN = oldRole.attackIN;
+            oldRole.node.active = false;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).role + oldRole.type, oldRole);
+            this.roleLayoutDirty = true;
+            this.pendingRoleSwitchIndex++;
+            count--;
+          }
+
+          if (this.pendingRoleSwitchIndex >= this.roleList.length) {
+            this.pendingRoleSwitchType = null;
+            this.pendingRoleSwitchIndex = 0;
+
+            if (this.roleLayoutDirty) {
+              this.roleLayoutDirty = false;
+              this.upPos();
+            }
           }
         } //7.003 2.329
 
@@ -748,19 +1048,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), PoolEnum) : PoolEnum).role + roleType);
 
           if (!role) {
-            const node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
-              error: Error()
-            }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
-              error: Error()
-            }), PrefabsEnum) : PrefabsEnum).hero, roleType);
-            role = node.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-              error: Error()
-            }), Role) : Role);
+            role = this.createRoleByType(roleType);
           }
 
           role.hp = 2;
           role.node.active = true;
           return role;
+        }
+
+        createRoleByType(roleType) {
+          const node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
+            error: Error()
+          }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+            error: Error()
+          }), PrefabsEnum) : PrefabsEnum).hero, roleType);
+          return node.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role);
         }
 
         attackEvent(index) {
