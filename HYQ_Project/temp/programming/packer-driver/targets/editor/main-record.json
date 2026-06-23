@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 71471708.4804,
+      "mTimestamp": 85114853.2423,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -18961,7 +18961,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/FlashRedManager.ts": {
       "mTimestamp": {
-        "mtime": 1781231241771.772,
+        "mtime": 1782195583568.851,
         "uuid": "7eeb70e3-f1ea-4d16-b4ec-793f0341aa41"
       },
       "chunkId": "9ec8816866d723aea0e61547ea23bf04cc3c7c78",
@@ -24274,7 +24274,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/ArmsUp.ts": {
       "mTimestamp": {
-        "mtime": 1781665569070.1738,
+        "mtime": 1782196960279.3284,
         "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
       },
       "chunkId": "7d88e9fa4d49091167d5648112015c50cab8c311",
@@ -24317,8 +24317,22 @@
           }
         },
         {
-          "value": "../../Base/EventManager",
+          "value": "./PropArms",
           "resolved": "__unresolved_2",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 35
+            },
+            "end": {
+              "line": 3,
+              "column": 47
+            }
+          }
+        },
+        {
+          "value": "../../Base/EventManager",
+          "resolved": "__unresolved_3",
           "loc": {
             "start": {
               "line": 4,
@@ -24332,7 +24346,7 @@
         },
         {
           "value": "../../Base/EnumList",
-          "resolved": "__unresolved_3",
+          "resolved": "__unresolved_4",
           "loc": {
             "start": {
               "line": 5,
@@ -24346,7 +24360,7 @@
         },
         {
           "value": "../Jump/JumpManager",
-          "resolved": "__unresolved_4",
+          "resolved": "__unresolved_5",
           "loc": {
             "start": {
               "line": 6,
@@ -24360,7 +24374,7 @@
         },
         {
           "value": "../../Base/CameraMove",
-          "resolved": "__unresolved_5",
+          "resolved": "__unresolved_6",
           "loc": {
             "start": {
               "line": 7,
@@ -24374,7 +24388,7 @@
         },
         {
           "value": "../../Base/UnityUpComponent",
-          "resolved": "__unresolved_6",
+          "resolved": "__unresolved_7",
           "loc": {
             "start": {
               "line": 10,
@@ -24388,7 +24402,7 @@
         },
         {
           "value": "../Effect/EffectManager",
-          "resolved": "__unresolved_7",
+          "resolved": "__unresolved_8",
           "loc": {
             "start": {
               "line": 11,
@@ -24402,7 +24416,7 @@
         },
         {
           "value": "../../Base/AudioManager",
-          "resolved": "__unresolved_8",
+          "resolved": "__unresolved_9",
           "loc": {
             "start": {
               "line": 12,
@@ -24416,7 +24430,7 @@
         },
         {
           "value": "../../Base/LayerManager",
-          "resolved": "__unresolved_9",
+          "resolved": "__unresolved_10",
           "loc": {
             "start": {
               "line": 13,
@@ -24463,6 +24477,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Player.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts"
           },
           "messages": []
         },
@@ -24883,7 +24904,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts": {
       "mTimestamp": {
-        "mtime": 1782181553652.281,
+        "mtime": 1782199333027.7793,
         "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
       },
       "chunkId": "aa6223cf35796d09344450a14919ad24c61174bb",
@@ -24903,11 +24924,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 140
+              "column": 161
             },
             "end": {
               "line": 1,
-              "column": 144
+              "column": 165
             }
           }
         },

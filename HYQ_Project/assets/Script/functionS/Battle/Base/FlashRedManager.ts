@@ -224,14 +224,29 @@ export class FlashRedManager {
      */
     public stopFlashRed(node: Node): void {
         if (!node) return;
-        const entry = this._activeFlashes.get(node.uuid);
-        if (!entry) return;
+        const uuid = node.uuid;
+        for (let i = this._pendingQueue.length - 1; i >= 0; i--) {
+            const entry = this._pendingQueue[i];
+            if (entry.node?.uuid === uuid) {
+                this._pendingQueue.splice(i, 1);
+                this._pendingUuids.delete(uuid);
+                this._release(entry);
+            }
+        }
+
+        const entry = this._activeFlashes.get(uuid);
+        if (!entry) {
+            if (this._activeFlashes.size === 0 && this._pendingQueue.length === 0) {
+                this._unregisterUpdate();
+            }
+            return;
+        }
 
         this._restoreEntry(entry);
-        this._activeFlashes.delete(node.uuid);
+        this._activeFlashes.delete(uuid);
         this._release(entry);
 
-        if (this._activeFlashes.size === 0) {
+        if (this._activeFlashes.size === 0 && this._pendingQueue.length === 0) {
             this._unregisterUpdate();
         }
     }

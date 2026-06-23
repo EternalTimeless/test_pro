@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, instantiate, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -94,8 +94,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCInteger = _cc.CCInteger;
       instantiate = _cc.instantiate;
       Label = _cc.Label;
+      Material = _cc.Material;
       MeshRenderer = _cc.MeshRenderer;
       Node = _cc.Node;
+      resources = _cc.resources;
       Tween = _cc.Tween;
       tween = _cc.tween;
       v3 = _cc.v3;
@@ -137,7 +139,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "4c579+CEFxDCr/XI7aDRdSS", "PropArms", undefined);
 
-      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Color', 'Component', 'instantiate', 'Label', 'MeshRenderer', 'Node', 'Tween', 'tween', 'v3', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Color', 'Component', 'instantiate', 'Label', 'Material', 'MeshRenderer', 'Node', 'resources', 'Tween', 'tween', 'v3', 'Vec3']);
 
       ({
         ccclass,
@@ -361,7 +363,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         type: CCFloat,
         displayName: '承载物浮动幅度',
         tooltip: '武器存活时，石板/承载节点上下浮动的高度幅度。'
-      }), _dec11(_class4 = (_class5 = class PropArms extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
+      }), _dec11(_class4 = (_class5 = (_class6 = class PropArms extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
         constructor(...args) {
@@ -384,6 +386,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.lalianFinished = false;
           this.hasLalian = false;
           this._level = 0;
+          this._curArmsUsesSpriteVisual = false;
+          this._curArmsSpriteTargetY = 0;
           this._isShake = false;
           this._initialTireCount = 0;
 
@@ -461,6 +465,86 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._disableWaveStageChain = false;
         }
 
+        static prepareSpriteWeaponVisual(root) {
+          if (!root) {
+            return false;
+          }
+
+          const spriteNodes = [];
+          PropArms.collectNodesByName(root, PropArms.spriteWeaponVisualName, spriteNodes);
+
+          if (spriteNodes.length <= 0) {
+            return false;
+          }
+
+          for (let i = 0; i < spriteNodes.length; i++) {
+            const spriteNode = spriteNodes[i];
+            spriteNode.active = true;
+            spriteNode.layer = root.layer;
+          }
+
+          const modelNodes = [];
+          PropArms.collectNodesByName(root, PropArms.modelWeaponVisualName, modelNodes);
+
+          for (let i = 0; i < modelNodes.length; i++) {
+            const modelNode = modelNodes[i];
+
+            if (!PropArms.isAncestorOfAny(modelNode, spriteNodes)) {
+              modelNode.active = false;
+            }
+          }
+
+          return true;
+        }
+
+        static collectNodesByName(root, name, out) {
+          if (!root) {
+            return;
+          }
+
+          if (root.name === name) {
+            out.push(root);
+          }
+
+          for (let i = 0; i < root.children.length; i++) {
+            PropArms.collectNodesByName(root.children[i], name, out);
+          }
+        }
+
+        static isAncestorOfAny(node, targets) {
+          for (let i = 0; i < targets.length; i++) {
+            let target = targets[i];
+
+            while (target) {
+              if (target === node) {
+                return true;
+              }
+
+              target = target.parent;
+            }
+          }
+
+          return false;
+        }
+
+        hasNodeByName(root, name) {
+          if (!root) {
+            return false;
+          }
+
+          if (root.name === name) {
+            return true;
+          }
+
+          for (let i = 0; i < root.children.length; i++) {
+            if (this.hasNodeByName(root.children[i], name)) {
+              return true;
+            }
+          }
+
+          return false;
+        }
+
         // @property(Node)
         // public effect_ss: Node;
         get hitNode() {
@@ -507,14 +591,36 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var _this$_curArms;
 
           this._isShake = false;
+          (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
+            error: Error()
+          }), FlashRedManager) : FlashRedManager).instance.stopFlashRed(this.node);
           (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
             error: Error()
           }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.unregisterTarget(this); // 轮胎依次破碎消失
 
+          const destroyTireCount = this.tireList.length;
+
           for (let i = 0; i < this.tireList.length; i++) {
             const tire = this.tireList[i];
             Tween.stopAllByTarget(tire);
-            tween(tire).delay(i * 0.05).to(0.07, {
+            const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
+
+            if (oilBurstRecords.length > 0) {
+              const burstState = {
+                progress: 0
+              };
+              const delay = i * PropArms.oilBurstDestroyDelayStep;
+              this.applyOilBurstProgress(oilBurstRecords, 0);
+              tween(burstState).delay(delay).to(PropArms.oilBurstDestroyDuration, {
+                progress: 1
+              }, {
+                onUpdate: target => {
+                  this.applyOilBurstProgress(oilBurstRecords, target.progress);
+                }
+              }).start();
+            }
+
+            tween(tire).delay(i * PropArms.oilBurstDestroyDelayStep).to(0.07, {
               scale: this.getBottomBaseRootScale(tire, 1.4, 1.5, 1.4)
             }, {
               easing: 'sineOut'
@@ -523,6 +629,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }, {
               easing: 'sineIn'
             }).call(() => {
+              this.restoreOilBurstMaterials(oilBurstRecords);
               this.releaseBottomBase(tire);
             }).start();
           }
@@ -549,7 +656,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.queueTrySpawnNextStage();
 
             if (this._disableWaveStageChain) {
-              this.node.active = false;
+              const activeDestroyDelay = 0.3 * this.animScale;
+              const batchDestroyDelay = (destroyTireCount - 1) * PropArms.oilBurstDestroyDelayStep + PropArms.oilBurstDestroyDuration;
+              const hideDelay = Math.max(0.01, activeDestroyDelay, batchDestroyDelay);
+              this.scheduleOnce(() => {
+                this.node.active = false;
+              }, hideDelay);
             }
 
             return;
@@ -839,10 +951,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             if (tireMeshRenderer) {
               this.meshFlashDataList[0].meshRender = tireMeshRenderer;
             }
-          } // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
+          }
 
+          (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
+            error: Error()
+          }), FlashRedManager) : FlashRedManager).instance.stopFlashRed(this.node); // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
 
-          if (oldMR && oldMR.isValid) {
+          const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
+
+          if (oilBurstRecords.length <= 0 && oldMR && oldMR.isValid) {
             (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
               error: Error()
             }), FlashRedManager) : FlashRedManager).instance.flashRed(this.node, [{
@@ -860,6 +977,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const s2 = this.getBottomBaseRootScale(tire, 1.3);
           const s3 = this.getBottomBaseRootScale(tire, 0.6);
           const s0 = v3(0, 0, 0);
+
+          if (oilBurstRecords.length > 0) {
+            const burstState = {
+              progress: 0
+            };
+            this.applyOilBurstProgress(oilBurstRecords, 0);
+            tween(burstState).to(0.3 * this.animScale, {
+              progress: 1
+            }, {
+              onUpdate: target => {
+                this.applyOilBurstProgress(oilBurstRecords, target.progress);
+              }
+            }).start();
+          }
+
           tween(tire).to(0.06 * this.animScale, {
             scale: s2
           }, {
@@ -877,6 +1009,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }, {
             easing: 'sineIn'
           }).call(() => {
+            this.restoreOilBurstMaterials(oilBurstRecords);
             this.releaseBottomBase(tire);
             this._isShake = false;
           }).start(); // 剩余轮胎弹跳下落（上面的轮胎先跳再落）
@@ -1005,6 +1138,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               const fbx = this.armsInfoList[i].fbx;
 
               if (fbx != null && fbx.node) {
+                PropArms.prepareSpriteWeaponVisual(fbx.node);
                 fbx.node.active = i === this._level;
               }
             }
@@ -1016,6 +1150,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               return;
             }
 
+            this._curArmsUsesSpriteVisual = this.hasNodeByName(this._curArms.fbx.node, PropArms.spriteWeaponVisualName);
+            this._curArmsSpriteTargetY = this._curArms.fbx.node.y;
             this._isStageAlive = true;
             this.initLalian();
             const tireSpacing = this.tireSpacing;
@@ -1358,6 +1494,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getArmsTargetY(liftCount) {
+          if (this._curArmsUsesSpriteVisual) {
+            return this._curArmsSpriteTargetY;
+          }
+
           this.loadRoleTemplateLayout();
 
           if (this.hasRoleTemplateLayout) {
@@ -1543,6 +1683,161 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return found ? (minX + maxX) * 0.5 : null;
         }
 
+        static preloadOilBurstMaterial() {
+          if (PropArms.oilBurstMaterial || PropArms.oilBurstMaterialLoading) {
+            return;
+          }
+
+          PropArms.oilBurstMaterialLoading = true;
+          resources.load(PropArms.oilBurstMaterialPath, Material, (err, material) => {
+            PropArms.oilBurstMaterialLoading = false;
+
+            if (err || !material) {
+              console.warn(`[PropArms] load oil burst material failed: ${PropArms.oilBurstMaterialPath}`, err);
+              return;
+            }
+
+            PropArms.oilBurstMaterial = material;
+          });
+        }
+
+        createOilBurstMaterialRecords(node) {
+          const burstTemplate = PropArms.oilBurstMaterial;
+
+          if (!burstTemplate) {
+            PropArms.preloadOilBurstMaterial();
+            return [];
+          }
+
+          const renderers = [];
+          this.collectMeshRenderers(node, renderers);
+          const records = [];
+
+          for (let r = 0; r < renderers.length; r++) {
+            const renderer = renderers[r];
+
+            if (!renderer || !renderer.isValid) {
+              continue;
+            }
+
+            const originalMaterials = [...renderer.sharedMaterials];
+            const burstMaterials = [];
+            let hasBurstMaterial = false;
+
+            for (let i = 0; i < originalMaterials.length; i++) {
+              const original = originalMaterials[i];
+
+              if (!original) {
+                burstMaterials[i] = null;
+                continue;
+              }
+
+              const burst = new Material();
+              burst.copy(burstTemplate);
+              this.copyOilBurstBaseProperties(original, burst);
+              burst.setProperty("burstProgress", 0);
+              burst.setProperty("burstWidth", 0.12);
+              burst.setProperty("burstOffset", 0.35);
+              burstMaterials[i] = burst;
+              renderer.setSharedMaterial(burst, i);
+              hasBurstMaterial = true;
+            }
+
+            if (hasBurstMaterial) {
+              records.push({
+                renderer,
+                originalMaterials,
+                burstMaterials
+              });
+            }
+          }
+
+          return records;
+        }
+
+        collectMeshRenderers(node, out) {
+          if (!node) {
+            return;
+          }
+
+          const meshRenderer = node.getComponent(MeshRenderer);
+
+          if (meshRenderer) {
+            out.push(meshRenderer);
+          }
+
+          for (let i = 0; i < node.children.length; i++) {
+            this.collectMeshRenderers(node.children[i], out);
+          }
+        }
+
+        copyOilBurstBaseProperties(source, target) {
+          const texture = this.getMaterialProperty(source, "mainTexture");
+
+          if (texture) {
+            target.setProperty("mainTexture", texture);
+          }
+
+          const color = this.getMaterialProperty(source, "mainColor");
+
+          if (color) {
+            target.setProperty("mainColor", color);
+          }
+        }
+
+        getMaterialProperty(material, propName) {
+          try {
+            const getter = material.getProperty;
+
+            if (typeof getter === "function") {
+              return getter.call(material, propName);
+            }
+          } catch (err) {
+            return null;
+          }
+
+          return null;
+        }
+
+        applyOilBurstProgress(records, progress) {
+          const value = Math.max(0, Math.min(1, progress));
+
+          for (let r = 0; r < records.length; r++) {
+            const record = records[r];
+
+            if (!record.renderer || !record.renderer.isValid) {
+              continue;
+            }
+
+            for (let i = 0; i < record.burstMaterials.length; i++) {
+              const material = record.burstMaterials[i];
+
+              if (material) {
+                material.setProperty("burstProgress", value);
+              }
+            }
+          }
+        }
+
+        restoreOilBurstMaterials(records) {
+          for (let r = 0; r < records.length; r++) {
+            const record = records[r];
+
+            if (record.renderer && record.renderer.isValid) {
+              record.renderer.sharedMaterials = [];
+              record.renderer.sharedMaterials = record.originalMaterials;
+            }
+
+            for (let i = 0; i < record.burstMaterials.length; i++) {
+              const material = record.burstMaterials[i];
+
+              if (material && material.isValid) {
+                material.destroy();
+              }
+            }
+          }
+        }
+
         findFirstMeshRenderer(node) {
           if (!node) {
             return null;
@@ -1661,6 +1956,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         selectArms() {}
 
         start() {
+          PropArms.preloadOilBurstMaterial();
+
           if (!this._disableWaveStageChain) {
             (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
               error: Error()
@@ -1777,7 +2074,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.node.setWorldPosition(this._stageSpawnPos);
         }
 
-      }, (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
+      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.15, _class6.oilBurstDestroyDelayStep = 0.05, _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
         configurable: true,
         enumerable: true,
         writable: true,

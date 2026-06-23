@@ -2032,6 +2032,29 @@
         "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-fs.chunk",
         "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-lighting.chunk",
         "..\\extensions\\super-packager\\package_assets\\chunks\\ocean-foam.chunk"
+      ],
+      "resources\\Shaders\\OilBarrelBurst.effect": [
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\oil-burst-vs.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\cc-global.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\cc-local.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\oil-burst-fs.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\output.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\builtin\\uniforms\\cc-global.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\common\\color\\gamma.chunk",
+        "chunks\\oil-burst-vs.chunk",
+        "chunks\\cc-global.chunk",
+        "chunks\\cc-local.chunk",
+        "chunks\\oil-burst-fs.chunk",
+        "chunks\\output.chunk",
+        "chunks\\builtin\\uniforms\\cc-global.chunk",
+        "chunks\\common\\color\\gamma.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\oil-burst-vs.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\cc-global.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\cc-local.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\oil-burst-fs.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\output.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\builtin\\uniforms\\cc-global.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\common\\color\\gamma.chunk"
       ]
     },
     "uuid": {
@@ -2508,6 +2531,9 @@
       ],
       "GameRes\\SLLYT_map\\zhujue\\M_ak.mtl": [
         "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "resources\\Materials\\OilBarrelBurst.mtl": [
+        "85d2f214-5f2e-4d73-934b-66e3f35a2470"
       ]
     }
   },

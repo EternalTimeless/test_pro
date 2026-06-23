@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, CCFloat, CCInteger, Color, Component, instantiate, Label, MeshRenderer, Node, Tween, tween, v3, Vec3 } from 'cc';
+import { _decorator, CCBoolean, CCFloat, CCInteger, Color, Component, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, v3, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import PoolManager from '../../Base/PoolManager';
@@ -21,6 +21,12 @@ enum AnimArms {
     up_ju,
     up_out
 }
+
+type OilBurstMaterialRecord = {
+    renderer: MeshRenderer;
+    originalMaterials: (Material | null)[];
+    burstMaterials: (Material | null)[];
+};
 
 
 @ccclass('ArmsInfo')
@@ -58,6 +64,83 @@ export class ArmsInfo {
 @ccclass('PropArms')
 export class PropArms extends BattleTarget3D {
 
+    private static readonly oilBurstMaterialPath: string = "Materials/OilBarrelBurst";
+    private static oilBurstMaterial: Material | null = null;
+    private static oilBurstMaterialLoading: boolean = false;
+    private static readonly oilBurstDestroyDuration: number = 0.15;
+    private static readonly oilBurstDestroyDelayStep: number = 0.05;
+    private static readonly spriteWeaponVisualName: string = "jiatelin";
+    private static readonly modelWeaponVisualName: string = "jiateling01";
+
+    public static prepareSpriteWeaponVisual(root: Node): boolean {
+        if (!root) {
+            return false;
+        }
+
+        const spriteNodes: Node[] = [];
+        PropArms.collectNodesByName(root, PropArms.spriteWeaponVisualName, spriteNodes);
+        if (spriteNodes.length <= 0) {
+            return false;
+        }
+
+        for (let i = 0; i < spriteNodes.length; i++) {
+            const spriteNode = spriteNodes[i];
+            spriteNode.active = true;
+            spriteNode.layer = root.layer;
+        }
+
+        const modelNodes: Node[] = [];
+        PropArms.collectNodesByName(root, PropArms.modelWeaponVisualName, modelNodes);
+        for (let i = 0; i < modelNodes.length; i++) {
+            const modelNode = modelNodes[i];
+            if (!PropArms.isAncestorOfAny(modelNode, spriteNodes)) {
+                modelNode.active = false;
+            }
+        }
+
+        return true;
+    }
+
+    private static collectNodesByName(root: Node, name: string, out: Node[]): void {
+        if (!root) {
+            return;
+        }
+        if (root.name === name) {
+            out.push(root);
+        }
+        for (let i = 0; i < root.children.length; i++) {
+            PropArms.collectNodesByName(root.children[i], name, out);
+        }
+    }
+
+    private static isAncestorOfAny(node: Node, targets: Node[]): boolean {
+        for (let i = 0; i < targets.length; i++) {
+            let target: Node | null = targets[i];
+            while (target) {
+                if (target === node) {
+                    return true;
+                }
+                target = target.parent;
+            }
+        }
+        return false;
+    }
+
+    private hasNodeByName(root: Node, name: string): boolean {
+        if (!root) {
+            return false;
+        }
+        if (root.name === name) {
+            return true;
+        }
+        for (let i = 0; i < root.children.length; i++) {
+            if (this.hasNodeByName(root.children[i], name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @property({ type: ArmsInfo, displayName: '武器阶段列表', tooltip: '每一项代表一个武器阶段。受击死亡后会切到下一阶段或触发武器飞向主角。' })
     public armsInfoList: ArmsInfo[] = [];
 
@@ -80,6 +163,8 @@ export class PropArms extends BattleTarget3D {
     private hasLalian: boolean = false;
 
     private _level: number = 0;
+    private _curArmsUsesSpriteVisual: boolean = false;
+    private _curArmsSpriteTargetY: number = 0;
 
     private _isShake: boolean = false;
 
@@ -193,17 +278,34 @@ export class PropArms extends BattleTarget3D {
     protected die(): void {
 
         this._isShake = false;
+        FlashRedManager.instance.stopFlashRed(this.node);
         BulletMonsterCollisionManager.instance.unregisterTarget(this);
 
         // 轮胎依次破碎消失
+        const destroyTireCount = this.tireList.length;
         for (let i = 0; i < this.tireList.length; i++) {
             const tire = this.tireList[i];
             Tween.stopAllByTarget(tire);
+            const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
+            if (oilBurstRecords.length > 0) {
+                const burstState = { progress: 0 };
+                const delay = i * PropArms.oilBurstDestroyDelayStep;
+                this.applyOilBurstProgress(oilBurstRecords, 0);
+                tween(burstState)
+                    .delay(delay)
+                    .to(PropArms.oilBurstDestroyDuration, { progress: 1 }, {
+                        onUpdate: (target: { progress: number }) => {
+                            this.applyOilBurstProgress(oilBurstRecords, target.progress);
+                        }
+                    })
+                    .start();
+            }
             tween(tire)
-                .delay(i * 0.05)
+                .delay(i * PropArms.oilBurstDestroyDelayStep)
                 .to(0.07, { scale: this.getBottomBaseRootScale(tire, 1.4, 1.5, 1.4) }, { easing: 'sineOut' })
                 .to(0.08, { scale: Vec3.ZERO }, { easing: 'sineIn' })
                 .call(() => {
+                    this.restoreOilBurstMaterials(oilBurstRecords);
                     this.releaseBottomBase(tire);
                 })
                 .start();
@@ -225,7 +327,12 @@ export class PropArms extends BattleTarget3D {
             this.node.emit(EventType.PROP_ARMS_DIE, this._curArms);
             this.queueTrySpawnNextStage();
             if (this._disableWaveStageChain) {
-                this.node.active = false;
+                const activeDestroyDelay = 0.3 * this.animScale;
+                const batchDestroyDelay = (destroyTireCount - 1) * PropArms.oilBurstDestroyDelayStep + PropArms.oilBurstDestroyDuration;
+                const hideDelay = Math.max(0.01, activeDestroyDelay, batchDestroyDelay);
+                this.scheduleOnce(() => {
+                    this.node.active = false;
+                }, hideDelay);
             }
             return;
         }
@@ -449,8 +556,12 @@ export class PropArms extends BattleTarget3D {
             }
         }
 
+        FlashRedManager.instance.stopFlashRed(this.node);
+
         // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
-        if (oldMR && oldMR.isValid) {
+        const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
+
+        if (oilBurstRecords.length <= 0 && oldMR && oldMR.isValid) {
             FlashRedManager.instance.flashRed(this.node, [{
                 meshRender: oldMR,
                 colorProps: this.meshFlashDataList[0].colorProps,
@@ -464,12 +575,24 @@ export class PropArms extends BattleTarget3D {
         const s2 = this.getBottomBaseRootScale(tire, 1.3);
         const s3 = this.getBottomBaseRootScale(tire, 0.6);
         const s0 = v3(0, 0, 0);
+        if (oilBurstRecords.length > 0) {
+            const burstState = { progress: 0 };
+            this.applyOilBurstProgress(oilBurstRecords, 0);
+            tween(burstState)
+                .to(0.3 * this.animScale, { progress: 1 }, {
+                    onUpdate: (target: { progress: number }) => {
+                        this.applyOilBurstProgress(oilBurstRecords, target.progress);
+                    }
+                })
+                .start();
+        }
         tween(tire)
             .to(0.06 * this.animScale, { scale: s2 }, { easing: 'cubicOut' })
             .to(0.08 * this.animScale, { scale: s3 }, { easing: 'cubicOut' })
             .to(0.08 * this.animScale, { scale: s1 }, { easing: 'backOut' })
             .to(0.08 * this.animScale, { scale: s0 }, { easing: 'sineIn' })
             .call(() => {
+                this.restoreOilBurstMaterials(oilBurstRecords);
                 this.releaseBottomBase(tire);
                 this._isShake = false;
             })
@@ -577,6 +700,7 @@ export class PropArms extends BattleTarget3D {
             for (let i = 0; i < this.armsInfoList.length; i++) {
                 const fbx = this.armsInfoList[i].fbx;
                 if (fbx?.node) {
+                    PropArms.prepareSpriteWeaponVisual(fbx.node);
                     fbx.node.active = i === this._level;
                 }
             }
@@ -585,6 +709,8 @@ export class PropArms extends BattleTarget3D {
                 this._isStageAlive = false;
                 return;
             }
+            this._curArmsUsesSpriteVisual = this.hasNodeByName(this._curArms.fbx.node, PropArms.spriteWeaponVisualName);
+            this._curArmsSpriteTargetY = this._curArms.fbx.node.y;
             this._isStageAlive = true;
             this.initLalian();
 
@@ -880,6 +1006,9 @@ export class PropArms extends BattleTarget3D {
     }
 
     private getArmsTargetY(liftCount: number): number {
+        if (this._curArmsUsesSpriteVisual) {
+            return this._curArmsSpriteTargetY;
+        }
         this.loadRoleTemplateLayout();
         if (this.hasRoleTemplateLayout) {
             return this.roleTemplateArmsPos.y + Math.max(0, liftCount - 1) * this.tireSpacing;
@@ -1046,6 +1175,139 @@ export class PropArms extends BattleTarget3D {
         return found ? (minX + maxX) * 0.5 : null;
     }
 
+    private static preloadOilBurstMaterial(): void {
+        if (PropArms.oilBurstMaterial || PropArms.oilBurstMaterialLoading) {
+            return;
+        }
+        PropArms.oilBurstMaterialLoading = true;
+        resources.load(PropArms.oilBurstMaterialPath, Material, (err, material) => {
+            PropArms.oilBurstMaterialLoading = false;
+            if (err || !material) {
+                console.warn(`[PropArms] load oil burst material failed: ${PropArms.oilBurstMaterialPath}`, err);
+                return;
+            }
+            PropArms.oilBurstMaterial = material;
+        });
+    }
+
+    private createOilBurstMaterialRecords(node: Node): OilBurstMaterialRecord[] {
+        const burstTemplate = PropArms.oilBurstMaterial;
+        if (!burstTemplate) {
+            PropArms.preloadOilBurstMaterial();
+            return [];
+        }
+
+        const renderers: MeshRenderer[] = [];
+        this.collectMeshRenderers(node, renderers);
+
+        const records: OilBurstMaterialRecord[] = [];
+        for (let r = 0; r < renderers.length; r++) {
+            const renderer = renderers[r];
+            if (!renderer || !renderer.isValid) {
+                continue;
+            }
+
+            const originalMaterials = [...renderer.sharedMaterials];
+            const burstMaterials: (Material | null)[] = [];
+            let hasBurstMaterial = false;
+
+            for (let i = 0; i < originalMaterials.length; i++) {
+                const original = originalMaterials[i];
+                if (!original) {
+                    burstMaterials[i] = null;
+                    continue;
+                }
+
+                const burst = new Material();
+                burst.copy(burstTemplate);
+                this.copyOilBurstBaseProperties(original, burst);
+                burst.setProperty("burstProgress", 0);
+                burst.setProperty("burstWidth", 0.12);
+                burst.setProperty("burstOffset", 0.35);
+                burstMaterials[i] = burst;
+                renderer.setSharedMaterial(burst, i);
+                hasBurstMaterial = true;
+            }
+
+            if (hasBurstMaterial) {
+                records.push({ renderer, originalMaterials, burstMaterials });
+            }
+        }
+        return records;
+    }
+
+    private collectMeshRenderers(node: Node, out: MeshRenderer[]): void {
+        if (!node) {
+            return;
+        }
+
+        const meshRenderer = node.getComponent(MeshRenderer);
+        if (meshRenderer) {
+            out.push(meshRenderer);
+        }
+
+        for (let i = 0; i < node.children.length; i++) {
+            this.collectMeshRenderers(node.children[i], out);
+        }
+    }
+
+    private copyOilBurstBaseProperties(source: Material, target: Material): void {
+        const texture = this.getMaterialProperty(source, "mainTexture");
+        if (texture) {
+            target.setProperty("mainTexture", texture);
+        }
+
+        const color = this.getMaterialProperty(source, "mainColor");
+        if (color) {
+            target.setProperty("mainColor", color);
+        }
+    }
+
+    private getMaterialProperty(material: Material, propName: string): any {
+        try {
+            const getter = (material as any).getProperty;
+            if (typeof getter === "function") {
+                return getter.call(material, propName);
+            }
+        } catch (err) {
+            return null;
+        }
+        return null;
+    }
+
+    private applyOilBurstProgress(records: OilBurstMaterialRecord[], progress: number): void {
+        const value = Math.max(0, Math.min(1, progress));
+        for (let r = 0; r < records.length; r++) {
+            const record = records[r];
+            if (!record.renderer || !record.renderer.isValid) {
+                continue;
+            }
+            for (let i = 0; i < record.burstMaterials.length; i++) {
+                const material = record.burstMaterials[i];
+                if (material) {
+                    material.setProperty("burstProgress", value);
+                }
+            }
+        }
+    }
+
+    private restoreOilBurstMaterials(records: OilBurstMaterialRecord[]): void {
+        for (let r = 0; r < records.length; r++) {
+            const record = records[r];
+            if (record.renderer && record.renderer.isValid) {
+                record.renderer.sharedMaterials = [];
+                record.renderer.sharedMaterials = record.originalMaterials;
+            }
+
+            for (let i = 0; i < record.burstMaterials.length; i++) {
+                const material = record.burstMaterials[i];
+                if (material && material.isValid) {
+                    material.destroy();
+                }
+            }
+        }
+    }
+
     private findFirstMeshRenderer(node: Node): MeshRenderer | null {
         if (!node) {
             return null;
@@ -1150,6 +1412,7 @@ export class PropArms extends BattleTarget3D {
 
 
     start() {
+        PropArms.preloadOilBurstMaterial();
         if (!this._disableWaveStageChain) {
             EventManager.instance.on(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage, this);
         }

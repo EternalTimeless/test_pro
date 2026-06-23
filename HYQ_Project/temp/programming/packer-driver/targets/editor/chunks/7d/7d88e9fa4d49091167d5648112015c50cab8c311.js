@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Tween, Vec3, Player, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, JumpManager, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, _dec, _dec2, _class, _class2, _descriptor, _crd, ccclass, property, ArmsUp;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Tween, Vec3, Player, PropArms, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, JumpManager, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, _dec, _dec2, _class, _class2, _descriptor, _crd, ccclass, property, ArmsUp;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -15,6 +15,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfArmsInfo(extras) {
     _reporterNs.report("ArmsInfo", "./PropArms", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfPropArms(extras) {
+    _reporterNs.report("PropArms", "./PropArms", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfEventManager(extras) {
@@ -78,24 +82,26 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_2) {
       Player = _unresolved_2.Player;
     }, function (_unresolved_3) {
-      EventManager = _unresolved_3.default;
+      PropArms = _unresolved_3.PropArms;
     }, function (_unresolved_4) {
-      EffectEnum = _unresolved_4.EffectEnum;
-      EventType = _unresolved_4.EventType;
-      LayerEnum = _unresolved_4.LayerEnum;
-      SoundEnum = _unresolved_4.SoundEnum;
+      EventManager = _unresolved_4.default;
     }, function (_unresolved_5) {
-      JumpManager = _unresolved_5.JumpManager;
+      EffectEnum = _unresolved_5.EffectEnum;
+      EventType = _unresolved_5.EventType;
+      LayerEnum = _unresolved_5.LayerEnum;
+      SoundEnum = _unresolved_5.SoundEnum;
     }, function (_unresolved_6) {
-      CameraMove = _unresolved_6.CameraMove;
+      JumpManager = _unresolved_6.JumpManager;
     }, function (_unresolved_7) {
-      UnityUpComponent = _unresolved_7.UnityUpComponent;
+      CameraMove = _unresolved_7.CameraMove;
     }, function (_unresolved_8) {
-      EffectManager = _unresolved_8.EffectManager;
+      UnityUpComponent = _unresolved_8.UnityUpComponent;
     }, function (_unresolved_9) {
-      AudioManager = _unresolved_9.default;
+      EffectManager = _unresolved_9.EffectManager;
     }, function (_unresolved_10) {
-      LayerManager = _unresolved_10.default;
+      AudioManager = _unresolved_10.default;
+    }, function (_unresolved_11) {
+      LayerManager = _unresolved_11.default;
     }],
     execute: function () {
       _crd = true;
@@ -146,6 +152,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          (_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+            error: Error()
+          }), PropArms) : PropArms).prepareSpriteWeaponVisual(fbxNode);
           const startPos = fbxNode.worldPosition.clone();
           this.scheduleOnce(() => {
             Tween.stopAllByTarget(fbxNode);

@@ -770,14 +770,17 @@
         "df892961-7da4-4f4d-8b24-7963cfcd3df7@97cb5",
         "29cb620a-6a6f-4137-9526-751deb1882ad",
         "03189dd5-73dd-4e52-8644-1ff1a122b972@2e1cf",
+        "e858ec41-b696-4f67-93e0-2bf9701f5fa1@f9941",
         "cc1ba55d-5314-4c01-ba6d-b71fae6946a4",
         "ba379bbc-987c-4bbc-a296-3cabc67825bb@73b7f",
         "c6316384-dbb5-4431-ad4a-4c00d3092298@73b7f",
         "f6fb758b-ca27-49a3-9074-b55054373a42@73b7f",
         "e8aabdc2-bc10-4f97-95c0-c41ee701c0f1@83837",
+        "d26e4428-da7b-4636-a9bc-d323067fd5bc@f9941",
         "a940ff9a-70dc-4bd5-91ca-f7badfe4f9ef",
         "0be8fd33-e86d-424b-af22-996a79677903",
         "fed75016-e3cc-4c00-b479-b84368d1644c@9cd64",
+        "511c4dd1-18bf-4fb4-b2ff-24b5bfe956a8@f9941",
         "195a1b86-f57e-4d07-af1b-3f836083249a",
         "9a96fc79-fcf2-4e2d-946e-0dca53a468fb@6016b",
         "85075bb1-7df0-491d-bece-017584a8240e",
@@ -9650,6 +9653,153 @@
     "value": {
       "depends": [
         "ed114fd7-00bb-44ea-b514-0b6c88c75558"
+      ]
+    },
+    "versionCode": 1
+  },
+  "a06bd5b7-62a5-4046-9f42-b34cae5c29da": {
+    "url": "db://assets/resources/Materials",
+    "value": {},
+    "versionCode": 1
+  },
+  "f9a7f3d1-1c80-4e66-8f7c-45a76b662f8a": {
+    "url": "db://assets/resources/Shaders",
+    "value": {},
+    "versionCode": 1
+  },
+  "2a6b1163-1472-4d78-afc8-a2b34ed2aa10": {
+    "url": "db://assets/resources/Materials/OilBarrelBurst.mtl",
+    "value": {
+      "depends": [
+        "85d2f214-5f2e-4d73-934b-66e3f35a2470"
+      ]
+    },
+    "versionCode": 1
+  },
+  "85d2f214-5f2e-4d73-934b-66e3f35a2470": {
+    "url": "db://assets/resources/Shaders/OilBarrelBurst.effect",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "0e9007ea-e181-4ad8-b4d6-08fc5161f1ba": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi",
+    "value": {},
+    "versionCode": 1
+  },
+  "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-AK47.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "5da8f267-1313-44d2-9ebc-adaef1ccb5cf": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-MP5.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "e858ec41-b696-4f67-93e0-2bf9701f5fa1": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "d26e4428-da7b-4636-a9bc-d323067fd5bc": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林蓝 光效增强.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "511c4dd1-18bf-4fb4-b2ff-24b5bfe956a8": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林黄金.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "d26e4428-da7b-4636-a9bc-d323067fd5bc@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林蓝 光效增强.png@6c48a",
+    "value": {
+      "depends": [
+        "d26e4428-da7b-4636-a9bc-d323067fd5bc"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e858ec41-b696-4f67-93e0-2bf9701f5fa1@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林.png@6c48a",
+    "value": {
+      "depends": [
+        "e858ec41-b696-4f67-93e0-2bf9701f5fa1"
+      ]
+    },
+    "versionCode": 1
+  },
+  "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-AK47.png@6c48a",
+    "value": {
+      "depends": [
+        "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce"
+      ]
+    },
+    "versionCode": 1
+  },
+  "511c4dd1-18bf-4fb4-b2ff-24b5bfe956a8@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林黄金.png@6c48a",
+    "value": {
+      "depends": [
+        "511c4dd1-18bf-4fb4-b2ff-24b5bfe956a8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "5da8f267-1313-44d2-9ebc-adaef1ccb5cf@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-MP5.png@6c48a",
+    "value": {
+      "depends": [
+        "5da8f267-1313-44d2-9ebc-adaef1ccb5cf"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e858ec41-b696-4f67-93e0-2bf9701f5fa1@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林.png@f9941",
+    "value": {
+      "depends": [
+        "e858ec41-b696-4f67-93e0-2bf9701f5fa1@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "5da8f267-1313-44d2-9ebc-adaef1ccb5cf@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-MP5.png@f9941",
+    "value": {
+      "depends": [
+        "5da8f267-1313-44d2-9ebc-adaef1ccb5cf@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "d26e4428-da7b-4636-a9bc-d323067fd5bc@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林蓝 光效增强.png@f9941",
+    "value": {
+      "depends": [
+        "d26e4428-da7b-4636-a9bc-d323067fd5bc@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "511c4dd1-18bf-4fb4-b2ff-24b5bfe956a8@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-加特林黄金.png@f9941",
+    "value": {
+      "depends": [
+        "511c4dd1-18bf-4fb4-b2ff-24b5bfe956a8@6c48a"
       ]
     },
     "versionCode": 1

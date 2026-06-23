@@ -6,7 +6,7 @@
       "uuid": "5f69c6c0-cb55-40e6-9ce8-7bb74031024e"
     },
     "resources": {
-      "time": 1781493202825.3438,
+      "time": 1782193902110.0073,
       "uuid": "caffc481-8e86-4f96-8867-9213f3a378f4"
     },
     "Scene": {
@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782187177470.221,
+      "time": 1782198719161.2517,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1666,7 +1666,7 @@
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
-      "time": 1781665569070.1738,
+      "time": 1782196960279.3284,
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782181553652.281,
+      "time": 1782199333027.7793,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -1942,7 +1942,7 @@
       "uuid": "a9926452-d8e9-47dc-a181-19f79a3a148e"
     },
     "Script\\functionS\\Battle\\Base\\FlashRedManager.ts": {
-      "time": 1781231241771.772,
+      "time": 1782195583568.851,
       "uuid": "7eeb70e3-f1ea-4d16-b4ec-793f0341aa41"
     },
     "Script\\functionS\\Battle\\Battle2D\\CollectBattleTarger2D.ts": {
@@ -4653,7 +4653,7 @@
       "uuid": "c588152e-c314-4759-a79c-e0c841054311"
     },
     "GameRes\\SLLYT_map": {
-      "time": 1781778500667.8364,
+      "time": 1782195527550.9514,
       "uuid": "1ae86c67-30a0-4d39-9163-71d38ebcff29"
     },
     "GameRes\\SLLYT_map\\tex": {
@@ -5033,6 +5033,76 @@
     "GameRes\\SLLYT_map\\fbx\\SM_tengman_01.fbx": {
       "time": 1782181052202.74,
       "uuid": "b0b79582-ae8f-4772-a003-6d3c178d17f8"
+    },
+    "resources\\Materials.meta": {
+      "time": 1782194089140.5815
+    },
+    "resources\\Shaders.meta": {
+      "time": 1782194089141.5786
+    },
+    "resources\\Materials\\OilBarrelBurst.mtl.meta": {
+      "time": 1782193908079.1738
+    },
+    "resources\\Shaders\\OilBarrelBurst.effect.meta": {
+      "time": 1782193891260.9219
+    },
+    "resources\\Materials": {
+      "time": 1782193908078.1758,
+      "uuid": "a06bd5b7-62a5-4046-9f42-b34cae5c29da"
+    },
+    "resources\\Shaders": {
+      "time": 1782193891260.9219,
+      "uuid": "f9a7f3d1-1c80-4e66-8f7c-45a76b662f8a"
+    },
+    "resources\\Materials\\OilBarrelBurst.mtl": {
+      "time": 1782193903564.1465,
+      "uuid": "2a6b1163-1472-4d78-afc8-a2b34ed2aa10"
+    },
+    "resources\\Shaders\\OilBarrelBurst.effect": {
+      "time": 1782193886660.3374,
+      "uuid": "85d2f214-5f2e-4d73-934b-66e3f35a2470"
+    },
+    "GameRes\\SLLYT_map\\wuqi.meta": {
+      "time": 1782195527550.9514
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-AK47.png.meta": {
+      "time": 1782195527500.7134
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-MP5.png.meta": {
+      "time": 1782195756677.032
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-加特林.png.meta": {
+      "time": 1782195747828.5503
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-加特林蓝 光效增强.png.meta": {
+      "time": 1782197412669.6592
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-加特林黄金.png.meta": {
+      "time": 1782197417605.5442
+    },
+    "GameRes\\SLLYT_map\\wuqi": {
+      "time": 1782195527537.1658,
+      "uuid": "0e9007ea-e181-4ad8-b4d6-08fc5161f1ba"
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-加特林蓝 光效增强.png": {
+      "time": 1782195527524.7185,
+      "uuid": "d26e4428-da7b-4636-a9bc-d323067fd5bc"
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-加特林.png": {
+      "time": 1782195527514.5613,
+      "uuid": "e858ec41-b696-4f67-93e0-2bf9701f5fa1"
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-AK47.png": {
+      "time": 1782195527499.7146,
+      "uuid": "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce"
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-加特林黄金.png": {
+      "time": 1782195527535.1694,
+      "uuid": "511c4dd1-18bf-4fb4-b2ff-24b5bfe956a8"
+    },
+    "GameRes\\SLLYT_map\\wuqi\\UI-MP5.png": {
+      "time": 1782195527504.702,
+      "uuid": "5da8f267-1313-44d2-9ebc-adaef1ccb5cf"
     }
   },
   "missing": {}

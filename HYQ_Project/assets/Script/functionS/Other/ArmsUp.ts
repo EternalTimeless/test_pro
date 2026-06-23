@@ -1,6 +1,6 @@
 import { _decorator, Component, Node, Tween, tween, Vec3 } from 'cc';
 import { Player } from '../Player/Player';
-import { ArmsInfo } from './PropArms';
+import { ArmsInfo, PropArms } from './PropArms';
 import EventManager from '../../Base/EventManager';
 import { EffectEnum, EventType, LayerEnum, PoolEnum, SoundEnum } from '../../Base/EnumList';
 import { JumpManager } from '../Jump/JumpManager';
@@ -34,6 +34,7 @@ export class ArmsUp extends UnityUpComponent {
         if (!fbxNode) {
             return;
         }
+        PropArms.prepareSpriteWeaponVisual(fbxNode);
         const startPos = fbxNode.worldPosition.clone();
         this.scheduleOnce(() => {
             Tween.stopAllByTarget(fbxNode);

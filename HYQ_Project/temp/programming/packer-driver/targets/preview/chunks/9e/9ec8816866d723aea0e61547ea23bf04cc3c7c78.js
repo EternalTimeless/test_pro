@@ -214,18 +214,39 @@ System.register(["cc"], function (_export, _context) {
 
         stopFlashRed(node) {
           if (!node) return;
+          var uuid = node.uuid;
 
-          var entry = this._activeFlashes.get(node.uuid);
+          for (var i = this._pendingQueue.length - 1; i >= 0; i--) {
+            var _entry$node;
 
-          if (!entry) return;
+            var _entry = this._pendingQueue[i];
+
+            if (((_entry$node = _entry.node) == null ? void 0 : _entry$node.uuid) === uuid) {
+              this._pendingQueue.splice(i, 1);
+
+              this._pendingUuids.delete(uuid);
+
+              this._release(_entry);
+            }
+          }
+
+          var entry = this._activeFlashes.get(uuid);
+
+          if (!entry) {
+            if (this._activeFlashes.size === 0 && this._pendingQueue.length === 0) {
+              this._unregisterUpdate();
+            }
+
+            return;
+          }
 
           this._restoreEntry(entry);
 
-          this._activeFlashes.delete(node.uuid);
+          this._activeFlashes.delete(uuid);
 
           this._release(entry);
 
-          if (this._activeFlashes.size === 0) {
+          if (this._activeFlashes.size === 0 && this._pendingQueue.length === 0) {
             this._unregisterUpdate();
           }
         }

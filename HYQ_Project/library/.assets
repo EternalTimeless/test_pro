@@ -720,7 +720,17 @@
             "GameRes\\SLLYT_map\\tex\\T_shizhu_a.jpg",
             "GameRes\\SLLYT_map\\tex\\T_shizhu_n.jpg",
             "GameRes\\SLLYT_map\\tex\\T_tengman_a.png",
-            "GameRes\\SLLYT_map\\tex\\T_tengman_n.jpg"
+            "GameRes\\SLLYT_map\\tex\\T_tengman_n.jpg",
+            "resources\\Materials",
+            "resources\\Shaders",
+            "resources\\Materials\\OilBarrelBurst.mtl",
+            "resources\\Shaders\\OilBarrelBurst.effect",
+            "GameRes\\SLLYT_map\\wuqi",
+            "GameRes\\SLLYT_map\\wuqi\\UI-AK47.png",
+            "GameRes\\SLLYT_map\\wuqi\\UI-MP5.png",
+            "GameRes\\SLLYT_map\\wuqi\\UI-加特林.png",
+            "GameRes\\SLLYT_map\\wuqi\\UI-加特林蓝 光效增强.png",
+            "GameRes\\SLLYT_map\\wuqi\\UI-加特林黄金.png"
         ]
     }
 }
