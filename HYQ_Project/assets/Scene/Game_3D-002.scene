@@ -12711,7 +12711,7 @@
     "_enabled": true,
     "__prefab": null,
     "showCount": 35,
-    "distance": 7,
+    "distance": 6,
     "height": 0,
     "count": 1,
     "addRoleMaxCount": 0,
@@ -12721,7 +12721,7 @@
     "lalianGate": {
       "__id__": 844
     },
-    "propStartZ": -0.5,
+    "propStartZ": -0.4,
     "wallNode": {
       "__id__": 305
     },
@@ -13801,7 +13801,7 @@
     "lalianGate": {
       "__id__": 873
     },
-    "propStartZ": -0.5,
+    "propStartZ": -0.4,
     "wallNode": {
       "__id__": 853
     },
