@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 90910254.5017,
+      "mTimestamp": 91418646.9064,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -27744,7 +27744,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropLalianGate.ts": {
       "mTimestamp": {
-        "mtime": 1782203031381.8938,
+        "mtime": 1782205738837.5066,
         "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
       },
       "chunkId": "c14c87720f6e6e7b27f438925fae2cc2d4587268",

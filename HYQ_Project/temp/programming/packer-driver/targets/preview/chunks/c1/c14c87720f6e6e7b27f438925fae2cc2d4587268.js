@@ -326,7 +326,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.pullRingRootStartEuler = new Vec3();
           this.pullRingTailStartEuler = new Vec3();
           this.hasPullRingStartData = false;
-          this.pullRingStageIndex = 0;
+          this.pullRingSwingSign = 1;
           this.runtimeSliderOffsetZ = 0;
           this.tempLockAimPos = new Vec3();
           this.tempCollisionWorldPos = new Vec3();
@@ -340,9 +340,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.animating = false;
           this.finished = false;
           this.registered = false;
-          this.pullRingRootYStages = [0, 8, -6, 4];
-          this.pullRingTailYStages = [4, 28, 42, 18];
-          this.pullRingStageTime = 0.055;
+          this.pullRingRootImpactY = 10;
+          this.pullRingRootReboundY = -7;
+          this.pullRingTailImpactY = 34;
+          this.pullRingTailReboundY = -28;
+          this.pullRingStageTime = 0.04;
         }
 
         get hitNode() {
@@ -602,7 +604,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.toothIndex = 0;
           this.pairIndex = 0;
           this.pairCount = 0;
-          this.pullRingStageIndex = 0;
+          this.pullRingSwingSign = 1;
 
           if (!this.cube) {
             return;
@@ -904,12 +906,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         resetPullRing() {
           if (this.pullRingRoot) {
             Tween.stopAllByTarget(this.pullRingRoot);
-            this.pullRingRoot.eulerAngles = this.getPullRingRootStageEuler(0);
+            this.pullRingRoot.eulerAngles = this.getPullRingRootEuler(0);
           }
 
           if (this.pullRingTail) {
             Tween.stopAllByTarget(this.pullRingTail);
-            this.pullRingTail.eulerAngles = this.getPullRingTailStageEuler(0);
+            this.pullRingTail.eulerAngles = this.getPullRingTailEuler(0);
           }
         }
 
@@ -920,55 +922,52 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          var firstStage = this.getNextPullRingStageIndex(1);
-          var secondStage = this.getNextPullRingStageIndex(2);
+          var sign = this.pullRingSwingSign;
+          this.pullRingSwingSign *= -1;
           Tween.stopAllByTarget(this.pullRingRoot);
           tween(this.pullRingRoot).to(this.pullRingStageTime, {
-            eulerAngles: this.getPullRingRootStageEuler(firstStage)
+            eulerAngles: this.getPullRingRootEuler(this.pullRingRootImpactY * sign)
           }, {
             easing: 'sineOut'
           }).to(this.pullRingStageTime, {
-            eulerAngles: this.getPullRingRootStageEuler(secondStage)
+            eulerAngles: this.getPullRingRootEuler(this.pullRingRootReboundY * sign)
+          }, {
+            easing: 'sineInOut'
+          }).to(this.pullRingStageTime, {
+            eulerAngles: this.getPullRingRootEuler(0)
           }, {
             easing: 'sineOut'
           }).start();
-          this.playPullRingTailJoint(firstStage, secondStage);
-          this.pullRingStageIndex = secondStage;
+          this.playPullRingTailJoint(sign);
         }
 
-        playPullRingTailJoint(firstStage, secondStage) {
+        playPullRingTailJoint(sign) {
           if (!this.pullRingRoot || !this.pullRingTail || !this.isNodeUnderParent(this.pullRingTail, this.pullRingRoot)) {
             return;
           }
 
           Tween.stopAllByTarget(this.pullRingTail);
           tween(this.pullRingTail).to(this.pullRingStageTime, {
-            eulerAngles: this.getPullRingTailStageEuler(firstStage)
+            eulerAngles: this.getPullRingTailEuler(this.pullRingTailImpactY * sign)
           }, {
             easing: 'sineOut'
           }).to(this.pullRingStageTime, {
-            eulerAngles: this.getPullRingTailStageEuler(secondStage)
+            eulerAngles: this.getPullRingTailEuler(this.pullRingTailReboundY * sign)
+          }, {
+            easing: 'sineInOut'
+          }).to(this.pullRingStageTime, {
+            eulerAngles: this.getPullRingTailEuler(0)
           }, {
             easing: 'sineOut'
           }).start();
         }
 
-        getNextPullRingStageIndex(offset) {
-          return (this.pullRingStageIndex + offset) % this.pullRingRootYStages.length;
+        getPullRingRootEuler(offsetY) {
+          return v3(this.pullRingRootStartEuler.x, this.pullRingRootStartEuler.y + offsetY, this.pullRingRootStartEuler.z);
         }
 
-        getPullRingRootStageEuler(stageIndex) {
-          var _this$pullRingRootYSt;
-
-          var y = (_this$pullRingRootYSt = this.pullRingRootYStages[stageIndex]) != null ? _this$pullRingRootYSt : 0;
-          return v3(this.pullRingRootStartEuler.x, this.pullRingRootStartEuler.y + y, this.pullRingRootStartEuler.z);
-        }
-
-        getPullRingTailStageEuler(stageIndex) {
-          var _this$pullRingTailYSt;
-
-          var y = (_this$pullRingTailYSt = this.pullRingTailYStages[stageIndex]) != null ? _this$pullRingTailYSt : 4;
-          return v3(this.pullRingTailStartEuler.x, this.pullRingTailStartEuler.y + y, this.pullRingTailStartEuler.z);
+        getPullRingTailEuler(offsetY) {
+          return v3(this.pullRingTailStartEuler.x, this.pullRingTailStartEuler.y + offsetY, this.pullRingTailStartEuler.z);
         }
 
         prepareSliderOffset() {

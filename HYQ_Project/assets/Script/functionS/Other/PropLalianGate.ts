@@ -132,7 +132,7 @@ export class PropLalianGate extends BattleTarget3D {
     private pullRingRootStartEuler: Vec3 = new Vec3();
     private pullRingTailStartEuler: Vec3 = new Vec3();
     private hasPullRingStartData: boolean = false;
-    private pullRingStageIndex: number = 0;
+    private pullRingSwingSign: number = 1;
     private runtimeSliderOffsetZ: number = 0;
     private tempLockAimPos: Vec3 = new Vec3();
     private tempCollisionWorldPos: Vec3 = new Vec3();
@@ -146,9 +146,11 @@ export class PropLalianGate extends BattleTarget3D {
     private animating: boolean = false;
     private finished: boolean = false;
     private registered: boolean = false;
-    private readonly pullRingRootYStages: number[] = [0, 8, -6, 4];
-    private readonly pullRingTailYStages: number[] = [4, 28, 42, 18];
-    private readonly pullRingStageTime: number = 0.055;
+    private readonly pullRingRootImpactY: number = 10;
+    private readonly pullRingRootReboundY: number = -7;
+    private readonly pullRingTailImpactY: number = 34;
+    private readonly pullRingTailReboundY: number = -28;
+    private readonly pullRingStageTime: number = 0.04;
 
     public get hitNode() {
         return this.cube ?? super.hitNode;
@@ -359,7 +361,7 @@ export class PropLalianGate extends BattleTarget3D {
         this.toothIndex = 0;
         this.pairIndex = 0;
         this.pairCount = 0;
-        this.pullRingStageIndex = 0;
+        this.pullRingSwingSign = 1;
 
         if (!this.cube) {
             return;
@@ -617,11 +619,11 @@ export class PropLalianGate extends BattleTarget3D {
     private resetPullRing(): void {
         if (this.pullRingRoot) {
             Tween.stopAllByTarget(this.pullRingRoot);
-            this.pullRingRoot.eulerAngles = this.getPullRingRootStageEuler(0);
+            this.pullRingRoot.eulerAngles = this.getPullRingRootEuler(0);
         }
         if (this.pullRingTail) {
             Tween.stopAllByTarget(this.pullRingTail);
-            this.pullRingTail.eulerAngles = this.getPullRingTailStageEuler(0);
+            this.pullRingTail.eulerAngles = this.getPullRingTailEuler(0);
         }
     }
 
@@ -631,41 +633,36 @@ export class PropLalianGate extends BattleTarget3D {
             return;
         }
 
-        const firstStage = this.getNextPullRingStageIndex(1);
-        const secondStage = this.getNextPullRingStageIndex(2);
+        const sign = this.pullRingSwingSign;
+        this.pullRingSwingSign *= -1;
         Tween.stopAllByTarget(this.pullRingRoot);
         tween(this.pullRingRoot)
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingRootStageEuler(firstStage) }, { easing: 'sineOut' })
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingRootStageEuler(secondStage) }, { easing: 'sineOut' })
+            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingRootEuler(this.pullRingRootImpactY * sign) }, { easing: 'sineOut' })
+            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingRootEuler(this.pullRingRootReboundY * sign) }, { easing: 'sineInOut' })
+            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingRootEuler(0) }, { easing: 'sineOut' })
             .start();
 
-        this.playPullRingTailJoint(firstStage, secondStage);
-        this.pullRingStageIndex = secondStage;
+        this.playPullRingTailJoint(sign);
     }
 
-    private playPullRingTailJoint(firstStage: number, secondStage: number): void {
+    private playPullRingTailJoint(sign: number): void {
         if (!this.pullRingRoot || !this.pullRingTail || !this.isNodeUnderParent(this.pullRingTail, this.pullRingRoot)) {
             return;
         }
         Tween.stopAllByTarget(this.pullRingTail);
         tween(this.pullRingTail)
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingTailStageEuler(firstStage) }, { easing: 'sineOut' })
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingTailStageEuler(secondStage) }, { easing: 'sineOut' })
+            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingTailEuler(this.pullRingTailImpactY * sign) }, { easing: 'sineOut' })
+            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingTailEuler(this.pullRingTailReboundY * sign) }, { easing: 'sineInOut' })
+            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingTailEuler(0) }, { easing: 'sineOut' })
             .start();
     }
 
-    private getNextPullRingStageIndex(offset: number): number {
-        return (this.pullRingStageIndex + offset) % this.pullRingRootYStages.length;
+    private getPullRingRootEuler(offsetY: number): Vec3 {
+        return v3(this.pullRingRootStartEuler.x, this.pullRingRootStartEuler.y + offsetY, this.pullRingRootStartEuler.z);
     }
 
-    private getPullRingRootStageEuler(stageIndex: number): Vec3 {
-        const y = this.pullRingRootYStages[stageIndex] ?? 0;
-        return v3(this.pullRingRootStartEuler.x, this.pullRingRootStartEuler.y + y, this.pullRingRootStartEuler.z);
-    }
-
-    private getPullRingTailStageEuler(stageIndex: number): Vec3 {
-        const y = this.pullRingTailYStages[stageIndex] ?? 4;
-        return v3(this.pullRingTailStartEuler.x, this.pullRingTailStartEuler.y + y, this.pullRingTailStartEuler.z);
+    private getPullRingTailEuler(offsetY: number): Vec3 {
+        return v3(this.pullRingTailStartEuler.x, this.pullRingTailStartEuler.y + offsetY, this.pullRingTailStartEuler.z);
     }
 
     private prepareSliderOffset(): void {
