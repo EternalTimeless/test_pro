@@ -91,11 +91,11 @@
       "specularIntensity": 1,
       "normalStrength": 1.806,
       "mainTexture": {
-        "__uuid__": "0552b58e-1abe-4274-96e8-b12744fd55eb@6c48a",
+        "__uuid__": "4a522742-190d-46c4-ac0e-ac6a5586ee59@6c48a",
         "__expectedType__": "cc.Texture2D"
       },
       "normalMap": {
-        "__uuid__": "bd076031-f303-41c0-99ca-65d6e0f3c784@6c48a",
+        "__uuid__": "1a656bb8-665f-4a1f-9360-616d85f39b04@6c48a",
         "__expectedType__": "cc.Texture2D"
       }
     },

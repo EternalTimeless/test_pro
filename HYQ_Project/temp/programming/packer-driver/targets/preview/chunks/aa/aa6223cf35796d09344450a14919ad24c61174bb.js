@@ -436,8 +436,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseChildEulerMap = new Map();
           this.bottomBaseTargetPosMap = new Map();
           this.manualBottomBaseNodeSet = new Set();
-          this.bottomBaseRollDegreesPerUnit = -160;
-          this.bottomBaseRollAxis = new Vec3(0, 0, 1);
+          this.bottomBaseRollDegreesPerUnit = -110;
+          this.bottomBaseRollAxis = new Vec3(0, 1, 0);
           this.roleLayoutTemplateName = "Role_t";
           this.roleTemplateBottomBasePos = new Vec3();
           this.roleTemplateArmsPos = new Vec3();

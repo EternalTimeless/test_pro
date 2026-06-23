@@ -12,7 +12,6 @@
   "_defines": [
     {
       "USE_NORMAL_MAP": true,
-      "USE_INSTANCING": true,
       "USE_ALBEDO_MAP": true
     },
     {},
@@ -82,7 +81,7 @@
         "__expectedType__": "cc.Texture2D"
       },
       "normalMap": {
-        "__uuid__": "b89873aa-31c3-4fd6-9cb9-eeb642110378@6c48a",
+        "__uuid__": "ed114fd7-00bb-44ea-b514-0b6c88c75558@6c48a",
         "__expectedType__": "cc.Texture2D"
       }
     },

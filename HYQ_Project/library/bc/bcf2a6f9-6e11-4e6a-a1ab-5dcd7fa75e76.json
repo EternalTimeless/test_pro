@@ -11,6 +11,7 @@
   "_techIdx": 0,
   "_defines": [
     {
+      "USE_NORMAL_MAP": true,
       "USE_INSTANCING": true,
       "USE_ALBEDO_MAP": true
     },
@@ -80,16 +81,20 @@
     {
       "mainColor": {
         "__type__": "cc.Color",
-        "r": 184,
-        "g": 181,
-        "b": 181,
+        "r": 211,
+        "g": 204,
+        "b": 204,
         "a": 255
       },
       "roughness": 0.499,
       "metallic": 0.674,
       "specularIntensity": 1,
       "mainTexture": {
-        "__uuid__": "f1b8abcf-82e9-4699-ba56-d486e4288457@6c48a",
+        "__uuid__": "4a522742-190d-46c4-ac0e-ac6a5586ee59@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "normalMap": {
+        "__uuid__": "1a656bb8-665f-4a1f-9360-616d85f39b04@6c48a",
         "__expectedType__": "cc.Texture2D"
       }
     },

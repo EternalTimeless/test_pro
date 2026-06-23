@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "3",
+    "_name": "SM_tengman_01",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -139,7 +139,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "e4pliOgVZRJbww6vEmUy36"
+    "fileId": "a0wJkyudlfV5MYTaVPGGAU"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -169,7 +169,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "e2EjmFk+dQI5LsFX7SruJM",
+    "fileId": "c1FWfNoCBbXJi2ODDsaYsK",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
@@ -182,7 +182,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "c7uLxNmYpVHp/5NHQxYG9R",
+    "fileId": "d9r83b0rdV4p3zRgdvWi6l",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null

@@ -146,8 +146,8 @@ export class PropArms extends BattleTarget3D {
     private readonly bottomBaseChildEulerMap: Map<Node, Vec3> = new Map();
     private readonly bottomBaseTargetPosMap: Map<Node, Vec3> = new Map();
     private readonly manualBottomBaseNodeSet: Set<Node> = new Set();
-    private readonly bottomBaseRollDegreesPerUnit: number = -160;
-    private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 0, 1);
+    private readonly bottomBaseRollDegreesPerUnit: number = -110;
+    private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 1, 0);
     private readonly roleLayoutTemplateName: string = "Role_t";
     private readonly roleTemplateBottomBasePos: Vec3 = new Vec3();
     private readonly roleTemplateArmsPos: Vec3 = new Vec3();
