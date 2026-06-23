@@ -13560,7 +13560,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "monsterCount": 260,
+    "monsterCount": 300,
     "maxSpawnPerFrame": 5,
     "monsterCreateQueue": {
       "__id__": 861
