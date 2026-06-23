@@ -68,13 +68,17 @@ export class CreatePropBrand extends UnityUpComponent {
 
     private tempV3: Vec3 = new Vec3();
 
+    private groundWorldPos: Vec3 = new Vec3();
+
+    private groundLocalPos: Vec3 = new Vec3();
+
     private modelVisualGroup: Node = null;
 
     private spriteVisualGroup: Node = null;
 
     private labelVisualGroup: Node = null;
 
-    private readonly groundHeight: number = 0;
+    private groundHeight: number = 0;
 
     private get activeLalianGate() {
         if (!this.lalianGate) {
@@ -93,13 +97,14 @@ export class CreatePropBrand extends UnityUpComponent {
     start() {
         const startZ = this.activePropStartZ;
         this.ensureVisualGroups();
+        this.refreshGroundHeight();
 
         for (let i = 0; i < this.showCount; i++) {
             const p = this.propBrand;
             this.propBrandList.push(p);
             this.wallNode.addChild(p.node);
             p.node.x = 0;
-            p.node.y = this.height;
+            p.node.y = this.getSpawnHeight();
             p.node.z = startZ + i * this.distance;
             this.bindPropBrandVisuals(p);
         }
@@ -169,6 +174,21 @@ export class CreatePropBrand extends UnityUpComponent {
         }
     }
 
+    private refreshGroundHeight(): void {
+        this.groundHeight = 0;
+        if (!this.wallNode) {
+            return;
+        }
+        this.groundWorldPos.set(this.wallNode.worldPosition);
+        this.groundWorldPos.y = 0;
+        this.wallNode.inverseTransformPoint(this.groundLocalPos, this.groundWorldPos);
+        this.groundHeight = this.groundLocalPos.y;
+    }
+
+    private getSpawnHeight(): number {
+        return Math.abs(this.height) <= 0.000001 ? this.groundHeight : this.height;
+    }
+
     private appendPropBrands(count: number) {
         const last = this.propBrandList[this.propBrandList.length - 1];
         const appendStartZ = last ? last.node.z + this.distance : this.activePropStartZ;
@@ -176,7 +196,7 @@ export class CreatePropBrand extends UnityUpComponent {
             const p = this.propBrand;
             this.wallNode.addChild(p.node);
             p.node.x = 0;
-            p.node.y = this.height;
+            p.node.y = this.getSpawnHeight();
             p.node.z = appendStartZ + i * this.distance;
             this.bindPropBrandVisuals(p);
             this.propBrandList.push(p);

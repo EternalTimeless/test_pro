@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 69384610.1834,
+      "mTimestamp": 71471708.4804,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -20283,7 +20283,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Bullet/BulletBattle3D.ts": {
       "mTimestamp": {
-        "mtime": 1782179752928.0425,
+        "mtime": 1782184130288.9475,
         "uuid": "aa25268b-cb3c-4c8a-8144-994c0a68b3b6"
       },
       "chunkId": "a78b9d0a8af4315011c59f40b6c49da033e49269",
@@ -21166,7 +21166,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletMonsterCollisionManager.ts": {
       "mTimestamp": {
-        "mtime": 1782116877601.2068,
+        "mtime": 1782185347402.163,
         "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
       },
       "chunkId": "e13771ea8032dbc1728530af431c57de3b1e5e24",
@@ -24526,7 +24526,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/CreatePropBrand.ts": {
       "mTimestamp": {
-        "mtime": 1782183694917.8853,
+        "mtime": 1782185787818.504,
         "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
       },
       "chunkId": "e2cd37831230a7474a5c89ec9f0764c2d6ce1581",

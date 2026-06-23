@@ -116,6 +116,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           /** 预分配临时Vec3，避免每帧new */
           this._tempVec3 = new Vec3();
+          this._tempBulletPrevPos = new Vec3();
+          this._checkedTargets = [];
 
           /** 子弹桶 - 每帧重建 */
           this._bulletBuckets = [];
@@ -394,8 +396,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
               if (!bullet.node.active) continue;
               const bx = bullet.node.worldPosition.x;
               const bz = bullet.node.worldPosition.z;
+              const prevPos = bullet.getPreviousWorldPosition(this._tempBulletPrevPos);
+              const prevX = prevPos.x;
+              const prevZ = prevPos.z;
               const bHalfX = bullet.collisionHalfX;
-              const bHalfZ = bullet.collisionHalfZ; // 遍历子弹的 attackTargetTag
+              const bHalfZ = bullet.collisionHalfZ;
+              const sweptMinX = Math.min(prevX, bx) - bHalfX;
+              const sweptMaxX = Math.max(prevX, bx) + bHalfX;
+
+              const minBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - bHalfZ);
+
+              const maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ); // 遍历子弹的 attackTargetTag
+
 
               const targetTags = bullet.attackTargetTag;
 
@@ -404,29 +416,32 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 const group = this._targetGroups[typeStr];
                 if (!group) continue; // x范围预过滤
 
-                if (bx + bHalfX < group.xMin || bx - bHalfX > group.xMax) continue;
+                if (sweptMaxX < group.xMin || sweptMinX > group.xMax) continue;
                 const tBuckets = this._targetBuckets[typeStr];
                 if (!tBuckets) continue;
-                const bucketTargets = tBuckets[bIdx];
-                if (!bucketTargets) continue;
+                this._checkedTargets.length = 0;
 
-                for (let mj = 0; mj < bucketTargets.length; mj++) {
-                  const target = bucketTargets[mj];
-                  if (target.isDie) continue; // AABB碰撞判定
+                for (let checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && bullet.node.active; checkBucketIdx++) {
+                  const bucketTargets = tBuckets[checkBucketIdx];
+                  if (!bucketTargets) continue;
 
-                  const targetPos = target.getCollisionWorldPosition(this._tempVec3);
-                  const tx = targetPos.x;
-                  const tz = targetPos.z;
-                  const tHalfX = target.collisionHalfX;
-                  const tHalfZ = target.collisionHalfZ;
-                  const dx = bx - tx;
-                  const dz = bz - tz;
-                  const overlapX = bHalfX + tHalfX;
-                  const overlapZ = bHalfZ + tHalfZ;
+                  for (let mj = 0; mj < bucketTargets.length && bullet.node.active; mj++) {
+                    const target = bucketTargets[mj];
+                    if (target.isDie || this._checkedTargets.indexOf(target) !== -1) continue;
 
-                  if (dx < overlapX && dx > -overlapX && dz < overlapZ && dz > -overlapZ) {
-                    // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
-                    bullet.onHitTarget(target);
+                    this._checkedTargets.push(target); // AABB碰撞判定
+
+
+                    const targetPos = target.getCollisionWorldPosition(this._tempVec3);
+                    const tx = targetPos.x;
+                    const tz = targetPos.z;
+                    const tHalfX = target.collisionHalfX;
+                    const tHalfZ = target.collisionHalfZ;
+
+                    if (this.isSweptBulletHit(prevX, prevZ, bx, bz, bHalfX, bHalfZ, tx, tz, tHalfX, tHalfZ)) {
+                      // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
+                      bullet.onHitTarget(target);
+                    }
                   }
                 }
               }
@@ -441,6 +456,67 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           }
 
           this._frameCount++;
+        }
+
+        isSweptBulletHit(prevX, prevZ, curX, curZ, bHalfX, bHalfZ, targetX, targetZ, targetHalfX, targetHalfZ) {
+          const minX = targetX - targetHalfX - bHalfX;
+          const maxX = targetX + targetHalfX + bHalfX;
+          const minZ = targetZ - targetHalfZ - bHalfZ;
+          const maxZ = targetZ + targetHalfZ + bHalfZ;
+          const dx = curX - prevX;
+          const dz = curZ - prevZ;
+          let enter = 0;
+          let exit = 1;
+
+          if (Math.abs(dx) <= 0.000001) {
+            if (prevX < minX || prevX > maxX) {
+              return false;
+            }
+          } else {
+            let t1 = (minX - prevX) / dx;
+            let t2 = (maxX - prevX) / dx;
+
+            if (t1 > t2) {
+              const temp = t1;
+              t1 = t2;
+              t2 = temp;
+            }
+
+            if (t1 > enter) {
+              enter = t1;
+            }
+
+            if (t2 < exit) {
+              exit = t2;
+            }
+
+            if (enter > exit) {
+              return false;
+            }
+          }
+
+          if (Math.abs(dz) <= 0.000001) {
+            return prevZ >= minZ && prevZ <= maxZ;
+          }
+
+          let t1 = (minZ - prevZ) / dz;
+          let t2 = (maxZ - prevZ) / dz;
+
+          if (t1 > t2) {
+            const temp = t1;
+            t1 = t2;
+            t2 = temp;
+          }
+
+          if (t1 > enter) {
+            enter = t1;
+          }
+
+          if (t2 < exit) {
+            exit = t2;
+          }
+
+          return enter <= exit;
         }
 
         getTargetTypeList() {

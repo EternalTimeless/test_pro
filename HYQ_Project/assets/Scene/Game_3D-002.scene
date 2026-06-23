@@ -12266,7 +12266,7 @@
     "sliderOffsetZ": 0,
     "reverseSliderMoveZ": true,
     "bulletLockRangeX": 2.5,
-    "bulletAimShrink": 0.92,
+    "bulletAimShrink": 0.8,
     "hitAreaOffsetZ": 0,
     "useCubeBoundsHitCenter": true,
     "_id": "b7c3bwdLBMC6oZKGB8tUEO"
@@ -13344,7 +13344,7 @@
     "sliderOffsetZ": 0,
     "reverseSliderMoveZ": false,
     "bulletLockRangeX": 2.5,
-    "bulletAimShrink": 0.92,
+    "bulletAimShrink": 0.8,
     "hitAreaOffsetZ": 0,
     "useCubeBoundsHitCenter": true,
     "_id": "2cJYh6vQtJKbc5HEklFCcv"

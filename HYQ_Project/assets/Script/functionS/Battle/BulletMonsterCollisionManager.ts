@@ -68,6 +68,8 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
     /** 预分配临时Vec3，避免每帧new */
     private _tempVec3: Vec3 = new Vec3();
+    private _tempBulletPrevPos: Vec3 = new Vec3();
+    private _checkedTargets: BattleTarget3D[] = [];
 
     /** 子弹桶 - 每帧重建 */
     private _bulletBuckets: BulletBattle3D[][] = [];
@@ -298,8 +300,15 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
                 const bx = bullet.node.worldPosition.x;
                 const bz = bullet.node.worldPosition.z;
+                const prevPos = bullet.getPreviousWorldPosition(this._tempBulletPrevPos);
+                const prevX = prevPos.x;
+                const prevZ = prevPos.z;
                 const bHalfX = bullet.collisionHalfX;
                 const bHalfZ = bullet.collisionHalfZ;
+                const sweptMinX = Math.min(prevX, bx) - bHalfX;
+                const sweptMaxX = Math.max(prevX, bx) + bHalfX;
+                const minBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - bHalfZ);
+                const maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ);
 
                 // 遍历子弹的 attackTargetTag
                 const targetTags = bullet.attackTargetTag;
@@ -309,38 +318,36 @@ export default class BulletMonsterCollisionManager extends Singleton {
                     if (!group) continue;
 
                     // x范围预过滤
-                    if (bx + bHalfX < group.xMin || bx - bHalfX > group.xMax) continue;
+                    if (sweptMaxX < group.xMin || sweptMinX > group.xMax) continue;
 
                     const tBuckets = this._targetBuckets[typeStr];
                     if (!tBuckets) continue;
-                    const bucketTargets = tBuckets[bIdx];
-                    if (!bucketTargets) continue;
+                    this._checkedTargets.length = 0;
+                    for (let checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && bullet.node.active; checkBucketIdx++) {
+                        const bucketTargets = tBuckets[checkBucketIdx];
+                        if (!bucketTargets) continue;
 
-                    for (let mj = 0; mj < bucketTargets.length; mj++) {
-                        const target = bucketTargets[mj];
-                        if (target.isDie) continue;
+                        for (let mj = 0; mj < bucketTargets.length && bullet.node.active; mj++) {
+                            const target = bucketTargets[mj];
+                            if (target.isDie || this._checkedTargets.indexOf(target) !== -1) continue;
+                            this._checkedTargets.push(target);
 
-                        // AABB碰撞判定
-                        const targetPos = target.getCollisionWorldPosition(this._tempVec3);
-                        const tx = targetPos.x;
-                        const tz = targetPos.z;
-                        const tHalfX = target.collisionHalfX;
-                        const tHalfZ = target.collisionHalfZ;
+                            // AABB碰撞判定
+                            const targetPos = target.getCollisionWorldPosition(this._tempVec3);
+                            const tx = targetPos.x;
+                            const tz = targetPos.z;
+                            const tHalfX = target.collisionHalfX;
+                            const tHalfZ = target.collisionHalfZ;
 
-                        const dx = bx - tx;
-                        const dz = bz - tz;
-                        const overlapX = bHalfX + tHalfX;
-                        const overlapZ = bHalfZ + tHalfZ;
-
-                        if (dx < overlapX && dx > -overlapX && dz < overlapZ && dz > -overlapZ) {
-                            // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
-                            bullet.onHitTarget(target);
+                            if (this.isSweptBulletHit(prevX, prevZ, bx, bz, bHalfX, bHalfZ, tx, tz, tHalfX, tHalfZ)) {
+                                // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
+                                bullet.onHitTarget(target);
+                            }
                         }
                     }
                 }
             }
         }
-
         // 5. 更新各组x范围（低频更新即可，每10帧更新一次）
         if (this._frameCount % 10 === 0) {
             for (const typeStr in this._targetGroups) {
@@ -351,6 +358,58 @@ export default class BulletMonsterCollisionManager extends Singleton {
     }
 
     private _frameCount: number = 0;
+
+    private isSweptBulletHit(prevX: number, prevZ: number, curX: number, curZ: number, bHalfX: number, bHalfZ: number, targetX: number, targetZ: number, targetHalfX: number, targetHalfZ: number): boolean {
+        const minX = targetX - targetHalfX - bHalfX;
+        const maxX = targetX + targetHalfX + bHalfX;
+        const minZ = targetZ - targetHalfZ - bHalfZ;
+        const maxZ = targetZ + targetHalfZ + bHalfZ;
+        const dx = curX - prevX;
+        const dz = curZ - prevZ;
+        let enter = 0;
+        let exit = 1;
+
+        if (Math.abs(dx) <= 0.000001) {
+            if (prevX < minX || prevX > maxX) {
+                return false;
+            }
+        } else {
+            let t1 = (minX - prevX) / dx;
+            let t2 = (maxX - prevX) / dx;
+            if (t1 > t2) {
+                const temp = t1;
+                t1 = t2;
+                t2 = temp;
+            }
+            if (t1 > enter) {
+                enter = t1;
+            }
+            if (t2 < exit) {
+                exit = t2;
+            }
+            if (enter > exit) {
+                return false;
+            }
+        }
+
+        if (Math.abs(dz) <= 0.000001) {
+            return prevZ >= minZ && prevZ <= maxZ;
+        }
+        let t1 = (minZ - prevZ) / dz;
+        let t2 = (maxZ - prevZ) / dz;
+        if (t1 > t2) {
+            const temp = t1;
+            t1 = t2;
+            t2 = temp;
+        }
+        if (t1 > enter) {
+            enter = t1;
+        }
+        if (t2 < exit) {
+            exit = t2;
+        }
+        return enter <= exit;
+    }
 
     private getTargetTypeList(): COLLIDE_TYPE[] {
         const list: COLLIDE_TYPE[] = [];

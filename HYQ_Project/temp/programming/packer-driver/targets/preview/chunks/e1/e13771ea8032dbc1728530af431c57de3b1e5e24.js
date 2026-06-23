@@ -116,6 +116,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           /** 预分配临时Vec3，避免每帧new */
           this._tempVec3 = new Vec3();
+          this._tempBulletPrevPos = new Vec3();
+          this._checkedTargets = [];
 
           /** 子弹桶 - 每帧重建 */
           this._bulletBuckets = [];
@@ -403,8 +405,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
               if (!_bullet.node.active) continue;
               var bx = _bullet.node.worldPosition.x;
               var bz = _bullet.node.worldPosition.z;
+
+              var prevPos = _bullet.getPreviousWorldPosition(this._tempBulletPrevPos);
+
+              var prevX = prevPos.x;
+              var prevZ = prevPos.z;
               var bHalfX = _bullet.collisionHalfX;
-              var bHalfZ = _bullet.collisionHalfZ; // 遍历子弹的 attackTargetTag
+              var bHalfZ = _bullet.collisionHalfZ;
+              var sweptMinX = Math.min(prevX, bx) - bHalfX;
+              var sweptMaxX = Math.max(prevX, bx) + bHalfX;
+
+              var minBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - bHalfZ);
+
+              var maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ); // 遍历子弹的 attackTargetTag
+
 
               var targetTags = _bullet.attackTargetTag;
 
@@ -414,30 +428,33 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 var _group = this._targetGroups[_typeStr];
                 if (!_group) continue; // x范围预过滤
 
-                if (bx + bHalfX < _group.xMin || bx - bHalfX > _group.xMax) continue;
+                if (sweptMaxX < _group.xMin || sweptMinX > _group.xMax) continue;
                 var _tBuckets = this._targetBuckets[_typeStr];
                 if (!_tBuckets) continue;
-                var bucketTargets = _tBuckets[_bIdx2];
-                if (!bucketTargets) continue;
+                this._checkedTargets.length = 0;
 
-                for (var mj = 0; mj < bucketTargets.length; mj++) {
-                  var _target = bucketTargets[mj];
-                  if (_target.isDie) continue; // AABB碰撞判定
+                for (var checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && _bullet.node.active; checkBucketIdx++) {
+                  var bucketTargets = _tBuckets[checkBucketIdx];
+                  if (!bucketTargets) continue;
 
-                  var targetPos = _target.getCollisionWorldPosition(this._tempVec3);
+                  for (var mj = 0; mj < bucketTargets.length && _bullet.node.active; mj++) {
+                    var _target = bucketTargets[mj];
+                    if (_target.isDie || this._checkedTargets.indexOf(_target) !== -1) continue;
 
-                  var tx = targetPos.x;
-                  var tz = targetPos.z;
-                  var tHalfX = _target.collisionHalfX;
-                  var tHalfZ = _target.collisionHalfZ;
-                  var dx = bx - tx;
-                  var dz = bz - tz;
-                  var overlapX = bHalfX + tHalfX;
-                  var overlapZ = bHalfZ + tHalfZ;
+                    this._checkedTargets.push(_target); // AABB碰撞判定
 
-                  if (dx < overlapX && dx > -overlapX && dz < overlapZ && dz > -overlapZ) {
-                    // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
-                    _bullet.onHitTarget(_target);
+
+                    var targetPos = _target.getCollisionWorldPosition(this._tempVec3);
+
+                    var tx = targetPos.x;
+                    var tz = targetPos.z;
+                    var tHalfX = _target.collisionHalfX;
+                    var tHalfZ = _target.collisionHalfZ;
+
+                    if (this.isSweptBulletHit(prevX, prevZ, bx, bz, bHalfX, bHalfZ, tx, tz, tHalfX, tHalfZ)) {
+                      // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
+                      _bullet.onHitTarget(_target);
+                    }
                   }
                 }
               }
@@ -452,6 +469,68 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           }
 
           this._frameCount++;
+        }
+
+        isSweptBulletHit(prevX, prevZ, curX, curZ, bHalfX, bHalfZ, targetX, targetZ, targetHalfX, targetHalfZ) {
+          var minX = targetX - targetHalfX - bHalfX;
+          var maxX = targetX + targetHalfX + bHalfX;
+          var minZ = targetZ - targetHalfZ - bHalfZ;
+          var maxZ = targetZ + targetHalfZ + bHalfZ;
+          var dx = curX - prevX;
+          var dz = curZ - prevZ;
+          var enter = 0;
+          var exit = 1;
+
+          if (Math.abs(dx) <= 0.000001) {
+            if (prevX < minX || prevX > maxX) {
+              return false;
+            }
+          } else {
+            var _t = (minX - prevX) / dx;
+
+            var _t2 = (maxX - prevX) / dx;
+
+            if (_t > _t2) {
+              var temp = _t;
+              _t = _t2;
+              _t2 = temp;
+            }
+
+            if (_t > enter) {
+              enter = _t;
+            }
+
+            if (_t2 < exit) {
+              exit = _t2;
+            }
+
+            if (enter > exit) {
+              return false;
+            }
+          }
+
+          if (Math.abs(dz) <= 0.000001) {
+            return prevZ >= minZ && prevZ <= maxZ;
+          }
+
+          var t1 = (minZ - prevZ) / dz;
+          var t2 = (maxZ - prevZ) / dz;
+
+          if (t1 > t2) {
+            var _temp = t1;
+            t1 = t2;
+            t2 = _temp;
+          }
+
+          if (t1 > enter) {
+            enter = t1;
+          }
+
+          if (t2 < exit) {
+            exit = t2;
+          }
+
+          return enter <= exit;
         }
 
         getTargetTypeList() {

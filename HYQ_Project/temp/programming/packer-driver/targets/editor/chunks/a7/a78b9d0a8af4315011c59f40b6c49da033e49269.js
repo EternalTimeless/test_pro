@@ -162,6 +162,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           /** 是否已注册到碰撞管理器 */
           this._registered = false;
           this._pooled = false;
+          this._previousWorldPosition = new Vec3();
+          this._hasPreviousWorldPosition = false;
           this.temp = new Vec3();
         }
 
@@ -178,6 +180,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         update(dt) {
+          this._previousWorldPosition.set(this.node.worldPosition);
+
+          this._hasPreviousWorldPosition = true;
+
           if (this.triggerDieTime != -1 && this._isTrigger) {
             if (this._triggerDieTime <= 0) {
               this.over();
@@ -242,6 +248,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._overTime = this.overTime;
           this._triggerDieTime = this.triggerDieTime;
           this._isTrigger = false;
+          this._hasPreviousWorldPosition = false;
           this.node.active = true; // 注册到碰撞管理器
 
           if (!this._registered) {
@@ -250,6 +257,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.registerBullet(this);
             this._registered = true;
           }
+        }
+
+        getPreviousWorldPosition(out) {
+          return this._hasPreviousWorldPosition ? out.set(this._previousWorldPosition) : out.set(this.node.worldPosition);
         }
 
         /**

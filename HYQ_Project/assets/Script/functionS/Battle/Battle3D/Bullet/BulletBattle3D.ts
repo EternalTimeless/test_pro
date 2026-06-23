@@ -62,6 +62,8 @@ export default class BulletBattle3D extends Component {
     /** 是否已注册到碰撞管理器 */
     private _registered: boolean = false;
     private _pooled: boolean = false;
+    private _previousWorldPosition: Vec3 = new Vec3();
+    private _hasPreviousWorldPosition: boolean = false;
 
     protected start(): void {
         this.moveD = this.node.getComponent(MoveDrive);
@@ -71,6 +73,8 @@ export default class BulletBattle3D extends Component {
     }
 
     protected update(dt: number): void {
+        this._previousWorldPosition.set(this.node.worldPosition);
+        this._hasPreviousWorldPosition = true;
         if (this.triggerDieTime != -1 && this._isTrigger) {
             if (this._triggerDieTime <= 0) {
                 this.over();
@@ -121,6 +125,7 @@ export default class BulletBattle3D extends Component {
         this._overTime = this.overTime;
         this._triggerDieTime = this.triggerDieTime;
         this._isTrigger = false;
+        this._hasPreviousWorldPosition = false;
         this.node.active = true;
 
         // 注册到碰撞管理器
@@ -132,6 +137,10 @@ export default class BulletBattle3D extends Component {
 
 
     public temp: Vec3 = new Vec3();
+
+    public getPreviousWorldPosition(out: Vec3): Vec3 {
+        return this._hasPreviousWorldPosition ? out.set(this._previousWorldPosition) : out.set(this.node.worldPosition);
+    }
 
     private static _effectWindowStart: number = 0;
     private static _effectCountInWindow: number = 0;
