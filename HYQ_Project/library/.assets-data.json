@@ -9803,5 +9803,12 @@
       ]
     },
     "versionCode": 1
+  },
+  "6f1c4845-49e9-4fba-8e11-5490e0b92729": {
+    "url": "db://assets/resources/Shaders/OilBarrelBurst.effect",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
   }
 }

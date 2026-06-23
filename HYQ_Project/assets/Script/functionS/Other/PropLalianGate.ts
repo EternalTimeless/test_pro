@@ -57,13 +57,13 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCInteger, displayName: '每对齿条数量', tooltip: '默认 2，表示每 2 个 SM_lalian 齿条算作一对，一次受击推进一对。' })
     public teethPerPair: number = 2;
 
-    @property({ type: CCInteger, displayName: '初始闭合对数', tooltip: '默认前 3 对齿条完全闭合。' })
-    public initialClosedPairCount: number = 3;
+    @property({ type: CCInteger, displayName: '初始闭合对数', tooltip: '默认前 2 对齿条完全闭合。' })
+    public initialClosedPairCount: number = 2;
 
-    @property({ type: CCFloat, displayName: '第4对初始闭合度', tooltip: '初始闭合对数之后的下一对闭合度。默认 0.5 表示半闭合。' })
+    @property({ type: CCFloat, displayName: '下一对初始闭合度', tooltip: '初始闭合对数之后的下一对闭合度。默认 0.5 表示半闭合。' })
     public nextPairInitialProgress: number = 0.5;
 
-    @property({ type: CCFloat, displayName: '第5对初始闭合度', tooltip: '第4对之后的下一对闭合度。默认 0.25 表示 1/4 闭合。' })
+    @property({ type: CCFloat, displayName: '再下一对初始闭合度', tooltip: '下一对之后的再下一对闭合度。默认 0.25 表示 1/4 闭合。' })
     public nextNextPairInitialProgress: number = 0.25;
 
     @property({ type: CCFloat, displayName: '齿条Z间距(兜底)', tooltip: '无法从齿条节点计算长度时，用这个值估算 +1/+99 的起始距离。' })
@@ -117,6 +117,9 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCBoolean, displayName: '使用滑块模型中心', tooltip: '开启后用滑块模型的渲染包围盒中心作为受击中心，避免滑块节点锚点偏后导致子弹穿过模型后才命中。' })
     public useCubeBoundsHitCenter: boolean = true;
 
+    @property({ type: CCFloat, displayName: '滑块厚度对齐偏移', tooltip: '滑块定位时，用模型包围盒中心再向厚的一侧偏移一点来对齐齿条位置。0=模型中心，0.2=向厚侧偏移 20% 半厚度。' })
+    public sliderThickCenterBias: number = 0.2;
+
     private teeth: Node[] = [];
     private toothStartPos: Vec3[] = [];
     private toothClosedPos: Vec3[] = [];
@@ -135,6 +138,8 @@ export class PropLalianGate extends BattleTarget3D {
     private tempCollisionWorldPos: Vec3 = new Vec3();
     private tempSliderTargetPos: Vec3 = new Vec3();
     private tempWorldPos: Vec3 = new Vec3();
+    private tempSliderVisualCenterWorldPos: Vec3 = new Vec3();
+    private tempSliderVisualCenterParentPos: Vec3 = new Vec3();
     private cubeMeshRenderers: MeshRenderer[] = [];
     private originalToothPositions: Map<Node, Vec3> = new Map();
     private closeCenter: number = 0;
@@ -526,6 +531,10 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     private setCubeBoundsCenter(out: Vec3): boolean {
+        return this.setCubeVisualCenter(out, false);
+    }
+
+    private setCubeVisualCenter(out: Vec3, useThickBias: boolean = true): boolean {
         let minX = Number.POSITIVE_INFINITY;
         let maxX = Number.NEGATIVE_INFINITY;
         let minY = Number.POSITIVE_INFINITY;
@@ -553,10 +562,18 @@ export class PropLalianGate extends BattleTarget3D {
         if (!found) {
             return false;
         }
+        const halfZ = (maxZ - minZ) * 0.5;
+        let centerZ = (minZ + maxZ) * 0.5;
+        if (useThickBias && this.cube) {
+            const anchorZ = this.cube.worldPosition.z;
+            const biasDirection = centerZ >= anchorZ ? 1 : -1;
+            const bias = Math.max(-1, Math.min(1, this.sliderThickCenterBias));
+            centerZ += halfZ * bias * biasDirection;
+        }
         out.set(
             (minX + maxX) * 0.5,
             (minY + maxY) * 0.5,
-            (minZ + maxZ) * 0.5,
+            centerZ,
         );
         return true;
     }
@@ -783,8 +800,9 @@ export class PropLalianGate extends BattleTarget3D {
     private getSliderTargetPos(tooth: Node, useRuntimeOffset: boolean = true): Vec3 {
         const cubePos = this.hasCubeStartData ? this.cubeStartPos : this.cube.position;
         const offsetZ = useRuntimeOffset ? this.runtimeSliderOffsetZ : 0;
+        const anchorOffsetZ = this.getSliderVisualAnchorOffsetZ();
         if (tooth.parent === this.cube.parent) {
-            return this.tempSliderTargetPos.set(cubePos.x, cubePos.y, tooth.position.z + offsetZ);
+            return this.tempSliderTargetPos.set(cubePos.x, cubePos.y, tooth.position.z + offsetZ - anchorOffsetZ);
         }
 
         this.tempWorldPos.set(tooth.worldPosition);
@@ -792,10 +810,24 @@ export class PropLalianGate extends BattleTarget3D {
             this.cube.parent.inverseTransformPoint(this.tempSliderTargetPos, this.tempWorldPos);
             this.tempSliderTargetPos.x = cubePos.x;
             this.tempSliderTargetPos.y = cubePos.y;
-            this.tempSliderTargetPos.z += offsetZ;
+            this.tempSliderTargetPos.z += offsetZ - anchorOffsetZ;
             return this.tempSliderTargetPos;
         }
-        return this.tempSliderTargetPos.set(cubePos.x, cubePos.y, tooth.position.z + offsetZ);
+        return this.tempSliderTargetPos.set(cubePos.x, cubePos.y, tooth.position.z + offsetZ - anchorOffsetZ);
+    }
+
+    private getSliderVisualAnchorOffsetZ(): number {
+        if (!this.cube || this.cubeMeshRenderers.length <= 0) {
+            return 0;
+        }
+        if (!this.setCubeVisualCenter(this.tempSliderVisualCenterWorldPos)) {
+            return 0;
+        }
+        if (this.cube.parent) {
+            this.cube.parent.inverseTransformPoint(this.tempSliderVisualCenterParentPos, this.tempSliderVisualCenterWorldPos);
+            return this.tempSliderVisualCenterParentPos.z - this.cube.position.z;
+        }
+        return this.tempSliderVisualCenterWorldPos.z - this.cube.worldPosition.z;
     }
 
     private getHitAnimDuration(): number {

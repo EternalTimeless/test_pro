@@ -10,7 +10,7 @@
       "uuid": "caffc481-8e86-4f96-8867-9213f3a378f4"
     },
     "Scene": {
-      "time": 1782124164713.3518,
+      "time": 1782201638338.633,
       "uuid": "e72949cf-3923-4906-b42c-4ca5bc00f29a"
     },
     "Script": {
@@ -246,11 +246,11 @@
       "uuid": "0eb60b0d-6019-42e8-8dc0-77a7212b5088"
     },
     "Script\\functionS\\Monster": {
-      "time": 1781597905249.2717,
+      "time": 1782201638349.1516,
       "uuid": "480b0da3-6475-4aa1-8e49-cfeec87991ec"
     },
     "Script\\functionS\\Other": {
-      "time": 1782093543897.4534,
+      "time": 1782201638350.1448,
       "uuid": "31a1e406-7653-4a32-9a59-655e6188e99e"
     },
     "Script\\functionS\\Player": {
@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782198719161.2517,
+      "time": 1782203343006.0012,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1662,7 +1662,7 @@
       "uuid": "93b74258-97e4-4fcb-bfc0-851d38430b93"
     },
     "Script\\functionS\\Monster\\MonsterCreate.ts": {
-      "time": 1781755074815.971,
+      "time": 1782201638349.1516,
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782199333027.7793,
+      "time": 1782201638351.1418,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -4422,7 +4422,7 @@
       "time": 1781689576517.3992
     },
     "Script\\functionS\\Other\\PropLalianGate.ts": {
-      "time": 1782117894156.627,
+      "time": 1782203031381.8938,
       "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts.meta": {
@@ -5043,24 +5043,17 @@
     "resources\\Materials\\OilBarrelBurst.mtl.meta": {
       "time": 1782193908079.1738
     },
-    "resources\\Shaders\\OilBarrelBurst.effect.meta": {
-      "time": 1782193891260.9219
-    },
     "resources\\Materials": {
-      "time": 1782193908078.1758,
+      "time": 1782201638352.139,
       "uuid": "a06bd5b7-62a5-4046-9f42-b34cae5c29da"
     },
     "resources\\Shaders": {
-      "time": 1782193891260.9219,
+      "time": 1782201638357.1267,
       "uuid": "f9a7f3d1-1c80-4e66-8f7c-45a76b662f8a"
     },
     "resources\\Materials\\OilBarrelBurst.mtl": {
-      "time": 1782193903564.1465,
+      "time": 1782201638352.139,
       "uuid": "2a6b1163-1472-4d78-afc8-a2b34ed2aa10"
-    },
-    "resources\\Shaders\\OilBarrelBurst.effect": {
-      "time": 1782193886660.3374,
-      "uuid": "85d2f214-5f2e-4d73-934b-66e3f35a2470"
     },
     "GameRes\\SLLYT_map\\wuqi.meta": {
       "time": 1782195527550.9514
@@ -5103,6 +5096,13 @@
     "GameRes\\SLLYT_map\\wuqi\\UI-MP5.png": {
       "time": 1782195527504.702,
       "uuid": "5da8f267-1313-44d2-9ebc-adaef1ccb5cf"
+    },
+    "resources\\Shaders\\OilBarrelBurst.effect.meta": {
+      "time": 1782201638357.1267
+    },
+    "resources\\Shaders\\OilBarrelBurst.effect": {
+      "time": 1782201638353.136,
+      "uuid": "85d2f214-5f2e-4d73-934b-66e3f35a2470"
     }
   },
   "missing": {}

@@ -724,13 +724,13 @@
             "resources\\Materials",
             "resources\\Shaders",
             "resources\\Materials\\OilBarrelBurst.mtl",
-            "resources\\Shaders\\OilBarrelBurst.effect",
             "GameRes\\SLLYT_map\\wuqi",
             "GameRes\\SLLYT_map\\wuqi\\UI-AK47.png",
             "GameRes\\SLLYT_map\\wuqi\\UI-MP5.png",
             "GameRes\\SLLYT_map\\wuqi\\UI-加特林.png",
             "GameRes\\SLLYT_map\\wuqi\\UI-加特林蓝 光效增强.png",
-            "GameRes\\SLLYT_map\\wuqi\\UI-加特林黄金.png"
+            "GameRes\\SLLYT_map\\wuqi\\UI-加特林黄金.png",
+            "resources\\Shaders\\OilBarrelBurst.effect"
         ]
     }
 }
