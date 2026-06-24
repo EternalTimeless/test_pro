@@ -730,7 +730,11 @@
             "GameRes\\SLLYT_map\\wuqi\\UI-加特林.png",
             "GameRes\\SLLYT_map\\wuqi\\UI-加特林蓝 光效增强.png",
             "GameRes\\SLLYT_map\\wuqi\\UI-加特林黄金.png",
-            "resources\\Shaders\\OilBarrelBurst.effect"
+            "resources\\Shaders\\OilBarrelBurst.effect",
+            "Scene\\Game_3D-005.scene",
+            "GameRes\\SLLYT_map\\mat\\M_beizengmen_yellow_02.mtl",
+            "GameRes\\SLLYT_map\\tex\\T_guanmu.png",
+            "GameRes\\SLLYT_map\\tex\\T_guanmu_blue.png"
         ]
     }
 }

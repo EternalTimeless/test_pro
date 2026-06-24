@@ -3,14 +3,14 @@
     {
       "bufferView": 0,
       "componentType": 5126,
-      "count": 426,
+      "count": 132,
       "max": [
         0.07075035572052002,
         0.08004853874444962,
-        0.770260214805603
+        0.771683394908905
       ],
       "min": [
-        -0.0686824768781662,
+        -0.0686824694275856,
         -0.059384290128946304,
         0.026703082025051117
       ],
@@ -21,7 +21,7 @@
       "bufferView": 0,
       "byteOffset": 12,
       "componentType": 5126,
-      "count": 426,
+      "count": 132,
       "name": "Cylinder001/NORMAL",
       "type": "VEC3"
     },
@@ -29,15 +29,55 @@
       "bufferView": 0,
       "byteOffset": 24,
       "componentType": 5126,
-      "count": 426,
+      "count": 132,
       "name": "Cylinder001/TEXCOORD_0",
       "type": "VEC2"
     },
     {
       "bufferView": 1,
       "componentType": 5123,
-      "count": 888,
+      "count": 294,
       "name": "Cylinder001/INDICES",
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 566,
+      "max": [
+        0.07026831805706024,
+        0.07934734225273132,
+        0.7826233506202698
+      ],
+      "min": [
+        -0.06713446229696274,
+        -0.05670827627182007,
+        0.552629828453064
+      ],
+      "name": "对象001/POSITION",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 566,
+      "name": "对象001/NORMAL",
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 24,
+      "componentType": 5126,
+      "count": 566,
+      "name": "对象001/TEXCOORD_0",
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 882,
+      "name": "对象001/INDICES",
       "type": "SCALAR"
     }
   ],
@@ -49,21 +89,35 @@
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 13632,
+      "byteLength": 4224,
       "byteStride": 32,
       "name": "Cylinder001",
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 1776,
-      "byteOffset": 13632,
+      "byteLength": 588,
+      "byteOffset": 4224,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 18112,
+      "byteOffset": 4812,
+      "byteStride": 32,
+      "name": "对象001",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1764,
+      "byteOffset": 22924,
       "target": 34963
     }
   ],
   "buffers": [
     {
-      "byteLength": 15408,
+      "byteLength": 24688,
       "uri": "out.bin"
     }
   ],
@@ -72,12 +126,12 @@
       "animationFrameRate": 30.0,
       "fbxFileHeaderInfo": {
         "creationTimeStamp": {
-          "day": 17,
-          "hour": 16,
-          "millisecond": 291,
-          "minute": 27,
+          "day": 23,
+          "hour": 17,
+          "millisecond": 558,
+          "minute": 13,
           "month": 6,
-          "second": 48,
+          "second": 23,
           "year": 2026
         },
         "creator": "FBX SDK/FBX Plugins version 2020.1.1",
@@ -89,7 +143,7 @@
             "applicationName": "3ds Max",
             "applicationVendor": "Autodesk",
             "applicationVersion": "2022",
-            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\bzm\\SM_beizengmen_03.fbx"
+            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\6.23\\SM_beizengmen_03.fbx"
           },
           "revision": "",
           "subject": "",
@@ -112,6 +166,19 @@
           "indices": 3
         }
       ]
+    },
+    {
+      "name": "对象001",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7
+        }
+      ]
     }
   ],
   "nodes": [
@@ -124,12 +191,23 @@
         0.0,
         0.7071067690849304
       ]
+    },
+    {
+      "mesh": 1,
+      "name": "对象001",
+      "rotation": [
+        -0.7071067690849304,
+        -0.0,
+        0.0,
+        0.7071067690849304
+      ]
     }
   ],
   "scenes": [
     {
       "nodes": [
-        0
+        0,
+        1
       ]
     }
   ]

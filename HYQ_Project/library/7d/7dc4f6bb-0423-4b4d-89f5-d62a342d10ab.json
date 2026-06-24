@@ -69,12 +69,6 @@
   ],
   "_props": [
     {
-      "albedoScale": {
-        "__type__": "cc.Vec3",
-        "x": 1.1,
-        "y": 1.1,
-        "z": 1.1
-      },
       "roughness": 0,
       "normalStrength": 0.5,
       "mainTexture": {

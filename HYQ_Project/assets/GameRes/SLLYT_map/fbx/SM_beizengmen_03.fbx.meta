@@ -5,6 +5,24 @@
   "uuid": "36cb1ca2-3c58-4c62-9e5d-dd515dce6967",
   "files": [],
   "subMetas": {
+    "035c0": {
+      "importer": "gltf-mesh",
+      "uuid": "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@035c0",
+      "displayName": "",
+      "id": "035c0",
+      "name": "对象001.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 294
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
     "c6160": {
       "importer": "gltf-mesh",
       "uuid": "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160",
@@ -13,7 +31,7 @@
       "name": "Cylinder001.mesh",
       "userData": {
         "gltfIndex": 0,
-        "triangleCount": 296
+        "triangleCount": 98
       },
       "ver": "1.1.1",
       "imported": true,
@@ -65,7 +83,8 @@
     },
     "assetFinder": {
       "meshes": [
-        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160"
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160",
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@035c0"
       ],
       "skeletons": [],
       "textures": [],

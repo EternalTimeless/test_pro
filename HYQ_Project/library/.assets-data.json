@@ -1176,8 +1176,9 @@
       "depends": [
         "06ccd6bf-6c20-475e-a1e9-4769cec74cb6@ba9d2",
         "af858f76-80d6-480e-92e9-5d1106503555",
+        "dea19d00-1fd6-4699-a3f7-2c8aae96e8cb",
+        "e9dde808-b1f7-4ebc-8617-4a610d13c3d8@f9941",
         "f98437b4-4680-4f47-b90d-a0c7b826005b",
-        "d721c99c-6745-434c-900e-6182785622ea@f9941",
         "ab01cbc5-abce-431e-8d91-6dea04e77138"
       ],
       "dependScripts": [
@@ -1192,8 +1193,9 @@
     "url": "db://assets/GameRes/Prefab/Prop_Brand_2.prefab",
     "value": {
       "depends": [
+        "dea19d00-1fd6-4699-a3f7-2c8aae96e8cb",
+        "5d685422-bdef-485d-be16-c8000b7f1f80@f9941",
         "f98437b4-4680-4f47-b90d-a0c7b826005b",
-        "ef7c10c2-a068-41bd-a6f0-5777121982ff@f9941",
         "5dd55190-0099-4d7b-8c86-c44951c27e0a"
       ],
       "dependScripts": [
@@ -7921,7 +7923,6 @@
         "0df93e8a-6b92-4fe1-9f75-248833974c1c",
         "ebca9632-c8e2-4736-bb73-79706c01cd19",
         "1dd89136-12dc-4b20-9296-810b3dc0ca2c",
-        "2e9d5c03-2005-4a97-8a0a-99318171a55f",
         "ab01cbc5-abce-431e-8d91-6dea04e77138",
         "5dd55190-0099-4d7b-8c86-c44951c27e0a",
         "d032ac98-05e1-4090-88bb-eb640dcb5fc1@b47c0",
@@ -8124,7 +8125,8 @@
     "url": "db://assets/GameRes/SLLYT_map/fbx/SM_beizengmen_03.fbx@1cf44",
     "value": {
       "depends": [
-        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160"
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160",
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@035c0"
       ]
     },
     "versionCode": 1
@@ -8512,7 +8514,9 @@
         "c02ceeff-80c7-4bbe-a955-798195f842a6",
         "1263d74c-8167-4928-91a6-4e2672411f47@a804a",
         "84532440-0322-4e78-b4fc-46a9b774a75b",
-        "323e7b95-835d-46c8-b339-4f3ea4aa1fe3"
+        "323e7b95-835d-46c8-b339-4f3ea4aa1fe3",
+        "3ecdd1fe-1135-4e79-821e-7603da86785f",
+        "4795d722-33bc-4b06-80ba-b29aee121f19"
       ],
       "dependScripts": [
         "CC3eba29-7abb-723a-f7ab-ae275e2277e8"
@@ -8578,7 +8582,8 @@
     "value": {
       "depends": [
         "c63cfac0-c992-4054-ab47-56d165a770b9",
-        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160"
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160",
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@035c0"
       ],
       "dependScripts": []
     },
@@ -8628,7 +8633,9 @@
     "value": {
       "depends": [
         "d32b94c0-802d-4996-a48c-f70d922c1083",
-        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160"
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@c6160",
+        "3a5b214d-62ad-4960-816e-20fbf4fb6e19",
+        "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@035c0"
       ],
       "dependScripts": []
     },
@@ -9806,6 +9813,167 @@
   },
   "6f1c4845-49e9-4fba-8e11-5490e0b92729": {
     "url": "db://assets/resources/Shaders/OilBarrelBurst.effect",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "3c90d493-9141-4d1a-8dd8-173b3b1ffabc": {
+    "url": "db://assets/Scene/Game_3D-005.scene",
+    "value": {
+      "depends": [
+        "3c90d493-9141-4d1a-8dd8-173b3b1ffabc",
+        "09f7d7d0-5529-499d-8bbb-e3e6a9394677",
+        "d1ffc78b-2a92-4489-893c-da76f48fc2ba",
+        "0138029d-bfaa-4d43-aa1c-63b3be01e8e5",
+        "822048d4-d5c9-4ed6-93b2-aa63e4139bac@16a87",
+        "a539b575-9537-49b0-ac27-43f709d42224",
+        "0df93e8a-6b92-4fe1-9f75-248833974c1c",
+        "ebca9632-c8e2-4736-bb73-79706c01cd19",
+        "1dd89136-12dc-4b20-9296-810b3dc0ca2c",
+        "ab01cbc5-abce-431e-8d91-6dea04e77138",
+        "5dd55190-0099-4d7b-8c86-c44951c27e0a",
+        "dea19d00-1fd6-4699-a3f7-2c8aae96e8cb",
+        "dd955aad-9fb4-43f7-93d3-04f3ebdefbbb@f9941",
+        "df892961-7da4-4f4d-8b24-7963cfcd3df7@97cb5",
+        "29cb620a-6a6f-4137-9526-751deb1882ad",
+        "03189dd5-73dd-4e52-8644-1ff1a122b972@2e1cf",
+        "cc1ba55d-5314-4c01-ba6d-b71fae6946a4",
+        "ba379bbc-987c-4bbc-a296-3cabc67825bb@73b7f",
+        "c6316384-dbb5-4431-ad4a-4c00d3092298@73b7f",
+        "f6fb758b-ca27-49a3-9074-b55054373a42@73b7f",
+        "e8aabdc2-bc10-4f97-95c0-c41ee701c0f1@83837",
+        "a940ff9a-70dc-4bd5-91ca-f7badfe4f9ef",
+        "0be8fd33-e86d-424b-af22-996a79677903",
+        "fed75016-e3cc-4c00-b479-b84368d1644c@9cd64",
+        "195a1b86-f57e-4d07-af1b-3f836083249a",
+        "9a96fc79-fcf2-4e2d-946e-0dca53a468fb@6016b",
+        "85075bb1-7df0-491d-bece-017584a8240e",
+        "d6735de2-0335-44ee-a765-33ae30b43066",
+        "ac9ad6bb-eec4-4420-9650-717c4a7d5140",
+        "8f687ae9-f5b3-4c5d-9170-5014aa2c3c84",
+        "193f8647-b8b4-42d4-9a69-a525d853a987@f9941",
+        "f6fb758b-ca27-49a3-9074-b55054373a42@16a87",
+        "d8076440-ef47-4d75-901b-ee91a400e94c",
+        "ac6eb507-f8e3-437a-8986-b7b34e4f6c5e",
+        "44781d6b-42f6-43c4-8ab6-2696357c119b@73b7f",
+        "8879c864-8ca1-4cda-9717-1c4ca76c4e49",
+        "36280121-26ae-4a8f-812b-7095d6e8f68b",
+        "d8f83505-8f07-4727-8042-6e4adaf03bdb@f9941",
+        "e2e3e8d1-37d6-48e7-a135-2241a772190f@f9941",
+        "6889e32d-f9ce-435e-9639-73129df1cac2",
+        "bbba8aab-d001-49cf-9a22-04d565443060@f9941",
+        "376fb3f4-139f-4977-b12d-690632989155@f9941",
+        "bbb48c40-318f-4f04-842a-0390928c0411",
+        "b86f34a9-5c63-4ea9-9bb4-66d9e9d8fdb3@f9941",
+        "f2d57ce1-7cab-48c2-9b0d-2efc33f4c47e",
+        "85451143-4e29-4add-aec1-eec95efd2b0e",
+        "9af4dd6f-c12b-4495-8aa7-156f1821a6e8@f9941",
+        "ac4e569f-d6a9-410e-a15c-936b043997e0@f9941",
+        "f96153eb-6f89-4aad-b84b-808954761c02",
+        "799add5f-4370-4ee6-b0a4-aca1ebcd06a3",
+        "b836b03f-f23c-4801-87e2-8742f0f6477c",
+        "22df2732-7376-4d1e-b3ec-198dc70edfad",
+        "990960bd-9301-4607-aca1-7c65a19e12bc",
+        "ac2e0ce8-427b-413a-b957-031450d6f06c",
+        "2be39540-c3f7-4309-a0f6-bffb11e792ab",
+        "a5d3d483-f17b-40f0-b2f6-f8315c79c88c",
+        "32cdc417-d225-4c93-bc55-2cc97b66bb81",
+        "31a7d71c-dbfe-4ce3-920b-07a58fd2c910",
+        "d16848b5-18b3-400e-8cad-f629e5124e7c",
+        "d4e35cfc-bccc-44da-a862-9531b7c1dda1",
+        "4a1c46cc-de5b-4b80-bbaf-835444348748",
+        "aa3d3fdc-214f-4f3d-8f6b-fc611a93cede",
+        "289a414f-8e4b-4d81-b760-72d9013ee799",
+        "93281d6f-e8bc-436b-a38f-b8143b325fdc"
+      ],
+      "dependScripts": [
+        "df21d7c0-057f-42d0-99ac-f0c9a1c670d6",
+        "CC3eba29-7abb-723a-f7ab-ae275e2277e8",
+        "6f259595-5aee-41d8-9049-d7188fa1e78a",
+        "4c579f82-105c-430a-bfd7-23b68345d492",
+        "da648bf8-ab14-4a6a-a474-9832df4b466c",
+        "a3fc851d-1125-44b5-aa5b-0bc582d46016",
+        "7ab0ec49-7b52-4369-a342-a29db05785c6",
+        "1bf3438b-1da7-4434-930b-814432d521fc",
+        "1f73fffa-7e0b-4275-921e-97239d52dd3a",
+        "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0",
+        "b41f7bf2-d6be-460d-81b2-3305244179b7",
+        "d0985bd0-e138-4615-b805-a38923e6194b",
+        "7dd534b2-c228-4325-8133-e281022dab59",
+        "dff7897e-71d1-4b28-8219-157367884693",
+        "7b32bbdb-1abc-4b60-aa8e-6c522754f601",
+        "0bf867df-81f2-478d-86c8-d963c3f9d0b0",
+        "71ade929-1f34-4339-ba92-2c2ea17e6fa0",
+        "a29e6a86-d980-4d4a-9a2d-b68c9f5fbfc9",
+        "3062c3b5-61c9-4397-8133-819b63aea95e"
+      ]
+    },
+    "versionCode": 1
+  },
+  "3a5b214d-62ad-4960-816e-20fbf4fb6e19": {
+    "url": "db://assets/GameRes/SLLYT_map/mat/M_beizengmen_yellow_02.mtl",
+    "value": {
+      "depends": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "7f8239c4-4b3d-4c75-b047-5c0d810287fc@6c48a",
+        "3964cc34-3094-4161-98e4-a79590088632@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "5d685422-bdef-485d-be16-c8000b7f1f80": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_guanmu.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "e9dde808-b1f7-4ebc-8617-4a610d13c3d8": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_guanmu_blue.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "e9dde808-b1f7-4ebc-8617-4a610d13c3d8@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_guanmu_blue.png@6c48a",
+    "value": {
+      "depends": [
+        "e9dde808-b1f7-4ebc-8617-4a610d13c3d8"
+      ]
+    },
+    "versionCode": 1
+  },
+  "5d685422-bdef-485d-be16-c8000b7f1f80@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_guanmu.png@6c48a",
+    "value": {
+      "depends": [
+        "5d685422-bdef-485d-be16-c8000b7f1f80"
+      ]
+    },
+    "versionCode": 1
+  },
+  "e9dde808-b1f7-4ebc-8617-4a610d13c3d8@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_guanmu_blue.png@f9941",
+    "value": {
+      "depends": [
+        "e9dde808-b1f7-4ebc-8617-4a610d13c3d8@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "5d685422-bdef-485d-be16-c8000b7f1f80@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/tex/T_guanmu.png@f9941",
+    "value": {
+      "depends": [
+        "5d685422-bdef-485d-be16-c8000b7f1f80@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "36cb1ca2-3c58-4c62-9e5d-dd515dce6967@035c0": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_beizengmen_03.fbx@035c0",
     "value": {
       "depends": []
     },
