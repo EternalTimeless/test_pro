@@ -624,9 +624,6 @@ export class MonsterCreate extends UnityUpComponent {
         if (monster.node.worldPositionZ < limitZ) {
             monster.node.setWorldPosition(monster.node.worldPositionX, monster.node.worldPositionY, limitZ);
         }
-        if (monster.move?.pos && monster.move.pos.z < limitZ) {
-            monster.move.pos.z = limitZ;
-        }
     }
 
     private getFrontMonsterByWave(waveIndex: number) {

@@ -911,8 +911,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         clampMonsterBehindWaveRole(monster) {
-          var _monster$move;
-
           var waveIndex = this.getWaveIndexByMonster(monster);
 
           if (waveIndex < 0 || waveIndex >= this._waveRoleNodes.length) {
@@ -931,10 +929,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           if (monster.node.worldPositionZ < limitZ) {
             monster.node.setWorldPosition(monster.node.worldPositionX, monster.node.worldPositionY, limitZ);
-          }
-
-          if ((_monster$move = monster.move) != null && _monster$move.pos && monster.move.pos.z < limitZ) {
-            monster.move.pos.z = limitZ;
           }
         }
 
