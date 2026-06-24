@@ -43,21 +43,21 @@
       },
       "crackColor": {
         "__type__": "cc.Color",
-        "r": 255,
-        "g": 84,
-        "b": 18,
+        "r": 219,
+        "g": 235,
+        "b": 255,
         "a": 255
       },
       "edgeColor": {
         "__type__": "cc.Color",
         "r": 255,
-        "g": 222,
-        "b": 50,
+        "g": 255,
+        "b": 255,
         "a": 255
       },
       "burstProgress": 0,
-      "burstWidth": 0.12,
-      "burstOffset": 0.35
+      "burstWidth": 0.04,
+      "burstOffset": 0.22
     }
   ]
 }

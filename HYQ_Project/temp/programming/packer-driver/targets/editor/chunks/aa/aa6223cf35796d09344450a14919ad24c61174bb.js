@@ -620,14 +620,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }).start();
             }
 
-            tween(tire).delay(i * PropArms.oilBurstDestroyDelayStep).to(0.07, {
-              scale: this.getBottomBaseRootScale(tire, 1.4, 1.5, 1.4)
+            tween(tire).delay(i * PropArms.oilBurstDestroyDelayStep).to(PropArms.oilBurstDestroyDuration, {
+              scale: this.getBottomBaseRootScale(tire, 1.4)
             }, {
               easing: 'sineOut'
-            }).to(0.08, {
-              scale: Vec3.ZERO
-            }, {
-              easing: 'sineIn'
             }).call(() => {
               this.restoreOilBurstMaterials(oilBurstRecords);
               this.releaseBottomBase(tire);
@@ -973,17 +969,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), TweenTool) : TweenTool).scaleShake(this.hpLabel.node); // 被销毁轮胎：果冻缩放→缩小消失
 
-          const s1 = this.getBottomBaseRootScale(tire);
-          const s2 = this.getBottomBaseRootScale(tire, 1.3);
-          const s3 = this.getBottomBaseRootScale(tire, 0.6);
-          const s0 = v3(0, 0, 0);
+          const s2 = this.getBottomBaseRootScale(tire, 1.4);
 
           if (oilBurstRecords.length > 0) {
             const burstState = {
               progress: 0
             };
             this.applyOilBurstProgress(oilBurstRecords, 0);
-            tween(burstState).to(0.3 * this.animScale, {
+            tween(burstState).to(0.22 * this.animScale, {
               progress: 1
             }, {
               onUpdate: target => {
@@ -992,22 +985,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }).start();
           }
 
-          tween(tire).to(0.06 * this.animScale, {
+          tween(tire).to(0.22 * this.animScale, {
             scale: s2
           }, {
-            easing: 'cubicOut'
-          }).to(0.08 * this.animScale, {
-            scale: s3
-          }, {
-            easing: 'cubicOut'
-          }).to(0.08 * this.animScale, {
-            scale: s1
-          }, {
-            easing: 'backOut'
-          }).to(0.08 * this.animScale, {
-            scale: s0
-          }, {
-            easing: 'sineIn'
+            easing: 'sineOut'
           }).call(() => {
             this.restoreOilBurstMaterials(oilBurstRecords);
             this.releaseBottomBase(tire);
@@ -1736,8 +1717,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               burst.copy(burstTemplate);
               this.copyOilBurstBaseProperties(original, burst);
               burst.setProperty("burstProgress", 0);
-              burst.setProperty("burstWidth", 0.12);
-              burst.setProperty("burstOffset", 0.35);
+              burst.setProperty("burstWidth", 0.04);
+              burst.setProperty("burstOffset", 0.22);
               burstMaterials[i] = burst;
               renderer.setSharedMaterial(burst, i);
               hasBurstMaterial = true;
