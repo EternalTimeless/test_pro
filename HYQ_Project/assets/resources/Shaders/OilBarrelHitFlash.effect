@@ -1,0 +1,88 @@
+CCEffect %{
+  techniques:
+  - name: opaque
+    passes:
+    - vert: oil-hit-flash-vs
+      frag: oil-hit-flash-fs:frag
+      rasterizerState:
+        cullMode: none
+      properties:
+        mainTexture:    { value: white }
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+        flashColor:     { value: [1.0, 0.74, 0.14, 1.0], editor: { type: color } }
+        flashProgress:  { value: 0.0, editor: { slide: true, range: [0, 1, 0.001] } }
+        flashStrength:  { value: 1.8, editor: { slide: true, range: [0, 3, 0.01] } }
+        edgeWidth:      { value: 0.2, editor: { slide: true, range: [0.04, 0.5, 0.01] } }
+        worldCenterY:   { value: 0.0 }
+        worldHalfY:     { value: 0.5 }
+}%
+
+CCProgram oil-hit-flash-vs %{
+  precision highp float;
+
+  #include <cc-global>
+  #include <cc-local>
+
+  in vec3 a_position;
+  in vec3 a_normal;
+  in vec2 a_texCoord;
+
+  out vec2 v_uv;
+  out float v_worldY;
+  out vec3 v_normal;
+  out vec3 v_viewDir;
+
+  void main () {
+    vec4 world = cc_matWorld * vec4(a_position, 1.0);
+    v_uv = a_texCoord;
+    v_worldY = world.y;
+    v_normal = normalize((cc_matWorldIT * vec4(a_normal, 0.0)).xyz);
+    v_viewDir = normalize(cc_cameraPos.xyz - world.xyz);
+    gl_Position = cc_matProj * cc_matView * world;
+  }
+}%
+
+CCProgram oil-hit-flash-fs %{
+  precision highp float;
+  #include <output>
+
+  uniform sampler2D mainTexture;
+
+  uniform HitFlashParams {
+    vec4 mainColor;
+    vec4 flashColor;
+    float flashProgress;
+    float flashStrength;
+    float edgeWidth;
+    float worldCenterY;
+    float worldHalfY;
+  };
+
+  in vec2 v_uv;
+  in float v_worldY;
+  in vec3 v_normal;
+  in vec3 v_viewDir;
+
+  vec4 frag () {
+    float p = clamp(flashProgress, 0.0, 1.0);
+    float fade = 1.0 - smoothstep(0.12, 1.0, p);
+    vec4 baseColor = texture(mainTexture, v_uv) * mainColor;
+
+    float halfY = max(worldHalfY, 0.001);
+    float yN = clamp((v_worldY - worldCenterY) / halfY, -1.0, 1.0);
+    float topDistance = clamp(1.0 - yN, 0.0, 1.0);
+    float bottomDistance = clamp(1.0 + yN, 0.0, 1.0);
+    float topWidth = edgeWidth * 0.62;
+    float bottomWidth = edgeWidth * 1.22;
+    float topLine = 1.0 - smoothstep(topWidth * 0.12, topWidth, topDistance);
+    float bottomLine = 1.0 - smoothstep(bottomWidth * 0.12, bottomWidth, bottomDistance);
+    float topSpread = pow(1.0 - smoothstep(0.0, 1.12, topDistance), 0.72);
+    float bottomSpread = pow(1.0 - smoothstep(0.0, 1.12, bottomDistance), 0.72);
+    float edgeSpread = max(topSpread, bottomSpread);
+    float rim = pow(1.0 - abs(dot(normalize(v_normal), normalize(v_viewDir))), 3.0);
+    float highlight = ((topLine * 1.08 + bottomLine * 1.32) * 1.35 + edgeSpread * 0.72 + rim * 0.02) * fade * flashStrength;
+
+    vec3 color = baseColor.rgb + flashColor.rgb * highlight;
+    return CCFragOutput(vec4(color, baseColor.a));
+  }
+}%

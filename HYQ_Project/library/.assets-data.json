@@ -9978,5 +9978,21 @@
       "depends": []
     },
     "versionCode": 1
+  },
+  "6eda71c0-221a-42f7-b9c3-2eac3a51bc90": {
+    "url": "db://assets/resources/Materials/OilBarrelHitFlash.mtl",
+    "value": {
+      "depends": [
+        "04e62b78-8a5b-4f70-94f1-7ec03dd49a70"
+      ]
+    },
+    "versionCode": 1
+  },
+  "04e62b78-8a5b-4f70-94f1-7ec03dd49a70": {
+    "url": "db://assets/resources/Shaders/OilBarrelHitFlash.effect",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
   }
 }

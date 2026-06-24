@@ -1,0 +1,50 @@
+{
+  "__type__": "cc.Material",
+  "_name": "OilBarrelHitFlash",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "04e62b78-8a5b-4f70-94f1-7ec03dd49a70",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 0,
+  "_defines": [
+    {}
+  ],
+  "_states": [
+    {
+      "rasterizerState": {
+        "cullMode": 0
+      },
+      "blendState": {
+        "targets": [
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {
+      "mainColor": {
+        "__type__": "cc.Color",
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 255
+      },
+      "flashColor": {
+        "__type__": "cc.Color",
+        "r": 255,
+        "g": 188,
+        "b": 36,
+        "a": 255
+      },
+      "flashProgress": 0,
+      "flashStrength": 1.8,
+      "edgeWidth": 0.2,
+      "worldCenterY": 0,
+      "worldHalfY": 0.5
+    }
+  ]
+}

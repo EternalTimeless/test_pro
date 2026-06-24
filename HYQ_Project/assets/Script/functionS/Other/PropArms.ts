@@ -28,6 +28,12 @@ type OilBurstMaterialRecord = {
     burstMaterials: (Material | null)[];
 };
 
+type OilHitFlashMaterialRecord = {
+    renderer: MeshRenderer;
+    originalMaterials: (Material | null)[];
+    flashMaterials: (Material | null)[];
+};
+
 
 @ccclass('ArmsInfo')
 export class ArmsInfo {
@@ -65,10 +71,15 @@ export class ArmsInfo {
 export class PropArms extends BattleTarget3D {
 
     private static readonly oilBurstMaterialPath: string = "Materials/OilBarrelBurst";
+    private static readonly oilHitFlashMaterialPath: string = "Materials/OilBarrelHitFlash";
     private static oilBurstMaterial: Material | null = null;
     private static oilBurstMaterialLoading: boolean = false;
+    private static oilHitFlashMaterial: Material | null = null;
+    private static oilHitFlashMaterialLoading: boolean = false;
     private static readonly oilBurstDestroyDuration: number = 0.15;
     private static readonly oilBurstDestroyDelayStep: number = 0.05;
+    private static readonly oilHitFlashDuration: number = 0.16;
+    private static readonly oilHitFlashColor: Color = new Color(255, 188, 36, 255);
     private static readonly spriteWeaponVisualName: string = "jiatelin";
     private static readonly modelWeaponVisualName: string = "jiateling01";
 
@@ -242,6 +253,8 @@ export class PropArms extends BattleTarget3D {
     private bottomBaseRollAngle: number = 0;
     private lastBottomBaseWorldZ: number = 0;
     private hasLastBottomBaseWorldZ: boolean = false;
+    private oilHitFlashRecords: OilHitFlashMaterialRecord[] = [];
+    private oilHitFlashState: { progress: number } | null = null;
 
     // @property(Node)
     // public effect_ss: Node;
@@ -263,11 +276,15 @@ export class PropArms extends BattleTarget3D {
         const shouldRemain = Math.max(0, Math.ceil(hpRatio * this._initialTireCount));
         if (this.tireList.length > shouldRemain) {
             this.destroyOneTire();
+            this.playOilBarrelHitFlash();
         } else if (!this._isShake && this.tireList.length > 0) {
             // 没销毁轮胎：所有轮胎波浪缩放+闪红
             this._isShake = true;
+            this.playOilBarrelHitFlash();
             this._playBottomTireHit();
             TweenTool.scaleShake(this.hpLabel.node);
+        } else {
+            this.playOilBarrelHitFlash();
         }
         this.hpLabel.string = Math.round(this.curHp).toString();
     }
@@ -278,6 +295,7 @@ export class PropArms extends BattleTarget3D {
     protected die(): void {
 
         this._isShake = false;
+        this.restoreOilHitFlashMaterials();
         FlashRedManager.instance.stopFlashRed(this.node);
         BulletMonsterCollisionManager.instance.unregisterTarget(this);
 
@@ -541,6 +559,7 @@ export class PropArms extends BattleTarget3D {
         if (!tire) return;
 
         // 停止残留缩放动画并重置到原始大小
+        this.restoreOilHitFlashMaterials();
         Tween.stopAllByTarget(tire);
         this.resetBottomBaseRootScale(tire);
 
@@ -1183,6 +1202,106 @@ export class PropArms extends BattleTarget3D {
         });
     }
 
+    private static preloadOilHitFlashMaterial(): void {
+        if (PropArms.oilHitFlashMaterial || PropArms.oilHitFlashMaterialLoading) {
+            return;
+        }
+        PropArms.oilHitFlashMaterialLoading = true;
+        resources.load(PropArms.oilHitFlashMaterialPath, Material, (err, material) => {
+            PropArms.oilHitFlashMaterialLoading = false;
+            if (err || !material) {
+                console.warn(`[PropArms] load oil hit flash material failed: ${PropArms.oilHitFlashMaterialPath}`, err);
+                return;
+            }
+            PropArms.oilHitFlashMaterial = material;
+        });
+    }
+
+    private playOilBarrelHitFlash(): void {
+        if (this.tireList.length <= 0 || this.isDie) {
+            return;
+        }
+        const flashTemplate = PropArms.oilHitFlashMaterial;
+        if (!flashTemplate) {
+            PropArms.preloadOilHitFlashMaterial();
+            return;
+        }
+
+        this.restoreOilHitFlashMaterials();
+
+        const records: OilHitFlashMaterialRecord[] = [];
+        for (let i = 0; i < this.tireList.length; i++) {
+            const tire = this.tireList[i];
+            if (!tire || !tire.activeInHierarchy) {
+                continue;
+            }
+
+            const renderers: MeshRenderer[] = [];
+            this.collectMeshRenderers(tire, renderers);
+            for (let r = 0; r < renderers.length; r++) {
+                const renderer = renderers[r];
+                if (!renderer || !renderer.isValid) {
+                    continue;
+                }
+
+                const originalMaterials = [...renderer.sharedMaterials];
+                const flashMaterials = originalMaterials.slice();
+                let hasFlashMaterial = false;
+                for (let m = 0; m < originalMaterials.length; m++) {
+                    const original = originalMaterials[m];
+                    if (!original) {
+                        continue;
+                    }
+                    const flash = new Material();
+                    flash.copy(flashTemplate);
+                    this.copyOilBarrelBaseProperties(original, flash);
+                    flash.setProperty("flashColor", PropArms.oilHitFlashColor);
+                    flash.setProperty("flashProgress", 0);
+                    flash.setProperty("flashStrength", 1.8);
+                    flash.setProperty("edgeWidth", 0.2);
+                    this.applyOilHitFlashWorldY(renderer, flash);
+                    flashMaterials[m] = flash;
+                    hasFlashMaterial = true;
+                }
+                if (!hasFlashMaterial) {
+                    continue;
+                }
+                renderer.sharedMaterials = flashMaterials;
+                records.push({ renderer, originalMaterials, flashMaterials });
+            }
+        }
+
+        if (records.length <= 0) {
+            return;
+        }
+
+        this.oilHitFlashRecords = records;
+        this.oilHitFlashState = { progress: 0 };
+        tween(this.oilHitFlashState)
+            .to(PropArms.oilHitFlashDuration, { progress: 1 }, {
+                onUpdate: (target: { progress: number }) => {
+                    this.applyOilHitFlashProgress(target.progress);
+                }
+            })
+            .call(() => {
+                this.restoreOilHitFlashMaterials();
+            })
+            .start();
+    }
+
+    private applyOilHitFlashWorldY(renderer: MeshRenderer, material: Material): void {
+        const worldBounds = (renderer as any)?.model?.worldBounds;
+        const center = worldBounds?.center;
+        const halfExtents = worldBounds?.halfExtents;
+        if (center && halfExtents) {
+            material.setProperty("worldCenterY", center.y);
+            material.setProperty("worldHalfY", Math.max(0.001, halfExtents.y));
+            return;
+        }
+        material.setProperty("worldCenterY", renderer.node.worldPositionY);
+        material.setProperty("worldHalfY", 0.5);
+    }
+
     private createOilBurstMaterialRecords(node: Node): OilBurstMaterialRecord[] {
         const burstTemplate = PropArms.oilBurstMaterial;
         if (!burstTemplate) {
@@ -1245,6 +1364,10 @@ export class PropArms extends BattleTarget3D {
     }
 
     private copyOilBurstBaseProperties(source: Material, target: Material): void {
+        this.copyOilBarrelBaseProperties(source, target);
+    }
+
+    private copyOilBarrelBaseProperties(source: Material, target: Material): void {
         const texture = this.getMaterialProperty(source, "mainTexture");
         if (texture) {
             target.setProperty("mainTexture", texture);
@@ -1254,6 +1377,44 @@ export class PropArms extends BattleTarget3D {
         if (color) {
             target.setProperty("mainColor", color);
         }
+    }
+
+    private applyOilHitFlashProgress(progress: number): void {
+        const value = Math.max(0, Math.min(1, progress));
+        for (let r = 0; r < this.oilHitFlashRecords.length; r++) {
+            const record = this.oilHitFlashRecords[r];
+            if (!record.renderer || !record.renderer.isValid) {
+                continue;
+            }
+            for (let i = 0; i < record.flashMaterials.length; i++) {
+                const material = record.flashMaterials[i];
+                if (material && material !== record.originalMaterials[i]) {
+                    material.setProperty("flashProgress", value);
+                }
+            }
+        }
+    }
+
+    private restoreOilHitFlashMaterials(): void {
+        if (this.oilHitFlashState) {
+            Tween.stopAllByTarget(this.oilHitFlashState);
+            this.oilHitFlashState = null;
+        }
+
+        for (let r = 0; r < this.oilHitFlashRecords.length; r++) {
+            const record = this.oilHitFlashRecords[r];
+            if (record.renderer && record.renderer.isValid) {
+                record.renderer.sharedMaterials = [];
+                record.renderer.sharedMaterials = record.originalMaterials;
+            }
+            for (let i = 0; i < record.flashMaterials.length; i++) {
+                const material = record.flashMaterials[i];
+                if (material && material !== record.originalMaterials[i] && material.isValid) {
+                    material.destroy();
+                }
+            }
+        }
+        this.oilHitFlashRecords.length = 0;
     }
 
     private getMaterialProperty(material: Material, propName: string): any {
@@ -1406,6 +1567,7 @@ export class PropArms extends BattleTarget3D {
 
     start() {
         PropArms.preloadOilBurstMaterial();
+        PropArms.preloadOilHitFlashMaterial();
         if (!this._disableWaveStageChain) {
             EventManager.instance.on(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage, this);
         }
@@ -1440,6 +1602,7 @@ export class PropArms extends BattleTarget3D {
     }
 
     protected onDestroy(): void {
+        this.restoreOilHitFlashMaterials();
         EventManager.instance.off(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage);
     }
 

@@ -970,3 +970,35 @@
 2026-6-24 16:27:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (12ms)
 2026-6-24 16:27:45-log: run build task 整理部分构建选项内数据到 settings.json success in 12 ms√, progress: 15%
 2026-6-24 16:27:45-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:247.13MB, end 247.22MB, increase: 84.67KB
+2026-6-24 16:41:04-debug: refresh db internal success
+2026-6-24 16:41:04-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\Other\PropArms.tsbackground: #aaff85; color: #000;color: #000;
+2026-6-24 16:41:04-debug: refresh db assets success
+2026-6-24 16:41:04-debug: refresh db super-packager success
+2026-6-24 16:41:04-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-24 16:41:04-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-24 16:41:04-debug: asset-db:refresh-all-database (732ms)
+2026-6-24 16:41:04-debug: asset-db-hook-engine-extends-afterRefresh (13ms)
+2026-6-24 16:41:04-debug: asset-db:worker-effect-data-processing (5ms)
+2026-6-24 17:03:23-debug: refresh db internal success
+2026-6-24 17:03:23-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\resources\Materials\OilBarrelHitFlash.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-24 17:03:23-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\resources\Shaders\OilBarrelHitFlash.effectbackground: #aaff85; color: #000;color: #000;
+2026-6-24 17:03:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\resources\Materialsbackground: #aaff85; color: #000;color: #000;
+2026-6-24 17:03:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\resources\Shadersbackground: #aaff85; color: #000;color: #000;
+2026-6-24 17:03:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\Other\PropArms.tsbackground: #aaff85; color: #000;color: #000;
+2026-6-24 17:03:24-debug: refresh db assets success
+2026-6-24 17:03:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\resources\Materials\OilBarrelHitFlash.mtlbackground: #aaff85; color: #000;color: #000;
+2026-6-24 17:03:24-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-24 17:03:24-debug: refresh db super-packager success
+2026-6-24 17:03:24-debug: asset-db:refresh-all-database (624ms)
+2026-6-24 17:03:25-debug: recompile effect.bin success
+2026-6-24 17:03:25-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-24 17:03:25-debug: asset-db:worker-effect-data-processing (1065ms)
+2026-6-24 17:03:25-debug: asset-db-hook-engine-extends-afterRefresh (1065ms)
+2026-6-24 17:03:27-debug: refresh db internal success
+2026-6-24 17:03:28-debug: refresh db assets success
+2026-6-24 17:03:28-debug: refresh db super-packager success
+2026-6-24 17:03:28-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-6-24 17:03:28-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-6-24 17:03:28-debug: asset-db:worker-effect-data-processing (1ms)
+2026-6-24 17:03:28-debug: asset-db:refresh-all-database (186ms)
+2026-6-24 17:03:28-debug: asset-db-hook-engine-extends-afterRefresh (2ms)

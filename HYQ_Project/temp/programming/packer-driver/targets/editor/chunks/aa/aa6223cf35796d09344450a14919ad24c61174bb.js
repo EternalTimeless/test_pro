@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -92,6 +92,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCBoolean = _cc.CCBoolean;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
+      Color = _cc.Color;
       instantiate = _cc.instantiate;
       Label = _cc.Label;
       Material = _cc.Material;
@@ -451,6 +452,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseRollAngle = 0;
           this.lastBottomBaseWorldZ = 0;
           this.hasLastBottomBaseWorldZ = false;
+          this.oilHitFlashRecords = [];
+          this.oilHitFlashState = null;
 
           _initializerDefineProperty(this, "speed", _descriptor26, this);
 
@@ -567,15 +570,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           if (this.tireList.length > shouldRemain) {
             this.destroyOneTire();
+            this.playOilBarrelHitFlash();
           } else if (!this._isShake && this.tireList.length > 0) {
             // 没销毁轮胎：所有轮胎波浪缩放+闪红
             this._isShake = true;
+            this.playOilBarrelHitFlash();
 
             this._playBottomTireHit();
 
             (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
               error: Error()
             }), TweenTool) : TweenTool).scaleShake(this.hpLabel.node);
+          } else {
+            this.playOilBarrelHitFlash();
           }
 
           this.hpLabel.string = Math.round(this.curHp).toString();
@@ -591,6 +598,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var _this$_curArms;
 
           this._isShake = false;
+          this.restoreOilHitFlashMaterials();
           (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
             error: Error()
           }), FlashRedManager) : FlashRedManager).instance.stopFlashRed(this.node);
@@ -936,6 +944,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const tire = this.tireList.shift();
           if (!tire) return; // 停止残留缩放动画并重置到原始大小
 
+          this.restoreOilHitFlashMaterials();
           Tween.stopAllByTarget(tire);
           this.resetBottomBaseRootScale(tire); // 捕获被销毁轮胎的MeshRenderer（flashRed是延迟应用的，必须在更新mesh引用前捕获）
 
@@ -1682,6 +1691,128 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           });
         }
 
+        static preloadOilHitFlashMaterial() {
+          if (PropArms.oilHitFlashMaterial || PropArms.oilHitFlashMaterialLoading) {
+            return;
+          }
+
+          PropArms.oilHitFlashMaterialLoading = true;
+          resources.load(PropArms.oilHitFlashMaterialPath, Material, (err, material) => {
+            PropArms.oilHitFlashMaterialLoading = false;
+
+            if (err || !material) {
+              console.warn(`[PropArms] load oil hit flash material failed: ${PropArms.oilHitFlashMaterialPath}`, err);
+              return;
+            }
+
+            PropArms.oilHitFlashMaterial = material;
+          });
+        }
+
+        playOilBarrelHitFlash() {
+          if (this.tireList.length <= 0 || this.isDie) {
+            return;
+          }
+
+          const flashTemplate = PropArms.oilHitFlashMaterial;
+
+          if (!flashTemplate) {
+            PropArms.preloadOilHitFlashMaterial();
+            return;
+          }
+
+          this.restoreOilHitFlashMaterials();
+          const records = [];
+
+          for (let i = 0; i < this.tireList.length; i++) {
+            const tire = this.tireList[i];
+
+            if (!tire || !tire.activeInHierarchy) {
+              continue;
+            }
+
+            const renderers = [];
+            this.collectMeshRenderers(tire, renderers);
+
+            for (let r = 0; r < renderers.length; r++) {
+              const renderer = renderers[r];
+
+              if (!renderer || !renderer.isValid) {
+                continue;
+              }
+
+              const originalMaterials = [...renderer.sharedMaterials];
+              const flashMaterials = originalMaterials.slice();
+              let hasFlashMaterial = false;
+
+              for (let m = 0; m < originalMaterials.length; m++) {
+                const original = originalMaterials[m];
+
+                if (!original) {
+                  continue;
+                }
+
+                const flash = new Material();
+                flash.copy(flashTemplate);
+                this.copyOilBarrelBaseProperties(original, flash);
+                flash.setProperty("flashColor", PropArms.oilHitFlashColor);
+                flash.setProperty("flashProgress", 0);
+                flash.setProperty("flashStrength", 1.8);
+                flash.setProperty("edgeWidth", 0.2);
+                this.applyOilHitFlashWorldY(renderer, flash);
+                flashMaterials[m] = flash;
+                hasFlashMaterial = true;
+              }
+
+              if (!hasFlashMaterial) {
+                continue;
+              }
+
+              renderer.sharedMaterials = flashMaterials;
+              records.push({
+                renderer,
+                originalMaterials,
+                flashMaterials
+              });
+            }
+          }
+
+          if (records.length <= 0) {
+            return;
+          }
+
+          this.oilHitFlashRecords = records;
+          this.oilHitFlashState = {
+            progress: 0
+          };
+          tween(this.oilHitFlashState).to(PropArms.oilHitFlashDuration, {
+            progress: 1
+          }, {
+            onUpdate: target => {
+              this.applyOilHitFlashProgress(target.progress);
+            }
+          }).call(() => {
+            this.restoreOilHitFlashMaterials();
+          }).start();
+        }
+
+        applyOilHitFlashWorldY(renderer, material) {
+          var _model2;
+
+          const worldBounds = renderer == null || (_model2 = renderer.model) == null ? void 0 : _model2.worldBounds;
+          const center = worldBounds == null ? void 0 : worldBounds.center;
+          const halfExtents = worldBounds == null ? void 0 : worldBounds.halfExtents;
+
+          if (center && halfExtents) {
+            material.setProperty("worldCenterY", center.y);
+            material.setProperty("worldHalfY", Math.max(0.001, halfExtents.y));
+            return;
+          }
+
+          material.setProperty("worldCenterY", renderer.node.worldPositionY);
+          material.setProperty("worldHalfY", 0.5);
+        }
+
         createOilBurstMaterialRecords(node) {
           const burstTemplate = PropArms.oilBurstMaterial;
 
@@ -1753,6 +1884,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         copyOilBurstBaseProperties(source, target) {
+          this.copyOilBarrelBaseProperties(source, target);
+        }
+
+        copyOilBarrelBaseProperties(source, target) {
           const texture = this.getMaterialProperty(source, "mainTexture");
 
           if (texture) {
@@ -1764,6 +1899,52 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (color) {
             target.setProperty("mainColor", color);
           }
+        }
+
+        applyOilHitFlashProgress(progress) {
+          const value = Math.max(0, Math.min(1, progress));
+
+          for (let r = 0; r < this.oilHitFlashRecords.length; r++) {
+            const record = this.oilHitFlashRecords[r];
+
+            if (!record.renderer || !record.renderer.isValid) {
+              continue;
+            }
+
+            for (let i = 0; i < record.flashMaterials.length; i++) {
+              const material = record.flashMaterials[i];
+
+              if (material && material !== record.originalMaterials[i]) {
+                material.setProperty("flashProgress", value);
+              }
+            }
+          }
+        }
+
+        restoreOilHitFlashMaterials() {
+          if (this.oilHitFlashState) {
+            Tween.stopAllByTarget(this.oilHitFlashState);
+            this.oilHitFlashState = null;
+          }
+
+          for (let r = 0; r < this.oilHitFlashRecords.length; r++) {
+            const record = this.oilHitFlashRecords[r];
+
+            if (record.renderer && record.renderer.isValid) {
+              record.renderer.sharedMaterials = [];
+              record.renderer.sharedMaterials = record.originalMaterials;
+            }
+
+            for (let i = 0; i < record.flashMaterials.length; i++) {
+              const material = record.flashMaterials[i];
+
+              if (material && material !== record.originalMaterials[i] && material.isValid) {
+                material.destroy();
+              }
+            }
+          }
+
+          this.oilHitFlashRecords.length = 0;
         }
 
         getMaterialProperty(material, propName) {
@@ -1938,6 +2119,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         start() {
           PropArms.preloadOilBurstMaterial();
+          PropArms.preloadOilHitFlashMaterial();
 
           if (!this._disableWaveStageChain) {
             (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
@@ -1966,6 +2148,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         onDestroy() {
+          this.restoreOilHitFlashMaterials();
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
           }), EventManager) : EventManager).instance.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
@@ -2055,7 +2238,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.node.setWorldPosition(this._stageSpawnPos);
         }
 
-      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.15, _class6.oilBurstDestroyDelayStep = 0.05, _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
+      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.15, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
         configurable: true,
         enumerable: true,
         writable: true,

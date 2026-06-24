@@ -2055,6 +2055,29 @@
         "..\\extensions\\super-packager\\package_assets\\chunks\\output.chunk",
         "..\\extensions\\super-packager\\package_assets\\chunks\\builtin\\uniforms\\cc-global.chunk",
         "..\\extensions\\super-packager\\package_assets\\chunks\\common\\color\\gamma.chunk"
+      ],
+      "resources\\Shaders\\OilBarrelHitFlash.effect": [
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\oil-hit-flash-vs.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\cc-global.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\cc-local.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\oil-hit-flash-fs.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\output.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\builtin\\uniforms\\cc-global.chunk",
+        "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine\\editor\\assets\\chunks\\common\\color\\gamma.chunk",
+        "chunks\\oil-hit-flash-vs.chunk",
+        "chunks\\cc-global.chunk",
+        "chunks\\cc-local.chunk",
+        "chunks\\oil-hit-flash-fs.chunk",
+        "chunks\\output.chunk",
+        "chunks\\builtin\\uniforms\\cc-global.chunk",
+        "chunks\\common\\color\\gamma.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\oil-hit-flash-vs.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\cc-global.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\cc-local.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\oil-hit-flash-fs.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\output.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\builtin\\uniforms\\cc-global.chunk",
+        "..\\extensions\\super-packager\\package_assets\\chunks\\common\\color\\gamma.chunk"
       ]
     },
     "uuid": {
@@ -2537,6 +2560,9 @@
       ],
       "GameRes\\SLLYT_map\\mat\\M_beizengmen_yellow_02.mtl": [
         "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "resources\\Materials\\OilBarrelHitFlash.mtl": [
+        "04e62b78-8a5b-4f70-94f1-7ec03dd49a70"
       ]
     }
   },
