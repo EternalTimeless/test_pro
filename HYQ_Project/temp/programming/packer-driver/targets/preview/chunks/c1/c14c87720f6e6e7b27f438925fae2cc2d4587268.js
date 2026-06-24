@@ -398,6 +398,47 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return this.propGapZ + Math.max(0, count) * this.nodeSpacingZ;
         }
 
+        getWorldZRange(out) {
+          if (!this.cube) {
+            return false;
+          }
+
+          var authoredTeeth = this.teeth.length > 0 ? this.teeth : this.collectTeeth();
+          var minZ = Number.POSITIVE_INFINITY;
+          var maxZ = Number.NEGATIVE_INFINITY;
+          var count = this.nodeCount > 0 ? Math.min(this.nodeCount, authoredTeeth.length) : authoredTeeth.length;
+
+          for (var i = 0; i < count; i++) {
+            var tooth = authoredTeeth[i];
+
+            if (!tooth) {
+              continue;
+            }
+
+            var z = tooth.worldPosition.z;
+            minZ = Math.min(minZ, z);
+            maxZ = Math.max(maxZ, z);
+          }
+
+          if (minZ === Number.POSITIVE_INFINITY || maxZ === Number.NEGATIVE_INFINITY) {
+            var _this$lalianRoot;
+
+            var centerNode = (_this$lalianRoot = this.lalianRoot) != null ? _this$lalianRoot : this.cube;
+
+            if (!centerNode) {
+              return false;
+            }
+
+            var halfZ = Math.max(0, this.getPropStartZ()) * 0.5;
+            var centerZ = centerNode.worldPosition.z;
+            out.set(centerZ - halfZ, centerZ + halfZ, 0);
+            return halfZ > 0;
+          }
+
+          out.set(minZ, maxZ, 0);
+          return true;
+        }
+
         Hit(damage) {
           if (this.animating && !this.finished) {
             return this.MaxHp > 0 ? this.curHp / this.MaxHp : 0;
@@ -407,13 +448,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         canLockBulletFromWorldX(worldX) {
-          var _ref, _this$lalianRoot;
+          var _ref, _this$lalianRoot2;
 
           if (this.finished || !this.cube || !this.cube.active || !this.cube.activeInHierarchy) {
             return false;
           }
 
-          var centerNode = (_ref = (_this$lalianRoot = this.lalianRoot) != null ? _this$lalianRoot : this.cube) != null ? _ref : this.node;
+          var centerNode = (_ref = (_this$lalianRoot2 = this.lalianRoot) != null ? _this$lalianRoot2 : this.cube) != null ? _ref : this.node;
           return Math.abs(worldX - centerNode.worldPosition.x) <= this.bulletLockRangeX;
         }
 

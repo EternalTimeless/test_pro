@@ -187,6 +187,37 @@ export class PropLalianGate extends BattleTarget3D {
         return this.propGapZ + Math.max(0, count) * this.nodeSpacingZ;
     }
 
+    public getWorldZRange(out: Vec3): boolean {
+        if (!this.cube) {
+            return false;
+        }
+        const authoredTeeth = this.teeth.length > 0 ? this.teeth : this.collectTeeth();
+        let minZ = Number.POSITIVE_INFINITY;
+        let maxZ = Number.NEGATIVE_INFINITY;
+        const count = this.nodeCount > 0 ? Math.min(this.nodeCount, authoredTeeth.length) : authoredTeeth.length;
+        for (let i = 0; i < count; i++) {
+            const tooth = authoredTeeth[i];
+            if (!tooth) {
+                continue;
+            }
+            const z = tooth.worldPosition.z;
+            minZ = Math.min(minZ, z);
+            maxZ = Math.max(maxZ, z);
+        }
+        if (minZ === Number.POSITIVE_INFINITY || maxZ === Number.NEGATIVE_INFINITY) {
+            const centerNode = this.lalianRoot ?? this.cube;
+            if (!centerNode) {
+                return false;
+            }
+            const halfZ = Math.max(0, this.getPropStartZ()) * 0.5;
+            const centerZ = centerNode.worldPosition.z;
+            out.set(centerZ - halfZ, centerZ + halfZ, 0);
+            return halfZ > 0;
+        }
+        out.set(minZ, maxZ, 0);
+        return true;
+    }
+
     public Hit(damage: number): number {
         if (this.animating && !this.finished) {
             return this.MaxHp > 0 ? this.curHp / this.MaxHp : 0;

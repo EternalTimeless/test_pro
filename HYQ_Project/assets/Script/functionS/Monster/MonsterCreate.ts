@@ -15,6 +15,7 @@ import { CameraMove } from '../../Base/CameraMove';
 import { PropArms } from '../Other/PropArms';
 import { CreatePropBrand } from '../Other/CreatePropBrand';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
+import { PropLalianGate } from '../Other/PropLalianGate';
 const { ccclass, property } = _decorator;
 const tempV3 = new Vec3();
 
@@ -73,25 +74,14 @@ export class MonsterCreate extends UnityUpComponent {
     @property({ tooltip: 'ZombieBrother前后Z轴排斥范围，该范围内不能生成ZombieBaby' })
     public brotherExcludeZ: number = 2;
 
-    @property({ tooltip: '怪物X轴分布半宽，实际列间距=disX*2/rowCount' })
+    @property({ displayName: '生成横向散布半宽(非限位)', tooltip: '只控制怪物生成队列的左右散布宽度，不决定是否允许进入左右奖励区。' })
     public disX: number = 2.5;
-
-    @property({ tooltip: '怪物中路限位半宽，怪物进入左右石板区时会被限制在该范围内' })
-    public disX2: number = 3;
 
     @property(CCFloat)
     public monsterSpeed: number = 2;
 
-    @property({ tooltip: '怪物中路X轴限制半宽，防止进入左右石板区域' })
+    @property({ type: CCFloat, displayName: '红框中路限位半宽', tooltip: '怪物在红框/非蓝框区域会被限制在 -该值 到 +该值 之间，左右两边同步生效。' })
     public middleLaneHalfX: number = 2;
-
-    @property({ tooltip: '左右石板区域Z轴起点，怪物只在该区间内限制中路' })
-    public sideSlabLimitMinZ: number = 22;
-
-    @property({ tooltip: '左右石板区域Z轴终点，怪物只在该区间内限制中路' })
-    public sideSlabLimitMaxZ: number = 200;
-
-
 
     /** 每列间距，由 disX*2/rowCount 计算得出 */
     private offX: number = 0;
@@ -146,6 +136,8 @@ export class MonsterCreate extends UnityUpComponent {
     private _monsterWaveIndexMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();
     private readonly waveRolePushGapInternal: number = 0.02;
     private _isRestoringWaveRolesAfterRebirth: boolean = false;
+    private lalianLimitRanges: { minZ: number, maxZ: number }[] = [];
+    private tempLalianRange: Vec3 = new Vec3();
 
     protected onLoad(): void {
         MonsterCreate.instance = this;
@@ -156,6 +148,7 @@ export class MonsterCreate extends UnityUpComponent {
         this.offX = this.disX * 2 / this.rowCount;
         EventManager.instance.on(EventType.PLAYER_RESURRECTION, this.TimeFlowsBackWard, this);
         EventManager.instance.on(EventType.MONSTER_SKILL_XRD, this.skillXRMonster, this);
+        this.refreshLalianLimitRange();
         this.spawnAllWavesAtStart();
         // this.scheduleOnce(() => {
         //     this.skillXRMonster(2, 2, 2);
@@ -518,13 +511,10 @@ export class MonsterCreate extends UnityUpComponent {
             } else if (monster.move.isPos) {
                 const mz = monster.node.worldPositionZ;
                 if (mz <= this.stage_0 && mz > this.stage_1) {
-                    const mx = monster.node.worldPositionX;
-                    const x = this.shouldLimitMonsterXAtZ(mz) || this.shouldLimitMonsterXAtZ(this.stage_1) ? this.clampMonsterX(mx) : mx;
-                    tempV3.x = x;
+                    tempV3.x = this.getMonsterMoveTargetX(monster, mz);
                     tempV3.y = 0;
                     tempV3.z = this.stage_1;
                     monster.move.pos = tempV3;
-                    monster.initX = x;
 
                 } else if (mz >= this.stage_1) {
                     if (!monster.attackTarget || !monster.attackTarget.active) {
@@ -538,6 +528,7 @@ export class MonsterCreate extends UnityUpComponent {
                     }
                 }
             }
+            this.syncMonsterMoveTargetX(monster);
             if (!this._isRestoringWaveRolesAfterRebirth) {
                 this.clampMonsterBehindWaveRole(monster);
             }
@@ -548,6 +539,47 @@ export class MonsterCreate extends UnityUpComponent {
             this._nextSpawnZ -= deltaTime * this.monsterSpeed;
         }
 
+    }
+
+    protected lateUpdate(deltaTime: number): void {
+        if (UnityUpComponent.isStop) {
+            return;
+        }
+        for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+            if (!monster || monster.isDie || !monster.node || !monster.node.active) {
+                continue;
+            }
+            this.syncMonsterMoveTargetX(monster);
+            this.limitMonsterToMiddleLane(monster);
+        }
+    }
+
+    private refreshLalianLimitRange(): void {
+        this.lalianLimitRanges.length = 0;
+
+        const scene = director.getScene();
+        if (!scene) {
+            return;
+        }
+
+        const stack: Node[] = [scene];
+        while (stack.length > 0) {
+            const node = stack.pop();
+            if (!node) {
+                continue;
+            }
+            const gate = node.getComponent(PropLalianGate);
+            if (gate && gate.getWorldZRange(this.tempLalianRange)) {
+                this.lalianLimitRanges.push({
+                    minZ: Math.min(this.tempLalianRange.x, this.tempLalianRange.y),
+                    maxZ: Math.max(this.tempLalianRange.x, this.tempLalianRange.y),
+                });
+            }
+            for (let i = node.children.length - 1; i >= 0; i--) {
+                stack.push(node.children[i]);
+            }
+        }
     }
 
     private updateWaveRolePush() {
@@ -698,15 +730,17 @@ export class MonsterCreate extends UnityUpComponent {
         // let z = this._finallyBoss ? this._finallyBoss.z + this.brotherExcludeZ * 2 + this.layerGapZ * layer : this.layerCount * (this.layerGapZ * l + this.brotherExcludeZ) + this.brotherExcludeZ + this.layerGapZ * layer;
         this._nextSpawnZ += this.brotherExcludeZ;
         const z = this._nextSpawnZ;
+        const worldZ = this.node.worldPositionZ + z;
         this._nextSpawnZ += this.brotherExcludeZ;
         monster.init((this._monsterBossCount * 2) + 1);
         monster.move.moveMod = MoveModEnum.PosMove;
+        monster.initX = 0;
         monster.node.setPosition(this.clampMonsterX(0), 0, z);
         this.applySpawnVariation(monster);
         tempV3.set(monster.node.worldPosition);
+        tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
         tempV3.z = this.stage_0;
         monster.move.pos = tempV3;
-        monster.initX = 0;
         if (waveIndex >= 0) {
             this._monsterWaveIndexMap.set(monster, waveIndex);
         }
@@ -746,7 +780,9 @@ export class MonsterCreate extends UnityUpComponent {
         // }
         const z = this._nextSpawnZ + (Math.random() - 0.5) * (this.layerGapZ + this.spawnRandomZ * 2);
         const rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
-        const x = this.shouldLimitMonsterXAtZ(z) ? this.clampMonsterX(rawX) : rawX;
+        const worldZ = this.node.worldPositionZ + z;
+        const x = this.shouldLimitMonsterXAtZ(worldZ) ? this.clampMonsterX(rawX) : rawX;
+        monster.initX = rawX;
 
         this.posIndex = (this.posIndex + 1) % this.rowCount;
 
@@ -757,10 +793,10 @@ export class MonsterCreate extends UnityUpComponent {
 
         tempV3.set(monster.node.worldPosition);
 
+        tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
         tempV3.z = this.stage_0;
 
         monster.move.pos = tempV3;
-        monster.initX = x;
         if (waveIndex >= 0) {
             this._monsterWaveIndexMap.set(monster, waveIndex);
         }
@@ -779,10 +815,6 @@ export class MonsterCreate extends UnityUpComponent {
         const yaw = monster.monsterType === MonsterType.ZombieBrother ? 0 : (Math.random() - 0.5) * this.spawnYawRandom * 2;
         monster.node.setRotationFromEuler(0, yaw, 0);
         monster.randomizeRunAnimation();
-    }
-
-    private shouldLimitMonsterXAtZ(z: number): boolean {
-        return z >= this.sideSlabLimitMinZ && z <= this.sideSlabLimitMaxZ;
     }
 
     public getFrontMonsterWorldZ(defaultZ: number = this.stage_0): number {
@@ -810,8 +842,30 @@ export class MonsterCreate extends UnityUpComponent {
         return x;
     }
 
+    private shouldLimitMonsterXAtZ(z: number): boolean {
+        for (let i = 0; i < this.lalianLimitRanges.length; i++) {
+            const range = this.lalianLimitRanges[i];
+            if (z >= range.minZ && z <= range.maxZ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private getMiddleLimitHalfX(): number {
-        return this.disX2 > 0 ? this.disX2 : this.middleLaneHalfX;
+        return Math.max(0, this.middleLaneHalfX);
+    }
+
+    private getMonsterMoveTargetX(monster: MonsterBattleTaerget, worldZ: number): number {
+        const freeX = monster?.initX ?? 0;
+        return this.shouldLimitMonsterXAtZ(worldZ) ? this.clampMonsterX(freeX) : freeX;
+    }
+
+    private syncMonsterMoveTargetX(monster: MonsterBattleTaerget): void {
+        if (!monster.move || monster.move.moveMod != MoveModEnum.PosMove) {
+            return;
+        }
+        monster.move.pos.x = this.getMonsterMoveTargetX(monster, monster.node.worldPositionZ);
     }
 
     private limitMonsterToMiddleLane(monster: MonsterBattleTaerget) {
@@ -821,9 +875,6 @@ export class MonsterCreate extends UnityUpComponent {
         const x = this.clampMonsterX(monster.node.x);
         if (monster.node.x != x) {
             monster.node.x = x;
-        }
-        if (monster.move) {
-            monster.move.pos.x = this.clampMonsterX(monster.move.pos.x);
         }
     }
 
@@ -849,11 +900,12 @@ export class MonsterCreate extends UnityUpComponent {
             monster.move.autoMove = false;
             if (monster.attackTarget) {
                 const z = -26.3 + Math.abs(-26.3 - monster.node.z) + 10 + Math.random() * 5;
-                const resetX = this.shouldLimitMonsterXAtZ(-26.3) ? this.clampMonsterX(monster.initX) : monster.initX;
+                const resetX = this.getMonsterMoveTargetX(monster, -26.3);
                 tween(monster.node).to(0.05, { x: resetX, z: -26.3 }).to(0.35, { z: z }).call(() => {
                     monster.move.autoMove = true;
                     monster.move.moveMod = MoveModEnum.PosMove;
                     tempV3.set(monster.node.worldPosition);
+                    tempV3.x = this.getMonsterMoveTargetX(monster, tempV3.z);
                     tempV3.z = this.stage_1;
                     monster.attackTarget = null;
                     monster.move.pos = tempV3;

@@ -100,10 +100,10 @@
     },
     "_lrot": {
       "__type__": "cc.Quat",
-      "x": 0.8117024232753988,
-      "y": -0.1330030706865263,
-      "z": -0.2734871696355468,
-      "w": -0.4986523110159402
+      "x": -0.8117024232753988,
+      "y": 0.1330030706865263,
+      "z": 0.2734871696355468,
+      "w": 0.4986523110159402
     },
     "_lscale": {
       "__type__": "cc.Vec3",
@@ -162,7 +162,7 @@
     "_csmTransitionRange": 0.05,
     "_shadowFixedArea": true,
     "_shadowNear": -20,
-    "_shadowFar": 12.9,
+    "_shadowFar": 40,
     "_shadowOrthoSize": 55,
     "_id": "fdnvk0XgNARK2FUVYIDuFC"
   },
@@ -15053,11 +15053,8 @@
     },
     "brotherExcludeZ": 6,
     "disX": 4,
-    "disX2": 4,
     "monsterSpeed": 4,
     "middleLaneHalfX": 2,
-    "sideSlabLimitMinZ": 22,
-    "sideSlabLimitMaxZ": 200,
     "rowCount": 23,
     "layerGapZ": 6,
     "spawnRandomX": 0.28,
