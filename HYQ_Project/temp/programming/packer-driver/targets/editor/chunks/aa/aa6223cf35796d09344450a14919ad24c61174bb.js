@@ -616,8 +616,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           for (let i = 0; i < this.tireList.length; i++) {
             const tire = this.tireList[i];
             Tween.stopAllByTarget(tire);
-            const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
-            this.spawnOilBurstShards(tire, oilBurstRecords, i);
+            const prefabBurstDuration = this.playBottomBasePrefabBurst(tire, i);
+            const oilBurstRecords = prefabBurstDuration > 0 ? [] : this.createOilBurstMaterialRecords(tire);
+
+            if (prefabBurstDuration <= 0) {
+              this.spawnOilBurstShards(tire, oilBurstRecords, i);
+            }
 
             if (oilBurstRecords.length > 0) {
               const burstState = {
@@ -634,14 +638,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }).start();
             }
 
-            tween(tire).delay(i * PropArms.oilBurstDestroyDelayStep).to(PropArms.oilBurstDestroyDuration, {
-              scale: this.getBottomBaseRootScale(tire, PropArms.oilBurstDestroyScale)
-            }, {
-              easing: 'sineOut'
-            }).call(() => {
-              this.restoreOilBurstMaterials(oilBurstRecords);
-              this.releaseBottomBase(tire);
-            }).start();
+            if (prefabBurstDuration > 0) {
+              tween(tire).delay(prefabBurstDuration).call(() => {
+                this.releaseBottomBase(tire);
+              }).start();
+            } else {
+              tween(tire).delay(i * PropArms.oilBurstDestroyDelayStep).to(PropArms.oilBurstDestroyDuration, {
+                scale: this.getBottomBaseRootScale(tire, PropArms.oilBurstDestroyScale)
+              }, {
+                easing: 'sineOut'
+              }).call(() => {
+                this.restoreOilBurstMaterials(oilBurstRecords);
+                this.releaseBottomBase(tire);
+              }).start();
+            }
           }
 
           this.tireList = [];
@@ -667,7 +677,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             if (this._disableWaveStageChain) {
               const activeDestroyDelay = 0.3 * this.animScale;
-              const batchDestroyDelay = (destroyTireCount - 1) * PropArms.oilBurstDestroyDelayStep + PropArms.oilBurstDestroyDuration;
+              const batchDestroyDelay = (destroyTireCount - 1) * PropArms.oilBurstDestroyDelayStep + Math.max(PropArms.oilBurstDestroyDuration, PropArms.oilBurstShardDuration + 0.08);
               const hideDelay = Math.max(0.01, activeDestroyDelay, batchDestroyDelay);
               this.scheduleOnce(() => {
                 this.node.active = false;
@@ -972,10 +982,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), CameraMove) : CameraMove).instance) == null || _instance2.Shake2(0.8); // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
 
-          const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
-          this.spawnOilBurstShards(tire, oilBurstRecords, 0);
+          const prefabBurstDuration = this.playBottomBasePrefabBurst(tire, 0);
+          const oilBurstRecords = prefabBurstDuration > 0 ? [] : this.createOilBurstMaterialRecords(tire);
 
-          if (oilBurstRecords.length <= 0 && oldMR && oldMR.isValid) {
+          if (prefabBurstDuration <= 0) {
+            this.spawnOilBurstShards(tire, oilBurstRecords, 0);
+          }
+
+          if (prefabBurstDuration <= 0 && oilBurstRecords.length <= 0 && oldMR && oldMR.isValid) {
             (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
               error: Error()
             }), FlashRedManager) : FlashRedManager).instance.flashRed(this.node, [{
@@ -1005,15 +1019,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }).start();
           }
 
-          tween(tire).to(0.18 * this.animScale, {
-            scale: s2
-          }, {
-            easing: 'sineOut'
-          }).call(() => {
-            this.restoreOilBurstMaterials(oilBurstRecords);
-            this.releaseBottomBase(tire);
-            this._isShake = false;
-          }).start(); // 剩余轮胎弹跳下落（上面的轮胎先跳再落）
+          if (prefabBurstDuration > 0) {
+            tween(tire).delay(prefabBurstDuration).call(() => {
+              this.releaseBottomBase(tire);
+              this._isShake = false;
+            }).start();
+          } else {
+            tween(tire).to(0.18 * this.animScale, {
+              scale: s2
+            }, {
+              easing: 'sineOut'
+            }).call(() => {
+              this.restoreOilBurstMaterials(oilBurstRecords);
+              this.releaseBottomBase(tire);
+              this._isShake = false;
+            }).start();
+          } // 剩余轮胎弹跳下落（上面的轮胎先跳再落）
+
 
           this._setupTireBounce(); // FBX弹跳一下
 
@@ -1322,6 +1344,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           tire.active = true;
+          this.resetBottomBaseBurstVisual(tire);
           this.getBottomBaseOriginalEuler(tire);
           tire.setScale(Vec3.ONE); // Set tire scale to one
 
@@ -1360,6 +1383,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             const node = selected[i];
             Tween.stopAllByTarget(node);
             node.active = true;
+            this.resetBottomBaseBurstVisual(node);
 
             if (node.parent !== this.node) {
               node.setParent(this.node, true);
@@ -1423,6 +1447,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         releaseBottomBase(node) {
           node.active = false;
           this.resetBottomBaseRootScale(node);
+          this.resetBottomBaseBurstVisual(node);
           this.bottomBaseTargetPosMap.delete(node);
 
           if (this.manualBottomBaseNodeSet.has(node)) {
@@ -1900,6 +1925,120 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               material.destroy();
               shardNode.destroy();
             }).start();
+          }
+        }
+
+        playBottomBasePrefabBurst(node, groupIndex) {
+          const burstRoot = this.getBottomBaseBurstRoot(node);
+
+          if (!node || !burstRoot || burstRoot.children.length <= 0) {
+            return 0;
+          }
+
+          for (let i = 0; i < node.children.length; i++) {
+            const child = node.children[i];
+            child.active = child === burstRoot;
+          }
+
+          burstRoot.active = true;
+          const burstCenter = burstRoot.worldPosition;
+          const baseSize = Math.max(0.22, this.getOilBurstShardBaseSize(node) * 0.72);
+          let maxDelay = groupIndex * PropArms.oilBurstDestroyDelayStep;
+
+          for (let i = 0; i < burstRoot.children.length; i++) {
+            const shard = burstRoot.children[i];
+
+            if (!shard) {
+              continue;
+            }
+
+            Tween.stopAllByTarget(shard);
+            const originalPos = this.getBottomBaseOriginalPos(shard);
+            const originalScale = this.getBottomBaseOriginalScale(shard);
+            const originalEuler = this.getBottomBaseOriginalEuler(shard);
+            shard.active = true;
+            shard.setPosition(originalPos);
+            shard.setScale(originalScale);
+            shard.eulerAngles = originalEuler;
+            const startWorldPos = shard.worldPosition.clone();
+            const dir = this.getOilBurstShardDirection(i, burstCenter);
+            const delay = groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.01;
+            const spinSign = i % 2 === 0 ? 1 : -1;
+            const spread = baseSize * (1.95 + i % 3 * 0.22);
+            maxDelay = Math.max(maxDelay, delay);
+            const flightState = {
+              progress: 0
+            };
+            tween(flightState).delay(delay).to(PropArms.oilBurstShardDuration, {
+              progress: 1
+            }, {
+              easing: 'quartOut',
+              onUpdate: state => {
+                const t = state.progress;
+                const distance = spread * (1 - Math.pow(1 - t, 1.7));
+                const swirl = baseSize * 0.08 * Math.sin(t * Math.PI);
+                shard.setWorldPosition(startWorldPos.x + dir.x * distance + spinSign * swirl * Math.abs(dir.z), startWorldPos.y + dir.y * distance, startWorldPos.z + dir.z * distance + spinSign * swirl * Math.abs(dir.x));
+                shard.eulerAngles = v3(originalEuler.x + spinSign * (220 * t + i * 9), originalEuler.y + 260 * t + i * 12, originalEuler.z + spinSign * (180 * t + i * 7));
+                const scale = 1 - t * 0.12;
+                shard.setScale(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+              }
+            }).call(() => {
+              if (!shard || !shard.isValid) {
+                return;
+              }
+
+              shard.setPosition(originalPos);
+              shard.setScale(originalScale);
+              shard.eulerAngles = originalEuler;
+              shard.active = false;
+            }).start();
+          }
+
+          return maxDelay + PropArms.oilBurstShardDuration;
+        }
+
+        getBottomBaseBurstRoot(node) {
+          if (!node) {
+            return null;
+          }
+
+          for (let i = 0; i < node.children.length; i++) {
+            const child = node.children[i];
+
+            if ((child == null ? void 0 : child.name) === "sp") {
+              return child;
+            }
+          }
+
+          return this.findNodeByName(node, "sp");
+        }
+
+        resetBottomBaseBurstVisual(node) {
+          const burstRoot = this.getBottomBaseBurstRoot(node);
+
+          if (!node || !burstRoot) {
+            return;
+          }
+
+          burstRoot.active = false;
+
+          for (let i = 0; i < node.children.length; i++) {
+            const child = node.children[i];
+            child.active = child !== burstRoot;
+          }
+
+          for (let i = 0; i < burstRoot.children.length; i++) {
+            const shard = burstRoot.children[i];
+
+            if (!shard) {
+              continue;
+            }
+
+            Tween.stopAllByTarget(shard);
+            shard.setPosition(this.getBottomBaseOriginalPos(shard));
+            shard.setScale(this.getBottomBaseOriginalScale(shard));
+            shard.eulerAngles = this.getBottomBaseOriginalEuler(shard);
+            shard.active = true;
           }
         }
 

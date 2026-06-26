@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782461367169.3452,
+      "time": 1782462601124.7432,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782458403473.864,
+      "time": 1782462489676.3452,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -4485,7 +4485,7 @@
       "time": 1782114278388.2827
     },
     "GameRes\\SLLYT_map\\fbx\\SM_youtong_02.fbx.meta": {
-      "time": 1781778499176.3691
+      "time": 1782461767300.229
     },
     "GameRes\\SLLYT_map\\mat\\M_baixian.mtl.meta": {
       "time": 1781778499420.7368
@@ -4635,15 +4635,15 @@
       "time": 1781778500658.8596
     },
     "GameRes\\SLLYT_map\\fbx": {
-      "time": 1782452350893.4788,
+      "time": 1782461767301.2915,
       "uuid": "81aa95e0-c269-4b18-8696-ffc181d7f4a4"
     },
     "GameRes\\SLLYT_map\\mat": {
-      "time": 1782446295209.0396,
+      "time": 1782461767326.7424,
       "uuid": "04cf2e46-a468-425b-9d02-6803b10f18fa"
     },
     "GameRes\\SLLYT_map\\pre": {
-      "time": 1782446295555.6206,
+      "time": 1782461767440.9922,
       "uuid": "c588152e-c314-4759-a79c-e0c841054311"
     },
     "GameRes\\SLLYT_map": {
@@ -4651,7 +4651,7 @@
       "uuid": "1ae86c67-30a0-4d39-9163-71d38ebcff29"
     },
     "GameRes\\SLLYT_map\\tex": {
-      "time": 1782446295666.8865,
+      "time": 1782461767486.4504,
       "uuid": "a2aaa93c-14a1-49a5-ac32-93c7c78d26f0"
     },
     "GameRes\\SLLYT_map\\zhujue": {
@@ -4665,10 +4665,6 @@
     "Scene\\SLLYT.scene": {
       "time": 1782266694388.7073,
       "uuid": "d507980d-0a9a-4dd5-a65f-99c4452efe39"
-    },
-    "GameRes\\SLLYT_map\\fbx\\shizhu_04.fbx": {
-      "time": 1781778499190.3323,
-      "uuid": "068e5021-13db-4da1-ac2f-e8c66e8dbc33"
     },
     "GameRes\\SLLYT_map\\fbx\\SM_beizengmen_03.fbx": {
       "time": 1782266694159.995,
@@ -4734,10 +4730,6 @@
       "time": 1782117953670.8733,
       "uuid": "54f70ea4-5f33-45d7-a1b6-dd241986cf65"
     },
-    "GameRes\\SLLYT_map\\mat\\M_shizhu_04_01.mtl": {
-      "time": 1782117965577.01,
-      "uuid": "57e1605b-26cc-40c6-b89f-70fe81b132c6"
-    },
     "GameRes\\SLLYT_map\\mat\\M_qiao.mtl": {
       "time": 1782266693913.7644,
       "uuid": "c50fd25f-793b-4102-addc-457618fd2179"
@@ -4767,7 +4759,7 @@
       "uuid": "c4a0e76d-17ef-4f23-9fe9-4b25c572034f"
     },
     "GameRes\\SLLYT_map\\pre\\huanjing.prefab": {
-      "time": 1782446295544.141,
+      "time": 1782461767438.9958,
       "uuid": "d1ffc78b-2a92-4489-893c-da76f48fc2ba"
     },
     "GameRes\\SLLYT_map\\pre\\lalian_01.prefab": {
@@ -4779,12 +4771,8 @@
       "uuid": "ebca9632-c8e2-4736-bb73-79706c01cd19"
     },
     "GameRes\\SLLYT_map\\pre\\qiao.prefab": {
-      "time": 1782446295549.6367,
+      "time": 1782461767440.9922,
       "uuid": "745647e2-8cb6-4031-ab9f-93ba708d8cd1"
-    },
-    "GameRes\\SLLYT_map\\pre\\shizhu_04.prefab": {
-      "time": 1781778499711.5835,
-      "uuid": "96b3c708-ae8a-4df2-af78-64fa68beafe3"
     },
     "GameRes\\SLLYT_map\\pre\\SM_beizengmen_03.prefab": {
       "time": 1782266694097.531,
@@ -4803,7 +4791,7 @@
       "uuid": "732609be-090b-4ad7-9e8e-4ec04d8e29ed"
     },
     "GameRes\\SLLYT_map\\fbx\\SM_youtong_02.fbx": {
-      "time": 1782114278390.276,
+      "time": 1782461767298.2366,
       "uuid": "610c8773-92fc-4d6b-a446-cb0b7b06352e"
     },
     "GameRes\\SLLYT_map\\pre\\SM_laliantou_02.prefab": {
@@ -4819,7 +4807,7 @@
       "uuid": "38afd98c-7249-42cc-aff9-ad8736a4ec39"
     },
     "GameRes\\SLLYT_map\\pre\\SM_youtong_02.prefab": {
-      "time": 1782268649884.9224,
+      "time": 1782461858316.992,
       "uuid": "1dd89136-12dc-4b20-9296-810b3dc0ca2c"
     },
     "GameRes\\SLLYT_map\\tex\\T_beizengmen_a.jpg": {
@@ -4978,17 +4966,9 @@
       "time": 1782181052874.896,
       "uuid": "1a656bb8-665f-4a1f-9360-616d85f39b04"
     },
-    "GameRes\\SLLYT_map\\tex\\T_shizhu_a.jpg": {
-      "time": 1782181052915.8223,
-      "uuid": "b0a07a48-a070-4f7e-98ef-db4af78571eb"
-    },
     "GameRes\\SLLYT_map\\tex\\T_beijing.jpg": {
       "time": 1782181052865.921,
       "uuid": "43211718-4192-4a72-b1a9-63a052d6be13"
-    },
-    "GameRes\\SLLYT_map\\tex\\T_shizhu_n.jpg": {
-      "time": 1782181052918.813,
-      "uuid": "f28fbe17-cc8b-4a4d-b96f-97763c32859d"
     },
     "GameRes\\SLLYT_map\\tex\\T_tengman_a.png": {
       "time": 1782181052932.3467,

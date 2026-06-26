@@ -631,9 +631,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var tire = _this.tireList[i];
             Tween.stopAllByTarget(tire);
 
-            var oilBurstRecords = _this.createOilBurstMaterialRecords(tire);
+            var prefabBurstDuration = _this.playBottomBasePrefabBurst(tire, i);
 
-            _this.spawnOilBurstShards(tire, oilBurstRecords, i);
+            var oilBurstRecords = prefabBurstDuration > 0 ? [] : _this.createOilBurstMaterialRecords(tire);
+
+            if (prefabBurstDuration <= 0) {
+              _this.spawnOilBurstShards(tire, oilBurstRecords, i);
+            }
 
             if (oilBurstRecords.length > 0) {
               var burstState = {
@@ -652,15 +656,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }).start();
             }
 
-            tween(tire).delay(i * PropArms.oilBurstDestroyDelayStep).to(PropArms.oilBurstDestroyDuration, {
-              scale: _this.getBottomBaseRootScale(tire, PropArms.oilBurstDestroyScale)
-            }, {
-              easing: 'sineOut'
-            }).call(() => {
-              _this.restoreOilBurstMaterials(oilBurstRecords);
+            if (prefabBurstDuration > 0) {
+              tween(tire).delay(prefabBurstDuration).call(() => {
+                _this.releaseBottomBase(tire);
+              }).start();
+            } else {
+              tween(tire).delay(i * PropArms.oilBurstDestroyDelayStep).to(PropArms.oilBurstDestroyDuration, {
+                scale: _this.getBottomBaseRootScale(tire, PropArms.oilBurstDestroyScale)
+              }, {
+                easing: 'sineOut'
+              }).call(() => {
+                _this.restoreOilBurstMaterials(oilBurstRecords);
 
-              _this.releaseBottomBase(tire);
-            }).start();
+                _this.releaseBottomBase(tire);
+              }).start();
+            }
           };
 
           for (var i = 0; i < this.tireList.length; i++) {
@@ -690,7 +700,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             if (this._disableWaveStageChain) {
               var activeDestroyDelay = 0.3 * this.animScale;
-              var batchDestroyDelay = (destroyTireCount - 1) * PropArms.oilBurstDestroyDelayStep + PropArms.oilBurstDestroyDuration;
+              var batchDestroyDelay = (destroyTireCount - 1) * PropArms.oilBurstDestroyDelayStep + Math.max(PropArms.oilBurstDestroyDuration, PropArms.oilBurstShardDuration + 0.08);
               var hideDelay = Math.max(0.01, activeDestroyDelay, batchDestroyDelay);
               this.scheduleOnce(() => {
                 this.node.active = false;
@@ -1006,10 +1016,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), CameraMove) : CameraMove).instance) == null || _instance2.Shake2(0.8); // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
 
-          var oilBurstRecords = this.createOilBurstMaterialRecords(tire);
-          this.spawnOilBurstShards(tire, oilBurstRecords, 0);
+          var prefabBurstDuration = this.playBottomBasePrefabBurst(tire, 0);
+          var oilBurstRecords = prefabBurstDuration > 0 ? [] : this.createOilBurstMaterialRecords(tire);
 
-          if (oilBurstRecords.length <= 0 && oldMR && oldMR.isValid) {
+          if (prefabBurstDuration <= 0) {
+            this.spawnOilBurstShards(tire, oilBurstRecords, 0);
+          }
+
+          if (prefabBurstDuration <= 0 && oilBurstRecords.length <= 0 && oldMR && oldMR.isValid) {
             (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
               error: Error()
             }), FlashRedManager) : FlashRedManager).instance.flashRed(this.node, [{
@@ -1039,15 +1053,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }).start();
           }
 
-          tween(tire).to(0.18 * this.animScale, {
-            scale: s2
-          }, {
-            easing: 'sineOut'
-          }).call(() => {
-            this.restoreOilBurstMaterials(oilBurstRecords);
-            this.releaseBottomBase(tire);
-            this._isShake = false;
-          }).start(); // 剩余轮胎弹跳下落（上面的轮胎先跳再落）
+          if (prefabBurstDuration > 0) {
+            tween(tire).delay(prefabBurstDuration).call(() => {
+              this.releaseBottomBase(tire);
+              this._isShake = false;
+            }).start();
+          } else {
+            tween(tire).to(0.18 * this.animScale, {
+              scale: s2
+            }, {
+              easing: 'sineOut'
+            }).call(() => {
+              this.restoreOilBurstMaterials(oilBurstRecords);
+              this.releaseBottomBase(tire);
+              this._isShake = false;
+            }).start();
+          } // 剩余轮胎弹跳下落（上面的轮胎先跳再落）
+
 
           this._setupTireBounce(); // FBX弹跳一下
 
@@ -1365,6 +1387,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           tire.active = true;
+          this.resetBottomBaseBurstVisual(tire);
           this.getBottomBaseOriginalEuler(tire);
           tire.setScale(Vec3.ONE); // Set tire scale to one
 
@@ -1403,6 +1426,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var node = selected[i];
             Tween.stopAllByTarget(node);
             node.active = true;
+            this.resetBottomBaseBurstVisual(node);
 
             if (node.parent !== this.node) {
               node.setParent(this.node, true);
@@ -1478,6 +1502,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         releaseBottomBase(node) {
           node.active = false;
           this.resetBottomBaseRootScale(node);
+          this.resetBottomBaseBurstVisual(node);
           this.bottomBaseTargetPosMap.delete(node);
 
           if (this.manualBottomBaseNodeSet.has(node)) {
@@ -1966,6 +1991,132 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
+        playBottomBasePrefabBurst(node, groupIndex) {
+          var _this4 = this;
+
+          var burstRoot = this.getBottomBaseBurstRoot(node);
+
+          if (!node || !burstRoot || burstRoot.children.length <= 0) {
+            return 0;
+          }
+
+          for (var i = 0; i < node.children.length; i++) {
+            var child = node.children[i];
+            child.active = child === burstRoot;
+          }
+
+          burstRoot.active = true;
+          var burstCenter = burstRoot.worldPosition;
+          var baseSize = Math.max(0.22, this.getOilBurstShardBaseSize(node) * 0.72);
+          var maxDelay = groupIndex * PropArms.oilBurstDestroyDelayStep;
+
+          var _loop4 = function _loop4(_i6) {
+            var shard = burstRoot.children[_i6];
+
+            if (!shard) {
+              return 1; // continue
+            }
+
+            Tween.stopAllByTarget(shard);
+
+            var originalPos = _this4.getBottomBaseOriginalPos(shard);
+
+            var originalScale = _this4.getBottomBaseOriginalScale(shard);
+
+            var originalEuler = _this4.getBottomBaseOriginalEuler(shard);
+
+            shard.active = true;
+            shard.setPosition(originalPos);
+            shard.setScale(originalScale);
+            shard.eulerAngles = originalEuler;
+            var startWorldPos = shard.worldPosition.clone();
+
+            var dir = _this4.getOilBurstShardDirection(_i6, burstCenter);
+
+            var delay = groupIndex * PropArms.oilBurstDestroyDelayStep + _i6 * 0.01;
+            var spinSign = _i6 % 2 === 0 ? 1 : -1;
+            var spread = baseSize * (1.95 + _i6 % 3 * 0.22);
+            maxDelay = Math.max(maxDelay, delay);
+            var flightState = {
+              progress: 0
+            };
+            tween(flightState).delay(delay).to(PropArms.oilBurstShardDuration, {
+              progress: 1
+            }, {
+              easing: 'quartOut',
+              onUpdate: state => {
+                var t = state.progress;
+                var distance = spread * (1 - Math.pow(1 - t, 1.7));
+                var swirl = baseSize * 0.08 * Math.sin(t * Math.PI);
+                shard.setWorldPosition(startWorldPos.x + dir.x * distance + spinSign * swirl * Math.abs(dir.z), startWorldPos.y + dir.y * distance, startWorldPos.z + dir.z * distance + spinSign * swirl * Math.abs(dir.x));
+                shard.eulerAngles = v3(originalEuler.x + spinSign * (220 * t + _i6 * 9), originalEuler.y + 260 * t + _i6 * 12, originalEuler.z + spinSign * (180 * t + _i6 * 7));
+                var scale = 1 - t * 0.12;
+                shard.setScale(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+              }
+            }).call(() => {
+              if (!shard || !shard.isValid) {
+                return;
+              }
+
+              shard.setPosition(originalPos);
+              shard.setScale(originalScale);
+              shard.eulerAngles = originalEuler;
+              shard.active = false;
+            }).start();
+          };
+
+          for (var _i6 = 0; _i6 < burstRoot.children.length; _i6++) {
+            if (_loop4(_i6)) continue;
+          }
+
+          return maxDelay + PropArms.oilBurstShardDuration;
+        }
+
+        getBottomBaseBurstRoot(node) {
+          if (!node) {
+            return null;
+          }
+
+          for (var i = 0; i < node.children.length; i++) {
+            var child = node.children[i];
+
+            if ((child == null ? void 0 : child.name) === "sp") {
+              return child;
+            }
+          }
+
+          return this.findNodeByName(node, "sp");
+        }
+
+        resetBottomBaseBurstVisual(node) {
+          var burstRoot = this.getBottomBaseBurstRoot(node);
+
+          if (!node || !burstRoot) {
+            return;
+          }
+
+          burstRoot.active = false;
+
+          for (var i = 0; i < node.children.length; i++) {
+            var child = node.children[i];
+            child.active = child !== burstRoot;
+          }
+
+          for (var _i7 = 0; _i7 < burstRoot.children.length; _i7++) {
+            var shard = burstRoot.children[_i7];
+
+            if (!shard) {
+              continue;
+            }
+
+            Tween.stopAllByTarget(shard);
+            shard.setPosition(this.getBottomBaseOriginalPos(shard));
+            shard.setScale(this.getBottomBaseOriginalScale(shard));
+            shard.eulerAngles = this.getBottomBaseOriginalEuler(shard);
+            shard.active = true;
+          }
+        }
+
         playSpriteWeaponHitScale(delay) {
           var _this$_curArms9;
 
@@ -2250,14 +2401,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             indices.push(start + 2, start + 1, start, start + 3, start + 1, start + 2);
           };
 
-          for (var _i6 = 0; _i6 < segmentCount; _i6++) {
-            var uStart = u0 + (u1 - u0) * (_i6 / segmentCount);
-            var uEnd = u0 + (u1 - u0) * ((_i6 + 1) / segmentCount);
+          for (var _i8 = 0; _i8 < segmentCount; _i8++) {
+            var uStart = u0 + (u1 - u0) * (_i8 / segmentCount);
+            var uEnd = u0 + (u1 - u0) * ((_i8 + 1) / segmentCount);
             var mainUvs = [uStart, v1, uEnd, v1, uStart, v0, uEnd, v0];
-            pushFace(outerBottom[_i6], outerBottom[_i6 + 1], outerTop[_i6], outerTop[_i6 + 1], mainUvs);
-            pushFace(innerBottom[_i6 + 1], innerBottom[_i6], innerTop[_i6 + 1], innerTop[_i6], mainUvs);
-            pushFace(outerTop[_i6], outerTop[_i6 + 1], innerTop[_i6], innerTop[_i6 + 1], sideUvs);
-            pushFace(innerBottom[_i6], innerBottom[_i6 + 1], outerBottom[_i6], outerBottom[_i6 + 1], sideUvs);
+            pushFace(outerBottom[_i8], outerBottom[_i8 + 1], outerTop[_i8], outerTop[_i8 + 1], mainUvs);
+            pushFace(innerBottom[_i8 + 1], innerBottom[_i8], innerTop[_i8 + 1], innerTop[_i8], mainUvs);
+            pushFace(outerTop[_i8], outerTop[_i8 + 1], innerTop[_i8], innerTop[_i8 + 1], sideUvs);
+            pushFace(innerBottom[_i8], innerBottom[_i8 + 1], outerBottom[_i8], outerBottom[_i8 + 1], sideUvs);
           }
 
           pushFace(outerBottom[0], innerBottom[0], outerTop[0], innerTop[0], sideUvs);
@@ -2532,21 +2683,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var template = segmentNodes[0];
             var basePos = template.position;
 
-            for (var _i7 = segmentNodes.length; _i7 < desiredCount; _i7++) {
+            for (var _i9 = segmentNodes.length; _i9 < desiredCount; _i9++) {
               var node = instantiate(template);
-              node.name = template.name + "_" + _i7;
+              node.name = template.name + "_" + _i9;
               this.lalianNode.addChild(node);
-              node.setPosition(basePos.x, basePos.y, basePos.z + this.lalianNodeSpacingZ * _i7);
+              node.setPosition(basePos.x, basePos.y, basePos.z + this.lalianNodeSpacingZ * _i9);
               segmentNodes.push(node);
             }
           }
 
-          for (var _i8 = 0; _i8 < segmentNodes.length; _i8++) {
-            segmentNodes[_i8].active = _i8 < desiredCount;
+          for (var _i10 = 0; _i10 < segmentNodes.length; _i10++) {
+            segmentNodes[_i10].active = _i10 < desiredCount;
           }
 
-          for (var _i9 = 0; _i9 < desiredCount && _i9 < segmentNodes.length; _i9++) {
-            var _child = segmentNodes[_i9];
+          for (var _i11 = 0; _i11 < desiredCount && _i11 < segmentNodes.length; _i11++) {
+            var _child = segmentNodes[_i11];
             this.lalianSegments.push(_child);
             var startPosList = [];
 

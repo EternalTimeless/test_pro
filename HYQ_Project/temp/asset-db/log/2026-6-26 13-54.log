@@ -3428,3 +3428,4 @@
 2026-6-26 16:15:04-debug: asset-db:refresh-all-database (260ms)
 2026-6-26 16:15:04-debug: asset-db:worker-effect-data-processing (1ms)
 2026-6-26 16:15:04-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-6-26 16:16:06-debug: refresh db internal success

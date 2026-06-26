@@ -8544,7 +8544,6 @@
     "url": "db://assets/GameRes/SLLYT_map/pre/qiao.prefab",
     "value": {
       "depends": [
-        "96b3c708-ae8a-4df2-af78-64fa68beafe3",
         "38afd98c-7249-42cc-aff9-ad8736a4ec39",
         "f5db90de-3ffd-4f64-abc4-440eb4586fdb",
         "39581f2d-beba-470c-ae42-9095177585a7",
@@ -8700,7 +8699,16 @@
     "value": {
       "depends": [
         "610c8773-92fc-4d6b-a446-cb0b7b06352e@684db",
-        "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0"
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@0d1e6",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@e7461",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@32ee6",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@98a7b",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@94210",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@717d0",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@9e403",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@69fe1",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@d708d"
       ]
     },
     "versionCode": 1
@@ -8723,7 +8731,16 @@
         "96a0e69e-e7ed-42d4-b597-f12ac6c6bad3",
         "610c8773-92fc-4d6b-a446-cb0b7b06352e@684db",
         "2e9d5c03-2005-4a97-8a0a-99318171a55f",
-        "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0"
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@035c0",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@0d1e6",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@e7461",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@32ee6",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@98a7b",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@94210",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@717d0",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@9e403",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@69fe1",
+        "610c8773-92fc-4d6b-a446-cb0b7b06352e@d708d"
       ],
       "dependScripts": []
     },
@@ -10051,6 +10068,69 @@
       "depends": [
         "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce@6c48a"
       ]
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@94210": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@94210",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@0d1e6": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@0d1e6",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@e7461": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@e7461",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@32ee6": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@32ee6",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@98a7b": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@98a7b",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@717d0": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@717d0",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@9e403": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@9e403",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@69fe1": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@69fe1",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "610c8773-92fc-4d6b-a446-cb0b7b06352e@d708d": {
+    "url": "db://assets/GameRes/SLLYT_map/fbx/SM_youtong_02.fbx@d708d",
+    "value": {
+      "depends": []
     },
     "versionCode": 1
   }

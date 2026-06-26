@@ -12,9 +12,9 @@
           0
         ],
         "indexView": {
-          "offset": 22720,
-          "length": 1248,
-          "count": 624,
+          "offset": 2880,
+          "length": 492,
+          "count": 246,
           "stride": 2
         }
       }
@@ -23,9 +23,9 @@
       {
         "view": {
           "offset": 0,
-          "length": 22720,
-          "count": 355,
-          "stride": 64
+          "length": 2880,
+          "count": 60,
+          "stride": 48
         },
         "attributes": [
           {
@@ -47,28 +47,23 @@
             "name": "a_tangent",
             "format": 44,
             "isNormalized": false
-          },
-          {
-            "name": "a_color",
-            "format": 44,
-            "isNormalized": false
           }
         ]
       }
     ],
     "minPosition": {
       "__type__": "cc.Vec3",
-      "x": -0.7059779167175293,
-      "y": -0.5771232843399048,
-      "z": -14.986477851867676
+      "x": -0.00011961902055190876,
+      "y": -0.017049165442585945,
+      "z": -0.4109252691268921
     },
     "maxPosition": {
       "__type__": "cc.Vec3",
-      "x": 0.6767541766166687,
-      "y": 0.5771908760070801,
-      "z": 4.852596282958984
+      "x": 0.28168824315071106,
+      "y": 0.283732533454895,
+      "z": 0.05578397959470749
     }
   },
-  "_hash": 2839790689,
+  "_hash": 3167006447,
   "_allowDataAccess": true
 }
