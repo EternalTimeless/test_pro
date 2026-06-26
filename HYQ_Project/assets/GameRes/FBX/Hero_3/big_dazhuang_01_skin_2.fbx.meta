@@ -159,9 +159,11 @@
         "_techIdx": 0,
         "_defines": [
           {
-            "USE_OUTLINE_PASS": true
+            "USE_OUTLINE_PASS": true,
+            "USE_INSTANCING": true
           },
           {
+            "USE_INSTANCING": true,
             "USE_NORMAL_MAP": true,
             "USE_ALBEDO_MAP": true
           },
@@ -277,9 +279,11 @@
         "_techIdx": 0,
         "_defines": [
           {
-            "USE_OUTLINE_PASS": true
+            "USE_OUTLINE_PASS": true,
+            "USE_INSTANCING": true
           },
           {
+            "USE_INSTANCING": true,
             "USE_NORMAL_MAP": true,
             "USE_ALBEDO_MAP": true
           },
@@ -395,9 +399,11 @@
         "_techIdx": 0,
         "_defines": [
           {
-            "USE_OUTLINE_PASS": true
+            "USE_OUTLINE_PASS": true,
+            "USE_INSTANCING": true
           },
           {
+            "USE_INSTANCING": true,
             "USE_NORMAL_MAP": true,
             "USE_ALBEDO_MAP": true
           },

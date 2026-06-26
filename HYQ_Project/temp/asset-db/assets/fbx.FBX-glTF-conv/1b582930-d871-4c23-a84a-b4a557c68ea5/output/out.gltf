@@ -5,12 +5,12 @@
       "componentType": 5126,
       "count": 100,
       "max": [
-        8.450772285461426,
+        9.690773010253906,
         338.6981201171875,
-        0.1903281807899475
+        0.1903281956911087
       ],
       "min": [
-        -8.001136779785156,
+        -9.20113754272461,
         -11.247197151184082,
         0.07119378447532654
       ],
@@ -72,12 +72,12 @@
       "animationFrameRate": 30.0,
       "fbxFileHeaderInfo": {
         "creationTimeStamp": {
-          "day": 22,
-          "hour": 15,
-          "millisecond": 706,
-          "minute": 2,
+          "day": 25,
+          "hour": 14,
+          "millisecond": 44,
+          "minute": 46,
           "month": 6,
-          "second": 59,
+          "second": 56,
           "year": 2026
         },
         "creator": "FBX SDK/FBX Plugins version 2020.1.1",
@@ -89,7 +89,7 @@
             "applicationName": "3ds Max",
             "applicationVendor": "Autodesk",
             "applicationVersion": "2022",
-            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\教网店学徒各种副业vx-Rshgzs666-3dmax室外藤曼爬山虎花藤植物3d模型素材cr vr渲染带贴图藤曼fbx\\SM_qiao_01.fbx"
+            "fileName": "C:\\Users\\Administrator\\Desktop\\SLLYT\\6.24\\SM_qiao_01.fbx"
           },
           "revision": "",
           "subject": "",
