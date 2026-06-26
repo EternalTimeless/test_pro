@@ -596,7 +596,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         die() {
-          var _this$_curArms;
+          var _instance, _this$_curArms;
 
           this._isShake = false;
           this.restoreOilHitFlashMaterials();
@@ -605,7 +605,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), FlashRedManager) : FlashRedManager).instance.stopFlashRed(this.node);
           (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
             error: Error()
-          }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.unregisterTarget(this); // 轮胎依次破碎消失
+          }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.unregisterTarget(this);
+          (_instance = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+            error: Error()
+          }), CameraMove) : CameraMove).instance) == null || _instance.Shake2(0.8); // 轮胎依次破碎消失
 
           const destroyTireCount = this.tireList.length;
 
@@ -941,7 +944,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         destroyOneTire() {
-          var _this$_curArms5, _this$_curArms6;
+          var _instance2, _this$_curArms5, _this$_curArms6;
 
           const tire = this.tireList.shift();
           if (!tire) return; // 停止残留缩放动画并重置到原始大小
@@ -962,7 +965,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
             error: Error()
-          }), FlashRedManager) : FlashRedManager).instance.stopFlashRed(this.node); // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
+          }), FlashRedManager) : FlashRedManager).instance.stopFlashRed(this.node);
+          (_instance2 = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+            error: Error()
+          }), CameraMove) : CameraMove).instance) == null || _instance2.Shake2(0.8); // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
 
           const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
           this.spawnOilBurstShards(tire, oilBurstRecords, 0);
@@ -1992,16 +1998,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getOilBurstShardDirection(index, burstCenter) {
-          var _instance;
+          var _instance3;
 
           const dirs = [[-0.82, 0.42, -0.38], [0.78, 0.34, -0.52], [-0.48, 0.72, 0.5], [0.42, 0.58, 0.7], [-0.72, -0.18, 0.64], [0.68, -0.22, 0.62], [-0.22, 0.88, -0.42], [0.28, -0.36, -0.88]];
           const dir = dirs[index % dirs.length];
           let x = dir[0];
           let y = dir[1];
           let z = dir[2];
-          const cameraPos = (_instance = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+          const cameraPos = (_instance3 = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
             error: Error()
-          }), CameraMove) : CameraMove).instance) == null || (_instance = _instance.node) == null ? void 0 : _instance.worldPosition;
+          }), CameraMove) : CameraMove).instance) == null || (_instance3 = _instance3.node) == null ? void 0 : _instance3.worldPosition;
 
           if (cameraPos && burstCenter) {
             const toCameraX = cameraPos.x - burstCenter.x;
@@ -2560,12 +2566,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         resetStagePosition() {
-          var _instance$getFrontMon, _instance2;
+          var _instance$getFrontMon, _instance4;
 
           const worldPos = this.node.worldPosition;
-          const frontZ = (_instance$getFrontMon = (_instance2 = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+          const frontZ = (_instance$getFrontMon = (_instance4 = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
             error: Error()
-          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance2.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
+          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance4.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
 
           this._stageSpawnPos.set(worldPos.x, worldPos.y, frontZ - this.waveFrontGap);
 

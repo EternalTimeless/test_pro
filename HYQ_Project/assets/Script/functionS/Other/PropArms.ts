@@ -301,6 +301,7 @@ export class PropArms extends BattleTarget3D {
         this.restoreOilHitFlashMaterials();
         FlashRedManager.instance.stopFlashRed(this.node);
         BulletMonsterCollisionManager.instance.unregisterTarget(this);
+        CameraMove.instance?.Shake2(0.8);
 
         // 轮胎依次破碎消失
         const destroyTireCount = this.tireList.length;
@@ -579,6 +580,7 @@ export class PropArms extends BattleTarget3D {
         }
 
         FlashRedManager.instance.stopFlashRed(this.node);
+        CameraMove.instance?.Shake2(0.8);
 
         // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
         const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
