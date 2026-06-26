@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Component, Vec3, BulletEnum, PoolEnum, PoolManager, EffectManager, MoveDrive, MoveModEnum, COLLIDE_TYPE, BulletMonsterCollisionManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _class3, _crd, ccclass, property, BulletBattle3D;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Component, Sprite, Vec3, BulletEnum, PoolEnum, PoolManager, EffectManager, MoveDrive, MoveModEnum, COLLIDE_TYPE, BulletMonsterCollisionManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _class3, _crd, ccclass, property, BulletBattle3D;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -60,6 +60,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
       Component = _cc.Component;
+      Sprite = _cc.Sprite;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
       BulletEnum = _unresolved_2.BulletEnum;
@@ -249,6 +250,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._triggerDieTime = this.triggerDieTime;
           this._isTrigger = false;
           this._hasPreviousWorldPosition = false;
+          var sprite = this.batchSprite && this.batchSprite.isValid ? this.batchSprite : this.node.getComponentInChildren(Sprite);
+
+          if (sprite && sprite.isValid) {
+            sprite.enabled = true;
+            this.batchSprite = sprite;
+          }
+
           this.node.active = true; // 注册到碰撞管理器
 
           if (!this._registered) {

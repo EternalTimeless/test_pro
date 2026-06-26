@@ -126,6 +126,13 @@ export default class BulletBattle3D extends Component {
         this._triggerDieTime = this.triggerDieTime;
         this._isTrigger = false;
         this._hasPreviousWorldPosition = false;
+        const sprite = this.batchSprite && this.batchSprite.isValid
+            ? this.batchSprite
+            : this.node.getComponentInChildren(Sprite);
+        if (sprite && sprite.isValid) {
+            sprite.enabled = true;
+            this.batchSprite = sprite;
+        }
         this.node.active = true;
 
         // 注册到碰撞管理器
