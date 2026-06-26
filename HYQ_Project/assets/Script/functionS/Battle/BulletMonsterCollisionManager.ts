@@ -1,4 +1,4 @@
-import { CCFloat, _decorator, Vec3, director, Director } from 'cc';
+import { CCFloat, _decorator, Vec3, director, Director, MeshRenderer, Node } from 'cc';
 import Singleton from 'db://assets/Script/Base/Singleton';
 import { COLLIDE_TYPE } from './CollectBattleTarger/ColliderTag';
 import BulletBattle3D from './Battle3D/Bullet/BulletBattle3D';
@@ -70,12 +70,18 @@ export default class BulletMonsterCollisionManager extends Singleton {
     private _tempVec3: Vec3 = new Vec3();
     private _tempBulletPrevPos: Vec3 = new Vec3();
     private _checkedTargets: BattleTarget3D[] = [];
+    private _checkedWalls: WallObstacleRange[] = [];
 
     /** 子弹桶 - 每帧重建 */
     private _bulletBuckets: BulletBattle3D[][] = [];
 
     /** 目标桶 - 按组ID+桶索引存储 */
     private _targetBuckets: { [groupId: string]: BattleTarget3D[][] } = {};
+    private _wallBuckets: WallObstacleRange[][] = [];
+    private _wallObstacles: WallObstacleRange[] = [];
+    private _wallScene: Node | null = null;
+    private _nextWallRefreshFrame: number = 0;
+    private readonly _wallRefreshIntervalFrames: number = 30;
 
     private _directorCallback: (dt: number) => void;
 
@@ -84,6 +90,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
         // 预分配桶数组
         for (let i = 0; i < this._bucketCount; i++) {
             this._bulletBuckets[i] = [];
+            this._wallBuckets[i] = [];
         }
         // 使用 director 的每帧回调驱动碰撞检测
         this._directorCallback = (dt: number) => {
@@ -232,6 +239,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
     /** 每帧碰撞检测 */
     public update(dt: number): void {
+        this.ensureWallObstacles();
         // 1. 清空桶数组（只重置length=0，不释放内存）
         for (let i = 0; i < this._bucketCount; i++) {
             this._bulletBuckets[i].length = 0;
@@ -309,6 +317,9 @@ export default class BulletMonsterCollisionManager extends Singleton {
                 const sweptMaxX = Math.max(prevX, bx) + bHalfX;
                 const minBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - bHalfZ);
                 const maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ);
+                if (this.tryRecycleBulletByWallHit(bullet, prevX, prevZ, bx, bz, bHalfX, bHalfZ, sweptMinX, sweptMaxX, minBucketIdx, maxBucketIdx)) {
+                    continue;
+                }
 
                 // 遍历子弹的 attackTargetTag
                 const targetTags = bullet.attackTargetTag;
@@ -359,11 +370,174 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
     private _frameCount: number = 0;
 
+    private ensureWallObstacles(): void {
+        const scene = director.getScene();
+        if (!scene) {
+            this.clearWallObstacles();
+            this._wallScene = null;
+            return;
+        }
+        if (this._wallScene !== scene || this._frameCount >= this._nextWallRefreshFrame) {
+            this.rebuildWallObstacles(scene);
+            this._wallScene = scene;
+            this._nextWallRefreshFrame = this._frameCount + (this._wallObstacles.length > 0 ? this._wallRefreshIntervalFrames : 1);
+        }
+    }
+
+    private clearWallObstacles(): void {
+        this._wallObstacles.length = 0;
+        for (let i = 0; i < this._bucketCount; i++) {
+            this._wallBuckets[i].length = 0;
+        }
+    }
+
+    private rebuildWallObstacles(scene: Node): void {
+        this.clearWallObstacles();
+        this.collectWallObstacles(scene);
+    }
+
+    private collectWallObstacles(node: Node): void {
+        if (!node) {
+            return;
+        }
+        if (node.name.indexOf('SM_gelidun_') === 0) {
+            const obstacle: WallObstacleRange = {
+                node,
+                renderers: [],
+                minX: 0,
+                maxX: 0,
+                minZ: 0,
+                maxZ: 0,
+            };
+            this.collectMeshRenderers(node, obstacle.renderers);
+            if (this.updateWallObstacleBounds(obstacle)) {
+                this._wallObstacles.push(obstacle);
+                this.addWallObstacleToBuckets(obstacle);
+            }
+            return;
+        }
+        for (let i = 0; i < node.children.length; i++) {
+            this.collectWallObstacles(node.children[i]);
+        }
+    }
+
+    private collectMeshRenderers(node: Node, out: MeshRenderer[]): void {
+        const renderer = node.getComponent(MeshRenderer);
+        if (renderer) {
+            out.push(renderer);
+        }
+        for (let i = 0; i < node.children.length; i++) {
+            this.collectMeshRenderers(node.children[i], out);
+        }
+    }
+
+    private updateWallObstacleBounds(obstacle: WallObstacleRange): boolean {
+        if (!obstacle.node.activeInHierarchy) {
+            return false;
+        }
+        let minX = Number.POSITIVE_INFINITY;
+        let maxX = Number.NEGATIVE_INFINITY;
+        let minZ = Number.POSITIVE_INFINITY;
+        let maxZ = Number.NEGATIVE_INFINITY;
+        let found = false;
+        for (let i = 0; i < obstacle.renderers.length; i++) {
+            const renderer = obstacle.renderers[i];
+            if (!renderer || !renderer.node.activeInHierarchy) {
+                continue;
+            }
+            const worldBounds = (renderer as any)?.model?.worldBounds;
+            const center = worldBounds?.center;
+            const halfExtents = worldBounds?.halfExtents;
+            if (!center || !halfExtents) {
+                continue;
+            }
+            minX = Math.min(minX, center.x - halfExtents.x);
+            maxX = Math.max(maxX, center.x + halfExtents.x);
+            minZ = Math.min(minZ, center.z - halfExtents.z);
+            maxZ = Math.max(maxZ, center.z + halfExtents.z);
+            found = true;
+        }
+        if (!found) {
+            return false;
+        }
+        obstacle.minX = minX;
+        obstacle.maxX = maxX;
+        obstacle.minZ = minZ;
+        obstacle.maxZ = maxZ;
+        return true;
+    }
+
+    private addWallObstacleToBuckets(obstacle: WallObstacleRange): void {
+        const minIdx = this._getBucketIdx(obstacle.minZ);
+        const maxIdx = this._getBucketIdx(obstacle.maxZ);
+        for (let i = minIdx; i <= maxIdx; i++) {
+            this._wallBuckets[i].push(obstacle);
+        }
+    }
+
+    private tryRecycleBulletByWallHit(
+        bullet: BulletBattle3D,
+        prevX: number,
+        prevZ: number,
+        curX: number,
+        curZ: number,
+        bHalfX: number,
+        bHalfZ: number,
+        sweptMinX: number,
+        sweptMaxX: number,
+        minBucketIdx: number,
+        maxBucketIdx: number,
+    ): boolean {
+        if (this._wallObstacles.length <= 0) {
+            return false;
+        }
+        this._checkedWalls.length = 0;
+        for (let bucketIdx = minBucketIdx; bucketIdx <= maxBucketIdx; bucketIdx++) {
+            const walls = this._wallBuckets[bucketIdx];
+            if (!walls || walls.length <= 0) {
+                continue;
+            }
+            for (let i = 0; i < walls.length; i++) {
+                const wall = walls[i];
+                if (!wall || this._checkedWalls.indexOf(wall) !== -1) {
+                    continue;
+                }
+                this._checkedWalls.push(wall);
+                if (!wall.node.activeInHierarchy) {
+                    continue;
+                }
+                if (sweptMaxX < wall.minX || sweptMinX > wall.maxX) {
+                    continue;
+                }
+                if (this.isSweptBulletHitBounds(prevX, prevZ, curX, curZ, bHalfX, bHalfZ, wall.minX, wall.maxX, wall.minZ, wall.maxZ)) {
+                    bullet.forceRecycle();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private isSweptBulletHit(prevX: number, prevZ: number, curX: number, curZ: number, bHalfX: number, bHalfZ: number, targetX: number, targetZ: number, targetHalfX: number, targetHalfZ: number): boolean {
-        const minX = targetX - targetHalfX - bHalfX;
-        const maxX = targetX + targetHalfX + bHalfX;
-        const minZ = targetZ - targetHalfZ - bHalfZ;
-        const maxZ = targetZ + targetHalfZ + bHalfZ;
+        return this.isSweptBulletHitBounds(
+            prevX,
+            prevZ,
+            curX,
+            curZ,
+            bHalfX,
+            bHalfZ,
+            targetX - targetHalfX,
+            targetX + targetHalfX,
+            targetZ - targetHalfZ,
+            targetZ + targetHalfZ,
+        );
+    }
+
+    private isSweptBulletHitBounds(prevX: number, prevZ: number, curX: number, curZ: number, expandHalfX: number, expandHalfZ: number, minX: number, maxX: number, minZ: number, maxZ: number): boolean {
+        minX -= expandHalfX;
+        maxX += expandHalfX;
+        minZ -= expandHalfZ;
+        maxZ += expandHalfZ;
         const dx = curX - prevX;
         const dz = curZ - prevZ;
         let enter = 0;
@@ -418,4 +592,13 @@ export default class BulletMonsterCollisionManager extends Singleton {
         }
         return list;
     }
+}
+
+interface WallObstacleRange {
+    node: Node;
+    renderers: MeshRenderer[];
+    minX: number;
+    maxX: number;
+    minZ: number;
+    maxZ: number;
 }

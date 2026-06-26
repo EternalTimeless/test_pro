@@ -244,6 +244,7 @@ export class PropArms extends BattleTarget3D {
     private readonly bottomBaseChildPosMap: Map<Node, Vec3> = new Map();
     private readonly bottomBaseChildEulerMap: Map<Node, Vec3> = new Map();
     private readonly bottomBaseTargetPosMap: Map<Node, Vec3> = new Map();
+    private readonly weaponVisualScaleMap: Map<Node, Vec3> = new Map();
     private readonly manualBottomBaseNodeSet: Set<Node> = new Set();
     private readonly bottomBaseRollDegreesPerUnit: number = -110;
     private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 1, 0);
@@ -409,6 +410,7 @@ export class PropArms extends BattleTarget3D {
         AudioManager.inst.playOneShot(SoundEnum.Sound_tire_hit, 0.4, 0.08);
         const staggerDelay = 0.05;
         const lastIdx = this.tireList.length - 1;
+        this.playSpriteWeaponHitScale(lastIdx * staggerDelay);
         for (let i = 0; i < this.tireList.length; i++) {
             const tire = this.tireList[i];
             Tween.stopAllByTarget(tire);
@@ -631,6 +633,7 @@ export class PropArms extends BattleTarget3D {
         if (!this._curArms.isCanMove && this.tireList.length > this._curArms.canTireCount) {
             dropTargetY = fbxY;
         }
+        this.playSpriteWeaponHitScale(delay);
         tween(fbxNode)
             .delay(delay)
             .to(0.04 * this.animScale, { y: fbxY + bounceH }, { easing: 'sineOut' })
@@ -1070,6 +1073,15 @@ export class PropArms extends BattleTarget3D {
         return originalScale;
     }
 
+    private getWeaponVisualOriginalScale(node: Node): Vec3 {
+        let originalScale = this.weaponVisualScaleMap.get(node);
+        if (!originalScale) {
+            originalScale = node.scale.clone();
+            this.weaponVisualScaleMap.set(node, originalScale);
+        }
+        return originalScale;
+    }
+
     private getBottomBaseOriginalPos(node: Node): Vec3 {
         let originalPos = this.bottomBaseChildPosMap.get(node);
         if (!originalPos) {
@@ -1383,6 +1395,42 @@ export class PropArms extends BattleTarget3D {
                     material.destroy();
                     shardNode.destroy();
                 })
+                .start();
+        }
+    }
+
+    private playSpriteWeaponHitScale(delay: number = 0): void {
+        if (!this._curArmsUsesSpriteVisual) {
+            return;
+        }
+        const weaponRoot = this._curArms?.fbx?.node;
+        if (!weaponRoot) {
+            return;
+        }
+
+        const spriteNodes: Node[] = [];
+        PropArms.collectNodesByName(weaponRoot, PropArms.spriteWeaponVisualName, spriteNodes);
+        if (spriteNodes.length <= 0) {
+            return;
+        }
+
+        for (let i = 0; i < spriteNodes.length; i++) {
+            const spriteNode = spriteNodes[i];
+            if (!spriteNode || !spriteNode.isValid || !spriteNode.activeInHierarchy) {
+                continue;
+            }
+
+            Tween.stopAllByTarget(spriteNode);
+            const originalScale = this.getWeaponVisualOriginalScale(spriteNode);
+            const scaleUp = v3(originalScale.x * 1.06, originalScale.y * 1.06, originalScale.z * 1.06);
+            const scaleDown = v3(originalScale.x * 0.97, originalScale.y * 0.97, originalScale.z * 0.97);
+
+            spriteNode.setScale(originalScale);
+            tween(spriteNode)
+                .delay(delay)
+                .to(0.08, { scale: scaleUp }, { easing: 'cubicOut' })
+                .to(0.08, { scale: scaleDown }, { easing: 'cubicOut' })
+                .to(0.08, { scale: originalScale }, { easing: 'backOut' })
                 .start();
         }
     }

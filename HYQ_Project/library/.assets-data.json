@@ -770,7 +770,7 @@
         "df892961-7da4-4f4d-8b24-7963cfcd3df7@97cb5",
         "29cb620a-6a6f-4137-9526-751deb1882ad",
         "03189dd5-73dd-4e52-8644-1ff1a122b972@2e1cf",
-        "e858ec41-b696-4f67-93e0-2bf9701f5fa1@f9941",
+        "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce@f9941",
         "cc1ba55d-5314-4c01-ba6d-b71fae6946a4",
         "ba379bbc-987c-4bbc-a296-3cabc67825bb@73b7f",
         "c6316384-dbb5-4431-ad4a-4c00d3092298@73b7f",
@@ -10041,6 +10041,15 @@
     "value": {
       "depends": [
         "98fbc20f-086f-4fb4-96b4-9ab4a6f2673f@704fe"
+      ]
+    },
+    "versionCode": 1
+  },
+  "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/UI-AK47.png@f9941",
+    "value": {
+      "depends": [
+        "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce@6c48a"
       ]
     },
     "versionCode": 1

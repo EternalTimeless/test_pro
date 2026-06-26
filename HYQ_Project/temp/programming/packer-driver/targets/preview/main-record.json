@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 15705.7202,
+      "mTimestamp": 7896056.1328,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -19716,7 +19716,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Bullet/BulletBattle3D.ts": {
       "mTimestamp": {
-        "mtime": 1782184130288.9475,
+        "mtime": 1782460509414.859,
         "uuid": "aa25268b-cb3c-4c8a-8144-994c0a68b3b6"
       },
       "chunkId": "a78b9d0a8af4315011c59f40b6c49da033e49269",
@@ -20325,7 +20325,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BattleTarger/BattleTarget3D.ts": {
       "mTimestamp": {
-        "mtime": 1782116806543.4634,
+        "mtime": 1782460491937.4158,
         "uuid": "d490fc41-2b7f-4209-a6b1-dca139d03fef"
       },
       "chunkId": "9a8786a747b555136cef77c9f5e7ad17e18a31eb",
@@ -20599,7 +20599,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletMonsterCollisionManager.ts": {
       "mTimestamp": {
-        "mtime": 1782185347402.163,
+        "mtime": 1782461003646.4739,
         "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
       },
       "chunkId": "e13771ea8032dbc1728530af431c57de3b1e5e24",
@@ -20619,11 +20619,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 62
+              "column": 82
             },
             "end": {
               "line": 1,
-              "column": 66
+              "column": 86
             }
           }
         },
@@ -24484,7 +24484,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts": {
       "mTimestamp": {
-        "mtime": 1782441190993.0957,
+        "mtime": 1782458403473.864,
         "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
       },
       "chunkId": "aa6223cf35796d09344450a14919ad24c61174bb",
@@ -27912,7 +27912,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropLalianGate.ts": {
       "mTimestamp": {
-        "mtime": 1782284082046.245,
+        "mtime": 1782460527426.2458,
         "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
       },
       "chunkId": "c14c87720f6e6e7b27f438925fae2cc2d4587268",

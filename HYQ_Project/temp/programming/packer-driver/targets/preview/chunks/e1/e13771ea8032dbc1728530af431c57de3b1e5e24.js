@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Vec3, director, Director, Singleton, CollisionTargetGroup, _dec, _class2, _crd, ccclass, property, BulletMonsterCollisionManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Vec3, director, Director, MeshRenderer, Singleton, CollisionTargetGroup, _dec, _class2, _crd, ccclass, property, BulletMonsterCollisionManager;
 
   function _reportPossibleCrUseOfSingleton(extras) {
     _reporterNs.report("Singleton", "db://assets/Script/Base/Singleton", _context.meta, extras);
@@ -30,6 +30,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
       Vec3 = _cc.Vec3;
       director = _cc.director;
       Director = _cc.Director;
+      MeshRenderer = _cc.MeshRenderer;
     }, function (_unresolved_2) {
       Singleton = _unresolved_2.default;
     }],
@@ -38,7 +39,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
       _cclegacy._RF.push({}, "e603cVqmUVFdKngtJ8SEsOF", "BulletMonsterCollisionManager", undefined);
 
-      __checkObsolete__(['CCFloat', '_decorator', 'Vec3', 'director', 'Director']);
+      __checkObsolete__(['CCFloat', '_decorator', 'Vec3', 'director', 'Director', 'MeshRenderer', 'Node']);
 
       ({
         ccclass,
@@ -118,17 +119,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this._tempVec3 = new Vec3();
           this._tempBulletPrevPos = new Vec3();
           this._checkedTargets = [];
+          this._checkedWalls = [];
 
           /** 子弹桶 - 每帧重建 */
           this._bulletBuckets = [];
 
           /** 目标桶 - 按组ID+桶索引存储 */
           this._targetBuckets = {};
+          this._wallBuckets = [];
+          this._wallObstacles = [];
+          this._wallScene = null;
+          this._nextWallRefreshFrame = 0;
+          this._wallRefreshIntervalFrames = 30;
           this._directorCallback = void 0;
           this._frameCount = 0;
 
           for (var i = 0; i < this._bucketCount; i++) {
             this._bulletBuckets[i] = [];
+            this._wallBuckets[i] = [];
           } // 使用 director 的每帧回调驱动碰撞检测
 
 
@@ -325,7 +333,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
 
         update(dt) {
-          // 1. 清空桶数组（只重置length=0，不释放内存）
+          this.ensureWallObstacles(); // 1. 清空桶数组（只重置length=0，不释放内存）
+
           for (var i = 0; i < this._bucketCount; i++) {
             this._bulletBuckets[i].length = 0;
           } // 清空目标桶
@@ -417,7 +426,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
               var minBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - bHalfZ);
 
-              var maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ); // 遍历子弹的 attackTargetTag
+              var maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ);
+
+              if (this.tryRecycleBulletByWallHit(_bullet, prevX, prevZ, bx, bz, bHalfX, bHalfZ, sweptMinX, sweptMaxX, minBucketIdx, maxBucketIdx)) {
+                continue;
+              } // 遍历子弹的 attackTargetTag
 
 
               var targetTags = _bullet.attackTargetTag;
@@ -471,11 +484,183 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this._frameCount++;
         }
 
+        ensureWallObstacles() {
+          var scene = director.getScene();
+
+          if (!scene) {
+            this.clearWallObstacles();
+            this._wallScene = null;
+            return;
+          }
+
+          if (this._wallScene !== scene || this._frameCount >= this._nextWallRefreshFrame) {
+            this.rebuildWallObstacles(scene);
+            this._wallScene = scene;
+            this._nextWallRefreshFrame = this._frameCount + (this._wallObstacles.length > 0 ? this._wallRefreshIntervalFrames : 1);
+          }
+        }
+
+        clearWallObstacles() {
+          this._wallObstacles.length = 0;
+
+          for (var i = 0; i < this._bucketCount; i++) {
+            this._wallBuckets[i].length = 0;
+          }
+        }
+
+        rebuildWallObstacles(scene) {
+          this.clearWallObstacles();
+          this.collectWallObstacles(scene);
+        }
+
+        collectWallObstacles(node) {
+          if (!node) {
+            return;
+          }
+
+          if (node.name.indexOf('SM_gelidun_') === 0) {
+            var obstacle = {
+              node,
+              renderers: [],
+              minX: 0,
+              maxX: 0,
+              minZ: 0,
+              maxZ: 0
+            };
+            this.collectMeshRenderers(node, obstacle.renderers);
+
+            if (this.updateWallObstacleBounds(obstacle)) {
+              this._wallObstacles.push(obstacle);
+
+              this.addWallObstacleToBuckets(obstacle);
+            }
+
+            return;
+          }
+
+          for (var i = 0; i < node.children.length; i++) {
+            this.collectWallObstacles(node.children[i]);
+          }
+        }
+
+        collectMeshRenderers(node, out) {
+          var renderer = node.getComponent(MeshRenderer);
+
+          if (renderer) {
+            out.push(renderer);
+          }
+
+          for (var i = 0; i < node.children.length; i++) {
+            this.collectMeshRenderers(node.children[i], out);
+          }
+        }
+
+        updateWallObstacleBounds(obstacle) {
+          if (!obstacle.node.activeInHierarchy) {
+            return false;
+          }
+
+          var minX = Number.POSITIVE_INFINITY;
+          var maxX = Number.NEGATIVE_INFINITY;
+          var minZ = Number.POSITIVE_INFINITY;
+          var maxZ = Number.NEGATIVE_INFINITY;
+          var found = false;
+
+          for (var i = 0; i < obstacle.renderers.length; i++) {
+            var _model;
+
+            var renderer = obstacle.renderers[i];
+
+            if (!renderer || !renderer.node.activeInHierarchy) {
+              continue;
+            }
+
+            var worldBounds = renderer == null || (_model = renderer.model) == null ? void 0 : _model.worldBounds;
+            var center = worldBounds == null ? void 0 : worldBounds.center;
+            var halfExtents = worldBounds == null ? void 0 : worldBounds.halfExtents;
+
+            if (!center || !halfExtents) {
+              continue;
+            }
+
+            minX = Math.min(minX, center.x - halfExtents.x);
+            maxX = Math.max(maxX, center.x + halfExtents.x);
+            minZ = Math.min(minZ, center.z - halfExtents.z);
+            maxZ = Math.max(maxZ, center.z + halfExtents.z);
+            found = true;
+          }
+
+          if (!found) {
+            return false;
+          }
+
+          obstacle.minX = minX;
+          obstacle.maxX = maxX;
+          obstacle.minZ = minZ;
+          obstacle.maxZ = maxZ;
+          return true;
+        }
+
+        addWallObstacleToBuckets(obstacle) {
+          var minIdx = this._getBucketIdx(obstacle.minZ);
+
+          var maxIdx = this._getBucketIdx(obstacle.maxZ);
+
+          for (var i = minIdx; i <= maxIdx; i++) {
+            this._wallBuckets[i].push(obstacle);
+          }
+        }
+
+        tryRecycleBulletByWallHit(bullet, prevX, prevZ, curX, curZ, bHalfX, bHalfZ, sweptMinX, sweptMaxX, minBucketIdx, maxBucketIdx) {
+          if (this._wallObstacles.length <= 0) {
+            return false;
+          }
+
+          this._checkedWalls.length = 0;
+
+          for (var bucketIdx = minBucketIdx; bucketIdx <= maxBucketIdx; bucketIdx++) {
+            var walls = this._wallBuckets[bucketIdx];
+
+            if (!walls || walls.length <= 0) {
+              continue;
+            }
+
+            for (var i = 0; i < walls.length; i++) {
+              var wall = walls[i];
+
+              if (!wall || this._checkedWalls.indexOf(wall) !== -1) {
+                continue;
+              }
+
+              this._checkedWalls.push(wall);
+
+              if (!wall.node.activeInHierarchy) {
+                continue;
+              }
+
+              if (sweptMaxX < wall.minX || sweptMinX > wall.maxX) {
+                continue;
+              }
+
+              if (this.isSweptBulletHitBounds(prevX, prevZ, curX, curZ, bHalfX, bHalfZ, wall.minX, wall.maxX, wall.minZ, wall.maxZ)) {
+                bullet.forceRecycle();
+                return true;
+              }
+            }
+          }
+
+          return false;
+        }
+
         isSweptBulletHit(prevX, prevZ, curX, curZ, bHalfX, bHalfZ, targetX, targetZ, targetHalfX, targetHalfZ) {
-          var minX = targetX - targetHalfX - bHalfX;
-          var maxX = targetX + targetHalfX + bHalfX;
-          var minZ = targetZ - targetHalfZ - bHalfZ;
-          var maxZ = targetZ + targetHalfZ + bHalfZ;
+          return this.isSweptBulletHitBounds(prevX, prevZ, curX, curZ, bHalfX, bHalfZ, targetX - targetHalfX, targetX + targetHalfX, targetZ - targetHalfZ, targetZ + targetHalfZ);
+        }
+
+        isSweptBulletHitBounds(prevX, prevZ, curX, curZ, expandHalfX, expandHalfZ, minX, maxX, minZ, maxZ) {
+          minX -= expandHalfX;
+          maxX += expandHalfX;
+          minZ -= expandHalfZ;
+          maxZ += expandHalfZ;
           var dx = curX - prevX;
           var dz = curZ - prevZ;
           var enter = 0;

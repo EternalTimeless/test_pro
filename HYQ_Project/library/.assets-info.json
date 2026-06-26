@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782457472084.1714,
+      "time": 1782458956476.1,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1594,7 +1594,7 @@
       "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
     },
     "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
-      "time": 1782185347402.163,
+      "time": 1782461003646.4739,
       "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
     },
     "Script\\functionS\\Battle\\HpComponent.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782441190993.0957,
+      "time": 1782458403473.864,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -1970,7 +1970,7 @@
       "uuid": "ce18d9a1-ffb3-4c20-ba16-b33bd8309509"
     },
     "Script\\functionS\\Battle\\BattleTarger\\BattleTarget3D.ts": {
-      "time": 1782116806543.4634,
+      "time": 1782460491937.4158,
       "uuid": "d490fc41-2b7f-4209-a6b1-dca139d03fef"
     },
     "Script\\functionS\\Battle\\CollectBattleTarger\\CollectGetTarget.ts": {
@@ -2274,7 +2274,7 @@
       "uuid": "ca0fd3d6-55e4-45ca-80e4-4c8243a063fd"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts": {
-      "time": 1782184130288.9475,
+      "time": 1782460509414.859,
       "uuid": "aa25268b-cb3c-4c8a-8144-994c0a68b3b6"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts": {
@@ -4422,7 +4422,7 @@
       "time": 1781689576517.3992
     },
     "Script\\functionS\\Other\\PropLalianGate.ts": {
-      "time": 1782284082046.245,
+      "time": 1782460527426.2458,
       "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts.meta": {
@@ -5031,7 +5031,7 @@
       "time": 1782195527550.9514
     },
     "GameRes\\SLLYT_map\\wuqi\\UI-AK47.png.meta": {
-      "time": 1782195527500.7134
+      "time": 1782458948512.3684
     },
     "GameRes\\SLLYT_map\\wuqi\\UI-MP5.png.meta": {
       "time": 1782266699020.599

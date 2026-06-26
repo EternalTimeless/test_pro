@@ -441,6 +441,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseChildPosMap = new Map();
           this.bottomBaseChildEulerMap = new Map();
           this.bottomBaseTargetPosMap = new Map();
+          this.weaponVisualScaleMap = new Map();
           this.manualBottomBaseNodeSet = new Set();
           this.bottomBaseRollDegreesPerUnit = -110;
           this.bottomBaseRollAxis = new Vec3(0, 1, 0);
@@ -752,6 +753,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), SoundEnum) : SoundEnum).Sound_tire_hit, 0.4, 0.08);
           const staggerDelay = 0.05;
           const lastIdx = this.tireList.length - 1;
+          this.playSpriteWeaponHitScale(lastIdx * staggerDelay);
 
           for (let i = 0; i < this.tireList.length; i++) {
             const tire = this.tireList[i];
@@ -1028,6 +1030,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             dropTargetY = fbxY;
           }
 
+          this.playSpriteWeaponHitScale(delay);
           tween(fbxNode).delay(delay).to(0.04 * this.animScale, {
             y: fbxY + bounceH
           }, {
@@ -1541,6 +1544,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return originalScale;
         }
 
+        getWeaponVisualOriginalScale(node) {
+          let originalScale = this.weaponVisualScaleMap.get(node);
+
+          if (!originalScale) {
+            originalScale = node.scale.clone();
+            this.weaponVisualScaleMap.set(node, originalScale);
+          }
+
+          return originalScale;
+        }
+
         getBottomBaseOriginalPos(node) {
           let originalPos = this.bottomBaseChildPosMap.get(node);
 
@@ -1885,6 +1899,54 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               (_renderer$mesh = renderer.mesh) == null || _renderer$mesh.destroy();
               material.destroy();
               shardNode.destroy();
+            }).start();
+          }
+        }
+
+        playSpriteWeaponHitScale(delay = 0) {
+          var _this$_curArms9;
+
+          if (!this._curArmsUsesSpriteVisual) {
+            return;
+          }
+
+          const weaponRoot = (_this$_curArms9 = this._curArms) == null || (_this$_curArms9 = _this$_curArms9.fbx) == null ? void 0 : _this$_curArms9.node;
+
+          if (!weaponRoot) {
+            return;
+          }
+
+          const spriteNodes = [];
+          PropArms.collectNodesByName(weaponRoot, PropArms.spriteWeaponVisualName, spriteNodes);
+
+          if (spriteNodes.length <= 0) {
+            return;
+          }
+
+          for (let i = 0; i < spriteNodes.length; i++) {
+            const spriteNode = spriteNodes[i];
+
+            if (!spriteNode || !spriteNode.isValid || !spriteNode.activeInHierarchy) {
+              continue;
+            }
+
+            Tween.stopAllByTarget(spriteNode);
+            const originalScale = this.getWeaponVisualOriginalScale(spriteNode);
+            const scaleUp = v3(originalScale.x * 1.06, originalScale.y * 1.06, originalScale.z * 1.06);
+            const scaleDown = v3(originalScale.x * 0.97, originalScale.y * 0.97, originalScale.z * 0.97);
+            spriteNode.setScale(originalScale);
+            tween(spriteNode).delay(delay).to(0.08, {
+              scale: scaleUp
+            }, {
+              easing: 'cubicOut'
+            }).to(0.08, {
+              scale: scaleDown
+            }, {
+              easing: 'cubicOut'
+            }).to(0.08, {
+              scale: originalScale
+            }, {
+              easing: 'backOut'
             }).start();
           }
         }
@@ -2497,11 +2559,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         _update(deltaTime) {
-          var _this$_curArms9;
+          var _this$_curArms10;
 
           const dt = deltaTime; // 石板浮动
 
-          if (this.isWallH && this.wallNode && (_this$_curArms9 = this._curArms) != null && (_this$_curArms9 = _this$_curArms9.fbx) != null && _this$_curArms9.node) {
+          if (this.isWallH && this.wallNode && (_this$_curArms10 = this._curArms) != null && (_this$_curArms10 = _this$_curArms10.fbx) != null && _this$_curArms10.node) {
             this._time += dt * this.speed;
             const curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;
