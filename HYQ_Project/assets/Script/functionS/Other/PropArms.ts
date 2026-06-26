@@ -1268,13 +1268,14 @@ export class PropArms extends BattleTarget3D {
         if (this.tireList.length <= 0 || this.isDie) {
             return;
         }
+        if (this.oilHitFlashState || this.oilHitFlashRecords.length > 0) {
+            return;
+        }
         const flashTemplate = PropArms.oilHitFlashMaterial;
         if (!flashTemplate) {
             PropArms.preloadOilHitFlashMaterial();
             return;
         }
-
-        this.restoreOilHitFlashMaterials();
 
         const records: OilHitFlashMaterialRecord[] = [];
         for (let i = 0; i < this.tireList.length; i++) {

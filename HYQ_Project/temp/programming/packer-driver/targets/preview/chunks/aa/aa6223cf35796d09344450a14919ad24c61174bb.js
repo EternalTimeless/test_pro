@@ -1817,6 +1817,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          if (this.oilHitFlashState || this.oilHitFlashRecords.length > 0) {
+            return;
+          }
+
           var flashTemplate = PropArms.oilHitFlashMaterial;
 
           if (!flashTemplate) {
@@ -1824,7 +1828,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          this.restoreOilHitFlashMaterials();
           var records = [];
 
           for (var i = 0; i < this.tireList.length; i++) {
