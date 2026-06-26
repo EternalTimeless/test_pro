@@ -200,6 +200,33 @@ System.register(["cc"], function (_export, _context) {
           this._registerUpdate();
         }
         /**
+         * 同步预热一次闪红材质实例化与恢复流程，用于加载阶段消化首次材质改写开销。
+         */
+
+
+        prewarm(node, flashDataList, flashColor = null, groupKey) {
+          if (!node || !node.isValid) return;
+          if (!flashDataList || flashDataList.length === 0) return;
+
+          const entry = this._acquire();
+
+          entry.node = node;
+          entry.flashDataList = flashDataList;
+          entry.groupKey = groupKey != null ? groupKey : null;
+
+          if (flashColor) {
+            entry.flashColor.set(flashColor);
+          } else {
+            entry.flashColor.set(FlashRedManager.DEFAULT_COLOR);
+          }
+
+          this._applyFlash(entry);
+
+          this._restoreEntry(entry);
+
+          this._release(entry);
+        }
+        /**
          * 停止指定节点的闪红效果，立即恢复原始材质
          */
 

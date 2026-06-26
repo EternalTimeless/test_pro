@@ -16,6 +16,8 @@ import BulletBattle3D from '../Battle/Battle3D/Bullet/BulletBattle3D';
 import { BulletBatchRenderer } from '../Battle/BulletBatchRenderer';
 import LayerManager from '../../Base/LayerManager';
 import AudioManager from '../../Base/AudioManager';
+import { FlashRedManager } from '../Battle/Base/FlashRedManager';
+import { EffectTimePartRemove } from '../Effect/EffectTimePartRemove';
 const { ccclass, property } = _decorator;
 
 type WarmupTask = {
@@ -51,6 +53,7 @@ export class GuideManager extends Component {
     private warmupPerFrame: number = 4;
     private warmupRoot: Node = null;
     private pendingSoundWarmupCount: number = 0;
+    private pendingRuntimeWarmupCount: number = 0;
 
     start() {
         GuideManager.instance = this;
@@ -146,6 +149,7 @@ export class GuideManager extends Component {
             SoundEnum.Sound_Gun,
             SoundEnum.Sound_FireGun,
             SoundEnum.Sound_Ship_UpLevel,
+            SoundEnum.Sound_PlaceGold,
         ];
         this.pendingSoundWarmupCount = sounds.length;
         for (let i = 0; i < sounds.length; i++) {
@@ -164,10 +168,10 @@ export class GuideManager extends Component {
             const task = this.warmupTasks[this.warmupTaskIndex];
             const node = PrefabsManager.instance.GetPrefabsIns(task.prefabType, task.prefabIndex);
             this.warmupRoot.addChild(node);
-            this.prewarmNode(node);
+            this.prewarmNode(node, task);
             const item = task.component ? node.getComponent(task.component) : node;
             if (task.bullet3D && item) {
-                this.prewarmBulletBatch(item);
+                this.prewarmBulletBatch(item as BulletBattle3D);
             }
             node.active = false;
             PoolManager.instance.setPool(task.poolKey, item);
@@ -179,10 +183,27 @@ export class GuideManager extends Component {
         }
     }
 
-    private prewarmNode(node: Node): void {
+    private prewarmNode(node: Node, task: WarmupTask): void {
+        const wasRootActive = this.warmupRoot?.active ?? false;
+        if (this.warmupRoot && !wasRootActive) {
+            this.warmupRoot.active = true;
+        }
+        node.active = true;
+
         const fbxManagers = node.getComponentsInChildren(FbxManager);
         for (let i = 0; i < fbxManagers.length; i++) {
             fbxManagers[i].prewarmAnimations();
+        }
+
+        if (task.prefabType === PrefabsEnum.effect) {
+            this.prewarmEffect(node);
+        } else if (task.prefabType === PrefabsEnum.hero) {
+            this.prewarmRole(node);
+        }
+
+        node.active = false;
+        if (this.warmupRoot && !wasRootActive) {
+            this.warmupRoot.active = false;
         }
     }
 
@@ -197,7 +218,40 @@ export class GuideManager extends Component {
 
     private isWarmupComplete(): boolean {
         const prefabWarmupComplete = this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
-        return prefabWarmupComplete && this.pendingSoundWarmupCount <= 0;
+        return prefabWarmupComplete && this.pendingSoundWarmupCount <= 0 && this.pendingRuntimeWarmupCount <= 0;
+    }
+
+    private prewarmEffect(node: Node): void {
+        const effect = node.getComponent(EffectTimePartRemove);
+        if (!effect) {
+            return;
+        }
+        this.pendingRuntimeWarmupCount++;
+        node.active = true;
+        this.scheduleOnce(() => {
+            node.active = false;
+            PoolManager.instance.setPool(PoolEnum.effect + effect.index, node);
+            this.pendingRuntimeWarmupCount--;
+        }, 0);
+    }
+
+    private prewarmRole(node: Node): void {
+        const role = node.getComponent(Role);
+        if (!role) {
+            return;
+        }
+
+        if (role.effect) {
+            role.effect.play();
+            role.effect.stop();
+        }
+
+        if (role.meshCreateDataList?.length > 0) {
+            FlashRedManager.instance.prewarm(role.node, role.meshCreateDataList);
+        }
+        if (role.meshRedDataList?.length > 0) {
+            FlashRedManager.instance.prewarm(role.node, role.meshRedDataList);
+        }
     }
 
     private findNodeByName(root: Node, name: string): Node | null {

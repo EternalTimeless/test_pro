@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 149487155.5377,
+      "mTimestamp": 150948059.9828,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -18394,7 +18394,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/FlashRedManager.ts": {
       "mTimestamp": {
-        "mtime": 1782195583568.851,
+        "mtime": 1782442472532.2856,
         "uuid": "7eeb70e3-f1ea-4d16-b4ec-793f0341aa41"
       },
       "chunkId": "9ec8816866d723aea0e61547ea23bf04cc3c7c78",
@@ -21554,7 +21554,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Guide/GuideManager.ts": {
       "mTimestamp": {
-        "mtime": 1782209055317.5723,
+        "mtime": 1782442790454.587,
         "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
       },
       "chunkId": "ddf9ec67bc21176ab14fd7bef2d6099af7cab4e3",
@@ -21819,6 +21819,34 @@
               "column": 50
             }
           }
+        },
+        {
+          "value": "../Battle/Base/FlashRedManager",
+          "resolved": "__unresolved_18",
+          "loc": {
+            "start": {
+              "line": 19,
+              "column": 32
+            },
+            "end": {
+              "line": 19,
+              "column": 64
+            }
+          }
+        },
+        {
+          "value": "../Effect/EffectTimePartRemove",
+          "resolved": "__unresolved_19",
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 37
+            },
+            "end": {
+              "line": 20,
+              "column": 69
+            }
+          }
         }
       ],
       "type": "esm",
@@ -21967,6 +21995,20 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Base/AudioManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/FlashRedManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectTimePartRemove.ts"
           },
           "messages": []
         }

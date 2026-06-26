@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16", "__unresolved_17"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16", "__unresolved_17", "__unresolved_18", "__unresolved_19"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, BulletEnum, EffectEnum, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, PrefabsManager, Role, JumpManager, EffectManager, BezierCurve, JumpCurve3D, FbxManager, BulletBattle3D, BulletBatchRenderer, LayerManager, AudioManager, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, GuideManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, BulletEnum, EffectEnum, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, PrefabsManager, Role, JumpManager, EffectManager, BezierCurve, JumpCurve3D, FbxManager, BulletBattle3D, BulletBatchRenderer, LayerManager, AudioManager, FlashRedManager, EffectTimePartRemove, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, GuideManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -101,6 +101,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("AudioManager", "../../Base/AudioManager", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfFlashRedManager(extras) {
+    _reporterNs.report("FlashRedManager", "../Battle/Base/FlashRedManager", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfEffectTimePartRemove(extras) {
+    _reporterNs.report("EffectTimePartRemove", "../Effect/EffectTimePartRemove", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -154,6 +162,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       LayerManager = _unresolved_17.default;
     }, function (_unresolved_18) {
       AudioManager = _unresolved_18.default;
+    }, function (_unresolved_19) {
+      FlashRedManager = _unresolved_19.FlashRedManager;
+    }, function (_unresolved_20) {
+      EffectTimePartRemove = _unresolved_20.EffectTimePartRemove;
     }],
     execute: function () {
       _crd = true;
@@ -190,6 +202,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.warmupPerFrame = 4;
           this.warmupRoot = null;
           this.pendingSoundWarmupCount = 0;
+          this.pendingRuntimeWarmupCount = 0;
         }
 
         start() {
@@ -472,7 +485,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), SoundEnum) : SoundEnum).Sound_FireGun, (_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
             error: Error()
-          }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel];
+          }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel, (_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            error: Error()
+          }), SoundEnum) : SoundEnum).Sound_PlaceGold];
           this.pendingSoundWarmupCount = sounds.length;
 
           for (var i = 0; i < sounds.length; i++) {
@@ -497,7 +512,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns(task.prefabType, task.prefabIndex);
             this.warmupRoot.addChild(node);
-            this.prewarmNode(node);
+            this.prewarmNode(node, task);
             var item = task.component ? node.getComponent(task.component) : node;
 
             if (task.bullet3D && item) {
@@ -517,13 +532,38 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        prewarmNode(node) {
+        prewarmNode(node, task) {
+          var _this$warmupRoot$acti, _this$warmupRoot;
+
+          var wasRootActive = (_this$warmupRoot$acti = (_this$warmupRoot = this.warmupRoot) == null ? void 0 : _this$warmupRoot.active) != null ? _this$warmupRoot$acti : false;
+
+          if (this.warmupRoot && !wasRootActive) {
+            this.warmupRoot.active = true;
+          }
+
+          node.active = true;
           var fbxManagers = node.getComponentsInChildren(_crd && FbxManager === void 0 ? (_reportPossibleCrUseOfFbxManager({
             error: Error()
           }), FbxManager) : FbxManager);
 
           for (var i = 0; i < fbxManagers.length; i++) {
             fbxManagers[i].prewarmAnimations();
+          }
+
+          if (task.prefabType === (_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+            error: Error()
+          }), PrefabsEnum) : PrefabsEnum).effect) {
+            this.prewarmEffect(node);
+          } else if (task.prefabType === (_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
+            error: Error()
+          }), PrefabsEnum) : PrefabsEnum).hero) {
+            this.prewarmRole(node);
+          }
+
+          node.active = false;
+
+          if (this.warmupRoot && !wasRootActive) {
+            this.warmupRoot.active = false;
           }
         }
 
@@ -550,7 +590,58 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         isWarmupComplete() {
           var prefabWarmupComplete = this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
-          return prefabWarmupComplete && this.pendingSoundWarmupCount <= 0;
+          return prefabWarmupComplete && this.pendingSoundWarmupCount <= 0 && this.pendingRuntimeWarmupCount <= 0;
+        }
+
+        prewarmEffect(node) {
+          var effect = node.getComponent(_crd && EffectTimePartRemove === void 0 ? (_reportPossibleCrUseOfEffectTimePartRemove({
+            error: Error()
+          }), EffectTimePartRemove) : EffectTimePartRemove);
+
+          if (!effect) {
+            return;
+          }
+
+          this.pendingRuntimeWarmupCount++;
+          node.active = true;
+          this.scheduleOnce(() => {
+            node.active = false;
+            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+              error: Error()
+            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+              error: Error()
+            }), PoolEnum) : PoolEnum).effect + effect.index, node);
+            this.pendingRuntimeWarmupCount--;
+          }, 0);
+        }
+
+        prewarmRole(node) {
+          var _role$meshCreateDataL, _role$meshRedDataList;
+
+          var role = node.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role);
+
+          if (!role) {
+            return;
+          }
+
+          if (role.effect) {
+            role.effect.play();
+            role.effect.stop();
+          }
+
+          if (((_role$meshCreateDataL = role.meshCreateDataList) == null ? void 0 : _role$meshCreateDataL.length) > 0) {
+            (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
+              error: Error()
+            }), FlashRedManager) : FlashRedManager).instance.prewarm(role.node, role.meshCreateDataList);
+          }
+
+          if (((_role$meshRedDataList = role.meshRedDataList) == null ? void 0 : _role$meshRedDataList.length) > 0) {
+            (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
+              error: Error()
+            }), FlashRedManager) : FlashRedManager).instance.prewarm(role.node, role.meshRedDataList);
+          }
         }
 
         findNodeByName(root, name) {
