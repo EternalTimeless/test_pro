@@ -56,8 +56,8 @@
         "a": 255
       },
       "burstProgress": 0,
-      "burstWidth": 0.03,
-      "burstOffset": 0.055
+      "burstWidth": 0.003,
+      "burstOffset": 0.0015
     }
   ]
 }

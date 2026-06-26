@@ -620,12 +620,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 progress: 0
               };
               const delay = i * PropArms.oilBurstDestroyDelayStep;
-              this.applyOilBurstProgress(oilBurstRecords, 0);
+              this.applyOilBurstProgress(oilBurstRecords, 0.95);
               tween(burstState).delay(delay).to(PropArms.oilBurstDestroyDuration, {
                 progress: 1
               }, {
                 onUpdate: target => {
-                  this.applyOilBurstProgress(oilBurstRecords, target.progress);
+                  this.applyOilBurstProgress(oilBurstRecords, 0.95 + target.progress * 0.05);
                 }
               }).start();
             }
@@ -987,12 +987,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             const burstState = {
               progress: 0
             };
-            this.applyOilBurstProgress(oilBurstRecords, 0);
+            this.applyOilBurstProgress(oilBurstRecords, 0.95);
             tween(burstState).to(0.18 * this.animScale, {
               progress: 1
             }, {
               onUpdate: target => {
-                this.applyOilBurstProgress(oilBurstRecords, target.progress);
+                this.applyOilBurstProgress(oilBurstRecords, 0.95 + target.progress * 0.05);
               }
             }).start();
           }
@@ -1835,34 +1835,44 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          const worldPos = node.worldPosition;
+          const burstCenter = this.getOilBurstShardWorldCenter(node);
           const baseSize = this.getOilBurstShardBaseSize(node);
 
           for (let i = 0; i < PropArms.oilBurstShardCount; i++) {
-            const angle = (-170 + i * 68 + (i % 2 === 0 ? -8 : 10)) * Math.PI / 180;
-            const startRadius = baseSize * (0.14 + i % 3 * 0.035);
+            const dir = this.getOilBurstShardDirection(i, burstCenter);
+            const startRadius = baseSize * (0.04 + i % 3 * 0.02);
             const shardNode = new Node(`OilBurstShard_${groupIndex}_${i}`);
             parent.addChild(shardNode);
             shardNode.layer = node.layer;
-            shardNode.setWorldPosition(worldPos.x + Math.cos(angle) * startRadius, worldPos.y + baseSize * (-0.16 + i % 4 * 0.12), worldPos.z + Math.sin(angle) * startRadius * 0.7);
-            shardNode.eulerAngles = v3(-26 + i * 17, 22 + i * 61, -34 + i * 29);
-            const startScale = 0.86 + i % 3 * 0.04;
+            shardNode.setWorldPosition(burstCenter.x + dir.x * startRadius, burstCenter.y + dir.y * startRadius, burstCenter.z + dir.z * startRadius);
+            const yaw = Math.atan2(dir.x, dir.z) * 180 / Math.PI;
+            shardNode.eulerAngles = v3(-18 + dir.y * 55 + i * 11, yaw + i * 13, -42 + i * 37);
+            const startScale = 0.88 + i % 3 * 0.04;
             shardNode.setScale(startScale, startScale, startScale);
             const renderer = shardNode.addComponent(MeshRenderer);
             renderer.mesh = this.createOilBurstShardMesh(baseSize, i);
             const material = this.createOilBurstShardMaterial(sourceMaterial);
             renderer.setSharedMaterial(material, 0);
-            const spread = baseSize * (1.55 + i % 3 * 0.16);
-            const startPos = shardNode.position;
-            const targetPos = v3(startPos.x + Math.cos(angle) * spread, startPos.y + baseSize * (0.42 + i % 4 * 0.12), startPos.z + Math.sin(angle) * spread * 0.78 + (i % 2 === 0 ? -1 : 1) * baseSize * 0.16);
-            const targetEuler = v3(shardNode.eulerAngles.x + 250 + i * 31, shardNode.eulerAngles.y + (i % 2 === 0 ? 1 : -1) * (320 + i * 28), shardNode.eulerAngles.z + 185 + i * 37);
-            const targetScale = v3(1, 1, 1);
-            tween(shardNode).delay(groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.01).to(PropArms.oilBurstShardDuration, {
-              position: targetPos,
-              eulerAngles: targetEuler,
-              scale: targetScale
+            const spread = baseSize * (3.15 + i % 4 * 0.38);
+            const spinSign = i % 2 === 0 ? 1 : -1;
+            const startPos = shardNode.position.clone();
+            const startEuler = shardNode.eulerAngles.clone();
+            const flightState = {
+              progress: 0
+            };
+            tween(flightState).delay(groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.01).to(PropArms.oilBurstShardDuration, {
+              progress: 1
             }, {
-              easing: 'quadOut'
+              easing: 'quartOut',
+              onUpdate: state => {
+                const t = state.progress;
+                const distance = spread * (1 - Math.pow(1 - t, 1.7));
+                const swirl = baseSize * 0.14 * Math.sin(t * Math.PI);
+                shardNode.setPosition(startPos.x + dir.x * distance + spinSign * swirl * Math.abs(dir.z), startPos.y + dir.y * distance, startPos.z + dir.z * distance + spinSign * swirl * Math.abs(dir.x));
+                shardNode.eulerAngles = v3(startEuler.x + spinSign * (300 * t + i * 12), startEuler.y + 360 * t + i * 16, startEuler.z + spinSign * (260 * t + i * 10));
+                const scale = 1.06 - t * 0.14;
+                shardNode.setScale(scale, scale, scale);
+              }
             }).call(() => {
               var _renderer$mesh;
 
@@ -1874,6 +1884,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getOilBurstSourceMaterial(records) {
+          let fallback = null;
+
           for (let r = 0; r < records.length; r++) {
             const record = records[r];
 
@@ -1881,17 +1893,26 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               const material = record.originalMaterials[i];
 
               if (material) {
-                return material;
+                const color = this.getMaterialProperty(material, "mainColor");
+
+                if (!color || color.r >= 210 && color.g >= 210 && color.b >= 210) {
+                  return material;
+                }
+
+                if (!fallback) {
+                  fallback = material;
+                }
               }
             }
           }
 
-          return null;
+          return fallback;
         }
 
         getOilBurstSourceMaterialFromNode(node) {
           const renderers = [];
           this.collectMeshRenderers(node, renderers);
+          let fallback = null;
 
           for (let r = 0; r < renderers.length; r++) {
             const materials = renderers[r].sharedMaterials;
@@ -1900,33 +1921,37 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               const material = materials[i];
 
               if (material) {
-                return material;
+                const color = this.getMaterialProperty(material, "mainColor");
+
+                if (!color || color.r >= 210 && color.g >= 210 && color.b >= 210) {
+                  return material;
+                }
+
+                if (!fallback) {
+                  fallback = material;
+                }
               }
             }
           }
 
-          return null;
+          return fallback;
         }
 
         createOilBurstShardMaterial(sourceMaterial) {
-          var _this$getMaterialProp;
-
           const material = new Material();
+          material.copy(sourceMaterial);
           const texture = this.getMaterialProperty(sourceMaterial, "mainTexture");
-          material.initialize({
-            effectName: "builtin-unlit",
-            technique: 3,
-            defines: {
-              USE_TEXTURE: !!texture
-            }
-          });
 
           if (texture) {
             material.setProperty("mainTexture", texture);
           }
 
-          const color = (_this$getMaterialProp = this.getMaterialProperty(sourceMaterial, "mainColor")) != null ? _this$getMaterialProp : new Color(255, 255, 255, 255);
-          material.setProperty("mainColor", color);
+          const color = this.getMaterialProperty(sourceMaterial, "mainColor");
+
+          if (color) {
+            material.setProperty("mainColor", color);
+          }
+
           return material;
         }
 
@@ -1948,26 +1973,123 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return 0.55;
         }
 
+        getOilBurstShardWorldCenter(node) {
+          const renderers = [];
+          this.collectMeshRenderers(node, renderers);
+
+          for (let i = 0; i < renderers.length; i++) {
+            var _renderers$i2;
+
+            const worldBounds = (_renderers$i2 = renderers[i]) == null || (_renderers$i2 = _renderers$i2.model) == null ? void 0 : _renderers$i2.worldBounds;
+            const center = worldBounds == null ? void 0 : worldBounds.center;
+
+            if (center) {
+              return v3(center.x, center.y, center.z);
+            }
+          }
+
+          return node.worldPosition.clone();
+        }
+
+        getOilBurstShardDirection(index, burstCenter) {
+          var _instance;
+
+          const dirs = [[-0.82, 0.42, -0.38], [0.78, 0.34, -0.52], [-0.48, 0.72, 0.5], [0.42, 0.58, 0.7], [-0.72, -0.18, 0.64], [0.68, -0.22, 0.62], [-0.22, 0.88, -0.42], [0.28, -0.36, -0.88]];
+          const dir = dirs[index % dirs.length];
+          let x = dir[0];
+          let y = dir[1];
+          let z = dir[2];
+          const cameraPos = (_instance = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+            error: Error()
+          }), CameraMove) : CameraMove).instance) == null || (_instance = _instance.node) == null ? void 0 : _instance.worldPosition;
+
+          if (cameraPos && burstCenter) {
+            const toCameraX = cameraPos.x - burstCenter.x;
+            const toCameraY = cameraPos.y - burstCenter.y;
+            const toCameraZ = cameraPos.z - burstCenter.z;
+            const toCameraLen = Math.max(0.0001, Math.sqrt(toCameraX * toCameraX + toCameraY * toCameraY + toCameraZ * toCameraZ));
+            x = x * 0.82 + toCameraX / toCameraLen * 0.18;
+            y = y * 0.88 + toCameraY / toCameraLen * 0.12;
+            z = z * 0.82 + toCameraZ / toCameraLen * 0.18;
+          }
+
+          const len = Math.max(0.0001, Math.sqrt(x * x + y * y + z * z));
+          return v3(x / len, y / len, z / len);
+        }
+
         createOilBurstShardMesh(size, index) {
-          const width = size * (0.58 + index % 3 * 0.08);
-          const height = size * (0.38 + (index + 1) % 3 * 0.06);
-          const depth = size * (0.18 + index % 2 * 0.04);
-          const hw = width * 0.5;
-          const hh = height * 0.5;
-          const hd = depth * 0.5;
-          const skewX = size * (0.06 + index % 4 * 0.018);
-          const skewY = size * (0.035 + index % 3 * 0.014);
-          const front = [[-hw - skewX * 0.2, -hh * 0.62, hd], [hw * 0.9, -hh, hd + skewX * 0.12], [-hw * 0.72, hh, hd - skewX * 0.08], [hw, hh * 0.46, hd]];
-          const back = [[front[0][0] + skewX, front[0][1] + skewY, -hd], [front[1][0] + skewX * 0.35, front[1][1] - skewY * 0.35, -hd], [front[2][0] - skewX * 0.25, front[2][1] + skewY * 0.3, -hd], [front[3][0] + skewX * 0.55, front[3][1] - skewY, -hd]];
+          const shapePresets = [{
+            outerRadius: 1.38,
+            shellThickness: 0.1,
+            halfHeight: 0.62,
+            angleSpan: 24,
+            segmentCount: 2,
+            tilt: -0.08,
+            uvBand: 0.08,
+            uvWidth: 0.12
+          }, {
+            outerRadius: 1.52,
+            shellThickness: 0.14,
+            halfHeight: 0.34,
+            angleSpan: 34,
+            segmentCount: 3,
+            tilt: 0.05,
+            uvBand: 0.22,
+            uvWidth: 0.12
+          }, {
+            outerRadius: 1.44,
+            shellThickness: 0.09,
+            halfHeight: 0.48,
+            angleSpan: 28,
+            segmentCount: 2,
+            tilt: 0.16,
+            uvBand: 0.42,
+            uvWidth: 0.12
+          }, {
+            outerRadius: 1.3,
+            shellThickness: 0.16,
+            halfHeight: 0.42,
+            angleSpan: 32,
+            segmentCount: 2,
+            tilt: -0.18,
+            uvBand: 0.58,
+            uvWidth: 0.12
+          }];
+          const preset = shapePresets[index % shapePresets.length];
+          const outerRadius = size * preset.outerRadius;
+          const shellThickness = size * preset.shellThickness;
+          const innerRadius = Math.max(outerRadius - shellThickness, outerRadius * 0.58);
+          const halfHeight = size * preset.halfHeight;
+          const segmentCount = preset.segmentCount;
+          const angleSpan = preset.angleSpan * Math.PI / 180;
+          const startAngle = -angleSpan * 0.5;
+          const outerBottom = [];
+          const outerTop = [];
+          const innerBottom = [];
+          const innerTop = [];
+
+          for (let i = 0; i <= segmentCount; i++) {
+            const ratio = i / segmentCount;
+            const angle = startAngle + angleSpan * ratio;
+            const cosA = Math.cos(angle);
+            const sinA = Math.sin(angle);
+            const tiltOffset = preset.tilt * size * (ratio - 0.5);
+            const topOffset = tiltOffset * 0.6;
+            outerBottom.push([cosA * outerRadius, -halfHeight + tiltOffset, sinA * outerRadius]);
+            outerTop.push([cosA * outerRadius, halfHeight + topOffset, sinA * outerRadius]);
+            innerBottom.push([cosA * innerRadius, -halfHeight + tiltOffset * 0.8, sinA * innerRadius]);
+            innerTop.push([cosA * innerRadius, halfHeight + topOffset * 0.8, sinA * innerRadius]);
+          }
+
           const positions = [];
           const uvs = [];
           const normals = [];
+          const tangents = [];
           const indices = [];
-          const u0 = index % 2 === 0 ? 0.08 : 0.44;
-          const v0 = index < 3 ? 0.18 : 0.5;
-          const u1 = Math.min(0.96, u0 + 0.36);
+          const u0 = preset.uvBand;
+          const v0 = index % 2 === 0 ? 0.16 : 0.5;
+          const u1 = Math.min(0.96, u0 + preset.uvWidth);
           const v1 = Math.min(0.9, v0 + 0.26);
-          const mainUvs = [u0, v1, u1, v1, u0 + 0.06, v0, u1, v0 + 0.04];
           const sideUvs = [u0 + 0.04, v1, u1 - 0.04, v1, u0 + 0.04, v0, u1 - 0.04, v0];
 
           const pushFace = (a, b, c, d, faceUvs) => {
@@ -1988,19 +2110,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             ny /= len;
             nz /= len;
             normals.push(nx, ny, nz, nx, ny, nz, nx, ny, nz, nx, ny, nz);
+            tangents.push(1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1);
             indices.push(start, start + 1, start + 2, start + 2, start + 1, start + 3);
+            indices.push(start + 2, start + 1, start, start + 3, start + 1, start + 2);
           };
 
-          pushFace(front[0], front[1], front[2], front[3], mainUvs);
-          pushFace(back[1], back[0], back[3], back[2], mainUvs);
-          pushFace(back[0], back[1], front[0], front[1], sideUvs);
-          pushFace(front[2], front[3], back[2], back[3], sideUvs);
-          pushFace(front[0], front[2], back[0], back[2], sideUvs);
-          pushFace(back[1], back[3], front[1], front[3], sideUvs);
-          const bound = size * 1.2;
+          for (let i = 0; i < segmentCount; i++) {
+            const uStart = u0 + (u1 - u0) * (i / segmentCount);
+            const uEnd = u0 + (u1 - u0) * ((i + 1) / segmentCount);
+            const mainUvs = [uStart, v1, uEnd, v1, uStart, v0, uEnd, v0];
+            pushFace(outerBottom[i], outerBottom[i + 1], outerTop[i], outerTop[i + 1], mainUvs);
+            pushFace(innerBottom[i + 1], innerBottom[i], innerTop[i + 1], innerTop[i], mainUvs);
+            pushFace(outerTop[i], outerTop[i + 1], innerTop[i], innerTop[i + 1], sideUvs);
+            pushFace(innerBottom[i], innerBottom[i + 1], outerBottom[i], outerBottom[i + 1], sideUvs);
+          }
+
+          pushFace(outerBottom[0], innerBottom[0], outerTop[0], innerTop[0], sideUvs);
+          pushFace(innerBottom[segmentCount], outerBottom[segmentCount], innerTop[segmentCount], outerTop[segmentCount], sideUvs);
+          const bound = outerRadius + shellThickness;
           return utils.createMesh({
             positions,
             normals,
+            tangents,
             uvs,
             indices,
             minPos: {
@@ -2051,8 +2182,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               burst.copy(burstTemplate);
               this.copyOilBurstBaseProperties(original, burst);
               burst.setProperty("burstProgress", 0);
-              burst.setProperty("burstWidth", 0.03);
-              burst.setProperty("burstOffset", 0.055);
+              burst.setProperty("burstWidth", 0.003);
+              burst.setProperty("burstOffset", 0.0015);
               burstMaterials[i] = burst;
               renderer.setSharedMaterial(burst, i);
               hasBurstMaterial = true;
@@ -2429,19 +2560,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         resetStagePosition() {
-          var _instance$getFrontMon, _instance;
+          var _instance$getFrontMon, _instance2;
 
           const worldPos = this.node.worldPosition;
-          const frontZ = (_instance$getFrontMon = (_instance = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+          const frontZ = (_instance$getFrontMon = (_instance2 = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
             error: Error()
-          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
+          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance2.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
 
           this._stageSpawnPos.set(worldPos.x, worldPos.y, frontZ - this.waveFrontGap);
 
           this.node.setWorldPosition(this._stageSpawnPos);
         }
 
-      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.12, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilBurstDestroyScale = 1.28, _class6.oilBurstShardCount = 6, _class6.oilBurstShardDuration = 0.28, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
+      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.12, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilBurstDestroyScale = 1.01, _class6.oilBurstShardCount = 4, _class6.oilBurstShardDuration = 0.46, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
         configurable: true,
         enumerable: true,
         writable: true,

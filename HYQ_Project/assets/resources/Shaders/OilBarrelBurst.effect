@@ -21,8 +21,8 @@ CCEffect %{
         crackColor:     { value: [0.86, 0.92, 1, 1], editor: { type: color } }
         edgeColor:      { value: [1, 1, 1, 1], editor: { type: color } }
         burstProgress:  { value: 0.0, editor: { slide: true, range: [0, 1, 0.001] } }
-        burstWidth:     { value: 0.03, editor: { slide: true, range: [0.005, 0.2, 0.001] } }
-        burstOffset:    { value: 0.055, editor: { slide: true, range: [0, 0.6, 0.001] } }
+        burstWidth:     { value: 0.003, editor: { slide: true, range: [0.001, 0.2, 0.001] } }
+        burstOffset:    { value: 0.0015, editor: { slide: true, range: [0, 0.6, 0.0005] } }
 }%
 
 CCProgram oil-burst-vs %{
@@ -54,11 +54,11 @@ CCProgram oil-burst-vs %{
 
   void main () {
     float p = clamp(burstProgress, 0.0, 1.0);
-    vec2 shardCell = floor(a_texCoord * 2.0 + a_position.xz * 0.025);
+    vec2 shardCell = floor(a_texCoord * 1.05 + a_position.xz * 0.008);
     float shard = hash21(shardCell);
     float angle = hash21(shardCell + vec2(17.0, 29.0)) * 6.2831853;
-    vec3 scatterDir = normalize(vec3(cos(angle) * 0.7, 0.24 + shard * 0.2, sin(angle) * 0.5) + a_normal * 0.16);
-    float scatter = burstOffset * p * p * (0.55 + shard * 0.28);
+    vec3 scatterDir = normalize(vec3(cos(angle) * 0.16, 0.06 + shard * 0.05, sin(angle) * 0.14) + a_normal * 0.05);
+    float scatter = burstOffset * p * p * (0.22 + shard * 0.1);
     vec3 localPos = a_position + scatterDir * scatter;
 
     vec4 world = cc_matWorld * vec4(localPos, 1.0);
@@ -107,7 +107,7 @@ CCProgram oil-burst-fs %{
     float p = clamp(burstProgress, 0.0, 1.0);
     vec4 baseColor = texture(mainTexture, v_uv) * mainColor;
 
-    vec2 crackUv = v_uv * 2.0 + v_worldPos.xz * 0.02;
+    vec2 crackUv = v_uv * 1.05 + v_worldPos.xz * 0.006;
     float crack = shardCrack(crackUv);
     float crackWidth = burstWidth * smoothstep(0.03, 0.62, p);
 
@@ -115,13 +115,13 @@ CCProgram oil-burst-fs %{
       discard;
     }
 
-    float edge = 1.0 - smoothstep(crackWidth, crackWidth + 0.018, crack);
-    edge *= smoothstep(0.04, 0.75, p);
+    float edge = 1.0 - smoothstep(crackWidth, crackWidth + 0.012, crack);
+    edge *= smoothstep(0.7, 0.96, p);
     vec3 shardColor = baseColor.rgb;
     shardColor = mix(shardColor, crackColor.rgb, edge * 0.18);
     shardColor += edgeColor.rgb * edge * 0.1;
 
-    float alpha = baseColor.a * (1.0 - smoothstep(0.72, 1.0, p) * 0.55);
+    float alpha = baseColor.a * (1.0 - smoothstep(0.78, 1.0, p) * 0.92);
     return CCFragOutput(vec4(shardColor, alpha));
   }
 }%
