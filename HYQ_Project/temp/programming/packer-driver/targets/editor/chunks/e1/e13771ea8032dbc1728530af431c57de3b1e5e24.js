@@ -118,8 +118,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           /** 预分配临时Vec3，避免每帧new */
           this._tempVec3 = new Vec3();
           this._tempBulletPrevPos = new Vec3();
-          this._checkedTargets = [];
-          this._checkedWalls = [];
+          this._targetCheckedStamp = new WeakMap();
+          this._wallCheckedStamp = new WeakMap();
 
           /** 子弹桶 - 每帧重建 */
           this._bulletBuckets = [];
@@ -130,7 +130,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this._wallObstacles = [];
           this._wallScene = null;
           this._nextWallRefreshFrame = 0;
-          this._wallRefreshIntervalFrames = 30;
+          this._targetCheckId = 1;
+          this._wallCheckId = 1;
           this._directorCallback = void 0;
           this._frameCount = 0;
 
@@ -432,7 +433,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 if (sweptMaxX < group.xMin || sweptMinX > group.xMax) continue;
                 const tBuckets = this._targetBuckets[typeStr];
                 if (!tBuckets) continue;
-                this._checkedTargets.length = 0;
+                const targetCheckId = this._targetCheckId++;
 
                 for (let checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && bullet.node.active; checkBucketIdx++) {
                   const bucketTargets = tBuckets[checkBucketIdx];
@@ -440,9 +441,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
                   for (let mj = 0; mj < bucketTargets.length && bullet.node.active; mj++) {
                     const target = bucketTargets[mj];
-                    if (target.isDie || this._checkedTargets.indexOf(target) !== -1) continue;
+                    if (target.isDie || this._targetCheckedStamp.get(target) === targetCheckId) continue;
 
-                    this._checkedTargets.push(target); // AABB碰撞判定
+                    this._targetCheckedStamp.set(target, targetCheckId); // AABB碰撞判定
 
 
                     const targetPos = target.getCollisionWorldPosition(this._tempVec3);
@@ -483,7 +484,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           if (this._wallScene !== scene || this._frameCount >= this._nextWallRefreshFrame) {
             this.rebuildWallObstacles(scene);
             this._wallScene = scene;
-            this._nextWallRefreshFrame = this._frameCount + (this._wallObstacles.length > 0 ? this._wallRefreshIntervalFrames : 1);
+            this._nextWallRefreshFrame = this._wallObstacles.length > 0 ? Number.MAX_SAFE_INTEGER : this._frameCount + 1;
           }
         }
 
@@ -603,7 +604,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             return false;
           }
 
-          this._checkedWalls.length = 0;
+          const wallCheckId = this._wallCheckId++;
 
           for (let bucketIdx = minBucketIdx; bucketIdx <= maxBucketIdx; bucketIdx++) {
             const walls = this._wallBuckets[bucketIdx];
@@ -615,11 +616,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             for (let i = 0; i < walls.length; i++) {
               const wall = walls[i];
 
-              if (!wall || this._checkedWalls.indexOf(wall) !== -1) {
+              if (!wall || this._wallCheckedStamp.get(wall) === wallCheckId) {
                 continue;
               }
 
-              this._checkedWalls.push(wall);
+              this._wallCheckedStamp.set(wall, wallCheckId);
 
               if (!wall.node.activeInHierarchy) {
                 continue;

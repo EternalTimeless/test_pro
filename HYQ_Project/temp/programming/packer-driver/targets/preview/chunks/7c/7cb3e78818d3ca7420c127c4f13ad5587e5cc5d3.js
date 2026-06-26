@@ -834,6 +834,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          if (this.lalianLimitRanges.length <= 0 || this._monsterList.length <= 0) {
+            return;
+          }
+
           for (var i = 0; i < this._monsterList.length; i++) {
             var monster = this._monsterList[i];
 
@@ -841,7 +845,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               continue;
             }
 
-            this.syncMonsterMoveTargetX(monster);
             this.limitMonsterToMiddleLane(monster);
           }
         }

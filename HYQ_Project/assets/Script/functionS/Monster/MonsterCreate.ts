@@ -545,12 +545,14 @@ export class MonsterCreate extends UnityUpComponent {
         if (UnityUpComponent.isStop) {
             return;
         }
+        if (this.lalianLimitRanges.length <= 0 || this._monsterList.length <= 0) {
+            return;
+        }
         for (let i = 0; i < this._monsterList.length; i++) {
             const monster = this._monsterList[i];
             if (!monster || monster.isDie || !monster.node || !monster.node.active) {
                 continue;
             }
-            this.syncMonsterMoveTargetX(monster);
             this.limitMonsterToMiddleLane(monster);
         }
     }

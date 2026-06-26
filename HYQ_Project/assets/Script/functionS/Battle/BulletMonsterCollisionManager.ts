@@ -69,8 +69,8 @@ export default class BulletMonsterCollisionManager extends Singleton {
     /** 预分配临时Vec3，避免每帧new */
     private _tempVec3: Vec3 = new Vec3();
     private _tempBulletPrevPos: Vec3 = new Vec3();
-    private _checkedTargets: BattleTarget3D[] = [];
-    private _checkedWalls: WallObstacleRange[] = [];
+    private _targetCheckedStamp: WeakMap<BattleTarget3D, number> = new WeakMap();
+    private _wallCheckedStamp: WeakMap<WallObstacleRange, number> = new WeakMap();
 
     /** 子弹桶 - 每帧重建 */
     private _bulletBuckets: BulletBattle3D[][] = [];
@@ -81,7 +81,8 @@ export default class BulletMonsterCollisionManager extends Singleton {
     private _wallObstacles: WallObstacleRange[] = [];
     private _wallScene: Node | null = null;
     private _nextWallRefreshFrame: number = 0;
-    private readonly _wallRefreshIntervalFrames: number = 30;
+    private _targetCheckId: number = 1;
+    private _wallCheckId: number = 1;
 
     private _directorCallback: (dt: number) => void;
 
@@ -333,15 +334,15 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
                     const tBuckets = this._targetBuckets[typeStr];
                     if (!tBuckets) continue;
-                    this._checkedTargets.length = 0;
+                    const targetCheckId = this._targetCheckId++;
                     for (let checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && bullet.node.active; checkBucketIdx++) {
                         const bucketTargets = tBuckets[checkBucketIdx];
                         if (!bucketTargets) continue;
 
                         for (let mj = 0; mj < bucketTargets.length && bullet.node.active; mj++) {
                             const target = bucketTargets[mj];
-                            if (target.isDie || this._checkedTargets.indexOf(target) !== -1) continue;
-                            this._checkedTargets.push(target);
+                            if (target.isDie || this._targetCheckedStamp.get(target) === targetCheckId) continue;
+                            this._targetCheckedStamp.set(target, targetCheckId);
 
                             // AABB碰撞判定
                             const targetPos = target.getCollisionWorldPosition(this._tempVec3);
@@ -380,7 +381,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
         if (this._wallScene !== scene || this._frameCount >= this._nextWallRefreshFrame) {
             this.rebuildWallObstacles(scene);
             this._wallScene = scene;
-            this._nextWallRefreshFrame = this._frameCount + (this._wallObstacles.length > 0 ? this._wallRefreshIntervalFrames : 1);
+            this._nextWallRefreshFrame = this._wallObstacles.length > 0 ? Number.MAX_SAFE_INTEGER : this._frameCount + 1;
         }
     }
 
@@ -491,7 +492,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
         if (this._wallObstacles.length <= 0) {
             return false;
         }
-        this._checkedWalls.length = 0;
+        const wallCheckId = this._wallCheckId++;
         for (let bucketIdx = minBucketIdx; bucketIdx <= maxBucketIdx; bucketIdx++) {
             const walls = this._wallBuckets[bucketIdx];
             if (!walls || walls.length <= 0) {
@@ -499,10 +500,10 @@ export default class BulletMonsterCollisionManager extends Singleton {
             }
             for (let i = 0; i < walls.length; i++) {
                 const wall = walls[i];
-                if (!wall || this._checkedWalls.indexOf(wall) !== -1) {
+                if (!wall || this._wallCheckedStamp.get(wall) === wallCheckId) {
                     continue;
                 }
-                this._checkedWalls.push(wall);
+                this._wallCheckedStamp.set(wall, wallCheckId);
                 if (!wall.node.activeInHierarchy) {
                     continue;
                 }
