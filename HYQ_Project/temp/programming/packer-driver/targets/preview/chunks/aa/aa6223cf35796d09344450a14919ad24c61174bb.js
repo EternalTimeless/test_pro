@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, utils, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -101,6 +101,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       resources = _cc.resources;
       Tween = _cc.Tween;
       tween = _cc.tween;
+      utils = _cc.utils;
       v3 = _cc.v3;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -140,7 +141,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "4c579+CEFxDCr/XI7aDRdSS", "PropArms", undefined);
 
-      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Color', 'Component', 'instantiate', 'Label', 'Material', 'MeshRenderer', 'Node', 'resources', 'Tween', 'tween', 'v3', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Color', 'Component', 'instantiate', 'Label', 'Material', 'MeshRenderer', 'Node', 'resources', 'Tween', 'tween', 'utils', 'v3', 'Vec3']);
 
       ({
         ccclass,
@@ -627,6 +628,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             var oilBurstRecords = _this.createOilBurstMaterialRecords(tire);
 
+            _this.spawnOilBurstShards(tire, oilBurstRecords, i);
+
             if (oilBurstRecords.length > 0) {
               var burstState = {
                 progress: 0
@@ -645,7 +648,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             tween(tire).delay(i * PropArms.oilBurstDestroyDelayStep).to(PropArms.oilBurstDestroyDuration, {
-              scale: _this.getBottomBaseRootScale(tire, 1.4)
+              scale: _this.getBottomBaseRootScale(tire, PropArms.oilBurstDestroyScale)
             }, {
               easing: 'sineOut'
             }).call(() => {
@@ -995,6 +998,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), FlashRedManager) : FlashRedManager).instance.stopFlashRed(this.node); // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
 
           var oilBurstRecords = this.createOilBurstMaterialRecords(tire);
+          this.spawnOilBurstShards(tire, oilBurstRecords, 0);
 
           if (oilBurstRecords.length <= 0 && oldMR && oldMR.isValid) {
             (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
@@ -1010,14 +1014,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), TweenTool) : TweenTool).scaleShake(this.hpLabel.node); // 被销毁轮胎：果冻缩放→缩小消失
 
-          var s2 = this.getBottomBaseRootScale(tire, 1.4);
+          var s2 = this.getBottomBaseRootScale(tire, PropArms.oilBurstDestroyScale);
 
           if (oilBurstRecords.length > 0) {
             var burstState = {
               progress: 0
             };
             this.applyOilBurstProgress(oilBurstRecords, 0);
-            tween(burstState).to(0.22 * this.animScale, {
+            tween(burstState).to(0.18 * this.animScale, {
               progress: 1
             }, {
               onUpdate: target => {
@@ -1026,7 +1030,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }).start();
           }
 
-          tween(tire).to(0.22 * this.animScale, {
+          tween(tire).to(0.18 * this.animScale, {
             scale: s2
           }, {
             easing: 'sineOut'
@@ -1866,6 +1870,213 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           material.setProperty("worldHalfY", 0.5);
         }
 
+        spawnOilBurstShards(node, records, groupIndex) {
+          var _this$getOilBurstSour,
+              _this3 = this;
+
+          if (!node) {
+            return;
+          }
+
+          var sourceMaterial = (_this$getOilBurstSour = this.getOilBurstSourceMaterial(records)) != null ? _this$getOilBurstSour : this.getOilBurstSourceMaterialFromNode(node);
+
+          if (!sourceMaterial) {
+            return;
+          }
+
+          var parent = node.parent;
+
+          if (!parent) {
+            return;
+          }
+
+          var worldPos = node.worldPosition;
+          var baseSize = this.getOilBurstShardBaseSize(node);
+
+          var _loop3 = function _loop3() {
+            var angle = (-170 + i * 68 + (i % 2 === 0 ? -8 : 10)) * Math.PI / 180;
+            var startRadius = baseSize * (0.14 + i % 3 * 0.035);
+            var shardNode = new Node("OilBurstShard_" + groupIndex + "_" + i);
+            parent.addChild(shardNode);
+            shardNode.layer = node.layer;
+            shardNode.setWorldPosition(worldPos.x + Math.cos(angle) * startRadius, worldPos.y + baseSize * (-0.16 + i % 4 * 0.12), worldPos.z + Math.sin(angle) * startRadius * 0.7);
+            shardNode.eulerAngles = v3(-26 + i * 17, 22 + i * 61, -34 + i * 29);
+            var startScale = 0.86 + i % 3 * 0.04;
+            shardNode.setScale(startScale, startScale, startScale);
+            var renderer = shardNode.addComponent(MeshRenderer);
+            renderer.mesh = _this3.createOilBurstShardMesh(baseSize, i);
+
+            var material = _this3.createOilBurstShardMaterial(sourceMaterial);
+
+            renderer.setSharedMaterial(material, 0);
+            var spread = baseSize * (1.55 + i % 3 * 0.16);
+            var startPos = shardNode.position;
+            var targetPos = v3(startPos.x + Math.cos(angle) * spread, startPos.y + baseSize * (0.42 + i % 4 * 0.12), startPos.z + Math.sin(angle) * spread * 0.78 + (i % 2 === 0 ? -1 : 1) * baseSize * 0.16);
+            var targetEuler = v3(shardNode.eulerAngles.x + 250 + i * 31, shardNode.eulerAngles.y + (i % 2 === 0 ? 1 : -1) * (320 + i * 28), shardNode.eulerAngles.z + 185 + i * 37);
+            var targetScale = v3(1, 1, 1);
+            tween(shardNode).delay(groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.01).to(PropArms.oilBurstShardDuration, {
+              position: targetPos,
+              eulerAngles: targetEuler,
+              scale: targetScale
+            }, {
+              easing: 'quadOut'
+            }).call(() => {
+              var _renderer$mesh;
+
+              (_renderer$mesh = renderer.mesh) == null || _renderer$mesh.destroy();
+              material.destroy();
+              shardNode.destroy();
+            }).start();
+          };
+
+          for (var i = 0; i < PropArms.oilBurstShardCount; i++) {
+            _loop3();
+          }
+        }
+
+        getOilBurstSourceMaterial(records) {
+          for (var r = 0; r < records.length; r++) {
+            var record = records[r];
+
+            for (var i = 0; i < record.originalMaterials.length; i++) {
+              var material = record.originalMaterials[i];
+
+              if (material) {
+                return material;
+              }
+            }
+          }
+
+          return null;
+        }
+
+        getOilBurstSourceMaterialFromNode(node) {
+          var renderers = [];
+          this.collectMeshRenderers(node, renderers);
+
+          for (var r = 0; r < renderers.length; r++) {
+            var materials = renderers[r].sharedMaterials;
+
+            for (var i = 0; i < materials.length; i++) {
+              var material = materials[i];
+
+              if (material) {
+                return material;
+              }
+            }
+          }
+
+          return null;
+        }
+
+        createOilBurstShardMaterial(sourceMaterial) {
+          var _this$getMaterialProp;
+
+          var material = new Material();
+          var texture = this.getMaterialProperty(sourceMaterial, "mainTexture");
+          material.initialize({
+            effectName: "builtin-unlit",
+            technique: 3,
+            defines: {
+              USE_TEXTURE: !!texture
+            }
+          });
+
+          if (texture) {
+            material.setProperty("mainTexture", texture);
+          }
+
+          var color = (_this$getMaterialProp = this.getMaterialProperty(sourceMaterial, "mainColor")) != null ? _this$getMaterialProp : new Color(255, 255, 255, 255);
+          material.setProperty("mainColor", color);
+          return material;
+        }
+
+        getOilBurstShardBaseSize(node) {
+          var renderers = [];
+          this.collectMeshRenderers(node, renderers);
+
+          for (var i = 0; i < renderers.length; i++) {
+            var _renderers$i;
+
+            var worldBounds = (_renderers$i = renderers[i]) == null || (_renderers$i = _renderers$i.model) == null ? void 0 : _renderers$i.worldBounds;
+            var halfExtents = worldBounds == null ? void 0 : worldBounds.halfExtents;
+
+            if (halfExtents) {
+              return Math.max(0.34, Math.min(1.45, Math.max(halfExtents.x, halfExtents.y, halfExtents.z) * 0.95));
+            }
+          }
+
+          return 0.55;
+        }
+
+        createOilBurstShardMesh(size, index) {
+          var width = size * (0.58 + index % 3 * 0.08);
+          var height = size * (0.38 + (index + 1) % 3 * 0.06);
+          var depth = size * (0.18 + index % 2 * 0.04);
+          var hw = width * 0.5;
+          var hh = height * 0.5;
+          var hd = depth * 0.5;
+          var skewX = size * (0.06 + index % 4 * 0.018);
+          var skewY = size * (0.035 + index % 3 * 0.014);
+          var front = [[-hw - skewX * 0.2, -hh * 0.62, hd], [hw * 0.9, -hh, hd + skewX * 0.12], [-hw * 0.72, hh, hd - skewX * 0.08], [hw, hh * 0.46, hd]];
+          var back = [[front[0][0] + skewX, front[0][1] + skewY, -hd], [front[1][0] + skewX * 0.35, front[1][1] - skewY * 0.35, -hd], [front[2][0] - skewX * 0.25, front[2][1] + skewY * 0.3, -hd], [front[3][0] + skewX * 0.55, front[3][1] - skewY, -hd]];
+          var positions = [];
+          var uvs = [];
+          var normals = [];
+          var indices = [];
+          var u0 = index % 2 === 0 ? 0.08 : 0.44;
+          var v0 = index < 3 ? 0.18 : 0.5;
+          var u1 = Math.min(0.96, u0 + 0.36);
+          var v1 = Math.min(0.9, v0 + 0.26);
+          var mainUvs = [u0, v1, u1, v1, u0 + 0.06, v0, u1, v0 + 0.04];
+          var sideUvs = [u0 + 0.04, v1, u1 - 0.04, v1, u0 + 0.04, v0, u1 - 0.04, v0];
+
+          var pushFace = (a, b, c, d, faceUvs) => {
+            var start = positions.length / 3;
+            positions.push(...a, ...b, ...c, ...d);
+            uvs.push(...faceUvs);
+            var abx = b[0] - a[0];
+            var aby = b[1] - a[1];
+            var abz = b[2] - a[2];
+            var acx = c[0] - a[0];
+            var acy = c[1] - a[1];
+            var acz = c[2] - a[2];
+            var nx = aby * acz - abz * acy;
+            var ny = abz * acx - abx * acz;
+            var nz = abx * acy - aby * acx;
+            var len = Math.max(0.0001, Math.sqrt(nx * nx + ny * ny + nz * nz));
+            nx /= len;
+            ny /= len;
+            nz /= len;
+            normals.push(nx, ny, nz, nx, ny, nz, nx, ny, nz, nx, ny, nz);
+            indices.push(start, start + 1, start + 2, start + 2, start + 1, start + 3);
+          };
+
+          pushFace(front[0], front[1], front[2], front[3], mainUvs);
+          pushFace(back[1], back[0], back[3], back[2], mainUvs);
+          pushFace(back[0], back[1], front[0], front[1], sideUvs);
+          pushFace(front[2], front[3], back[2], back[3], sideUvs);
+          pushFace(front[0], front[2], back[0], back[2], sideUvs);
+          pushFace(back[1], back[3], front[1], front[3], sideUvs);
+          var bound = size * 1.2;
+          return utils.createMesh({
+            positions,
+            normals,
+            uvs,
+            indices,
+            minPos: {
+              x: -bound,
+              y: -bound,
+              z: -bound
+            },
+            maxPos: {
+              x: bound,
+              y: bound,
+              z: bound
+            }
+          });
+        }
+
         createOilBurstMaterialRecords(node) {
           var burstTemplate = PropArms.oilBurstMaterial;
 
@@ -1901,8 +2112,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               burst.copy(burstTemplate);
               this.copyOilBurstBaseProperties(original, burst);
               burst.setProperty("burstProgress", 0);
-              burst.setProperty("burstWidth", 0.04);
-              burst.setProperty("burstOffset", 0.22);
+              burst.setProperty("burstWidth", 0.03);
+              burst.setProperty("burstOffset", 0.055);
               burstMaterials[i] = burst;
               renderer.setSharedMaterial(burst, i);
               hasBurstMaterial = true;
@@ -2291,7 +2502,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.node.setWorldPosition(this._stageSpawnPos);
         }
 
-      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.15, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
+      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.12, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilBurstDestroyScale = 1.28, _class6.oilBurstShardCount = 6, _class6.oilBurstShardDuration = 0.28, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
         configurable: true,
         enumerable: true,
         writable: true,

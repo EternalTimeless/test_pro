@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, CCFloat, CCInteger, Color, Component, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, v3, Vec3 } from 'cc';
+import { _decorator, CCBoolean, CCFloat, CCInteger, Color, Component, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, utils, v3, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import PoolManager from '../../Base/PoolManager';
@@ -76,8 +76,11 @@ export class PropArms extends BattleTarget3D {
     private static oilBurstMaterialLoading: boolean = false;
     private static oilHitFlashMaterial: Material | null = null;
     private static oilHitFlashMaterialLoading: boolean = false;
-    private static readonly oilBurstDestroyDuration: number = 0.15;
+    private static readonly oilBurstDestroyDuration: number = 0.12;
     private static readonly oilBurstDestroyDelayStep: number = 0.05;
+    private static readonly oilBurstDestroyScale: number = 1.28;
+    private static readonly oilBurstShardCount: number = 6;
+    private static readonly oilBurstShardDuration: number = 0.28;
     private static readonly oilHitFlashDuration: number = 0.16;
     private static readonly oilHitFlashColor: Color = new Color(255, 188, 36, 255);
     private static readonly spriteWeaponVisualName: string = "jiatelin";
@@ -305,6 +308,7 @@ export class PropArms extends BattleTarget3D {
             const tire = this.tireList[i];
             Tween.stopAllByTarget(tire);
             const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
+            this.spawnOilBurstShards(tire, oilBurstRecords, i);
             if (oilBurstRecords.length > 0) {
                 const burstState = { progress: 0 };
                 const delay = i * PropArms.oilBurstDestroyDelayStep;
@@ -320,7 +324,7 @@ export class PropArms extends BattleTarget3D {
             }
             tween(tire)
                 .delay(i * PropArms.oilBurstDestroyDelayStep)
-                .to(PropArms.oilBurstDestroyDuration, { scale: this.getBottomBaseRootScale(tire, 1.4) }, { easing: 'sineOut' })
+                .to(PropArms.oilBurstDestroyDuration, { scale: this.getBottomBaseRootScale(tire, PropArms.oilBurstDestroyScale) }, { easing: 'sineOut' })
                 .call(() => {
                     this.restoreOilBurstMaterials(oilBurstRecords);
                     this.releaseBottomBase(tire);
@@ -578,6 +582,7 @@ export class PropArms extends BattleTarget3D {
 
         // 用旧引用闪红被销毁的轮胎（传独立数组，避免延迟应用时被新引用覆盖）
         const oilBurstRecords = this.createOilBurstMaterialRecords(tire);
+        this.spawnOilBurstShards(tire, oilBurstRecords, 0);
 
         if (oilBurstRecords.length <= 0 && oldMR && oldMR.isValid) {
             FlashRedManager.instance.flashRed(this.node, [{
@@ -589,12 +594,12 @@ export class PropArms extends BattleTarget3D {
         TweenTool.scaleShake(this.hpLabel.node);
 
         // 被销毁轮胎：果冻缩放→缩小消失
-        const s2 = this.getBottomBaseRootScale(tire, 1.4);
+        const s2 = this.getBottomBaseRootScale(tire, PropArms.oilBurstDestroyScale);
         if (oilBurstRecords.length > 0) {
             const burstState = { progress: 0 };
             this.applyOilBurstProgress(oilBurstRecords, 0);
             tween(burstState)
-                .to(0.22 * this.animScale, { progress: 1 }, {
+                .to(0.18 * this.animScale, { progress: 1 }, {
                     onUpdate: (target: { progress: number }) => {
                         this.applyOilBurstProgress(oilBurstRecords, target.progress);
                     }
@@ -602,7 +607,7 @@ export class PropArms extends BattleTarget3D {
                 .start();
         }
         tween(tire)
-            .to(0.22 * this.animScale, { scale: s2 }, { easing: 'sineOut' })
+            .to(0.18 * this.animScale, { scale: s2 }, { easing: 'sineOut' })
             .call(() => {
                 this.restoreOilBurstMaterials(oilBurstRecords);
                 this.releaseBottomBase(tire);
@@ -1302,6 +1307,215 @@ export class PropArms extends BattleTarget3D {
         material.setProperty("worldHalfY", 0.5);
     }
 
+    private spawnOilBurstShards(node: Node, records: OilBurstMaterialRecord[], groupIndex: number): void {
+        if (!node) {
+            return;
+        }
+
+        const sourceMaterial = this.getOilBurstSourceMaterial(records) ?? this.getOilBurstSourceMaterialFromNode(node);
+        if (!sourceMaterial) {
+            return;
+        }
+
+        const parent = node.parent;
+        if (!parent) {
+            return;
+        }
+
+        const worldPos = node.worldPosition;
+        const baseSize = this.getOilBurstShardBaseSize(node);
+        for (let i = 0; i < PropArms.oilBurstShardCount; i++) {
+            const angle = (-170 + i * 68 + (i % 2 === 0 ? -8 : 10)) * Math.PI / 180;
+            const startRadius = baseSize * (0.14 + (i % 3) * 0.035);
+            const shardNode = new Node(`OilBurstShard_${groupIndex}_${i}`);
+            parent.addChild(shardNode);
+            shardNode.layer = node.layer;
+            shardNode.setWorldPosition(
+                worldPos.x + Math.cos(angle) * startRadius,
+                worldPos.y + baseSize * (-0.16 + (i % 4) * 0.12),
+                worldPos.z + Math.sin(angle) * startRadius * 0.7
+            );
+            shardNode.eulerAngles = v3(
+                -26 + i * 17,
+                22 + i * 61,
+                -34 + i * 29
+            );
+            const startScale = 0.86 + (i % 3) * 0.04;
+            shardNode.setScale(startScale, startScale, startScale);
+
+            const renderer = shardNode.addComponent(MeshRenderer);
+            renderer.mesh = this.createOilBurstShardMesh(baseSize, i);
+            const material = this.createOilBurstShardMaterial(sourceMaterial);
+            renderer.setSharedMaterial(material, 0);
+
+            const spread = baseSize * (1.55 + (i % 3) * 0.16);
+            const startPos = shardNode.position;
+            const targetPos = v3(
+                startPos.x + Math.cos(angle) * spread,
+                startPos.y + baseSize * (0.42 + (i % 4) * 0.12),
+                startPos.z + Math.sin(angle) * spread * 0.78 + (i % 2 === 0 ? -1 : 1) * baseSize * 0.16
+            );
+            const targetEuler = v3(
+                shardNode.eulerAngles.x + 250 + i * 31,
+                shardNode.eulerAngles.y + (i % 2 === 0 ? 1 : -1) * (320 + i * 28),
+                shardNode.eulerAngles.z + 185 + i * 37
+            );
+            const targetScale = v3(1, 1, 1);
+            tween(shardNode)
+                .delay(groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.01)
+                .to(PropArms.oilBurstShardDuration, {
+                    position: targetPos,
+                    eulerAngles: targetEuler,
+                    scale: targetScale
+                }, { easing: 'quadOut' })
+                .call(() => {
+                    renderer.mesh?.destroy();
+                    material.destroy();
+                    shardNode.destroy();
+                })
+                .start();
+        }
+    }
+
+    private getOilBurstSourceMaterial(records: OilBurstMaterialRecord[]): Material | null {
+        for (let r = 0; r < records.length; r++) {
+            const record = records[r];
+            for (let i = 0; i < record.originalMaterials.length; i++) {
+                const material = record.originalMaterials[i];
+                if (material) {
+                    return material;
+                }
+            }
+        }
+        return null;
+    }
+
+    private getOilBurstSourceMaterialFromNode(node: Node): Material | null {
+        const renderers: MeshRenderer[] = [];
+        this.collectMeshRenderers(node, renderers);
+        for (let r = 0; r < renderers.length; r++) {
+            const materials = renderers[r].sharedMaterials;
+            for (let i = 0; i < materials.length; i++) {
+                const material = materials[i];
+                if (material) {
+                    return material;
+                }
+            }
+        }
+        return null;
+    }
+
+    private createOilBurstShardMaterial(sourceMaterial: Material): Material {
+        const material = new Material();
+        const texture = this.getMaterialProperty(sourceMaterial, "mainTexture");
+        material.initialize({
+            effectName: "builtin-unlit",
+            technique: 3,
+            defines: { USE_TEXTURE: !!texture },
+        });
+        if (texture) {
+            material.setProperty("mainTexture", texture);
+        }
+        const color = this.getMaterialProperty(sourceMaterial, "mainColor") ?? new Color(255, 255, 255, 255);
+        material.setProperty("mainColor", color);
+        return material;
+    }
+
+    private getOilBurstShardBaseSize(node: Node): number {
+        const renderers: MeshRenderer[] = [];
+        this.collectMeshRenderers(node, renderers);
+        for (let i = 0; i < renderers.length; i++) {
+            const worldBounds = (renderers[i] as any)?.model?.worldBounds;
+            const halfExtents = worldBounds?.halfExtents;
+            if (halfExtents) {
+                return Math.max(0.34, Math.min(1.45, Math.max(halfExtents.x, halfExtents.y, halfExtents.z) * 0.95));
+            }
+        }
+        return 0.55;
+    }
+
+    private createOilBurstShardMesh(size: number, index: number) {
+        const width = size * (0.58 + (index % 3) * 0.08);
+        const height = size * (0.38 + ((index + 1) % 3) * 0.06);
+        const depth = size * (0.18 + (index % 2) * 0.04);
+        const hw = width * 0.5;
+        const hh = height * 0.5;
+        const hd = depth * 0.5;
+        const skewX = size * (0.06 + (index % 4) * 0.018);
+        const skewY = size * (0.035 + (index % 3) * 0.014);
+
+        const front = [
+            [-hw - skewX * 0.2, -hh * 0.62, hd],
+            [hw * 0.9, -hh, hd + skewX * 0.12],
+            [-hw * 0.72, hh, hd - skewX * 0.08],
+            [hw, hh * 0.46, hd],
+        ];
+        const back = [
+            [front[0][0] + skewX, front[0][1] + skewY, -hd],
+            [front[1][0] + skewX * 0.35, front[1][1] - skewY * 0.35, -hd],
+            [front[2][0] - skewX * 0.25, front[2][1] + skewY * 0.3, -hd],
+            [front[3][0] + skewX * 0.55, front[3][1] - skewY, -hd],
+        ];
+        const positions: number[] = [];
+        const uvs: number[] = [];
+        const normals: number[] = [];
+        const indices: number[] = [];
+        const u0 = index % 2 === 0 ? 0.08 : 0.44;
+        const v0 = index < 3 ? 0.18 : 0.5;
+        const u1 = Math.min(0.96, u0 + 0.36);
+        const v1 = Math.min(0.9, v0 + 0.26);
+        const mainUvs = [
+            u0, v1,
+            u1, v1,
+            u0 + 0.06, v0,
+            u1, v0 + 0.04,
+        ];
+        const sideUvs = [
+            u0 + 0.04, v1,
+            u1 - 0.04, v1,
+            u0 + 0.04, v0,
+            u1 - 0.04, v0,
+        ];
+        const pushFace = (a: number[], b: number[], c: number[], d: number[], faceUvs: number[]) => {
+            const start = positions.length / 3;
+            positions.push(...a, ...b, ...c, ...d);
+            uvs.push(...faceUvs);
+
+            const abx = b[0] - a[0];
+            const aby = b[1] - a[1];
+            const abz = b[2] - a[2];
+            const acx = c[0] - a[0];
+            const acy = c[1] - a[1];
+            const acz = c[2] - a[2];
+            let nx = aby * acz - abz * acy;
+            let ny = abz * acx - abx * acz;
+            let nz = abx * acy - aby * acx;
+            const len = Math.max(0.0001, Math.sqrt(nx * nx + ny * ny + nz * nz));
+            nx /= len;
+            ny /= len;
+            nz /= len;
+            normals.push(nx, ny, nz, nx, ny, nz, nx, ny, nz, nx, ny, nz);
+            indices.push(start, start + 1, start + 2, start + 2, start + 1, start + 3);
+        };
+
+        pushFace(front[0], front[1], front[2], front[3], mainUvs);
+        pushFace(back[1], back[0], back[3], back[2], mainUvs);
+        pushFace(back[0], back[1], front[0], front[1], sideUvs);
+        pushFace(front[2], front[3], back[2], back[3], sideUvs);
+        pushFace(front[0], front[2], back[0], back[2], sideUvs);
+        pushFace(back[1], back[3], front[1], front[3], sideUvs);
+
+        const bound = size * 1.2;
+        return utils.createMesh({
+            positions,
+            normals,
+            uvs,
+            indices,
+            minPos: { x: -bound, y: -bound, z: -bound },
+            maxPos: { x: bound, y: bound, z: bound },
+        });
+    }
+
     private createOilBurstMaterialRecords(node: Node): OilBurstMaterialRecord[] {
         const burstTemplate = PropArms.oilBurstMaterial;
         if (!burstTemplate) {
@@ -1334,8 +1548,8 @@ export class PropArms extends BattleTarget3D {
                 burst.copy(burstTemplate);
                 this.copyOilBurstBaseProperties(original, burst);
                 burst.setProperty("burstProgress", 0);
-                burst.setProperty("burstWidth", 0.04);
-                burst.setProperty("burstOffset", 0.22);
+                burst.setProperty("burstWidth", 0.03);
+                burst.setProperty("burstOffset", 0.055);
                 burstMaterials[i] = burst;
                 renderer.setSharedMaterial(burst, i);
                 hasBurstMaterial = true;
