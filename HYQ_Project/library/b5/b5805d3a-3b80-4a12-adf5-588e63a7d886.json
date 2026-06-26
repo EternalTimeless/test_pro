@@ -13958,9 +13958,9 @@
       "__id__": 869
     },
     "brotherExcludeZ": 6,
-    "disX": 4,
+    "disX": 3,
     "monsterSpeed": 4,
-    "middleLaneHalfX": 2.5,
+    "middleLaneHalfX": 4,
     "rowCount": 23,
     "layerGapZ": 6,
     "spawnRandomX": 0.28,
