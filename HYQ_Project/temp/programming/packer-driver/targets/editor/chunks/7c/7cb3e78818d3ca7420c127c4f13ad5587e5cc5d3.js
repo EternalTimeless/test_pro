@@ -771,7 +771,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           if (!this._isRestoringWaveRolesAfterRebirth) {
-            this.updateWaveRolePush();
+            this.updateWaveRoleForwardMove(deltaTime);
           }
 
           for (let i = this._monsterList.length - 1; i >= 0; i--) {
@@ -889,8 +889,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        updateWaveRolePush() {
+        updateWaveRoleForwardMove(deltaTime) {
           if (this._waveRoleNodes.length <= 0 || this._waveStageStartZList.length <= 0) {
+            return;
+          }
+
+          const moveDistance = Math.max(0, this.waveRoleForwardSpeed) * deltaTime;
+
+          if (moveDistance <= 0) {
             return;
           }
 
@@ -901,21 +907,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               continue;
             }
 
-            const frontMonster = this.getFrontMonsterByWave(i);
-
-            if (!frontMonster) {
-              continue;
-            }
-
-            const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
-            const monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
-            const monsterFrontZ = frontMonster.node.worldPositionZ - monsterHalfZ;
-            const targetZ = monsterFrontZ - this.waveRolePushGapInternal - roleHalfZ;
-
-            if (Math.abs(targetZ - role.node.worldPositionZ) > 0.05) {
-              const pos = role.node.worldPosition;
-              role.node.setWorldPosition(pos.x, pos.y, targetZ);
-            }
+            const pos = role.node.worldPosition;
+            role.node.setWorldPosition(pos.x, pos.y, pos.z - moveDistance);
           }
         }
 
