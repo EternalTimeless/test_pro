@@ -70,6 +70,9 @@ export class Player extends UnityUpComponent {
     private pendingBulletBatchWarmType: BulletEnum = null;
     private readonly bulletPrewarmPerFrame: number = 2;
     private roleLayoutDirty: boolean = false;
+    private roleAnimationDirty: boolean = true;
+    private currentRoleAnimation: PlayerFBXAnimName = null;
+    private currentRoleAnimationRoleCount: number = -1;
 
     public isLock: boolean = false;
 
@@ -422,6 +425,7 @@ export class Player extends UnityUpComponent {
             oldRole.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + oldRole.type, oldRole);
             this.roleLayoutDirty = true;
+            this.roleAnimationDirty = true;
             this.pendingRoleSwitchIndex++;
             count--;
         }
@@ -440,27 +444,22 @@ export class Player extends UnityUpComponent {
 
     private roleMove() {
         const isMove = this.move.isMove;
+        const animName = this.isLock
+            ? (isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack)
+            : (isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle);
 
-        if (this.isLock) {
-            for (let i = 0; i < this.roleList.length; i++) {
-                const role = this.roleList[i];
-                if (isMove) {
-                    role.fbxManager.setAnimation(PlayerFBXAnimName.run_attack, true);
-                } else {
-                    role.fbxManager.setAnimation(PlayerFBXAnimName.attack, true);
-                }
-            }
-
-        } else {
-            for (let i = 0; i < this.roleList.length; i++) {
-                const role = this.roleList[i];
-                if (isMove) {
-                    role.fbxManager.setAnimation(PlayerFBXAnimName.run, true);
-                } else {
-                    role.fbxManager.setAnimation(PlayerFBXAnimName.idle, true);
-                }
-            }
+        if (!this.roleAnimationDirty
+            && this.currentRoleAnimation === animName
+            && this.currentRoleAnimationRoleCount === this.roleList.length) {
+            return;
         }
+
+        for (let i = 0; i < this.roleList.length; i++) {
+            this.roleList[i].fbxManager.setAnimation(animName, true);
+        }
+        this.currentRoleAnimation = animName;
+        this.currentRoleAnimationRoleCount = this.roleList.length;
+        this.roleAnimationDirty = false;
     }
 
 
@@ -496,11 +495,9 @@ export class Player extends UnityUpComponent {
                 x = rx;
             }
         }
-        // 在控制台输出边界值
-        console.log("Boundary:" + x);
         // 设置移动对象的x轴移动值为8减去最大x坐标值
         this.move.MoveX = 7.8 - x;
-
+        this.move.MoveX = 7.8 - x;
     }
 
     private roleR: number = 0.8;

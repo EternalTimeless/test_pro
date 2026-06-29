@@ -225,6 +225,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.pendingBulletBatchWarmType = null;
           this.bulletPrewarmPerFrame = 2;
           this.roleLayoutDirty = false;
+          this.roleAnimationDirty = true;
+          this.currentRoleAnimation = null;
+          this.currentRoleAnimationRoleCount = -1;
           this.isLock = false;
 
           // public MoveX: number = 8;
@@ -744,6 +747,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PoolEnum) : PoolEnum).role + oldRole.type, oldRole);
             this.roleLayoutDirty = true;
+            this.roleAnimationDirty = true;
             this.pendingRoleSwitchIndex++;
             count--;
           }
@@ -762,28 +766,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         roleMove() {
           var isMove = this.move.isMove;
+          var animName = this.isLock ? isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack : isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle;
 
-          if (this.isLock) {
-            for (var i = 0; i < this.roleList.length; i++) {
-              var role = this.roleList[i];
-
-              if (isMove) {
-                role.fbxManager.setAnimation(PlayerFBXAnimName.run_attack, true);
-              } else {
-                role.fbxManager.setAnimation(PlayerFBXAnimName.attack, true);
-              }
-            }
-          } else {
-            for (var _i = 0; _i < this.roleList.length; _i++) {
-              var _role = this.roleList[_i];
-
-              if (isMove) {
-                _role.fbxManager.setAnimation(PlayerFBXAnimName.run, true);
-              } else {
-                _role.fbxManager.setAnimation(PlayerFBXAnimName.idle, true);
-              }
-            }
+          if (!this.roleAnimationDirty && this.currentRoleAnimation === animName && this.currentRoleAnimationRoleCount === this.roleList.length) {
+            return;
           }
+
+          for (var i = 0; i < this.roleList.length; i++) {
+            this.roleList[i].fbxManager.setAnimation(animName, true);
+          }
+
+          this.currentRoleAnimation = animName;
+          this.currentRoleAnimationRoleCount = this.roleList.length;
+          this.roleAnimationDirty = false;
         }
 
         addRole(role) {
@@ -820,11 +815,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             if (rx > x) {
               x = rx;
             }
-          } // 在控制台输出边界值
+          } // 设置移动对象的x轴移动值为8减去最大x坐标值
 
 
-          console.log("Boundary:" + x); // 设置移动对象的x轴移动值为8减去最大x坐标值
-
+          this.move.MoveX = 7.8 - x;
           this.move.MoveX = 7.8 - x;
         }
 
@@ -913,14 +907,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           var _loop = function _loop() {
-            var role = _this.roleList[_i2];
+            var role = _this.roleList[_i];
 
-            if (!_i2) {
+            if (!_i) {
               tween(role.node).to(0.2, {
                 position: Vec3.ZERO
               }).start();
             } else {
-              var pos = _this.getNextPos(_i2, true);
+              var pos = _this.getNextPos(_i, true);
 
               tween(role.node).to(0.2, {
                 position: pos
@@ -932,7 +926,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
           };
 
-          for (var _i2 = 0; _i2 < this.roleList.length; _i2++) {
+          for (var _i = 0; _i < this.roleList.length; _i++) {
             _loop();
           }
 
@@ -969,12 +963,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var minIdx = -1;
             var minDist = 0;
 
-            for (var _i3 = 0; _i3 < total; _i3++) {
-              if (used[_i3]) continue;
+            for (var _i2 = 0; _i2 < total; _i2++) {
+              if (used[_i2]) continue;
 
-              if (minIdx < 0 || dists[_i3] < minDist) {
-                minIdx = _i3;
-                minDist = dists[_i3];
+              if (minIdx < 0 || dists[_i2] < minDist) {
+                minIdx = _i2;
+                minDist = dists[_i2];
               }
             }
 
@@ -983,8 +977,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           } // 从后往前删除，保证索引不错位
 
 
-          for (var _i4 = 0; _i4 < len; _i4++) {
-            var role = list[picked[_i4]];
+          for (var _i3 = 0; _i3 < len; _i3++) {
+            var role = list[picked[_i3]];
             role.hp -= 3;
             this.roleDie(role); // role.node.active = false;
             // PoolManager.instance.setPool(PoolEnum.role + this.roleType, role);
@@ -994,8 +988,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return b - a;
           });
 
-          for (var _i5 = 0; _i5 < len; _i5++) {
-            list.splice(picked[_i5], 1);
+          for (var _i4 = 0; _i4 < len; _i4++) {
+            list.splice(picked[_i4], 1);
           }
 
           this.upPos();

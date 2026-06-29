@@ -245,6 +245,9 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
     /** 每帧碰撞检测 */
     public update(dt: number): void {
+        if (this._bullets.length === 0) {
+            return;
+        }
         this.ensureWallObstacles();
         // 1. 清空桶数组（只重置length=0，不释放内存）
         for (let i = 0; i < this._bucketCount; i++) {

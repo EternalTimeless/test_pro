@@ -225,6 +225,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.pendingBulletBatchWarmType = null;
           this.bulletPrewarmPerFrame = 2;
           this.roleLayoutDirty = false;
+          this.roleAnimationDirty = true;
+          this.currentRoleAnimation = null;
+          this.currentRoleAnimationRoleCount = -1;
           this.isLock = false;
 
           // public MoveX: number = 8;
@@ -743,6 +746,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PoolEnum) : PoolEnum).role + oldRole.type, oldRole);
             this.roleLayoutDirty = true;
+            this.roleAnimationDirty = true;
             this.pendingRoleSwitchIndex++;
             count--;
           }
@@ -761,28 +765,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         roleMove() {
           const isMove = this.move.isMove;
+          const animName = this.isLock ? isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack : isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle;
 
-          if (this.isLock) {
-            for (let i = 0; i < this.roleList.length; i++) {
-              const role = this.roleList[i];
-
-              if (isMove) {
-                role.fbxManager.setAnimation(PlayerFBXAnimName.run_attack, true);
-              } else {
-                role.fbxManager.setAnimation(PlayerFBXAnimName.attack, true);
-              }
-            }
-          } else {
-            for (let i = 0; i < this.roleList.length; i++) {
-              const role = this.roleList[i];
-
-              if (isMove) {
-                role.fbxManager.setAnimation(PlayerFBXAnimName.run, true);
-              } else {
-                role.fbxManager.setAnimation(PlayerFBXAnimName.idle, true);
-              }
-            }
+          if (!this.roleAnimationDirty && this.currentRoleAnimation === animName && this.currentRoleAnimationRoleCount === this.roleList.length) {
+            return;
           }
+
+          for (let i = 0; i < this.roleList.length; i++) {
+            this.roleList[i].fbxManager.setAnimation(animName, true);
+          }
+
+          this.currentRoleAnimation = animName;
+          this.currentRoleAnimationRoleCount = this.roleList.length;
+          this.roleAnimationDirty = false;
         }
 
         addRole(role) {
@@ -819,11 +814,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             if (rx > x) {
               x = rx;
             }
-          } // 在控制台输出边界值
+          } // 设置移动对象的x轴移动值为8减去最大x坐标值
 
 
-          console.log("Boundary:" + x); // 设置移动对象的x轴移动值为8减去最大x坐标值
-
+          this.move.MoveX = 7.8 - x;
           this.move.MoveX = 7.8 - x;
         }
 

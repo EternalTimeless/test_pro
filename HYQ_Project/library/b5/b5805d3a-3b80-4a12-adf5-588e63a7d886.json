@@ -15372,8 +15372,9 @@
     ],
     "attackSpeed": 2,
     "maxRoleCount": 56,
-    "maxShootingRoleCount": 40,
+    "maxShootingRoleCount": 35,
     "maxMuzzleEffectCount": 10,
+    "enableRuntimeUpgradePrewarm": false,
     "shootList": [
       {
         "__id__": 967
@@ -20169,6 +20170,7 @@
       "__id__": 1146
     },
     "loadingDuration": 1.2,
+    "startGuideReachX": 0.35,
     "_id": "17U0bx9MpDYp+CWYblVckr"
   },
   {

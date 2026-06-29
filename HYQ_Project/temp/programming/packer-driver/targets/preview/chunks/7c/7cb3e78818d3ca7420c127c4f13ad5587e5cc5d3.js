@@ -1607,7 +1607,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               var endPos = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()
               }), PoolManager) : PoolManager).instance.V3;
-              console.log("fx2", fx);
               var px = fx * Math.random() * 20 + fx * 4;
               var skillEndX = px + fx * 8;
               endPos.x = _this2.shouldLimitMonsterXAtZ(pos.z) ? _this2.clampMonsterX(skillEndX) : skillEndX;

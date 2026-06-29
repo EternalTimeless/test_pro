@@ -1140,7 +1140,6 @@ export class MonsterCreate extends UnityUpComponent {
                 // === 命中：击飞 ===
                 const pos = monster.node.worldPosition;
                 const endPos = PoolManager.instance.V3;
-                console.log("fx2", fx);
                 let px = fx * Math.random() * 20 + fx * 4;
 
                 const skillEndX = px + fx * 8;

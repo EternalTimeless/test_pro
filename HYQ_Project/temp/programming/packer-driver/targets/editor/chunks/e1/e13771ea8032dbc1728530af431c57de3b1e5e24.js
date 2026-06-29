@@ -331,6 +331,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
 
         update(dt) {
+          if (this._bullets.length === 0) {
+            return;
+          }
+
           this.ensureWallObstacles(); // 1. 清空桶数组（只重置length=0，不释放内存）
 
           for (let i = 0; i < this._bucketCount; i++) {

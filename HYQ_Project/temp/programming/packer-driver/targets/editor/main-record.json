@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 1314850.6362,
+      "mTimestamp": 3170290.5435,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -21166,7 +21166,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletMonsterCollisionManager.ts": {
       "mTimestamp": {
-        "mtime": 1782725518188.438,
+        "mtime": 1782727243438.7693,
         "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
       },
       "chunkId": "e13771ea8032dbc1728530af431c57de3b1e5e24",
@@ -24022,7 +24022,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts": {
       "mTimestamp": {
-        "mtime": 1782724249105.365,
+        "mtime": 1782727222589.7305,
         "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
       },
       "chunkId": "7cb3e78818d3ca7420c127c4f13ad5587e5cc5d3",
@@ -25586,7 +25586,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Player.ts": {
       "mTimestamp": {
-        "mtime": 1782725468613.4285,
+        "mtime": 1782727424158.6443,
         "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
       },
       "chunkId": "120cba8f856407335ad8a04347cd4d36bf752a1e",
