@@ -272,11 +272,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
 
         MoveEvent(deltaTime) {
-          if (!MoveDrive.isMoveOk) {
+          if (!this.canMoveNow()) {
             return;
           }
 
           this.moveEvent(deltaTime);
+        }
+
+        canMoveNow() {
+          return MoveDrive.isMoveOk || MoveDrive.isGuideMoveOnly && this.isGuideMoveMode();
+        }
+
+        isGuideMoveMode() {
+          return this.moveMod == MoveModEnum.RockerMove || this.moveMod == MoveModEnum.RockerTouchMove;
         }
 
         moveEvent(deltaTime) {
@@ -511,7 +519,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           // console.log('rockerTouchMove', x);
           if ((_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
             error: Error()
-          }), UnityUpComponent) : UnityUpComponent).isStop) {
+          }), UnityUpComponent) : UnityUpComponent).isStop || !this.canMoveNow()) {
             return;
           }
 
@@ -552,6 +560,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         rockerTouchStart() {
+          if (!this.canMoveNow()) {
+            return;
+          }
+
           this.node.getPosition(this.curTempPosV3);
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
@@ -620,7 +632,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         // }
 
 
-      }, _class3.isMoveOk = false, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "directionalLock", [_dec2], {
+      }, _class3.isMoveOk = false, _class3.isGuideMoveOnly = false, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "directionalLock", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,

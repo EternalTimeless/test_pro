@@ -329,6 +329,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._waveRoleNodes = [];
           this._waveStageStartZList = [];
           this._monsterWaveIndexMap = new WeakMap();
+          this._monsterSpawnEulerMap = new Map();
           this.waveRolePushGapInternal = 0.02;
           this.waveRolePlayerHalfX = 0.35;
           this.waveRolePlayerHalfZ = 0.35;
@@ -906,6 +907,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         updateWaveRoleForwardMove(deltaTime) {
+          if (!MonsterCreate.isStartMove) {
+            return;
+          }
+
           if (this._waveRoleNodes.length <= 0 || this._waveStageStartZList.length <= 0) {
             return;
           }
@@ -1328,11 +1333,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         applySpawnVariation(monster) {
           var scale = 1 + (Math.random() - 0.5) * this.spawnScaleRandom * 2;
           monster.node.setScale(scale, scale, scale);
+          var baseEuler = this.getMonsterSpawnEuler(monster);
           var yaw = monster.monsterType === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
           }), MonsterType) : MonsterType).ZombieBrother ? 0 : (Math.random() - 0.5) * this.spawnYawRandom * 2;
-          monster.node.setRotationFromEuler(0, yaw, 0);
+          monster.node.setRotationFromEuler(baseEuler.x, baseEuler.y + yaw, baseEuler.z);
           monster.randomizeRunAnimation();
+        }
+
+        getMonsterSpawnEuler(monster) {
+          var euler = this._monsterSpawnEulerMap.get(monster.monsterType);
+
+          if (!euler) {
+            euler = monster.node.eulerAngles.clone();
+
+            this._monsterSpawnEulerMap.set(monster.monsterType, euler);
+          }
+
+          return euler;
         }
 
         getFrontMonsterWorldZ(defaultZ) {

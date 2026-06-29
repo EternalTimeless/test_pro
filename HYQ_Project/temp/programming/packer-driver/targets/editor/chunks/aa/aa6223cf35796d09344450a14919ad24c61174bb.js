@@ -1616,6 +1616,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           const curWorldZ = this.node.worldPositionZ;
 
+          if (!(_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+            error: Error()
+          }), MonsterCreate) : MonsterCreate).isStartMove) {
+            this.lastBottomBaseWorldZ = curWorldZ;
+            this.hasLastBottomBaseWorldZ = true;
+            return;
+          }
+
           if (!this.hasLastBottomBaseWorldZ) {
             this.lastBottomBaseWorldZ = curWorldZ;
             this.hasLastBottomBaseWorldZ = true;

@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16", "__unresolved_17", "__unresolved_18", "__unresolved_19"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, BulletEnum, EffectEnum, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, PrefabsManager, Role, JumpManager, EffectManager, BezierCurve, JumpCurve3D, FbxManager, BulletBattle3D, BulletBatchRenderer, LayerManager, AudioManager, FlashRedManager, EffectTimePartRemove, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _class3, _crd, ccclass, property, GuideManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Animation, CCFloat, Component, Node, Sprite, GuideLine, Player, MoveDrive, MonsterCreate, BulletEnum, EffectEnum, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, PrefabsManager, Role, JumpManager, EffectManager, BezierCurve, JumpCurve3D, FbxManager, BulletBattle3D, BulletBatchRenderer, LayerManager, AudioManager, FlashRedManager, EffectTimePartRemove, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _class3, _crd, ccclass, property, GuideManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -182,7 +182,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       _export("GuideManager", GuideManager = (_dec = ccclass('GuideManager'), _dec2 = property(Node), _dec3 = property(Animation), _dec4 = property({
         type: CCFloat,
         tooltip: '加载条播放时长'
-      }), _dec(_class = (_class2 = (_class3 = class GuideManager extends Component {
+      }), _dec5 = property(CCFloat), _dec(_class = (_class2 = (_class3 = class GuideManager extends Component {
         constructor(...args) {
           super(...args);
 
@@ -194,6 +194,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "loadingDuration", _descriptor3, this);
 
+          _initializerDefineProperty(this, "startGuideReachX", _descriptor4, this);
+
           this.loadingNode = null;
           this.loadingProgress = null;
           this.loadingTime = 0;
@@ -203,6 +205,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.warmupRoot = null;
           this.pendingSoundWarmupCount = 0;
           this.pendingRuntimeWarmupCount = 0;
+          this.waitingStartGuide = false;
+          this.startGuidePlayerX = 0;
+          this.startGuideTargetX = 0;
+          this.hasStartGuidePosition = false;
         }
 
         start() {
@@ -217,8 +223,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          if (this.waitingStartGuide) {
+            this.checkStartGuideReached();
+            return;
+          }
+
           if (!this.loadingNode || !this.loadingNode.active) {
-            this.finishGuide();
+            this.showStartGuide();
             return;
           }
 
@@ -232,27 +243,118 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           if (progress >= 1 && this.isWarmupComplete()) {
             this.loadingNode.active = false;
-            this.finishGuide();
+            this.showStartGuide();
           }
         }
 
         lockGameplay() {
           this.isLock = false;
+          this.waitingStartGuide = false;
+          this.hasStartGuidePosition = false;
+          this.setGuideVisualActive(false);
+          this.setGameplayActive(false, false);
+        }
 
+        setGameplayActive(active, guideMoveOnly = false) {
           if ((_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
             error: Error()
           }), Player) : Player).instance) {
             (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
               error: Error()
-            }), Player) : Player).instance.isLock = false;
+            }), Player) : Player).instance.isLock = active;
           }
 
           (_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
             error: Error()
-          }), MoveDrive) : MoveDrive).isMoveOk = false;
+          }), MoveDrive) : MoveDrive).isMoveOk = active;
+          (_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
+            error: Error()
+          }), MoveDrive) : MoveDrive).isGuideMoveOnly = guideMoveOnly;
           (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
             error: Error()
-          }), MonsterCreate) : MonsterCreate).isStartMove = false;
+          }), MonsterCreate) : MonsterCreate).isStartMove = active;
+        }
+
+        setGuideVisualActive(active) {
+          var _this$handAnim;
+
+          if (this.roleNode) {
+            this.roleNode.active = active;
+          }
+
+          if ((_this$handAnim = this.handAnim) != null && _this$handAnim.node) {
+            this.handAnim.node.active = active;
+
+            if (active) {
+              this.handAnim.play();
+            } else {
+              this.handAnim.stop();
+            }
+          }
+        }
+
+        showStartGuide() {
+          if (this.waitingStartGuide || this.isLock) {
+            return;
+          }
+
+          this.waitingStartGuide = true;
+          this.cacheStartGuidePosition();
+          this.setGameplayActive(false, true);
+          this.setGuideVisualActive(true);
+
+          if (this.roleNode) {
+            var _instance;
+
+            (_instance = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
+              error: Error()
+            }), GuideLine) : GuideLine).instance) == null || _instance.setLineNode(this.getGuidePlayerNode(), this.roleNode);
+          }
+        }
+
+        cacheStartGuidePosition() {
+          const playerNode = this.getGuidePlayerNode();
+
+          if (!playerNode || !this.roleNode) {
+            this.hasStartGuidePosition = false;
+            return;
+          }
+
+          this.startGuidePlayerX = playerNode.worldPosition.x;
+          this.startGuideTargetX = this.roleNode.worldPosition.x;
+          this.hasStartGuidePosition = true;
+        }
+
+        getGuidePlayerNode() {
+          var _instance$move$node, _instance2, _instance3;
+
+          return (_instance$move$node = (_instance2 = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance) == null || (_instance2 = _instance2.move) == null ? void 0 : _instance2.node) != null ? _instance$move$node : (_instance3 = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance) == null ? void 0 : _instance3.node;
+        }
+
+        checkStartGuideReached() {
+          const playerNode = this.getGuidePlayerNode();
+
+          if (!playerNode || !this.roleNode) {
+            return;
+          }
+
+          if (!this.hasStartGuidePosition) {
+            this.cacheStartGuidePosition();
+          }
+
+          const playerX = playerNode.worldPosition.x;
+          const targetX = this.roleNode.worldPosition.x;
+          const dx = Math.abs(playerX - targetX);
+          const targetOffset = this.hasStartGuidePosition ? this.startGuideTargetX - this.startGuidePlayerX : targetX - playerX;
+          const hasPassedTarget = targetOffset >= 0 ? playerX >= targetX - this.startGuideReachX : playerX <= targetX + this.startGuideReachX;
+
+          if (dx <= this.startGuideReachX || hasPassedTarget) {
+            this.finishGuide();
+          }
         }
 
         initLoadingView() {
@@ -265,7 +367,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.loadingNode = this.findNodeByName(root, "loading");
 
           if (!this.loadingNode) {
-            this.finishGuide();
+            this.showStartGuide();
             return;
           }
 
@@ -568,11 +670,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         prewarmBulletBatch(bullet) {
-          var _instance;
+          var _instance4;
 
-          const bulletLayer = (_instance = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
+          const bulletLayer = (_instance4 = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
             error: Error()
-          }), LayerManager) : LayerManager).instance) == null ? void 0 : _instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
+          }), LayerManager) : LayerManager).instance) == null ? void 0 : _instance4.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
             error: Error()
           }), LayerEnum) : LayerEnum).BulletLayer);
 
@@ -665,40 +767,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         finishGuide() {
-          var _this$handAnim, _instance2;
+          var _instance5;
 
           if (this.isLock) {
             return;
           }
 
           this.isLock = true;
-
-          if (this.roleNode) {
-            this.roleNode.active = false;
-          }
-
-          if ((_this$handAnim = this.handAnim) != null && _this$handAnim.node) {
-            this.handAnim.node.active = false;
-          }
-
-          (_instance2 = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
+          this.waitingStartGuide = false;
+          this.hasStartGuidePosition = false;
+          this.setGuideVisualActive(false);
+          (_instance5 = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
             error: Error()
-          }), GuideLine) : GuideLine).instance) == null || _instance2.setLineNode();
-
-          if ((_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
-            error: Error()
-          }), Player) : Player).instance) {
-            (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
-              error: Error()
-            }), Player) : Player).instance.isLock = true;
-          }
-
-          (_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
-            error: Error()
-          }), MoveDrive) : MoveDrive).isMoveOk = true;
-          (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
-            error: Error()
-          }), MonsterCreate) : MonsterCreate).isStartMove = true;
+          }), GuideLine) : GuideLine).instance) == null || _instance5.setLineNode();
+          this.setGameplayActive(true, false);
         }
 
       }, _class3.instance = void 0, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "roleNode", [_dec2], {
@@ -717,6 +799,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         writable: true,
         initializer: function () {
           return 1.2;
+        }
+      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "startGuideReachX", [_dec5], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.35;
         }
       })), _class2)) || _class));
 

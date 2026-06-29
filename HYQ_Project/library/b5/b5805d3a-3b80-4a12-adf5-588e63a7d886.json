@@ -13932,7 +13932,7 @@
     "__type__": "MonsterCreateInfo",
     "loopMax": 1,
     "monsterType": 1,
-    "monsterCountMax": 300,
+    "monsterCountMax": 250,
     "brotherExcludeZ": 0
   },
   {
@@ -13946,7 +13946,7 @@
     "__type__": "MonsterCreateInfo",
     "loopMax": -1,
     "monsterType": 0,
-    "monsterCountMax": 200,
+    "monsterCountMax": 300,
     "brotherExcludeZ": 0
   },
   {

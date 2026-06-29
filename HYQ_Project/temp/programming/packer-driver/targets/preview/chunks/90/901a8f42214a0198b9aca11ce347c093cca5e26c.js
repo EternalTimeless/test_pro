@@ -273,10 +273,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         MoveEvent(deltaTime) {
           if (!MoveDrive.isMoveOk) {
-            return;
+            if (!MoveDrive.isGuideMoveOnly || !this.isGuideMoveMode()) {
+              return;
+            }
           }
 
           this.moveEvent(deltaTime);
+        }
+
+        isGuideMoveMode() {
+          return this.moveMod == MoveModEnum.RockerMove || this.moveMod == MoveModEnum.RockerTouchMove;
         }
 
         moveEvent(deltaTime) {
@@ -620,7 +626,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         // }
 
 
-      }, _class3.isMoveOk = false, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "directionalLock", [_dec2], {
+      }, _class3.isMoveOk = false, _class3.isGuideMoveOnly = false, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "directionalLock", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,

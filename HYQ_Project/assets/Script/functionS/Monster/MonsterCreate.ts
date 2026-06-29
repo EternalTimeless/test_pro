@@ -593,6 +593,9 @@ export class MonsterCreate extends UnityUpComponent {
     }
 
     private updateWaveRoleForwardMove(deltaTime: number) {
+        if (!MonsterCreate.isStartMove) {
+            return;
+        }
         if (this._waveRoleNodes.length <= 0 || this._waveStageStartZList.length <= 0) {
             return;
         }

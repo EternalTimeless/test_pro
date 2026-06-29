@@ -44,6 +44,8 @@ export class GuideManager extends Component {
 
     @property({ type: CCFloat, tooltip: '加载条播放时长' })
     public loadingDuration: number = 1.2;
+    @property(CCFloat)
+    public startGuideReachX: number = 0.35;
 
     private loadingNode: Node = null;
     private loadingProgress: Sprite = null;
@@ -54,6 +56,10 @@ export class GuideManager extends Component {
     private warmupRoot: Node = null;
     private pendingSoundWarmupCount: number = 0;
     private pendingRuntimeWarmupCount: number = 0;
+    private waitingStartGuide: boolean = false;
+    private startGuidePlayerX: number = 0;
+    private startGuideTargetX: number = 0;
+    private hasStartGuidePosition: boolean = false;
 
     start() {
         GuideManager.instance = this;
@@ -67,8 +73,13 @@ export class GuideManager extends Component {
             return;
         }
 
+        if (this.waitingStartGuide) {
+            this.checkStartGuideReached();
+            return;
+        }
+
         if (!this.loadingNode || !this.loadingNode.active) {
-            this.finishGuide();
+            this.showStartGuide();
             return;
         }
 
@@ -81,17 +92,88 @@ export class GuideManager extends Component {
 
         if (progress >= 1 && this.isWarmupComplete()) {
             this.loadingNode.active = false;
-            this.finishGuide();
+            this.showStartGuide();
         }
     }
 
     private lockGameplay() {
         this.isLock = false;
+        this.waitingStartGuide = false;
+        this.hasStartGuidePosition = false;
+        this.setGuideVisualActive(false);
+        this.setGameplayActive(false, false);
+    }
+
+    private setGameplayActive(active: boolean, guideMoveOnly: boolean = false) {
         if (Player.instance) {
-            Player.instance.isLock = false;
+            Player.instance.isLock = active;
         }
-        MoveDrive.isMoveOk = false;
-        MonsterCreate.isStartMove = false;
+        MoveDrive.isMoveOk = active;
+        MoveDrive.isGuideMoveOnly = guideMoveOnly;
+        MonsterCreate.isStartMove = active;
+    }
+
+    private setGuideVisualActive(active: boolean) {
+        if (this.roleNode) {
+            this.roleNode.active = active;
+        }
+        if (this.handAnim?.node) {
+            this.handAnim.node.active = active;
+            if (active) {
+                this.handAnim.play();
+            } else {
+                this.handAnim.stop();
+            }
+        }
+    }
+
+    private showStartGuide() {
+        if (this.waitingStartGuide || this.isLock) {
+            return;
+        }
+        this.waitingStartGuide = true;
+        this.cacheStartGuidePosition();
+        this.setGameplayActive(false, true);
+        this.setGuideVisualActive(true);
+        if (this.roleNode) {
+            GuideLine.instance?.setLineNode(this.getGuidePlayerNode(), this.roleNode);
+        }
+    }
+
+    private cacheStartGuidePosition() {
+        const playerNode = this.getGuidePlayerNode();
+        if (!playerNode || !this.roleNode) {
+            this.hasStartGuidePosition = false;
+            return;
+        }
+        this.startGuidePlayerX = playerNode.worldPosition.x;
+        this.startGuideTargetX = this.roleNode.worldPosition.x;
+        this.hasStartGuidePosition = true;
+    }
+
+    private getGuidePlayerNode() {
+        return Player.instance?.move?.node ?? Player.instance?.node;
+    }
+
+    private checkStartGuideReached() {
+        const playerNode = this.getGuidePlayerNode();
+        if (!playerNode || !this.roleNode) {
+            return;
+        }
+        if (!this.hasStartGuidePosition) {
+            this.cacheStartGuidePosition();
+        }
+
+        const playerX = playerNode.worldPosition.x;
+        const targetX = this.roleNode.worldPosition.x;
+        const dx = Math.abs(playerX - targetX);
+        const targetOffset = this.hasStartGuidePosition ? this.startGuideTargetX - this.startGuidePlayerX : targetX - playerX;
+        const hasPassedTarget = targetOffset >= 0
+            ? playerX >= targetX - this.startGuideReachX
+            : playerX <= targetX + this.startGuideReachX;
+        if (dx <= this.startGuideReachX || hasPassedTarget) {
+            this.finishGuide();
+        }
     }
 
     private initLoadingView() {
@@ -102,7 +184,7 @@ export class GuideManager extends Component {
 
         this.loadingNode = this.findNodeByName(root, "loading");
         if (!this.loadingNode) {
-            this.finishGuide();
+            this.showStartGuide();
             return;
         }
 
@@ -275,18 +357,11 @@ export class GuideManager extends Component {
             return;
         }
         this.isLock = true;
-        if (this.roleNode) {
-            this.roleNode.active = false;
-        }
-        if (this.handAnim?.node) {
-            this.handAnim.node.active = false;
-        }
+        this.waitingStartGuide = false;
+        this.hasStartGuidePosition = false;
+        this.setGuideVisualActive(false);
         GuideLine.instance?.setLineNode();
-        if (Player.instance) {
-            Player.instance.isLock = true;
-        }
-        MoveDrive.isMoveOk = true;
-        MonsterCreate.isStartMove = true;
+        this.setGameplayActive(true, false);
     }
 
 }

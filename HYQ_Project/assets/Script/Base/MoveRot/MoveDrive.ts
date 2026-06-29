@@ -112,6 +112,7 @@ export class MoveDrive extends UnityUpComponent {
     })
     public rotLock: Vec3 = new Vec3(Vec3.ONE);
     public static isMoveOk: boolean = false;
+    public static isGuideMoveOnly: boolean = false;
 
     @property({
         type: CCFloat, visible(this: MoveDrive) {
@@ -175,10 +176,18 @@ export class MoveDrive extends UnityUpComponent {
 
     /**需要自己去调用 */
     public MoveEvent(deltaTime: number) {
-        if (!MoveDrive.isMoveOk) {
+        if (!this.canMoveNow()) {
             return;
         }
         this.moveEvent(deltaTime);
+    }
+
+    private canMoveNow() {
+        return MoveDrive.isMoveOk || (MoveDrive.isGuideMoveOnly && this.isGuideMoveMode());
+    }
+
+    private isGuideMoveMode() {
+        return this.moveMod == MoveModEnum.RockerMove || this.moveMod == MoveModEnum.RockerTouchMove;
     }
 
     public moveEvent(deltaTime: number) {
@@ -385,7 +394,7 @@ export class MoveDrive extends UnityUpComponent {
     public MoveX: number = 7.8;
     private rockerTouchMove(x: number) {
         // console.log('rockerTouchMove', x);
-        if (UnityUpComponent.isStop) {
+        if (UnityUpComponent.isStop || !this.canMoveNow()) {
             return;
         }
 
@@ -431,6 +440,9 @@ export class MoveDrive extends UnityUpComponent {
     }
 
     private rockerTouchStart() {
+        if (!this.canMoveNow()) {
+            return;
+        }
         this.node.getPosition(this.curTempPosV3);
         EventManager.instance.on(Node.EventType.TOUCH_MOVE, this.rockerTouchMove, this);
         EventManager.instance.on(Node.EventType.TOUCH_END, this.rockerTouchEnd, this);

@@ -1141,6 +1141,12 @@ export class PropArms extends BattleTarget3D {
         }
 
         const curWorldZ = this.node.worldPositionZ;
+        if (!MonsterCreate.isStartMove) {
+            this.lastBottomBaseWorldZ = curWorldZ;
+            this.hasLastBottomBaseWorldZ = true;
+            return;
+        }
+
         if (!this.hasLastBottomBaseWorldZ) {
             this.lastBottomBaseWorldZ = curWorldZ;
             this.hasLastBottomBaseWorldZ = true;

@@ -906,6 +906,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         updateWaveRoleForwardMove(deltaTime) {
+          if (!MonsterCreate.isStartMove) {
+            return;
+          }
+
           if (this._waveRoleNodes.length <= 0 || this._waveStageStartZList.length <= 0) {
             return;
           }
