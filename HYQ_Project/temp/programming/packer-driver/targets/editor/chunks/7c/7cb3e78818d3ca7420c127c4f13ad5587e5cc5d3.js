@@ -45,6 +45,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("Player", "../Player/Player", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfRole(extras) {
+    _reporterNs.report("Role", "../Player/Role", _context.meta, extras);
+  }
+
   function _reportPossibleCrUseOfEventManager(extras) {
     _reporterNs.report("EventManager", "../../Base/EventManager", _context.meta, extras);
   }
@@ -326,6 +330,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._waveStageStartZList = [];
           this._monsterWaveIndexMap = new WeakMap();
           this.waveRolePushGapInternal = 0.02;
+          this.waveRolePlayerHalfX = 0.35;
+          this.waveRolePlayerHalfZ = 0.35;
           this._isRestoringWaveRolesAfterRebirth = false;
           this.lalianLimitRanges = [];
           this.tempLalianRange = new Vec3();
@@ -605,9 +611,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          const targetZ = this.node.worldPositionZ + stageStartZ - this.getWaveRoleCollisionHalfZ(role) - this.waveRolePushGapInternal;
-          const pos = role.node.worldPosition;
-          role.node.setWorldPosition(pos.x, pos.y, targetZ);
+          const targetCenterZ = this.node.worldPositionZ + stageStartZ - this.getWaveRoleCollisionHalfZ(role) - this.waveRolePushGapInternal;
+          this.setCollisionCenterWorldZ(role, targetCenterZ);
         }
 
         snapWaveRolesToCurrentWaveFront() {
@@ -625,10 +630,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
             const monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
-            const monsterFrontZ = frontMonster.node.worldPositionZ - monsterHalfZ;
-            const targetZ = monsterFrontZ - this.waveRolePushGapInternal - roleHalfZ;
-            const pos = role.node.worldPosition;
-            role.node.setWorldPosition(pos.x, pos.y, targetZ);
+            const monsterCenterZ = frontMonster.getCollisionWorldPosition(tempV3).z;
+            const targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGapInternal - roleHalfZ;
+            this.setCollisionCenterWorldZ(role, targetCenterZ);
+            this.clampMonstersBehindWaveRole(i);
           }
         }
 
@@ -772,6 +777,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           if (!this._isRestoringWaveRolesAfterRebirth) {
             this.updateWaveRoleForwardMove(deltaTime);
+            this.checkWaveRolePlayerCollision();
           }
 
           for (let i = this._monsterList.length - 1; i >= 0; i--) {
@@ -806,6 +812,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 monster.move.pos = tempV3;
               } else if (mz >= this.stage_1) {
                 if (!monster.attackTarget || !monster.attackTarget.active) {
+                  if (!(_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+                    error: Error()
+                  }), Player) : Player).instance || (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+                    error: Error()
+                  }), Player) : Player).instance.isDie || (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+                    error: Error()
+                  }), Player) : Player).instance.roleList.length <= 0) {
+                    continue;
+                  }
+
                   monster.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
                     error: Error()
                   }), MoveModEnum) : MoveModEnum).targetMove;
@@ -913,8 +929,38 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         clampMonsterBehindWaveRole(monster) {
-          const waveIndex = this.getWaveIndexByMonster(monster);
+          if (!monster || !monster.node || !monster.node.active || monster.isDie || this._waveRoleNodes.length <= 0) {
+            return;
+          }
 
+          for (let i = 0; i < this._waveRoleNodes.length; i++) {
+            this.clampMonsterBehindSingleWaveRole(monster, this._waveRoleNodes[i]);
+          }
+        }
+
+        clampMonsterBehindSingleWaveRole(monster, role) {
+          if (!role || !role.node || !role.node.active || role.isDie) {
+            return;
+          }
+
+          const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
+          const monsterHalfZ = this.getMonsterCollisionHalfZ(monster);
+          const roleCenterZ = role.getCollisionWorldPosition(tempV3).z;
+          const monsterCenterZ = monster.getCollisionWorldPosition(tempV3).z;
+          const roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGapInternal;
+          const roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGapInternal;
+          const monsterMinZ = monsterCenterZ - monsterHalfZ;
+          const monsterMaxZ = monsterCenterZ + monsterHalfZ;
+
+          if (monsterMaxZ < roleMinZ || monsterMinZ > roleMaxZ) {
+            return;
+          }
+
+          const limitCenterZ = roleCenterZ + roleHalfZ + monsterHalfZ + this.waveRolePushGapInternal;
+          this.setCollisionCenterWorldZ(monster, limitCenterZ);
+        }
+
+        clampMonstersBehindWaveRole(waveIndex) {
           if (waveIndex < 0 || waveIndex >= this._waveRoleNodes.length) {
             return;
           }
@@ -925,13 +971,135 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
-          const monsterHalfZ = this.getMonsterCollisionHalfZ(monster);
-          const limitZ = role.node.worldPositionZ + roleHalfZ + monsterHalfZ + this.waveRolePushGapInternal;
+          for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
 
-          if (monster.node.worldPositionZ < limitZ) {
-            monster.node.setWorldPosition(monster.node.worldPositionX, monster.node.worldPositionY, limitZ);
+            if (!monster || !monster.node || !monster.node.active || monster.isDie) {
+              continue;
+            }
+
+            this.clampMonsterBehindSingleWaveRole(monster, role);
           }
+        }
+
+        setCollisionCenterWorldZ(target, centerZ) {
+          if (!(target != null && target.node)) {
+            return;
+          }
+
+          const hitZ = target.getCollisionWorldPosition(tempV3).z;
+          const nodePos = target.node.worldPosition;
+          target.node.setWorldPosition(nodePos.x, nodePos.y, nodePos.z + centerZ - hitZ);
+        }
+
+        getCollisionCenterOffsetZ(target) {
+          if (!(target != null && target.node)) {
+            return 0;
+          }
+
+          return target.getCollisionWorldPosition(tempV3).z - target.node.worldPosition.z;
+        }
+
+        checkWaveRolePlayerCollision() {
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!player || player.isDie || !player.roleList || player.roleList.length <= 0 || this._waveRoleNodes.length <= 0) {
+            return;
+          }
+
+          let hasRoleDie = false;
+
+          for (let i = 0; i < this._waveRoleNodes.length; i++) {
+            var _waveRole$collisionHa;
+
+            const waveRole = this._waveRoleNodes[i];
+
+            if (!waveRole || !waveRole.node || !waveRole.node.active || waveRole.isDie) {
+              continue;
+            }
+
+            const roleCenter = waveRole.getCollisionWorldPosition(tempV3);
+            const centerX = roleCenter.x;
+            const centerZ = roleCenter.z;
+            const halfX = Math.max(0, (_waveRole$collisionHa = waveRole.collisionHalfX) != null ? _waveRole$collisionHa : 0);
+            const halfZ = this.getWaveRoleCollisionHalfZ(waveRole);
+
+            for (let j = player.roleList.length - 1; j >= 0; j--) {
+              const role = player.roleList[j];
+
+              if (!this.isRoleInWaveRoleBox(role, centerX, centerZ, halfX, halfZ)) {
+                continue;
+              }
+
+              player.roleList.splice(j, 1);
+              player.roleDie(role);
+              hasRoleDie = true;
+            }
+          }
+
+          if (hasRoleDie) {
+            player.upPos();
+          }
+        }
+
+        isRoleInWaveRoleBox(role, centerX, centerZ, halfX, halfZ) {
+          if (!role || !role.node || !role.node.active) {
+            return false;
+          }
+
+          const pos = role.node.worldPosition;
+          return Math.abs(pos.x - centerX) <= halfX + this.waveRolePlayerHalfX && Math.abs(pos.z - centerZ) <= halfZ + this.waveRolePlayerHalfZ;
+        }
+
+        getWaveRoleLimitedSpawnZ(localZ, monster) {
+          if (this._waveRoleNodes.length <= 0) {
+            return localZ;
+          }
+
+          let resultZ = localZ;
+
+          for (let pass = 0; pass < this._waveRoleNodes.length; pass++) {
+            let changed = false;
+
+            for (let i = 0; i < this._waveRoleNodes.length; i++) {
+              const limitedZ = this.getSingleWaveRoleLimitedSpawnZ(resultZ, this._waveRoleNodes[i], monster);
+
+              if (limitedZ > resultZ) {
+                resultZ = limitedZ;
+                changed = true;
+              }
+            }
+
+            if (!changed) {
+              break;
+            }
+          }
+
+          return resultZ;
+        }
+
+        getSingleWaveRoleLimitedSpawnZ(localZ, waveRole, monster) {
+          if (!waveRole || !waveRole.node || !waveRole.node.active || waveRole.isDie) {
+            return localZ;
+          }
+
+          const roleCenterZ = waveRole.getCollisionWorldPosition(tempV3).z;
+          const roleHalfZ = this.getWaveRoleCollisionHalfZ(waveRole);
+          const monsterHalfZ = this.getMonsterCollisionHalfZ(monster);
+          const monsterCenterOffsetZ = this.getCollisionCenterOffsetZ(monster);
+          const monsterCenterZ = this.node.worldPositionZ + localZ + monsterCenterOffsetZ;
+          const monsterMinZ = monsterCenterZ - monsterHalfZ;
+          const monsterMaxZ = monsterCenterZ + monsterHalfZ;
+          const roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGapInternal;
+          const roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGapInternal;
+
+          if (monsterMaxZ < roleMinZ || monsterMinZ > roleMaxZ) {
+            return localZ;
+          }
+
+          return roleMaxZ + monsterHalfZ + this.waveRolePushGapInternal - monsterCenterOffsetZ - this.node.worldPositionZ;
         }
 
         getFrontMonsterByWave(waveIndex) {
@@ -1055,8 +1223,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           // let z = this._finallyBoss ? this._finallyBoss.z + this.brotherExcludeZ * 2 + this.layerGapZ * layer : this.layerCount * (this.layerGapZ * l + this.brotherExcludeZ) + this.brotherExcludeZ + this.layerGapZ * layer;
 
           this._nextSpawnZ += this.brotherExcludeZ;
-          const z = this._nextSpawnZ;
+          const z = this.getWaveRoleLimitedSpawnZ(this._nextSpawnZ, monster);
           const worldZ = this.node.worldPositionZ + z;
+          this._nextSpawnZ = z;
           this._nextSpawnZ += this.brotherExcludeZ;
           monster.init(this._monsterBossCount * 2 + 1);
           monster.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
@@ -1115,7 +1284,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           // }
 
 
-          const z = this._nextSpawnZ + (Math.random() - 0.5) * (this.layerGapZ + this.spawnRandomZ * 2);
+          const rawZ = this._nextSpawnZ + (Math.random() - 0.5) * (this.layerGapZ + this.spawnRandomZ * 2);
+          const z = this.getWaveRoleLimitedSpawnZ(rawZ, monster);
           const rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
           const worldZ = this.node.worldPositionZ + z;
           const x = this.shouldLimitMonsterXAtZ(worldZ) ? this.clampMonsterX(rawX) : rawX;
@@ -1133,6 +1303,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           if (waveIndex >= 0) {
             this._monsterWaveIndexMap.set(monster, waveIndex);
+          }
+
+          if (z > rawZ && z > this._nextSpawnZ) {
+            this._nextSpawnZ = z;
           }
 
           this._rowCount++;
@@ -1365,9 +1539,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
             const monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
-            const targetZ = frontMonster.node.worldPositionZ - monsterHalfZ - this.waveRolePushGapInternal - roleHalfZ;
-            const pos = role.node.worldPosition;
-            role.node.setWorldPosition(pos.x, pos.y, targetZ);
+            const monsterCenterZ = frontMonster.getCollisionWorldPosition(tempV3).z;
+            const targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGapInternal - roleHalfZ;
+            this.setCollisionCenterWorldZ(role, targetCenterZ);
+            this.clampMonstersBehindWaveRole(i);
           }
 
           this._isRestoringWaveRolesAfterRebirth = false;

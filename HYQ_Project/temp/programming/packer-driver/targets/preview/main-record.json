@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 6977916.2093,
+      "mTimestamp": 8767016.1998,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -23455,7 +23455,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts": {
       "mTimestamp": {
-        "mtime": 1782705585079.0032,
+        "mtime": 1782713172107.3013,
         "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
       },
       "chunkId": "7cb3e78818d3ca7420c127c4f13ad5587e5cc5d3",
@@ -23572,11 +23572,11 @@
           "resolved": "__unresolved_7",
           "loc": {
             "start": {
-              "line": 8,
+              "line": 9,
               "column": 25
             },
             "end": {
-              "line": 8,
+              "line": 9,
               "column": 50
             }
           }
@@ -23586,11 +23586,11 @@
           "resolved": "__unresolved_8",
           "loc": {
             "start": {
-              "line": 9,
+              "line": 10,
               "column": 33
             },
             "end": {
-              "line": 9,
+              "line": 10,
               "column": 62
             }
           }
@@ -23600,11 +23600,11 @@
           "resolved": "__unresolved_9",
           "loc": {
             "start": {
-              "line": 10,
+              "line": 11,
               "column": 30
             },
             "end": {
-              "line": 10,
+              "line": 11,
               "column": 60
             }
           }
@@ -23614,11 +23614,11 @@
           "resolved": "__unresolved_10",
           "loc": {
             "start": {
-              "line": 11,
+              "line": 12,
               "column": 28
             },
             "end": {
-              "line": 11,
+              "line": 12,
               "column": 49
             }
           }
@@ -23628,11 +23628,11 @@
           "resolved": "__unresolved_11",
           "loc": {
             "start": {
-              "line": 12,
+              "line": 13,
               "column": 32
             },
             "end": {
-              "line": 12,
+              "line": 13,
               "column": 64
             }
           }
@@ -23642,11 +23642,11 @@
           "resolved": "__unresolved_12",
           "loc": {
             "start": {
-              "line": 14,
+              "line": 15,
               "column": 27
             },
             "end": {
-              "line": 14,
+              "line": 15,
               "column": 50
             }
           }
@@ -23656,11 +23656,11 @@
           "resolved": "__unresolved_13",
           "loc": {
             "start": {
-              "line": 15,
+              "line": 16,
               "column": 25
             },
             "end": {
-              "line": 15,
+              "line": 16,
               "column": 44
             }
           }
@@ -23670,11 +23670,11 @@
           "resolved": "__unresolved_14",
           "loc": {
             "start": {
-              "line": 16,
+              "line": 17,
               "column": 32
             },
             "end": {
-              "line": 16,
+              "line": 17,
               "column": 58
             }
           }
@@ -23684,11 +23684,11 @@
           "resolved": "__unresolved_15",
           "loc": {
             "start": {
-              "line": 17,
+              "line": 18,
               "column": 42
             },
             "end": {
-              "line": 17,
+              "line": 18,
               "column": 83
             }
           }
@@ -23698,11 +23698,11 @@
           "resolved": "__unresolved_16",
           "loc": {
             "start": {
-              "line": 18,
+              "line": 19,
               "column": 31
             },
             "end": {
-              "line": 18,
+              "line": 19,
               "column": 56
             }
           }
