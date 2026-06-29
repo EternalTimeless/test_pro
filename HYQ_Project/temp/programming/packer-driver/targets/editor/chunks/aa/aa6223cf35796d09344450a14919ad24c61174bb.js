@@ -1901,24 +1901,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             renderer.mesh = this.createOilBurstShardMesh(baseSize, i);
             const material = this.createOilBurstShardMaterial(sourceMaterial);
             renderer.setSharedMaterial(material, 0);
-            const spread = baseSize * (3.15 + i % 4 * 0.38);
+            const spread = baseSize * (2.7 + i % 4 * 0.42);
             const spinSign = i % 2 === 0 ? 1 : -1;
             const startPos = shardNode.position.clone();
             const startEuler = shardNode.eulerAngles.clone();
+            const tangent = this.getOilBurstShardTangent(dir, i);
+            const lift = baseSize * (0.56 + i % 3 * 0.16);
+            const fall = baseSize * (0.52 + i % 2 * 0.18);
+            const wobble = baseSize * (0.08 + i % 3 * 0.025);
             const flightState = {
               progress: 0
             };
-            tween(flightState).delay(groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.01).to(PropArms.oilBurstShardDuration, {
+            tween(flightState).delay(groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.012).to(PropArms.oilBurstShardDuration, {
               progress: 1
             }, {
               easing: 'quartOut',
               onUpdate: state => {
                 const t = state.progress;
-                const distance = spread * (1 - Math.pow(1 - t, 1.7));
-                const swirl = baseSize * 0.14 * Math.sin(t * Math.PI);
-                shardNode.setPosition(startPos.x + dir.x * distance + spinSign * swirl * Math.abs(dir.z), startPos.y + dir.y * distance, startPos.z + dir.z * distance + spinSign * swirl * Math.abs(dir.x));
-                shardNode.eulerAngles = v3(startEuler.x + spinSign * (300 * t + i * 12), startEuler.y + 360 * t + i * 16, startEuler.z + spinSign * (260 * t + i * 10));
-                const scale = 1.06 - t * 0.14;
+                const outward = 1 - Math.pow(1 - t, 2.2);
+                const arc = Math.sin(t * Math.PI);
+                const distance = spread * outward;
+                const swirl = wobble * arc;
+                shardNode.setPosition(startPos.x + dir.x * distance + tangent.x * swirl, startPos.y + dir.y * distance * 0.35 + lift * arc - fall * t * t, startPos.z + dir.z * distance + tangent.z * swirl);
+                shardNode.eulerAngles = v3(startEuler.x + spinSign * (360 * outward + i * 13), startEuler.y + 280 * outward + spinSign * arc * 42 + i * 17, startEuler.z + spinSign * (310 * outward + i * 11));
+                const scale = 1.04 + 0.05 * arc - t * 0.18;
                 shardNode.setScale(scale, scale, scale);
               }
             }).call(() => {
@@ -1965,9 +1971,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             shard.eulerAngles = originalEuler;
             const startWorldPos = shard.worldPosition.clone();
             const dir = this.getOilBurstShardDirection(i, burstCenter);
-            const delay = groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.01;
+            const delay = groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.012;
             const spinSign = i % 2 === 0 ? 1 : -1;
-            const spread = baseSize * (1.95 + i % 3 * 0.22);
+            const spread = baseSize * (1.75 + i % 3 * 0.28);
+            const tangent = this.getOilBurstShardTangent(dir, i);
+            const lift = baseSize * (0.34 + i % 3 * 0.12);
+            const fall = baseSize * (0.36 + i % 2 * 0.14);
+            const wobble = baseSize * (0.055 + i % 3 * 0.018);
             maxDelay = Math.max(maxDelay, delay);
             const flightState = {
               progress: 0
@@ -1978,11 +1988,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               easing: 'quartOut',
               onUpdate: state => {
                 const t = state.progress;
-                const distance = spread * (1 - Math.pow(1 - t, 1.7));
-                const swirl = baseSize * 0.08 * Math.sin(t * Math.PI);
-                shard.setWorldPosition(startWorldPos.x + dir.x * distance + spinSign * swirl * Math.abs(dir.z), startWorldPos.y + dir.y * distance, startWorldPos.z + dir.z * distance + spinSign * swirl * Math.abs(dir.x));
-                shard.eulerAngles = v3(originalEuler.x + spinSign * (220 * t + i * 9), originalEuler.y + 260 * t + i * 12, originalEuler.z + spinSign * (180 * t + i * 7));
-                const scale = 1 - t * 0.12;
+                const outward = 1 - Math.pow(1 - t, 2.15);
+                const arc = Math.sin(t * Math.PI);
+                const distance = spread * outward;
+                const swirl = wobble * arc;
+                shard.setWorldPosition(startWorldPos.x + dir.x * distance + tangent.x * swirl, startWorldPos.y + dir.y * distance * 0.32 + lift * arc - fall * t * t, startWorldPos.z + dir.z * distance + tangent.z * swirl);
+                shard.eulerAngles = v3(originalEuler.x + spinSign * (260 * outward + i * 9), originalEuler.y + 210 * outward + spinSign * arc * 34 + i * 12, originalEuler.z + spinSign * (230 * outward + i * 7));
+                const scale = 1 + 0.04 * arc - t * 0.16;
                 shard.setScale(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
               }
             }).call(() => {
@@ -2225,6 +2237,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           const len = Math.max(0.0001, Math.sqrt(x * x + y * y + z * z));
           return v3(x / len, y / len, z / len);
+        }
+
+        getOilBurstShardTangent(dir, index) {
+          const sign = index % 2 === 0 ? 1 : -1;
+          let x = dir.z * sign;
+          let z = -dir.x * sign;
+          const len = Math.sqrt(x * x + z * z);
+
+          if (len < 0.0001) {
+            x = sign;
+            z = 0;
+          } else {
+            x /= len;
+            z /= len;
+          }
+
+          return v3(x, 0, z);
         }
 
         createOilBurstShardMesh(size, index) {
