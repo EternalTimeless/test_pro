@@ -131,6 +131,8 @@ export class MonsterCreate extends UnityUpComponent {
     public waveRoleTemplate: PropArms = null;
     @property({ type: CCInteger, tooltip: '中路Role_x的大波次数量，默认3。' })
     public waveRoleCount: number = 3;
+    @property({ type: CCFloat, displayName: '油桶自身前进速度', tooltip: 'Role_0/1/2 油桶沿 Z 轴自身前进的速度，不再由怪物位置反推。' })
+    public waveRoleForwardSpeed: number = 2;
     private _waveRoleNodes: PropArms[] = [];
     private _waveStageStartZList: number[] = [];
     private _monsterWaveIndexMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();

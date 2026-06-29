@@ -13881,6 +13881,7 @@
     "spawnYawRandom": 8,
     "waveRoleTemplate": null,
     "waveRoleCount": 3,
+    "waveRoleForwardSpeed": 2,
     "_id": "8drBHAToxIh7Y7d09Zsa0m"
   },
   {
@@ -13916,8 +13917,8 @@
   {
     "__type__": "MonsterCreateInfo",
     "loopMax": 1,
-    "monsterType": 0,
-    "monsterCountMax": 100,
+    "monsterType": 1,
+    "monsterCountMax": 150,
     "brotherExcludeZ": 0
   },
   {
@@ -13930,8 +13931,8 @@
   {
     "__type__": "MonsterCreateInfo",
     "loopMax": 1,
-    "monsterType": 0,
-    "monsterCountMax": 400,
+    "monsterType": 1,
+    "monsterCountMax": 300,
     "brotherExcludeZ": 0
   },
   {
