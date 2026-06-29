@@ -591,7 +591,7 @@ export class MonsterCreate extends UnityUpComponent {
             return;
         }
 
-        const moveDistance = Math.max(0, this.waveRoleForwardSpeed) * deltaTime;
+        const moveDistance = Math.max(0, this.monsterSpeed) * deltaTime;
         if (moveDistance <= 0) {
             return;
         }

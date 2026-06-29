@@ -894,7 +894,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          const moveDistance = Math.max(0, this.waveRoleForwardSpeed) * deltaTime;
+          const moveDistance = Math.max(0, this.monsterSpeed) * deltaTime;
 
           if (moveDistance <= 0) {
             return;
