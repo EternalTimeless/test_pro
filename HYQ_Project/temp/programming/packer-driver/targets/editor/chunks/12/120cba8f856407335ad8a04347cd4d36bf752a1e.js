@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -105,6 +105,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
+      CCBoolean = _cc.CCBoolean;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
       Node = _cc.Node;
@@ -155,7 +156,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "b41f7vy1r5GDYGyMwUkQXm3", "Player", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Component', 'Node', 'Quat', 'Tween', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Component', 'Node', 'Quat', 'Tween', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -185,7 +186,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         type: CCInteger,
         displayName: '枪口特效最大播放数',
         tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。'
-      }), _dec7 = property(Node), _dec(_class = (_class2 = (_class3 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), _dec7 = property(CCBoolean), _dec8 = property(Node), _dec(_class = (_class2 = (_class3 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor(...args) {
@@ -210,6 +211,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor5, this);
 
+          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor6, this);
+
           this.shootRoleStartIndex = 0;
           this.pendingRoleSwitchType = null;
           this.pendingRoleSwitchIndex = 0;
@@ -225,7 +228,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isLock = false;
 
           // public MoveX: number = 8;
-          _initializerDefineProperty(this, "shootList", _descriptor6, this);
+          _initializerDefineProperty(this, "shootList", _descriptor7, this);
 
           this.shootIndex = 1;
           this.attackIn = false;
@@ -450,18 +453,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), AudioManager) : AudioManager).inst.preload((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
             error: Error()
           }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
-          const bulletType = this.getBulletTypeByArms(armwType);
-
-          if (bulletType !== null) {
-            this.startBulletPrewarm(bulletType, this.getWeaponPrewarmBulletCount());
-          }
-
           const soundType = this.getSoundTypeByArms(armwType);
 
           if (soundType !== null) {
             (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
               error: Error()
             }), AudioManager) : AudioManager).inst.preload(soundType);
+          }
+
+          if (!this.enableRuntimeUpgradePrewarm) {
+            this.clearRuntimeWarmupQueue();
+            return;
+          }
+
+          const bulletType = this.getBulletTypeByArms(armwType);
+
+          if (bulletType !== null) {
+            this.startBulletPrewarm(bulletType, this.getWeaponPrewarmBulletCount());
           }
 
           const targetRoleType = this.getRoleTypeByArms(armwType);
@@ -471,6 +479,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           this.startRolePrewarm(targetRoleType, this.roleList.length);
+        }
+
+        clearRuntimeWarmupQueue() {
+          this.pendingRolePrewarmType = null;
+          this.pendingRolePrewarmCount = 0;
+          this.pendingBulletPrewarmType = null;
+          this.pendingBulletPrewarmCount = 0;
+          this.pendingBulletBatchWarmType = null;
         }
 
         getRoleTypeByArms(armwType) {
@@ -680,7 +696,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.pendingRoleSwitchType = roleType;
           this.pendingRoleSwitchIndex = 0;
           this.roleLayoutDirty = false;
-          this.startRolePrewarm(roleType, this.roleList.length);
+
+          if (this.enableRuntimeUpgradePrewarm) {
+            this.startRolePrewarm(roleType, this.roleList.length);
+          } else {
+            this.pendingRolePrewarmType = null;
+            this.pendingRolePrewarmCount = 0;
+          }
         }
 
         processPendingRoleSwitch() {
@@ -704,14 +726,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               this.pendingRoleSwitchIndex++;
               count--;
               continue;
-            }
-
-            if ((_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.getPoolSize((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-              error: Error()
-            }), PoolEnum) : PoolEnum).role + this.pendingRoleSwitchType) <= 0) {
-              break;
             }
 
             const newRole = this.getRoleByType(this.pendingRoleSwitchType);
@@ -1140,7 +1154,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 8;
         }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "shootList", [_dec7], {
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "enableRuntimeUpgradePrewarm", [_dec7], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return false;
+        }
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "shootList", [_dec8], {
         configurable: true,
         enumerable: true,
         writable: true,

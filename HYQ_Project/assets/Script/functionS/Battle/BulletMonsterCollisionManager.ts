@@ -38,6 +38,11 @@ class CollisionTargetGroup {
         this.xMin = minX - 0.5;
         this.xMax = maxX + 0.5;
     }
+
+    public invalidateXRange(): void {
+        this.xMin = -9999;
+        this.xMax = 9999;
+    }
 }
 
 /**
@@ -130,7 +135,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
             return;
         }
         this._targetGroups[type].targets.push(target);
-        this._targetGroups[type].updateXRange();
+        this._targetGroups[type].invalidateXRange();
     }
 
     /** 注销目标 */
@@ -146,7 +151,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
             group.targets[idx] = group.targets[group.targets.length - 1];
             group.targets.pop();
         }
-        group.updateXRange();
+        group.invalidateXRange();
     }
 
     public clearBullets(): void {

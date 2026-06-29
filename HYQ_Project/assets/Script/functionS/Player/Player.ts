@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Component, Node, Quat, Tween, tween, Vec3 } from 'cc';
+import { _decorator, CCBoolean, CCFloat, CCInteger, Component, Node, Quat, Tween, tween, Vec3 } from 'cc';
 import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { Role } from './Role';
@@ -55,6 +55,8 @@ export class Player extends UnityUpComponent {
 
     @property({ type: CCInteger, displayName: '枪口特效最大播放数', tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。' })
     public maxMuzzleEffectCount: number = 8;
+    @property(CCBoolean)
+    public enableRuntimeUpgradePrewarm: boolean = false;
 
     private shootRoleStartIndex: number = 0;
     private pendingRoleSwitchType: RoleEnum = null;
@@ -225,13 +227,18 @@ export class Player extends UnityUpComponent {
 
     public prepareArmsUpgrade(armwType: ArmsTypeEnum) {
         AudioManager.inst.preload(SoundEnum.Sound_Ship_UpLevel);
-        const bulletType = this.getBulletTypeByArms(armwType);
-        if (bulletType !== null) {
-            this.startBulletPrewarm(bulletType, this.getWeaponPrewarmBulletCount());
-        }
         const soundType = this.getSoundTypeByArms(armwType);
         if (soundType !== null) {
             AudioManager.inst.preload(soundType);
+        }
+        if (!this.enableRuntimeUpgradePrewarm) {
+            this.clearRuntimeWarmupQueue();
+            return;
+        }
+
+        const bulletType = this.getBulletTypeByArms(armwType);
+        if (bulletType !== null) {
+            this.startBulletPrewarm(bulletType, this.getWeaponPrewarmBulletCount());
         }
 
         const targetRoleType = this.getRoleTypeByArms(armwType);
@@ -239,6 +246,14 @@ export class Player extends UnityUpComponent {
             return;
         }
         this.startRolePrewarm(targetRoleType, this.roleList.length);
+    }
+
+    private clearRuntimeWarmupQueue() {
+        this.pendingRolePrewarmType = null;
+        this.pendingRolePrewarmCount = 0;
+        this.pendingBulletPrewarmType = null;
+        this.pendingBulletPrewarmCount = 0;
+        this.pendingBulletBatchWarmType = null;
     }
 
     private getRoleTypeByArms(armwType: ArmsTypeEnum): RoleEnum | null {
@@ -368,7 +383,12 @@ export class Player extends UnityUpComponent {
         this.pendingRoleSwitchType = roleType;
         this.pendingRoleSwitchIndex = 0;
         this.roleLayoutDirty = false;
-        this.startRolePrewarm(roleType, this.roleList.length);
+        if (this.enableRuntimeUpgradePrewarm) {
+            this.startRolePrewarm(roleType, this.roleList.length);
+        } else {
+            this.pendingRolePrewarmType = null;
+            this.pendingRolePrewarmCount = 0;
+        }
     }
 
     private processPendingRoleSwitch() {
@@ -391,9 +411,6 @@ export class Player extends UnityUpComponent {
                 continue;
             }
 
-            if (PoolManager.instance.getPoolSize(PoolEnum.role + this.pendingRoleSwitchType) <= 0) {
-                break;
-            }
             const newRole = this.getRoleByType(this.pendingRoleSwitchType);
             Tween.stopAllByTarget(oldRole.node);
             Tween.stopAllByTarget(newRole.node);

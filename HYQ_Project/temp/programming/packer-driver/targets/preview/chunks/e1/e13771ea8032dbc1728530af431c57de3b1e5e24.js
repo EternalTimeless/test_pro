@@ -83,6 +83,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this.xMax = maxX + 0.5;
         }
 
+        invalidateXRange() {
+          this.xMin = -9999;
+          this.xMax = 9999;
+        }
+
       };
       /**
        * 自定义碰撞管理器 - 替代物理引擎进行子弹与目标的碰撞检测
@@ -188,7 +193,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           this._targetGroups[type].targets.push(target);
 
-          this._targetGroups[type].updateXRange();
+          this._targetGroups[type].invalidateXRange();
         }
         /** 注销目标 */
 
@@ -207,7 +212,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             group.targets.pop();
           }
 
-          group.updateXRange();
+          group.invalidateXRange();
         }
 
         clearBullets() {
