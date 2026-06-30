@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782811585265.2676,
+      "time": 1782813692482.092,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1506,23 +1506,23 @@
       "uuid": "376fb3f4-139f-4977-b12d-690632989155"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_0.prefab": {
-      "time": 1782790893558.9646,
+      "time": 1782813067159.6172,
       "uuid": "22df2732-7376-4d1e-b3ec-198dc70edfad"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_1.prefab": {
-      "time": 1782790900714.7002,
+      "time": 1782813072253.7173,
       "uuid": "990960bd-9301-4607-aca1-7c65a19e12bc"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_2.prefab": {
-      "time": 1782790906926.2336,
+      "time": 1782813084152.875,
       "uuid": "ac2e0ce8-427b-413a-b957-031450d6f06c"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_3.prefab": {
-      "time": 1782790913477.6465,
+      "time": 1782813091011.3408,
       "uuid": "2be39540-c3f7-4309-a0f6-bffb11e792ab"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_4.prefab": {
-      "time": 1782790919263.4495,
+      "time": 1782813096377.5972,
       "uuid": "a5d3d483-f17b-40f0-b2f6-f8315c79c88c"
     },
     "Script\\Base\\MoveRot\\MoveDrive.ts": {
@@ -1666,7 +1666,7 @@
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
-      "time": 1782207328890.402,
+      "time": 1782812206278.1738,
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782810948331.8096,
+      "time": 1782811816409.5857,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -1682,7 +1682,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1782783496460.819,
+      "time": 1782813358382.3157,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
@@ -2693,7 +2693,7 @@
       "time": 1781256724062.4617
     },
     "Scene\\Game_3D-002.scene.meta": {
-      "time": 1782453251836.6606
+      "time": 1782813636993.8223
     },
     "GameRes\\Anim\\Anim_hand.anim.meta": {
       "time": 1780287686914.2603

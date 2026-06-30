@@ -18,6 +18,19 @@ import { BulletBatchRenderer } from '../Battle/BulletBatchRenderer';
 import LayerManager from '../../Base/LayerManager';
 const { ccclass, property } = _decorator;
 
+@ccclass('WeaponBulletConfig')
+class WeaponBulletConfig {
+
+    @property({ type: ArmsTypeEnum, displayName: '武器类型', tooltip: '该配置对应的武器类型。' })
+    public armsType: ArmsTypeEnum = ArmsTypeEnum.bq;
+
+    @property({ type: CCFloat, displayName: '子弹威力', tooltip: '该武器发射子弹时的基础伤害倍率。' })
+    public bulletPower: number = 1;
+
+    @property({ type: BulletEnum, displayName: '子弹模型', tooltip: '该武器使用的子弹预制体类型。' })
+    public bulletType: BulletEnum = BulletEnum.arrow;
+}
+
 
 enum PlayerFBXAnimName {
     idle,
@@ -57,6 +70,37 @@ export class Player extends UnityUpComponent {
     public maxMuzzleEffectCount: number = 8;
     @property(CCBoolean)
     public enableRuntimeUpgradePrewarm: boolean = false;
+    @property({ type: [WeaponBulletConfig], displayName: '武器子弹配置', tooltip: '配置各武器的子弹威力和子弹模型。' })
+    public weaponBulletConfigList: WeaponBulletConfig[] = [
+        (() => {
+            const config = new WeaponBulletConfig();
+            config.armsType = ArmsTypeEnum.bq;
+            config.bulletPower = 2;
+            config.bulletType = BulletEnum.arrow_1;
+            return config;
+        })(),
+        (() => {
+            const config = new WeaponBulletConfig();
+            config.armsType = ArmsTypeEnum.jq;
+            config.bulletPower = 2;
+            config.bulletType = BulletEnum.arrow_2;
+            return config;
+        })(),
+        (() => {
+            const config = new WeaponBulletConfig();
+            config.armsType = ArmsTypeEnum.jtl;
+            config.bulletPower = 0.5;
+            config.bulletType = BulletEnum.arrow_3;
+            return config;
+        })(),
+        (() => {
+            const config = new WeaponBulletConfig();
+            config.armsType = ArmsTypeEnum.jtl2;
+            config.bulletPower = 0.3;
+            config.bulletType = BulletEnum.arrow_4;
+            return config;
+        })(),
+    ];
 
     private shootRoleStartIndex: number = 0;
     private pendingRoleSwitchType: RoleEnum = null;
@@ -184,31 +228,27 @@ export class Player extends UnityUpComponent {
     }
 
     public upArms(armwType: ArmsTypeEnum) {
+        const weaponBulletConfig = this.getWeaponBulletConfig(armwType);
         switch (armwType) {
             case ArmsTypeEnum.bq:
-                Role.power = 2;
+                this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.attackSpeed = 4;
-                Role.bulletType = BulletEnum.arrow_1;
                 break;
             case ArmsTypeEnum.jq:
-                // Role.power = 3;
-                Role.bulletType = BulletEnum.arrow_2;
-
+                this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.attackSpeed = 6;
                 break;
 
             case ArmsTypeEnum.jtl:
-                Role.power = 0.5;
+                this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.attackSpeed = 10;
-                Role.bulletType = BulletEnum.arrow_3;
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
                 this.startRoleSwitch(RoleEnum.dazhuang);
                 break;
             case ArmsTypeEnum.jtl2: {
-                Role.power = 0.3;
-                Role.bulletType = BulletEnum.arrow_4;
+                this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.attackSpeed = 20;
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
@@ -217,10 +257,8 @@ export class Player extends UnityUpComponent {
                 break;
             }
             case ArmsTypeEnum.tk:
-                GameOverPanel.instance.show(true);
                 break;
             case ArmsTypeEnum.jj:
-                GameOverPanel.instance.show(true);
                 break;
         }
     }
@@ -267,17 +305,25 @@ export class Player extends UnityUpComponent {
     }
 
     private getBulletTypeByArms(armwType: ArmsTypeEnum): BulletEnum | null {
-        switch (armwType) {
-            case ArmsTypeEnum.bq:
-                return BulletEnum.arrow_1;
-            case ArmsTypeEnum.jq:
-                return BulletEnum.arrow_2;
-            case ArmsTypeEnum.jtl:
-                return BulletEnum.arrow_3;
-            case ArmsTypeEnum.jtl2:
-                return BulletEnum.arrow_4;
+        return this.getWeaponBulletConfig(armwType)?.bulletType ?? null;
+    }
+
+    private getWeaponBulletConfig(armwType: ArmsTypeEnum): WeaponBulletConfig | null {
+        for (let i = 0; i < this.weaponBulletConfigList.length; i++) {
+            const config = this.weaponBulletConfigList[i];
+            if (config?.armsType === armwType) {
+                return config;
+            }
         }
         return null;
+    }
+
+    private applyWeaponBulletConfig(config: WeaponBulletConfig | null): void {
+        if (!config) {
+            return;
+        }
+        Role.power = config.bulletPower;
+        Role.bulletType = config.bulletType;
     }
 
     private getSoundTypeByArms(armwType: ArmsTypeEnum): SoundEnum | null {

@@ -1212,8 +1212,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this._isStageAlive = false;
             this.node.active = false;
           } else {
-            var _this$_curArms3;
-
             this.loadRoleTemplateLayout();
 
             for (var i = 0; i < this.armsInfoList.length; i++) {
@@ -1228,9 +1226,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             this._curArms = this.armsInfoList[this._level];
-            var visualRoot = this.getCurrentArmsVisualRoot(this._curArms);
+            var currentArms = this._curArms;
+            var visualRoot = this.getCurrentArmsVisualRoot(currentArms);
 
-            if (!((_this$_curArms3 = this._curArms) != null && _this$_curArms3.fbx) || !visualRoot) {
+            if (!(currentArms != null && currentArms.fbx) || !visualRoot) {
               this._isStageAlive = false;
               return;
             }
@@ -1240,10 +1239,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this._isStageAlive = true;
             this.initLalian();
             var tireSpacing = this.tireSpacing;
-            var wallHeight = this._curArms.wallHeight;
-            var tireCount = this.hasLalian ? 0 : this._curArms.tireCount;
+            var wallHeight = currentArms.wallHeight;
+            var tireCount = this.hasLalian ? 0 : currentArms.tireCount;
             var manualBottomBases = !this.hasLalian ? this.collectManualBottomBases(tireCount) : [];
-            this.initHp(this._curArms.hp);
+            this.initHp(currentArms.hp);
 
             if (this.hasLalian) {
               this.MaxHp = Math.max(1, this.lalianSegments.length * 2);
@@ -1269,9 +1268,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             visualRoot.setScale(Vec3.ZERO);
-
-            this._curArms.fbx.setAnimation(AnimArms.idle, true);
-
+            currentArms.fbx.setAnimation(AnimArms.idle, true);
             this.isWallH = false;
             this.resetBottomBaseRollState(); // 生成所有轮胎（起始在地底）
 
@@ -1307,19 +1304,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var wallPhase1TargetY;
             var needTireLift;
 
-            if (this._curArms.isCanMove) {
+            if (currentArms.isCanMove) {
               fbxPhase1TargetY = this.getArmsTargetY(0);
               wallPhase1TargetY = fbxPhase1TargetY + wallHeight;
               needTireLift = true;
             } else {
-              fbxPhase1TargetY = this.hasRoleTemplateLayout ? this.getArmsTargetY(0) : this._curArms.canHeight;
+              fbxPhase1TargetY = this.hasRoleTemplateLayout ? this.getArmsTargetY(0) : currentArms.canHeight;
               wallPhase1TargetY = fbxPhase1TargetY + wallHeight;
               needTireLift = false;
             } // FBX快速升起
 
 
             tween(visualRoot).delay(phase1Delay).call(() => {
-              this._curArms.fbx.setAnimation(AnimArms.up_ju, true);
+              currentArms.fbx.setAnimation(AnimArms.up_ju, true);
             }).to(phase1RiseTime, {
               y: fbxPhase1TargetY,
               scale: scale
@@ -1378,6 +1375,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             var totalTime = this.hasLalian ? phase1Delay + phase1RiseTime + 0.05 : tireStartDelay + (tireCount - 1) * tireInterval + tireRiseTime + 0.05;
             this.scheduleOnce(() => {
+              var _currentArms$fbx;
+
+              if (this._curArms === currentArms && (_currentArms$fbx = currentArms.fbx) != null && (_currentArms$fbx = _currentArms$fbx.node) != null && _currentArms$fbx.isValid) {
+                currentArms.fbx.setAnimation(AnimArms.idle, true);
+              }
+
               this.hpLabel.node.setScale(hplSx, hplSy, hplSz);
               (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
                 error: Error()

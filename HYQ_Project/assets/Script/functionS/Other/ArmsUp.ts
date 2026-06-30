@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Tween, tween, Vec3 } from 'cc';
+import { _decorator, Component, Node, Quat, Tween, tween, Vec3 } from 'cc';
 import { Player } from '../Player/Player';
 import { ArmsInfo, PropArms } from './PropArms';
 import EventManager from '../../Base/EventManager';
@@ -20,6 +20,8 @@ export class ArmsUp extends UnityUpComponent {
     public player: Player;
 
     private _monsterList: MonsterBattleTaerget[] = [];
+    private static readonly tempForward: Vec3 = new Vec3();
+    private static readonly tempQuat: Quat = new Quat();
 
 
     start() {
@@ -37,10 +39,13 @@ export class ArmsUp extends UnityUpComponent {
         PropArms.prepareSpriteWeaponVisual(fbxNode);
         this.player.prepareArmsUpgrade(armsInfo.armsType);
         const startPos = fbxNode.worldPosition.clone();
+        const startRot = fbxNode.worldRotation.clone();
         this.scheduleOnce(() => {
             Tween.stopAllByTarget(fbxNode);
             LayerManager.instance.getLayer(LayerEnum.Layer_1_Ground).addChild(fbxNode);
             fbxNode.setWorldPosition(startPos);
+            fbxNode.setWorldRotation(startRot);
+            this.faceNodeToPlayer(fbxNode, pos);
             fbxNode.active = true;
             JumpManager.instance.jumpCurve(fbxNode, pos, 0.7, 2).onComplete(() => {
                 CameraMove.instance.Shake2(0.5);
@@ -51,6 +56,20 @@ export class ArmsUp extends UnityUpComponent {
                 CameraMove.instance.Shake1(1.5);
             });
         }, 0);
+    }
+
+    private faceNodeToPlayer(node: Node, playerPos: Vec3): void {
+        if (!node) {
+            return;
+        }
+        Vec3.subtract(ArmsUp.tempForward, playerPos, node.worldPosition);
+        ArmsUp.tempForward.y = 0;
+        if (ArmsUp.tempForward.lengthSqr() <= 0.0001) {
+            return;
+        }
+        ArmsUp.tempForward.normalize();
+        Quat.fromViewUp(ArmsUp.tempQuat, ArmsUp.tempForward, Vec3.UP);
+        node.setWorldRotation(ArmsUp.tempQuat);
     }
 
     private addMonster(monster: MonsterBattleTaerget) {

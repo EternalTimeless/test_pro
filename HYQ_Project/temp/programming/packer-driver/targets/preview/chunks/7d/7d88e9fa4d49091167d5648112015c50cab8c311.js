@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Tween, Vec3, Player, PropArms, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, JumpManager, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, _dec, _dec2, _class, _class2, _descriptor, _crd, ccclass, property, ArmsUp;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Quat, Tween, Vec3, Player, PropArms, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, JumpManager, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, _dec, _dec2, _class, _class2, _descriptor, _class3, _crd, ccclass, property, ArmsUp;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -77,6 +77,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
+      Quat = _cc.Quat;
       Tween = _cc.Tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -108,7 +109,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "5d8f1HjQ5VPB48TxCy43J2w", "ArmsUp", undefined);
 
-      __checkObsolete__(['_decorator', 'Component', 'Node', 'Tween', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'Component', 'Node', 'Quat', 'Tween', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -117,7 +118,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("ArmsUp", ArmsUp = (_dec = ccclass('ArmsUp'), _dec2 = property(_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
         error: Error()
-      }), Player) : Player), _dec(_class = (_class2 = class ArmsUp extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), Player) : Player), _dec(_class = (_class2 = (_class3 = class ArmsUp extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
@@ -157,6 +158,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), PropArms) : PropArms).prepareSpriteWeaponVisual(fbxNode);
           this.player.prepareArmsUpgrade(armsInfo.armsType);
           var startPos = fbxNode.worldPosition.clone();
+          var startRot = fbxNode.worldRotation.clone();
           this.scheduleOnce(() => {
             Tween.stopAllByTarget(fbxNode);
             (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
@@ -165,6 +167,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), LayerEnum) : LayerEnum).Layer_1_Ground).addChild(fbxNode);
             fbxNode.setWorldPosition(startPos);
+            fbxNode.setWorldRotation(startRot);
+            this.faceNodeToPlayer(fbxNode, pos);
             fbxNode.active = true;
             (_crd && JumpManager === void 0 ? (_reportPossibleCrUseOfJumpManager({
               error: Error()
@@ -189,6 +193,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }), CameraMove) : CameraMove).instance.Shake1(1.5);
             });
           }, 0);
+        }
+
+        faceNodeToPlayer(node, playerPos) {
+          if (!node) {
+            return;
+          }
+
+          Vec3.subtract(ArmsUp.tempForward, playerPos, node.worldPosition);
+          ArmsUp.tempForward.y = 0;
+
+          if (ArmsUp.tempForward.lengthSqr() <= 0.0001) {
+            return;
+          }
+
+          ArmsUp.tempForward.normalize();
+          Quat.fromViewUp(ArmsUp.tempQuat, ArmsUp.tempForward, Vec3.UP);
+          node.setWorldRotation(ArmsUp.tempQuat);
         }
 
         addMonster(monster) {
@@ -236,7 +257,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._monsterList.length = 0;
         }
 
-      }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
+      }, _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,

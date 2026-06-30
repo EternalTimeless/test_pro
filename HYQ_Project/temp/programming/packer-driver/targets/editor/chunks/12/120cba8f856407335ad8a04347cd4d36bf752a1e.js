@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _class3, _crd, ccclass, property, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _class4, _class5, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -162,6 +162,57 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         ccclass,
         property
       } = _decorator);
+      WeaponBulletConfig = (_dec = ccclass('WeaponBulletConfig'), _dec2 = property({
+        type: _crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+          error: Error()
+        }), ArmsTypeEnum) : ArmsTypeEnum,
+        displayName: '武器类型',
+        tooltip: '该配置对应的武器类型。'
+      }), _dec3 = property({
+        type: CCFloat,
+        displayName: '子弹威力',
+        tooltip: '该武器发射子弹时的基础伤害倍率。'
+      }), _dec4 = property({
+        type: _crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+          error: Error()
+        }), BulletEnum) : BulletEnum,
+        displayName: '子弹模型',
+        tooltip: '该武器使用的子弹预制体类型。'
+      }), _dec(_class = (_class2 = class WeaponBulletConfig {
+        constructor() {
+          _initializerDefineProperty(this, "armsType", _descriptor, this);
+
+          _initializerDefineProperty(this, "bulletPower", _descriptor2, this);
+
+          _initializerDefineProperty(this, "bulletType", _descriptor3, this);
+        }
+
+      }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "armsType", [_dec2], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+            error: Error()
+          }), ArmsTypeEnum) : ArmsTypeEnum).bq;
+        }
+      }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "bulletPower", [_dec3], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 1;
+        }
+      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "bulletType", [_dec4], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+            error: Error()
+          }), BulletEnum) : BulletEnum).arrow;
+        }
+      })), _class2)) || _class);
 
       PlayerFBXAnimName = /*#__PURE__*/function (PlayerFBXAnimName) {
         PlayerFBXAnimName[PlayerFBXAnimName["idle"] = 0] = "idle";
@@ -172,21 +223,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         return PlayerFBXAnimName;
       }(PlayerFBXAnimName || {});
 
-      _export("Player", Player = (_dec = ccclass('Player'), _dec2 = property(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+      _export("Player", Player = (_dec5 = ccclass('Player'), _dec6 = property(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
         error: Error()
-      }), Role) : Role), _dec3 = property(CCFloat), _dec4 = property({
+      }), Role) : Role), _dec7 = property(CCFloat), _dec8 = property({
         type: CCInteger,
         displayName: '+1人数上限',
         tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。'
-      }), _dec5 = property({
+      }), _dec9 = property({
         type: CCInteger,
         displayName: '同时发射子弹人数上限',
         tooltip: '每轮最多允许多少个角色同时发射子弹。只限制射击人数，不影响 +1 总人数。'
-      }), _dec6 = property({
+      }), _dec10 = property({
         type: CCInteger,
         displayName: '枪口特效最大播放数',
         tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。'
-      }), _dec7 = property(CCBoolean), _dec8 = property(Node), _dec(_class = (_class2 = (_class3 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), _dec11 = property(CCBoolean), _dec12 = property({
+        type: [WeaponBulletConfig],
+        displayName: '武器子弹配置',
+        tooltip: '配置各武器的子弹威力和子弹模型。'
+      }), _dec13 = property(Node), _dec5(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor(...args) {
@@ -196,22 +251,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), RoleEnum) : RoleEnum).underling;
 
-          _initializerDefineProperty(this, "roleList", _descriptor, this);
+          _initializerDefineProperty(this, "roleList", _descriptor4, this);
 
           this.move = void 0;
 
-          _initializerDefineProperty(this, "attackSpeed", _descriptor2, this);
+          _initializerDefineProperty(this, "attackSpeed", _descriptor5, this);
 
           this.isDie = false;
           this.curCount = 1;
 
-          _initializerDefineProperty(this, "maxRoleCount", _descriptor3, this);
+          _initializerDefineProperty(this, "maxRoleCount", _descriptor6, this);
 
-          _initializerDefineProperty(this, "maxShootingRoleCount", _descriptor4, this);
+          _initializerDefineProperty(this, "maxShootingRoleCount", _descriptor7, this);
 
-          _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor5, this);
+          _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor8, this);
 
-          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor6, this);
+          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor9, this);
+
+          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor10, this);
 
           this.shootRoleStartIndex = 0;
           this.pendingRoleSwitchType = null;
@@ -228,7 +285,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isLock = false;
 
           // public MoveX: number = 8;
-          _initializerDefineProperty(this, "shootList", _descriptor7, this);
+          _initializerDefineProperty(this, "shootList", _descriptor11, this);
 
           this.shootIndex = 1;
           this.attackIn = false;
@@ -348,45 +405,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         upArms(armwType) {
+          const weaponBulletConfig = this.getWeaponBulletConfig(armwType);
+
           switch (armwType) {
             case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).bq:
-              (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                error: Error()
-              }), Role) : Role).power = 2;
+              this.applyWeaponBulletConfig(weaponBulletConfig);
               this.attackSpeed = 4;
-              (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                error: Error()
-              }), Role) : Role).bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
-                error: Error()
-              }), BulletEnum) : BulletEnum).arrow_1;
               break;
 
             case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).jq:
-              // Role.power = 3;
-              (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                error: Error()
-              }), Role) : Role).bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
-                error: Error()
-              }), BulletEnum) : BulletEnum).arrow_2;
+              this.applyWeaponBulletConfig(weaponBulletConfig);
               this.attackSpeed = 6;
               break;
 
             case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).jtl:
-              (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                error: Error()
-              }), Role) : Role).power = 0.5;
+              this.applyWeaponBulletConfig(weaponBulletConfig);
               this.attackSpeed = 10;
-              (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                error: Error()
-              }), Role) : Role).bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
-                error: Error()
-              }), BulletEnum) : BulletEnum).arrow_3;
               (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
                 error: Error()
               }), TweenTool) : TweenTool).scaleShake(this.node);
@@ -405,14 +445,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).jtl2:
               {
-                (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                  error: Error()
-                }), Role) : Role).power = 0.3;
-                (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-                  error: Error()
-                }), Role) : Role).bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
-                  error: Error()
-                }), BulletEnum) : BulletEnum).arrow_4;
+                this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.attackSpeed = 20;
                 (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
                   error: Error()
@@ -432,17 +465,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).tk:
-              (_crd && GameOverPanel === void 0 ? (_reportPossibleCrUseOfGameOverPanel({
-                error: Error()
-              }), GameOverPanel) : GameOverPanel).instance.show(true);
               break;
 
             case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).jj:
-              (_crd && GameOverPanel === void 0 ? (_reportPossibleCrUseOfGameOverPanel({
-                error: Error()
-              }), GameOverPanel) : GameOverPanel).instance.show(true);
               break;
           }
         }
@@ -510,37 +537,34 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getBulletTypeByArms(armwType) {
-          switch (armwType) {
-            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
-              error: Error()
-            }), ArmsTypeEnum) : ArmsTypeEnum).bq:
-              return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
-                error: Error()
-              }), BulletEnum) : BulletEnum).arrow_1;
+          var _this$getWeaponBullet, _this$getWeaponBullet2;
 
-            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
-              error: Error()
-            }), ArmsTypeEnum) : ArmsTypeEnum).jq:
-              return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
-                error: Error()
-              }), BulletEnum) : BulletEnum).arrow_2;
+          return (_this$getWeaponBullet = (_this$getWeaponBullet2 = this.getWeaponBulletConfig(armwType)) == null ? void 0 : _this$getWeaponBullet2.bulletType) != null ? _this$getWeaponBullet : null;
+        }
 
-            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
-              error: Error()
-            }), ArmsTypeEnum) : ArmsTypeEnum).jtl:
-              return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
-                error: Error()
-              }), BulletEnum) : BulletEnum).arrow_3;
+        getWeaponBulletConfig(armwType) {
+          for (let i = 0; i < this.weaponBulletConfigList.length; i++) {
+            const config = this.weaponBulletConfigList[i];
 
-            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
-              error: Error()
-            }), ArmsTypeEnum) : ArmsTypeEnum).jtl2:
-              return (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
-                error: Error()
-              }), BulletEnum) : BulletEnum).arrow_4;
+            if ((config == null ? void 0 : config.armsType) === armwType) {
+              return config;
+            }
           }
 
           return null;
+        }
+
+        applyWeaponBulletConfig(config) {
+          if (!config) {
+            return;
+          }
+
+          (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).power = config.bulletPower;
+          (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).bulletType = config.bulletType;
         }
 
         getSoundTypeByArms(armwType) {
@@ -1106,56 +1130,103 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         // }
 
 
-      }, _class3.instance = void 0, _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "roleList", [_dec2], {
+      }, _class6.instance = void 0, _class6), (_descriptor4 = _applyDecoratedDescriptor(_class5.prototype, "roleList", [_dec6], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return [];
         }
-      }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "attackSpeed", [_dec3], {
+      }), _descriptor5 = _applyDecoratedDescriptor(_class5.prototype, "attackSpeed", [_dec7], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "maxRoleCount", [_dec4], {
+      }), _descriptor6 = _applyDecoratedDescriptor(_class5.prototype, "maxRoleCount", [_dec8], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 55;
         }
-      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "maxShootingRoleCount", [_dec5], {
+      }), _descriptor7 = _applyDecoratedDescriptor(_class5.prototype, "maxShootingRoleCount", [_dec9], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 30;
         }
-      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "maxMuzzleEffectCount", [_dec6], {
+      }), _descriptor8 = _applyDecoratedDescriptor(_class5.prototype, "maxMuzzleEffectCount", [_dec10], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 8;
         }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "enableRuntimeUpgradePrewarm", [_dec7], {
+      }), _descriptor9 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec11], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return false;
         }
-      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "shootList", [_dec8], {
+      }), _descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec12], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return [(() => {
+            const config = new WeaponBulletConfig();
+            config.armsType = (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).bq;
+            config.bulletPower = 2;
+            config.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_1;
+            return config;
+          })(), (() => {
+            const config = new WeaponBulletConfig();
+            config.armsType = (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jq;
+            config.bulletPower = 2;
+            config.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_2;
+            return config;
+          })(), (() => {
+            const config = new WeaponBulletConfig();
+            config.armsType = (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl;
+            config.bulletPower = 0.5;
+            config.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_3;
+            return config;
+          })(), (() => {
+            const config = new WeaponBulletConfig();
+            config.armsType = (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl2;
+            config.bulletPower = 0.3;
+            config.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
+              error: Error()
+            }), BulletEnum) : BulletEnum).arrow_4;
+            return config;
+          })()];
+        }
+      }), _descriptor11 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec13], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return [];
         }
-      })), _class2)) || _class));
+      })), _class5)) || _class4));
 
       _cclegacy._RF.pop();
 

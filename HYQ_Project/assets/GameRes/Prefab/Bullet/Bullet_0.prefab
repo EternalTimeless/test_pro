@@ -273,7 +273,7 @@
       13
     ],
     "triggerDieTime": -1,
-    "overTime": 1.3,
+    "overTime": 1,
     "attackCount": 1,
     "moveD": {
       "__id__": 8

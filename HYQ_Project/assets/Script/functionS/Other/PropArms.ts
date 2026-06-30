@@ -757,8 +757,9 @@ export class PropArms extends BattleTarget3D {
                 }
             }
             this._curArms = this.armsInfoList[this._level];
-            const visualRoot = this.getCurrentArmsVisualRoot(this._curArms);
-            if (!this._curArms?.fbx || !visualRoot) {
+            const currentArms = this._curArms;
+            const visualRoot = this.getCurrentArmsVisualRoot(currentArms);
+            if (!currentArms?.fbx || !visualRoot) {
                 this._isStageAlive = false;
                 return;
             }
@@ -768,11 +769,11 @@ export class PropArms extends BattleTarget3D {
             this.initLalian();
 
             const tireSpacing = this.tireSpacing;
-            const wallHeight = this._curArms.wallHeight;
-            const tireCount = this.hasLalian ? 0 : this._curArms.tireCount;
+            const wallHeight = currentArms.wallHeight;
+            const tireCount = this.hasLalian ? 0 : currentArms.tireCount;
             const manualBottomBases = !this.hasLalian ? this.collectManualBottomBases(tireCount) : [];
 
-            this.initHp(this._curArms.hp);
+            this.initHp(currentArms.hp);
             if (this.hasLalian) {
                 this.MaxHp = Math.max(1, this.lalianSegments.length * 2);
                 this.curHp = this.MaxHp;
@@ -794,7 +795,7 @@ export class PropArms extends BattleTarget3D {
                 visualRoot.y = -1;
             }
             visualRoot.setScale(Vec3.ZERO);
-            this._curArms.fbx.setAnimation(AnimArms.idle, true);
+            currentArms.fbx.setAnimation(AnimArms.idle, true);
             this.isWallH = false;
             this.resetBottomBaseRollState();
 
@@ -827,12 +828,12 @@ export class PropArms extends BattleTarget3D {
             let wallPhase1TargetY: number;
             let needTireLift: boolean;
 
-            if (this._curArms.isCanMove) {
+            if (currentArms.isCanMove) {
                 fbxPhase1TargetY = this.getArmsTargetY(0);
                 wallPhase1TargetY = fbxPhase1TargetY + wallHeight;
                 needTireLift = true;
             } else {
-                fbxPhase1TargetY = this.hasRoleTemplateLayout ? this.getArmsTargetY(0) : this._curArms.canHeight;
+                fbxPhase1TargetY = this.hasRoleTemplateLayout ? this.getArmsTargetY(0) : currentArms.canHeight;
                 wallPhase1TargetY = fbxPhase1TargetY + wallHeight;
                 needTireLift = false;
             }
@@ -840,7 +841,7 @@ export class PropArms extends BattleTarget3D {
             // FBX快速升起
             tween(visualRoot)
                 .delay(phase1Delay)
-                .call(() => { this._curArms.fbx.setAnimation(AnimArms.up_ju, true); })
+                .call(() => { currentArms.fbx.setAnimation(AnimArms.up_ju, true); })
                 .to(phase1RiseTime, { y: fbxPhase1TargetY, scale: scale }, { easing: "backOut" })
                 .start();
 
@@ -891,6 +892,9 @@ export class PropArms extends BattleTarget3D {
             // 计算总动画时长，结束后统一处理
             const totalTime = this.hasLalian ? phase1Delay + phase1RiseTime + 0.05 : tireStartDelay + (tireCount - 1) * tireInterval + tireRiseTime + 0.05;
             this.scheduleOnce(() => {
+                if (this._curArms === currentArms && currentArms.fbx?.node?.isValid) {
+                    currentArms.fbx.setAnimation(AnimArms.idle, true);
+                }
                 this.hpLabel.node.setScale(hplSx, hplSy, hplSz);
                 PoolManager.instance.V3 = scale;
                 BulletMonsterCollisionManager.instance.registerTarget(this);
