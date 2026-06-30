@@ -1,7 +1,7 @@
 {
   "modules": {
     "cce:/internal/x/cc": {
-      "mTimestamp": 11061.3559,
+      "mTimestamp": 8982.7731,
       "chunkId": "93ba276ea7b26ffcdc433fab14afc1ed6f05647b",
       "imports": [
         {
@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 62171590.3674,
+      "mTimestamp": 28177.7876,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -15248,7 +15248,7 @@
       ]
     },
     "cce:/internal/code-quality/cr.mjs": {
-      "mTimestamp": 1782724325265,
+      "mTimestamp": 1782794205210,
       "chunkId": "6a5019a719a9014c047e67aa1cf34453ab8392ce",
       "imports": [],
       "type": "esm",
@@ -25051,7 +25051,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts": {
       "mTimestamp": {
-        "mtime": 1782785554932.1577,
+        "mtime": 1782791613389.5273,
         "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
       },
       "chunkId": "aa6223cf35796d09344450a14919ad24c61174bb",
@@ -25206,57 +25206,71 @@
           }
         },
         {
-          "value": "../../Base/AudioManager",
+          "value": "../Battle/Base/BattleTargetBase",
           "resolved": "__unresolved_10",
           "loc": {
             "start": {
               "line": 11,
-              "column": 25
+              "column": 51
             },
             "end": {
               "line": 11,
+              "column": 84
+            }
+          }
+        },
+        {
+          "value": "../../Base/AudioManager",
+          "resolved": "__unresolved_11",
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 25
+            },
+            "end": {
+              "line": 12,
               "column": 50
             }
           }
         },
         {
           "value": "../SkAnim/FbxManager",
-          "resolved": "__unresolved_11",
+          "resolved": "__unresolved_12",
           "loc": {
             "start": {
-              "line": 13,
+              "line": 14,
               "column": 27
             },
             "end": {
-              "line": 13,
+              "line": 14,
               "column": 49
             }
           }
         },
         {
           "value": "../../Base/CameraMove",
-          "resolved": "__unresolved_12",
+          "resolved": "__unresolved_13",
           "loc": {
             "start": {
-              "line": 15,
+              "line": 16,
               "column": 27
             },
             "end": {
-              "line": 15,
+              "line": 16,
               "column": 50
             }
           }
         },
         {
           "value": "../Monster/MonsterCreate",
-          "resolved": "__unresolved_13",
+          "resolved": "__unresolved_14",
           "loc": {
             "start": {
-              "line": 16,
+              "line": 17,
               "column": 30
             },
             "end": {
-              "line": 16,
+              "line": 17,
               "column": 56
             }
           }
@@ -25352,6 +25366,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/FlashRedManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/BattleTargetBase.ts"
           },
           "messages": []
         },

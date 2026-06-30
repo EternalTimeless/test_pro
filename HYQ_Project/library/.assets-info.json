@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1782785660205.1433,
+      "time": 1782801729797.5034,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -622,11 +622,11 @@
       "uuid": "d16848b5-18b3-400e-8cad-f629e5124e7c"
     },
     "GameRes\\Prefab\\Prop_Brand.prefab": {
-      "time": 1782456246867.08,
+      "time": 1782789741208.7659,
       "uuid": "0138029d-bfaa-4d43-aa1c-63b3be01e8e5"
     },
     "GameRes\\Prefab\\Prop_Brand_2.prefab": {
-      "time": 1782456070296.5403,
+      "time": 1782789710656.284,
       "uuid": "09f7d7d0-5529-499d-8bbb-e3e6a9394677"
     },
     "GameRes\\Prefab\\Role.prefab": {
@@ -1506,23 +1506,23 @@
       "uuid": "376fb3f4-139f-4977-b12d-690632989155"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_0.prefab": {
-      "time": 1781766512443.353,
+      "time": 1782790893558.9646,
       "uuid": "22df2732-7376-4d1e-b3ec-198dc70edfad"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_1.prefab": {
-      "time": 1781766499065.8796,
+      "time": 1782790900714.7002,
       "uuid": "990960bd-9301-4607-aca1-7c65a19e12bc"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_2.prefab": {
-      "time": 1781766504947.533,
+      "time": 1782790906926.2336,
       "uuid": "ac2e0ce8-427b-413a-b957-031450d6f06c"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_3.prefab": {
-      "time": 1781766518416.806,
+      "time": 1782790913477.6465,
       "uuid": "2be39540-c3f7-4309-a0f6-bffb11e792ab"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_4.prefab": {
-      "time": 1781766531571.4707,
+      "time": 1782790919263.4495,
       "uuid": "a5d3d483-f17b-40f0-b2f6-f8315c79c88c"
     },
     "Script\\Base\\MoveRot\\MoveDrive.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782785554932.1577,
+      "time": 1782791613389.5273,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -4639,11 +4639,11 @@
       "uuid": "81aa95e0-c269-4b18-8696-ffc181d7f4a4"
     },
     "GameRes\\SLLYT_map\\mat": {
-      "time": 1782461767326.7424,
+      "time": 1782799574432.3167,
       "uuid": "04cf2e46-a468-425b-9d02-6803b10f18fa"
     },
     "GameRes\\SLLYT_map\\pre": {
-      "time": 1782461767440.9922,
+      "time": 1782799183391.4077,
       "uuid": "c588152e-c314-4759-a79c-e0c841054311"
     },
     "GameRes\\SLLYT_map": {
@@ -4735,11 +4735,11 @@
       "uuid": "c50fd25f-793b-4102-addc-457618fd2179"
     },
     "GameRes\\SLLYT_map\\mat\\M_youtong.mtl": {
-      "time": 1782186522951.2827,
+      "time": 1782799574432.3167,
       "uuid": "96a0e69e-e7ed-42d4-b597-f12ac6c6bad3"
     },
     "GameRes\\SLLYT_map\\mat\\M_youtong_02.mtl": {
-      "time": 1782186532604.128,
+      "time": 1782799183390.4094,
       "uuid": "2e9d5c03-2005-4a97-8a0a-99318171a55f"
     },
     "GameRes\\SLLYT_map\\mat\\ocean_realistic.effect": {
@@ -4807,7 +4807,7 @@
       "uuid": "38afd98c-7249-42cc-aff9-ad8736a4ec39"
     },
     "GameRes\\SLLYT_map\\pre\\SM_youtong_02.prefab": {
-      "time": 1782461858316.992,
+      "time": 1782800886854.0962,
       "uuid": "1dd89136-12dc-4b20-9296-810b3dc0ca2c"
     },
     "GameRes\\SLLYT_map\\tex\\T_beizengmen_a.jpg": {
@@ -5132,6 +5132,13 @@
     "GameRes\\SLLYT_map\\fbx\\SM_shizhu_02.fbx": {
       "time": 1782446295152.198,
       "uuid": "98fbc20f-086f-4fb4-96b4-9ab4a6f2673f"
+    },
+    "GameRes\\SLLYT_map\\mat\\M_youtong-001.mtl.meta": {
+      "time": 1782799301764.933
+    },
+    "GameRes\\SLLYT_map\\mat\\M_youtong-001.mtl": {
+      "time": 1782800862806.6028,
+      "uuid": "7ef7d2ba-2053-4adf-b470-1602c7f8a98b"
     }
   },
   "missing": {}

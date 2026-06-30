@@ -80,7 +80,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 1
     },
@@ -454,7 +454,10 @@
     "__prefab": {
       "__id__": 26
     },
-    "_customMaterial": null,
+    "_customMaterial": {
+      "__uuid__": "dea19d00-1fd6-4699-a3f7-2c8aae96e8cb",
+      "__expectedType__": "cc.Material"
+    },
     "_srcBlendFactor": 2,
     "_dstBlendFactor": 4,
     "_color": {
@@ -564,8 +567,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 207.5546875,
-      "height": 155.2
+      "width": 265.48,
+      "height": 124
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",

@@ -8,6 +8,7 @@ import TweenTool from '../../Tool/TweenTool';
 import EventManager from '../../Base/EventManager';
 import { AttackParkPlay } from '../Battle/Battle3D/AttackParkPlay';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
+import { MeshFlashData, MeshFlashSwitchData } from '../Battle/Base/BattleTargetBase';
 import AudioManager from '../../Base/AudioManager';
 import { count } from 'console';
 import { FbxManager } from '../SkAnim/FbxManager';
@@ -83,6 +84,7 @@ export class PropArms extends BattleTarget3D {
     private static readonly oilBurstShardDuration: number = 0.46;
     private static readonly oilHitFlashDuration: number = 0.16;
     private static readonly oilHitFlashColor: Color = new Color(255, 188, 36, 255);
+    private static readonly oilHitFlashIntensity: number = 0.5;
     private static readonly spriteWeaponVisualName: string = "jiatelin";
     private static readonly modelWeaponVisualName: string = "jiateling01";
 
@@ -1271,76 +1273,43 @@ export class PropArms extends BattleTarget3D {
     }
 
     private playOilBarrelHitFlash(): void {
-        if (this.tireList.length <= 0 || this.isDie) {
+        if (this.tireList.length <= 0 || this.isDie || !this.meshFlashDataList?.length) {
             return;
         }
-        if (this.oilHitFlashState || this.oilHitFlashRecords.length > 0) {
-            return;
-        }
-        const flashTemplate = PropArms.oilHitFlashMaterial;
-        if (!flashTemplate) {
-            PropArms.preloadOilHitFlashMaterial();
-            return;
-        }
+        FlashRedManager.instance.flashRed(
+            this.node,
+            this.getOilBarrelFlashDataList(),
+            PropArms.oilHitFlashDuration,
+            PropArms.oilHitFlashColor,
+            "oilBarrel_Hit"
+        );
+    }
 
-        const records: OilHitFlashMaterialRecord[] = [];
-        for (let i = 0; i < this.tireList.length; i++) {
-            const tire = this.tireList[i];
-            if (!tire || !tire.activeInHierarchy) {
+    private getOilBarrelFlashDataList(): MeshFlashData[] {
+        const result: MeshFlashData[] = [];
+        for (let i = 0; i < this.meshFlashDataList.length; i++) {
+            const data = this.meshFlashDataList[i];
+            if (!data?.meshRender) {
                 continue;
             }
-
-            const renderers: MeshRenderer[] = [];
-            this.collectMeshRenderers(tire, renderers);
-            for (let r = 0; r < renderers.length; r++) {
-                const renderer = renderers[r];
-                if (!renderer || !renderer.isValid) {
-                    continue;
-                }
-
-                const originalMaterials = [...renderer.sharedMaterials];
-                const flashMaterials = originalMaterials.slice();
-                let hasFlashMaterial = false;
-                for (let m = 0; m < originalMaterials.length; m++) {
-                    const original = originalMaterials[m];
-                    if (!original) {
-                        continue;
-                    }
-                    const flash = new Material();
-                    flash.copy(flashTemplate);
-                    this.copyOilBarrelBaseProperties(original, flash);
-                    flash.setProperty("flashColor", PropArms.oilHitFlashColor);
-                    flash.setProperty("flashProgress", 0);
-                    flash.setProperty("flashStrength", 1.8);
-                    flash.setProperty("edgeWidth", 0.2);
-                    this.applyOilHitFlashWorldY(renderer, flash);
-                    flashMaterials[m] = flash;
-                    hasFlashMaterial = true;
-                }
-                if (!hasFlashMaterial) {
-                    continue;
-                }
-                renderer.sharedMaterials = flashMaterials;
-                records.push({ renderer, originalMaterials, flashMaterials });
+            if (data.switchProps && data.switchProps.length > 0) {
+                result.push(data);
+                continue;
             }
+            const flashData = new MeshFlashData();
+            flashData.meshRender = data.meshRender;
+            flashData.colorProps = data.colorProps ? [...data.colorProps] : [];
+            const intensitySwitch = new MeshFlashSwitchData();
+            intensitySwitch.propName = "flashRedIntensity";
+            intensitySwitch.passIndex = 0;
+            intensitySwitch.matIndex = -1;
+            intensitySwitch.flashValue = PropArms.oilHitFlashIntensity;
+            intensitySwitch.restoreValue = 0;
+            intensitySwitch.useMaterialProp = false;
+            flashData.switchProps = [intensitySwitch];
+            result.push(flashData);
         }
-
-        if (records.length <= 0) {
-            return;
-        }
-
-        this.oilHitFlashRecords = records;
-        this.oilHitFlashState = { progress: 0 };
-        tween(this.oilHitFlashState)
-            .to(PropArms.oilHitFlashDuration, { progress: 1 }, {
-                onUpdate: (target: { progress: number }) => {
-                    this.applyOilHitFlashProgress(target.progress);
-                }
-            })
-            .call(() => {
-                this.restoreOilHitFlashMaterials();
-            })
-            .start();
+        return result;
     }
 
     private applyOilHitFlashWorldY(renderer: MeshRenderer, material: Material): void {
@@ -1924,25 +1893,7 @@ export class PropArms extends BattleTarget3D {
     }
 
     private restoreOilHitFlashMaterials(): void {
-        if (this.oilHitFlashState) {
-            Tween.stopAllByTarget(this.oilHitFlashState);
-            this.oilHitFlashState = null;
-        }
-
-        for (let r = 0; r < this.oilHitFlashRecords.length; r++) {
-            const record = this.oilHitFlashRecords[r];
-            if (record.renderer && record.renderer.isValid) {
-                record.renderer.sharedMaterials = [];
-                record.renderer.sharedMaterials = record.originalMaterials;
-            }
-            for (let i = 0; i < record.flashMaterials.length; i++) {
-                const material = record.flashMaterials[i];
-                if (material && material !== record.originalMaterials[i] && material.isValid) {
-                    material.destroy();
-                }
-            }
-        }
-        this.oilHitFlashRecords.length = 0;
+        FlashRedManager.instance.stopFlashRed(this.node);
     }
 
     private getMaterialProperty(material: Material, propName: string): any {

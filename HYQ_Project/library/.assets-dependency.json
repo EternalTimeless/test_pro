@@ -2535,10 +2535,12 @@
         "c8f66d17-351a-48da-a12c-0212d28575c4"
       ],
       "GameRes\\SLLYT_map\\mat\\M_youtong.mtl": [
-        "c8f66d17-351a-48da-a12c-0212d28575c4"
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "2c9c2681-b8db-4786-bf04-0ca447710be4"
       ],
       "GameRes\\SLLYT_map\\mat\\M_youtong_02.mtl": [
-        "c8f66d17-351a-48da-a12c-0212d28575c4"
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "2c9c2681-b8db-4786-bf04-0ca447710be4"
       ],
       "GameRes\\SLLYT_map\\mat\\ocean_realistic.mtl": [
         "eb9cc796-e90c-4759-a0c4-a04ce69a4ae7"
@@ -2566,6 +2568,15 @@
       ],
       "GameRes\\SLLYT_map\\mat\\M_shizhu_02.mtl": [
         "c8f66d17-351a-48da-a12c-0212d28575c4"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_youtong-001.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "2c9c2681-b8db-4786-bf04-0ca447710be4",
+        "6b7e860b-8ba2-45ae-b130-63eea1f9e208"
+      ],
+      "GameRes\\SLLYT_map\\mat\\M_youtong-002.mtl": [
+        "c8f66d17-351a-48da-a12c-0212d28575c4",
+        "2c9c2681-b8db-4786-bf04-0ca447710be4"
       ]
     }
   },
