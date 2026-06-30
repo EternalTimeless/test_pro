@@ -225,9 +225,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.pendingBulletBatchWarmType = null;
           this.bulletPrewarmPerFrame = 2;
           this.roleLayoutDirty = false;
-          this.roleAnimationDirty = true;
-          this.currentRoleAnimation = null;
-          this.currentRoleAnimationRoleCount = -1;
           this.isLock = false;
 
           // public MoveX: number = 8;
@@ -746,7 +743,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PoolEnum) : PoolEnum).role + oldRole.type, oldRole);
             this.roleLayoutDirty = true;
-            this.roleAnimationDirty = true;
             this.pendingRoleSwitchIndex++;
             count--;
           }
@@ -767,17 +763,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const isMove = this.move.isMove;
           const animName = this.isLock ? isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack : isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle;
 
-          if (!this.roleAnimationDirty && this.currentRoleAnimation === animName && this.currentRoleAnimationRoleCount === this.roleList.length) {
-            return;
-          }
-
           for (let i = 0; i < this.roleList.length; i++) {
-            this.roleList[i].fbxManager.setAnimation(animName, true);
-          }
+            const fbx = this.roleList[i].fbxManager;
+            const state = fbx.getAnimState(animName);
 
-          this.currentRoleAnimation = animName;
-          this.currentRoleAnimationRoleCount = this.roleList.length;
-          this.roleAnimationDirty = false;
+            if (fbx.curState !== animName || !(state != null && state.isPlaying)) {
+              fbx.setAnimation(animName, true);
+            }
+          }
         }
 
         addRole(role) {

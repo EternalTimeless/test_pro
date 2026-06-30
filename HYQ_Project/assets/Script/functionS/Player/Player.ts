@@ -70,9 +70,6 @@ export class Player extends UnityUpComponent {
     private pendingBulletBatchWarmType: BulletEnum = null;
     private readonly bulletPrewarmPerFrame: number = 2;
     private roleLayoutDirty: boolean = false;
-    private roleAnimationDirty: boolean = true;
-    private currentRoleAnimation: PlayerFBXAnimName = null;
-    private currentRoleAnimationRoleCount: number = -1;
 
     public isLock: boolean = false;
 
@@ -425,7 +422,6 @@ export class Player extends UnityUpComponent {
             oldRole.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + oldRole.type, oldRole);
             this.roleLayoutDirty = true;
-            this.roleAnimationDirty = true;
             this.pendingRoleSwitchIndex++;
             count--;
         }
@@ -448,18 +444,13 @@ export class Player extends UnityUpComponent {
             ? (isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack)
             : (isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle);
 
-        if (!this.roleAnimationDirty
-            && this.currentRoleAnimation === animName
-            && this.currentRoleAnimationRoleCount === this.roleList.length) {
-            return;
-        }
-
         for (let i = 0; i < this.roleList.length; i++) {
-            this.roleList[i].fbxManager.setAnimation(animName, true);
+            const fbx = this.roleList[i].fbxManager;
+            const state = fbx.getAnimState(animName);
+            if (fbx.curState !== animName || !state?.isPlaying) {
+                fbx.setAnimation(animName, true);
+            }
         }
-        this.currentRoleAnimation = animName;
-        this.currentRoleAnimationRoleCount = this.roleList.length;
-        this.roleAnimationDirty = false;
     }
 
 
