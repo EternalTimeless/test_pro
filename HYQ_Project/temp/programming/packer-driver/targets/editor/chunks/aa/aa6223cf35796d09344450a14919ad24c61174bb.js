@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, utils, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, MeshFlashData, MeshFlashSwitchData, AudioManager, FbxManager, CameraMove, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, utils, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, MeshFlashData, MeshFlashSwitchData, AudioManager, FbxManager, CameraMove, MoveDrive, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -85,6 +85,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("CameraMove", "../../Base/CameraMove", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfMoveDrive(extras) {
+    _reporterNs.report("MoveDrive", "../../Base/MoveRot/MoveDrive", _context.meta, extras);
+  }
+
   function _reportPossibleCrUseOfMonsterCreate(extras) {
     _reporterNs.report("MonsterCreate", "../Monster/MonsterCreate", _context.meta, extras);
   }
@@ -145,7 +149,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_14) {
       CameraMove = _unresolved_14.CameraMove;
     }, function (_unresolved_15) {
-      MonsterCreate = _unresolved_15.MonsterCreate;
+      MoveDrive = _unresolved_15.MoveDrive;
+    }, function (_unresolved_16) {
+      MonsterCreate = _unresolved_16.MonsterCreate;
     }],
     execute: function () {
       _crd = true;
@@ -235,6 +241,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "canTireCount", _descriptor8, this);
 
           _initializerDefineProperty(this, "wallHeight", _descriptor9, this);
+
+          this.runtimeVisualRoot = null;
         }
 
       }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "armsType", [_dec2], {
@@ -454,9 +462,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseTargetPosMap = new Map();
           this.weaponVisualScaleMap = new Map();
           this.manualBottomBaseNodeSet = new Set();
-          this.bottomBaseRollDegreesPerUnit = -110;
+          this.bottomBaseRollDegreesPerUnit = 110;
           this.bottomBaseRollAxis = new Vec3(0, 1, 0);
-          this.roleLayoutTemplateName = "Role_t";
           this.roleTemplateBottomBasePos = new Vec3();
           this.roleTemplateArmsPos = new Vec3();
           this.tempBottomBaseTargetPos = new Vec3();
@@ -608,7 +615,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         die() {
-          var _instance, _this$_curArms;
+          var _instance;
 
           this._isShake = false;
           this.restoreOilHitFlashMaterials();
@@ -667,7 +674,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.tireList = [];
           this.hpLabel.string = "";
-          Tween.stopAllByTarget((_this$_curArms = this._curArms) == null || (_this$_curArms = _this$_curArms.fbx) == null ? void 0 : _this$_curArms.node); // const time = this._curArms.fbx.setAnimation(AnimArms.up_out, false).duration;
+          Tween.stopAllByTarget(this.getCurrentArmsVisualRoot(this._curArms)); // const time = this._curArms.fbx.setAnimation(AnimArms.up_out, false).duration;
           // const halfTime = time * 0.5;
           // FBX动画结束后切回idle，发送全局事件让人跳走
           // this.scheduleOnce(() => {
@@ -701,11 +708,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           tween(this.wallNode) // .delay(halfTime)
           .call(() => {
-            var _this$_curArms$fbx$no, _this$_curArms2, _this$_curArms3;
+            var _this$getCurrentArmsV, _this$getCurrentArmsV2, _this$_curArms;
 
             this.isWallH = false; // 锁定到浮动基准中心，消除sin相位差异
 
-            const baseY = ((_this$_curArms$fbx$no = (_this$_curArms2 = this._curArms) == null || (_this$_curArms2 = _this$_curArms2.fbx) == null || (_this$_curArms2 = _this$_curArms2.node) == null ? void 0 : _this$_curArms2.y) != null ? _this$_curArms$fbx$no : 0) + ((_this$_curArms3 = this._curArms) == null ? void 0 : _this$_curArms3.wallHeight);
+            const baseY = ((_this$getCurrentArmsV = (_this$getCurrentArmsV2 = this.getCurrentArmsVisualRoot(this._curArms)) == null ? void 0 : _this$getCurrentArmsV2.y) != null ? _this$getCurrentArmsV : 0) + ((_this$_curArms = this._curArms) == null ? void 0 : _this$_curArms.wallHeight);
             this.wallNode.y = baseY; // 运行时捕获位置
 
             const throwY = this.wallNode.y + 3;
@@ -925,9 +932,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.unregisterTarget(this);
 
           const emitFinish = () => {
-            var _this$_curArms4;
+            var _this$_curArms2;
 
-            const armsInfo = (_this$_curArms4 = this._curArms) != null ? _this$_curArms4 : this.createLalianArmsInfo();
+            const armsInfo = (_this$_curArms2 = this._curArms) != null ? _this$_curArms2 : this.createLalianArmsInfo();
             (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
               error: Error()
             }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
@@ -967,7 +974,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         destroyOneTire() {
-          var _instance2, _this$_curArms5, _this$_curArms6;
+          var _instance2;
 
           const tire = this.tireList.shift();
           if (!tire) return; // 停止残留缩放动画并重置到原始大小
@@ -1051,8 +1058,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._setupTireBounce(); // FBX弹跳一下
 
 
-          Tween.stopAllByTarget((_this$_curArms5 = this._curArms) == null || (_this$_curArms5 = _this$_curArms5.fbx) == null ? void 0 : _this$_curArms5.node);
-          const fbxNode = (_this$_curArms6 = this._curArms) == null || (_this$_curArms6 = _this$_curArms6.fbx) == null ? void 0 : _this$_curArms6.node;
+          Tween.stopAllByTarget(this.getCurrentArmsVisualRoot(this._curArms));
+          const fbxNode = this.getCurrentArmsVisualRoot(this._curArms);
           if (!fbxNode) return;
           const delay = 0.05 + this.tireList.length * 0.05;
           const fbxY = fbxNode.y;
@@ -1165,28 +1172,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this._isStageAlive = false;
             this.node.active = false;
           } else {
-            var _this$_curArms7;
+            var _this$_curArms3;
 
             this.loadRoleTemplateLayout();
 
             for (let i = 0; i < this.armsInfoList.length; i++) {
-              const fbx = this.armsInfoList[i].fbx;
+              const arms = this.armsInfoList[i];
+              const visualRoot = this.getCurrentArmsVisualRoot(arms);
 
-              if (fbx != null && fbx.node) {
-                PropArms.prepareSpriteWeaponVisual(fbx.node);
-                fbx.node.active = i === this._level;
+              if (visualRoot) {
+                PropArms.prepareSpriteWeaponVisual(visualRoot);
+                visualRoot.active = i === this._level;
               }
             }
 
             this._curArms = this.armsInfoList[this._level];
+            const visualRoot = this.getCurrentArmsVisualRoot(this._curArms);
 
-            if (!((_this$_curArms7 = this._curArms) != null && (_this$_curArms7 = _this$_curArms7.fbx) != null && _this$_curArms7.node)) {
+            if (!((_this$_curArms3 = this._curArms) != null && _this$_curArms3.fbx) || !visualRoot) {
               this._isStageAlive = false;
               return;
             }
 
-            this._curArmsUsesSpriteVisual = this.hasNodeByName(this._curArms.fbx.node, PropArms.spriteWeaponVisualName);
-            this._curArmsSpriteTargetY = this._curArms.fbx.node.y;
+            this._curArmsUsesSpriteVisual = this.hasNodeByName(visualRoot, PropArms.spriteWeaponVisualName);
+            this._curArmsSpriteTargetY = visualRoot.y;
             this._isStageAlive = true;
             this.initLalian();
             const tireSpacing = this.tireSpacing;
@@ -1210,15 +1219,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             const scale = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
-            }), PoolManager) : PoolManager).instance.V3.set(this._curArms.fbx.node.scale); // 初始位置: FBX在地下
+            }), PoolManager) : PoolManager).instance.V3.set(visualRoot.scale); // 初始位置: FBX在地下
 
             if (this.hasRoleTemplateLayout) {
-              this._curArms.fbx.node.setPosition(this.roleTemplateArmsPos.x, -1, this.roleTemplateArmsPos.z);
+              visualRoot.setPosition(this.roleTemplateArmsPos.x, -1, this.roleTemplateArmsPos.z);
             } else {
-              this._curArms.fbx.node.y = -1;
+              visualRoot.y = -1;
             }
 
-            this._curArms.fbx.node.setScale(Vec3.ZERO);
+            visualRoot.setScale(Vec3.ZERO);
 
             this._curArms.fbx.setAnimation(AnimArms.idle, true);
 
@@ -1268,7 +1277,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             } // FBX快速升起
 
 
-            tween(this._curArms.fbx.node).delay(phase1Delay).call(() => {
+            tween(visualRoot).delay(phase1Delay).call(() => {
               this._curArms.fbx.setAnimation(AnimArms.up_ju, true);
             }).to(phase1RiseTime, {
               y: fbxPhase1TargetY,
@@ -1307,7 +1316,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 const liftTime = 0.08;
                 const targetFbxY = this.getArmsTargetY(i + 1);
                 const targetWallY = targetFbxY + wallHeight;
-                tween(this._curArms.fbx.node).delay(liftDelay).to(liftTime, {
+                tween(visualRoot).delay(liftDelay).to(liftTime, {
                   y: targetFbxY
                 }, {
                   easing: "backOut"
@@ -1373,10 +1382,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         collectManualBottomBases(maxCount) {
-          var _this$_curArms8;
-
           const result = [];
-          const roleNode = (_this$_curArms8 = this._curArms) == null || (_this$_curArms8 = _this$_curArms8.fbx) == null ? void 0 : _this$_curArms8.node;
+          const roleNode = this.getCurrentArmsVisualRoot(this._curArms);
 
           if (roleNode) {
             this.collectBottomBaseNodes(roleNode, result, true);
@@ -1483,7 +1490,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             root = root.parent;
           }
 
-          const template = this.findNodeByName(root, this.roleLayoutTemplateName);
+          const template = this.findNodeByName(root, "Role_t");
 
           if (!template || template === this.node || template.children.length < 2) {
             return;
@@ -1619,17 +1626,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.hasLastBottomBaseWorldZ = true;
         }
 
-        updateBottomBaseRoll() {
+        updateBottomBaseRoll(dt) {
           if (this.tireList.length <= 0) {
             this.hasLastBottomBaseWorldZ = false;
             return;
           }
 
           const curWorldZ = this.node.worldPositionZ;
+          const isGuideRollingOnly = !(_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+            error: Error()
+          }), MonsterCreate) : MonsterCreate).isStartMove && (_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
+            error: Error()
+          }), MoveDrive) : MoveDrive).isGuideMoveOnly;
 
           if (!(_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
             error: Error()
-          }), MonsterCreate) : MonsterCreate).isStartMove) {
+          }), MonsterCreate) : MonsterCreate).isStartMove && !isGuideRollingOnly) {
             this.lastBottomBaseWorldZ = curWorldZ;
             this.hasLastBottomBaseWorldZ = true;
             return;
@@ -1641,8 +1653,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          const deltaZ = curWorldZ - this.lastBottomBaseWorldZ;
+          let deltaZ = curWorldZ - this.lastBottomBaseWorldZ;
           this.lastBottomBaseWorldZ = curWorldZ;
+
+          if (isGuideRollingOnly) {
+            var _instance$monsterSpee, _instance3;
+
+            deltaZ = -Math.max(0, (_instance$monsterSpee = (_instance3 = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+              error: Error()
+            }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance3.monsterSpeed) != null ? _instance$monsterSpee : 0) * dt;
+          }
 
           if (Math.abs(deltaZ) <= 0.0001) {
             return;
@@ -2035,13 +2055,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         playSpriteWeaponHitScale(delay = 0) {
-          var _this$_curArms9;
-
           if (!this._curArmsUsesSpriteVisual) {
             return;
           }
 
-          const weaponRoot = (_this$_curArms9 = this._curArms) == null || (_this$_curArms9 = _this$_curArms9.fbx) == null ? void 0 : _this$_curArms9.node;
+          const weaponRoot = this.getCurrentArmsVisualRoot(this._curArms);
 
           if (!weaponRoot) {
             return;
@@ -2191,16 +2209,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getOilBurstShardDirection(index, burstCenter) {
-          var _instance3;
+          var _instance4;
 
           const dirs = [[-0.82, 0.42, -0.38], [0.78, 0.34, -0.52], [-0.48, 0.72, 0.5], [0.42, 0.58, 0.7], [-0.72, -0.18, 0.64], [0.68, -0.22, 0.62], [-0.22, 0.88, -0.42], [0.28, -0.36, -0.88]];
           const dir = dirs[index % dirs.length];
           let x = dir[0];
           let y = dir[1];
           let z = dir[2];
-          const cameraPos = (_instance3 = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+          const cameraPos = (_instance4 = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
             error: Error()
-          }), CameraMove) : CameraMove).instance) == null || (_instance3 = _instance3.node) == null ? void 0 : _instance3.worldPosition;
+          }), CameraMove) : CameraMove).instance) == null || (_instance4 = _instance4.node) == null ? void 0 : _instance4.worldPosition;
 
           if (cameraPos && burstCenter) {
             const toCameraX = cameraPos.x - burstCenter.x;
@@ -2669,6 +2687,39 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._level = this._fixedStageIndex;
         }
 
+        bindFixedStageRuntime(stageIndex, visualRoot, fbx) {
+          if (stageIndex < 0 || stageIndex >= this.armsInfoList.length) {
+            return;
+          }
+
+          const arms = this.armsInfoList[stageIndex];
+
+          if (!arms) {
+            return;
+          }
+
+          arms.runtimeVisualRoot = visualRoot;
+
+          if (fbx) {
+            arms.fbx = fbx;
+          }
+        }
+
+        applyRoleLayoutReference(bottomBaseRef, armsRef) {
+          this.roleTemplateLayoutLoaded = true;
+          this.hasRoleTemplateLayout = false;
+
+          if (bottomBaseRef != null && bottomBaseRef.isValid) {
+            this.node.inverseTransformPoint(this.roleTemplateBottomBasePos, bottomBaseRef.worldPosition);
+            this.hasRoleTemplateLayout = true;
+          }
+
+          if (armsRef != null && armsRef.isValid) {
+            this.node.inverseTransformPoint(this.roleTemplateArmsPos, armsRef.worldPosition);
+            this.hasRoleTemplateLayout = true;
+          }
+        }
+
         getBlockCollisionHalfZ() {
           var _this$tireScale, _this$tireScale2;
 
@@ -2687,20 +2738,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         _update(deltaTime) {
-          var _this$_curArms10;
-
           const dt = deltaTime; // 石板浮动
 
-          if (this.isWallH && this.wallNode && (_this$_curArms10 = this._curArms) != null && (_this$_curArms10 = _this$_curArms10.fbx) != null && _this$_curArms10.node) {
+          const visualRoot = this.getCurrentArmsVisualRoot(this._curArms);
+
+          if (this.isWallH && this.wallNode && visualRoot) {
             this._time += dt * this.speed;
-            const curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
+            const curY = visualRoot.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;
           } // 轮胎平滑插值到正确位置
 
 
           this._updateTireDrop(dt);
 
-          this.updateBottomBaseRoll(); // _isShake冷却（非销毁受击用）
+          this.updateBottomBaseRoll(dt); // _isShake冷却（非销毁受击用）
 
           if (this._shakeCooldown > 0) {
             this._shakeCooldown -= dt;
@@ -2756,16 +2807,26 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         resetStagePosition() {
-          var _instance$getFrontMon, _instance4;
+          var _instance$getFrontMon, _instance5;
 
           const worldPos = this.node.worldPosition;
-          const frontZ = (_instance$getFrontMon = (_instance4 = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+          const frontZ = (_instance$getFrontMon = (_instance5 = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
             error: Error()
-          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance4.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
+          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance5.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
 
           this._stageSpawnPos.set(worldPos.x, worldPos.y, frontZ - this.waveFrontGap);
 
           this.node.setWorldPosition(this._stageSpawnPos);
+        }
+
+        getCurrentArmsVisualRoot(arms) {
+          var _arms$runtimeVisualRo;
+
+          if (!arms) {
+            return null;
+          }
+
+          return (_arms$runtimeVisualRo = arms.runtimeVisualRoot) != null && _arms$runtimeVisualRo.isValid ? arms.runtimeVisualRoot : null;
         }
 
       }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.12, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilBurstDestroyScale = 1.01, _class6.oilBurstShardCount = 4, _class6.oilBurstShardDuration = 0.46, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.oilHitFlashIntensity = 0.5, _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {

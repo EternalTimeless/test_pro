@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16", "__unresolved_17", "__unresolved_18"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, director, instantiate, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, BulletMonsterCollisionManager, PropLalianGate, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _class4, _class5, _descriptor5, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _class7, _class8, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, director, instantiate, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, Role, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, BulletMonsterCollisionManager, PropLalianGate, FbxManager, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _class4, _class5, _descriptor5, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _class7, _class8, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -89,6 +89,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("PropLalianGate", "../Other/PropLalianGate", _context.meta, extras);
   }
 
+  function _reportPossibleCrUseOfFbxManager(extras) {
+    _reporterNs.report("FbxManager", "../SkAnim/FbxManager", _context.meta, extras);
+  }
+
   return {
     setters: [function (_unresolved_) {
       _reporterNs = _unresolved_;
@@ -119,25 +123,29 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_7) {
       Player = _unresolved_7.Player;
     }, function (_unresolved_8) {
-      EventManager = _unresolved_8.default;
+      Role = _unresolved_8.Role;
     }, function (_unresolved_9) {
-      UnityUpComponent = _unresolved_9.UnityUpComponent;
+      EventManager = _unresolved_9.default;
     }, function (_unresolved_10) {
-      GameOverPanel = _unresolved_10.GameOverPanel;
+      UnityUpComponent = _unresolved_10.UnityUpComponent;
     }, function (_unresolved_11) {
-      JumpManager = _unresolved_11.JumpManager;
+      GameOverPanel = _unresolved_11.GameOverPanel;
     }, function (_unresolved_12) {
-      FlashRedManager = _unresolved_12.FlashRedManager;
+      JumpManager = _unresolved_12.JumpManager;
     }, function (_unresolved_13) {
-      CameraMove = _unresolved_13.CameraMove;
+      FlashRedManager = _unresolved_13.FlashRedManager;
     }, function (_unresolved_14) {
-      PropArms = _unresolved_14.PropArms;
+      CameraMove = _unresolved_14.CameraMove;
     }, function (_unresolved_15) {
-      CreatePropBrand = _unresolved_15.CreatePropBrand;
+      PropArms = _unresolved_15.PropArms;
     }, function (_unresolved_16) {
-      BulletMonsterCollisionManager = _unresolved_16.default;
+      CreatePropBrand = _unresolved_16.CreatePropBrand;
     }, function (_unresolved_17) {
-      PropLalianGate = _unresolved_17.PropLalianGate;
+      BulletMonsterCollisionManager = _unresolved_17.default;
+    }, function (_unresolved_18) {
+      PropLalianGate = _unresolved_18.PropLalianGate;
+    }, function (_unresolved_19) {
+      FbxManager = _unresolved_19.FbxManager;
     }],
     execute: function () {
       _crd = true;
@@ -257,13 +265,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         displayName: '出生朝向随机',
         tooltip: '怪物出生时 Y 轴随机旋转角度，轻微打散朝向。'
       }), _dec22 = property({
-        type: _crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
-          error: Error()
-        }), PropArms) : PropArms,
-        tooltip: '中路Role_x模板。MonsterCreate会按怪物大波次一次性复制出Role_0/Role_1/Role_2并在开场全部摆好。留空时会自动寻找场景中带多阶段armsInfoList的PropArms。'
-      }), _dec23 = property({
         type: CCInteger,
-        tooltip: '中路Role_x的大波次数量，默认3。'
+        displayName: '油桶大波次数量',
+        tooltip: '中路油桶需要生成的固定大波次数量，默认 3。'
+      }), _dec23 = property({
+        type: [CCInteger],
+        displayName: '油桶对应波次索引',
+        tooltip: '按顺序对应 Role_0/1/2 所在的怪物波次。0 表示第 0 波。'
       }), _dec24 = property({
         type: CCFloat,
         displayName: '油桶自身前进速度',
@@ -320,14 +328,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._hasInitialFilled = false;
           this._spawnAllWavesOnStart = true;
 
-          _initializerDefineProperty(this, "waveRoleTemplate", _descriptor19, this);
+          _initializerDefineProperty(this, "waveRoleCount", _descriptor19, this);
 
-          _initializerDefineProperty(this, "waveRoleCount", _descriptor20, this);
+          _initializerDefineProperty(this, "waveRoleStageIndexList", _descriptor20, this);
 
           _initializerDefineProperty(this, "waveRoleForwardSpeed", _descriptor21, this);
 
           this._waveRoleNodes = [];
           this._waveStageStartZList = [];
+          this._waveStageIndexList = [];
           this._monsterWaveIndexMap = new WeakMap();
           this.waveRolePushGapInternal = 0.02;
           this.waveRolePlayerHalfX = 0.35;
@@ -362,13 +371,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         prepareWaveRoles() {
-          var _this$waveRoleTemplat;
-
           if (this._waveRoleNodes.length > 0) {
             return;
           }
 
-          const template = (_this$waveRoleTemplat = this.waveRoleTemplate) != null ? _this$waveRoleTemplat : this.findWaveRoleTemplate();
+          const template = this.findWaveRoleTemplate();
 
           if (!template || !template.node) {
             return;
@@ -381,7 +388,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           const allStageStartZList = this.getWaveStageStartZList(totalStageCount);
-          const stageZList = this.getBigWaveStartZList(allStageStartZList, this.waveRoleCount);
+          const stageIndexList = this.getWaveRoleStageIndexList(totalStageCount);
+          const stageZList = stageIndexList.map(stageIndex => allStageStartZList[stageIndex]);
+          this._waveStageIndexList = stageIndexList.slice();
           this._waveStageStartZList = stageZList.slice();
           const parent = template.node.parent;
 
@@ -389,39 +398,40 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          this._waveRoleNodes.length = 0;
-
-          this._waveRoleNodes.push(template);
-
-          template.setFixedStage(0);
-          template.node.active = true;
-
-          if (typeof stageZList[0] === 'number') {
-            this.resetWaveRoleToStageStart(template, stageZList[0]);
-          }
+          const roleList = [template];
 
           for (let i = 1; i < stageZList.length; i++) {
-            const cloneNode = instantiate(template.node);
-            parent.addChild(cloneNode);
-            const clone = cloneNode.getComponent(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
-              error: Error()
-            }), PropArms) : PropArms);
+            const clone = this.createWaveRoleClone(template, parent);
 
-            if (!clone) {
-              continue;
+            if (clone) {
+              roleList.push(clone);
             }
+          }
 
-            clone.setFixedStage(Math.min(i, clone.armsInfoList.length - 1));
-            clone.node.active = true;
+          this._waveRoleNodes.length = 0;
+
+          for (let i = 0; i < roleList.length; i++) {
+            const role = roleList[i];
+            this.configureWaveRoleByStage(role, i);
+            role.setFixedStage(Math.min(i, role.armsInfoList.length - 1));
+            role.node.active = true;
 
             if (typeof stageZList[i] === 'number') {
-              this.resetWaveRoleToStageStart(clone, stageZList[i]);
+              this.resetWaveRoleToStageStart(role, stageZList[i]);
             }
 
-            this._waveRoleNodes.push(clone);
+            this._waveRoleNodes.push(role);
           }
 
           this.bindWaveRolesToCreatePropBrand();
+        }
+
+        createWaveRoleClone(template, parent) {
+          const cloneNode = instantiate(template.node);
+          parent.addChild(cloneNode);
+          return cloneNode.getComponent(_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
+            error: Error()
+          }), PropArms) : PropArms);
         }
 
         findWaveRoleTemplate() {
@@ -444,12 +454,132 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PropArms) : PropArms);
 
-            if (arms && arms.armsInfoList.length > 1) {
+            if (arms && arms.armsInfoList.length > 1 && this.findNodeByName(node, 'Role_0')) {
               return arms;
             }
 
             for (let i = node.children.length - 1; i >= 0; i--) {
               stack.push(node.children[i]);
+            }
+          }
+
+          return null;
+        }
+
+        configureWaveRoleByStage(role, stageIndex) {
+          const roleRoot = this.findWaveRoleRoot(role);
+
+          if (!roleRoot) {
+            return;
+          }
+
+          const stageAnchor = this.findWaveRoleStageAnchor(roleRoot, stageIndex);
+
+          if (!stageAnchor) {
+            return;
+          }
+
+          this.applyWaveRoleStageSelection(roleRoot, stageAnchor);
+          const bottomBaseRef = this.findWaveRoleBottomBaseReference(stageAnchor);
+          const fbx = this.resolveWaveRoleFbx(stageAnchor);
+          role.bindFixedStageRuntime(stageIndex, stageAnchor, fbx);
+          role.applyRoleLayoutReference(bottomBaseRef, stageAnchor);
+        }
+
+        findWaveRoleRoot(role) {
+          if (!(role != null && role.node)) {
+            return null;
+          }
+
+          return role.node;
+        }
+
+        applyWaveRoleStageSelection(roleRoot, activeStage) {
+          roleRoot.active = true;
+
+          for (let i = 0; i < roleRoot.children.length; i++) {
+            const child = roleRoot.children[i];
+
+            if (!child) {
+              continue;
+            }
+
+            if (/^Role_\d+$/i.test(child.name)) {
+              child.active = child === activeStage;
+            }
+          }
+        }
+
+        resolveWaveRoleFbx(visualRoot) {
+          if (!visualRoot) {
+            return null;
+          }
+
+          const role = visualRoot.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role);
+
+          if (role != null && role.fbxManager) {
+            return role.fbxManager;
+          }
+
+          return visualRoot.getComponentInChildren(_crd && FbxManager === void 0 ? (_reportPossibleCrUseOfFbxManager({
+            error: Error()
+          }), FbxManager) : FbxManager);
+        }
+
+        findWaveRoleStageAnchor(roleRoot, stageIndex) {
+          const exact = this.findNodeByName(roleRoot, `Role_${stageIndex}`);
+
+          if (exact) {
+            return exact;
+          }
+
+          return this.findNodeByName(roleRoot, 'Role_0');
+        }
+
+        findWaveRoleBottomBaseReference(roleRoot) {
+          if (!roleRoot) {
+            return null;
+          }
+
+          const stack = [roleRoot];
+
+          while (stack.length > 0) {
+            const node = stack.pop();
+
+            if (!node) {
+              continue;
+            }
+
+            const name = node.name.toLowerCase();
+
+            if (name.indexOf('youtong') >= 0 || name.indexOf('oil') >= 0) {
+              return node;
+            }
+
+            for (let i = node.children.length - 1; i >= 0; i--) {
+              stack.push(node.children[i]);
+            }
+          }
+
+          return null;
+        }
+
+        findNodeByName(root, name) {
+          if (!root) {
+            return null;
+          }
+
+          if (root.name === name) {
+            return root;
+          }
+
+          for (let i = 0; i < root.children.length; i++) {
+            const result = this.findNodeByName(root.children[i], name);
+
+            if (result) {
+              return result;
             }
           }
 
@@ -474,6 +604,71 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           return count;
+        }
+
+        getWaveRoleStageIndexList(stageCount) {
+          var _this$waveRoleStageIn;
+
+          const result = [];
+
+          if (stageCount <= 0) {
+            return result;
+          }
+
+          const targetCount = Math.max(0, this.waveRoleCount);
+          const source = (_this$waveRoleStageIn = this.waveRoleStageIndexList) != null ? _this$waveRoleStageIn : [];
+
+          for (let i = 0; i < source.length; i++) {
+            const rawIndex = source[i];
+            const stageIndex = Math.min(stageCount - 1, Math.max(0, Math.floor(rawIndex)));
+
+            if (result.indexOf(stageIndex) >= 0) {
+              continue;
+            }
+
+            result.push(stageIndex);
+
+            if (targetCount > 0 && result.length >= targetCount) {
+              break;
+            }
+          }
+
+          if (result.length <= 0) {
+            result.push(0);
+          }
+
+          while (targetCount > 0 && result.length < Math.min(targetCount, stageCount)) {
+            const fallbackIndex = Math.min(stageCount - 1, result[result.length - 1] + 1);
+
+            if (result.indexOf(fallbackIndex) >= 0) {
+              break;
+            }
+
+            result.push(fallbackIndex);
+          }
+
+          result.sort((a, b) => a - b);
+          return result;
+        }
+
+        buildStageToWaveRoleIndexList(stageCount, stageStartIndexList) {
+          const result = [];
+
+          if (stageCount <= 0 || stageStartIndexList.length <= 0) {
+            return result;
+          }
+
+          let waveIndex = 0;
+
+          for (let i = 0; i < stageCount; i++) {
+            while (waveIndex + 1 < stageStartIndexList.length && i >= stageStartIndexList[waveIndex + 1]) {
+              waveIndex++;
+            }
+
+            result.push(waveIndex);
+          }
+
+          return result;
         }
 
         getBigWaveStartZList(allStageStartZList, bigWaveCount) {
@@ -688,7 +883,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bossDieCount = 0;
           this.monsterMatIns = [0, 0, 0];
           this._monsterWaveIndexMap = new WeakMap();
-          const stageToBigWaveList = this.buildStageToBigWaveIndex(this.getConfiguredWaveCount(), Math.max(1, this.waveRoleCount));
+          const stageToBigWaveList = this.buildStageToWaveRoleIndexList(this.getConfiguredWaveCount(), this.getWaveRoleStageIndexList(this.getConfiguredWaveCount()));
           let stageCursor = 0;
 
           for (let i = 0; i < stageList.length; i++) {
@@ -1790,19 +1985,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 8;
         }
-      }), _descriptor19 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleTemplate", [_dec22], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function () {
-          return null;
-        }
-      }), _descriptor20 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleCount", [_dec23], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleCount", [_dec22], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 3;
+        }
+      }), _descriptor20 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleStageIndexList", [_dec23], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return [0, 2, 5];
         }
       }), _descriptor21 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleForwardSpeed", [_dec24], {
         configurable: true,

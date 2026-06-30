@@ -17,6 +17,7 @@ import { PropArms } from '../Other/PropArms';
 import { CreatePropBrand } from '../Other/CreatePropBrand';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import { PropLalianGate } from '../Other/PropLalianGate';
+import { FbxManager } from '../SkAnim/FbxManager';
 const { ccclass, property } = _decorator;
 const tempV3 = new Vec3();
 
@@ -128,14 +129,15 @@ export class MonsterCreate extends UnityUpComponent {
     private stage_1: number = 15;
     private _hasInitialFilled: boolean = false;
     private _spawnAllWavesOnStart: boolean = true;
-    @property({ type: PropArms, tooltip: '中路Role_x模板。MonsterCreate会按怪物大波次一次性复制出Role_0/Role_1/Role_2并在开场全部摆好。留空时会自动寻找场景中带多阶段armsInfoList的PropArms。' })
-    public waveRoleTemplate: PropArms = null;
-    @property({ type: CCInteger, tooltip: '中路Role_x的大波次数量，默认3。' })
+    @property({ type: CCInteger, displayName: '油桶大波次数量', tooltip: '中路油桶需要生成的固定大波次数量，默认 3。' })
     public waveRoleCount: number = 3;
+    @property({ type: [CCInteger], displayName: '油桶对应波次索引', tooltip: '按顺序对应 Role_0/1/2 所在的怪物波次。0 表示第 0 波。' })
+    public waveRoleStageIndexList: number[] = [0, 2, 5];
     @property({ type: CCFloat, displayName: '油桶自身前进速度', tooltip: 'Role_0/1/2 油桶沿 Z 轴自身前进的速度，不再由怪物位置反推。' })
     public waveRoleForwardSpeed: number = 2;
     private _waveRoleNodes: PropArms[] = [];
     private _waveStageStartZList: number[] = [];
+    private _waveStageIndexList: number[] = [];
     private _monsterWaveIndexMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();
     private readonly waveRolePushGapInternal: number = 0.02;
     private readonly waveRolePlayerHalfX: number = 0.35;
@@ -166,7 +168,7 @@ export class MonsterCreate extends UnityUpComponent {
             return;
         }
 
-        const template = this.waveRoleTemplate ?? this.findWaveRoleTemplate();
+        const template = this.findWaveRoleTemplate();
         if (!template || !template.node) {
             return;
         }
@@ -177,38 +179,42 @@ export class MonsterCreate extends UnityUpComponent {
         }
 
         const allStageStartZList = this.getWaveStageStartZList(totalStageCount);
-        const stageZList = this.getBigWaveStartZList(allStageStartZList, this.waveRoleCount);
+        const stageIndexList = this.getWaveRoleStageIndexList(totalStageCount);
+        const stageZList = stageIndexList.map((stageIndex) => allStageStartZList[stageIndex]);
+        this._waveStageIndexList = stageIndexList.slice();
         this._waveStageStartZList = stageZList.slice();
         const parent = template.node.parent;
         if (!parent) {
             return;
         }
 
-        this._waveRoleNodes.length = 0;
-        this._waveRoleNodes.push(template);
-
-        template.setFixedStage(0);
-        template.node.active = true;
-        if (typeof stageZList[0] === 'number') {
-            this.resetWaveRoleToStageStart(template, stageZList[0]);
+        const roleList: PropArms[] = [template];
+        for (let i = 1; i < stageZList.length; i++) {
+            const clone = this.createWaveRoleClone(template, parent);
+            if (clone) {
+                roleList.push(clone);
+            }
         }
 
-        for (let i = 1; i < stageZList.length; i++) {
-            const cloneNode = instantiate(template.node);
-            parent.addChild(cloneNode);
-            const clone = cloneNode.getComponent(PropArms);
-            if (!clone) {
-                continue;
-            }
-            clone.setFixedStage(Math.min(i, clone.armsInfoList.length - 1));
-            clone.node.active = true;
+        this._waveRoleNodes.length = 0;
+        for (let i = 0; i < roleList.length; i++) {
+            const role = roleList[i];
+            this.configureWaveRoleByStage(role, i);
+            role.setFixedStage(Math.min(i, role.armsInfoList.length - 1));
+            role.node.active = true;
             if (typeof stageZList[i] === 'number') {
-                this.resetWaveRoleToStageStart(clone, stageZList[i]);
+                this.resetWaveRoleToStageStart(role, stageZList[i]);
             }
-            this._waveRoleNodes.push(clone);
+            this._waveRoleNodes.push(role);
         }
 
         this.bindWaveRolesToCreatePropBrand();
+    }
+
+    private createWaveRoleClone(template: PropArms, parent: Node) {
+        const cloneNode = instantiate(template.node);
+        parent.addChild(cloneNode);
+        return cloneNode.getComponent(PropArms);
     }
 
     private findWaveRoleTemplate() {
@@ -224,11 +230,106 @@ export class MonsterCreate extends UnityUpComponent {
                 continue;
             }
             const arms = node.getComponent(PropArms);
-            if (arms && arms.armsInfoList.length > 1) {
+            if (arms && arms.armsInfoList.length > 1 && this.findNodeByName(node, 'Role_0')) {
                 return arms;
             }
             for (let i = node.children.length - 1; i >= 0; i--) {
                 stack.push(node.children[i]);
+            }
+        }
+        return null;
+    }
+
+    private configureWaveRoleByStage(role: PropArms, stageIndex: number) {
+        const roleRoot = this.findWaveRoleRoot(role);
+        if (!roleRoot) {
+            return;
+        }
+
+        const stageAnchor = this.findWaveRoleStageAnchor(roleRoot, stageIndex);
+        if (!stageAnchor) {
+            return;
+        }
+
+        this.applyWaveRoleStageSelection(roleRoot, stageAnchor);
+        const bottomBaseRef = this.findWaveRoleBottomBaseReference(stageAnchor);
+        const fbx = this.resolveWaveRoleFbx(stageAnchor);
+
+        role.bindFixedStageRuntime(stageIndex, stageAnchor, fbx);
+        role.applyRoleLayoutReference(bottomBaseRef, stageAnchor);
+    }
+
+    private findWaveRoleRoot(role: PropArms) {
+        if (!role?.node) {
+            return null;
+        }
+        return role.node;
+    }
+
+    private applyWaveRoleStageSelection(roleRoot: Node, activeStage: Node) {
+        roleRoot.active = true;
+        for (let i = 0; i < roleRoot.children.length; i++) {
+            const child = roleRoot.children[i];
+            if (!child) {
+                continue;
+            }
+            if (/^Role_\d+$/i.test(child.name)) {
+                child.active = child === activeStage;
+            }
+        }
+    }
+
+    private resolveWaveRoleFbx(visualRoot: Node | null) {
+        if (!visualRoot) {
+            return null;
+        }
+        const role = visualRoot.getComponent(Role);
+        if (role?.fbxManager) {
+            return role.fbxManager;
+        }
+        return visualRoot.getComponentInChildren(FbxManager);
+    }
+
+    private findWaveRoleStageAnchor(roleRoot: Node, stageIndex: number) {
+        const exact = this.findNodeByName(roleRoot, `Role_${stageIndex}`);
+        if (exact) {
+            return exact;
+        }
+        return this.findNodeByName(roleRoot, 'Role_0');
+    }
+
+    private findWaveRoleBottomBaseReference(roleRoot: Node) {
+        if (!roleRoot) {
+            return null;
+        }
+        const stack: Node[] = [roleRoot];
+        while (stack.length > 0) {
+            const node = stack.pop();
+            if (!node) {
+                continue;
+            }
+            const name = node.name.toLowerCase();
+            if (name.indexOf('youtong') >= 0 || name.indexOf('oil') >= 0) {
+                return node;
+            }
+            for (let i = node.children.length - 1; i >= 0; i--) {
+                stack.push(node.children[i]);
+            }
+        }
+        return null;
+    }
+
+    private findNodeByName(root: Node, name: string): Node | null {
+        if (!root) {
+            return null;
+        }
+        if (root.name === name) {
+            return root;
+        }
+        for (let i = 0; i < root.children.length; i++) {
+            const result = this.findNodeByName(root.children[i], name);
+            if (result) {
+                return result;
             }
         }
         return null;
@@ -246,6 +347,58 @@ export class MonsterCreate extends UnityUpComponent {
             count += loopCount;
         }
         return count;
+    }
+
+    private getWaveRoleStageIndexList(stageCount: number) {
+        const result: number[] = [];
+        if (stageCount <= 0) {
+            return result;
+        }
+
+        const targetCount = Math.max(0, this.waveRoleCount);
+        const source = this.waveRoleStageIndexList ?? [];
+        for (let i = 0; i < source.length; i++) {
+            const rawIndex = source[i];
+            const stageIndex = Math.min(stageCount - 1, Math.max(0, Math.floor(rawIndex)));
+            if (result.indexOf(stageIndex) >= 0) {
+                continue;
+            }
+            result.push(stageIndex);
+            if (targetCount > 0 && result.length >= targetCount) {
+                break;
+            }
+        }
+
+        if (result.length <= 0) {
+            result.push(0);
+        }
+
+        while (targetCount > 0 && result.length < Math.min(targetCount, stageCount)) {
+            const fallbackIndex = Math.min(stageCount - 1, result[result.length - 1] + 1);
+            if (result.indexOf(fallbackIndex) >= 0) {
+                break;
+            }
+            result.push(fallbackIndex);
+        }
+
+        result.sort((a, b) => a - b);
+        return result;
+    }
+
+    private buildStageToWaveRoleIndexList(stageCount: number, stageStartIndexList: number[]) {
+        const result: number[] = [];
+        if (stageCount <= 0 || stageStartIndexList.length <= 0) {
+            return result;
+        }
+
+        let waveIndex = 0;
+        for (let i = 0; i < stageCount; i++) {
+            while (waveIndex + 1 < stageStartIndexList.length && i >= stageStartIndexList[waveIndex + 1]) {
+                waveIndex++;
+            }
+            result.push(waveIndex);
+        }
+        return result;
     }
 
     private getBigWaveStartZList(allStageStartZList: number[], bigWaveCount: number) {
@@ -424,7 +577,10 @@ export class MonsterCreate extends UnityUpComponent {
         this.monsterMatIns = [0, 0, 0];
         this._monsterWaveIndexMap = new WeakMap();
 
-        const stageToBigWaveList = this.buildStageToBigWaveIndex(this.getConfiguredWaveCount(), Math.max(1, this.waveRoleCount));
+        const stageToBigWaveList = this.buildStageToWaveRoleIndexList(
+            this.getConfiguredWaveCount(),
+            this.getWaveRoleStageIndexList(this.getConfiguredWaveCount()),
+        );
         let stageCursor = 0;
 
         for (let i = 0; i < stageList.length; i++) {

@@ -14,6 +14,7 @@ import { count } from 'console';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { JumpManager } from '../Jump/JumpManager';
 import { CameraMove } from '../../Base/CameraMove';
+import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
 import { MonsterCreate } from '../Monster/MonsterCreate';
 const { ccclass, property } = _decorator;
 
@@ -64,6 +65,8 @@ export class ArmsInfo {
 
     @property({ type: CCFloat, displayName: '石板/承载物高度偏移', tooltip: 'wallNode 相对武器模型的高度偏移，用于让承载物跟随武器上下浮动。' })
     public wallHeight: number = 0.5;
+
+    public runtimeVisualRoot: Node = null;
 
 }
 
@@ -248,9 +251,8 @@ export class PropArms extends BattleTarget3D {
     private readonly bottomBaseTargetPosMap: Map<Node, Vec3> = new Map();
     private readonly weaponVisualScaleMap: Map<Node, Vec3> = new Map();
     private readonly manualBottomBaseNodeSet: Set<Node> = new Set();
-    private readonly bottomBaseRollDegreesPerUnit: number = -110;
+    private readonly bottomBaseRollDegreesPerUnit: number = 110;
     private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 1, 0);
-    private readonly roleLayoutTemplateName: string = "Role_t";
     private readonly roleTemplateBottomBasePos: Vec3 = new Vec3();
     private readonly roleTemplateArmsPos: Vec3 = new Vec3();
     private readonly tempBottomBaseTargetPos: Vec3 = new Vec3();
@@ -349,7 +351,7 @@ export class PropArms extends BattleTarget3D {
         }
         this.tireList = [];
         this.hpLabel.string = "";
-        Tween.stopAllByTarget(this._curArms?.fbx?.node);
+        Tween.stopAllByTarget(this.getCurrentArmsVisualRoot(this._curArms));
         // const time = this._curArms.fbx.setAnimation(AnimArms.up_out, false).duration;
         // const halfTime = time * 0.5;
 
@@ -380,7 +382,7 @@ export class PropArms extends BattleTarget3D {
             .call(() => {
                 this.isWallH = false;
                 // 锁定到浮动基准中心，消除sin相位差异
-                const baseY = (this._curArms?.fbx?.node?.y ?? 0) + this._curArms?.wallHeight;
+                const baseY = (this.getCurrentArmsVisualRoot(this._curArms)?.y ?? 0) + this._curArms?.wallHeight;
                 this.wallNode.y = baseY;
 
                 // 运行时捕获位置
@@ -650,8 +652,8 @@ export class PropArms extends BattleTarget3D {
         this._setupTireBounce();
 
         // FBX弹跳一下
-        Tween.stopAllByTarget(this._curArms?.fbx?.node);
-        const fbxNode = this._curArms?.fbx?.node;
+        Tween.stopAllByTarget(this.getCurrentArmsVisualRoot(this._curArms));
+        const fbxNode = this.getCurrentArmsVisualRoot(this._curArms);
         if (!fbxNode) return;
         const delay = 0.05 + this.tireList.length * 0.05;
         const fbxY = fbxNode.y;
@@ -747,19 +749,21 @@ export class PropArms extends BattleTarget3D {
         } else {
             this.loadRoleTemplateLayout();
             for (let i = 0; i < this.armsInfoList.length; i++) {
-                const fbx = this.armsInfoList[i].fbx;
-                if (fbx?.node) {
-                    PropArms.prepareSpriteWeaponVisual(fbx.node);
-                    fbx.node.active = i === this._level;
+                const arms = this.armsInfoList[i];
+                const visualRoot = this.getCurrentArmsVisualRoot(arms);
+                if (visualRoot) {
+                    PropArms.prepareSpriteWeaponVisual(visualRoot);
+                    visualRoot.active = i === this._level;
                 }
             }
             this._curArms = this.armsInfoList[this._level];
-            if (!this._curArms?.fbx?.node) {
+            const visualRoot = this.getCurrentArmsVisualRoot(this._curArms);
+            if (!this._curArms?.fbx || !visualRoot) {
                 this._isStageAlive = false;
                 return;
             }
-            this._curArmsUsesSpriteVisual = this.hasNodeByName(this._curArms.fbx.node, PropArms.spriteWeaponVisualName);
-            this._curArmsSpriteTargetY = this._curArms.fbx.node.y;
+            this._curArmsUsesSpriteVisual = this.hasNodeByName(visualRoot, PropArms.spriteWeaponVisualName);
+            this._curArmsSpriteTargetY = visualRoot.y;
             this._isStageAlive = true;
             this.initLalian();
 
@@ -781,15 +785,15 @@ export class PropArms extends BattleTarget3D {
             this.hpLabel.node.setScale(0, 0, 0);
 
             // 保存FBX原始scale（复用PoolManager的V3避免GC）
-            const scale = PoolManager.instance.V3.set(this._curArms.fbx.node.scale);
+            const scale = PoolManager.instance.V3.set(visualRoot.scale);
 
             // 初始位置: FBX在地下
             if (this.hasRoleTemplateLayout) {
-                this._curArms.fbx.node.setPosition(this.roleTemplateArmsPos.x, -1, this.roleTemplateArmsPos.z);
+                visualRoot.setPosition(this.roleTemplateArmsPos.x, -1, this.roleTemplateArmsPos.z);
             } else {
-                this._curArms.fbx.node.y = -1;
+                visualRoot.y = -1;
             }
-            this._curArms.fbx.node.setScale(Vec3.ZERO);
+            visualRoot.setScale(Vec3.ZERO);
             this._curArms.fbx.setAnimation(AnimArms.idle, true);
             this.isWallH = false;
             this.resetBottomBaseRollState();
@@ -834,7 +838,7 @@ export class PropArms extends BattleTarget3D {
             }
 
             // FBX快速升起
-            tween(this._curArms.fbx.node)
+            tween(visualRoot)
                 .delay(phase1Delay)
                 .call(() => { this._curArms.fbx.setAnimation(AnimArms.up_ju, true); })
                 .to(phase1RiseTime, { y: fbxPhase1TargetY, scale: scale }, { easing: "backOut" })
@@ -871,7 +875,7 @@ export class PropArms extends BattleTarget3D {
                     const targetFbxY = this.getArmsTargetY(i + 1);
                     const targetWallY = targetFbxY + wallHeight;
 
-                    tween(this._curArms.fbx.node)
+                    tween(visualRoot)
                         .delay(liftDelay)
                         .to(liftTime, { y: targetFbxY }, { easing: "backOut" })
                         .start();
@@ -921,7 +925,7 @@ export class PropArms extends BattleTarget3D {
 
     private collectManualBottomBases(maxCount: number): Node[] {
         const result: Node[] = [];
-        const roleNode = this._curArms?.fbx?.node;
+        const roleNode = this.getCurrentArmsVisualRoot(this._curArms);
         if (roleNode) {
             this.collectBottomBaseNodes(roleNode, result, true);
         }
@@ -1011,7 +1015,7 @@ export class PropArms extends BattleTarget3D {
             root = root.parent;
         }
 
-        const template = this.findNodeByName(root, this.roleLayoutTemplateName);
+        const template = this.findNodeByName(root, "Role_t");
         if (!template || template === this.node || template.children.length < 2) {
             return;
         }
@@ -1136,14 +1140,15 @@ export class PropArms extends BattleTarget3D {
         this.hasLastBottomBaseWorldZ = true;
     }
 
-    private updateBottomBaseRoll(): void {
+    private updateBottomBaseRoll(dt: number): void {
         if (this.tireList.length <= 0) {
             this.hasLastBottomBaseWorldZ = false;
             return;
         }
 
         const curWorldZ = this.node.worldPositionZ;
-        if (!MonsterCreate.isStartMove) {
+        const isGuideRollingOnly = !MonsterCreate.isStartMove && MoveDrive.isGuideMoveOnly;
+        if (!MonsterCreate.isStartMove && !isGuideRollingOnly) {
             this.lastBottomBaseWorldZ = curWorldZ;
             this.hasLastBottomBaseWorldZ = true;
             return;
@@ -1155,8 +1160,11 @@ export class PropArms extends BattleTarget3D {
             return;
         }
 
-        const deltaZ = curWorldZ - this.lastBottomBaseWorldZ;
+        let deltaZ = curWorldZ - this.lastBottomBaseWorldZ;
         this.lastBottomBaseWorldZ = curWorldZ;
+        if (isGuideRollingOnly) {
+            deltaZ = -Math.max(0, MonsterCreate.instance?.monsterSpeed ?? 0) * dt;
+        }
         if (Math.abs(deltaZ) <= 0.0001) {
             return;
         }
@@ -1535,7 +1543,7 @@ export class PropArms extends BattleTarget3D {
         if (!this._curArmsUsesSpriteVisual) {
             return;
         }
-        const weaponRoot = this._curArms?.fbx?.node;
+        const weaponRoot = this.getCurrentArmsVisualRoot(this._curArms);
         if (!weaponRoot) {
             return;
         }
@@ -2074,6 +2082,34 @@ export class PropArms extends BattleTarget3D {
         this._level = this._fixedStageIndex;
     }
 
+    public bindFixedStageRuntime(stageIndex: number, visualRoot: Node | null, fbx: FbxManager | null): void {
+        if (stageIndex < 0 || stageIndex >= this.armsInfoList.length) {
+            return;
+        }
+        const arms = this.armsInfoList[stageIndex];
+        if (!arms) {
+            return;
+        }
+        arms.runtimeVisualRoot = visualRoot;
+        if (fbx) {
+            arms.fbx = fbx;
+        }
+    }
+
+    public applyRoleLayoutReference(bottomBaseRef: Node | null, armsRef: Node | null): void {
+        this.roleTemplateLayoutLoaded = true;
+        this.hasRoleTemplateLayout = false;
+
+        if (bottomBaseRef?.isValid) {
+            this.node.inverseTransformPoint(this.roleTemplateBottomBasePos, bottomBaseRef.worldPosition);
+            this.hasRoleTemplateLayout = true;
+        }
+        if (armsRef?.isValid) {
+            this.node.inverseTransformPoint(this.roleTemplateArmsPos, armsRef.worldPosition);
+            this.hasRoleTemplateLayout = true;
+        }
+    }
+
     public getBlockCollisionHalfZ() {
         const tireDepth = this.tireScale?.z || this.tireScale?.x || 1;
         const tireHalfZ = tireDepth * 0.5;
@@ -2088,15 +2124,16 @@ export class PropArms extends BattleTarget3D {
     _update(deltaTime: number) {
         const dt = deltaTime;
         // 石板浮动
-        if (this.isWallH && this.wallNode && this._curArms?.fbx?.node) {
+        const visualRoot = this.getCurrentArmsVisualRoot(this._curArms);
+        if (this.isWallH && this.wallNode && visualRoot) {
             this._time += dt * this.speed;
-            const curY = this._curArms.fbx.node.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
+            const curY = visualRoot.y + this._curArms.wallHeight + Math.sin(this._time) * this.h;
             this.wallNode.y = curY;
         }
 
         // 轮胎平滑插值到正确位置
         this._updateTireDrop(dt);
-        this.updateBottomBaseRoll();
+        this.updateBottomBaseRoll(dt);
 
         // _isShake冷却（非销毁受击用）
         if (this._shakeCooldown > 0) {
@@ -2150,6 +2187,13 @@ export class PropArms extends BattleTarget3D {
         const frontZ = MonsterCreate.instance?.getFrontMonsterWorldZ(worldPos.z) ?? worldPos.z;
         this._stageSpawnPos.set(worldPos.x, worldPos.y, frontZ - this.waveFrontGap);
         this.node.setWorldPosition(this._stageSpawnPos);
+    }
+
+    private getCurrentArmsVisualRoot(arms: ArmsInfo | null): Node | null {
+        if (!arms) {
+            return null;
+        }
+        return arms.runtimeVisualRoot?.isValid ? arms.runtimeVisualRoot : null;
     }
 
 

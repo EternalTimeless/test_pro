@@ -485,6 +485,7 @@
             "GameRes\\SLLYT_map\\mat\\M_qiao.mtl",
             "GameRes\\SLLYT_map\\mat\\M_shizhu_02.mtl",
             "GameRes\\SLLYT_map\\mat\\M_tengman.mtl",
+            "GameRes\\SLLYT_map\\mat\\M_youtong-001.mtl",
             "GameRes\\SLLYT_map\\mat\\M_youtong.mtl",
             "GameRes\\SLLYT_map\\mat\\M_youtong_02.mtl",
             "GameRes\\SLLYT_map\\mat\\ocean_realistic.mtl",
@@ -732,8 +733,7 @@
             "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Shrapnel.ts",
             "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangeTowerAttack.ts",
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts",
-            "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts",
-            "GameRes\\SLLYT_map\\mat\\M_youtong-001.mtl"
+            "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts"
         ]
     }
 }
