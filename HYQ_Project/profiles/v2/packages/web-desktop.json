@@ -1,0 +1,22 @@
+{
+  "__version__": "1.0.1",
+  "builder": {
+    "common": {
+      "binGroupConfig": {
+        "threshold": 16,
+        "enable": false
+      },
+      "polyfills": {
+        "asyncFunctions": true
+      },
+      "nativeCodeBundleMode": "asmjs",
+      "scenes": [
+        {
+          "url": "db://assets/Scene/Game_3D-002.scene",
+          "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
+        }
+      ],
+      "startScene": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
+    }
+  }
+}

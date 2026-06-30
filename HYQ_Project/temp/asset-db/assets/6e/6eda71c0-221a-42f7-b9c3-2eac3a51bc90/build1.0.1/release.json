@@ -1,0 +1,90 @@
+[
+    1,
+    [
+        "045it4iltPcJTxfsA91Jpw"
+    ],
+    [
+        "_effectAsset"
+    ],
+    [
+        [
+            "cc.Material",
+            [
+                "_name",
+                "_states",
+                "_defines",
+                "_props"
+            ],
+            0,
+            12
+        ]
+    ],
+    [
+        [
+            0,
+            0,
+            1,
+            2,
+            3,
+            4
+        ]
+    ],
+    [
+        [
+            0,
+            "OilBarrelHitFlash",
+            [
+                {
+                    "rasterizerState": {
+                        "cullMode": 0
+                    },
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                }
+            ],
+            [
+                {}
+            ],
+            [
+                [
+                    [
+                        {
+                            "flashProgress": 0,
+                            "flashStrength": 1.8,
+                            "edgeWidth": 0.2,
+                            "worldCenterY": 0,
+                            "worldHalfY": 0.5
+                        },
+                        "mainColor",
+                        8,
+                        [
+                            4,
+                            4294967295
+                        ],
+                        "flashColor",
+                        8,
+                        [
+                            4,
+                            4280597759
+                        ]
+                    ]
+                ],
+                11
+            ]
+        ]
+    ],
+    0,
+    0,
+    [
+        0
+    ],
+    [
+        0
+    ],
+    [
+        0
+    ]
+]

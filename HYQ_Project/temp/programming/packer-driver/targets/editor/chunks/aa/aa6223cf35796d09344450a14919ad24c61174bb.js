@@ -553,7 +553,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         // @property(Node)
         // public effect_ss: Node;
         get hitNode() {
-          if (this.hasLalian && this.lalianCube) {
+          if (this.hasLalian && this.lalianCube && this.lalianCube.isValid) {
             return this.lalianCube;
           }
 

@@ -54,8 +54,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       _export("default", PBASDK = class PBASDK {
         /** 游戏加载后调用 */
         static Init(material, maxStage) {
-          var google_play = "https://play.google.com/store/apps/details?id=com.greenmushroom.boomblitz.gp&hl=en_US";
-          var appstore = "https://apps.apple.com/us/app/top-heroes/id6450953550";
+          var google_play = "";
+          var appstore = "";
           (_crd && super_html_playable === void 0 ? (_reportPossibleCrUseOfsuper_html_playable({
             error: Error()
           }), super_html_playable) : super_html_playable).set_google_play_url(google_play);

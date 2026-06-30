@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 59266642.5675,
+      "mTimestamp": 62171590.3674,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -18835,7 +18835,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/BattleTargetBase.ts": {
       "mTimestamp": {
-        "mtime": 1780287689398.2012,
+        "mtime": 1782784753564.9304,
         "uuid": "a9926452-d8e9-47dc-a181-19f79a3a148e"
       },
       "chunkId": "021cbce763294c7c4adf05845718c817a68ff9f3",
@@ -20892,7 +20892,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BattleTarger/BattleTarget3D.ts": {
       "mTimestamp": {
-        "mtime": 1782460491937.4158,
+        "mtime": 1782785990249.3406,
         "uuid": "d490fc41-2b7f-4209-a6b1-dca139d03fef"
       },
       "chunkId": "9a8786a747b555136cef77c9f5e7ad17e18a31eb",
@@ -25051,7 +25051,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts": {
       "mTimestamp": {
-        "mtime": 1782719921101.6172,
+        "mtime": 1782785554932.1577,
         "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
       },
       "chunkId": "aa6223cf35796d09344450a14919ad24c61174bb",
@@ -27969,7 +27969,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/Common/SuperPackage.ts": {
       "mTimestamp": {
-        "mtime": 1779678918149.1064,
+        "mtime": 1782786422424.9216,
         "uuid": "aa6cd0a6-0e91-4013-94bc-e2063049f65a"
       },
       "chunkId": "fb231b7b47c244832aa3ed0055e0ff4d6bda9530",
@@ -28075,7 +28075,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PBASDK.ts": {
       "mTimestamp": {
-        "mtime": 1779871484269.7153,
+        "mtime": 1782786422424.9216,
         "uuid": "de608ba4-76a0-4ad8-899e-06d88d0487fc"
       },
       "chunkId": "7ece20e41250ede0e4707962498ddfd8c4453b24",

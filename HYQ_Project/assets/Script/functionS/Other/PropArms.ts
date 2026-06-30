@@ -264,7 +264,7 @@ export class PropArms extends BattleTarget3D {
     // public effect_ss: Node;
 
     public get hitNode() {
-        if (this.hasLalian && this.lalianCube) {
+        if (this.hasLalian && this.lalianCube && this.lalianCube.isValid) {
             return this.lalianCube;
         }
         return super.hitNode;

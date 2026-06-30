@@ -79,7 +79,7 @@ export abstract class BattleTargetBase extends UnityUpComponent {
     private hitNode_2: Node;
 
     public get hitNode() {
-        if (!this.hitNode_2) {
+        if (!this.hitNode_2 || !this.hitNode_2.isValid) {
             return this.node;
         }
         return this.hitNode_2;

@@ -15,11 +15,11 @@ export class SuperPackage {
     /**
      * 谷歌链接（打包工具中设置会自动同步到这里）
      */
-    private _google_play_url: string = "https://play.google.com/store/apps/details?id=com.greenmushroom.boomblitz.gp&hl=en_US";
+    private _google_play_url: string = "";
     /**
      * 苹果链接（打包工具中设置会自动同步到这里）
      */
-    private _appstore_url: string = "https://apps.apple.com/us/app/top-heroes/id6450953550";
+    private _appstore_url: string = "";
 
     // 私有构造函数，防止外部实例化
     private constructor() {

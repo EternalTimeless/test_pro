@@ -246,7 +246,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         get hitNode() {
-          if (!this.hitNode_2) {
+          if (!this.hitNode_2 || !this.hitNode_2.isValid) {
             return this.node;
           }
 

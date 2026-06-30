@@ -1,0 +1,125 @@
+[
+    1,
+    [
+        "ebnMeW6QxHWaDEoEzmmkrn"
+    ],
+    [
+        "_effectAsset"
+    ],
+    [
+        [
+            "cc.Material",
+            [
+                "_name",
+                "_states",
+                "_defines",
+                "_props"
+            ],
+            0,
+            12
+        ]
+    ],
+    [
+        [
+            0,
+            0,
+            1,
+            2,
+            3,
+            4
+        ]
+    ],
+    [
+        [
+            0,
+            "ocean_realistic",
+            [
+                {
+                    "rasterizerState": {
+                        "cullMode": 2
+                    },
+                    "depthStencilState": {
+                        "depthWrite": true
+                    },
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                }
+            ],
+            [
+                {}
+            ],
+            [
+                [
+                    [
+                        {
+                            "windAngle": 1.9,
+                            "waveSize": 13,
+                            "waveHeight": 5,
+                            "waveSpeed": 0.74,
+                            "waveRandomness": 1,
+                            "choppiness": 0.16,
+                            "detailStrength": 0.12,
+                            "detailSpeed": 0.87,
+                            "detailScale": 11.5,
+                            "detailRandomness": 0,
+                            "absorptionDist": 0.7,
+                            "smoothness": 0.59,
+                            "reflectionStrength": 1.33,
+                            "sssStrength": 0,
+                            "specularIntensity": 0,
+                            "foamAmount": 0,
+                            "foamScale": 0.5,
+                            "fogDensity": 0.022,
+                            "fogStart": 842
+                        },
+                        "shallowColor",
+                        8,
+                        [
+                            4,
+                            4283315463
+                        ],
+                        "deepColor",
+                        8,
+                        [
+                            4,
+                            4285885707
+                        ],
+                        "sssColor",
+                        8,
+                        [
+                            4,
+                            4294967295
+                        ],
+                        "foamColor",
+                        8,
+                        [
+                            4,
+                            4278190080
+                        ],
+                        "fogColor",
+                        8,
+                        [
+                            4,
+                            4289829257
+                        ]
+                    ]
+                ],
+                11
+            ]
+        ]
+    ],
+    0,
+    0,
+    [
+        0
+    ],
+    [
+        0
+    ],
+    [
+        0
+    ]
+]

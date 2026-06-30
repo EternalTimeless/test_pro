@@ -1,0 +1,595 @@
+[
+    1,
+    0,
+    0,
+    [
+        [
+            "cc.EffectAsset",
+            [
+                "_name",
+                "shaders",
+                "techniques"
+            ],
+            0
+        ]
+    ],
+    [
+        [
+            0,
+            0,
+            1,
+            2,
+            4
+        ]
+    ],
+    [
+        [
+            0,
+            "../resources/Shaders/OilBarrelBurst",
+            [
+                {
+                    "hash": 3184795600,
+                    "name": "../resources/Shaders/OilBarrelBurst|oil-burst-vs|oil-burst-fs:frag",
+                    "blocks": [
+                        {
+                            "name": "BurstParams",
+                            "stageFlags": 17,
+                            "binding": 0,
+                            "members": [
+                                {
+                                    "name": "mainColor",
+                                    "type": 16,
+                                    "count": 1
+                                },
+                                {
+                                    "name": "crackColor",
+                                    "type": 16,
+                                    "count": 1
+                                },
+                                {
+                                    "name": "edgeColor",
+                                    "type": 16,
+                                    "count": 1
+                                },
+                                {
+                                    "name": "burstProgress",
+                                    "type": 13,
+                                    "count": 1
+                                },
+                                {
+                                    "name": "burstWidth",
+                                    "type": 13,
+                                    "count": 1
+                                },
+                                {
+                                    "name": "burstOffset",
+                                    "type": 13,
+                                    "count": 1
+                                }
+                            ],
+                            "defines": []
+                        }
+                    ],
+                    "samplerTextures": [
+                        {
+                            "name": "mainTexture",
+                            "type": 28,
+                            "count": 1,
+                            "stageFlags": 16,
+                            "sampleType": 0,
+                            "binding": 1,
+                            "defines": []
+                        }
+                    ],
+                    "samplers": [],
+                    "textures": [],
+                    "buffers": [],
+                    "images": [],
+                    "subpassInputs": [],
+                    "attributes": [
+                        {
+                            "name": "a_position",
+                            "format": 32,
+                            "location": 0,
+                            "defines": []
+                        },
+                        {
+                            "name": "a_normal",
+                            "format": 32,
+                            "location": 1,
+                            "defines": []
+                        },
+                        {
+                            "name": "a_texCoord",
+                            "format": 21,
+                            "location": 2,
+                            "defines": []
+                        }
+                    ],
+                    "fragColors": [
+                        {
+                            "name": "cc_FragColor",
+                            "typename": "vec4",
+                            "type": 16,
+                            "count": 1,
+                            "stageFlags": 16,
+                            "location": 0,
+                            "defines": []
+                        }
+                    ],
+                    "descriptors": [
+                        {
+                            "rate": 0,
+                            "blocks": [
+                                {
+                                    "name": "CCLocal",
+                                    "stageFlags": 1,
+                                    "tags": {
+                                        "builtin": "local"
+                                    },
+                                    "members": [
+                                        {
+                                            "name": "cc_matWorld",
+                                            "typename": "mat4",
+                                            "type": 25,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_matWorldIT",
+                                            "typename": "mat4",
+                                            "type": 25,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_lightingMapUVParam",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_localShadowBias",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_reflectionProbeData1",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_reflectionProbeData2",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_reflectionProbeBlendData1",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_reflectionProbeBlendData2",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        }
+                                    ],
+                                    "defines": []
+                                }
+                            ],
+                            "samplerTextures": [],
+                            "samplers": [],
+                            "textures": [],
+                            "buffers": [],
+                            "images": [],
+                            "subpassInputs": []
+                        },
+                        {
+                            "rate": 1,
+                            "blocks": [
+                                {
+                                    "name": "BurstParams",
+                                    "stageFlags": 17,
+                                    "binding": 0,
+                                    "members": [
+                                        {
+                                            "name": "mainColor",
+                                            "type": 16,
+                                            "count": 1
+                                        },
+                                        {
+                                            "name": "crackColor",
+                                            "type": 16,
+                                            "count": 1
+                                        },
+                                        {
+                                            "name": "edgeColor",
+                                            "type": 16,
+                                            "count": 1
+                                        },
+                                        {
+                                            "name": "burstProgress",
+                                            "type": 13,
+                                            "count": 1
+                                        },
+                                        {
+                                            "name": "burstWidth",
+                                            "type": 13,
+                                            "count": 1
+                                        },
+                                        {
+                                            "name": "burstOffset",
+                                            "type": 13,
+                                            "count": 1
+                                        }
+                                    ],
+                                    "defines": []
+                                }
+                            ],
+                            "samplerTextures": [
+                                {
+                                    "name": "mainTexture",
+                                    "type": 28,
+                                    "count": 1,
+                                    "stageFlags": 16,
+                                    "sampleType": 0,
+                                    "binding": 1,
+                                    "defines": []
+                                }
+                            ],
+                            "samplers": [],
+                            "textures": [],
+                            "buffers": [],
+                            "images": [],
+                            "subpassInputs": []
+                        },
+                        {
+                            "rate": 2,
+                            "blocks": [],
+                            "samplerTextures": [],
+                            "samplers": [],
+                            "textures": [],
+                            "buffers": [],
+                            "images": [],
+                            "subpassInputs": []
+                        },
+                        {
+                            "rate": 3,
+                            "blocks": [
+                                {
+                                    "name": "CCGlobal",
+                                    "stageFlags": 17,
+                                    "tags": {
+                                        "builtin": "global"
+                                    },
+                                    "members": [
+                                        {
+                                            "name": "cc_time",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_screenSize",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_nativeSize",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_probeInfo",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_debug_view_mode",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        }
+                                    ],
+                                    "defines": []
+                                },
+                                {
+                                    "name": "CCCamera",
+                                    "stageFlags": 17,
+                                    "tags": {
+                                        "builtin": "global"
+                                    },
+                                    "members": [
+                                        {
+                                            "name": "cc_matView",
+                                            "typename": "mat4",
+                                            "type": 25,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_matViewInv",
+                                            "typename": "mat4",
+                                            "type": 25,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_matProj",
+                                            "typename": "mat4",
+                                            "type": 25,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_matProjInv",
+                                            "typename": "mat4",
+                                            "type": 25,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_matViewProj",
+                                            "typename": "mat4",
+                                            "type": 25,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_matViewProjInv",
+                                            "typename": "mat4",
+                                            "type": 25,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_cameraPos",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "highp "
+                                        },
+                                        {
+                                            "name": "cc_surfaceTransform",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_screenScale",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_exposure",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_mainLitDir",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_mainLitColor",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_ambientSky",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_ambientGround",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_fogColor",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_fogBase",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_fogAdd",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_nearFar",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        },
+                                        {
+                                            "name": "cc_viewPort",
+                                            "typename": "vec4",
+                                            "type": 16,
+                                            "count": 1,
+                                            "precision": "mediump "
+                                        }
+                                    ],
+                                    "defines": []
+                                }
+                            ],
+                            "samplerTextures": [],
+                            "samplers": [],
+                            "textures": [],
+                            "buffers": [],
+                            "images": [],
+                            "subpassInputs": []
+                        }
+                    ],
+                    "glsl3": {
+                        "vert": "\nprecision highp float;\nlayout(std140) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_probeInfo;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(std140) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nlayout(std140) uniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n  highp vec4 cc_reflectionProbeData1;\n  highp vec4 cc_reflectionProbeData2;\n  highp vec4 cc_reflectionProbeBlendData1;\n  highp vec4 cc_reflectionProbeBlendData2;\n};\nin vec3 a_position;\nin vec3 a_normal;\nin vec2 a_texCoord;\nout vec2 v_uv;\nout vec3 v_worldPos;\nout float v_shardSeed;\nlayout(std140) uniform BurstParams {\n  vec4 mainColor;\n  vec4 crackColor;\n  vec4 edgeColor;\n  float burstProgress;\n  float burstWidth;\n  float burstOffset;\n};\nfloat hash21(vec2 p) {\n  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);\n}\nvoid main () {\n  float p = clamp(burstProgress, 0.0, 1.0);\n  vec2 shardCell = floor(a_texCoord * 1.05 + a_position.xz * 0.008);\n  float shard = hash21(shardCell);\n  float angle = hash21(shardCell + vec2(17.0, 29.0)) * 6.2831853;\n  vec3 scatterDir = normalize(vec3(cos(angle) * 0.16, 0.06 + shard * 0.05, sin(angle) * 0.14) + a_normal * 0.05);\n  float scatter = burstOffset * p * p * (0.22 + shard * 0.1);\n  vec3 localPos = a_position + scatterDir * scatter;\n  vec4 world = cc_matWorld * vec4(localPos, 1.0);\n  v_worldPos = world.xyz;\n  v_uv = a_texCoord;\n  v_shardSeed = shard;\n  gl_Position = cc_matProj * cc_matView * world;\n}",
+                        "frag": "\nprecision highp float;\nlayout(std140) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_probeInfo;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(std140) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nvec4 CCFragOutput (vec4 color) {\n  return color;\n}\nuniform sampler2D mainTexture;\nlayout(std140) uniform BurstParams {\n  vec4 mainColor;\n  vec4 crackColor;\n  vec4 edgeColor;\n  float burstProgress;\n  float burstWidth;\n  float burstOffset;\n};\nin vec2 v_uv;\nin vec3 v_worldPos;\nin float v_shardSeed;\nfloat hash21(vec2 p) {\n  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);\n}\nfloat shardCrack(vec2 uv) {\n  vec2 grid = floor(uv);\n  vec2 f = fract(uv);\n  float jitter = hash21(grid) - 0.5;\n  float border = min(min(f.x, 1.0 - f.x), min(f.y, 1.0 - f.y));\n  float diagA = abs(f.x - f.y + jitter * 0.28);\n  float diagB = abs(f.x + f.y - 1.0 + jitter * 0.22);\n  return min(border, min(diagA, diagB));\n}\nvec4 frag () {\n  float p = clamp(burstProgress, 0.0, 1.0);\n  vec4 baseColor = texture(mainTexture, v_uv) * mainColor;\n  vec2 crackUv = v_uv * 1.05 + v_worldPos.xz * 0.006;\n  float crack = shardCrack(crackUv);\n  float crackWidth = burstWidth * smoothstep(0.03, 0.62, p);\n  if (p > 0.01 && crack < crackWidth) {\n    discard;\n  }\n  float edge = 1.0 - smoothstep(crackWidth, crackWidth + 0.012, crack);\n  edge *= smoothstep(0.7, 0.96, p);\n  vec3 shardColor = baseColor.rgb;\n  shardColor = mix(shardColor, crackColor.rgb, edge * 0.18);\n  shardColor += edgeColor.rgb * edge * 0.1;\n  float alpha = baseColor.a * (1.0 - smoothstep(0.78, 1.0, p) * 0.92);\n  return CCFragOutput(vec4(shardColor, alpha));\n}\nlayout(location = 0) out vec4 cc_FragColor;\nvoid main() { cc_FragColor = frag(); }"
+                    },
+                    "glsl1": {
+                        "vert": "\nprecision highp float;\nuniform highp mat4 cc_matView;\n  uniform highp mat4 cc_matProj;\nuniform highp mat4 cc_matWorld;\nattribute vec3 a_position;\nattribute vec3 a_normal;\nattribute vec2 a_texCoord;\nvarying vec2 v_uv;\nvarying vec3 v_worldPos;\nvarying float v_shardSeed;\n   uniform float burstProgress;\n   uniform float burstOffset;\nfloat hash21(vec2 p) {\n  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);\n}\nvoid main () {\n  float p = clamp(burstProgress, 0.0, 1.0);\n  vec2 shardCell = floor(a_texCoord * 1.05 + a_position.xz * 0.008);\n  float shard = hash21(shardCell);\n  float angle = hash21(shardCell + vec2(17.0, 29.0)) * 6.2831853;\n  vec3 scatterDir = normalize(vec3(cos(angle) * 0.16, 0.06 + shard * 0.05, sin(angle) * 0.14) + a_normal * 0.05);\n  float scatter = burstOffset * p * p * (0.22 + shard * 0.1);\n  vec3 localPos = a_position + scatterDir * scatter;\n  vec4 world = cc_matWorld * vec4(localPos, 1.0);\n  v_worldPos = world.xyz;\n  v_uv = a_texCoord;\n  v_shardSeed = shard;\n  gl_Position = cc_matProj * cc_matView * world;\n}",
+                        "frag": "\nprecision highp float;\nvec4 CCFragOutput (vec4 color) {\n  return color;\n}\nuniform sampler2D mainTexture;\n   uniform vec4 mainColor;\n   uniform vec4 crackColor;\n   uniform vec4 edgeColor;\n   uniform float burstProgress;\n   uniform float burstWidth;\nvarying vec2 v_uv;\nvarying vec3 v_worldPos;\nvarying float v_shardSeed;\nfloat hash21(vec2 p) {\n  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);\n}\nfloat shardCrack(vec2 uv) {\n  vec2 grid = floor(uv);\n  vec2 f = fract(uv);\n  float jitter = hash21(grid) - 0.5;\n  float border = min(min(f.x, 1.0 - f.x), min(f.y, 1.0 - f.y));\n  float diagA = abs(f.x - f.y + jitter * 0.28);\n  float diagB = abs(f.x + f.y - 1.0 + jitter * 0.22);\n  return min(border, min(diagA, diagB));\n}\nvec4 frag () {\n  float p = clamp(burstProgress, 0.0, 1.0);\n  vec4 baseColor = texture2D(mainTexture, v_uv) * mainColor;\n  vec2 crackUv = v_uv * 1.05 + v_worldPos.xz * 0.006;\n  float crack = shardCrack(crackUv);\n  float crackWidth = burstWidth * smoothstep(0.03, 0.62, p);\n  if (p > 0.01 && crack < crackWidth) {\n    discard;\n  }\n  float edge = 1.0 - smoothstep(crackWidth, crackWidth + 0.012, crack);\n  edge *= smoothstep(0.7, 0.96, p);\n  vec3 shardColor = baseColor.rgb;\n  shardColor = mix(shardColor, crackColor.rgb, edge * 0.18);\n  shardColor += edgeColor.rgb * edge * 0.1;\n  float alpha = baseColor.a * (1.0 - smoothstep(0.78, 1.0, p) * 0.92);\n  return CCFragOutput(vec4(shardColor, alpha));\n}\nvoid main() { gl_FragColor = frag(); }"
+                    },
+                    "builtins": {
+                        "globals": {
+                            "blocks": [
+                                {
+                                    "name": "CCGlobal",
+                                    "defines": []
+                                },
+                                {
+                                    "name": "CCCamera",
+                                    "defines": []
+                                }
+                            ],
+                            "samplerTextures": [],
+                            "buffers": [],
+                            "images": []
+                        },
+                        "locals": {
+                            "blocks": [
+                                {
+                                    "name": "CCLocal",
+                                    "defines": []
+                                }
+                            ],
+                            "samplerTextures": [],
+                            "buffers": [],
+                            "images": []
+                        },
+                        "statistics": {
+                            "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 62,
+                            "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 48
+                        }
+                    },
+                    "defines": []
+                }
+            ],
+            [
+                {
+                    "name": "transparent",
+                    "passes": [
+                        {
+                            "program": "../resources/Shaders/OilBarrelBurst|oil-burst-vs|oil-burst-fs:frag",
+                            "rasterizerState": {
+                                "cullMode": 0
+                            },
+                            "blendState": {
+                                "targets": [
+                                    {
+                                        "blend": true,
+                                        "blendSrc": 2,
+                                        "blendDst": 4,
+                                        "blendDstAlpha": 4
+                                    }
+                                ]
+                            },
+                            "depthStencilState": {
+                                "depthTest": true,
+                                "depthWrite": false
+                            },
+                            "properties": {
+                                "mainTexture": {
+                                    "value": "white",
+                                    "type": 28
+                                },
+                                "mainColor": {
+                                    "type": 16,
+                                    "value": [
+                                        1,
+                                        1,
+                                        1,
+                                        1
+                                    ]
+                                },
+                                "crackColor": {
+                                    "type": 16,
+                                    "value": [
+                                        0.86,
+                                        0.92,
+                                        1,
+                                        1
+                                    ]
+                                },
+                                "edgeColor": {
+                                    "type": 16,
+                                    "value": [
+                                        1,
+                                        1,
+                                        1,
+                                        1
+                                    ]
+                                },
+                                "burstProgress": {
+                                    "type": 13,
+                                    "value": [
+                                        0
+                                    ]
+                                },
+                                "burstWidth": {
+                                    "type": 13,
+                                    "value": [
+                                        0.003
+                                    ]
+                                },
+                                "burstOffset": {
+                                    "type": 13,
+                                    "value": [
+                                        0.0015
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        ]
+    ],
+    0,
+    0,
+    [],
+    [],
+    []
+]

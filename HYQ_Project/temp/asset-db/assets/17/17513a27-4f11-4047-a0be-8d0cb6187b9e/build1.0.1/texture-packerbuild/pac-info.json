@@ -1,0 +1,152 @@
+{
+  "md5": "58633",
+  "versionDev": "1.0.2",
+  "sharpMd5": "4e4ce",
+  "result": {
+    "atlases": [
+      {
+        "spriteFrameInfos": [
+          {
+            "name": "bullet_4",
+            "uuid": "36b966de-1e03-4b02-b9d3-c8ea39109fce@f9941",
+            "imageUuid": "36b966de-1e03-4b02-b9d3-c8ea39109fce",
+            "textureUuid": "36b966de-1e03-4b02-b9d3-c8ea39109fce@6c48a",
+            "trim": {
+              "rotatedWidth": 245,
+              "rotatedHeight": 426,
+              "x": 3,
+              "y": 3,
+              "width": 245,
+              "height": 426
+            },
+            "rawWidth": 316,
+            "rawHeight": 464,
+            "width": 251,
+            "height": 432,
+            "originalPath": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\library\\36\\36b966de-1e03-4b02-b9d3-c8ea39109fce.png",
+            "rotated": false,
+            "_mtime": 1780287688101.824,
+            "x": 0,
+            "y": 0,
+            "rotatedWidth": 251,
+            "rotatedHeight": 432
+          },
+          {
+            "name": "bullet_3",
+            "uuid": "168104d3-6799-455c-b63a-3c17f56d39f9@f9941",
+            "imageUuid": "168104d3-6799-455c-b63a-3c17f56d39f9",
+            "textureUuid": "168104d3-6799-455c-b63a-3c17f56d39f9@6c48a",
+            "trim": {
+              "rotatedWidth": 176,
+              "rotatedHeight": 395,
+              "x": 3,
+              "y": 435,
+              "width": 176,
+              "height": 395
+            },
+            "rawWidth": 250,
+            "rawHeight": 445,
+            "width": 182,
+            "height": 401,
+            "originalPath": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\library\\16\\168104d3-6799-455c-b63a-3c17f56d39f9.png",
+            "rotated": false,
+            "_mtime": 1780287688086.2046,
+            "x": 0,
+            "y": 432,
+            "rotatedWidth": 182,
+            "rotatedHeight": 401
+          },
+          {
+            "name": "bullet_1",
+            "uuid": "748c6511-a26a-4fe0-a206-901bd98bc56a@f9941",
+            "imageUuid": "748c6511-a26a-4fe0-a206-901bd98bc56a",
+            "textureUuid": "748c6511-a26a-4fe0-a206-901bd98bc56a@6c48a",
+            "trim": {
+              "rotatedWidth": 394,
+              "rotatedHeight": 147,
+              "x": 3,
+              "y": 836,
+              "width": 147,
+              "height": 394
+            },
+            "rawWidth": 236,
+            "rawHeight": 432,
+            "width": 153,
+            "height": 400,
+            "originalPath": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\library\\74\\748c6511-a26a-4fe0-a206-901bd98bc56a.png",
+            "rotated": true,
+            "_mtime": 1780287688086.2046,
+            "x": 0,
+            "y": 833,
+            "rotatedWidth": 400,
+            "rotatedHeight": 153
+          },
+          {
+            "name": "bullet_2",
+            "uuid": "f68c0530-d123-4979-8115-45a86607b984@f9941",
+            "imageUuid": "f68c0530-d123-4979-8115-45a86607b984",
+            "textureUuid": "f68c0530-d123-4979-8115-45a86607b984@6c48a",
+            "trim": {
+              "rotatedWidth": 135,
+              "rotatedHeight": 395,
+              "x": 185,
+              "y": 435,
+              "width": 135,
+              "height": 395
+            },
+            "rawWidth": 186,
+            "rawHeight": 426,
+            "width": 141,
+            "height": 401,
+            "originalPath": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\library\\f6\\f68c0530-d123-4979-8115-45a86607b984.png",
+            "rotated": false,
+            "_mtime": 1780287688086.2046,
+            "x": 182,
+            "y": 432,
+            "rotatedWidth": 141,
+            "rotatedHeight": 401
+          },
+          {
+            "name": "bullet_0",
+            "uuid": "ca742501-e16f-4a7b-b5c1-270228fb8168@f9941",
+            "imageUuid": "ca742501-e16f-4a7b-b5c1-270228fb8168",
+            "textureUuid": "ca742501-e16f-4a7b-b5c1-270228fb8168@6c48a",
+            "trim": {
+              "rotatedWidth": 133,
+              "rotatedHeight": 395,
+              "x": 254,
+              "y": 3,
+              "width": 133,
+              "height": 395
+            },
+            "rawWidth": 186,
+            "rawHeight": 426,
+            "width": 139,
+            "height": 401,
+            "originalPath": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\library\\ca\\ca742501-e16f-4a7b-b5c1-270228fb8168.png",
+            "rotated": false,
+            "_mtime": 1780287688086.2046,
+            "x": 251,
+            "y": 0,
+            "rotatedWidth": 139,
+            "rotatedHeight": 401
+          }
+        ],
+        "width": 400,
+        "height": 986,
+        "name": "auto-atlas.pac-0",
+        "imagePath": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\temp\\asset-db\\assets\\17\\17513a27-4f11-4047-a0be-8d0cb6187b9e\\build1.0.1\\texture-packerbuild\\15744dfbc.png",
+        "imageUuid": "15744dfbc",
+        "textureUuid": "15744dfbc@6c48a",
+        "compressed": {
+          "imagePathNoExt": "",
+          "suffixs": [
+            ".png"
+          ]
+        }
+      }
+    ],
+    "unpackedImages": [],
+    "pacUuid": "17513a27-4f11-4047-a0be-8d0cb6187b9e"
+  }
+}

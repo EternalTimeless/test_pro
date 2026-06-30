@@ -11,8 +11,8 @@ export default class PBASDK {
 
     /** 游戏加载后调用 */
     public static Init(material:string, maxStage:number): void {
-        const google_play = "https://play.google.com/store/apps/details?id=com.greenmushroom.boomblitz.gp&hl=en_US";
-        const appstore = "https://apps.apple.com/us/app/top-heroes/id6450953550";
+        const google_play = "";
+        const appstore = "";
 
         super_html_playable.set_google_play_url(google_play);
         super_html_playable.set_app_store_url(appstore);

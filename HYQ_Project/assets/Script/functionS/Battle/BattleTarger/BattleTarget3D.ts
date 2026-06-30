@@ -21,7 +21,10 @@ export abstract class BattleTarget3D extends BattleTargetBase {
     public repelEnabled: boolean = true;
 
     public getCollisionWorldPosition(out?: Vec3): Vec3 {
-        const pos = this.hitNode.worldPosition;
+        const hitNode = this.hitNode;
+        const pos = hitNode && hitNode.isValid
+            ? hitNode.worldPosition
+            : (this.node && this.node.isValid ? this.node.worldPosition : Vec3.ZERO);
         if (out) {
             return out.set(pos);
         }

@@ -1,0 +1,190 @@
+[
+    1,
+    [
+        "44BEYNmPZC7600kI1VKEKt@6c48a",
+        "a9CIuBBnRIVK3jlMY00dcc@6c48a",
+        "8aS4KTzbdE96jbuKSGZkrC@6c48a",
+        "28lpD8HRFNYLyLZTCzv6Yv"
+    ],
+    [
+        "mainTexture",
+        "normalMap",
+        "occlusionMap",
+        "_effectAsset"
+    ],
+    [
+        [
+            "cc.Material",
+            [
+                "_states",
+                "_defines",
+                "_props"
+            ],
+            1,
+            12
+        ]
+    ],
+    [
+        [
+            0,
+            0,
+            1,
+            2,
+            3
+        ]
+    ],
+    [
+        [
+            0,
+            [
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                }
+            ],
+            [
+                {
+                    "USE_OUTLINE_PASS": true
+                },
+                {
+                    "USE_NORMAL_MAP": true,
+                    "USE_ALBEDO_MAP": true,
+                    "USE_OCCLUSION_MAP": true
+                },
+                {},
+                {},
+                {},
+                {},
+                {}
+            ],
+            [
+                [
+                    [
+                        {},
+                        "baseColor",
+                        8,
+                        [
+                            4,
+                            4278251750
+                        ]
+                    ],
+                    [
+                        {
+                            "occlusion": 0.645,
+                            "roughness": 0.86,
+                            "metallic": 0.196,
+                            "specularIntensity": 0.262,
+                            "normalStrength": 0.824
+                        },
+                        "mainColor",
+                        8,
+                        [
+                            4,
+                            4294831046
+                        ],
+                        "mainTexture",
+                        6,
+                        0,
+                        "normalMap",
+                        6,
+                        1,
+                        "occlusionMap",
+                        6,
+                        2
+                    ],
+                    {},
+                    {},
+                    {},
+                    {},
+                    {}
+                ],
+                11,
+                11,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ]
+    ],
+    0,
+    0,
+    [
+        0,
+        0,
+        0,
+        0
+    ],
+    [
+        0,
+        1,
+        2,
+        3
+    ],
+    [
+        0,
+        1,
+        2,
+        3
+    ]
+]

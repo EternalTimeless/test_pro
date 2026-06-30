@@ -34,12 +34,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           /**
            * 谷歌链接（打包工具中设置会自动同步到这里）
            */
-          this._google_play_url = "https://play.google.com/store/apps/details?id=com.greenmushroom.boomblitz.gp&hl=en_US";
+          this._google_play_url = "";
 
           /**
            * 苹果链接（打包工具中设置会自动同步到这里）
            */
-          this._appstore_url = "https://apps.apple.com/us/app/top-heroes/id6450953550";
+          this._appstore_url = "";
           (_crd && super_html_playable === void 0 ? (_reportPossibleCrUseOfsuper_html_playable({
             error: Error()
           }), super_html_playable) : super_html_playable).set_google_play_url(this._google_play_url);

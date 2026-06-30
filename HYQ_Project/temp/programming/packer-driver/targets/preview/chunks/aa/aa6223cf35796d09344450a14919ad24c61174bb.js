@@ -553,7 +553,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         // @property(Node)
         // public effect_ss: Node;
         get hitNode() {
-          if (this.hasLalian && this.lalianCube) {
+          if (this.hasLalian && this.lalianCube && this.lalianCube.isValid) {
             return this.lalianCube;
           }
 
@@ -1670,6 +1670,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           var curWorldZ = this.node.worldPositionZ;
+
+          if (!(_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+            error: Error()
+          }), MonsterCreate) : MonsterCreate).isStartMove) {
+            this.lastBottomBaseWorldZ = curWorldZ;
+            this.hasLastBottomBaseWorldZ = true;
+            return;
+          }
 
           if (!this.hasLastBottomBaseWorldZ) {
             this.lastBottomBaseWorldZ = curWorldZ;

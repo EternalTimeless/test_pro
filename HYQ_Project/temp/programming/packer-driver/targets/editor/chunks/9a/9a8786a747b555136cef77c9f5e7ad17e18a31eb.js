@@ -84,7 +84,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
         }
 
         getCollisionWorldPosition(out) {
-          const pos = this.hitNode.worldPosition;
+          const hitNode = this.hitNode;
+          const pos = hitNode && hitNode.isValid ? hitNode.worldPosition : this.node && this.node.isValid ? this.node.worldPosition : Vec3.ZERO;
 
           if (out) {
             return out.set(pos);

@@ -1,0 +1,41 @@
+{
+  "__version__": "1.0.1",
+  "builder": {
+    "common": {
+      "binGroupConfig": {
+        "threshold": 16,
+        "enable": false
+      },
+      "polyfills": {
+        "asyncFunctions": true
+      },
+      "buildPath": "project://build",
+      "outputName": "web-mobile",
+      "mainBundleCompressionType": "merge_dep",
+      "platform": "web-mobile",
+      "startScene": "b5805d3a-3b80-4a12-adf5-588e63a7d886",
+      "scenes": [
+        {
+          "url": "db://assets/Scene/Game_3D-002.scene",
+          "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
+        }
+      ],
+      "nativeCodeBundleMode": "asmjs"
+    },
+    "taskOptionsMap": {
+      "1782784158510": {
+        "useWebGPU": false,
+        "orientation": "auto",
+        "embedWebDebugger": false,
+        "__version__": "1.0.1"
+      },
+      "1782786421939": {
+        "useWebGPU": false,
+        "orientation": "auto",
+        "embedWebDebugger": false,
+        "__version__": "1.0.1"
+      }
+    },
+    "__version__": "1.3.9"
+  }
+}

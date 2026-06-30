@@ -1,0 +1,52 @@
+{
+  "md5": "55c4a",
+  "versionDev": "1.0.2",
+  "sharpMd5": "4e4ce",
+  "result": {
+    "atlases": [
+      {
+        "spriteFrameInfos": [
+          {
+            "name": "手",
+            "uuid": "376fb3f4-139f-4977-b12d-690632989155@f9941",
+            "imageUuid": "376fb3f4-139f-4977-b12d-690632989155",
+            "textureUuid": "376fb3f4-139f-4977-b12d-690632989155@6c48a",
+            "trim": {
+              "rotatedWidth": 120,
+              "rotatedHeight": 124,
+              "x": 3,
+              "y": 3,
+              "width": 124,
+              "height": 120
+            },
+            "rawWidth": 124,
+            "rawHeight": 120,
+            "width": 130,
+            "height": 126,
+            "originalPath": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\library\\37\\376fb3f4-139f-4977-b12d-690632989155.png",
+            "rotated": true,
+            "_mtime": 1781231240947.3982,
+            "x": 0,
+            "y": 0,
+            "rotatedWidth": 126,
+            "rotatedHeight": 130
+          }
+        ],
+        "width": 126,
+        "height": 130,
+        "name": "auto-atlas.pac-0",
+        "imagePath": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\temp\\asset-db\\assets\\b7\\b74fc0c2-4c67-4dd4-8d74-9612ad56cfb1\\build1.0.1\\texture-packerbuild\\1be18999f.png",
+        "imageUuid": "1be18999f",
+        "textureUuid": "1be18999f@6c48a",
+        "compressed": {
+          "imagePathNoExt": "",
+          "suffixs": [
+            ".png"
+          ]
+        }
+      }
+    ],
+    "unpackedImages": [],
+    "pacUuid": "b74fc0c2-4c67-4dd4-8d74-9612ad56cfb1"
+  }
+}
