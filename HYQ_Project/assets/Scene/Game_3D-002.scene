@@ -3065,7 +3065,7 @@
       }
     ],
     "hitEffect": 2,
-    "collisionHalfX": 2,
+    "collisionHalfX": 3,
     "collisionHalfZ": 2,
     "repelEnabled": false,
     "armsInfoList": [
@@ -3157,7 +3157,7 @@
     "__prefab": {
       "__id__": 183
     },
-    "_id": "e3bIoFRtBPs7PPktJynVnr"
+    "_id": "470LXu9DBHi5pycTKPQKLI"
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -3193,7 +3193,7 @@
     "__prefab": {
       "__id__": 186
     },
-    "_id": "43YXzLuOlBSbgmGOqVBQJE"
+    "_id": "c8osIzcbZLobkG7Tq5T21S"
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -3229,7 +3229,7 @@
     "__prefab": {
       "__id__": 189
     },
-    "_id": "6crbZV0HhJz62xODiCW8/J"
+    "_id": "86JSP4sGVE/4Xic37DvAho"
   },
   {
     "__type__": "cc.CompPrefabInfo",

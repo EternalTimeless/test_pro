@@ -803,9 +803,18 @@ export class MonsterCreate extends UnityUpComponent {
         }
 
         const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
+        const roleHalfX = Math.max(0, role.collisionHalfX ?? 0);
         const monsterHalfZ = this.getMonsterCollisionHalfZ(monster);
-        const roleCenterZ = role.getCollisionWorldPosition(tempV3).z;
-        const monsterCenterZ = monster.getCollisionWorldPosition(tempV3).z;
+        const monsterHalfX = Math.max(0, monster.collisionHalfX ?? 0);
+        const roleCenter = role.getCollisionWorldPosition(tempV3);
+        const roleCenterX = roleCenter.x;
+        const roleCenterZ = roleCenter.z;
+        const monsterCenter = monster.getCollisionWorldPosition(tempV3);
+        const monsterCenterX = monsterCenter.x;
+        const monsterCenterZ = monsterCenter.z;
+        if (Math.abs(monsterCenterX - roleCenterX) > roleHalfX + monsterHalfX + this.waveRolePushGapInternal) {
+            return;
+        }
         const roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGapInternal;
         const roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGapInternal;
         const monsterMinZ = monsterCenterZ - monsterHalfZ;

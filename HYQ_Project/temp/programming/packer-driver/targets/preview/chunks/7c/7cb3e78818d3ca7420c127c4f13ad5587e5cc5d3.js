@@ -1180,14 +1180,27 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         clampMonsterBehindSingleWaveRole(monster, role) {
+          var _role$collisionHalfX, _monster$collisionHal;
+
           if (!role || !role.node || !role.node.active || role.isDie) {
             return;
           }
 
           var roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
+          var roleHalfX = Math.max(0, (_role$collisionHalfX = role.collisionHalfX) != null ? _role$collisionHalfX : 0);
           var monsterHalfZ = this.getMonsterCollisionHalfZ(monster);
-          var roleCenterZ = role.getCollisionWorldPosition(tempV3).z;
-          var monsterCenterZ = monster.getCollisionWorldPosition(tempV3).z;
+          var monsterHalfX = Math.max(0, (_monster$collisionHal = monster.collisionHalfX) != null ? _monster$collisionHal : 0);
+          var roleCenter = role.getCollisionWorldPosition(tempV3);
+          var roleCenterX = roleCenter.x;
+          var roleCenterZ = roleCenter.z;
+          var monsterCenter = monster.getCollisionWorldPosition(tempV3);
+          var monsterCenterX = monsterCenter.x;
+          var monsterCenterZ = monsterCenter.z;
+
+          if (Math.abs(monsterCenterX - roleCenterX) > roleHalfX + monsterHalfX + this.waveRolePushGapInternal) {
+            return;
+          }
+
           var roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGapInternal;
           var roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGapInternal;
           var monsterMinZ = monsterCenterZ - monsterHalfZ;
@@ -1386,9 +1399,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getMonsterCollisionHalfZ(monster) {
-          var _monster$collisionHal;
+          var _monster$collisionHal2;
 
-          return Math.max(0, (_monster$collisionHal = monster == null ? void 0 : monster.collisionHalfZ) != null ? _monster$collisionHal : 0);
+          return Math.max(0, (_monster$collisionHal2 = monster == null ? void 0 : monster.collisionHalfZ) != null ? _monster$collisionHal2 : 0);
         }
 
         getWaveIndexByMonsterZ(z) {
