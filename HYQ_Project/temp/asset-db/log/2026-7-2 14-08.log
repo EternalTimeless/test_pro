@@ -508,3 +508,35 @@
 2026-7-2 15:19:14-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (7ms)
 2026-7-2 15:19:14-log: run build task 整理部分构建选项内数据到 settings.json success in 7 ms√, progress: 15%
 2026-7-2 15:19:14-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:256.05MB, end 256.12MB, increase: 72.02KB
+2026-7-2 15:20:09-debug: refresh db internal success
+2026-7-2 15:20:09-debug: refresh db assets success
+2026-7-2 15:20:09-debug: refresh db super-packager success
+2026-7-2 15:20:09-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-2 15:20:09-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-2 15:20:09-debug: asset-db:refresh-all-database (175ms)
+2026-7-2 15:20:09-debug: asset-db:worker-effect-data-processing (2ms)
+2026-7-2 15:20:09-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-2 15:20:11-debug: refresh db internal success
+2026-7-2 15:20:11-debug: refresh db assets success
+2026-7-2 15:20:11-debug: refresh db super-packager success
+2026-7-2 15:20:11-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-2 15:20:11-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-2 15:20:11-debug: asset-db:refresh-all-database (166ms)
+2026-7-2 15:20:11-debug: asset-db:worker-effect-data-processing (2ms)
+2026-7-2 15:20:11-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-2 15:20:16-debug: refresh db internal success
+2026-7-2 15:20:16-debug: refresh db assets success
+2026-7-2 15:20:16-debug: refresh db super-packager success
+2026-7-2 15:20:16-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-2 15:20:16-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-2 15:20:16-debug: asset-db:refresh-all-database (166ms)
+2026-7-2 15:20:16-debug: asset-db:worker-effect-data-processing (1ms)
+2026-7-2 15:20:16-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-2 15:25:30-debug: refresh db internal success
+2026-7-2 15:25:30-debug: refresh db assets success
+2026-7-2 15:25:30-debug: refresh db super-packager success
+2026-7-2 15:25:30-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-2 15:25:30-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-2 15:25:30-debug: asset-db:refresh-all-database (161ms)
+2026-7-2 15:25:30-debug: asset-db:worker-effect-data-processing (1ms)
+2026-7-2 15:25:30-debug: asset-db-hook-engine-extends-afterRefresh (1ms)

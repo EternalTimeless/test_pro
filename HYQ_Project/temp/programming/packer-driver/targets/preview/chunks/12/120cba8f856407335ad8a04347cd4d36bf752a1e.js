@@ -908,8 +908,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
 
         roleMove() {
-          var isMove = this.move.isMove;
-          var animName = this.isLock ? isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack : isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle;
+          var animName = this.getCurrentRoleAnimName();
 
           for (var i = 0; i < this.roleList.length; i++) {
             var fbx = this.roleList[i].fbxManager;
@@ -919,6 +918,37 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               fbx.setAnimation(animName, true);
             }
           }
+        }
+
+        getCurrentRoleAnimName() {
+          var isMove = this.move.isMove;
+          return this.isLock ? isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack : isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle;
+        }
+
+        syncRoleAnimationToTeam(role) {
+          if (!role || role.attackIN || !role.fbxManager) {
+            return;
+          }
+
+          var animName = this.getCurrentRoleAnimName();
+          var frame = 0;
+
+          for (var i = 0; i < this.roleList.length; i++) {
+            var sourceRole = this.roleList[i];
+
+            if (!sourceRole || sourceRole === role || sourceRole.attackIN || !sourceRole.fbxManager) {
+              continue;
+            }
+
+            var sourceState = sourceRole.fbxManager.getAnimState(animName);
+
+            if (sourceState && sourceState.duration > 0) {
+              frame = sourceState.time % sourceState.duration / sourceState.duration;
+              break;
+            }
+          }
+
+          role.fbxManager.setAnimationImmediate(animName, true, frame);
         }
 
         addRole(role, attackIn) {
@@ -937,6 +967,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           role.attackIN = attackIn;
           this.roleList.push(role);
           this.curCount = Math.min(this.getEffectiveMaxRoleCount(), this.curCount + 1);
+          this.syncRoleAnimationToTeam(role);
           return true;
         }
 

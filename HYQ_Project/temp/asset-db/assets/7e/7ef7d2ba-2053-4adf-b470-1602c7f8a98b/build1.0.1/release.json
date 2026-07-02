@@ -1,0 +1,142 @@
+[
+    1,
+    [
+        "01Ts2qpaJDQJwxx1ceOAi4@6c48a",
+        "9eJ33BV21H5JUIS07vg+Ol@6c48a",
+        "6bfoYLi6JFrrEwY+6h+eII"
+    ],
+    [
+        "mainTexture",
+        "normalMap",
+        "_effectAsset"
+    ],
+    [
+        [
+            "cc.Material",
+            [
+                "_name",
+                "_states",
+                "_defines",
+                "_props"
+            ],
+            0,
+            12
+        ]
+    ],
+    [
+        [
+            0,
+            0,
+            1,
+            2,
+            3,
+            4
+        ]
+    ],
+    [
+        [
+            0,
+            "M_youtong-001",
+            [
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                },
+                {
+                    "rasterizerState": {},
+                    "depthStencilState": {},
+                    "blendState": {
+                        "targets": [
+                            {}
+                        ]
+                    }
+                }
+            ],
+            [
+                {
+                    "USE_INSTANCING": true,
+                    "USE_NORMAL_MAP": true,
+                    "USE_ALBEDO_MAP": true
+                },
+                {},
+                {},
+                {},
+                {}
+            ],
+            [
+                [
+                    [
+                        {
+                            "grayScaleFactor": 0,
+                            "flashRedEdgeRange": 1.5
+                        },
+                        "mainTexture",
+                        6,
+                        0,
+                        "normalMap",
+                        6,
+                        1
+                    ],
+                    {},
+                    {},
+                    {},
+                    {}
+                ],
+                11,
+                0,
+                0,
+                0,
+                0
+            ]
+        ]
+    ],
+    0,
+    0,
+    [
+        0,
+        0,
+        0
+    ],
+    [
+        0,
+        1,
+        2
+    ],
+    [
+        0,
+        1,
+        2
+    ]
+]

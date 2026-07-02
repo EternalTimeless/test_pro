@@ -557,10 +557,7 @@ export class Player extends UnityUpComponent {
     //7.003 2.329
 
     private roleMove() {
-        const isMove = this.move.isMove;
-        const animName = this.isLock
-            ? (isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack)
-            : (isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle);
+        const animName = this.getCurrentRoleAnimName();
 
         for (let i = 0; i < this.roleList.length; i++) {
             const fbx = this.roleList[i].fbxManager;
@@ -569,6 +566,35 @@ export class Player extends UnityUpComponent {
                 fbx.setAnimation(animName, true);
             }
         }
+    }
+
+    private getCurrentRoleAnimName(): PlayerFBXAnimName {
+        const isMove = this.move.isMove;
+        return this.isLock
+            ? (isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack)
+            : (isMove ? PlayerFBXAnimName.run : PlayerFBXAnimName.idle);
+    }
+
+    private syncRoleAnimationToTeam(role: Role): void {
+        if (!role || role.attackIN || !role.fbxManager) {
+            return;
+        }
+
+        const animName = this.getCurrentRoleAnimName();
+        let frame = 0;
+        for (let i = 0; i < this.roleList.length; i++) {
+            const sourceRole = this.roleList[i];
+            if (!sourceRole || sourceRole === role || sourceRole.attackIN || !sourceRole.fbxManager) {
+                continue;
+            }
+            const sourceState = sourceRole.fbxManager.getAnimState(animName);
+            if (sourceState && sourceState.duration > 0) {
+                frame = (sourceState.time % sourceState.duration) / sourceState.duration;
+                break;
+            }
+        }
+
+        role.fbxManager.setAnimationImmediate(animName, true, frame);
     }
 
 
@@ -582,6 +608,7 @@ export class Player extends UnityUpComponent {
         role.attackIN = attackIn;
         this.roleList.push(role);
         this.curCount = Math.min(this.getEffectiveMaxRoleCount(), this.curCount + 1);
+        this.syncRoleAnimationToTeam(role);
         return true;
     }
 
