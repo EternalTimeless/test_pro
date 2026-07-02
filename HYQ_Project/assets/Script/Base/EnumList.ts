@@ -137,6 +137,7 @@ export enum OtherPrefabsEnum {
 }
 
 export enum ArmsTypeEnum {
+    none = -1,
     bq,
     jq,
     jtl,

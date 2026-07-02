@@ -95,6 +95,36 @@ System.register(["cc"], function (_export, _context) {
           return animState;
         }
 
+        setAnimationImmediate(skT, loop, frame) {
+          if (loop === void 0) {
+            loop = true;
+          }
+
+          if (frame === void 0) {
+            frame = 0;
+          }
+
+          var sk = this.skeleta;
+          var aniName = this._animName[skT];
+          var animState = sk.getState(aniName);
+
+          if (!animState) {
+            return animState;
+          }
+
+          if (this._cur != -1 && this._cur != skT) {
+            var curName = this._animName[this._cur];
+            var curState = sk.getState(curName);
+            curState == null || curState.stop();
+          }
+
+          sk.crossFade(aniName, 0);
+          animState.setTime(frame * animState.duration);
+          animState.speed = 1;
+          this._cur = skT;
+          return animState;
+        }
+
         getAnimState(skT) {
           var sk = this.skeleta;
           var aniName = this._animName[skT];

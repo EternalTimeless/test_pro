@@ -24,6 +24,9 @@ class WeaponBulletConfig {
     @property({ type: ArmsTypeEnum, displayName: '武器类型', tooltip: '该配置对应的武器类型。' })
     public armsType: ArmsTypeEnum = ArmsTypeEnum.bq;
 
+    @property({ type: ArmsTypeEnum, displayName: '武器模型', tooltip: '单独指定该配置使用的角色/武器模型；选择 none 时跟随武器类型。' })
+    public weaponModel: ArmsTypeEnum = ArmsTypeEnum.none;
+
     @property({ type: CCFloat, displayName: '子弹威力', tooltip: '该武器发射子弹时的基础伤害倍率。' })
     public bulletPower: number = 1;
 
@@ -59,9 +62,16 @@ export class Player extends UnityUpComponent {
 
     public isDie: boolean = false;
     private curCount: number = 1;
+    private pendingAddRoleCount: number = 0;
 
     @property({ type: CCInteger, displayName: '+1人数上限', tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。' })
-    public maxRoleCount: number = 55;
+    public maxRoleCount: number = 53;
+
+    @property({ type: CCInteger, displayName: '最外圈角色数', tooltip: '最外圈排满需要的角色数量。填 28 时，满员阵型为 1 + 8 + 16 + 28 = 53。' })
+    public outerLayerRoleCount: number = 28;
+
+    @property({ type: CCFloat, displayName: '减员缩圈延迟(秒)', tooltip: '角色减少后等待多久再重新排列缩圈。等待期间再次减员会重新计时。' })
+    public shrinkAfterRoleLossDelay: number = 2;
 
     @property({ type: CCInteger, displayName: '同时发射子弹人数上限', tooltip: '每轮最多允许多少个角色同时发射子弹。只限制射击人数，不影响 +1 总人数。' })
     public maxShootingRoleCount: number = 30;
@@ -75,6 +85,7 @@ export class Player extends UnityUpComponent {
         (() => {
             const config = new WeaponBulletConfig();
             config.armsType = ArmsTypeEnum.bq;
+            config.weaponModel = ArmsTypeEnum.none;
             config.bulletPower = 2;
             config.bulletType = BulletEnum.arrow_1;
             return config;
@@ -82,6 +93,7 @@ export class Player extends UnityUpComponent {
         (() => {
             const config = new WeaponBulletConfig();
             config.armsType = ArmsTypeEnum.jq;
+            config.weaponModel = ArmsTypeEnum.none;
             config.bulletPower = 2;
             config.bulletType = BulletEnum.arrow_2;
             return config;
@@ -89,6 +101,7 @@ export class Player extends UnityUpComponent {
         (() => {
             const config = new WeaponBulletConfig();
             config.armsType = ArmsTypeEnum.jtl;
+            config.weaponModel = ArmsTypeEnum.none;
             config.bulletPower = 0.5;
             config.bulletType = BulletEnum.arrow_3;
             return config;
@@ -96,6 +109,7 @@ export class Player extends UnityUpComponent {
         (() => {
             const config = new WeaponBulletConfig();
             config.armsType = ArmsTypeEnum.jtl2;
+            config.weaponModel = ArmsTypeEnum.none;
             config.bulletPower = 0.3;
             config.bulletType = BulletEnum.arrow_4;
             return config;
@@ -114,6 +128,10 @@ export class Player extends UnityUpComponent {
     private pendingBulletBatchWarmType: BulletEnum = null;
     private readonly bulletPrewarmPerFrame: number = 2;
     private roleLayoutDirty: boolean = false;
+    private shrinkDelayTimer: number = -1;
+    private shrinkAnimating: boolean = false;
+    private shrinkDirtyDuringAnimating: boolean = false;
+    private readonly roleLayoutTweenDuration: number = 0.2;
 
     public isLock: boolean = false;
 
@@ -127,6 +145,7 @@ export class Player extends UnityUpComponent {
     start() {
         Player.instance = this;
         this.move = this.node.getComponent(MoveDrive);
+        this.syncRespawnRoleCount();
         EventManager.instance.on(EventType.PLAYER_HIT, this.hit, this);
         EventManager.instance.on(EventType.PLAYER_HIT_2, this.hit_2, this);
     }
@@ -150,6 +169,7 @@ export class Player extends UnityUpComponent {
         this.processPendingRolePrewarm();
         this.processPendingBulletPrewarm();
         this.processPendingRoleSwitch();
+        this.processDelayedShrink(dt);
         this.roleMove();
     }
 
@@ -224,19 +244,31 @@ export class Player extends UnityUpComponent {
             return 0;
         }
         const effectiveIndex = index - 1;
-        return Math.floor(Math.log2(effectiveIndex / this.LayerCount + 1));
+        let layer = 0;
+        let indexInLayer = effectiveIndex;
+        let layerCount = this.getRoleLayerCount(layer);
+        while (indexInLayer >= layerCount) {
+            indexInLayer -= layerCount;
+            layer++;
+            layerCount = this.getRoleLayerCount(layer);
+        }
+        return layer;
     }
 
-    public upArms(armwType: ArmsTypeEnum) {
-        const weaponBulletConfig = this.getWeaponBulletConfig(armwType);
-        switch (armwType) {
+    public upArms(armwType: ArmsTypeEnum, weaponBulletConfigIndex: number = -1) {
+        const weaponBulletConfig = this.getWeaponBulletConfig(armwType, weaponBulletConfigIndex);
+        const upgradeArmsType = weaponBulletConfig?.armsType ?? armwType;
+        let shouldApplyRoleModel = false;
+        switch (upgradeArmsType) {
             case ArmsTypeEnum.bq:
                 this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.attackSpeed = 4;
+                shouldApplyRoleModel = true;
                 break;
             case ArmsTypeEnum.jq:
                 this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.attackSpeed = 6;
+                shouldApplyRoleModel = true;
                 break;
 
             case ArmsTypeEnum.jtl:
@@ -245,7 +277,7 @@ export class Player extends UnityUpComponent {
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
-                this.startRoleSwitch(RoleEnum.dazhuang);
+                shouldApplyRoleModel = true;
                 break;
             case ArmsTypeEnum.jtl2: {
                 this.applyWeaponBulletConfig(weaponBulletConfig);
@@ -253,7 +285,7 @@ export class Player extends UnityUpComponent {
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
-                this.startRoleSwitch(RoleEnum.dazhuangPlus);
+                shouldApplyRoleModel = true;
                 break;
             }
             case ArmsTypeEnum.tk:
@@ -261,11 +293,16 @@ export class Player extends UnityUpComponent {
             case ArmsTypeEnum.jj:
                 break;
         }
+        if (shouldApplyRoleModel) {
+            this.applyWeaponRoleModel(weaponBulletConfig, upgradeArmsType);
+        }
     }
 
-    public prepareArmsUpgrade(armwType: ArmsTypeEnum) {
+    public prepareArmsUpgrade(armwType: ArmsTypeEnum, weaponBulletConfigIndex: number = -1) {
+        const weaponBulletConfig = this.getWeaponBulletConfig(armwType, weaponBulletConfigIndex);
+        const upgradeArmsType = weaponBulletConfig?.armsType ?? armwType;
         AudioManager.inst.preload(SoundEnum.Sound_Ship_UpLevel);
-        const soundType = this.getSoundTypeByArms(armwType);
+        const soundType = this.getSoundTypeByArms(upgradeArmsType);
         if (soundType !== null) {
             AudioManager.inst.preload(soundType);
         }
@@ -274,12 +311,12 @@ export class Player extends UnityUpComponent {
             return;
         }
 
-        const bulletType = this.getBulletTypeByArms(armwType);
+        const bulletType = weaponBulletConfig?.bulletType ?? this.getBulletTypeByArms(upgradeArmsType);
         if (bulletType !== null) {
             this.startBulletPrewarm(bulletType, this.getWeaponPrewarmBulletCount());
         }
 
-        const targetRoleType = this.getRoleTypeByArms(armwType);
+        const targetRoleType = this.getRoleTypeByWeaponConfig(weaponBulletConfig, upgradeArmsType);
         if (targetRoleType === null) {
             return;
         }
@@ -296,6 +333,9 @@ export class Player extends UnityUpComponent {
 
     private getRoleTypeByArms(armwType: ArmsTypeEnum): RoleEnum | null {
         switch (armwType) {
+            case ArmsTypeEnum.bq:
+            case ArmsTypeEnum.jq:
+                return RoleEnum.underling;
             case ArmsTypeEnum.jtl:
                 return RoleEnum.dazhuang;
             case ArmsTypeEnum.jtl2:
@@ -304,11 +344,35 @@ export class Player extends UnityUpComponent {
         return null;
     }
 
+    private getWeaponModelArmsType(config: WeaponBulletConfig | null, fallbackArmsType: ArmsTypeEnum): ArmsTypeEnum {
+        const modelType = config?.weaponModel;
+        if (modelType !== undefined && modelType !== null && modelType !== ArmsTypeEnum.none) {
+            return modelType;
+        }
+        return config?.armsType ?? fallbackArmsType;
+    }
+
+    private getRoleTypeByWeaponConfig(config: WeaponBulletConfig | null, fallbackArmsType: ArmsTypeEnum): RoleEnum | null {
+        return this.getRoleTypeByArms(this.getWeaponModelArmsType(config, fallbackArmsType));
+    }
+
+    private applyWeaponRoleModel(config: WeaponBulletConfig | null, fallbackArmsType: ArmsTypeEnum): void {
+        const targetRoleType = this.getRoleTypeByWeaponConfig(config, fallbackArmsType);
+        if (targetRoleType === null) {
+            return;
+        }
+        this.startRoleSwitch(targetRoleType);
+    }
+
     private getBulletTypeByArms(armwType: ArmsTypeEnum): BulletEnum | null {
         return this.getWeaponBulletConfig(armwType)?.bulletType ?? null;
     }
 
-    private getWeaponBulletConfig(armwType: ArmsTypeEnum): WeaponBulletConfig | null {
+    private getWeaponBulletConfig(armwType: ArmsTypeEnum, weaponBulletConfigIndex: number = -1): WeaponBulletConfig | null {
+        const indexedConfig = this.getWeaponBulletConfigByIndex(weaponBulletConfigIndex);
+        if (indexedConfig) {
+            return indexedConfig;
+        }
         for (let i = 0; i < this.weaponBulletConfigList.length; i++) {
             const config = this.weaponBulletConfigList[i];
             if (config?.armsType === armwType) {
@@ -316,6 +380,14 @@ export class Player extends UnityUpComponent {
             }
         }
         return null;
+    }
+
+    private getWeaponBulletConfigByIndex(index: number): WeaponBulletConfig | null {
+        if (!this.weaponBulletConfigList || index < 0) {
+            return null;
+        }
+        const safeIndex = Math.floor(index);
+        return this.weaponBulletConfigList[safeIndex] ?? null;
     }
 
     private applyWeaponBulletConfig(config: WeaponBulletConfig | null): void {
@@ -500,14 +572,82 @@ export class Player extends UnityUpComponent {
     }
 
 
-    public addRole(role: Role) {
-        if (this.roleList.length >= this.maxRoleCount) {
+    public addRole(role: Role, attackIn: boolean = true) {
+        if (this.isDie) {
             return false;
         }
-        role.attackIN = true;
+        if (this.roleList.length >= this.getEffectiveMaxRoleCount()) {
+            return false;
+        }
+        role.attackIN = attackIn;
         this.roleList.push(role);
-        this.curCount++;
+        this.curCount = Math.min(this.getEffectiveMaxRoleCount(), this.curCount + 1);
         return true;
+    }
+
+    public canReserveRoleSlot(maxCount: number = this.getEffectiveMaxRoleCount()): boolean {
+        const limit = Math.min(this.getEffectiveMaxRoleCount(), Math.max(1, Math.floor(maxCount)));
+        return !this.isDie && this.roleList.length + this.pendingAddRoleCount < limit;
+    }
+
+    public isRoleCountAtLimit(maxCount: number = this.getEffectiveMaxRoleCount()): boolean {
+        const limit = Math.min(this.getEffectiveMaxRoleCount(), Math.max(1, Math.floor(maxCount)));
+        return this.roleList.length >= limit;
+    }
+
+    public reserveRoleSlot(maxCount: number = this.getEffectiveMaxRoleCount()): number {
+        if (!this.canReserveRoleSlot(maxCount)) {
+            return -1;
+        }
+        const index = this.roleList.length + this.pendingAddRoleCount;
+        this.pendingAddRoleCount++;
+        return index;
+    }
+
+    public releaseRoleSlot(): void {
+        this.pendingAddRoleCount = Math.max(0, this.pendingAddRoleCount - 1);
+    }
+
+    public commitReservedRole(role: Role): Role | null {
+        this.releaseRoleSlot();
+        if (!role || this.isDie) {
+            return null;
+        }
+
+        let committedRole = role;
+        if (role.type !== this.roleType) {
+            committedRole = this.replaceRoleWithCurrentType(role);
+        }
+
+        if (!this.addRole(committedRole, false)) {
+            committedRole.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + committedRole.type, committedRole);
+            return null;
+        }
+        return committedRole;
+    }
+
+    private replaceRoleWithCurrentType(role: Role): Role {
+        const parent = role.node.parent;
+        const worldPos = PoolManager.instance.V3.set(role.node.worldPosition);
+        const scale = PoolManager.instance.V3.set(role.node.scale);
+        Tween.stopAllByTarget(role.node);
+        if (role.fbxManager?.node) {
+            Tween.stopAllByTarget(role.fbxManager.node);
+        }
+        role.node.active = false;
+        PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+
+        const newRole = this.getRoleByType(this.roleType);
+        if (parent) {
+            parent.addChild(newRole.node);
+        }
+        newRole.node.setWorldPosition(worldPos);
+        newRole.node.setScale(scale);
+        newRole.attackIN = role.attackIN;
+        PoolManager.instance.V3 = worldPos;
+        PoolManager.instance.V3 = scale;
+        return newRole;
     }
 
     /**
@@ -543,20 +683,53 @@ export class Player extends UnityUpComponent {
         if (index == -1) {
             index = this.roleList.length - 1;
         }
+        if (index <= 0) {
+            return local ? PoolManager.instance.V3.set(Vec3.ZERO) : PoolManager.instance.V3.set(this.node.worldPosition);
+        }
         // 列表第一个不算，用 index-1 作为有效索引
         // 第 n 层数量 = LayerCount * 2^n，前 n 层总数 = LayerCount * (2^n - 1)
         // layer = floor(log2(effectiveIndex / LayerCount + 1))
         const effectiveIndex = index - 1;
-        const layer = Math.floor(Math.log2(effectiveIndex / this.LayerCount + 1));
-        const layerCount = this.LayerCount << layer;
-        const indexInLayer = effectiveIndex - this.LayerCount * ((1 << layer) - 1);
+        const layerInfo = this.getRoleLayerInfo(effectiveIndex);
         if (local) {
-            const pos = getCirclePosition(Vec3.ZERO, layerCount, indexInLayer, (layer + 1) * this.roleR);
+            const pos = getCirclePosition(Vec3.ZERO, layerInfo.layerCount, layerInfo.indexInLayer, (layerInfo.layer + 1) * this.roleR);
             return pos;
         } else {
-            const pos = getCirclePosition(this.node.worldPosition, layerCount, indexInLayer, (layer + 1) * this.roleR);
+            const pos = getCirclePosition(this.node.worldPosition, layerInfo.layerCount, layerInfo.indexInLayer, (layerInfo.layer + 1) * this.roleR);
             return pos;
         }
+    }
+
+    private getRoleLayerInfo(effectiveIndex: number): { layer: number, layerCount: number, indexInLayer: number } {
+        let layer = 0;
+        let indexInLayer = Math.max(0, effectiveIndex);
+        let layerCount = this.getRoleLayerCount(layer);
+        while (indexInLayer >= layerCount) {
+            indexInLayer -= layerCount;
+            layer++;
+            layerCount = this.getRoleLayerCount(layer);
+        }
+        return { layer, layerCount, indexInLayer };
+    }
+
+    private getRoleLayerCount(layer: number): number {
+        if (layer <= 0) {
+            return this.LayerCount;
+        }
+        if (layer === 1) {
+            return this.LayerCount * 2;
+        }
+        const outerCount = Math.max(1, Math.floor(this.outerLayerRoleCount));
+        if (layer === 2) {
+            return outerCount;
+        }
+        return outerCount << (layer - 2);
+    }
+
+    public getEffectiveMaxRoleCount(): number {
+        const configuredMax = Math.max(1, Math.floor(this.maxRoleCount));
+        const fourLayerMax = 1 + this.getRoleLayerCount(0) + this.getRoleLayerCount(1) + this.getRoleLayerCount(2);
+        return Math.min(configuredMax, fourLayerMax);
     }
 
     public get length() {
@@ -572,36 +745,171 @@ export class Player extends UnityUpComponent {
 
 
     public upPos() {
+        this.applyRoleLayout(false);
+    }
+
+    public requestShrinkAfterRoleLoss(): void {
         if (this.isDie) {
             return;
         }
-        this.isDie = this.roleList.length == 0;
-        if (this.isDie) {
-            // this.TimeFlowsBackWard();
-            EventManager.instance.on(EventType.PLAYER_RESURRECTION, this.TimeFlowsBackWard, this, true);
-            EventManager.instance.emit(EventType.PLAYER_DIE);
-            GameOverPanel.instance.show(false);
+        this.recycleInactiveRoles();
+        this.recycleOverflowRoles();
+        if (this.getCombatRoleCount() <= 0) {
+            this.cancelDelayedShrink();
+            this.handlePlayerDie();
+            return;
         }
 
-        for (let i = this.roleList.length - 1; i >= 0; i--) {
-            const role = this.roleList[i];
-            if (!role.node.active) {
-                this.roleList.splice(i, 1);
-                PoolManager.instance.setPool(PoolEnum.role + role.type, role);
-            }
+        if (this.shrinkAnimating) {
+            this.shrinkDirtyDuringAnimating = true;
+            return;
         }
+
+        this.shrinkDelayTimer = Math.max(0, this.shrinkAfterRoleLossDelay);
+        if (this.shrinkDelayTimer <= 0) {
+            this.processDelayedShrink(0);
+        }
+    }
+
+    private processDelayedShrink(dt: number): void {
+        if (this.shrinkDelayTimer < 0) {
+            return;
+        }
+        if (this.isDie) {
+            this.cancelDelayedShrink();
+            return;
+        }
+        if (this.shrinkAnimating) {
+            this.shrinkDelayTimer = -1;
+            this.shrinkDirtyDuringAnimating = true;
+            return;
+        }
+
+        this.shrinkDelayTimer -= dt;
+        if (this.shrinkDelayTimer > 0) {
+            return;
+        }
+
+        this.shrinkDelayTimer = -1;
+        this.applyRoleLayout(true);
+    }
+
+    private cancelDelayedShrink(): void {
+        this.shrinkDelayTimer = -1;
+        this.shrinkAnimating = false;
+        this.shrinkDirtyDuringAnimating = false;
+    }
+
+    private applyRoleLayout(isDelayedShrink: boolean): void {
+        if (this.isDie) {
+            return;
+        }
+        this.recycleInactiveRoles();
+        this.recycleOverflowRoles();
+        if (this.getCombatRoleCount() <= 0) {
+            this.cancelDelayedShrink();
+            this.handlePlayerDie();
+            return;
+        }
+
+        if (isDelayedShrink) {
+            this.shrinkAnimating = true;
+            this.shrinkDirtyDuringAnimating = false;
+        }
+
+        let layoutIndex = 0;
         for (let i = 0; i < this.roleList.length; i++) {
             const role = this.roleList[i];
-            if (!i) {
-                tween(role.node).to(0.2, { position: Vec3.ZERO }).start();
+            if (role.attackIN) {
+                continue;
+            }
+            if (!layoutIndex) {
+                tween(role.node).to(this.roleLayoutTweenDuration, { position: Vec3.ZERO }).start();
             } else {
-                const pos = this.getNextPos(i, true);
-                tween(role.node).to(0.2, { position: pos }).call(() => {
+                const pos = this.getNextPos(layoutIndex, true);
+                tween(role.node).to(this.roleLayoutTweenDuration, { position: pos }).call(() => {
                     PoolManager.instance.V3 = pos;
                 }).start();
             }
+            layoutIndex++;
         }
         this.upMoveBoundary();
+
+        if (isDelayedShrink) {
+            this.scheduleOnce(() => {
+                this.shrinkAnimating = false;
+                if (!this.shrinkDirtyDuringAnimating) {
+                    return;
+                }
+                this.shrinkDirtyDuringAnimating = false;
+                this.requestShrinkAfterRoleLoss();
+            }, this.roleLayoutTweenDuration);
+        }
+    }
+
+    private getCombatRoleCount(): number {
+        let count = 0;
+        for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+            if (role && role.node.active && !role.attackIN) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private recycleInactiveRoles(): void {
+        for (let i = this.roleList.length - 1; i >= 0; i--) {
+            const role = this.roleList[i];
+            if (!role || !role.node.active) {
+                this.roleList.splice(i, 1);
+                if (role) {
+                    PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+                }
+            }
+        }
+    }
+
+    private recycleOverflowRoles(): void {
+        const maxCount = this.getEffectiveMaxRoleCount();
+        for (let i = this.roleList.length - 1; i >= maxCount; i--) {
+            const role = this.roleList[i];
+            this.roleList.splice(i, 1);
+            if (!role) {
+                continue;
+            }
+            Tween.stopAllByTarget(role.node);
+            if (role.fbxManager?.node) {
+                Tween.stopAllByTarget(role.fbxManager.node);
+            }
+            role.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+        }
+    }
+
+    private recyclePendingAttackRoles(): void {
+        for (let i = this.roleList.length - 1; i >= 0; i--) {
+            const role = this.roleList[i];
+            if (!role || !role.attackIN) {
+                continue;
+            }
+            Tween.stopAllByTarget(role.node);
+            if (role.fbxManager?.node) {
+                Tween.stopAllByTarget(role.fbxManager.node);
+            }
+            role.node.active = false;
+            this.roleList.splice(i, 1);
+            PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+        }
+    }
+
+    private handlePlayerDie(): void {
+        this.cancelDelayedShrink();
+        this.isDie = true;
+        this.recyclePendingAttackRoles();
+        EventManager.instance.on(EventType.PLAYER_RESURRECTION, this.TimeFlowsBackWard, this, true);
+        EventManager.instance.emit(EventType.PLAYER_DIE);
+        GameOverPanel.instance.show(false);
     }
 
     public hit(pos: Vec3, count: number = 4) {
@@ -610,16 +918,25 @@ export class Player extends UnityUpComponent {
         }
         const list = this.roleList;
         const total = list.length;
-        const len = count < total ? count : total;
+        let candidateCount = 0;
         // 预分配距离数组，避免临时对象
         const dists: number[] = [];
         for (let i = 0; i < total; i++) {
+            if (list[i].attackIN) {
+                dists[i] = Number.MAX_VALUE;
+                continue;
+            }
+            candidateCount++;
             const rp = list[i].node.worldPosition;
             const dx = rp.x - pos.x;
             const dz = rp.z - pos.z;
             dists[i] = dx * dx + dz * dz;
         }
         // 选择法找最近的 len 个索引
+        const len = count < candidateCount ? count : candidateCount;
+        if (len <= 0) {
+            return;
+        }
         const picked: number[] = [];
         const used: boolean[] = [];
         for (let n = 0; n < len; n++) {
@@ -627,16 +944,20 @@ export class Player extends UnityUpComponent {
             let minDist = 0;
             for (let i = 0; i < total; i++) {
                 if (used[i]) continue;
+                if (dists[i] === Number.MAX_VALUE) continue;
                 if (minIdx < 0 || dists[i] < minDist) {
                     minIdx = i;
                     minDist = dists[i];
                 }
             }
+            if (minIdx < 0) {
+                break;
+            }
             picked[n] = minIdx;
             used[minIdx] = true;
         }
         // 从后往前删除，保证索引不错位
-        for (let i = 0; i < len; i++) {
+        for (let i = 0; i < picked.length; i++) {
             const role = list[picked[i]];
             role.hp -= 3;
             this.roleDie(role);
@@ -644,21 +965,24 @@ export class Player extends UnityUpComponent {
             // PoolManager.instance.setPool(PoolEnum.role + this.roleType, role);
         }
         picked.sort(function (a, b) { return b - a; });
-        for (let i = 0; i < len; i++) {
+        for (let i = 0; i < picked.length; i++) {
             list.splice(picked[i], 1);
         }
-        this.upPos();
+        this.requestShrinkAfterRoleLoss();
     }
 
 
     private hit_2(role: Role, power: number) {
+        if (role.attackIN) {
+            return;
+        }
         role.hp -= power;
         if (role.hp <= 0) {
             const index = this.roleList.indexOf(role);
             if (index != -1) {
                 this.roleList.splice(index, 1);
                 this.roleDie(role);
-                this.upPos();
+                this.requestShrinkAfterRoleLoss();
             }
         } else {
             FlashRedManager.instance.flashRed(role.node, role.meshRedDataList);
@@ -666,6 +990,8 @@ export class Player extends UnityUpComponent {
     }
 
     private TimeFlowsBackWard() {
+        this.clearRolesForRetry();
+        this.syncRespawnRoleCount();
         this._attackTime = 0.5;
         this.shootRoleStartIndex = 0;
         for (let i = 0; i < this.curCount; i++) {
@@ -691,6 +1017,29 @@ export class Player extends UnityUpComponent {
         }, 2);
     }
 
+    private syncRespawnRoleCount(): void {
+        const currentRoleCount = this.roleList?.length ?? 0;
+        this.curCount = Math.min(this.getEffectiveMaxRoleCount(), Math.max(1, this.curCount, currentRoleCount));
+    }
+
+    private clearRolesForRetry(): void {
+        this.cancelDelayedShrink();
+        this.pendingAddRoleCount = 0;
+        if (!this.roleList?.length) {
+            return;
+        }
+        for (let i = this.roleList.length - 1; i >= 0; i--) {
+            const role = this.roleList[i];
+            if (!role) {
+                continue;
+            }
+            Tween.stopAllByTarget(role.node);
+            role.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+        }
+        this.roleList.length = 0;
+    }
+
     roleDie(role: Role) {
         const endTime = role.fbxManager.setAnimation(PlayerFBXAnimName.die, false).duration;
         role.die(endTime);
@@ -707,19 +1056,27 @@ export class Player extends UnityUpComponent {
         return role;
     }
 
+    public getRoleForSpawn(): Role {
+        return this.getRoleByType(this.roleType);
+    }
+
     private getRoleByType(roleType: RoleEnum) {
         let role = PoolManager.instance.getPool<Role>(PoolEnum.role + roleType);
         if (!role) {
             role = this.createRoleByType(roleType);
         }
+        role.type = roleType;
         role.hp = 2;
         role.node.active = true;
+        role.resetForSpawn();
         return role;
     }
 
     private createRoleByType(roleType: RoleEnum) {
         const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, roleType);
-        return node.getComponent(Role);
+        const role = node.getComponent(Role);
+        role.type = roleType;
+        return role;
     }
 
 

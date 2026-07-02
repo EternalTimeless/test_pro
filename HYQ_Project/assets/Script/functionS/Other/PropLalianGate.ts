@@ -24,6 +24,33 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: Node, displayName: '拉环尾巴节点', tooltip: '拉环尾巴节点。滑块受击时，这个节点会做更明显的摆动。' })
     public pullRingTail: Node = null;
 
+    @property({ type: CCInteger, displayName: '拉环循环段数', tooltip: '拉环摆动一圈拆成多少段，默认 8 段。' })
+    public pullRingLoopStepCount: number = 8;
+
+    @property({ type: CCInteger, displayName: '每次受击拉环步数', tooltip: '每次命中推进多少段拉环动作，默认 2 段。' })
+    public pullRingStepPerHit: number = 2;
+
+    @property({ type: CCFloat, displayName: '拉环单步时长(秒)', tooltip: '每一段拉环动作的持续时间，数值越大动作越慢。' })
+    public pullRingStepTime: number = 0.08;
+
+    @property({ type: CCFloat, displayName: '拉环根左右摆幅', tooltip: '拉环根节点沿 Y 轴左右摆动角度。' })
+    public pullRingRootSwingY: number = 16;
+
+    @property({ type: CCFloat, displayName: '拉环根椭圆仰角', tooltip: '拉环根节点沿 X 轴形成压扁椭圆弧的仰角。' })
+    public pullRingRootLiftX: number = 6;
+
+    @property({ type: CCFloat, displayName: '拉环根世界上抬高度', tooltip: '拉环根节点整体沿世界 Y 轴上抬，避免父级轴向导致变成 Z 纵深偏移。' })
+    public pullRingRootLiftY: number = 0.08;
+
+    @property({ type: CCFloat, displayName: '拉环尾左右摆幅', tooltip: '拉环尾节点沿 Y 轴左右摆动角度，尾部更大时会像喇叭口。' })
+    public pullRingTailSwingY: number = 42;
+
+    @property({ type: CCFloat, displayName: '拉环尾椭圆仰角', tooltip: '拉环尾节点沿 X 轴形成压扁椭圆弧的仰角。' })
+    public pullRingTailLiftX: number = 14;
+
+    @property({ type: CCFloat, displayName: '拉环尾下压角度比例', tooltip: '只缩放尾部 X 轴下压角度，不影响左右摆幅；数值越小越不容易穿模。' })
+    public pullRingTailDownAngleScale: number = 0.65;
+
     @property({ type: [Node], displayName: '拉链齿条列表', tooltip: '拖入需要参与推进的 SM_lalian-xxx 节点。列表为空且开启自动收集时，会从拉链根节点下自动收集 SM_lalian-xxx。' })
     public teethNodes: Node[] = [];
 
@@ -129,10 +156,11 @@ export class PropLalianGate extends BattleTarget3D {
     private cubeStartScale: Vec3 = new Vec3(1, 1, 1);
     private cubeStartPos: Vec3 = new Vec3();
     private hasCubeStartData: boolean = false;
+    private pullRingRootStartWorldPos: Vec3 = new Vec3();
     private pullRingRootStartEuler: Vec3 = new Vec3();
     private pullRingTailStartEuler: Vec3 = new Vec3();
     private hasPullRingStartData: boolean = false;
-    private pullRingSwingSign: number = 1;
+    private pullRingLoopStepIndex: number = 0;
     private runtimeSliderOffsetZ: number = 0;
     private tempLockAimPos: Vec3 = new Vec3();
     private tempCollisionWorldPos: Vec3 = new Vec3();
@@ -146,12 +174,6 @@ export class PropLalianGate extends BattleTarget3D {
     private animating: boolean = false;
     private finished: boolean = false;
     private registered: boolean = false;
-    private readonly pullRingRootImpactY: number = 10;
-    private readonly pullRingRootReboundY: number = -7;
-    private readonly pullRingTailImpactY: number = 34;
-    private readonly pullRingTailReboundY: number = -28;
-    private readonly pullRingStageTime: number = 0.04;
-
     public get hitNode() {
         return this.cube ?? super.hitNode;
     }
@@ -392,7 +414,7 @@ export class PropLalianGate extends BattleTarget3D {
         this.toothIndex = 0;
         this.pairIndex = 0;
         this.pairCount = 0;
-        this.pullRingSwingSign = 1;
+        this.pullRingLoopStepIndex = 0;
 
         if (!this.cube) {
             return;
@@ -639,6 +661,7 @@ export class PropLalianGate extends BattleTarget3D {
             return;
         }
         if (this.pullRingRoot) {
+            this.pullRingRootStartWorldPos.set(this.pullRingRoot.worldPosition);
             this.pullRingRootStartEuler.set(this.pullRingRoot.eulerAngles);
         }
         if (this.pullRingTail) {
@@ -650,11 +673,12 @@ export class PropLalianGate extends BattleTarget3D {
     private resetPullRing(): void {
         if (this.pullRingRoot) {
             Tween.stopAllByTarget(this.pullRingRoot);
-            this.pullRingRoot.eulerAngles = this.getPullRingRootEuler(0);
+            this.pullRingRoot.setWorldPosition(this.getPullRingRootLiftedWorldPosition());
+            this.pullRingRoot.eulerAngles = this.getPullRingRootStepEuler(0);
         }
         if (this.pullRingTail) {
             Tween.stopAllByTarget(this.pullRingTail);
-            this.pullRingTail.eulerAngles = this.getPullRingTailEuler(0);
+            this.pullRingTail.eulerAngles = this.getPullRingTailStepEuler(0);
         }
     }
 
@@ -664,36 +688,76 @@ export class PropLalianGate extends BattleTarget3D {
             return;
         }
 
-        const sign = this.pullRingSwingSign;
-        this.pullRingSwingSign *= -1;
-        Tween.stopAllByTarget(this.pullRingRoot);
-        tween(this.pullRingRoot)
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingRootEuler(this.pullRingRootImpactY * sign) }, { easing: 'sineOut' })
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingRootEuler(this.pullRingRootReboundY * sign) }, { easing: 'sineInOut' })
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingRootEuler(0) }, { easing: 'sineOut' })
-            .start();
+        const loopStepCount = this.getPullRingLoopStepCount();
+        const stepPerHit = this.getPullRingStepPerHit();
+        const stepTime = this.getPullRingStepTime();
+        const targetSteps: number[] = [];
+        for (let i = 1; i <= stepPerHit; i++) {
+            targetSteps.push((this.pullRingLoopStepIndex + i) % loopStepCount);
+        }
+        this.pullRingLoopStepIndex = targetSteps[targetSteps.length - 1];
 
-        this.playPullRingTailJoint(sign);
+        Tween.stopAllByTarget(this.pullRingRoot);
+        let rootTween = tween(this.pullRingRoot);
+        for (let i = 0; i < targetSteps.length; i++) {
+            rootTween = rootTween.to(stepTime, { eulerAngles: this.getPullRingRootStepEuler(targetSteps[i]) }, { easing: 'sineInOut' });
+        }
+        rootTween.start();
+
+        this.playPullRingTailJoint(targetSteps, stepTime);
     }
 
-    private playPullRingTailJoint(sign: number): void {
+    private playPullRingTailJoint(targetSteps: number[], stepTime: number): void {
         if (!this.pullRingRoot || !this.pullRingTail || !this.isNodeUnderParent(this.pullRingTail, this.pullRingRoot)) {
             return;
         }
         Tween.stopAllByTarget(this.pullRingTail);
-        tween(this.pullRingTail)
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingTailEuler(this.pullRingTailImpactY * sign) }, { easing: 'sineOut' })
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingTailEuler(this.pullRingTailReboundY * sign) }, { easing: 'sineInOut' })
-            .to(this.pullRingStageTime, { eulerAngles: this.getPullRingTailEuler(0) }, { easing: 'sineOut' })
-            .start();
+        let tailTween = tween(this.pullRingTail);
+        for (let i = 0; i < targetSteps.length; i++) {
+            tailTween = tailTween.to(stepTime, { eulerAngles: this.getPullRingTailStepEuler(targetSteps[i]) }, { easing: 'sineInOut' });
+        }
+        tailTween.start();
     }
 
-    private getPullRingRootEuler(offsetY: number): Vec3 {
-        return v3(this.pullRingRootStartEuler.x, this.pullRingRootStartEuler.y + offsetY, this.pullRingRootStartEuler.z);
+    private getPullRingRootStepEuler(stepIndex: number): Vec3 {
+        const phase = this.getPullRingPhase(stepIndex);
+        const swingY = Math.sin(phase) * this.pullRingRootSwingY;
+        const liftX = (1 - Math.cos(phase)) * 0.5 * this.pullRingRootLiftX;
+        return v3(this.pullRingRootStartEuler.x + liftX, this.pullRingRootStartEuler.y + swingY, this.pullRingRootStartEuler.z);
     }
 
-    private getPullRingTailEuler(offsetY: number): Vec3 {
-        return v3(this.pullRingTailStartEuler.x, this.pullRingTailStartEuler.y + offsetY, this.pullRingTailStartEuler.z);
+    private getPullRingRootLiftedWorldPosition(): Vec3 {
+        return v3(this.pullRingRootStartWorldPos.x, this.pullRingRootStartWorldPos.y + this.pullRingRootLiftY, this.pullRingRootStartWorldPos.z);
+    }
+
+    private getPullRingTailStepEuler(stepIndex: number): Vec3 {
+        const phase = this.getPullRingPhase(stepIndex);
+        const wave = Math.sin(phase);
+        const liftCurve = (1 - Math.cos(phase)) * 0.5;
+        const downAngleScale = 1 - (1 - this.getPullRingTailDownAngleScale()) * liftCurve;
+        const swingY = wave * this.pullRingTailSwingY;
+        const liftX = liftCurve * this.pullRingTailLiftX * downAngleScale;
+        return v3(this.pullRingTailStartEuler.x + liftX, this.pullRingTailStartEuler.y + swingY, this.pullRingTailStartEuler.z);
+    }
+
+    private getPullRingPhase(stepIndex: number): number {
+        return Math.PI * 2 * (stepIndex / this.getPullRingLoopStepCount());
+    }
+
+    private getPullRingLoopStepCount(): number {
+        return Math.max(2, Math.floor(this.pullRingLoopStepCount));
+    }
+
+    private getPullRingStepPerHit(): number {
+        return Math.max(1, Math.floor(this.pullRingStepPerHit));
+    }
+
+    private getPullRingStepTime(): number {
+        return Math.max(0.02, this.pullRingStepTime);
+    }
+
+    private getPullRingTailDownAngleScale(): number {
+        return Math.max(0.1, Math.min(1, this.pullRingTailDownAngleScale));
     }
 
     private prepareSliderOffset(): void {

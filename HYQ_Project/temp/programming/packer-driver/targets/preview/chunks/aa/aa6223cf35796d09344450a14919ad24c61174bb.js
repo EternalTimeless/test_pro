@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, utils, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, MeshFlashData, MeshFlashSwitchData, AudioManager, FbxManager, CameraMove, MoveDrive, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Color, instantiate, Label, Material, MeshRenderer, Node, resources, Tween, tween, utils, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, PoolManager, ArmsTypeEnum, EventType, OtherPrefabsEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, TweenTool, EventManager, AttackParkPlay, FlashRedManager, MeshFlashData, MeshFlashSwitchData, AudioManager, FbxManager, CameraMove, MoveDrive, MonsterCreate, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _class4, _class5, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _class6, _crd, ccclass, property, AnimArms, ArmsInfo, PropArms;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -243,6 +243,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "wallHeight", _descriptor9, this);
 
           this.runtimeVisualRoot = null;
+          this.weaponBulletConfigIndex = -1;
         }
 
       }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "armsType", [_dec2], {
@@ -334,53 +335,57 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '只微调油桶模型子节点的 X，不移动血量、受击中心和根节点。正值向右，负值向左。'
       }), _dec17 = property({
         type: CCFloat,
+        displayName: '油桶滚动速度',
+        tooltip: '油桶随前进位移产生的旋转角度倍率，只影响滚动动效，不影响油桶本体移动速度。'
+      }), _dec18 = property({
+        type: CCFloat,
         displayName: '受击弹跳高度',
         tooltip: '底座/滚筒被打掉后，剩余底座和武器模型的弹跳高度。'
-      }), _dec18 = property({
+      }), _dec19 = property({
         type: CCFloat,
         displayName: '波次前方间距',
         tooltip: '多阶段武器跟随怪物波次刷新时，出现在最前方怪物前面的距离。'
-      }), _dec19 = property({
+      }), _dec20 = property({
         type: CCFloat,
         displayName: '下一阶段延迟',
         tooltip: '当前阶段死亡后，生成下一阶段武器前等待的时间。'
-      }), _dec20 = property({
+      }), _dec21 = property({
         type: CCFloat,
         displayName: '动画速度倍率',
         tooltip: '受击、底座消失、拉链收拢等动画的速度倍率。数值越大动画越慢。'
-      }), _dec21 = property({
+      }), _dec22 = property({
         type: Node,
         displayName: '石板/承载节点',
         tooltip: '武器下方跟随抬升、死亡后下砸的承载节点。没有该节点时只触发武器完成事件。'
-      }), _dec22 = property({
+      }), _dec23 = property({
         type: CCInteger,
         displayName: 'Lalian节点数量(0=全部)',
         tooltip: '拉链模式下使用的 Node 数量。填 0 表示使用 Lalian 下已有的全部节点。'
-      }), _dec23 = property({
+      }), _dec24 = property({
         type: CCFloat,
         displayName: 'Lalian节点Z间距',
         tooltip: '需要自动补足 Lalian 节点时，新节点之间的 Z 轴间距。'
-      }), _dec24 = property({
+      }), _dec25 = property({
         type: CCFloat,
         displayName: 'Lalian收拢X',
         tooltip: '拉链子节点最终靠拢到中心时保留的 X 轴距离，例如左右最终为 +/-0.1。'
-      }), _dec25 = property({
+      }), _dec26 = property({
         type: CCInteger,
         displayName: 'Lalian完成移动数量(0=节点数)',
         tooltip: '拉链全部打完后放出的 +1/+99 数量。填 0 表示使用拉链节点数量。'
-      }), _dec26 = property({
+      }), _dec27 = property({
         type: Vec3,
         displayName: '石板跳跃位置',
         tooltip: '预留字段：石板/承载节点跳跃时使用的位置参数。当前主要逻辑不依赖它。'
-      }), _dec27 = property({
+      }), _dec28 = property({
         type: Node,
         displayName: '石板落地特效',
         tooltip: '石板/承载节点死亡下砸落地时播放的特效节点。'
-      }), _dec28 = property({
+      }), _dec29 = property({
         type: CCFloat,
         displayName: '承载物浮动速度',
         tooltip: '武器存活时，石板/承载节点上下浮动的速度。'
-      }), _dec29 = property({
+      }), _dec30 = property({
         type: CCFloat,
         displayName: '承载物浮动幅度',
         tooltip: '武器存活时，石板/承载节点上下浮动的高度幅度。'
@@ -428,29 +433,31 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "bottomBaseOffsetX", _descriptor14, this);
 
-          _initializerDefineProperty(this, "jumpHeight", _descriptor15, this);
+          _initializerDefineProperty(this, "bottomBaseRollDegreesPerUnit", _descriptor15, this);
 
-          _initializerDefineProperty(this, "waveFrontGap", _descriptor16, this);
+          _initializerDefineProperty(this, "jumpHeight", _descriptor16, this);
 
-          _initializerDefineProperty(this, "nextStageDelay", _descriptor17, this);
+          _initializerDefineProperty(this, "waveFrontGap", _descriptor17, this);
+
+          _initializerDefineProperty(this, "nextStageDelay", _descriptor18, this);
 
           // @property(AttackParkPlay)
           // public effect: AttackParkPlay;
-          _initializerDefineProperty(this, "animScale", _descriptor18, this);
+          _initializerDefineProperty(this, "animScale", _descriptor19, this);
 
-          _initializerDefineProperty(this, "wallNode", _descriptor19, this);
+          _initializerDefineProperty(this, "wallNode", _descriptor20, this);
 
-          _initializerDefineProperty(this, "lalianNodeCount", _descriptor20, this);
+          _initializerDefineProperty(this, "lalianNodeCount", _descriptor21, this);
 
-          _initializerDefineProperty(this, "lalianNodeSpacingZ", _descriptor21, this);
+          _initializerDefineProperty(this, "lalianNodeSpacingZ", _descriptor22, this);
 
-          _initializerDefineProperty(this, "lalianCloseX", _descriptor22, this);
+          _initializerDefineProperty(this, "lalianCloseX", _descriptor23, this);
 
-          _initializerDefineProperty(this, "lalianMoveCount", _descriptor23, this);
+          _initializerDefineProperty(this, "lalianMoveCount", _descriptor24, this);
 
-          _initializerDefineProperty(this, "jumpWallPos", _descriptor24, this);
+          _initializerDefineProperty(this, "jumpWallPos", _descriptor25, this);
 
-          _initializerDefineProperty(this, "wallEffect", _descriptor25, this);
+          _initializerDefineProperty(this, "wallEffect", _descriptor26, this);
 
           this.bottomBasePrefab = (_crd && OtherPrefabsEnum === void 0 ? (_reportPossibleCrUseOfOtherPrefabsEnum({
             error: Error()
@@ -462,7 +469,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseTargetPosMap = new Map();
           this.weaponVisualScaleMap = new Map();
           this.manualBottomBaseNodeSet = new Set();
-          this.bottomBaseRollDegreesPerUnit = 110;
           this.bottomBaseRollAxis = new Vec3(0, 1, 0);
           this.roleTemplateBottomBasePos = new Vec3();
           this.roleTemplateArmsPos = new Vec3();
@@ -475,9 +481,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.oilHitFlashRecords = [];
           this.oilHitFlashState = null;
 
-          _initializerDefineProperty(this, "speed", _descriptor26, this);
+          _initializerDefineProperty(this, "speed", _descriptor27, this);
 
-          _initializerDefineProperty(this, "h", _descriptor27, this);
+          _initializerDefineProperty(this, "h", _descriptor28, this);
 
           this._time = 0;
           this.isWallH = false;
@@ -1226,6 +1232,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             this._curArms = this.armsInfoList[this._level];
+            this._curArms.weaponBulletConfigIndex = this._level;
             var currentArms = this._curArms;
             var visualRoot = this.getCurrentArmsVisualRoot(currentArms);
 
@@ -2950,87 +2957,94 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor15 = _applyDecoratedDescriptor(_class5.prototype, "jumpHeight", [_dec17], {
+      }), _descriptor15 = _applyDecoratedDescriptor(_class5.prototype, "bottomBaseRollDegreesPerUnit", [_dec17], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 85;
+        }
+      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "jumpHeight", [_dec18], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.5;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "waveFrontGap", [_dec18], {
+      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "waveFrontGap", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 2;
         }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "nextStageDelay", [_dec19], {
+      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "nextStageDelay", [_dec20], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.2;
         }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "animScale", [_dec20], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "animScale", [_dec21], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 1;
         }
-      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "wallNode", [_dec21], {
+      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "wallNode", [_dec22], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "lalianNodeCount", [_dec22], {
+      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "lalianNodeCount", [_dec23], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "lalianNodeSpacingZ", [_dec23], {
+      }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "lalianNodeSpacingZ", [_dec24], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.8;
         }
-      }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "lalianCloseX", [_dec24], {
+      }), _descriptor23 = _applyDecoratedDescriptor(_class5.prototype, "lalianCloseX", [_dec25], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.1;
         }
-      }), _descriptor23 = _applyDecoratedDescriptor(_class5.prototype, "lalianMoveCount", [_dec25], {
+      }), _descriptor24 = _applyDecoratedDescriptor(_class5.prototype, "lalianMoveCount", [_dec26], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor24 = _applyDecoratedDescriptor(_class5.prototype, "jumpWallPos", [_dec26], {
+      }), _descriptor25 = _applyDecoratedDescriptor(_class5.prototype, "jumpWallPos", [_dec27], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return new Vec3();
         }
-      }), _descriptor25 = _applyDecoratedDescriptor(_class5.prototype, "wallEffect", [_dec27], {
+      }), _descriptor26 = _applyDecoratedDescriptor(_class5.prototype, "wallEffect", [_dec28], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor26 = _applyDecoratedDescriptor(_class5.prototype, "speed", [_dec28], {
+      }), _descriptor27 = _applyDecoratedDescriptor(_class5.prototype, "speed", [_dec29], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 1;
         }
-      }), _descriptor27 = _applyDecoratedDescriptor(_class5.prototype, "h", [_dec29], {
+      }), _descriptor28 = _applyDecoratedDescriptor(_class5.prototype, "h", [_dec30], {
         configurable: true,
         enumerable: true,
         writable: true,

@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -82,6 +82,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       Component = _cc.Component;
       Node = _cc.Node;
       Quat = _cc.Quat;
+      Tween = _cc.Tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
       FbxManager = _unresolved_2.FbxManager;
@@ -112,7 +113,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "86381loO/lKPYw+1SpcYu+c", "Role", undefined);
 
-      __checkObsolete__(['_decorator', 'CCInteger', 'Color', 'Component', 'Node', 'Quat', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCInteger', 'Color', 'Component', 'Node', 'Quat', 'Tween', 'Vec3']);
 
       ({
         ccclass,
@@ -162,6 +163,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "effect", _descriptor6, this);
 
+          this.initialArmsParent = null;
+          this.initialArmsPosition = new Vec3();
+          this.initialArmsRotation = new Quat();
+          this.initialArmsScale = new Vec3();
+          this.initialArmsChildTransforms = [];
+          this.hasInitialArmsTransform = false;
+
           // public attackTime: number = 0;
           // ==================== 闪红效果 ====================
           _initializerDefineProperty(this, "meshFlashDataList", _descriptor7, this);
@@ -171,7 +179,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "meshCreateDataList", _descriptor9, this);
         }
 
+        onLoad() {
+          this.cacheInitialArmsTransform();
+        }
+
         start() {
+          this.cacheInitialArmsTransform();
+
           if (!Role.bulletLayer) {
             Role.bulletLayer = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
               error: Error()
@@ -180,6 +194,166 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), LayerEnum) : LayerEnum).BulletLayer);
           } // this.fbxManager.setAttackAnimCall(this.attackEvent, this)
 
+        }
+
+        resetForSpawn() {
+          var _this$fbxManager, _this$initialArmsPare;
+
+          this.cacheInitialArmsTransform();
+          this.stopTweensRecursively(this.node);
+
+          if ((_this$fbxManager = this.fbxManager) != null && _this$fbxManager.node) {
+            this.fbxManager.node.active = true;
+            this.fbxManager.setAnimationImmediate(Role.idleAnimIndex, true, 0);
+          }
+
+          if (!this.arms) {
+            return;
+          }
+
+          if ((_this$initialArmsPare = this.initialArmsParent) != null && _this$initialArmsPare.isValid && this.arms.parent !== this.initialArmsParent) {
+            this.arms.setParent(this.initialArmsParent, false);
+          }
+
+          this.arms.setPosition(this.initialArmsPosition);
+          this.arms.setRotation(this.initialArmsRotation);
+          this.arms.setScale(this.initialArmsScale);
+          this.arms.active = true;
+          this.restoreInitialArmsChildTransforms();
+          this.hideDetachedPropSockets();
+        }
+
+        setEntryWeaponVisible(visible) {
+          if (!this.arms) {
+            return;
+          }
+
+          const socket = this.findAncestorByName(this.arms, Role.propSocketNodeName);
+
+          if (socket) {
+            socket.active = visible;
+          }
+
+          this.arms.active = visible;
+        }
+
+        cacheInitialArmsTransform() {
+          if (this.hasInitialArmsTransform || !this.arms) {
+            return;
+          }
+
+          this.initialArmsParent = this.arms.parent;
+          this.initialArmsPosition.set(this.arms.position);
+          Quat.copy(this.initialArmsRotation, this.arms.rotation);
+          this.initialArmsScale.set(this.arms.scale);
+          this.cacheInitialArmsChildTransforms(this.arms);
+          this.hasInitialArmsTransform = true;
+        }
+
+        cacheInitialArmsChildTransforms(node) {
+          for (let i = 0; i < node.children.length; i++) {
+            const child = node.children[i];
+            this.initialArmsChildTransforms.push({
+              node: child,
+              parent: child.parent,
+              position: child.position.clone(),
+              rotation: child.rotation.clone(),
+              scale: child.scale.clone(),
+              active: child.active
+            });
+            this.cacheInitialArmsChildTransforms(child);
+          }
+        }
+
+        restoreInitialArmsChildTransforms() {
+          for (let i = 0; i < this.initialArmsChildTransforms.length; i++) {
+            var _item$node, _item$parent;
+
+            const item = this.initialArmsChildTransforms[i];
+
+            if (!((_item$node = item.node) != null && _item$node.isValid)) {
+              continue;
+            }
+
+            if ((_item$parent = item.parent) != null && _item$parent.isValid && item.node.parent !== item.parent) {
+              item.node.setParent(item.parent, false);
+            }
+
+            item.node.setPosition(item.position);
+            item.node.setRotation(item.rotation);
+            item.node.setScale(item.scale);
+            item.node.active = item.active;
+          }
+        }
+
+        stopTweensRecursively(node) {
+          if (!node) {
+            return;
+          }
+
+          Tween.stopAllByTarget(node);
+
+          for (let i = 0; i < node.children.length; i++) {
+            this.stopTweensRecursively(node.children[i]);
+          }
+        }
+
+        hideDetachedPropSockets() {
+          this.hideDetachedPropSocketsRecursively(this.node);
+        }
+
+        hideDetachedPropSocketsRecursively(node) {
+          if (!node) {
+            return;
+          }
+
+          if (node.name === Role.propSocketNodeName) {
+            node.active = this.isCurrentWeaponSocket(node);
+
+            if (!node.active) {
+              return;
+            }
+          }
+
+          for (let i = 0; i < node.children.length; i++) {
+            this.hideDetachedPropSocketsRecursively(node.children[i]);
+          }
+        }
+
+        isCurrentWeaponSocket(socketNode) {
+          return this.containsNode(socketNode, this.arms) || this.containsNode(socketNode, this.shoot);
+        }
+
+        containsNode(root, target) {
+          if (!root || !target) {
+            return false;
+          }
+
+          if (root === target) {
+            return true;
+          }
+
+          for (let i = 0; i < root.children.length; i++) {
+            if (this.containsNode(root.children[i], target)) {
+              return true;
+            }
+          }
+
+          return false;
+        }
+
+        findAncestorByName(node, name) {
+          let current = node;
+
+          while (current) {
+            if (current.name === name) {
+              return current;
+            }
+
+            current = current.parent;
+          }
+
+          return null;
         }
 
         die(time) {
@@ -266,7 +440,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         error: Error()
       }), SoundEnum) : SoundEnum).Sound_Gun, _class3.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
         error: Error()
-      }), BulletEnum) : BulletEnum).arrow, _class3.power = 1, _class3.repelPower = 0, _class3.bulletLayer = void 0, _class3.aimVector = new Vec3(), _class3.aimQuat = new Quat(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec2], {
+      }), BulletEnum) : BulletEnum).arrow, _class3.power = 1, _class3.repelPower = 0, _class3.bulletLayer = void 0, _class3.propSocketNodeName = 'Bip001 Prop1 Socket', _class3.idleAnimIndex = 0, _class3.aimVector = new Vec3(), _class3.aimQuat = new Quat(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,

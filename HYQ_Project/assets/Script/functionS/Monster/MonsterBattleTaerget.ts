@@ -58,9 +58,12 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     private runAnimStartFrame: number = 0;
 
     /** 重写init，在初始化后注册到碰撞管理器 */
-    public init(difficulty: number) {
+    public init(difficulty: number, fixedHp: number = 0) {
 
         super.init(difficulty);
+        if (fixedHp > 0) {
+            this.initFixedHp(fixedHp);
+        }
         this.attackIn = false;
         if (this.monsterType == MonsterType.ZombieBrother) {
             this.fixBossHpLabel();

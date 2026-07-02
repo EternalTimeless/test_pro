@@ -272,6 +272,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isDestroy = false;
         }
 
+        initFixedHp(maxHp) {
+          if (!this.defMaxHp) {
+            this.defMaxHp = this.MaxHp;
+          }
+
+          this.MaxHp = Math.max(1, maxHp);
+          this.curHp = this.MaxHp;
+          this.isDestroy = false;
+
+          if (this.hpC) {
+            this.hpC.value = 1;
+          }
+        }
+
         Hit(damage) {
           if (this.isDie) {
             return 0;

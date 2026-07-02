@@ -67,6 +67,7 @@ export class ArmsInfo {
     public wallHeight: number = 0.5;
 
     public runtimeVisualRoot: Node = null;
+    public weaponBulletConfigIndex: number = -1;
 
 }
 
@@ -208,6 +209,9 @@ export class PropArms extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '油桶视觉X微调', tooltip: '只微调油桶模型子节点的 X，不移动血量、受击中心和根节点。正值向右，负值向左。' })
     public bottomBaseOffsetX: number = 0;
 
+    @property({ type: CCFloat, displayName: '油桶滚动速度', tooltip: '油桶随前进位移产生的旋转角度倍率，只影响滚动动效，不影响油桶本体移动速度。' })
+    public bottomBaseRollDegreesPerUnit: number = 85;
+
     @property({ type: CCFloat, displayName: '受击弹跳高度', tooltip: '底座/滚筒被打掉后，剩余底座和武器模型的弹跳高度。' })
     public jumpHeight: number = 0.5;
 
@@ -251,7 +255,6 @@ export class PropArms extends BattleTarget3D {
     private readonly bottomBaseTargetPosMap: Map<Node, Vec3> = new Map();
     private readonly weaponVisualScaleMap: Map<Node, Vec3> = new Map();
     private readonly manualBottomBaseNodeSet: Set<Node> = new Set();
-    private readonly bottomBaseRollDegreesPerUnit: number = 110;
     private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 1, 0);
     private readonly roleTemplateBottomBasePos: Vec3 = new Vec3();
     private readonly roleTemplateArmsPos: Vec3 = new Vec3();
@@ -757,6 +760,7 @@ export class PropArms extends BattleTarget3D {
                 }
             }
             this._curArms = this.armsInfoList[this._level];
+            this._curArms.weaponBulletConfigIndex = this._level;
             const currentArms = this._curArms;
             const visualRoot = this.getCurrentArmsVisualRoot(currentArms);
             if (!currentArms?.fbx || !visualRoot) {

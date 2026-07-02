@@ -3090,6 +3090,7 @@
     },
     "tireSpacing": 1.232,
     "bottomBaseOffsetX": 0,
+    "bottomBaseRollDegreesPerUnit": 55,
     "jumpHeight": 0.7,
     "waveFrontGap": 2,
     "nextStageDelay": 0.2,
@@ -3156,7 +3157,7 @@
     "__prefab": {
       "__id__": 183
     },
-    "_id": "a35qE1dP1BCrEtW7q/CCfi"
+    "_id": "e3bIoFRtBPs7PPktJynVnr"
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -3192,7 +3193,7 @@
     "__prefab": {
       "__id__": 186
     },
-    "_id": "71uvHMaSlOk6C8+Xex7nCJ"
+    "_id": "43YXzLuOlBSbgmGOqVBQJE"
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -3228,7 +3229,7 @@
     "__prefab": {
       "__id__": 189
     },
-    "_id": "3acL1G7VlDAoms5uIaABfH"
+    "_id": "6crbZV0HhJz62xODiCW8/J"
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -11223,11 +11224,32 @@
     "addRoleMaxCount": 0,
     "winPropCountThreshold": 99,
     "releaseCountLimit": 0,
-    "moveSpeed": 18,
+    "moveSpeed": 16,
     "lalianGate": {
       "__id__": 730
     },
     "propStartZ": -0.4,
+    "feedbackFloatHeight": 1.2,
+    "feedbackFloatDuration": 1,
+    "feedbackFadeDelay": 0.2,
+    "feedbackStartYOffset": 0.8,
+    "plusFeedbackColor": {
+      "__type__": "cc.Color",
+      "r": 49,
+      "g": 191,
+      "b": 218,
+      "a": 255
+    },
+    "maxFeedbackColor": {
+      "__type__": "cc.Color",
+      "r": 199,
+      "g": 40,
+      "b": 40,
+      "a": 255
+    },
+    "maxFeedbackFontScale": 1,
+    "maxFeedbackFontFamily": "Comic Sans MS",
+    "maxFeedbackInterval": 1,
     "wallNode": {
       "__id__": 191
     },
@@ -11258,6 +11280,15 @@
     },
     "pullRingRoot": null,
     "pullRingTail": null,
+    "pullRingLoopStepCount": 8,
+    "pullRingStepPerHit": 2,
+    "pullRingStepTime": 0.05,
+    "pullRingRootSwingY": 16,
+    "pullRingRootLiftX": 5,
+    "pullRingRootLiftY": 0.15,
+    "pullRingTailSwingY": 38,
+    "pullRingTailLiftX": 14,
+    "pullRingTailDownAngleScale": 0.1,
     "teethNodes": [],
     "autoCollectTeeth": true,
     "sortTeethByZ": true,
@@ -12252,6 +12283,15 @@
     "cube": null,
     "pullRingRoot": null,
     "pullRingTail": null,
+    "pullRingLoopStepCount": 8,
+    "pullRingStepPerHit": 2,
+    "pullRingStepTime": 0.08,
+    "pullRingRootSwingY": 16,
+    "pullRingRootLiftX": 6,
+    "pullRingRootLiftY": 0.08,
+    "pullRingTailSwingY": 42,
+    "pullRingTailLiftX": 14,
+    "pullRingTailDownAngleScale": 0.65,
     "teethNodes": [],
     "autoCollectTeeth": true,
     "sortTeethByZ": true,
@@ -12308,6 +12348,27 @@
       "__id__": 759
     },
     "propStartZ": -0.4,
+    "feedbackFloatHeight": 1.2,
+    "feedbackFloatDuration": 0.45,
+    "feedbackFadeDelay": 0.2,
+    "feedbackStartYOffset": 0.8,
+    "plusFeedbackColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "maxFeedbackColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 64,
+      "b": 64,
+      "a": 255
+    },
+    "maxFeedbackFontScale": 1.15,
+    "maxFeedbackFontFamily": "Comic Sans MS",
+    "maxFeedbackInterval": 1,
     "wallNode": {
       "__id__": 739
     },
@@ -12338,6 +12399,15 @@
     },
     "pullRingRoot": null,
     "pullRingTail": null,
+    "pullRingLoopStepCount": 8,
+    "pullRingStepPerHit": 2,
+    "pullRingStepTime": 0.05,
+    "pullRingRootSwingY": 15,
+    "pullRingRootLiftX": 6,
+    "pullRingRootLiftY": 0.15,
+    "pullRingTailSwingY": 38,
+    "pullRingTailLiftX": 14,
+    "pullRingTailDownAngleScale": 0.1,
     "teethNodes": [],
     "autoCollectTeeth": true,
     "sortTeethByZ": true,
@@ -12568,22 +12638,29 @@
       "__id__": 768
     },
     "brotherExcludeZ": 6,
-    "disX": 4,
-    "monsterSpeed": 4,
+    "disX": 3,
+    "monsterSpeed": 3.5,
     "middleLaneHalfX": 4,
-    "rowCount": 27,
+    "rowCount": 15,
     "layerGapZ": 6,
     "spawnRandomX": 0.28,
     "spawnRandomZ": 0.25,
     "spawnScaleRandom": 0.06,
-    "spawnYawRandom": 8,
+    "spawnYawRandom": 6,
+    "spawnPositionOffset": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": -15
+    },
+    "monsterDeathThrowBaseHeight": 0.8,
+    "monsterDeathThrowRandomHeight": 0.35,
     "waveRoleCount": 3,
     "waveRoleStageIndexList": [
       0,
       2,
       5
     ],
-    "waveRoleForwardSpeed": 2,
     "_id": "8drBHAToxIh7Y7d09Zsa0m"
   },
   {
@@ -12619,7 +12696,9 @@
     "__type__": "MonsterCreateInfo",
     "loopMax": 1,
     "monsterType": 0,
-    "monsterCountMax": 70,
+    "monsterCountMax": 50,
+    "monsterHp": 0,
+    "difficulty": 0,
     "brotherExcludeZ": 6
   },
   {
@@ -12627,6 +12706,8 @@
     "loopMax": 1,
     "monsterType": 0,
     "monsterCountMax": 80,
+    "monsterHp": 0,
+    "difficulty": 0,
     "brotherExcludeZ": 0
   },
   {
@@ -12634,6 +12715,8 @@
     "loopMax": 1,
     "monsterType": 1,
     "monsterCountMax": 100,
+    "monsterHp": 0,
+    "difficulty": 0,
     "brotherExcludeZ": 0
   },
   {
@@ -12641,20 +12724,26 @@
     "loopMax": 1,
     "monsterType": 2,
     "monsterCountMax": 1,
+    "monsterHp": 0,
+    "difficulty": 1,
     "brotherExcludeZ": 0
   },
   {
     "__type__": "MonsterCreateInfo",
     "loopMax": 1,
     "monsterType": 1,
-    "monsterCountMax": 250,
+    "monsterCountMax": 200,
+    "monsterHp": 0,
+    "difficulty": 2,
     "brotherExcludeZ": 0
   },
   {
     "__type__": "MonsterCreateInfo",
     "loopMax": 1,
     "monsterType": 1,
-    "monsterCountMax": 300,
+    "monsterCountMax": 200,
+    "monsterHp": 0,
+    "difficulty": 2,
     "brotherExcludeZ": 0
   },
   {
@@ -12662,13 +12751,17 @@
     "loopMax": 1,
     "monsterType": 2,
     "monsterCountMax": 1,
+    "monsterHp": 0,
+    "difficulty": 2.5,
     "brotherExcludeZ": 0
   },
   {
     "__type__": "MonsterCreateInfo",
     "loopMax": -1,
-    "monsterType": 0,
+    "monsterType": 1,
     "monsterCountMax": 100,
+    "monsterHp": 0,
+    "difficulty": 2,
     "brotherExcludeZ": 0
   },
   {
@@ -14093,7 +14186,9 @@
       null
     ],
     "attackSpeed": 2,
-    "maxRoleCount": 56,
+    "maxRoleCount": 53,
+    "outerLayerRoleCount": 28,
+    "shrinkAfterRoleLossDelay": 2,
     "maxShootingRoleCount": 35,
     "maxMuzzleEffectCount": 10,
     "enableRuntimeUpgradePrewarm": false,
@@ -14138,26 +14233,30 @@
   },
   {
     "__type__": "WeaponBulletConfig",
-    "armsType": 0,
-    "bulletPower": 1,
-    "bulletType": 0
-  },
-  {
-    "__type__": "WeaponBulletConfig",
-    "armsType": 1,
+    "armsType": 2,
+    "weaponModel": 1,
     "bulletPower": 2,
     "bulletType": 0
   },
   {
     "__type__": "WeaponBulletConfig",
     "armsType": 2,
+    "weaponModel": -1,
+    "bulletPower": 0.5,
+    "bulletType": 0
+  },
+  {
+    "__type__": "WeaponBulletConfig",
+    "armsType": 2,
+    "weaponModel": -1,
     "bulletPower": 1.5,
     "bulletType": 3
   },
   {
     "__type__": "WeaponBulletConfig",
     "armsType": 3,
-    "bulletPower": 2,
+    "weaponModel": -1,
+    "bulletPower": 1.5,
     "bulletType": 4
   },
   {

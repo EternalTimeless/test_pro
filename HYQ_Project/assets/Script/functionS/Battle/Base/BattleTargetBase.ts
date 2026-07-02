@@ -114,6 +114,18 @@ export abstract class BattleTargetBase extends UnityUpComponent {
         this.isDestroy = false;
     }
 
+    public initFixedHp(maxHp: number): void {
+        if (!this.defMaxHp) {
+            this.defMaxHp = this.MaxHp;
+        }
+        this.MaxHp = Math.max(1, maxHp);
+        this.curHp = this.MaxHp;
+        this.isDestroy = false;
+        if (this.hpC) {
+            this.hpC.value = 1;
+        }
+    }
+
     public Hit(damage: number): number {
         if (this.isDie) {
             return 0;

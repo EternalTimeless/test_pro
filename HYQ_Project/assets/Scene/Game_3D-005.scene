@@ -14722,7 +14722,8 @@
       null
     ],
     "attackSpeed": 2,
-    "maxRoleCount": 55,
+    "maxRoleCount": 53,
+    "outerLayerRoleCount": 28,
     "maxShootingRoleCount": 40,
     "maxMuzzleEffectCount": 10,
     "shootList": [

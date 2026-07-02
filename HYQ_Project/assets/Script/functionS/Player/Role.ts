@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Color, Component, Node, Quat, Vec3 } from 'cc';
+import { _decorator, CCInteger, Color, Component, Node, Quat, Tween, Vec3 } from 'cc';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { BulletEnum, LayerEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import BulletManager from '../Battle/BulletManager';
@@ -46,6 +46,15 @@ export class Role extends Component {
     @property(AttackParkPlay)
     public effect: AttackParkPlay;
 
+    private initialArmsParent: Node = null;
+    private readonly initialArmsPosition: Vec3 = new Vec3();
+    private readonly initialArmsRotation: Quat = new Quat();
+    private readonly initialArmsScale: Vec3 = new Vec3();
+    private readonly initialArmsChildTransforms: { node: Node, parent: Node, position: Vec3, rotation: Quat, scale: Vec3, active: boolean }[] = [];
+    private hasInitialArmsTransform: boolean = false;
+    private static readonly propSocketNodeName: string = 'Bip001 Prop1 Socket';
+    private static readonly idleAnimIndex: number = 0;
+
     private static aimVector: Vec3 = new Vec3();
     private static aimQuat: Quat = new Quat();
     // public attackTime: number = 0;
@@ -58,11 +67,150 @@ export class Role extends Component {
     public meshCreateDataList: MeshFlashData[] = [];
 
 
+    protected onLoad(): void {
+        this.cacheInitialArmsTransform();
+    }
+
     start() {
+        this.cacheInitialArmsTransform();
         if (!Role.bulletLayer) {
             Role.bulletLayer = LayerManager.instance.getLayer(LayerEnum.BulletLayer);
         }
         // this.fbxManager.setAttackAnimCall(this.attackEvent, this)
+    }
+
+    public resetForSpawn(): void {
+        this.cacheInitialArmsTransform();
+        this.stopTweensRecursively(this.node);
+        if (this.fbxManager?.node) {
+            this.fbxManager.node.active = true;
+            this.fbxManager.setAnimationImmediate(Role.idleAnimIndex, true, 0);
+        }
+        if (!this.arms) {
+            return;
+        }
+        if (this.initialArmsParent?.isValid && this.arms.parent !== this.initialArmsParent) {
+            this.arms.setParent(this.initialArmsParent, false);
+        }
+        this.arms.setPosition(this.initialArmsPosition);
+        this.arms.setRotation(this.initialArmsRotation);
+        this.arms.setScale(this.initialArmsScale);
+        this.arms.active = true;
+        this.restoreInitialArmsChildTransforms();
+        this.hideDetachedPropSockets();
+    }
+
+    public setEntryWeaponVisible(visible: boolean): void {
+        if (!this.arms) {
+            return;
+        }
+        const socket = this.findAncestorByName(this.arms, Role.propSocketNodeName);
+        if (socket) {
+            socket.active = visible;
+        }
+        this.arms.active = visible;
+    }
+
+    private cacheInitialArmsTransform(): void {
+        if (this.hasInitialArmsTransform || !this.arms) {
+            return;
+        }
+        this.initialArmsParent = this.arms.parent;
+        this.initialArmsPosition.set(this.arms.position);
+        Quat.copy(this.initialArmsRotation, this.arms.rotation);
+        this.initialArmsScale.set(this.arms.scale);
+        this.cacheInitialArmsChildTransforms(this.arms);
+        this.hasInitialArmsTransform = true;
+    }
+
+    private cacheInitialArmsChildTransforms(node: Node): void {
+        for (let i = 0; i < node.children.length; i++) {
+            const child = node.children[i];
+            this.initialArmsChildTransforms.push({
+                node: child,
+                parent: child.parent,
+                position: child.position.clone(),
+                rotation: child.rotation.clone(),
+                scale: child.scale.clone(),
+                active: child.active,
+            });
+            this.cacheInitialArmsChildTransforms(child);
+        }
+    }
+
+    private restoreInitialArmsChildTransforms(): void {
+        for (let i = 0; i < this.initialArmsChildTransforms.length; i++) {
+            const item = this.initialArmsChildTransforms[i];
+            if (!item.node?.isValid) {
+                continue;
+            }
+            if (item.parent?.isValid && item.node.parent !== item.parent) {
+                item.node.setParent(item.parent, false);
+            }
+            item.node.setPosition(item.position);
+            item.node.setRotation(item.rotation);
+            item.node.setScale(item.scale);
+            item.node.active = item.active;
+        }
+    }
+
+    private stopTweensRecursively(node: Node): void {
+        if (!node) {
+            return;
+        }
+        Tween.stopAllByTarget(node);
+        for (let i = 0; i < node.children.length; i++) {
+            this.stopTweensRecursively(node.children[i]);
+        }
+    }
+
+    private hideDetachedPropSockets(): void {
+        this.hideDetachedPropSocketsRecursively(this.node);
+    }
+
+    private hideDetachedPropSocketsRecursively(node: Node): void {
+        if (!node) {
+            return;
+        }
+        if (node.name === Role.propSocketNodeName) {
+            node.active = this.isCurrentWeaponSocket(node);
+            if (!node.active) {
+                return;
+            }
+        }
+        for (let i = 0; i < node.children.length; i++) {
+            this.hideDetachedPropSocketsRecursively(node.children[i]);
+        }
+    }
+
+    private isCurrentWeaponSocket(socketNode: Node): boolean {
+        return this.containsNode(socketNode, this.arms) || this.containsNode(socketNode, this.shoot);
+    }
+
+    private containsNode(root: Node, target: Node): boolean {
+        if (!root || !target) {
+            return false;
+        }
+        if (root === target) {
+            return true;
+        }
+        for (let i = 0; i < root.children.length; i++) {
+            if (this.containsNode(root.children[i], target)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private findAncestorByName(node: Node, name: string): Node | null {
+        let current = node;
+        while (current) {
+            if (current.name === name) {
+                return current;
+            }
+            current = current.parent;
+        }
+        return null;
     }
 
 
@@ -133,4 +281,3 @@ export class Role extends Component {
 
 
 }
-

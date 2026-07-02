@@ -193,8 +193,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         /** 重写init，在初始化后注册到碰撞管理器 */
-        init(difficulty) {
+        init(difficulty, fixedHp = 0) {
           super.init(difficulty);
+
+          if (fixedHp > 0) {
+            this.initFixedHp(fixedHp);
+          }
+
           this.attackIn = false;
 
           if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({

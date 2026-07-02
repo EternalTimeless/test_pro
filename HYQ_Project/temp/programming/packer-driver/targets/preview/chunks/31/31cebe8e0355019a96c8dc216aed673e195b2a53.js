@@ -160,6 +160,7 @@ System.register(["cc"], function (_export, _context) {
       }({}));
 
       _export("ArmsTypeEnum", ArmsTypeEnum = /*#__PURE__*/function (ArmsTypeEnum) {
+        ArmsTypeEnum[ArmsTypeEnum["none"] = -1] = "none";
         ArmsTypeEnum[ArmsTypeEnum["bq"] = 0] = "bq";
         ArmsTypeEnum[ArmsTypeEnum["jq"] = 1] = "jq";
         ArmsTypeEnum[ArmsTypeEnum["jtl"] = 2] = "jtl";

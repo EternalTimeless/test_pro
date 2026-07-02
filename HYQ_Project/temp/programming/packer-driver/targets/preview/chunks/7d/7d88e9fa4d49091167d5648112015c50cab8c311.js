@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Quat, Tween, Vec3, Player, PropArms, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, JumpManager, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, _dec, _dec2, _class, _class2, _descriptor, _class3, _crd, ccclass, property, ArmsUp;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Quat, Tween, Vec3, Player, PropArms, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, WeaponFlyState, _dec, _dec2, _class, _class2, _descriptor, _class3, _crd, ccclass, property, ArmsUp;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -39,10 +39,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfSoundEnum(extras) {
     _reporterNs.report("SoundEnum", "../../Base/EnumList", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfJumpManager(extras) {
-    _reporterNs.report("JumpManager", "../Jump/JumpManager", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfCameraMove(extras) {
@@ -92,24 +88,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       LayerEnum = _unresolved_5.LayerEnum;
       SoundEnum = _unresolved_5.SoundEnum;
     }, function (_unresolved_6) {
-      JumpManager = _unresolved_6.JumpManager;
+      CameraMove = _unresolved_6.CameraMove;
     }, function (_unresolved_7) {
-      CameraMove = _unresolved_7.CameraMove;
+      UnityUpComponent = _unresolved_7.UnityUpComponent;
     }, function (_unresolved_8) {
-      UnityUpComponent = _unresolved_8.UnityUpComponent;
+      EffectManager = _unresolved_8.EffectManager;
     }, function (_unresolved_9) {
-      EffectManager = _unresolved_9.EffectManager;
+      AudioManager = _unresolved_9.default;
     }, function (_unresolved_10) {
-      AudioManager = _unresolved_10.default;
-    }, function (_unresolved_11) {
-      LayerManager = _unresolved_11.default;
+      LayerManager = _unresolved_10.default;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "5d8f1HjQ5VPB48TxCy43J2w", "ArmsUp", undefined);
 
-      __checkObsolete__(['_decorator', 'Component', 'Node', 'Quat', 'Tween', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'Node', 'Quat', 'Tween', 'Vec3']);
 
       ({
         ccclass,
@@ -127,6 +121,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "player", _descriptor, this);
 
           this._monsterList = [];
+          this.flyingWeaponNodes = new Set();
+          this.flyingWeaponStateMap = new Map();
         }
 
         start() {
@@ -146,17 +142,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         armsUPEvent(armsInfo) {
           var _armsInfo$fbx;
 
-          var pos = this.player.node.worldPosition;
           var fbxNode = (_armsInfo$fbx = armsInfo.fbx) == null ? void 0 : _armsInfo$fbx.node;
 
           if (!fbxNode) {
             return;
           }
 
+          if (this.flyingWeaponNodes.has(fbxNode)) {
+            return;
+          }
+
+          this.flyingWeaponNodes.add(fbxNode);
           (_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
             error: Error()
           }), PropArms) : PropArms).prepareSpriteWeaponVisual(fbxNode);
-          this.player.prepareArmsUpgrade(armsInfo.armsType);
+          this.player.prepareArmsUpgrade(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
           var startPos = fbxNode.worldPosition.clone();
           var startRot = fbxNode.worldRotation.clone();
           this.scheduleOnce(() => {
@@ -168,31 +168,90 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), LayerEnum) : LayerEnum).Layer_1_Ground).addChild(fbxNode);
             fbxNode.setWorldPosition(startPos);
             fbxNode.setWorldRotation(startRot);
-            this.faceNodeToPlayer(fbxNode, pos);
+            this.faceNodeToPlayer(fbxNode, this.player.node.worldPosition);
             fbxNode.active = true;
-            (_crd && JumpManager === void 0 ? (_reportPossibleCrUseOfJumpManager({
-              error: Error()
-            }), JumpManager) : JumpManager).instance.jumpCurve(fbxNode, pos, 0.7, 2).onComplete(() => {
-              (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
-                error: Error()
-              }), CameraMove) : CameraMove).instance.Shake2(0.5);
-              fbxNode.active = false;
-              (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
-                error: Error()
-              }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
-                error: Error()
-              }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
-              this.player.upArms(armsInfo.armsType);
-              (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
-                error: Error()
-              }), EffectManager) : EffectManager).instance.addShowEffect(pos, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
-                error: Error()
-              }), EffectEnum) : EffectEnum).up, 3);
-              (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
-                error: Error()
-              }), CameraMove) : CameraMove).instance.Shake1(1.5);
-            });
+            this.startWeaponFly(fbxNode, armsInfo, startPos);
           }, 0);
+        }
+
+        startWeaponFly(node, armsInfo, startPos) {
+          this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos));
+        }
+
+        completeWeaponFly(node, armsInfo) {
+          if (!this.finishWeaponFly(node)) {
+            return;
+          }
+
+          var pos = this.player.node.worldPosition;
+          (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+            error: Error()
+          }), CameraMove) : CameraMove).instance.Shake2(0.5);
+          (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
+            error: Error()
+          }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
+            error: Error()
+          }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
+          this.player.upArms(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
+          (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
+            error: Error()
+          }), EffectManager) : EffectManager).instance.addShowEffect(pos, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
+            error: Error()
+          }), EffectEnum) : EffectEnum).up, 3);
+          (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+            error: Error()
+          }), CameraMove) : CameraMove).instance.Shake1(1.5);
+        }
+
+        finishWeaponFly(node) {
+          if (!node) {
+            return false;
+          }
+
+          var isFlying = this.flyingWeaponNodes.has(node);
+          this.flyingWeaponNodes.delete(node);
+          this.flyingWeaponStateMap.delete(node);
+
+          if (!isFlying || !node.isValid) {
+            return false;
+          }
+
+          Tween.stopAllByTarget(node);
+          node.active = false;
+          return true;
+        }
+
+        updateFlyingWeapons(dt) {
+          if (this.flyingWeaponStateMap.size === 0) {
+            return;
+          }
+
+          var completeList = [];
+          this.flyingWeaponStateMap.forEach(state => {
+            var _state$node, _this$player;
+
+            if (!((_state$node = state.node) != null && _state$node.isValid) || !((_this$player = this.player) != null && (_this$player = _this$player.node) != null && _this$player.isValid)) {
+              this.finishWeaponFly(state.node);
+              return;
+            }
+
+            state.elapsed += dt;
+            var rawT = Math.min(1, state.elapsed / ArmsUp.WEAPON_FLY_DURATION);
+            var t = rawT * rawT * (3 - 2 * rawT);
+            var playerPos = this.player.node.worldPosition;
+            Vec3.lerp(ArmsUp.tempFlightPos, state.startPos, playerPos, t);
+            ArmsUp.tempFlightPos.y += ArmsUp.WEAPON_FLY_ARC_HEIGHT * 4 * rawT * (1 - rawT);
+            state.node.setWorldPosition(ArmsUp.tempFlightPos);
+            this.faceNodeToPlayer(state.node, playerPos);
+
+            if (rawT >= 1) {
+              completeList.push(state);
+            }
+          });
+
+          for (var i = 0; i < completeList.length; i++) {
+            this.completeWeaponFly(completeList[i].node, completeList[i].armsInfo);
+          }
         }
 
         faceNodeToPlayer(node, playerPos) {
@@ -220,7 +279,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        _update(dt) {// this.checkPlayerAndMonsterCollide();
+        _update(dt) {
+          this.updateFlyingWeapons(dt); // this.checkPlayerAndMonsterCollide();
         }
 
         checkPlayerAndMonsterCollide() {
@@ -249,7 +309,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           if (isUpPos) {
-            this.player.upPos();
+            this.player.requestShrinkAfterRoleLoss();
           }
         }
 
@@ -257,12 +317,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._monsterList.length = 0;
         }
 
-      }, _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
+      }, _class3.WEAPON_FLY_DURATION = 0.7, _class3.WEAPON_FLY_ARC_HEIGHT = 4, _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3.tempFlightPos = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
       })), _class2)) || _class));
+
+      WeaponFlyState = class WeaponFlyState {
+        constructor(node, armsInfo, startPos) {
+          this.elapsed = 0;
+          this.startPos = new Vec3();
+          this.node = node;
+          this.armsInfo = armsInfo;
+          this.startPos.set(startPos);
+        }
+
+      };
 
       _cclegacy._RF.pop();
 

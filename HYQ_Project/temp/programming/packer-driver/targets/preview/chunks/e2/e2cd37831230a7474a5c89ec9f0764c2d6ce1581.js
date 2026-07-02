@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Node, tween, Tween, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, Role, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, GameOverPanel, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, CCString, Color, instantiate, Label, Node, tween, Tween, UIOpacity, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, GameOverPanel, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -49,10 +49,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     _reporterNs.report("Player", "../Player/Player", _context.meta, extras);
   }
 
-  function _reportPossibleCrUseOfRole(extras) {
-    _reporterNs.report("Role", "../Player/Role", _context.meta, extras);
-  }
-
   function _reportPossibleCrUseOfLayerManager(extras) {
     _reporterNs.report("LayerManager", "../../Base/LayerManager", _context.meta, extras);
   }
@@ -95,9 +91,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       _decorator = _cc._decorator;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
+      CCString = _cc.CCString;
+      Color = _cc.Color;
+      instantiate = _cc.instantiate;
+      Label = _cc.Label;
       Node = _cc.Node;
       tween = _cc.tween;
       Tween = _cc.Tween;
+      UIOpacity = _cc.UIOpacity;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
       PoolManager = _unresolved_2.default;
@@ -115,30 +116,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_6) {
       Player = _unresolved_6.Player;
     }, function (_unresolved_7) {
-      Role = _unresolved_7.Role;
+      LayerManager = _unresolved_7.default;
     }, function (_unresolved_8) {
-      LayerManager = _unresolved_8.default;
+      JumpManager = _unresolved_8.JumpManager;
     }, function (_unresolved_9) {
-      JumpManager = _unresolved_9.JumpManager;
+      UnityUpComponent = _unresolved_9.UnityUpComponent;
     }, function (_unresolved_10) {
-      UnityUpComponent = _unresolved_10.UnityUpComponent;
+      EffectManager = _unresolved_10.EffectManager;
     }, function (_unresolved_11) {
-      EffectManager = _unresolved_11.EffectManager;
+      AudioManager = _unresolved_11.default;
     }, function (_unresolved_12) {
-      AudioManager = _unresolved_12.default;
+      FlashRedManager = _unresolved_12.FlashRedManager;
     }, function (_unresolved_13) {
-      FlashRedManager = _unresolved_13.FlashRedManager;
+      PropLalianGate = _unresolved_13.PropLalianGate;
     }, function (_unresolved_14) {
-      PropLalianGate = _unresolved_14.PropLalianGate;
-    }, function (_unresolved_15) {
-      GameOverPanel = _unresolved_15.GameOverPanel;
+      GameOverPanel = _unresolved_14.GameOverPanel;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "7ab0exJe1JDaaNCop2wV4XG", "CreatePropBrand", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'ITriggerEvent', 'Node', 'tween', 'Tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'CCString', 'Color', 'instantiate', 'ITriggerEvent', 'Label', 'Node', 'tween', 'Tween', 'UIOpacity', 'Vec3']);
 
       ({
         ccclass,
@@ -188,10 +187,46 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         displayName: '道具起始Z额外偏移',
         tooltip: '在拉链自动计算的起始 Z 基础上额外加的偏移。用于微调 +1/+99 队列离拉链的远近。'
       }), _dec12 = property({
+        type: CCFloat,
+        displayName: '提示文本上飘高度',
+        tooltip: '吃到 +1 或人数已满时，提示文本向上飘动的高度。'
+      }), _dec13 = property({
+        type: CCFloat,
+        displayName: '提示文本持续时间',
+        tooltip: '吃到 +1 或人数已满时，提示文本从出现到淡出的时间。'
+      }), _dec14 = property({
+        type: CCFloat,
+        displayName: '飘字淡出延迟',
+        tooltip: '飘字出现后保持清晰的时间，之后继续上飘并缓慢淡出。'
+      }), _dec15 = property({
+        type: CCFloat,
+        displayName: '提示文本起始高度偏移',
+        tooltip: '提示文本生成时，在起点基础上额外增加的 Y 高度。'
+      }), _dec16 = property({
+        type: Color,
+        displayName: '+1文本颜色',
+        tooltip: '吃到 +1 时显示的飘字颜色。'
+      }), _dec17 = property({
+        type: Color,
+        displayName: 'MAX文本颜色',
+        tooltip: '人数达到上限时显示的 MAX! 文本颜色。'
+      }), _dec18 = property({
+        type: CCFloat,
+        displayName: 'MAX文本字号倍数',
+        tooltip: 'MAX! 飘字相对 +1 模板字号的放大倍数。'
+      }), _dec19 = property({
+        type: CCString,
+        displayName: 'MAX文本字体',
+        tooltip: 'MAX! 飘字使用的系统字体名。'
+      }), _dec20 = property({
+        type: CCFloat,
+        displayName: 'MAX触发间隔(秒)',
+        tooltip: '上一次 MAX! 飘字出现后，至少间隔多少秒才允许再次出现。'
+      }), _dec21 = property({
         type: Node,
         displayName: '道具挂载父节点',
         tooltip: '生成出来的 +1/+99 道具会挂到这个节点下面。通常填当前通道的 wall/root 节点。'
-      }), _dec13 = property({
+      }), _dec22 = property({
         type: CCInteger,
         displayName: '道具类型',
         tooltip: '对应 PrefabsEnum.prop 的预制体类型编号。保持和原来左/右道具类型一致。'
@@ -221,9 +256,27 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "propStartZ", _descriptor10, this);
 
-          _initializerDefineProperty(this, "wallNode", _descriptor11, this);
+          _initializerDefineProperty(this, "feedbackFloatHeight", _descriptor11, this);
 
-          _initializerDefineProperty(this, "type", _descriptor12, this);
+          _initializerDefineProperty(this, "feedbackFloatDuration", _descriptor12, this);
+
+          _initializerDefineProperty(this, "feedbackFadeDelay", _descriptor13, this);
+
+          _initializerDefineProperty(this, "feedbackStartYOffset", _descriptor14, this);
+
+          _initializerDefineProperty(this, "plusFeedbackColor", _descriptor15, this);
+
+          _initializerDefineProperty(this, "maxFeedbackColor", _descriptor16, this);
+
+          _initializerDefineProperty(this, "maxFeedbackFontScale", _descriptor17, this);
+
+          _initializerDefineProperty(this, "maxFeedbackFontFamily", _descriptor18, this);
+
+          _initializerDefineProperty(this, "maxFeedbackInterval", _descriptor19, this);
+
+          _initializerDefineProperty(this, "wallNode", _descriptor20, this);
+
+          _initializerDefineProperty(this, "type", _descriptor21, this);
 
           this.propBrandList = [];
           this.tempPropBrandList = [];
@@ -236,6 +289,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.spriteVisualGroup = null;
           this.labelVisualGroup = null;
           this.groundHeight = 0;
+          this.maxFeedbackCooldown = 0;
         }
 
         get activeLalianGate() {
@@ -302,6 +356,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         _update(deltaTime) {
+          if (this.maxFeedbackCooldown > 0) {
+            this.maxFeedbackCooldown = Math.max(0, this.maxFeedbackCooldown - deltaTime);
+          }
+
           if (this.isMove) {
             for (var i = 0; i < this.propBrandList.length; i++) {
               var p = this.propBrandList[i];
@@ -468,7 +526,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          if (!this.isWinPropBrand(propBrand) && player.length >= this.getAddRoleMaxCount(player)) {
+          var addRoleMaxCount = this.getAddRoleMaxCount(player);
+
+          if (!this.isWinPropBrand(propBrand) && !player.canReserveRoleSlot(addRoleMaxCount)) {
+            if (player.isRoleCountAtLimit(addRoleMaxCount) && this.maxFeedbackCooldown <= 0) {
+              var maxTextPos = this.getMaxFeedbackWorldPos(player);
+              this.showFloatingFeedback(propBrand, "MAX!", maxTextPos, this.maxFeedbackColor, this.maxFeedbackFontScale, this.maxFeedbackFontFamily);
+              this.maxFeedbackCooldown = Math.max(0, this.maxFeedbackInterval);
+            }
+
             this.recycleTriggeredProp(propBrand);
             return;
           }
@@ -481,23 +547,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          var role = (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-            error: Error()
-          }), PoolManager) : PoolManager).instance.getPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-            error: Error()
-          }), PoolEnum) : PoolEnum).role + player.roleType);
+          var reservedIndex = player.reserveRoleSlot(addRoleMaxCount);
 
-          if (!role) {
-            var node = (_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
-              error: Error()
-            }), PrefabsManager) : PrefabsManager).instance.GetPrefabsIns((_crd && PrefabsEnum === void 0 ? (_reportPossibleCrUseOfPrefabsEnum({
-              error: Error()
-            }), PrefabsEnum) : PrefabsEnum).hero, player.roleType);
-            role = node.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-              error: Error()
-            }), Role) : Role);
+          if (reservedIndex < 0) {
+            this.recycleTriggeredProp(propBrand);
+            return;
           }
 
+          var role = player.getRoleForSpawn();
           var layer = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
             error: Error()
           }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
@@ -509,13 +566,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           role.hp = 2;
           role.node.active = true;
 
-          if (!player.addRole(role)) {
+          if (reservedIndex >= player.getEffectiveMaxRoleCount()) {
+            player.releaseRoleSlot();
             role.node.active = false;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
             }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
               error: Error()
-            }), PoolEnum) : PoolEnum).role + player.roleType, role);
+            }), PoolEnum) : PoolEnum).role + role.type, role);
 
             var _propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
 
@@ -540,8 +598,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          var pos = player.getNextPos();
-          var index = player.length - 1;
+          var initialTargetPos = player.getNextPos(reservedIndex);
+          var pos = new Vec3(initialTargetPos.x, initialTargetPos.y, initialTargetPos.z);
+          (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.V3 = initialTargetPos;
+          this.showFloatingFeedback(propBrand, "+" + propBrand.count, pos, this.plusFeedbackColor);
           this.tempV3.set(selfPos);
           this.tempV3.y += 1;
           (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
@@ -591,6 +653,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), PoolManager) : PoolManager).instance.V3 = scale2;
           }).start();
           role.attackIN = true;
+          role.setEntryWeaponVisible(false);
           (_crd && JumpManager === void 0 ? (_reportPossibleCrUseOfJumpManager({
             error: Error()
           }), JumpManager) : JumpManager).instance.jumpBezierByPoints(role.node, 3, cPos, pos).onComplete(() => {
@@ -599,27 +662,64 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
               error: Error()
             }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
-            role.attackIN = false;
+
+            if (!role.node.active || player.isDie) {
+              player.releaseRoleSlot();
+              role.node.active = false;
+              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+                error: Error()
+              }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+                error: Error()
+              }), PoolEnum) : PoolEnum).role + role.type, role);
+              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+                error: Error()
+              }), PoolManager) : PoolManager).instance.V3 = pos;
+              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+                error: Error()
+              }), PoolManager) : PoolManager).instance.V3 = cPos;
+              return;
+            }
+
+            var committedRole = player.commitReservedRole(role);
+
+            if (!committedRole) {
+              role.node.active = false;
+              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+                error: Error()
+              }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+                error: Error()
+              }), PoolEnum) : PoolEnum).role + role.type, role);
+              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+                error: Error()
+              }), PoolManager) : PoolManager).instance.V3 = pos;
+              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+                error: Error()
+              }), PoolManager) : PoolManager).instance.V3 = cPos;
+              return;
+            }
+
+            role = committedRole;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
             }), PoolManager) : PoolManager).instance.V3 = pos;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
             }), PoolManager) : PoolManager).instance.V3 = cPos;
-            var selfPos2 = player.getNextPos(index);
+            var currentIndex = player.roleList.indexOf(role);
+            var selfPos2 = player.getNextPos(currentIndex);
             player.node.addChild(role.node);
             role.node.setWorldPosition(selfPos2);
-            player.upMoveBoundary();
-
-            if (role.arms) {
-              role.arms.active = true;
-            }
-
+            player.upPos();
+            role.setEntryWeaponVisible(true);
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
             }), PoolManager) : PoolManager).instance.V3 = selfPos2;
           }).setEndPosPre(prop => {
-            var curPos = player.getNextPos(index);
+            if (!role.node.active || player.isDie) {
+              return;
+            }
+
+            var curPos = player.getNextPos(Math.min(reservedIndex, player.getEffectiveMaxRoleCount() - 1));
             curPos.subtract(pos);
             curPos.add(prop.worldPosition);
             prop.setWorldPosition(curPos);
@@ -685,8 +785,106 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
         }
 
+        showFloatingFeedback(propBrand, text, worldPos, color, fontScale, fontFamily) {
+          var _propBrand$lab;
+
+          if (color === void 0) {
+            color = null;
+          }
+
+          if (fontScale === void 0) {
+            fontScale = 1;
+          }
+
+          if (fontFamily === void 0) {
+            fontFamily = '';
+          }
+
+          var templateNode = propBrand == null || (_propBrand$lab = propBrand.lab) == null ? void 0 : _propBrand$lab.node;
+
+          if (!templateNode || !this.labelVisualGroup) {
+            return;
+          }
+
+          var feedbackNode = instantiate(templateNode);
+          var label = feedbackNode.getComponent(Label);
+
+          if (!label) {
+            feedbackNode.destroy();
+            return;
+          }
+
+          this.labelVisualGroup.addChild(feedbackNode);
+          feedbackNode.active = true;
+          feedbackNode.setWorldPosition(worldPos.x, worldPos.y + this.feedbackStartYOffset, worldPos.z);
+          feedbackNode.setScale(templateNode.scale);
+          label.string = text;
+          var feedbackColor = color ? color.clone() : templateNode.getComponent(Label).color.clone();
+          label.color = feedbackColor;
+
+          if (fontFamily) {
+            var labelAny = label;
+            labelAny.useSystemFont = true;
+            labelAny.fontFamily = fontFamily;
+          }
+
+          if (fontScale > 0 && Math.abs(fontScale - 1) > 0.001) {
+            label.fontSize = Math.round(label.fontSize * fontScale);
+            label.lineHeight = Math.round(label.lineHeight * fontScale);
+          }
+
+          var opacity = feedbackNode.getComponent(UIOpacity);
+
+          if (!opacity) {
+            opacity = feedbackNode.addComponent(UIOpacity);
+          }
+
+          opacity.opacity = 255;
+          var startY = worldPos.y + this.feedbackStartYOffset;
+          var totalDuration = Math.max(0.001, this.feedbackFloatDuration);
+          var fadeDelay = Math.max(0, Math.min(this.feedbackFadeDelay, totalDuration));
+          var fadeDuration = Math.max(0.001, totalDuration - fadeDelay);
+          var fadeStartRatio = fadeDelay / totalDuration;
+          var fadeStartPos = new Vec3(worldPos.x, startY + this.feedbackFloatHeight * fadeStartRatio, worldPos.z);
+          var endPos = new Vec3(worldPos.x, startY + this.feedbackFloatHeight, worldPos.z);
+          tween(feedbackNode).to(fadeDelay, {
+            worldPosition: fadeStartPos
+          }, {
+            easing: 'sineOut'
+          }).to(fadeDuration, {
+            worldPosition: endPos
+          }, {
+            easing: 'sineOut'
+          }).call(() => {
+            feedbackNode.destroy();
+          }).start();
+          var fadeState = {
+            alpha: 255
+          };
+          tween(fadeState).delay(fadeDelay).to(fadeDuration, {
+            alpha: 0
+          }, {
+            easing: 'sineOut',
+            onUpdate: state => {
+              var alpha = Math.max(0, Math.min(255, Math.round(state.alpha)));
+              opacity.opacity = alpha;
+              feedbackColor.a = alpha;
+              label.color = feedbackColor;
+            }
+          }).start();
+        }
+
+        getMaxFeedbackWorldPos(player) {
+          var _centerRole$node$worl, _centerRole$node;
+
+          var centerRole = player.roleList && player.roleList.length > 0 ? player.roleList[0] : null;
+          var sourcePos = (_centerRole$node$worl = centerRole == null || (_centerRole$node = centerRole.node) == null ? void 0 : _centerRole$node.worldPosition) != null ? _centerRole$node$worl : player.node.worldPosition;
+          return new Vec3(sourcePos.x, sourcePos.y, sourcePos.z);
+        }
+
         getAddRoleMaxCount(player) {
-          return this.addRoleMaxCount > 0 ? Math.min(this.addRoleMaxCount, player.maxRoleCount) : player.maxRoleCount;
+          var playerMaxCount = player.getEffectiveMaxRoleCount();
+          return this.addRoleMaxCount > 0 ? Math.min(this.addRoleMaxCount, playerMaxCount) : playerMaxCount;
         }
 
         isWinPropBrand(propBrand) {
@@ -785,12 +983,75 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec12], {
+      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "feedbackFloatHeight", [_dec12], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 1.2;
+        }
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "feedbackFloatDuration", [_dec13], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.9;
+        }
+      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "feedbackFadeDelay", [_dec14], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.2;
+        }
+      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "feedbackStartYOffset", [_dec15], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.8;
+        }
+      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "plusFeedbackColor", [_dec16], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return new Color(168, 232, 255, 255);
+        }
+      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "maxFeedbackColor", [_dec17], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return new Color(255, 64, 64, 255);
+        }
+      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "maxFeedbackFontScale", [_dec18], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 1.15;
+        }
+      }), _descriptor18 = _applyDecoratedDescriptor(_class2.prototype, "maxFeedbackFontFamily", [_dec19], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 'Trebuchet MS';
+        }
+      }), _descriptor19 = _applyDecoratedDescriptor(_class2.prototype, "maxFeedbackInterval", [_dec20], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 1;
+        }
+      }), _descriptor20 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec21], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec13], {
+      }), _descriptor21 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec22], {
         configurable: true,
         enumerable: true,
         writable: true,

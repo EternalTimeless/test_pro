@@ -61,6 +61,25 @@ export class FbxManager extends Component {
         return animState;
     }
 
+    public setAnimationImmediate(skT: number, loop: boolean = true, frame: number = 0) {
+        const sk = this.skeleta;
+        const aniName = this._animName[skT];
+        const animState = sk.getState(aniName);
+        if (!animState) {
+            return animState;
+        }
+        if (this._cur != -1 && this._cur != skT) {
+            const curName = this._animName[this._cur];
+            const curState = sk.getState(curName);
+            curState?.stop();
+        }
+        sk.crossFade(aniName, 0);
+        animState.setTime(frame * animState.duration);
+        animState.speed = 1;
+        this._cur = skT;
+        return animState;
+    }
+
     public getAnimState(skT: number) {
         const sk = this.skeleta;
         let aniName = this._animName[skT];

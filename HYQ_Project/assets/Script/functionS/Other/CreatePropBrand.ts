@@ -1,10 +1,9 @@
-import { _decorator, CCFloat, CCInteger, ITriggerEvent, Node, tween, Tween, Vec3 } from 'cc';
+import { _decorator, CCFloat, CCInteger, CCString, Color, instantiate, ITriggerEvent, Label, Node, tween, Tween, UIOpacity, Vec3 } from 'cc';
 import PoolManager from '../../Base/PoolManager';
 import { PropBrand } from './PropBrand';
 import { EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum } from '../../Base/EnumList';
 import { PrefabsManager } from '../../Base/PrefabsManager';
 import { Player } from '../Player/Player';
-import { Role } from '../Player/Role';
 import LayerManager from '../../Base/LayerManager';
 import { JumpManager } from '../Jump/JumpManager';
 import { UnityUpComponent } from '../../Base/UnityUpComponent';
@@ -52,6 +51,33 @@ export class CreatePropBrand extends UnityUpComponent {
     @property({ type: CCFloat, displayName: '道具起始Z额外偏移', tooltip: '在拉链自动计算的起始 Z 基础上额外加的偏移。用于微调 +1/+99 队列离拉链的远近。' })
     public propStartZ: number = 0;
 
+    @property({ type: CCFloat, displayName: '提示文本上飘高度', tooltip: '吃到 +1 或人数已满时，提示文本向上飘动的高度。' })
+    public feedbackFloatHeight: number = 1.2;
+
+    @property({ type: CCFloat, displayName: '提示文本持续时间', tooltip: '吃到 +1 或人数已满时，提示文本从出现到淡出的时间。' })
+    public feedbackFloatDuration: number = 0.9;
+
+    @property({ type: CCFloat, displayName: '飘字淡出延迟', tooltip: '飘字出现后保持清晰的时间，之后继续上飘并缓慢淡出。' })
+    public feedbackFadeDelay: number = 0.2;
+
+    @property({ type: CCFloat, displayName: '提示文本起始高度偏移', tooltip: '提示文本生成时，在起点基础上额外增加的 Y 高度。' })
+    public feedbackStartYOffset: number = 0.8;
+
+    @property({ type: Color, displayName: '+1文本颜色', tooltip: '吃到 +1 时显示的飘字颜色。' })
+    public plusFeedbackColor: Color = new Color(168, 232, 255, 255);
+
+    @property({ type: Color, displayName: 'MAX文本颜色', tooltip: '人数达到上限时显示的 MAX! 文本颜色。' })
+    public maxFeedbackColor: Color = new Color(255, 64, 64, 255);
+
+    @property({ type: CCFloat, displayName: 'MAX文本字号倍数', tooltip: 'MAX! 飘字相对 +1 模板字号的放大倍数。' })
+    public maxFeedbackFontScale: number = 1.15;
+
+    @property({ type: CCString, displayName: 'MAX文本字体', tooltip: 'MAX! 飘字使用的系统字体名。' })
+    public maxFeedbackFontFamily: string = 'Trebuchet MS';
+
+    @property({ type: CCFloat, displayName: 'MAX触发间隔(秒)', tooltip: '上一次 MAX! 飘字出现后，至少间隔多少秒才允许再次出现。' })
+    public maxFeedbackInterval: number = 1;
+
     @property({ type: Node, displayName: '道具挂载父节点', tooltip: '生成出来的 +1/+99 道具会挂到这个节点下面。通常填当前通道的 wall/root 节点。' })
     public wallNode: Node;
 
@@ -79,6 +105,8 @@ export class CreatePropBrand extends UnityUpComponent {
     private labelVisualGroup: Node = null;
 
     private groundHeight: number = 0;
+
+    private maxFeedbackCooldown: number = 0;
 
     private get activeLalianGate() {
         if (!this.lalianGate) {
@@ -129,6 +157,10 @@ export class CreatePropBrand extends UnityUpComponent {
     }
 
     _update(deltaTime: number) {
+        if (this.maxFeedbackCooldown > 0) {
+            this.maxFeedbackCooldown = Math.max(0, this.maxFeedbackCooldown - deltaTime);
+        }
+
         if (this.isMove) {
             for (let i = 0; i < this.propBrandList.length; i++) {
                 const p = this.propBrandList[i];
@@ -261,7 +293,13 @@ export class CreatePropBrand extends UnityUpComponent {
         if (!propBrand) {
             return;
         }
-        if (!this.isWinPropBrand(propBrand) && player.length >= this.getAddRoleMaxCount(player)) {
+        const addRoleMaxCount = this.getAddRoleMaxCount(player);
+        if (!this.isWinPropBrand(propBrand) && !player.canReserveRoleSlot(addRoleMaxCount)) {
+            if (player.isRoleCountAtLimit(addRoleMaxCount) && this.maxFeedbackCooldown <= 0) {
+                const maxTextPos = this.getMaxFeedbackWorldPos(player);
+                this.showFloatingFeedback(propBrand, "MAX!", maxTextPos, this.maxFeedbackColor, this.maxFeedbackFontScale, this.maxFeedbackFontFamily);
+                this.maxFeedbackCooldown = Math.max(0, this.maxFeedbackInterval);
+            }
             this.recycleTriggeredProp(propBrand);
             return;
         }
@@ -272,11 +310,13 @@ export class CreatePropBrand extends UnityUpComponent {
             return;
         }
 
-        let role = PoolManager.instance.getPool<Role>(PoolEnum.role + player.roleType);
-        if (!role) {
-            const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.hero, player.roleType);
-            role = node.getComponent(Role);
+        const reservedIndex = player.reserveRoleSlot(addRoleMaxCount);
+        if (reservedIndex < 0) {
+            this.recycleTriggeredProp(propBrand);
+            return;
         }
+
+        let role = player.getRoleForSpawn();
 
         const layer = LayerManager.instance.getLayer(LayerEnum.Layer_1_Ground);
         layer.addChild(role.node);
@@ -284,9 +324,10 @@ export class CreatePropBrand extends UnityUpComponent {
         role.node.setWorldPosition(selfPos);
         role.hp = 2;
         role.node.active = true;
-        if (!player.addRole(role)) {
+        if (reservedIndex >= player.getEffectiveMaxRoleCount()) {
+            player.releaseRoleSlot();
             role.node.active = false;
-            PoolManager.instance.setPool(PoolEnum.role + player.roleType, role);
+            PoolManager.instance.setPool(PoolEnum.role + role.type, role);
             const propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
             if (propBrandIndex !== -1) {
                 this.tempPropBrandList.splice(propBrandIndex, 1);
@@ -302,9 +343,10 @@ export class CreatePropBrand extends UnityUpComponent {
             }, 0);
             return;
         }
-
-        const pos = player.getNextPos();
-        const index = player.length - 1;
+        const initialTargetPos = player.getNextPos(reservedIndex);
+        const pos = new Vec3(initialTargetPos.x, initialTargetPos.y, initialTargetPos.z);
+        PoolManager.instance.V3 = initialTargetPos;
+        this.showFloatingFeedback(propBrand, `+${propBrand.count}`, pos, this.plusFeedbackColor);
         this.tempV3.set(selfPos);
         this.tempV3.y += 1;
         AudioManager.inst.playOneShot(SoundEnum.Sound_PlaceGold);
@@ -325,22 +367,41 @@ export class CreatePropBrand extends UnityUpComponent {
             PoolManager.instance.V3 = scale2;
         }).start();
         role.attackIN = true;
+        role.setEntryWeaponVisible(false);
 
         JumpManager.instance.jumpBezierByPoints(role.node, 3, cPos, pos).onComplete(() => {
             AudioManager.inst.playOneShot(SoundEnum.Sound_Ship_UpLevel);
-            role.attackIN = false;
+            if (!role.node.active || player.isDie) {
+                player.releaseRoleSlot();
+                role.node.active = false;
+                PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+                PoolManager.instance.V3 = pos;
+                PoolManager.instance.V3 = cPos;
+                return;
+            }
+            const committedRole = player.commitReservedRole(role);
+            if (!committedRole) {
+                role.node.active = false;
+                PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+                PoolManager.instance.V3 = pos;
+                PoolManager.instance.V3 = cPos;
+                return;
+            }
+            role = committedRole;
             PoolManager.instance.V3 = pos;
             PoolManager.instance.V3 = cPos;
-            const selfPos2 = player.getNextPos(index);
+            const currentIndex = player.roleList.indexOf(role);
+            const selfPos2 = player.getNextPos(currentIndex);
             player.node.addChild(role.node);
             role.node.setWorldPosition(selfPos2);
-            player.upMoveBoundary();
-            if (role.arms) {
-                role.arms.active = true;
-            }
+            player.upPos();
+            role.setEntryWeaponVisible(true);
             PoolManager.instance.V3 = selfPos2;
         }).setEndPosPre((prop: Node) => {
-            const curPos = player.getNextPos(index);
+            if (!role.node.active || player.isDie) {
+                return;
+            }
+            const curPos = player.getNextPos(Math.min(reservedIndex, player.getEffectiveMaxRoleCount() - 1));
             curPos.subtract(pos);
             curPos.add(prop.worldPosition);
             prop.setWorldPosition(curPos);
@@ -392,8 +453,79 @@ export class CreatePropBrand extends UnityUpComponent {
         propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
     }
 
+    private showFloatingFeedback(propBrand: PropBrand, text: string, worldPos: Vec3, color: Color | null = null, fontScale: number = 1, fontFamily: string = ''): void {
+        const templateNode = propBrand?.lab?.node;
+        if (!templateNode || !this.labelVisualGroup) {
+            return;
+        }
+        const feedbackNode = instantiate(templateNode);
+        const label = feedbackNode.getComponent(Label);
+        if (!label) {
+            feedbackNode.destroy();
+            return;
+        }
+
+        this.labelVisualGroup.addChild(feedbackNode);
+        feedbackNode.active = true;
+        feedbackNode.setWorldPosition(worldPos.x, worldPos.y + this.feedbackStartYOffset, worldPos.z);
+        feedbackNode.setScale(templateNode.scale);
+        label.string = text;
+        const feedbackColor = color ? color.clone() : templateNode.getComponent(Label).color.clone();
+        label.color = feedbackColor;
+        if (fontFamily) {
+            const labelAny = label as any;
+            labelAny.useSystemFont = true;
+            labelAny.fontFamily = fontFamily;
+        }
+        if (fontScale > 0 && Math.abs(fontScale - 1) > 0.001) {
+            label.fontSize = Math.round(label.fontSize * fontScale);
+            label.lineHeight = Math.round(label.lineHeight * fontScale);
+        }
+
+        let opacity = feedbackNode.getComponent(UIOpacity);
+        if (!opacity) {
+            opacity = feedbackNode.addComponent(UIOpacity);
+        }
+        opacity.opacity = 255;
+
+        const startY = worldPos.y + this.feedbackStartYOffset;
+        const totalDuration = Math.max(0.001, this.feedbackFloatDuration);
+        const fadeDelay = Math.max(0, Math.min(this.feedbackFadeDelay, totalDuration));
+        const fadeDuration = Math.max(0.001, totalDuration - fadeDelay);
+        const fadeStartRatio = fadeDelay / totalDuration;
+        const fadeStartPos = new Vec3(worldPos.x, startY + this.feedbackFloatHeight * fadeStartRatio, worldPos.z);
+        const endPos = new Vec3(worldPos.x, startY + this.feedbackFloatHeight, worldPos.z);
+        tween(feedbackNode)
+            .to(fadeDelay, { worldPosition: fadeStartPos }, { easing: 'sineOut' })
+            .to(fadeDuration, { worldPosition: endPos }, { easing: 'sineOut' })
+            .call(() => {
+                feedbackNode.destroy();
+            })
+            .start();
+        const fadeState = { alpha: 255 };
+        tween(fadeState)
+            .delay(fadeDelay)
+            .to(fadeDuration, { alpha: 0 }, {
+                easing: 'sineOut',
+                onUpdate: (state: { alpha: number }) => {
+                    const alpha = Math.max(0, Math.min(255, Math.round(state.alpha)));
+                    opacity.opacity = alpha;
+                    feedbackColor.a = alpha;
+                    label.color = feedbackColor;
+                }
+            })
+            .start();
+    }
+
+    private getMaxFeedbackWorldPos(player: Player): Vec3 {
+        const centerRole = player.roleList && player.roleList.length > 0 ? player.roleList[0] : null;
+        const sourcePos = centerRole?.node?.worldPosition ?? player.node.worldPosition;
+        return new Vec3(sourcePos.x, sourcePos.y, sourcePos.z);
+    }
+
     private getAddRoleMaxCount(player: Player): number {
-        return this.addRoleMaxCount > 0 ? Math.min(this.addRoleMaxCount, player.maxRoleCount) : player.maxRoleCount;
+        const playerMaxCount = player.getEffectiveMaxRoleCount();
+        return this.addRoleMaxCount > 0 ? Math.min(this.addRoleMaxCount, playerMaxCount) : playerMaxCount;
     }
 
     private isWinPropBrand(propBrand: PropBrand): boolean {
