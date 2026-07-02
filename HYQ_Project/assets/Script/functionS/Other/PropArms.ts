@@ -84,7 +84,7 @@ export class PropArms extends BattleTarget3D {
     private static readonly oilBurstDestroyDuration: number = 0.12;
     private static readonly oilBurstDestroyDelayStep: number = 0.05;
     private static readonly oilBurstDestroyScale: number = 1.01;
-    private static readonly oilBurstShardCount: number = 4;
+    private static readonly oilBurstShardCount: number = 8;
     private static readonly oilBurstShardDuration: number = 0.46;
     private static readonly oilHitFlashDuration: number = 0.16;
     private static readonly oilHitFlashColor: Color = new Color(255, 188, 36, 255);
@@ -1387,10 +1387,8 @@ export class PropArms extends BattleTarget3D {
             const spinSign = i % 2 === 0 ? 1 : -1;
             const startPos = shardNode.position.clone();
             const startEuler = shardNode.eulerAngles.clone();
-            const tangent = this.getOilBurstShardTangent(dir, i);
             const lift = baseSize * (0.56 + (i % 3) * 0.16);
             const fall = baseSize * (0.52 + (i % 2) * 0.18);
-            const wobble = baseSize * (0.08 + (i % 3) * 0.025);
             const flightState = { progress: 0 };
             tween(flightState)
                 .delay(groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.012)
@@ -1401,11 +1399,10 @@ export class PropArms extends BattleTarget3D {
                         const outward = 1 - Math.pow(1 - t, 2.2);
                         const arc = Math.sin(t * Math.PI);
                         const distance = spread * outward;
-                        const swirl = wobble * arc;
                         shardNode.setPosition(
-                            startPos.x + dir.x * distance + tangent.x * swirl,
+                            startPos.x + dir.x * distance,
                             startPos.y + dir.y * distance * 0.35 + lift * arc - fall * t * t,
-                            startPos.z + dir.z * distance + tangent.z * swirl
+                            startPos.z + dir.z * distance
                         );
                         shardNode.eulerAngles = v3(
                             startEuler.x + spinSign * (360 * outward + i * 13),
@@ -1456,14 +1453,12 @@ export class PropArms extends BattleTarget3D {
             shard.eulerAngles = originalEuler;
 
             const startWorldPos = shard.worldPosition.clone();
-            const dir = this.getOilBurstShardDirection(i, burstCenter);
+            const dir = this.getOilBurstShardDirection(i, burstCenter, startWorldPos);
             const delay = groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.012;
             const spinSign = i % 2 === 0 ? 1 : -1;
             const spread = baseSize * (1.75 + (i % 3) * 0.28);
-            const tangent = this.getOilBurstShardTangent(dir, i);
             const lift = baseSize * (0.34 + (i % 3) * 0.12);
             const fall = baseSize * (0.36 + (i % 2) * 0.14);
-            const wobble = baseSize * (0.055 + (i % 3) * 0.018);
             maxDelay = Math.max(maxDelay, delay);
 
             const flightState = { progress: 0 };
@@ -1476,11 +1471,10 @@ export class PropArms extends BattleTarget3D {
                         const outward = 1 - Math.pow(1 - t, 2.15);
                         const arc = Math.sin(t * Math.PI);
                         const distance = spread * outward;
-                        const swirl = wobble * arc;
                         shard.setWorldPosition(
-                            startWorldPos.x + dir.x * distance + tangent.x * swirl,
+                            startWorldPos.x + dir.x * distance,
                             startWorldPos.y + dir.y * distance * 0.32 + lift * arc - fall * t * t,
-                            startWorldPos.z + dir.z * distance + tangent.z * swirl,
+                            startWorldPos.z + dir.z * distance,
                         );
                         shard.eulerAngles = v3(
                             originalEuler.x + spinSign * (260 * outward + i * 9),

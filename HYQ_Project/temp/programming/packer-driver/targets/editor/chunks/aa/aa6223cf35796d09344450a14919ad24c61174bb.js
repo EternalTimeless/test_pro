@@ -1912,10 +1912,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             const spinSign = i % 2 === 0 ? 1 : -1;
             const startPos = shardNode.position.clone();
             const startEuler = shardNode.eulerAngles.clone();
-            const tangent = this.getOilBurstShardTangent(dir, i);
             const lift = baseSize * (0.56 + i % 3 * 0.16);
             const fall = baseSize * (0.52 + i % 2 * 0.18);
-            const wobble = baseSize * (0.08 + i % 3 * 0.025);
             const flightState = {
               progress: 0
             };
@@ -1928,8 +1926,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 const outward = 1 - Math.pow(1 - t, 2.2);
                 const arc = Math.sin(t * Math.PI);
                 const distance = spread * outward;
-                const swirl = wobble * arc;
-                shardNode.setPosition(startPos.x + dir.x * distance + tangent.x * swirl, startPos.y + dir.y * distance * 0.35 + lift * arc - fall * t * t, startPos.z + dir.z * distance + tangent.z * swirl);
+                shardNode.setPosition(startPos.x + dir.x * distance, startPos.y + dir.y * distance * 0.35 + lift * arc - fall * t * t, startPos.z + dir.z * distance);
                 shardNode.eulerAngles = v3(startEuler.x + spinSign * (360 * outward + i * 13), startEuler.y + 280 * outward + spinSign * arc * 42 + i * 17, startEuler.z + spinSign * (310 * outward + i * 11));
                 const scale = 1.04 + 0.05 * arc - t * 0.18;
                 shardNode.setScale(scale, scale, scale);
@@ -1977,14 +1974,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             shard.setScale(originalScale);
             shard.eulerAngles = originalEuler;
             const startWorldPos = shard.worldPosition.clone();
-            const dir = this.getOilBurstShardDirection(i, burstCenter);
+            const dir = this.getOilBurstShardDirection(i, burstCenter, startWorldPos);
             const delay = groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.012;
             const spinSign = i % 2 === 0 ? 1 : -1;
             const spread = baseSize * (1.75 + i % 3 * 0.28);
-            const tangent = this.getOilBurstShardTangent(dir, i);
             const lift = baseSize * (0.34 + i % 3 * 0.12);
             const fall = baseSize * (0.36 + i % 2 * 0.14);
-            const wobble = baseSize * (0.055 + i % 3 * 0.018);
             maxDelay = Math.max(maxDelay, delay);
             const flightState = {
               progress: 0
@@ -1998,8 +1993,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 const outward = 1 - Math.pow(1 - t, 2.15);
                 const arc = Math.sin(t * Math.PI);
                 const distance = spread * outward;
-                const swirl = wobble * arc;
-                shard.setWorldPosition(startWorldPos.x + dir.x * distance + tangent.x * swirl, startWorldPos.y + dir.y * distance * 0.32 + lift * arc - fall * t * t, startWorldPos.z + dir.z * distance + tangent.z * swirl);
+                shard.setWorldPosition(startWorldPos.x + dir.x * distance, startWorldPos.y + dir.y * distance * 0.32 + lift * arc - fall * t * t, startWorldPos.z + dir.z * distance);
                 shard.eulerAngles = v3(originalEuler.x + spinSign * (260 * outward + i * 9), originalEuler.y + 210 * outward + spinSign * arc * 34 + i * 12, originalEuler.z + spinSign * (230 * outward + i * 7));
                 const scale = 1 + 0.04 * arc - t * 0.16;
                 shard.setScale(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
@@ -2839,7 +2833,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return (_arms$runtimeVisualRo = arms.runtimeVisualRoot) != null && _arms$runtimeVisualRo.isValid ? arms.runtimeVisualRoot : null;
         }
 
-      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.12, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilBurstDestroyScale = 1.01, _class6.oilBurstShardCount = 4, _class6.oilBurstShardDuration = 0.46, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.oilHitFlashIntensity = 0.5, _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
+      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.12, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilBurstDestroyScale = 1.01, _class6.oilBurstShardCount = 8, _class6.oilBurstShardDuration = 0.46, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.oilHitFlashIntensity = 0.5, _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
         configurable: true,
         enumerable: true,
         writable: true,
