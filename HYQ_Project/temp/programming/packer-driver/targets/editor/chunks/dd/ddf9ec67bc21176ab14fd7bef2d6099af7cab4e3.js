@@ -209,6 +209,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.startGuidePlayerX = 0;
           this.startGuideTargetX = 0;
           this.hasStartGuidePosition = false;
+          this.warmupInitialized = false;
+          this.startGuideLineBound = false;
         }
 
         start() {
@@ -219,11 +221,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         update(dt) {
+          if (!this.warmupInitialized) {
+            this.initWarmupTasks();
+          }
+
           if (this.isLock) {
             return;
           }
 
           if (this.waitingStartGuide) {
+            var _this$loadingNode;
+
+            this.refreshStartGuideVisualBinding();
+
+            if ((_this$loadingNode = this.loadingNode) != null && _this$loadingNode.active && this.isStartGuideDisplayReady()) {
+              this.loadingNode.active = false;
+            }
+
             this.checkStartGuideReached();
             return;
           }
@@ -241,8 +255,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.loadingProgress.fillRange = progress;
           }
 
-          if (progress >= 1 && this.isWarmupComplete()) {
-            this.loadingNode.active = false;
+          if (progress >= 1 && this.isLoadingComplete()) {
             this.showStartGuide();
           }
         }
@@ -299,17 +312,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           this.waitingStartGuide = true;
+          this.startGuideLineBound = false;
           this.cacheStartGuidePosition();
           this.setGameplayActive(false, true);
           this.setGuideVisualActive(true);
-
-          if (this.roleNode) {
-            var _instance;
-
-            (_instance = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
-              error: Error()
-            }), GuideLine) : GuideLine).instance) == null || _instance.setLineNode(this.getGuidePlayerNode(), this.roleNode);
-          }
+          this.refreshStartGuideVisualBinding();
         }
 
         cacheStartGuidePosition() {
@@ -326,13 +333,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getGuidePlayerNode() {
-          var _instance$move$node, _instance2, _instance3;
+          var _instance$move$node, _instance, _instance2;
 
-          return (_instance$move$node = (_instance2 = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+          return (_instance$move$node = (_instance = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
             error: Error()
-          }), Player) : Player).instance) == null || (_instance2 = _instance2.move) == null ? void 0 : _instance2.node) != null ? _instance$move$node : (_instance3 = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+          }), Player) : Player).instance) == null || (_instance = _instance.move) == null ? void 0 : _instance.node) != null ? _instance$move$node : (_instance2 = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
             error: Error()
-          }), Player) : Player).instance) == null ? void 0 : _instance3.node;
+          }), Player) : Player).instance) == null ? void 0 : _instance2.node;
         }
 
         checkStartGuideReached() {
@@ -383,7 +390,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         initWarmupTasks() {
-          if (!(_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
+          if (this.warmupInitialized || !(_crd && PrefabsManager === void 0 ? (_reportPossibleCrUseOfPrefabsManager({
             error: Error()
           }), PrefabsManager) : PrefabsManager).instance) {
             return;
@@ -578,6 +585,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             count: 6
           }];
           this.warmupTaskIndex = 0;
+          this.warmupInitialized = true;
         }
 
         preloadSounds() {
@@ -670,11 +678,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         prewarmBulletBatch(bullet) {
-          var _instance4;
+          var _instance3;
 
-          const bulletLayer = (_instance4 = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
+          const bulletLayer = (_instance3 = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
             error: Error()
-          }), LayerManager) : LayerManager).instance) == null ? void 0 : _instance4.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
+          }), LayerManager) : LayerManager).instance) == null ? void 0 : _instance3.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
             error: Error()
           }), LayerEnum) : LayerEnum).BulletLayer);
 
@@ -691,8 +699,83 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         isWarmupComplete() {
+          if (!this.warmupInitialized) {
+            return false;
+          }
+
           const prefabWarmupComplete = this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
           return prefabWarmupComplete && this.pendingSoundWarmupCount <= 0 && this.pendingRuntimeWarmupCount <= 0;
+        }
+
+        isLoadingComplete() {
+          return this.isWarmupComplete() && this.isStartGuideDependencyReady();
+        }
+
+        isStartGuideDependencyReady() {
+          var _this$roleNode, _this$handAnim$node, _instance4, _this$getGuidePlayerN, _instance5;
+
+          if (!((_this$roleNode = this.roleNode) != null && _this$roleNode.isValid)) {
+            return false;
+          }
+
+          if (this.handAnim && !((_this$handAnim$node = this.handAnim.node) != null && _this$handAnim$node.isValid)) {
+            return false;
+          }
+
+          if (!((_instance4 = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance) != null && (_instance4 = _instance4.node) != null && _instance4.isValid) || !((_this$getGuidePlayerN = this.getGuidePlayerNode()) != null && _this$getGuidePlayerN.isValid)) {
+            return false;
+          }
+
+          if (!((_instance5 = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
+            error: Error()
+          }), GuideLine) : GuideLine).instance) != null && (_instance5 = _instance5.node) != null && _instance5.isValid)) {
+            return false;
+          }
+
+          return true;
+        }
+
+        refreshStartGuideVisualBinding() {
+          var _this$roleNode2, _instance6;
+
+          if (!this.waitingStartGuide || !((_this$roleNode2 = this.roleNode) != null && _this$roleNode2.isValid)) {
+            this.startGuideLineBound = false;
+            return;
+          }
+
+          const playerNode = this.getGuidePlayerNode();
+
+          if (!(playerNode != null && playerNode.isValid) || !((_instance6 = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
+            error: Error()
+          }), GuideLine) : GuideLine).instance) != null && (_instance6 = _instance6.node) != null && _instance6.isValid)) {
+            this.startGuideLineBound = false;
+            return;
+          }
+
+          (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
+            error: Error()
+          }), GuideLine) : GuideLine).instance.setLineNode(playerNode, this.roleNode);
+          this.startGuideLineBound = true;
+        }
+
+        isStartGuideDisplayReady() {
+          var _this$roleNode3, _this$handAnim2;
+
+          if (!this.waitingStartGuide) {
+            return false;
+          }
+
+          if (!((_this$roleNode3 = this.roleNode) != null && _this$roleNode3.activeInHierarchy)) {
+            return false;
+          }
+
+          if ((_this$handAnim2 = this.handAnim) != null && _this$handAnim2.node && !this.handAnim.node.activeInHierarchy) {
+            return false;
+          }
+
+          return this.startGuideLineBound;
         }
 
         prewarmEffect(node) {
@@ -767,7 +850,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         finishGuide() {
-          var _instance5;
+          var _instance7;
 
           if (this.isLock) {
             return;
@@ -776,10 +859,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isLock = true;
           this.waitingStartGuide = false;
           this.hasStartGuidePosition = false;
+          this.startGuideLineBound = false;
           this.setGuideVisualActive(false);
-          (_instance5 = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
+          (_instance7 = (_crd && GuideLine === void 0 ? (_reportPossibleCrUseOfGuideLine({
             error: Error()
-          }), GuideLine) : GuideLine).instance) == null || _instance5.setLineNode();
+          }), GuideLine) : GuideLine).instance) == null || _instance7.setLineNode();
           this.setGameplayActive(true, false);
         }
 

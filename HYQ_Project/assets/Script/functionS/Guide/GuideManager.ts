@@ -60,6 +60,8 @@ export class GuideManager extends Component {
     private startGuidePlayerX: number = 0;
     private startGuideTargetX: number = 0;
     private hasStartGuidePosition: boolean = false;
+    private warmupInitialized: boolean = false;
+    private startGuideLineBound: boolean = false;
 
     start() {
         GuideManager.instance = this;
@@ -69,11 +71,18 @@ export class GuideManager extends Component {
     }
 
     update(dt: number) {
+        if (!this.warmupInitialized) {
+            this.initWarmupTasks();
+        }
         if (this.isLock) {
             return;
         }
 
         if (this.waitingStartGuide) {
+            this.refreshStartGuideVisualBinding();
+            if (this.loadingNode?.active && this.isStartGuideDisplayReady()) {
+                this.loadingNode.active = false;
+            }
             this.checkStartGuideReached();
             return;
         }
@@ -90,8 +99,7 @@ export class GuideManager extends Component {
             this.loadingProgress.fillRange = progress;
         }
 
-        if (progress >= 1 && this.isWarmupComplete()) {
-            this.loadingNode.active = false;
+        if (progress >= 1 && this.isLoadingComplete()) {
             this.showStartGuide();
         }
     }
@@ -132,12 +140,11 @@ export class GuideManager extends Component {
             return;
         }
         this.waitingStartGuide = true;
+        this.startGuideLineBound = false;
         this.cacheStartGuidePosition();
         this.setGameplayActive(false, true);
         this.setGuideVisualActive(true);
-        if (this.roleNode) {
-            GuideLine.instance?.setLineNode(this.getGuidePlayerNode(), this.roleNode);
-        }
+        this.refreshStartGuideVisualBinding();
     }
 
     private cacheStartGuidePosition() {
@@ -198,7 +205,7 @@ export class GuideManager extends Component {
     }
 
     private initWarmupTasks() {
-        if (!PrefabsManager.instance) {
+        if (this.warmupInitialized || !PrefabsManager.instance) {
             return;
         }
         this.warmupRoot = new Node("WarmupPool");
@@ -224,6 +231,7 @@ export class GuideManager extends Component {
             { poolKey: PoolEnum.effect + EffectEnum.door, prefabType: PrefabsEnum.effect, prefabIndex: EffectEnum.door, count: 6 },
         ];
         this.warmupTaskIndex = 0;
+        this.warmupInitialized = true;
     }
 
     private preloadSounds(): void {
@@ -299,8 +307,58 @@ export class GuideManager extends Component {
     }
 
     private isWarmupComplete(): boolean {
+        if (!this.warmupInitialized) {
+            return false;
+        }
         const prefabWarmupComplete = this.warmupTasks.length <= 0 || this.warmupTaskIndex >= this.warmupTasks.length;
         return prefabWarmupComplete && this.pendingSoundWarmupCount <= 0 && this.pendingRuntimeWarmupCount <= 0;
+    }
+
+    private isLoadingComplete(): boolean {
+        return this.isWarmupComplete() && this.isStartGuideDependencyReady();
+    }
+
+    private isStartGuideDependencyReady(): boolean {
+        if (!this.roleNode?.isValid) {
+            return false;
+        }
+        if (this.handAnim && !this.handAnim.node?.isValid) {
+            return false;
+        }
+        if (!Player.instance?.node?.isValid || !this.getGuidePlayerNode()?.isValid) {
+            return false;
+        }
+        if (!GuideLine.instance?.node?.isValid) {
+            return false;
+        }
+        return true;
+    }
+
+    private refreshStartGuideVisualBinding(): void {
+        if (!this.waitingStartGuide || !this.roleNode?.isValid) {
+            this.startGuideLineBound = false;
+            return;
+        }
+        const playerNode = this.getGuidePlayerNode();
+        if (!playerNode?.isValid || !GuideLine.instance?.node?.isValid) {
+            this.startGuideLineBound = false;
+            return;
+        }
+        GuideLine.instance.setLineNode(playerNode, this.roleNode);
+        this.startGuideLineBound = true;
+    }
+
+    private isStartGuideDisplayReady(): boolean {
+        if (!this.waitingStartGuide) {
+            return false;
+        }
+        if (!this.roleNode?.activeInHierarchy) {
+            return false;
+        }
+        if (this.handAnim?.node && !this.handAnim.node.activeInHierarchy) {
+            return false;
+        }
+        return this.startGuideLineBound;
     }
 
     private prewarmEffect(node: Node): void {
@@ -359,6 +417,7 @@ export class GuideManager extends Component {
         this.isLock = true;
         this.waitingStartGuide = false;
         this.hasStartGuidePosition = false;
+        this.startGuideLineBound = false;
         this.setGuideVisualActive(false);
         GuideLine.instance?.setLineNode();
         this.setGameplayActive(true, false);
