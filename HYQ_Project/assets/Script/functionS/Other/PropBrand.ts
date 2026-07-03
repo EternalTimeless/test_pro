@@ -1,4 +1,7 @@
-import { _decorator, Collider, Component, Label, Node, Sprite, Vec3 } from 'cc';
+import { _decorator, Collider, Label, Node, Sprite, Vec3 } from 'cc';
+import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
+import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
+import ColliderTag, { COLLIDE_TYPE } from '../Battle/CollectBattleTarger/ColliderTag';
 const { ccclass, property } = _decorator;
 
 enum PropBrandVisualKind {
@@ -14,7 +17,9 @@ type PropBrandVisualRecord = {
 };
 
 @ccclass('PropBrand')
-export class PropBrand extends Component {
+export class PropBrand extends BattleTarget3D {
+
+    public readonly skipBulletHitEffect: boolean = true;
 
     @property(Label)
     public lab: Label;
@@ -26,6 +31,8 @@ export class PropBrand extends Component {
 
     private visualActive: boolean = true;
     private visualRecords: PropBrandVisualRecord[] = [];
+    private registered: boolean = false;
+    private readonly tempCollisionWorldPos: Vec3 = new Vec3();
 
     public setVisualActive(active: boolean): void {
         if (this.visualActive === active) {
@@ -41,6 +48,25 @@ export class PropBrand extends Component {
         for (let i = 0; i < this.node.children.length; i++) {
             this.node.children[i].active = active;
         }
+    }
+
+    public activateBulletTarget(): void {
+        this.initFixedHp(1);
+        this.setupColliderTag();
+        this.refreshCollisionBounds();
+        this.registerTarget();
+    }
+
+    public deactivateBulletTarget(): void {
+        this.unregisterTarget();
+        this.isDestroy = true;
+    }
+
+    public getCollisionWorldPosition(out: Vec3 = this.tempCollisionWorldPos): Vec3 {
+        if (this.refreshCollisionBounds(out)) {
+            return out;
+        }
+        return super.getCollisionWorldPosition(out);
     }
 
     public bindVisualGroups(modelGroup: Node, spriteGroup: Node, labelGroup: Node): void {
@@ -103,6 +129,62 @@ export class PropBrand extends Component {
     init(num: number = 1) {
         this.count = num;
         this.lab.string = `+${num}`;
+    }
+
+    protected _update(dt: number): void {
+    }
+
+    public Hit(damage: number): number {
+        this.refreshCollisionBounds();
+        return 1;
+    }
+
+    protected damage(power: number): void {
+    }
+
+    protected die(): void {
+    }
+
+    public repelBattleTarget(target: Node, reoel: number): void {
+    }
+
+    private refreshCollisionBounds(out?: Vec3): boolean {
+        const worldBounds = (this.collide as any)?.worldBounds;
+        const center = worldBounds?.center;
+        const halfExtents = worldBounds?.halfExtents;
+        if (!center || !halfExtents) {
+            return false;
+        }
+        this.collisionHalfX = Math.max(0.05, halfExtents.x);
+        this.collisionHalfZ = Math.max(0.05, halfExtents.z);
+        if (out) {
+            out.set(center.x, center.y, center.z);
+        }
+        return true;
+    }
+
+    private setupColliderTag(): void {
+        let tag = this.getComponent(ColliderTag);
+        if (!tag) {
+            tag = this.addComponent(ColliderTag);
+        }
+        tag.tag = COLLIDE_TYPE.MONSTER;
+    }
+
+    private registerTarget(): void {
+        if (this.registered) {
+            return;
+        }
+        BulletMonsterCollisionManager.instance.registerTarget(this);
+        this.registered = true;
+    }
+
+    private unregisterTarget(): void {
+        if (!this.registered) {
+            return;
+        }
+        BulletMonsterCollisionManager.instance.unregisterTarget(this);
+        this.registered = false;
     }
 }
 

@@ -135,6 +135,7 @@ export class CreatePropBrand extends UnityUpComponent {
             p.node.y = this.getSpawnHeight();
             p.node.z = startZ + i * this.distance;
             this.bindPropBrandVisuals(p);
+            p.activateBulletTarget();
         }
 
         const gate = this.activeLalianGate;
@@ -146,6 +147,8 @@ export class CreatePropBrand extends UnityUpComponent {
 
     protected onDestroy(): void {
         this.activeLalianGate?.node.off(EventType.PROP_ARMS_DIE, this.lalianDoneEvent, this);
+        this.clearPropBrandTargets(this.propBrandList);
+        this.clearPropBrandTargets(this.tempPropBrandList);
     }
 
     private lalianDoneEvent(info: LalianDoneInfo) {
@@ -198,10 +201,7 @@ export class CreatePropBrand extends UnityUpComponent {
             p.updateVisualTransform();
 
             if (p.node.z <= -30) {
-                this.tempPropBrandList.splice(i, 1);
-                p.setVisualActive(false);
-                p.node.active = false;
-                PoolManager.instance.setPool(PoolEnum.Prop + this.type, p);
+                this.recyclePropBrand(p);
             }
         }
     }
@@ -231,6 +231,7 @@ export class CreatePropBrand extends UnityUpComponent {
             p.node.y = this.getSpawnHeight();
             p.node.z = appendStartZ + i * this.distance;
             this.bindPropBrandVisuals(p);
+            p.activateBulletTarget();
             this.propBrandList.push(p);
         }
     }
@@ -328,18 +329,11 @@ export class CreatePropBrand extends UnityUpComponent {
             player.releaseRoleSlot();
             role.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + role.type, role);
-            const propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
-            if (propBrandIndex !== -1) {
-                this.tempPropBrandList.splice(propBrandIndex, 1);
-            }
             this.scheduleOnce(() => {
-                if (!propBrand) {
+                if (!propBrand?.node?.isValid) {
                     return;
                 }
-                propBrand.setVisualActive(false);
-                propBrand.node.active = false;
-                PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
-                propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+                this.recyclePropBrand(propBrand);
             }, 0);
             return;
         }
@@ -408,28 +402,14 @@ export class CreatePropBrand extends UnityUpComponent {
             PoolManager.instance.V3 = curPos;
         }, null);
 
-        const propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
-        if (propBrandIndex !== -1) {
-            this.tempPropBrandList.splice(propBrandIndex, 1);
-        }
         this.scheduleOnce(() => {
             Tween.stopAllByTarget(this.node);
-            propBrand.setVisualActive(false);
-            propBrand.node.active = false;
-            PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
-            propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+            this.recyclePropBrand(propBrand);
         }, 0);
     }
 
     private recycleTriggeredProp(propBrand: PropBrand): void {
-        const propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
-        if (propBrandIndex !== -1) {
-            this.tempPropBrandList.splice(propBrandIndex, 1);
-        }
-        propBrand.setVisualActive(false);
-        propBrand.node.active = false;
-        PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
-        propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+        this.recyclePropBrand(propBrand);
     }
 
     private ensureVisualGroups(): void {
@@ -547,5 +527,35 @@ export class CreatePropBrand extends UnityUpComponent {
             }
         }
         return null;
+    }
+
+    private recyclePropBrand(propBrand: PropBrand): void {
+        if (!propBrand?.node?.isValid || !propBrand.node.active) {
+            return;
+        }
+
+        const tempPropBrandIndex = this.tempPropBrandList.indexOf(propBrand);
+        if (tempPropBrandIndex !== -1) {
+            this.tempPropBrandList.splice(tempPropBrandIndex, 1);
+        }
+
+        const propBrandIndex = this.propBrandList.indexOf(propBrand);
+        if (propBrandIndex !== -1) {
+            this.propBrandList.splice(propBrandIndex, 1);
+        }
+
+        propBrand.deactivateBulletTarget();
+        propBrand.setVisualActive(false);
+        propBrand.node.active = false;
+        propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+        PoolManager.instance.setPool(PoolEnum.Prop + this.type, propBrand);
+    }
+
+    private clearPropBrandTargets(list: PropBrand[]): void {
+        for (let i = 0; i < list.length; i++) {
+            const propBrand = list[i];
+            propBrand?.deactivateBulletTarget();
+            propBrand?.collide?.off("onTriggerEnter", this.onTriggerEnter, this);
+        }
     }
 }

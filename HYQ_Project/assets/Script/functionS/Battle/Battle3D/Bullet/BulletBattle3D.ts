@@ -178,6 +178,9 @@ export default class BulletBattle3D extends Component {
     }
 
     private tryShowHitEffect(battle: BattleTarget3D) {
+        if ((battle as any).skipBulletHitEffect) {
+            return;
+        }
         const now = Date.now() * 0.001;
         if (now - BulletBattle3D._effectWindowStart >= BulletBattle3D._hitEffectWindow) {
             BulletBattle3D._effectWindowStart = now;

@@ -299,6 +299,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         tryShowHitEffect(battle) {
+          if (battle.skipBulletHitEffect) {
+            return;
+          }
+
           const now = Date.now() * 0.001;
 
           if (now - BulletBattle3D._effectWindowStart >= BulletBattle3D._hitEffectWindow) {

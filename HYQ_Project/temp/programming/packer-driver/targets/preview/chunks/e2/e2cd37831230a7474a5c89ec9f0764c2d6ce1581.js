@@ -321,6 +321,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             p.node.y = this.getSpawnHeight();
             p.node.z = startZ + i * this.distance;
             this.bindPropBrandVisuals(p);
+            p.activateBulletTarget();
           }
 
           var gate = this.activeLalianGate;
@@ -341,6 +342,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_this$activeLalianGat3 = this.activeLalianGate) == null || _this$activeLalianGat3.node.off((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
             error: Error()
           }), EventType) : EventType).PROP_ARMS_DIE, this.lalianDoneEvent, this);
+          this.clearPropBrandTargets(this.propBrandList);
+          this.clearPropBrandTargets(this.tempPropBrandList);
         }
 
         lalianDoneEvent(info) {
@@ -402,16 +405,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             _p.updateVisualTransform();
 
             if (_p.node.z <= -30) {
-              this.tempPropBrandList.splice(_i, 1);
-
-              _p.setVisualActive(false);
-
-              _p.node.active = false;
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-                error: Error()
-              }), PoolEnum) : PoolEnum).Prop + this.type, _p);
+              this.recyclePropBrand(_p);
             }
           }
         }
@@ -444,6 +438,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             p.node.y = this.getSpawnHeight();
             p.node.z = appendStartZ + i * this.distance;
             this.bindPropBrandVisuals(p);
+            p.activateBulletTarget();
             this.propBrandList.push(p);
           }
         }
@@ -574,26 +569,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
               error: Error()
             }), PoolEnum) : PoolEnum).role + role.type, role);
-
-            var _propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
-
-            if (_propBrandIndex !== -1) {
-              this.tempPropBrandList.splice(_propBrandIndex, 1);
-            }
-
             this.scheduleOnce(() => {
-              if (!propBrand) {
+              var _propBrand$node;
+
+              if (!(propBrand != null && (_propBrand$node = propBrand.node) != null && _propBrand$node.isValid)) {
                 return;
               }
 
-              propBrand.setVisualActive(false);
-              propBrand.node.active = false;
-              (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-                error: Error()
-              }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-                error: Error()
-              }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
-              propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+              this.recyclePropBrand(propBrand);
             }, 0);
             return;
           }
@@ -727,40 +710,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PoolManager) : PoolManager).instance.V3 = curPos;
           }, null);
-          var propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
-
-          if (propBrandIndex !== -1) {
-            this.tempPropBrandList.splice(propBrandIndex, 1);
-          }
-
           this.scheduleOnce(() => {
             Tween.stopAllByTarget(this.node);
-            propBrand.setVisualActive(false);
-            propBrand.node.active = false;
-            (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-              error: Error()
-            }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-              error: Error()
-            }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
-            propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+            this.recyclePropBrand(propBrand);
           }, 0);
         }
 
         recycleTriggeredProp(propBrand) {
-          var propBrandIndex = this.tempPropBrandList.indexOf(propBrand);
-
-          if (propBrandIndex !== -1) {
-            this.tempPropBrandList.splice(propBrandIndex, 1);
-          }
-
-          propBrand.setVisualActive(false);
-          propBrand.node.active = false;
-          (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
-            error: Error()
-          }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
-            error: Error()
-          }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
-          propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+          this.recyclePropBrand(propBrand);
         }
 
         ensureVisualGroups() {
@@ -913,6 +870,46 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           return null;
+        }
+
+        recyclePropBrand(propBrand) {
+          var _propBrand$node2;
+
+          if (!(propBrand != null && (_propBrand$node2 = propBrand.node) != null && _propBrand$node2.isValid) || !propBrand.node.active) {
+            return;
+          }
+
+          var tempPropBrandIndex = this.tempPropBrandList.indexOf(propBrand);
+
+          if (tempPropBrandIndex !== -1) {
+            this.tempPropBrandList.splice(tempPropBrandIndex, 1);
+          }
+
+          var propBrandIndex = this.propBrandList.indexOf(propBrand);
+
+          if (propBrandIndex !== -1) {
+            this.propBrandList.splice(propBrandIndex, 1);
+          }
+
+          propBrand.deactivateBulletTarget();
+          propBrand.setVisualActive(false);
+          propBrand.node.active = false;
+          propBrand.collide.off("onTriggerEnter", this.onTriggerEnter, this);
+          (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
+            error: Error()
+          }), PoolManager) : PoolManager).instance.setPool((_crd && PoolEnum === void 0 ? (_reportPossibleCrUseOfPoolEnum({
+            error: Error()
+          }), PoolEnum) : PoolEnum).Prop + this.type, propBrand);
+        }
+
+        clearPropBrandTargets(list) {
+          for (var i = 0; i < list.length; i++) {
+            var _propBrand$collide;
+
+            var propBrand = list[i];
+            propBrand == null || propBrand.deactivateBulletTarget();
+            propBrand == null || (_propBrand$collide = propBrand.collide) == null || _propBrand$collide.off("onTriggerEnter", this.onTriggerEnter, this);
+          }
         }
 
       }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "showCount", [_dec2], {
