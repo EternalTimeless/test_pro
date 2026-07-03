@@ -305,11 +305,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       }), _dec27 = property({
         type: CCInteger,
         displayName: '油桶大波次数量',
-        tooltip: '中路油桶需要生成的固定大波次数量，默认 3。'
+        tooltip: '兼容旧配置：当“油桶对应波次索引”为空时，使用这里的数量从第 0 波开始顺序生成油桶。'
       }), _dec28 = property({
         type: [CCInteger],
         displayName: '油桶对应波次索引',
-        tooltip: '按顺序对应 Role_0/1/2 所在的怪物波次。0 表示第 0 波。'
+        tooltip: '数组内每一项生成一个油桶，并对应一个怪物波次；例如 [0, 2] 表示只生成两个油桶。0 表示第 0 波。'
       }), _dec10(_class7 = (_class8 = (_class9 = class MonsterCreate extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
@@ -427,6 +427,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           var allStageStartZList = this.getWaveStageStartZList(totalStageCount);
           var stageIndexList = this.getWaveRoleStageIndexList(totalStageCount);
+
+          if (stageIndexList.length <= 0) {
+            return;
+          }
+
           var stageZList = stageIndexList.map(stageIndex => allStageStartZList[stageIndex]);
           this._waveStageIndexList = stageIndexList.slice();
           this._waveStageStartZList = stageZList.slice();
@@ -653,39 +658,35 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return result;
           }
 
-          var targetCount = Math.max(0, this.waveRoleCount);
           var source = (_this$waveRoleStageIn = this.waveRoleStageIndexList) != null ? _this$waveRoleStageIn : [];
 
-          for (var i = 0; i < source.length; i++) {
-            var rawIndex = source[i];
-            var stageIndex = Math.min(stageCount - 1, Math.max(0, Math.floor(rawIndex)));
+          if (source.length > 0) {
+            for (var i = 0; i < source.length; i++) {
+              var rawIndex = source[i];
 
-            if (result.indexOf(stageIndex) >= 0) {
-              continue;
+              if (typeof rawIndex !== 'number' || isNaN(rawIndex)) {
+                continue;
+              }
+
+              var stageIndex = Math.min(stageCount - 1, Math.max(0, Math.floor(rawIndex)));
+
+              if (result.indexOf(stageIndex) >= 0) {
+                continue;
+              }
+
+              result.push(stageIndex);
             }
 
-            result.push(stageIndex);
-
-            if (targetCount > 0 && result.length >= targetCount) {
-              break;
-            }
+            result.sort((a, b) => a - b);
+            return result;
           }
 
-          if (result.length <= 0) {
-            result.push(0);
+          var targetCount = Math.min(stageCount, Math.max(0, Math.floor(this.waveRoleCount)));
+
+          for (var _i2 = 0; _i2 < targetCount; _i2++) {
+            result.push(_i2);
           }
 
-          while (targetCount > 0 && result.length < Math.min(targetCount, stageCount)) {
-            var fallbackIndex = Math.min(stageCount - 1, result[result.length - 1] + 1);
-
-            if (result.indexOf(fallbackIndex) >= 0) {
-              break;
-            }
-
-            result.push(fallbackIndex);
-          }
-
-          result.sort((a, b) => a - b);
           return result;
         }
 
@@ -736,8 +737,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           var chunkSize = Math.max(1, Math.ceil(allStageStartZList.length / bigWaveCount));
 
-          for (var _i2 = 0; _i2 < allStageStartZList.length && result.length < bigWaveCount; _i2 += chunkSize) {
-            result.push(allStageStartZList[_i2]);
+          for (var _i3 = 0; _i3 < allStageStartZList.length && result.length < bigWaveCount; _i3 += chunkSize) {
+            result.push(allStageStartZList[_i3]);
           }
 
           while (result.length < bigWaveCount && result.length < allStageStartZList.length) {
@@ -795,9 +796,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (result.length < bigWaveCount) {
             var chunkSize = Math.max(1, Math.ceil(stageTypeList.length / bigWaveCount));
 
-            for (var _i3 = 0; _i3 < stageTypeList.length && result.length < bigWaveCount; _i3 += chunkSize) {
-              if (result.indexOf(_i3) === -1) {
-                result.push(_i3);
+            for (var _i4 = 0; _i4 < stageTypeList.length && result.length < bigWaveCount; _i4 += chunkSize) {
+              if (result.indexOf(_i4) === -1) {
+                result.push(_i4);
               }
             }
           }
@@ -832,8 +833,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           var chunkSize = Math.max(1, Math.ceil(stageCount / bigWaveCount));
 
-          for (var _i4 = 0; _i4 < stageCount; _i4++) {
-            result.push(Math.min(bigWaveCount - 1, Math.floor(_i4 / chunkSize)));
+          for (var _i5 = 0; _i5 < stageCount; _i5++) {
+            result.push(Math.min(bigWaveCount - 1, Math.floor(_i5 / chunkSize)));
           }
 
           return result;
@@ -1013,8 +1014,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.checkWaveRolePlayerCollision();
           }
 
-          for (var _i5 = this._monsterList.length - 1; _i5 >= 0; _i5--) {
-            var monster = this._monsterList[_i5];
+          for (var _i6 = this._monsterList.length - 1; _i6 >= 0; _i6--) {
+            var monster = this._monsterList[_i6];
 
             if (monster != null && monster.move) {
               monster.move.speed = Math.max(0, this.monsterSpeed);
@@ -1036,7 +1037,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 }
               }
 
-              this._monsterList[_i5] = this._monsterList[this._monsterList.length - 1];
+              this._monsterList[_i6] = this._monsterList[this._monsterList.length - 1];
 
               this._monsterList.pop();
             } else if (monster.move.isPos) {
@@ -1812,10 +1813,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.scheduleOnce(() => {
             this.restoreWaveRolesAfterRebirth();
 
-            for (var _i6 = 0; _i6 < this._monsterList.length; _i6++) {
+            for (var _i7 = 0; _i7 < this._monsterList.length; _i7++) {
               var _m$node;
 
-              var m = this._monsterList[_i6];
+              var m = this._monsterList[_i7];
 
               if (m && !m.isDie && (_m$node = m.node) != null && _m$node.active) {
                 (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({

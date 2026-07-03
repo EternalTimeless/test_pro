@@ -1659,50 +1659,37 @@ export class PropArms extends BattleTarget3D {
         return node.worldPosition.clone();
     }
 
-    private getOilBurstShardDirection(index: number, burstCenter?: Vec3): Vec3 {
-        const dirs = [
-            [-0.82, 0.42, -0.38],
-            [0.78, 0.34, -0.52],
-            [-0.48, 0.72, 0.5],
-            [0.42, 0.58, 0.7],
-            [-0.72, -0.18, 0.64],
-            [0.68, -0.22, 0.62],
-            [-0.22, 0.88, -0.42],
-            [0.28, -0.36, -0.88],
-        ];
-        const dir = dirs[index % dirs.length];
-        let x = dir[0];
-        let y = dir[1];
-        let z = dir[2];
+    private getOilBurstShardDirection(index: number, burstCenter?: Vec3, shardWorldPos?: Vec3): Vec3 {
+        let x = 0;
+        let y = 0;
+        let z = 0;
 
-        const cameraPos = CameraMove.instance?.node?.worldPosition;
-        if (cameraPos && burstCenter) {
-            const toCameraX = cameraPos.x - burstCenter.x;
-            const toCameraY = cameraPos.y - burstCenter.y;
-            const toCameraZ = cameraPos.z - burstCenter.z;
-            const toCameraLen = Math.max(0.0001, Math.sqrt(toCameraX * toCameraX + toCameraY * toCameraY + toCameraZ * toCameraZ));
-            x = x * 0.82 + (toCameraX / toCameraLen) * 0.18;
-            y = y * 0.88 + (toCameraY / toCameraLen) * 0.12;
-            z = z * 0.82 + (toCameraZ / toCameraLen) * 0.18;
+        if (burstCenter && shardWorldPos) {
+            x = shardWorldPos.x - burstCenter.x;
+            y = shardWorldPos.y - burstCenter.y;
+            z = shardWorldPos.z - burstCenter.z;
         }
 
-        const len = Math.max(0.0001, Math.sqrt(x * x + y * y + z * z));
-        return v3(x / len, y / len, z / len);
-    }
-
-    private getOilBurstShardTangent(dir: Vec3, index: number): Vec3 {
-        const sign = index % 2 === 0 ? 1 : -1;
-        let x = dir.z * sign;
-        let z = -dir.x * sign;
-        const len = Math.sqrt(x * x + z * z);
+        let len = Math.sqrt(x * x + y * y + z * z);
         if (len < 0.0001) {
-            x = sign;
-            z = 0;
+            const count = Math.max(1, PropArms.oilBurstShardCount);
+            const t = (index + 0.5) / count;
+            const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+            y = 1 - 2 * t;
+            const radius = Math.sqrt(Math.max(0, 1 - y * y));
+            const angle = index * goldenAngle;
+            x = Math.cos(angle) * radius;
+            z = Math.sin(angle) * radius;
+            y = y * 0.62 + 0.24;
         } else {
             x /= len;
+            y /= len;
             z /= len;
+            y = y * 0.74 + 0.2;
         }
-        return v3(x, 0, z);
+
+        len = Math.max(0.0001, Math.sqrt(x * x + y * y + z * z));
+        return v3(x / len, y / len, z / len);
     }
 
     private createOilBurstShardMesh(size: number, index: number) {

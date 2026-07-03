@@ -144,9 +144,9 @@ export class MonsterCreate extends UnityUpComponent {
     private stage_1: number = 15;
     private _hasInitialFilled: boolean = false;
     private _spawnAllWavesOnStart: boolean = true;
-    @property({ type: CCInteger, displayName: '油桶大波次数量', tooltip: '中路油桶需要生成的固定大波次数量，默认 3。' })
+    @property({ type: CCInteger, displayName: '油桶大波次数量', tooltip: '兼容旧配置：当“油桶对应波次索引”为空时，使用这里的数量从第 0 波开始顺序生成油桶。' })
     public waveRoleCount: number = 3;
-    @property({ type: [CCInteger], displayName: '油桶对应波次索引', tooltip: '按顺序对应 Role_0/1/2 所在的怪物波次。0 表示第 0 波。' })
+    @property({ type: [CCInteger], displayName: '油桶对应波次索引', tooltip: '数组内每一项生成一个油桶，并对应一个怪物波次；例如 [0, 2] 表示只生成两个油桶。0 表示第 0 波。' })
     public waveRoleStageIndexList: number[] = [0, 2, 5];
     private _waveRoleNodes: PropArms[] = [];
     private _waveStageStartZList: number[] = [];
@@ -193,6 +193,9 @@ export class MonsterCreate extends UnityUpComponent {
 
         const allStageStartZList = this.getWaveStageStartZList(totalStageCount);
         const stageIndexList = this.getWaveRoleStageIndexList(totalStageCount);
+        if (stageIndexList.length <= 0) {
+            return;
+        }
         const stageZList = stageIndexList.map((stageIndex) => allStageStartZList[stageIndex]);
         this._waveStageIndexList = stageIndexList.slice();
         this._waveStageStartZList = stageZList.slice();
@@ -368,33 +371,28 @@ export class MonsterCreate extends UnityUpComponent {
             return result;
         }
 
-        const targetCount = Math.max(0, this.waveRoleCount);
         const source = this.waveRoleStageIndexList ?? [];
-        for (let i = 0; i < source.length; i++) {
-            const rawIndex = source[i];
-            const stageIndex = Math.min(stageCount - 1, Math.max(0, Math.floor(rawIndex)));
-            if (result.indexOf(stageIndex) >= 0) {
-                continue;
+        if (source.length > 0) {
+            for (let i = 0; i < source.length; i++) {
+                const rawIndex = source[i];
+                if (typeof rawIndex !== 'number' || isNaN(rawIndex)) {
+                    continue;
+                }
+                const stageIndex = Math.min(stageCount - 1, Math.max(0, Math.floor(rawIndex)));
+                if (result.indexOf(stageIndex) >= 0) {
+                    continue;
+                }
+                result.push(stageIndex);
             }
-            result.push(stageIndex);
-            if (targetCount > 0 && result.length >= targetCount) {
-                break;
-            }
+            result.sort((a, b) => a - b);
+            return result;
         }
 
-        if (result.length <= 0) {
-            result.push(0);
+        const targetCount = Math.min(stageCount, Math.max(0, Math.floor(this.waveRoleCount)));
+        for (let i = 0; i < targetCount; i++) {
+            result.push(i);
         }
 
-        while (targetCount > 0 && result.length < Math.min(targetCount, stageCount)) {
-            const fallbackIndex = Math.min(stageCount - 1, result[result.length - 1] + 1);
-            if (result.indexOf(fallbackIndex) >= 0) {
-                break;
-            }
-            result.push(fallbackIndex);
-        }
-
-        result.sort((a, b) => a - b);
         return result;
     }
 

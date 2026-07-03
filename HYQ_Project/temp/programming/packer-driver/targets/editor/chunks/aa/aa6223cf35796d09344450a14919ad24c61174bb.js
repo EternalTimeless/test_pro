@@ -2212,47 +2212,38 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return node.worldPosition.clone();
         }
 
-        getOilBurstShardDirection(index, burstCenter) {
-          var _instance4;
+        getOilBurstShardDirection(index, burstCenter, shardWorldPos) {
+          let x = 0;
+          let y = 0;
+          let z = 0;
 
-          const dirs = [[-0.82, 0.42, -0.38], [0.78, 0.34, -0.52], [-0.48, 0.72, 0.5], [0.42, 0.58, 0.7], [-0.72, -0.18, 0.64], [0.68, -0.22, 0.62], [-0.22, 0.88, -0.42], [0.28, -0.36, -0.88]];
-          const dir = dirs[index % dirs.length];
-          let x = dir[0];
-          let y = dir[1];
-          let z = dir[2];
-          const cameraPos = (_instance4 = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
-            error: Error()
-          }), CameraMove) : CameraMove).instance) == null || (_instance4 = _instance4.node) == null ? void 0 : _instance4.worldPosition;
-
-          if (cameraPos && burstCenter) {
-            const toCameraX = cameraPos.x - burstCenter.x;
-            const toCameraY = cameraPos.y - burstCenter.y;
-            const toCameraZ = cameraPos.z - burstCenter.z;
-            const toCameraLen = Math.max(0.0001, Math.sqrt(toCameraX * toCameraX + toCameraY * toCameraY + toCameraZ * toCameraZ));
-            x = x * 0.82 + toCameraX / toCameraLen * 0.18;
-            y = y * 0.88 + toCameraY / toCameraLen * 0.12;
-            z = z * 0.82 + toCameraZ / toCameraLen * 0.18;
+          if (burstCenter && shardWorldPos) {
+            x = shardWorldPos.x - burstCenter.x;
+            y = shardWorldPos.y - burstCenter.y;
+            z = shardWorldPos.z - burstCenter.z;
           }
 
-          const len = Math.max(0.0001, Math.sqrt(x * x + y * y + z * z));
-          return v3(x / len, y / len, z / len);
-        }
-
-        getOilBurstShardTangent(dir, index) {
-          const sign = index % 2 === 0 ? 1 : -1;
-          let x = dir.z * sign;
-          let z = -dir.x * sign;
-          const len = Math.sqrt(x * x + z * z);
+          let len = Math.sqrt(x * x + y * y + z * z);
 
           if (len < 0.0001) {
-            x = sign;
-            z = 0;
+            const count = Math.max(1, PropArms.oilBurstShardCount);
+            const t = (index + 0.5) / count;
+            const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+            y = 1 - 2 * t;
+            const radius = Math.sqrt(Math.max(0, 1 - y * y));
+            const angle = index * goldenAngle;
+            x = Math.cos(angle) * radius;
+            z = Math.sin(angle) * radius;
+            y = y * 0.62 + 0.24;
           } else {
             x /= len;
+            y /= len;
             z /= len;
+            y = y * 0.74 + 0.2;
           }
 
-          return v3(x, 0, z);
+          len = Math.max(0.0001, Math.sqrt(x * x + y * y + z * z));
+          return v3(x / len, y / len, z / len);
         }
 
         createOilBurstShardMesh(size, index) {
@@ -2811,12 +2802,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         resetStagePosition() {
-          var _instance$getFrontMon, _instance5;
+          var _instance$getFrontMon, _instance4;
 
           const worldPos = this.node.worldPosition;
-          const frontZ = (_instance$getFrontMon = (_instance5 = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
+          const frontZ = (_instance$getFrontMon = (_instance4 = (_crd && MonsterCreate === void 0 ? (_reportPossibleCrUseOfMonsterCreate({
             error: Error()
-          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance5.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
+          }), MonsterCreate) : MonsterCreate).instance) == null ? void 0 : _instance4.getFrontMonsterWorldZ(worldPos.z)) != null ? _instance$getFrontMon : worldPos.z;
 
           this._stageSpawnPos.set(worldPos.x, worldPos.y, frontZ - this.waveFrontGap);
 
