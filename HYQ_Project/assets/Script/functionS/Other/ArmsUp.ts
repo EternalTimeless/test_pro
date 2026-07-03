@@ -20,6 +20,7 @@ type WeaponFlyNodeInfo = {
 export class ArmsUp extends UnityUpComponent {
     private static readonly WEAPON_FLY_DURATION = 0.7;
     private static readonly WEAPON_FLY_ARC_HEIGHT = 4;
+    private static readonly WEAPON_FLY_END_SCALE_RATE = 0.6;
     private static readonly WEAPON_PICKUP_VISUAL_NAME = 'weapon';
 
     @property(Player)
@@ -31,6 +32,7 @@ export class ArmsUp extends UnityUpComponent {
     private static readonly tempForward: Vec3 = new Vec3();
     private static readonly tempQuat: Quat = new Quat();
     private static readonly tempFlightPos: Vec3 = new Vec3();
+    private static readonly tempFlightScale: Vec3 = new Vec3();
 
 
     start() {
@@ -70,7 +72,7 @@ export class ArmsUp extends UnityUpComponent {
             this.faceNodeToPlayer(weaponNode, this.player.node.worldPosition);
         }
         weaponNode.active = true;
-        this.startWeaponFly(weaponNode, armsInfo, startPos, weaponFlyInfo.facePlayer);
+        this.startWeaponFly(weaponNode, armsInfo, startPos, startScale, weaponFlyInfo.facePlayer);
     }
 
     private getWeaponFlyNodeInfo(armsInfo: ArmsInfo): WeaponFlyNodeInfo | null {
@@ -119,8 +121,8 @@ export class ArmsUp extends UnityUpComponent {
             ?? LayerManager.instance.getLayer(LayerEnum.Layer_1_Ground);
     }
 
-    private startWeaponFly(node: Node, armsInfo: ArmsInfo, startPos: Vec3, facePlayer: boolean): void {
-        this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos, facePlayer));
+    private startWeaponFly(node: Node, armsInfo: ArmsInfo, startPos: Vec3, startScale: Vec3, facePlayer: boolean): void {
+        this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos, startScale, facePlayer));
     }
 
     private completeWeaponFly(node: Node, armsInfo: ArmsInfo): void {
@@ -174,6 +176,10 @@ export class ArmsUp extends UnityUpComponent {
             Vec3.lerp(ArmsUp.tempFlightPos, state.startPos, playerPos, t);
             ArmsUp.tempFlightPos.y += ArmsUp.WEAPON_FLY_ARC_HEIGHT * 4 * rawT * (1 - rawT);
             state.node.setWorldPosition(ArmsUp.tempFlightPos);
+            if (state.shrinkOnFly) {
+                Vec3.lerp(ArmsUp.tempFlightScale, state.startScale, state.endScale, t);
+                state.node.setWorldScale(ArmsUp.tempFlightScale);
+            }
             if (state.facePlayer) {
                 this.faceNodeToPlayer(state.node, playerPos);
             }
@@ -246,12 +252,26 @@ export class ArmsUp extends UnityUpComponent {
 }
 
 class WeaponFlyState {
-    public constructor(public node: Node, public armsInfo: ArmsInfo, startPos: Vec3, public facePlayer: boolean) {
+    public constructor(public node: Node, public armsInfo: ArmsInfo, startPos: Vec3, startScale: Vec3, public facePlayer: boolean) {
         this.startPos.set(startPos);
+        this.startScale.set(startScale);
+        this.shrinkOnFly = !facePlayer;
+        if (this.shrinkOnFly) {
+            this.endScale.set(
+                startScale.x * ArmsUp.WEAPON_FLY_END_SCALE_RATE,
+                startScale.y * ArmsUp.WEAPON_FLY_END_SCALE_RATE,
+                startScale.z * ArmsUp.WEAPON_FLY_END_SCALE_RATE,
+            );
+        } else {
+            this.endScale.set(startScale);
+        }
     }
 
     public elapsed: number = 0;
     public startPos: Vec3 = new Vec3();
+    public startScale: Vec3 = new Vec3();
+    public endScale: Vec3 = new Vec3();
+    public shrinkOnFly: boolean = false;
 }
 
 

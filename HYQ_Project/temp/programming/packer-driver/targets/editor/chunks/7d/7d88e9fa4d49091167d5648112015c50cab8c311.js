@@ -175,7 +175,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           weaponNode.active = true;
-          this.startWeaponFly(weaponNode, armsInfo, startPos, weaponFlyInfo.facePlayer);
+          this.startWeaponFly(weaponNode, armsInfo, startPos, startScale, weaponFlyInfo.facePlayer);
         }
 
         getWeaponFlyNodeInfo(armsInfo) {
@@ -254,8 +254,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), LayerEnum) : LayerEnum).Layer_1_Ground);
         }
 
-        startWeaponFly(node, armsInfo, startPos, facePlayer) {
-          this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos, facePlayer));
+        startWeaponFly(node, armsInfo, startPos, startScale, facePlayer) {
+          this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos, startScale, facePlayer));
         }
 
         completeWeaponFly(node, armsInfo) {
@@ -330,6 +330,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             Vec3.lerp(ArmsUp.tempFlightPos, state.startPos, playerPos, t);
             ArmsUp.tempFlightPos.y += ArmsUp.WEAPON_FLY_ARC_HEIGHT * 4 * rawT * (1 - rawT);
             state.node.setWorldPosition(ArmsUp.tempFlightPos);
+
+            if (state.shrinkOnFly) {
+              Vec3.lerp(ArmsUp.tempFlightScale, state.startScale, state.endScale, t);
+              state.node.setWorldScale(ArmsUp.tempFlightScale);
+            }
 
             if (state.facePlayer) {
               this.faceNodeToPlayer(state.node, playerPos);
@@ -408,7 +413,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._monsterList.length = 0;
         }
 
-      }, _class3.WEAPON_FLY_DURATION = 0.7, _class3.WEAPON_FLY_ARC_HEIGHT = 4, _class3.WEAPON_PICKUP_VISUAL_NAME = 'weapon', _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3.tempFlightPos = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
+      }, _class3.WEAPON_FLY_DURATION = 0.7, _class3.WEAPON_FLY_ARC_HEIGHT = 4, _class3.WEAPON_FLY_END_SCALE_RATE = 0.6, _class3.WEAPON_PICKUP_VISUAL_NAME = 'weapon', _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3.tempFlightPos = new Vec3(), _class3.tempFlightScale = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -416,13 +421,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       })), _class2)) || _class));
 
       WeaponFlyState = class WeaponFlyState {
-        constructor(node, armsInfo, startPos, facePlayer) {
+        constructor(node, armsInfo, startPos, startScale, facePlayer) {
           this.elapsed = 0;
           this.startPos = new Vec3();
+          this.startScale = new Vec3();
+          this.endScale = new Vec3();
+          this.shrinkOnFly = false;
           this.node = node;
           this.armsInfo = armsInfo;
           this.facePlayer = facePlayer;
           this.startPos.set(startPos);
+          this.startScale.set(startScale);
+          this.shrinkOnFly = !facePlayer;
+
+          if (this.shrinkOnFly) {
+            this.endScale.set(startScale.x * ArmsUp.WEAPON_FLY_END_SCALE_RATE, startScale.y * ArmsUp.WEAPON_FLY_END_SCALE_RATE, startScale.z * ArmsUp.WEAPON_FLY_END_SCALE_RATE);
+          } else {
+            this.endScale.set(startScale);
+          }
         }
 
       };

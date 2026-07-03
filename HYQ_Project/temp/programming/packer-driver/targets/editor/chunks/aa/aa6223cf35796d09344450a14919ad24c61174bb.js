@@ -2129,10 +2129,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             Tween.stopAllByTarget(spriteNode);
             const originalScale = this.getWeaponVisualOriginalScale(spriteNode);
             const scaleUpRate = Math.max(1, this.weaponHitScaleUp);
+            const scaleDownRate = Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
             const scaleUp = v3(originalScale.x * scaleUpRate, originalScale.y * scaleUpRate, originalScale.z * scaleUpRate);
-            const returnDuration = Math.max(0.01, totalDuration);
-            spriteNode.setScale(scaleUp);
-            tween(spriteNode).to(returnDuration, {
+            const scaleDown = v3(originalScale.x * scaleDownRate, originalScale.y * scaleDownRate, originalScale.z * scaleDownRate);
+            const pulseDuration = Math.max(0.01, totalDuration);
+            const scaleUpDuration = Math.max(0.01, pulseDuration * 0.35);
+            const returnDuration = Math.max(0.01, pulseDuration - scaleUpDuration);
+            spriteNode.setScale(scaleDown);
+            tween(spriteNode).to(scaleUpDuration, {
+              scale: scaleUp
+            }, {
+              easing: 'cubicOut'
+            }).to(returnDuration, {
               scale: originalScale
             }, {
               easing: 'backOut'
