@@ -36,6 +36,11 @@ type OilHitFlashMaterialRecord = {
     flashMaterials: (Material | null)[];
 };
 
+type WeaponVisualHitPulseState = {
+    elapsed: number;
+    duration: number;
+};
+
 
 @ccclass('ArmsInfo')
 export class ArmsInfo {
@@ -270,6 +275,7 @@ export class PropArms extends BattleTarget3D {
     private readonly bottomBaseChildEulerMap: Map<Node, Vec3> = new Map();
     private readonly bottomBaseTargetPosMap: Map<Node, Vec3> = new Map();
     private readonly weaponVisualScaleMap: Map<Node, Vec3> = new Map();
+    private readonly weaponVisualHitPulseStateMap: Map<Node, WeaponVisualHitPulseState> = new Map();
     private readonly manualBottomBaseNodeSet: Set<Node> = new Set();
     private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 1, 0);
     private readonly roleTemplateBottomBasePos: Vec3 = new Vec3();
@@ -322,6 +328,7 @@ export class PropArms extends BattleTarget3D {
     protected die(): void {
 
         this._isShake = false;
+        this.clearWeaponVisualHitPulseState();
         this.restoreOilHitFlashMaterials();
         FlashRedManager.instance.stopFlashRed(this.node);
         BulletMonsterCollisionManager.instance.unregisterTarget(this);
@@ -784,6 +791,8 @@ export class PropArms extends BattleTarget3D {
                 || this.hasNodeByName(visualRoot, PropArms.spriteWeaponVisualName);
             this._curArmsSpriteTargetY = visualRoot.y;
             this._isStageAlive = true;
+            this.clearWeaponVisualHitPulseState();
+            this.cacheWeaponVisualOriginalScales(visualRoot);
             this.initLalian();
 
             const tireSpacing = this.tireSpacing;
@@ -1151,6 +1160,80 @@ export class PropArms extends BattleTarget3D {
             this.weaponVisualScaleMap.set(node, originalScale);
         }
         return originalScale;
+    }
+
+    private cacheWeaponVisualOriginalScales(root: Node | null): void {
+        if (!root) {
+            return;
+        }
+        const spriteNodes: Node[] = [];
+        PropArms.collectNodesByName(root, PropArms.weaponPickupVisualName, spriteNodes);
+        PropArms.collectNodesByName(root, PropArms.spriteWeaponVisualName, spriteNodes);
+        for (let i = 0; i < spriteNodes.length; i++) {
+            const spriteNode = spriteNodes[i];
+            if (!spriteNode?.isValid) {
+                continue;
+            }
+            this.weaponVisualScaleMap.set(spriteNode, spriteNode.scale.clone());
+        }
+    }
+
+    private clearWeaponVisualHitPulseState(resetScale: boolean = true): void {
+        this.weaponVisualHitPulseStateMap.forEach((_, node) => {
+            if (!node?.isValid) {
+                return;
+            }
+            Tween.stopAllByTarget(node);
+            if (resetScale) {
+                node.setScale(this.getWeaponVisualOriginalScale(node));
+            }
+        });
+        this.weaponVisualHitPulseStateMap.clear();
+    }
+
+    private updateWeaponVisualHitPulse(dt: number): void {
+        if (this.weaponVisualHitPulseStateMap.size <= 0) {
+            return;
+        }
+        const finishedNodes: Node[] = [];
+        this.weaponVisualHitPulseStateMap.forEach((state, node) => {
+            if (!node?.isValid || !node.activeInHierarchy) {
+                finishedNodes.push(node);
+                return;
+            }
+
+            state.elapsed += dt;
+            const originalScale = this.getWeaponVisualOriginalScale(node);
+            const scaleUpRate = Math.max(1, this.weaponHitScaleUp);
+            const scaleDownRate = Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
+            const rawT = Math.min(1, state.elapsed / Math.max(0.01, state.duration));
+            let currentRate = 1;
+
+            if (rawT < 0.35) {
+                const segmentT = rawT / 0.35;
+                const easedT = segmentT * segmentT * (3 - 2 * segmentT);
+                currentRate = scaleDownRate + (scaleUpRate - scaleDownRate) * easedT;
+            } else {
+                const segmentT = (rawT - 0.35) / 0.65;
+                const easedT = 1 - Math.pow(1 - segmentT, 2);
+                currentRate = scaleUpRate + (1 - scaleUpRate) * easedT;
+            }
+
+            node.setScale(
+                originalScale.x * currentRate,
+                originalScale.y * currentRate,
+                originalScale.z * currentRate,
+            );
+
+            if (rawT >= 1) {
+                node.setScale(originalScale);
+                finishedNodes.push(node);
+            }
+        });
+
+        for (let i = 0; i < finishedNodes.length; i++) {
+            this.weaponVisualHitPulseStateMap.delete(finishedNodes[i]);
+        }
     }
 
     private getBottomBaseOriginalPos(node: Node): Vec3 {
@@ -1595,21 +1678,23 @@ export class PropArms extends BattleTarget3D {
                 continue;
             }
 
+            const pulseState = this.weaponVisualHitPulseStateMap.get(spriteNode);
+            if (pulseState && pulseState.elapsed < pulseState.duration) {
+                continue;
+            }
+
             Tween.stopAllByTarget(spriteNode);
             const originalScale = this.getWeaponVisualOriginalScale(spriteNode);
-            const scaleUpRate = Math.max(1, this.weaponHitScaleUp);
-            const scaleDownRate = Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
-            const scaleUp = v3(originalScale.x * scaleUpRate, originalScale.y * scaleUpRate, originalScale.z * scaleUpRate);
-            const scaleDown = v3(originalScale.x * scaleDownRate, originalScale.y * scaleDownRate, originalScale.z * scaleDownRate);
-            const pulseDuration = Math.max(0.01, totalDuration);
-            const scaleUpDuration = Math.max(0.01, pulseDuration * 0.35);
-            const returnDuration = Math.max(0.01, pulseDuration - scaleUpDuration);
-
-            spriteNode.setScale(scaleDown);
-            tween(spriteNode)
-                .to(scaleUpDuration, { scale: scaleUp }, { easing: 'cubicOut' })
-                .to(returnDuration, { scale: originalScale }, { easing: 'backOut' })
-                .start();
+            const scaleDownRate = Math.max(0.01, Math.min(Math.max(1, this.weaponHitScaleUp), this.weaponHitScaleDown));
+            spriteNode.setScale(
+                originalScale.x * scaleDownRate,
+                originalScale.y * scaleDownRate,
+                originalScale.z * scaleDownRate,
+            );
+            this.weaponVisualHitPulseStateMap.set(spriteNode, {
+                elapsed: 0,
+                duration: Math.max(0.01, totalDuration),
+            });
         }
     }
 
@@ -2142,6 +2227,7 @@ export class PropArms extends BattleTarget3D {
     }
 
     protected onDestroy(): void {
+        this.clearWeaponVisualHitPulseState(false);
         this.restoreOilHitFlashMaterials();
         EventManager.instance.off(EventType.MONSTER_WAVE_STAGE, this.onMonsterWaveStage);
     }
@@ -2159,6 +2245,7 @@ export class PropArms extends BattleTarget3D {
         // 轮胎平滑插值到正确位置
         this._updateTireDrop(dt);
         this.updateBottomBaseRoll(dt);
+        this.updateWeaponVisualHitPulse(dt);
 
         // _isShake冷却（非销毁受击用）
         if (this._shakeCooldown > 0) {

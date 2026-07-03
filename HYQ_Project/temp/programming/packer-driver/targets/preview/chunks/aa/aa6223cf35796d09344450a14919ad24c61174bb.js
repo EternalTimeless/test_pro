@@ -480,6 +480,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bottomBaseChildEulerMap = new Map();
           this.bottomBaseTargetPosMap = new Map();
           this.weaponVisualScaleMap = new Map();
+          this.weaponVisualHitPulseStateMap = new Map();
           this.manualBottomBaseNodeSet = new Set();
           this.bottomBaseRollAxis = new Vec3(0, 1, 0);
           this.roleTemplateBottomBasePos = new Vec3();
@@ -659,6 +660,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               _this = this;
 
           this._isShake = false;
+          this.clearWeaponVisualHitPulseState();
           this.restoreOilHitFlashMaterials();
           (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
             error: Error()
@@ -1263,6 +1265,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this._curArmsUsesSpriteVisual = this.hasNodeByName(visualRoot, PropArms.weaponPickupVisualName) || this.hasNodeByName(visualRoot, PropArms.spriteWeaponVisualName);
             this._curArmsSpriteTargetY = visualRoot.y;
             this._isStageAlive = true;
+            this.clearWeaponVisualHitPulseState();
+            this.cacheWeaponVisualOriginalScales(visualRoot);
             this.initLalian();
             var tireSpacing = this.tireSpacing;
             var wallHeight = currentArms.wallHeight;
@@ -1702,6 +1706,89 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           return originalScale;
+        }
+
+        cacheWeaponVisualOriginalScales(root) {
+          if (!root) {
+            return;
+          }
+
+          var spriteNodes = [];
+          PropArms.collectNodesByName(root, PropArms.weaponPickupVisualName, spriteNodes);
+          PropArms.collectNodesByName(root, PropArms.spriteWeaponVisualName, spriteNodes);
+
+          for (var i = 0; i < spriteNodes.length; i++) {
+            var spriteNode = spriteNodes[i];
+
+            if (!(spriteNode != null && spriteNode.isValid)) {
+              continue;
+            }
+
+            this.weaponVisualScaleMap.set(spriteNode, spriteNode.scale.clone());
+          }
+        }
+
+        clearWeaponVisualHitPulseState(resetScale) {
+          if (resetScale === void 0) {
+            resetScale = true;
+          }
+
+          this.weaponVisualHitPulseStateMap.forEach((_, node) => {
+            if (!(node != null && node.isValid)) {
+              return;
+            }
+
+            Tween.stopAllByTarget(node);
+
+            if (resetScale) {
+              node.setScale(this.getWeaponVisualOriginalScale(node));
+            }
+          });
+          this.weaponVisualHitPulseStateMap.clear();
+        }
+
+        updateWeaponVisualHitPulse(dt) {
+          if (this.weaponVisualHitPulseStateMap.size <= 0) {
+            return;
+          }
+
+          var finishedNodes = [];
+          this.weaponVisualHitPulseStateMap.forEach((state, node) => {
+            if (!(node != null && node.isValid) || !node.activeInHierarchy) {
+              finishedNodes.push(node);
+              return;
+            }
+
+            state.elapsed += dt;
+            var originalScale = this.getWeaponVisualOriginalScale(node);
+            var scaleUpRate = Math.max(1, this.weaponHitScaleUp);
+            var scaleDownRate = Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
+            var rawT = Math.min(1, state.elapsed / Math.max(0.01, state.duration));
+            var currentRate = 1;
+
+            if (rawT < 0.35) {
+              var segmentT = rawT / 0.35;
+              var easedT = segmentT * segmentT * (3 - 2 * segmentT);
+              currentRate = scaleDownRate + (scaleUpRate - scaleDownRate) * easedT;
+            } else {
+              var _segmentT = (rawT - 0.35) / 0.65;
+
+              var _easedT = 1 - Math.pow(1 - _segmentT, 2);
+
+              currentRate = scaleUpRate + (1 - scaleUpRate) * _easedT;
+            }
+
+            node.setScale(originalScale.x * currentRate, originalScale.y * currentRate, originalScale.z * currentRate);
+
+            if (rawT >= 1) {
+              node.setScale(originalScale);
+              finishedNodes.push(node);
+            }
+          });
+
+          for (var i = 0; i < finishedNodes.length; i++) {
+            this.weaponVisualHitPulseStateMap.delete(finishedNodes[i]);
+          }
         }
 
         getBottomBaseOriginalPos(node) {
@@ -2205,25 +2292,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               continue;
             }
 
+            var pulseState = this.weaponVisualHitPulseStateMap.get(spriteNode);
+
+            if (pulseState && pulseState.elapsed < pulseState.duration) {
+              continue;
+            }
+
             Tween.stopAllByTarget(spriteNode);
             var originalScale = this.getWeaponVisualOriginalScale(spriteNode);
-            var scaleUpRate = Math.max(1, this.weaponHitScaleUp);
-            var scaleDownRate = Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
-            var scaleUp = v3(originalScale.x * scaleUpRate, originalScale.y * scaleUpRate, originalScale.z * scaleUpRate);
-            var scaleDown = v3(originalScale.x * scaleDownRate, originalScale.y * scaleDownRate, originalScale.z * scaleDownRate);
-            var pulseDuration = Math.max(0.01, totalDuration);
-            var scaleUpDuration = Math.max(0.01, pulseDuration * 0.35);
-            var returnDuration = Math.max(0.01, pulseDuration - scaleUpDuration);
-            spriteNode.setScale(scaleDown);
-            tween(spriteNode).to(scaleUpDuration, {
-              scale: scaleUp
-            }, {
-              easing: 'cubicOut'
-            }).to(returnDuration, {
-              scale: originalScale
-            }, {
-              easing: 'backOut'
-            }).start();
+            var scaleDownRate = Math.max(0.01, Math.min(Math.max(1, this.weaponHitScaleUp), this.weaponHitScaleDown));
+            spriteNode.setScale(originalScale.x * scaleDownRate, originalScale.y * scaleDownRate, originalScale.z * scaleDownRate);
+            this.weaponVisualHitPulseStateMap.set(spriteNode, {
+              elapsed: 0,
+              duration: Math.max(0.01, totalDuration)
+            });
           }
         }
 
@@ -2847,6 +2929,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         onDestroy() {
+          this.clearWeaponVisualHitPulseState(false);
           this.restoreOilHitFlashMaterials();
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
@@ -2869,7 +2952,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this._updateTireDrop(dt);
 
-          this.updateBottomBaseRoll(dt); // _isShake冷却（非销毁受击用）
+          this.updateBottomBaseRoll(dt);
+          this.updateWeaponVisualHitPulse(dt); // _isShake冷却（非销毁受击用）
 
           if (this._shakeCooldown > 0) {
             this._shakeCooldown -= dt;
