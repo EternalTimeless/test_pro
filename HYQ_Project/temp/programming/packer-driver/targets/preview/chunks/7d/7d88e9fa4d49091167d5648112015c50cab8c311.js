@@ -413,7 +413,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._monsterList.length = 0;
         }
 
-      }, _class3.WEAPON_FLY_DURATION = 0.7, _class3.WEAPON_FLY_ARC_HEIGHT = 4, _class3.WEAPON_FLY_END_SCALE_RATE = 0.6, _class3.WEAPON_PICKUP_VISUAL_NAME = 'weapon', _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3.tempFlightPos = new Vec3(), _class3.tempFlightScale = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
+      }, _class3.WEAPON_FLY_DURATION = 0.63, _class3.WEAPON_FLY_ARC_HEIGHT = 4, _class3.WEAPON_FLY_END_SCALE_RATE = 0.6, _class3.WEAPON_PICKUP_VISUAL_NAME = 'weapon', _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3.tempFlightPos = new Vec3(), _class3.tempFlightScale = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,

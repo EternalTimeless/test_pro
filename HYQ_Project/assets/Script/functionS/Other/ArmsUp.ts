@@ -18,7 +18,7 @@ type WeaponFlyNodeInfo = {
 
 @ccclass('ArmsUp')
 export class ArmsUp extends UnityUpComponent {
-    private static readonly WEAPON_FLY_DURATION = 0.7;
+    private static readonly WEAPON_FLY_DURATION = 0.63;
     private static readonly WEAPON_FLY_ARC_HEIGHT = 4;
     private static readonly WEAPON_FLY_END_SCALE_RATE = 0.6;
     private static readonly WEAPON_PICKUP_VISUAL_NAME = 'weapon';
