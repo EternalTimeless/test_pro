@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _class4, _class5, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _class4, _class5, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -262,11 +262,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         type: CCInteger,
         displayName: '枪口特效最大播放数',
         tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。'
-      }), _dec14 = property(CCBoolean), _dec15 = property({
+      }), _dec14 = property({
+        type: CCInteger,
+        displayName: '错峰发射武器配置索引',
+        tooltip: '指定哪一个武器子弹配置使用错峰发射。0 表示第一个油桶给出的武器；负数表示关闭。'
+      }), _dec15 = property({
+        type: CCFloat,
+        displayName: '错峰发射占攻击间隔比例',
+        tooltip: '错峰武器每轮射击摊开的时间比例。0.85 表示在本轮攻击间隔的 85% 时间内连续发射，伤害和总弹量不变。'
+      }), _dec16 = property({
+        type: CCInteger,
+        displayName: '默认武器配置索引',
+        tooltip: '开局默认使用的“武器子弹配置”索引。-1 表示保持旧默认值：子弹 arrow、威力 1、攻击速度使用 Player.attackSpeed。'
+      }), _dec17 = property(CCBoolean), _dec18 = property({
         type: [WeaponBulletConfig],
         displayName: '武器子弹配置',
         tooltip: '配置各武器的子弹威力和子弹模型。'
-      }), _dec16 = property(Node), _dec6(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), _dec19 = property(Node), _dec6(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
@@ -296,9 +308,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor11, this);
 
-          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor12, this);
+          _initializerDefineProperty(this, "staggerShotWeaponConfigIndex", _descriptor12, this);
 
-          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor13, this);
+          _initializerDefineProperty(this, "staggerShotWindowRatio", _descriptor13, this);
+
+          _initializerDefineProperty(this, "defaultWeaponConfigIndex", _descriptor14, this);
+
+          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor15, this);
+
+          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor16, this);
 
           this.shootRoleStartIndex = 0;
           this.pendingRoleSwitchType = null;
@@ -311,6 +329,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.pendingBulletPrewarmCount = 0;
           this.pendingBulletBatchWarmType = null;
           this.bulletPrewarmPerFrame = 2;
+          this.currentWeaponBulletConfigIndex = -1;
+          this.staggerShotClock = 0;
+          this.pendingStaggerShots = [];
           this.roleLayoutDirty = false;
           this.shrinkDelayTimer = -1;
           this.shrinkAnimating = false;
@@ -319,7 +340,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isLock = false;
 
           // public MoveX: number = 8;
-          _initializerDefineProperty(this, "shootList", _descriptor14, this);
+          _initializerDefineProperty(this, "shootList", _descriptor17, this);
 
           this.shootIndex = 1;
           this.attackIn = false;
@@ -333,6 +354,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.move = this.node.getComponent(_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
             error: Error()
           }), MoveDrive) : MoveDrive);
+          this.applyDefaultWeaponConfig();
           this.syncRespawnRoleCount();
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
@@ -354,10 +376,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           // } else {
           //     this.move.isMove = false;
           // }
+          this.staggerShotClock += dt;
+
           if (this.isLock) {
             this.roleAttack(dt);
           }
 
+          this.processPendingStaggerShots();
           this.processPendingRolePrewarm();
           this.processPendingBulletPrewarm();
           this.processPendingRoleSwitch();
@@ -376,6 +401,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             var shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
             var outerLayer = this.getShootingOuterLayer(shootCount);
+            var useStaggerShot = this.shouldUseStaggerShot();
             var effectPlayCount = 0;
 
             for (var i = 0; i < shootCount; i++) {
@@ -389,11 +415,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                   effectPlayCount++;
                 }
 
-                role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect); // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
+                if (useStaggerShot) {
+                  this.enqueueStaggerShot(role, i, shootCount, attackTime, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
+                } else {
+                  role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
+                } // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
                 // const animState = role.fbxManager.setAnimation(animIndex, false);
                 // const endTime = animState.duration;
                 // const animScale = endTime / attackTime;
                 // animState.speed = animScale;
+
               }
             }
 
@@ -405,6 +436,48 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           } else {
             this._attackTime -= dt;
+          }
+        }
+
+        shouldUseStaggerShot() {
+          return this.staggerShotWeaponConfigIndex >= 0 && this.currentWeaponBulletConfigIndex === Math.floor(this.staggerShotWeaponConfigIndex) && this.staggerShotWindowRatio > 0;
+        }
+
+        enqueueStaggerShot(role, shotIndex, shootCount, attackTime, visualBulletCount, damageScale, lockWorldX, playEffect) {
+          if (!role || shootCount <= 1) {
+            role == null || role.attackEvent(0, visualBulletCount, damageScale, lockWorldX, playEffect);
+            return;
+          }
+
+          var windowRatio = Math.max(0, Math.min(0.95, this.staggerShotWindowRatio));
+          var spreadTime = Math.max(0, attackTime * windowRatio);
+          var delay = spreadTime * shotIndex / Math.max(1, shootCount - 1);
+          this.pendingStaggerShots.push({
+            role,
+            fireTime: this.staggerShotClock + delay,
+            visualBulletCount,
+            damageScale,
+            lockWorldX,
+            playEffect
+          });
+        }
+
+        processPendingStaggerShots() {
+          for (var i = this.pendingStaggerShots.length - 1; i >= 0; i--) {
+            var shot = this.pendingStaggerShots[i];
+
+            if (!shot || shot.fireTime > this.staggerShotClock) {
+              continue;
+            }
+
+            this.pendingStaggerShots[i] = this.pendingStaggerShots[this.pendingStaggerShots.length - 1];
+            this.pendingStaggerShots.pop();
+
+            if (!shot.role || !shot.role.node || !shot.role.node.activeInHierarchy || shot.role.attackIN) {
+              continue;
+            }
+
+            shot.role.attackEvent(0, shot.visualBulletCount, shot.damageScale, shot.lockWorldX, shot.playEffect);
           }
         }
 
@@ -459,6 +532,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           var weaponBulletConfig = this.getWeaponBulletConfig(armwType, weaponBulletConfigIndex);
           var upgradeArmsType = (_weaponBulletConfig$a = weaponBulletConfig == null ? void 0 : weaponBulletConfig.armsType) != null ? _weaponBulletConfig$a : armwType;
+          this.pendingStaggerShots.length = 0;
+          this.currentWeaponBulletConfigIndex = weaponBulletConfig ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex) : -1;
           var shouldApplyRoleModel = false;
 
           switch (upgradeArmsType) {
@@ -466,7 +541,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).bq:
               this.applyWeaponBulletConfig(weaponBulletConfig);
-              this.attackSpeed = 4;
+              this.applyWeaponAttackSpeed(upgradeArmsType);
               shouldApplyRoleModel = true;
               break;
 
@@ -474,7 +549,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).jq:
               this.applyWeaponBulletConfig(weaponBulletConfig);
-              this.attackSpeed = 6;
+              this.applyWeaponAttackSpeed(upgradeArmsType);
               shouldApplyRoleModel = true;
               break;
 
@@ -482,7 +557,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), ArmsTypeEnum) : ArmsTypeEnum).jtl:
               this.applyWeaponBulletConfig(weaponBulletConfig);
-              this.attackSpeed = 10;
+              this.applyWeaponAttackSpeed(upgradeArmsType);
               (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
                 error: Error()
               }), TweenTool) : TweenTool).scaleShake(this.node);
@@ -500,7 +575,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), ArmsTypeEnum) : ArmsTypeEnum).jtl2:
               {
                 this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.attackSpeed = 20;
+                this.applyWeaponAttackSpeed(upgradeArmsType);
                 (_crd && TweenTool === void 0 ? (_reportPossibleCrUseOfTweenTool({
                   error: Error()
                 }), TweenTool) : TweenTool).scaleShake(this.node);
@@ -677,6 +752,36 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return (_this$weaponBulletCon = this.weaponBulletConfigList[safeIndex]) != null ? _this$weaponBulletCon : null;
         }
 
+        applyDefaultWeaponConfig() {
+          var config = this.getWeaponBulletConfigByIndex(this.defaultWeaponConfigIndex);
+
+          if (!config) {
+            this.currentWeaponBulletConfigIndex = -1;
+            return;
+          }
+
+          this.applyWeaponBulletConfig(config);
+          var armsType = config.armsType;
+          this.applyWeaponAttackSpeed(armsType);
+          var soundType = this.getSoundTypeByArms(armsType);
+
+          if (soundType !== null) {
+            (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+              error: Error()
+            }), Role) : Role).soundType = soundType;
+          }
+
+          this.currentWeaponBulletConfigIndex = this.getWeaponBulletConfigResolvedIndex(config, this.defaultWeaponConfigIndex);
+        }
+
+        getWeaponBulletConfigResolvedIndex(config, weaponBulletConfigIndex) {
+          if (weaponBulletConfigIndex >= 0) {
+            return Math.floor(weaponBulletConfigIndex);
+          }
+
+          return this.weaponBulletConfigList ? this.weaponBulletConfigList.indexOf(config) : -1;
+        }
+
         applyWeaponBulletConfig(config) {
           if (!config) {
             return;
@@ -688,6 +793,34 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
             error: Error()
           }), Role) : Role).bulletType = config.bulletType;
+        }
+
+        applyWeaponAttackSpeed(armwType) {
+          switch (armwType) {
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).bq:
+              this.attackSpeed = 4;
+              break;
+
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jq:
+              this.attackSpeed = 6;
+              break;
+
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl:
+              this.attackSpeed = 10;
+              break;
+
+            case (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+              error: Error()
+            }), ArmsTypeEnum) : ArmsTypeEnum).jtl2:
+              this.attackSpeed = 20;
+              break;
+          }
         }
 
         getSoundTypeByArms(armwType) {
@@ -1749,14 +1882,35 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 8;
         }
-      }), _descriptor12 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec14], {
+      }), _descriptor12 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWeaponConfigIndex", [_dec14], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0;
+        }
+      }), _descriptor13 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWindowRatio", [_dec15], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.85;
+        }
+      }), _descriptor14 = _applyDecoratedDescriptor(_class5.prototype, "defaultWeaponConfigIndex", [_dec16], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return -1;
+        }
+      }), _descriptor15 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec17], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return false;
         }
-      }), _descriptor13 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec15], {
+      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec18], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -1815,7 +1969,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return config;
           })()];
         }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec16], {
+      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,
