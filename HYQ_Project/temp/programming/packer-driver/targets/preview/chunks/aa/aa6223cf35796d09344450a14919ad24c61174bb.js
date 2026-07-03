@@ -2083,7 +2083,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var burstCenter = this.getOilBurstShardWorldCenter(node);
           var baseSize = this.getOilBurstShardBaseSize(node);
 
-          var _loop3 = function _loop3(i) {
+          var _loop3 = function _loop3() {
             var dir = _this3.getOilBurstShardDirection(i, burstCenter);
 
             var startRadius = baseSize * (0.04 + i % 3 * 0.02);
@@ -2091,8 +2091,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             parent.addChild(shardNode);
             shardNode.layer = node.layer;
             shardNode.setWorldPosition(burstCenter.x + dir.x * startRadius, burstCenter.y + dir.y * startRadius, burstCenter.z + dir.z * startRadius);
-            var yaw = Math.atan2(dir.x, dir.z) * 180 / Math.PI;
-            shardNode.eulerAngles = v3(-18 + dir.y * 55 + i * 11, yaw + i * 13, -42 + i * 37);
             var startScale = 0.88 + i % 3 * 0.04;
             shardNode.setScale(startScale, startScale, startScale);
             var renderer = shardNode.addComponent(MeshRenderer);
@@ -2101,12 +2099,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var material = _this3.createOilBurstShardMaterial(sourceMaterial);
 
             renderer.setSharedMaterial(material, 0);
-            var spread = baseSize * (2.7 + i % 4 * 0.42);
-            var spinSign = i % 2 === 0 ? 1 : -1;
+            var spread = baseSize * (3.15 + i % 4 * 0.5) * 1.3;
             var startPos = shardNode.position.clone();
-            var startEuler = shardNode.eulerAngles.clone();
-            var lift = baseSize * (0.56 + i % 3 * 0.16);
-            var fall = baseSize * (0.52 + i % 2 * 0.18);
+            var endScale = startScale * 0.5;
             var flightState = {
               progress: 0
             };
@@ -2117,12 +2112,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               onUpdate: state => {
                 var t = state.progress;
                 var outward = 1 - Math.pow(1 - t, 2.2);
-                var arc = Math.sin(t * Math.PI);
                 var distance = spread * outward;
-                shardNode.setPosition(startPos.x + dir.x * distance, startPos.y + dir.y * distance * 0.35 + lift * arc - fall * t * t, startPos.z + dir.z * distance);
-                shardNode.eulerAngles = v3(startEuler.x + spinSign * (360 * outward + i * 13), startEuler.y + 280 * outward + spinSign * arc * 42 + i * 17, startEuler.z + spinSign * (310 * outward + i * 11));
-                var scale = 1.04 + 0.05 * arc - t * 0.18;
+                shardNode.setPosition(startPos.x + dir.x * distance, startPos.y + dir.y * distance, startPos.z + dir.z * distance);
+                var scale = startScale + (endScale - startScale) * t;
                 shardNode.setScale(scale, scale, scale);
+
+                _this3.setOilBurstShardMaterialProgress(material, t);
               }
             }).call(() => {
               var _renderer$mesh;
@@ -2134,7 +2129,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           };
 
           for (var i = 0; i < PropArms.oilBurstShardCount; i++) {
-            _loop3(i);
+            _loop3();
           }
         }
 
@@ -2157,7 +2152,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var baseSize = Math.max(0.22, this.getOilBurstShardBaseSize(node) * 0.72);
           var maxDelay = groupIndex * PropArms.oilBurstDestroyDelayStep;
 
-          var _loop4 = function _loop4(_i6) {
+          var _loop4 = function _loop4() {
             var shard = burstRoot.children[_i6];
 
             if (!shard) {
@@ -2181,10 +2176,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var dir = _this4.getOilBurstShardDirection(_i6, burstCenter, startWorldPos);
 
             var delay = groupIndex * PropArms.oilBurstDestroyDelayStep + _i6 * 0.012;
-            var spinSign = _i6 % 2 === 0 ? 1 : -1;
-            var spread = baseSize * (1.75 + _i6 % 3 * 0.28);
-            var lift = baseSize * (0.34 + _i6 % 3 * 0.12);
-            var fall = baseSize * (0.36 + _i6 % 2 * 0.14);
+            var spread = baseSize * (2.1 + _i6 % 3 * 0.34) * 1.3;
+
+            var fadeMaterialRecords = _this4.createOilBurstShardFadeMaterialRecords(shard);
+
             maxDelay = Math.max(maxDelay, delay);
             var flightState = {
               progress: 0
@@ -2196,27 +2191,32 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               onUpdate: state => {
                 var t = state.progress;
                 var outward = 1 - Math.pow(1 - t, 2.15);
-                var arc = Math.sin(t * Math.PI);
                 var distance = spread * outward;
-                shard.setWorldPosition(startWorldPos.x + dir.x * distance, startWorldPos.y + dir.y * distance * 0.32 + lift * arc - fall * t * t, startWorldPos.z + dir.z * distance);
-                shard.eulerAngles = v3(originalEuler.x + spinSign * (260 * outward + _i6 * 9), originalEuler.y + 210 * outward + spinSign * arc * 34 + _i6 * 12, originalEuler.z + spinSign * (230 * outward + _i6 * 7));
-                var scale = 1 + 0.04 * arc - t * 0.16;
+                shard.setWorldPosition(startWorldPos.x + dir.x * distance, startWorldPos.y + dir.y * distance, startWorldPos.z + dir.z * distance);
+                var scale = 1 - 0.5 * t;
                 shard.setScale(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+
+                _this4.applyOilBurstShardFadeProgress(fadeMaterialRecords, t);
               }
             }).call(() => {
               if (!shard || !shard.isValid) {
+                _this4.restoreOilBurstShardFadeMaterials(fadeMaterialRecords);
+
                 return;
               }
 
               shard.setPosition(originalPos);
               shard.setScale(originalScale);
               shard.eulerAngles = originalEuler;
+
+              _this4.restoreOilBurstShardFadeMaterials(fadeMaterialRecords);
+
               shard.active = false;
             }).start();
           };
 
           for (var _i6 = 0; _i6 < burstRoot.children.length; _i6++) {
-            if (_loop4(_i6)) continue;
+            if (_loop4()) continue;
           }
 
           return maxDelay + PropArms.oilBurstShardDuration;
@@ -2365,20 +2365,136 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         createOilBurstShardMaterial(sourceMaterial) {
           var material = new Material();
-          material.copy(sourceMaterial);
-          var texture = this.getMaterialProperty(sourceMaterial, "mainTexture");
+          var burstTemplate = PropArms.oilBurstMaterial;
 
-          if (texture) {
-            material.setProperty("mainTexture", texture);
-          }
+          if (burstTemplate) {
+            material.copy(burstTemplate);
+            this.copyOilBurstBaseProperties(sourceMaterial, material);
+            material.setProperty("burstProgress", 0);
+            material.setProperty("burstWidth", 0.003);
+            material.setProperty("burstOffset", 0.0015);
+          } else {
+            material.copy(sourceMaterial);
+            var texture = this.getMaterialProperty(sourceMaterial, "mainTexture");
 
-          var color = this.getMaterialProperty(sourceMaterial, "mainColor");
+            if (texture) {
+              material.setProperty("mainTexture", texture);
+            }
 
-          if (color) {
-            material.setProperty("mainColor", color);
+            var color = this.getMaterialProperty(sourceMaterial, "mainColor");
+
+            if (color) {
+              material.setProperty("mainColor", color);
+            }
           }
 
           return material;
+        }
+
+        setOilBurstShardMaterialProgress(material, progress) {
+          if (!material) {
+            return;
+          }
+
+          material.setProperty("burstProgress", Math.max(0, Math.min(1, progress)));
+        }
+
+        createOilBurstShardFadeMaterialRecords(node) {
+          var burstTemplate = PropArms.oilBurstMaterial;
+
+          if (!burstTemplate) {
+            PropArms.preloadOilBurstMaterial();
+            return [];
+          }
+
+          var renderers = [];
+          this.collectMeshRenderers(node, renderers);
+          var records = [];
+
+          for (var r = 0; r < renderers.length; r++) {
+            var renderer = renderers[r];
+
+            if (!(renderer != null && renderer.isValid)) {
+              continue;
+            }
+
+            var originalMaterials = [...renderer.sharedMaterials];
+            var runtimeMaterials = [];
+            var hasRuntimeMaterial = false;
+
+            for (var i = 0; i < originalMaterials.length; i++) {
+              var original = originalMaterials[i];
+
+              if (!original) {
+                runtimeMaterials[i] = null;
+                continue;
+              }
+
+              var runtimeMaterial = new Material();
+              runtimeMaterial.copy(burstTemplate);
+              this.copyOilBurstBaseProperties(original, runtimeMaterial);
+              runtimeMaterial.setProperty("burstProgress", 0);
+              runtimeMaterial.setProperty("burstWidth", 0.003);
+              runtimeMaterial.setProperty("burstOffset", 0.0015);
+              runtimeMaterials[i] = runtimeMaterial;
+              renderer.setSharedMaterial(runtimeMaterial, i);
+              hasRuntimeMaterial = true;
+            }
+
+            if (hasRuntimeMaterial) {
+              records.push({
+                renderer,
+                originalMaterials,
+                runtimeMaterials
+              });
+            }
+          }
+
+          return records;
+        }
+
+        applyOilBurstShardFadeProgress(records, progress) {
+          var clampedProgress = Math.max(0, Math.min(1, progress));
+
+          for (var r = 0; r < records.length; r++) {
+            var _record$renderer;
+
+            var record = records[r];
+
+            if (!((_record$renderer = record.renderer) != null && _record$renderer.isValid)) {
+              continue;
+            }
+
+            for (var i = 0; i < record.runtimeMaterials.length; i++) {
+              var material = record.runtimeMaterials[i];
+
+              if (!material) {
+                continue;
+              }
+
+              material.setProperty("burstProgress", clampedProgress);
+            }
+          }
+        }
+
+        restoreOilBurstShardFadeMaterials(records) {
+          for (var r = 0; r < records.length; r++) {
+            var _record$renderer2;
+
+            var record = records[r];
+
+            if ((_record$renderer2 = record.renderer) != null && _record$renderer2.isValid) {
+              for (var i = 0; i < record.originalMaterials.length; i++) {
+                record.renderer.setSharedMaterial(record.originalMaterials[i], i);
+              }
+            }
+
+            for (var _i8 = 0; _i8 < record.runtimeMaterials.length; _i8++) {
+              var _record$runtimeMateri;
+
+              (_record$runtimeMateri = record.runtimeMaterials[_i8]) == null || _record$runtimeMateri.destroy();
+            }
+          }
         }
 
         getOilBurstShardBaseSize(node) {
@@ -2549,14 +2665,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             indices.push(start + 2, start + 1, start, start + 3, start + 1, start + 2);
           };
 
-          for (var _i8 = 0; _i8 < segmentCount; _i8++) {
-            var uStart = u0 + (u1 - u0) * (_i8 / segmentCount);
-            var uEnd = u0 + (u1 - u0) * ((_i8 + 1) / segmentCount);
+          for (var _i9 = 0; _i9 < segmentCount; _i9++) {
+            var uStart = u0 + (u1 - u0) * (_i9 / segmentCount);
+            var uEnd = u0 + (u1 - u0) * ((_i9 + 1) / segmentCount);
             var mainUvs = [uStart, v1, uEnd, v1, uStart, v0, uEnd, v0];
-            pushFace(outerBottom[_i8], outerBottom[_i8 + 1], outerTop[_i8], outerTop[_i8 + 1], mainUvs);
-            pushFace(innerBottom[_i8 + 1], innerBottom[_i8], innerTop[_i8 + 1], innerTop[_i8], mainUvs);
-            pushFace(outerTop[_i8], outerTop[_i8 + 1], innerTop[_i8], innerTop[_i8 + 1], sideUvs);
-            pushFace(innerBottom[_i8], innerBottom[_i8 + 1], outerBottom[_i8], outerBottom[_i8 + 1], sideUvs);
+            pushFace(outerBottom[_i9], outerBottom[_i9 + 1], outerTop[_i9], outerTop[_i9 + 1], mainUvs);
+            pushFace(innerBottom[_i9 + 1], innerBottom[_i9], innerTop[_i9 + 1], innerTop[_i9], mainUvs);
+            pushFace(outerTop[_i9], outerTop[_i9 + 1], innerTop[_i9], innerTop[_i9 + 1], sideUvs);
+            pushFace(innerBottom[_i9], innerBottom[_i9 + 1], outerBottom[_i9], outerBottom[_i9 + 1], sideUvs);
           }
 
           pushFace(outerBottom[0], innerBottom[0], outerTop[0], innerTop[0], sideUvs);
@@ -2811,21 +2927,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var template = segmentNodes[0];
             var basePos = template.position;
 
-            for (var _i9 = segmentNodes.length; _i9 < desiredCount; _i9++) {
+            for (var _i10 = segmentNodes.length; _i10 < desiredCount; _i10++) {
               var node = instantiate(template);
-              node.name = template.name + "_" + _i9;
+              node.name = template.name + "_" + _i10;
               this.lalianNode.addChild(node);
-              node.setPosition(basePos.x, basePos.y, basePos.z + this.lalianNodeSpacingZ * _i9);
+              node.setPosition(basePos.x, basePos.y, basePos.z + this.lalianNodeSpacingZ * _i10);
               segmentNodes.push(node);
             }
           }
 
-          for (var _i10 = 0; _i10 < segmentNodes.length; _i10++) {
-            segmentNodes[_i10].active = _i10 < desiredCount;
+          for (var _i11 = 0; _i11 < segmentNodes.length; _i11++) {
+            segmentNodes[_i11].active = _i11 < desiredCount;
           }
 
-          for (var _i11 = 0; _i11 < desiredCount && _i11 < segmentNodes.length; _i11++) {
-            var _child = segmentNodes[_i11];
+          for (var _i12 = 0; _i12 < desiredCount && _i12 < segmentNodes.length; _i12++) {
+            var _child = segmentNodes[_i12];
             this.lalianSegments.push(_child);
             var startPosList = [];
 
@@ -3106,14 +3222,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return 1.22;
+          return 1.16;
         }
       }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "weaponHitScaleDown", [_dec23], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return 0.86;
+          return 0.9;
         }
       }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "wallNode", [_dec24], {
         configurable: true,

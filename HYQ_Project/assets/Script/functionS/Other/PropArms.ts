@@ -36,6 +36,12 @@ type OilHitFlashMaterialRecord = {
     flashMaterials: (Material | null)[];
 };
 
+type OilBurstShardFadeMaterialRecord = {
+    renderer: MeshRenderer;
+    originalMaterials: (Material | null)[];
+    runtimeMaterials: (Material | null)[];
+};
+
 type WeaponVisualHitPulseState = {
     elapsed: number;
     duration: number;
@@ -242,10 +248,10 @@ export class PropArms extends BattleTarget3D {
     public animScale: number = 1;
 
     @property({ type: CCFloat, displayName: '武器图片受击放大倍率', tooltip: '油桶受击时 weapon 图片先放大的倍率。' })
-    public weaponHitScaleUp: number = 1.22;
+    public weaponHitScaleUp: number = 1.16;
 
     @property({ type: CCFloat, displayName: '武器图片受击压缩倍率', tooltip: '油桶受击时 weapon 图片回弹压缩的倍率。' })
-    public weaponHitScaleDown: number = 0.86;
+    public weaponHitScaleDown: number = 0.9;
 
     @property({ type: Node, displayName: '石板/承载节点', tooltip: '武器下方跟随抬升、死亡后下砸的承载节点。没有该节点时只触发武器完成事件。' })
     public wallNode: Node;
@@ -1485,12 +1491,6 @@ export class PropArms extends BattleTarget3D {
                 burstCenter.y + dir.y * startRadius,
                 burstCenter.z + dir.z * startRadius
             );
-            const yaw = Math.atan2(dir.x, dir.z) * 180 / Math.PI;
-            shardNode.eulerAngles = v3(
-                -18 + dir.y * 55 + i * 11,
-                yaw + i * 13,
-                -42 + i * 37
-            );
             const startScale = 0.88 + (i % 3) * 0.04;
             shardNode.setScale(startScale, startScale, startScale);
 
@@ -1499,12 +1499,9 @@ export class PropArms extends BattleTarget3D {
             const material = this.createOilBurstShardMaterial(sourceMaterial);
             renderer.setSharedMaterial(material, 0);
 
-            const spread = baseSize * (2.7 + (i % 4) * 0.42);
-            const spinSign = i % 2 === 0 ? 1 : -1;
+            const spread = baseSize * (3.15 + (i % 4) * 0.5) * 1.3;
             const startPos = shardNode.position.clone();
-            const startEuler = shardNode.eulerAngles.clone();
-            const lift = baseSize * (0.56 + (i % 3) * 0.16);
-            const fall = baseSize * (0.52 + (i % 2) * 0.18);
+            const endScale = startScale * 0.5;
             const flightState = { progress: 0 };
             tween(flightState)
                 .delay(groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.012)
@@ -1513,20 +1510,15 @@ export class PropArms extends BattleTarget3D {
                     onUpdate: (state: { progress: number }) => {
                         const t = state.progress;
                         const outward = 1 - Math.pow(1 - t, 2.2);
-                        const arc = Math.sin(t * Math.PI);
                         const distance = spread * outward;
                         shardNode.setPosition(
                             startPos.x + dir.x * distance,
-                            startPos.y + dir.y * distance * 0.35 + lift * arc - fall * t * t,
+                            startPos.y + dir.y * distance,
                             startPos.z + dir.z * distance
                         );
-                        shardNode.eulerAngles = v3(
-                            startEuler.x + spinSign * (360 * outward + i * 13),
-                            startEuler.y + 280 * outward + spinSign * arc * 42 + i * 17,
-                            startEuler.z + spinSign * (310 * outward + i * 11)
-                        );
-                        const scale = 1.04 + 0.05 * arc - t * 0.18;
+                        const scale = startScale + (endScale - startScale) * t;
                         shardNode.setScale(scale, scale, scale);
+                        this.setOilBurstShardMaterialProgress(material, t);
                     }
                 })
                 .call(() => {
@@ -1571,10 +1563,8 @@ export class PropArms extends BattleTarget3D {
             const startWorldPos = shard.worldPosition.clone();
             const dir = this.getOilBurstShardDirection(i, burstCenter, startWorldPos);
             const delay = groupIndex * PropArms.oilBurstDestroyDelayStep + i * 0.012;
-            const spinSign = i % 2 === 0 ? 1 : -1;
-            const spread = baseSize * (1.75 + (i % 3) * 0.28);
-            const lift = baseSize * (0.34 + (i % 3) * 0.12);
-            const fall = baseSize * (0.36 + (i % 2) * 0.14);
+            const spread = baseSize * (2.1 + (i % 3) * 0.34) * 1.3;
+            const fadeMaterialRecords = this.createOilBurstShardFadeMaterialRecords(shard);
             maxDelay = Math.max(maxDelay, delay);
 
             const flightState = { progress: 0 };
@@ -1585,33 +1575,30 @@ export class PropArms extends BattleTarget3D {
                     onUpdate: (state: { progress: number }) => {
                         const t = state.progress;
                         const outward = 1 - Math.pow(1 - t, 2.15);
-                        const arc = Math.sin(t * Math.PI);
                         const distance = spread * outward;
                         shard.setWorldPosition(
                             startWorldPos.x + dir.x * distance,
-                            startWorldPos.y + dir.y * distance * 0.32 + lift * arc - fall * t * t,
+                            startWorldPos.y + dir.y * distance,
                             startWorldPos.z + dir.z * distance,
                         );
-                        shard.eulerAngles = v3(
-                            originalEuler.x + spinSign * (260 * outward + i * 9),
-                            originalEuler.y + 210 * outward + spinSign * arc * 34 + i * 12,
-                            originalEuler.z + spinSign * (230 * outward + i * 7),
-                        );
-                        const scale = 1 + 0.04 * arc - t * 0.16;
+                        const scale = 1 - 0.5 * t;
                         shard.setScale(
                             originalScale.x * scale,
                             originalScale.y * scale,
                             originalScale.z * scale,
                         );
+                        this.applyOilBurstShardFadeProgress(fadeMaterialRecords, t);
                     }
                 })
                 .call(() => {
                     if (!shard || !shard.isValid) {
+                        this.restoreOilBurstShardFadeMaterials(fadeMaterialRecords);
                         return;
                     }
                     shard.setPosition(originalPos);
                     shard.setScale(originalScale);
                     shard.eulerAngles = originalEuler;
+                    this.restoreOilBurstShardFadeMaterials(fadeMaterialRecords);
                     shard.active = false;
                 })
                 .start();
@@ -1742,16 +1729,103 @@ export class PropArms extends BattleTarget3D {
 
     private createOilBurstShardMaterial(sourceMaterial: Material): Material {
         const material = new Material();
-        material.copy(sourceMaterial);
-        const texture = this.getMaterialProperty(sourceMaterial, "mainTexture");
-        if (texture) {
-            material.setProperty("mainTexture", texture);
-        }
-        const color = this.getMaterialProperty(sourceMaterial, "mainColor");
-        if (color) {
-            material.setProperty("mainColor", color);
+        const burstTemplate = PropArms.oilBurstMaterial;
+        if (burstTemplate) {
+            material.copy(burstTemplate);
+            this.copyOilBurstBaseProperties(sourceMaterial, material);
+            material.setProperty("burstProgress", 0);
+            material.setProperty("burstWidth", 0.003);
+            material.setProperty("burstOffset", 0.0015);
+        } else {
+            material.copy(sourceMaterial);
+            const texture = this.getMaterialProperty(sourceMaterial, "mainTexture");
+            if (texture) {
+                material.setProperty("mainTexture", texture);
+            }
+            const color = this.getMaterialProperty(sourceMaterial, "mainColor");
+            if (color) {
+                material.setProperty("mainColor", color);
+            }
         }
         return material;
+    }
+
+    private setOilBurstShardMaterialProgress(material: Material | null, progress: number): void {
+        if (!material) {
+            return;
+        }
+        material.setProperty("burstProgress", Math.max(0, Math.min(1, progress)));
+    }
+
+    private createOilBurstShardFadeMaterialRecords(node: Node): OilBurstShardFadeMaterialRecord[] {
+        const burstTemplate = PropArms.oilBurstMaterial;
+        if (!burstTemplate) {
+            PropArms.preloadOilBurstMaterial();
+            return [];
+        }
+        const renderers: MeshRenderer[] = [];
+        this.collectMeshRenderers(node, renderers);
+        const records: OilBurstShardFadeMaterialRecord[] = [];
+        for (let r = 0; r < renderers.length; r++) {
+            const renderer = renderers[r];
+            if (!renderer?.isValid) {
+                continue;
+            }
+            const originalMaterials = [...renderer.sharedMaterials];
+            const runtimeMaterials: (Material | null)[] = [];
+            let hasRuntimeMaterial = false;
+            for (let i = 0; i < originalMaterials.length; i++) {
+                const original = originalMaterials[i];
+                if (!original) {
+                    runtimeMaterials[i] = null;
+                    continue;
+                }
+                const runtimeMaterial = new Material();
+                runtimeMaterial.copy(burstTemplate);
+                this.copyOilBurstBaseProperties(original, runtimeMaterial);
+                runtimeMaterial.setProperty("burstProgress", 0);
+                runtimeMaterial.setProperty("burstWidth", 0.003);
+                runtimeMaterial.setProperty("burstOffset", 0.0015);
+                runtimeMaterials[i] = runtimeMaterial;
+                renderer.setSharedMaterial(runtimeMaterial, i);
+                hasRuntimeMaterial = true;
+            }
+            if (hasRuntimeMaterial) {
+                records.push({ renderer, originalMaterials, runtimeMaterials });
+            }
+        }
+        return records;
+    }
+
+    private applyOilBurstShardFadeProgress(records: OilBurstShardFadeMaterialRecord[], progress: number): void {
+        const clampedProgress = Math.max(0, Math.min(1, progress));
+        for (let r = 0; r < records.length; r++) {
+            const record = records[r];
+            if (!record.renderer?.isValid) {
+                continue;
+            }
+            for (let i = 0; i < record.runtimeMaterials.length; i++) {
+                const material = record.runtimeMaterials[i];
+                if (!material) {
+                    continue;
+                }
+                material.setProperty("burstProgress", clampedProgress);
+            }
+        }
+    }
+
+    private restoreOilBurstShardFadeMaterials(records: OilBurstShardFadeMaterialRecord[]): void {
+        for (let r = 0; r < records.length; r++) {
+            const record = records[r];
+            if (record.renderer?.isValid) {
+                for (let i = 0; i < record.originalMaterials.length; i++) {
+                    record.renderer.setSharedMaterial(record.originalMaterials[i], i);
+                }
+            }
+            for (let i = 0; i < record.runtimeMaterials.length; i++) {
+                record.runtimeMaterials[i]?.destroy();
+            }
+        }
     }
 
     private getOilBurstShardBaseSize(node: Node): number {
