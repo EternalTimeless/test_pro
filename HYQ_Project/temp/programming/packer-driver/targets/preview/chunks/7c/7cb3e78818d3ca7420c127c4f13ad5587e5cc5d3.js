@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16", "__unresolved_17", "__unresolved_18"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, director, instantiate, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, Role, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, BulletMonsterCollisionManager, PropLalianGate, FbxManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _dec8, _dec9, _class4, _class5, _descriptor7, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _class7, _class8, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, director, instantiate, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, Role, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, BulletMonsterCollisionManager, PropLalianGate, FbxManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _dec10, _dec11, _class4, _class5, _descriptor9, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _class7, _class8, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -164,14 +164,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           error: Error()
         }), MonsterType) : MonsterType
       }), _dec4 = property(CCInteger), _dec5 = property({
+        type: CCInteger,
+        displayName: '实际生成数量(0=默认)',
+        tooltip: '这一波实际生成的怪物数量。填 0 时沿用“每行生成的怪物数量”。'
+      }), _dec6 = property({
+        type: CCInteger,
+        displayName: 'Z范围基准数量(0=默认)',
+        tooltip: '这一波用于计算 Z 轴铺开范围的基准数量。大于实际生成数量时，怪物会在同样 Z 范围内变得更稀疏。'
+      }), _dec7 = property({
         type: CCFloat,
         displayName: '怪物生命(0=默认)',
         tooltip: '该配置生成的怪物生命值。填 0 时使用怪物预制体默认生命和原有难度倍率。'
-      }), _dec6 = property({
+      }), _dec8 = property({
         type: CCFloat,
         displayName: '难度倍率(0=默认)',
         tooltip: '该配置生成的怪物难度倍率。填 0 时使用原有默认倍率。怪物生命大于 0 时，优先使用固定生命。'
-      }), _dec7 = property(CCInteger), _dec(_class = (_class2 = class MonsterCreateInfo {
+      }), _dec9 = property(CCInteger), _dec(_class = (_class2 = class MonsterCreateInfo {
         constructor() {
           _initializerDefineProperty(this, "loopMax", _descriptor, this);
 
@@ -179,11 +187,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "monsterCountMax", _descriptor3, this);
 
-          _initializerDefineProperty(this, "monsterHp", _descriptor4, this);
+          _initializerDefineProperty(this, "actualSpawnCount", _descriptor4, this);
 
-          _initializerDefineProperty(this, "difficulty", _descriptor5, this);
+          _initializerDefineProperty(this, "zRangeCountBase", _descriptor5, this);
 
-          _initializerDefineProperty(this, "brotherExcludeZ", _descriptor6, this);
+          _initializerDefineProperty(this, "monsterHp", _descriptor6, this);
+
+          _initializerDefineProperty(this, "difficulty", _descriptor7, this);
+
+          _initializerDefineProperty(this, "brotherExcludeZ", _descriptor8, this);
 
           this.curMonsterCount = 0;
           this.curLoopCount = 0;
@@ -217,21 +229,35 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 50;
         }
-      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "monsterHp", [_dec5], {
+      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "actualSpawnCount", [_dec5], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "difficulty", [_dec6], {
+      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "zRangeCountBase", [_dec6], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "brotherExcludeZ", [_dec7], {
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "monsterHp", [_dec7], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0;
+        }
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "difficulty", [_dec8], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0;
+        }
+      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "brotherExcludeZ", [_dec9], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -239,14 +265,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return 0;
         }
       })), _class2)) || _class);
-      MonsterCreateQueue = (_dec8 = ccclass("MonsterCreateQueue"), _dec9 = property(MonsterCreateInfo), _dec8(_class4 = (_class5 = class MonsterCreateQueue {
+      MonsterCreateQueue = (_dec10 = ccclass("MonsterCreateQueue"), _dec11 = property(MonsterCreateInfo), _dec10(_class4 = (_class5 = class MonsterCreateQueue {
         constructor() {
           this.curIndex = 0;
 
-          _initializerDefineProperty(this, "monsterCreateInfoList", _descriptor7, this);
+          _initializerDefineProperty(this, "monsterCreateInfoList", _descriptor9, this);
         }
 
-      }, (_descriptor7 = _applyDecoratedDescriptor(_class5.prototype, "monsterCreateInfoList", [_dec9], {
+      }, (_descriptor9 = _applyDecoratedDescriptor(_class5.prototype, "monsterCreateInfoList", [_dec11], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -255,103 +281,107 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
       })), _class5)) || _class4);
 
-      _export("MonsterCreate", MonsterCreate = (_dec10 = ccclass('MonsterCreate'), _dec11 = property({
+      _export("MonsterCreate", MonsterCreate = (_dec12 = ccclass('MonsterCreate'), _dec13 = property({
         type: CCInteger,
         tooltip: '场景中最大怪物数量'
-      }), _dec12 = property({
+      }), _dec14 = property({
         type: CCInteger,
         tooltip: '补充阶段每帧最大生成数，防止大量死怪时瞬间补怪掉帧'
-      }), _dec13 = property(MonsterCreateQueue), _dec14 = property({
+      }), _dec15 = property(MonsterCreateQueue), _dec16 = property({
         tooltip: 'ZombieBrother前后Z轴排斥范围，该范围内不能生成ZombieBaby'
-      }), _dec15 = property({
+      }), _dec17 = property({
         displayName: '生成横向散布半宽(非限位)',
         tooltip: '只控制怪物生成队列的左右散布宽度，不决定是否允许进入左右奖励区。'
-      }), _dec16 = property(CCFloat), _dec17 = property({
+      }), _dec18 = property(CCFloat), _dec19 = property({
         type: CCFloat,
         displayName: '红框中路限位半宽',
         tooltip: '怪物在红框/非蓝框区域会被限制在 -该值 到 +该值 之间，左右两边同步生效。'
-      }), _dec18 = property({
-        tooltip: '每行生成的怪物数量'
-      }), _dec19 = property({
-        tooltip: '怪物Z轴每层间距'
       }), _dec20 = property({
+        tooltip: '每行生成的怪物数量'
+      }), _dec21 = property({
+        tooltip: '怪物Z轴每层间距'
+      }), _dec22 = property({
         type: CCFloat,
         displayName: '出生X随机扰动',
         tooltip: '怪物出生时在当前列位置基础上额外随机偏移，减少队列感。'
-      }), _dec21 = property({
+      }), _dec23 = property({
         type: CCFloat,
         displayName: '出生Z随机扰动',
         tooltip: '怪物出生时在当前层位置基础上额外随机前后偏移，减少横排整齐感。'
-      }), _dec22 = property({
+      }), _dec24 = property({
         type: CCFloat,
         displayName: '出生缩放随机',
         tooltip: '怪物出生时随机缩放幅度，0.08 表示 0.92-1.08。'
-      }), _dec23 = property({
+      }), _dec25 = property({
         type: CCFloat,
         displayName: '出生朝向随机',
         tooltip: '怪物出生时 Y 轴随机旋转角度，轻微打散朝向。'
-      }), _dec24 = property({
+      }), _dec26 = property({
         type: Vec3,
         displayName: '怪物出生整体偏移',
         tooltip: '整体调整怪物初始生成位置，主要调 Z 可前后移动到指定红线位置。'
-      }), _dec25 = property({
+      }), _dec27 = property({
         type: CCFloat,
         displayName: '怪物死亡抛起基础高度',
         tooltip: '怪物被击飞死亡时的基础抛起高度，数值越大飞得越高。'
-      }), _dec26 = property({
+      }), _dec28 = property({
         type: CCFloat,
         displayName: '怪物死亡抛起随机高度',
         tooltip: '怪物被击飞死亡时额外随机增加的抛起高度，0 表示不随机。'
-      }), _dec27 = property({
+      }), _dec29 = property({
         type: CCInteger,
         displayName: '油桶大波次数量',
         tooltip: '兼容旧配置：当“油桶对应波次索引”为空时，使用这里的数量从第 0 波开始顺序生成油桶。'
-      }), _dec28 = property({
+      }), _dec30 = property({
         type: [CCInteger],
         displayName: '油桶对应波次索引',
         tooltip: '数组内每一项生成一个油桶，并对应一个怪物波次；例如 [0, 2] 表示只生成两个油桶。0 表示第 0 波。'
-      }), _dec10(_class7 = (_class8 = (_class9 = class MonsterCreate extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), _dec31 = property({
+        type: CCFloat,
+        displayName: '油桶怪物预留间距',
+        tooltip: '创建怪物和初始化油桶时，油桶碰撞盒与怪物碰撞盒之间额外保留的 Z 轴距离。数值越大越不容易视觉穿模。'
+      }), _dec12(_class7 = (_class8 = (_class9 = class MonsterCreate extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
           super(...arguments);
 
-          _initializerDefineProperty(this, "monsterCount", _descriptor8, this);
+          _initializerDefineProperty(this, "monsterCount", _descriptor10, this);
 
-          _initializerDefineProperty(this, "maxSpawnPerFrame", _descriptor9, this);
+          _initializerDefineProperty(this, "maxSpawnPerFrame", _descriptor11, this);
 
-          _initializerDefineProperty(this, "monsterCreateQueue", _descriptor10, this);
+          _initializerDefineProperty(this, "monsterCreateQueue", _descriptor12, this);
 
-          _initializerDefineProperty(this, "brotherExcludeZ", _descriptor11, this);
+          _initializerDefineProperty(this, "brotherExcludeZ", _descriptor13, this);
 
-          _initializerDefineProperty(this, "disX", _descriptor12, this);
+          _initializerDefineProperty(this, "disX", _descriptor14, this);
 
-          _initializerDefineProperty(this, "monsterSpeed", _descriptor13, this);
+          _initializerDefineProperty(this, "monsterSpeed", _descriptor15, this);
 
-          _initializerDefineProperty(this, "middleLaneHalfX", _descriptor14, this);
+          _initializerDefineProperty(this, "middleLaneHalfX", _descriptor16, this);
 
           /** 每列间距，由 disX*2/rowCount 计算得出 */
           this.offX = 0;
 
-          _initializerDefineProperty(this, "rowCount", _descriptor15, this);
+          _initializerDefineProperty(this, "rowCount", _descriptor17, this);
 
           this._rowCount = 0;
 
-          _initializerDefineProperty(this, "layerGapZ", _descriptor16, this);
+          _initializerDefineProperty(this, "layerGapZ", _descriptor18, this);
 
-          _initializerDefineProperty(this, "spawnRandomX", _descriptor17, this);
+          _initializerDefineProperty(this, "spawnRandomX", _descriptor19, this);
 
-          _initializerDefineProperty(this, "spawnRandomZ", _descriptor18, this);
+          _initializerDefineProperty(this, "spawnRandomZ", _descriptor20, this);
 
-          _initializerDefineProperty(this, "spawnScaleRandom", _descriptor19, this);
+          _initializerDefineProperty(this, "spawnScaleRandom", _descriptor21, this);
 
-          _initializerDefineProperty(this, "spawnYawRandom", _descriptor20, this);
+          _initializerDefineProperty(this, "spawnYawRandom", _descriptor22, this);
 
-          _initializerDefineProperty(this, "spawnPositionOffset", _descriptor21, this);
+          _initializerDefineProperty(this, "spawnPositionOffset", _descriptor23, this);
 
-          _initializerDefineProperty(this, "monsterDeathThrowBaseHeight", _descriptor22, this);
+          _initializerDefineProperty(this, "monsterDeathThrowBaseHeight", _descriptor24, this);
 
-          _initializerDefineProperty(this, "monsterDeathThrowRandomHeight", _descriptor23, this);
+          _initializerDefineProperty(this, "monsterDeathThrowRandomHeight", _descriptor25, this);
 
           this._monsterList = [];
           this.posIndex = 0;
@@ -368,15 +398,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._hasInitialFilled = false;
           this._spawnAllWavesOnStart = true;
 
-          _initializerDefineProperty(this, "waveRoleCount", _descriptor24, this);
+          _initializerDefineProperty(this, "waveRoleCount", _descriptor26, this);
 
-          _initializerDefineProperty(this, "waveRoleStageIndexList", _descriptor25, this);
+          _initializerDefineProperty(this, "waveRoleStageIndexList", _descriptor27, this);
 
           this._waveRoleNodes = [];
           this._waveStageStartZList = [];
           this._waveStageIndexList = [];
           this._monsterWaveIndexMap = new WeakMap();
-          this.waveRolePushGapInternal = 0.02;
+
+          _initializerDefineProperty(this, "waveRoleMonsterGap", _descriptor28, this);
+
           this.waveRolePlayerHalfX = 0.35;
           this.waveRolePlayerHalfZ = 0.35;
           this._isRestoringWaveRolesAfterRebirth = false;
@@ -406,6 +438,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.spawnAllWavesAtStart(); // this.scheduleOnce(() => {
           //     this.skillXRMonster(2, 2, 2);
           // }, 2);
+        }
+
+        get waveRolePushGap() {
+          return Math.max(0, this.waveRoleMonsterGap);
         }
 
         prepareWaveRoles() {
@@ -845,7 +881,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          var targetCenterZ = this.node.worldPositionZ + stageStartZ - this.getWaveRoleCollisionHalfZ(role) - this.waveRolePushGapInternal;
+          var targetCenterZ = this.node.worldPositionZ + stageStartZ - this.getWaveRoleCollisionHalfZ(role) - this.waveRolePushGap;
           this.setCollisionCenterWorldZ(role, targetCenterZ);
         }
 
@@ -865,7 +901,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
             var monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
             var monsterCenterZ = frontMonster.getCollisionWorldPosition(tempV3).z;
-            var targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGapInternal - roleHalfZ;
+            var targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGap - roleHalfZ;
             this.setCollisionCenterWorldZ(role, targetCenterZ);
             this.clampMonstersBehindWaveRole(i);
           }
@@ -933,15 +969,44 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               var _stageToBigWaveList$M;
 
               var waveIndex = (_stageToBigWaveList$M = stageToBigWaveList[Math.min(stageCursor, stageToBigWaveList.length - 1)]) != null ? _stageToBigWaveList$M : 0;
+              var spawnCount = this.getQuestSpawnCount(quest);
+              var rangeCount = this.getQuestRangeCount(quest);
 
-              for (var count = 0; count < quest.monsterCountMax; count++) {
-                if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
-                  error: Error()
-                }), MonsterType) : MonsterType).ZombieBrother) {
-                  this.spawnBrother(quest, waveIndex);
-                } else {
-                  this.spawnBaby(quest, waveIndex);
+              if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+                error: Error()
+              }), MonsterType) : MonsterType).ZombieBrother || spawnCount >= rangeCount) {
+                for (var count = 0; count < spawnCount; count++) {
+                  if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+                    error: Error()
+                  }), MonsterType) : MonsterType).ZombieBrother) {
+                    this.spawnBrother(quest, waveIndex);
+                  } else {
+                    this.spawnBaby(quest, waveIndex);
+                  }
                 }
+              } else {
+                var spawnSlotSet = this.buildSparseWaveSpawnSlotSet(spawnCount, rangeCount);
+                var cursorNextSpawnZ = this._nextSpawnZ;
+                var cursorRowCount = this._rowCount;
+                var cursorPosIndex = this.posIndex;
+
+                for (var slot = 0; slot < rangeCount; slot++) {
+                  if (spawnSlotSet.has(slot)) {
+                    cursorNextSpawnZ = this.spawnBabyAtCursor(quest, waveIndex, cursorNextSpawnZ, cursorPosIndex);
+                  }
+
+                  cursorPosIndex = (cursorPosIndex + 1) % this.rowCount;
+                  cursorRowCount++;
+
+                  if (cursorRowCount == this.rowCount) {
+                    cursorNextSpawnZ += this.layerGapZ;
+                    cursorRowCount = 0;
+                  }
+                }
+
+                this._nextSpawnZ = cursorNextSpawnZ;
+                this._rowCount = cursorRowCount;
+                this.posIndex = cursorPosIndex;
               }
 
               this._nextSpawnZ += quest.brotherExcludeZ;
@@ -963,7 +1028,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             if (this._monsterList.length < this.monsterCount) {
               var quest = this.monsterCreateQueue.monsterCreateInfoList[this.monsterCreateQueue.curIndex];
-              var monsterCount = quest.monsterCountMax - quest.curMonsterCount;
+              var questSpawnCount = this.getQuestSpawnCount(quest);
+              var monsterCount = questSpawnCount - quest.curMonsterCount;
               var count = this.monsterCount - monsterCount + this._monsterList.length;
 
               if (count >= 0) {
@@ -990,7 +1056,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
               quest.curMonsterCount += count;
 
-              if (quest.curMonsterCount == quest.monsterCountMax) {
+              if (quest.curMonsterCount == questSpawnCount) {
                 (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
                   error: Error()
                 }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
@@ -1198,12 +1264,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var monsterCenterX = monsterCenter.x;
           var monsterCenterZ = monsterCenter.z;
 
-          if (Math.abs(monsterCenterX - roleCenterX) > roleHalfX + monsterHalfX + this.waveRolePushGapInternal) {
+          if (Math.abs(monsterCenterX - roleCenterX) > roleHalfX + monsterHalfX + this.waveRolePushGap) {
             return;
           }
 
-          var roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGapInternal;
-          var roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGapInternal;
+          var roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGap;
+          var roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGap;
           var monsterMinZ = monsterCenterZ - monsterHalfZ;
           var monsterMaxZ = monsterCenterZ + monsterHalfZ;
 
@@ -1211,7 +1277,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          var limitCenterZ = roleCenterZ + roleHalfZ + monsterHalfZ + this.waveRolePushGapInternal;
+          var limitCenterZ = roleCenterZ + roleHalfZ + monsterHalfZ + this.waveRolePushGap;
           this.setCollisionCenterWorldZ(monster, limitCenterZ);
         }
 
@@ -1335,6 +1401,89 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return resultZ;
         }
 
+        getQuestSpawnCount(quest) {
+          var _quest$monsterCountMa, _quest$actualSpawnCou;
+
+          var defaultCount = Math.max(0, Math.floor((_quest$monsterCountMa = quest == null ? void 0 : quest.monsterCountMax) != null ? _quest$monsterCountMa : 0));
+          var actualCount = Math.max(0, Math.floor((_quest$actualSpawnCou = quest == null ? void 0 : quest.actualSpawnCount) != null ? _quest$actualSpawnCou : 0));
+          return actualCount > 0 ? actualCount : defaultCount;
+        }
+
+        getQuestRangeCount(quest) {
+          var _quest$zRangeCountBas;
+
+          var spawnCount = this.getQuestSpawnCount(quest);
+          var rangeCount = Math.max(0, Math.floor((_quest$zRangeCountBas = quest == null ? void 0 : quest.zRangeCountBase) != null ? _quest$zRangeCountBas : 0));
+          return Math.max(spawnCount, rangeCount > 0 ? rangeCount : spawnCount);
+        }
+
+        buildSparseWaveSpawnSlotSet(spawnCount, rangeCount) {
+          var slotSet = new Set();
+
+          if (spawnCount <= 0 || rangeCount <= 0) {
+            return slotSet;
+          }
+
+          if (spawnCount >= rangeCount) {
+            for (var i = 0; i < rangeCount; i++) {
+              slotSet.add(i);
+            }
+
+            return slotSet;
+          }
+
+          if (spawnCount === 1) {
+            slotSet.add(0);
+            return slotSet;
+          }
+
+          for (var _i7 = 0; _i7 < spawnCount; _i7++) {
+            var slotIndex = Math.round(_i7 * (rangeCount - 1) / (spawnCount - 1));
+            slotSet.add(Math.min(rangeCount - 1, Math.max(0, slotIndex)));
+          }
+
+          return slotSet;
+        }
+
+        spawnBabyAtCursor(quest, waveIndex, baseNextSpawnZ, basePosIndex) {
+          var type = this.getQuestBabyType(quest);
+          var monsterIns = this.monsterMatIns[type];
+          var monster = this.getMonster(type);
+
+          this._monsterList.push(monster);
+
+          this.node.addChild(monster.node);
+
+          if (!monsterIns) {
+            this.monsterMatIns[type] = 1;
+            monster.flashDie(0.01);
+          }
+
+          var rawZ = baseNextSpawnZ + (Math.random() - 0.5) * (this.layerGapZ + this.spawnRandomZ * 2);
+          var z = this.getWaveRoleLimitedSpawnZ(rawZ, monster);
+          var rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + (basePosIndex - (this.rowCount - 1) / 2) * this.offX;
+          var worldZ = this.getSpawnWorldZ(z);
+          var spawnX = this.getSpawnX(rawX);
+          var x = this.shouldLimitMonsterXAtZ(worldZ) ? this.clampMonsterX(spawnX) : spawnX;
+          monster.initX = spawnX;
+          monster.init(this.getQuestDifficulty(quest, 1), this.getQuestFixedHp(quest));
+          monster.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
+            error: Error()
+          }), MoveModEnum) : MoveModEnum).PosMove;
+          monster.node.setPosition(x, this.getSpawnY(), this.getSpawnZ(z));
+          this.applySpawnVariation(monster);
+          tempV3.set(monster.node.worldPosition);
+          tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
+          tempV3.z = this.stage_0;
+          monster.move.pos = tempV3;
+
+          if (waveIndex >= 0) {
+            this._monsterWaveIndexMap.set(monster, waveIndex);
+          }
+
+          return z > rawZ ? z : baseNextSpawnZ;
+        }
+
         getSingleWaveRoleLimitedSpawnZ(localZ, waveRole, monster) {
           if (!waveRole || !waveRole.node || !waveRole.node.active || waveRole.isDie) {
             return localZ;
@@ -1347,14 +1496,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var monsterCenterZ = this.getSpawnWorldZ(localZ) + monsterCenterOffsetZ;
           var monsterMinZ = monsterCenterZ - monsterHalfZ;
           var monsterMaxZ = monsterCenterZ + monsterHalfZ;
-          var roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGapInternal;
-          var roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGapInternal;
+          var roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGap;
+          var roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGap;
 
           if (monsterMaxZ < roleMinZ || monsterMinZ > roleMaxZ) {
             return localZ;
           }
 
-          return roleMaxZ + monsterHalfZ + this.waveRolePushGapInternal - monsterCenterOffsetZ - this.node.worldPositionZ - this.getSpawnOffsetZ();
+          return roleMaxZ + monsterHalfZ + this.waveRolePushGap - monsterCenterOffsetZ - this.node.worldPositionZ - this.getSpawnOffsetZ();
         }
 
         getFrontMonsterByWave(waveIndex) {
@@ -1449,7 +1598,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 nextSpawnZ += this.brotherExcludeZ;
                 nextSpawnZ += this.brotherExcludeZ;
               } else {
-                for (var count = 0; count < quest.monsterCountMax; count++) {
+                var rangeCount = this.getQuestRangeCount(quest);
+
+                for (var count = 0; count < rangeCount; count++) {
                   rowCount++;
 
                   if (rowCount == this.rowCount) {
@@ -1813,10 +1964,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.scheduleOnce(() => {
             this.restoreWaveRolesAfterRebirth();
 
-            for (var _i7 = 0; _i7 < this._monsterList.length; _i7++) {
+            for (var _i8 = 0; _i8 < this._monsterList.length; _i8++) {
               var _m$node;
 
-              var m = this._monsterList[_i7];
+              var m = this._monsterList[_i8];
 
               if (m && !m.isDie && (_m$node = m.node) != null && _m$node.active) {
                 (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
@@ -1882,7 +2033,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
             var monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
             var monsterCenterZ = frontMonster.getCollisionWorldPosition(tempV3).z;
-            var targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGapInternal - roleHalfZ;
+            var targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGap - roleHalfZ;
             this.setCollisionCenterWorldZ(role, targetCenterZ);
             this.clampMonstersBehindWaveRole(i);
           }
@@ -2052,131 +2203,138 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), CameraMove) : CameraMove).instance.Shake2(10);
         }
 
-      }, _class9.instance = null, _class9.isStartMove = false, _class9), (_descriptor8 = _applyDecoratedDescriptor(_class8.prototype, "monsterCount", [_dec11], {
+      }, _class9.instance = null, _class9.isStartMove = false, _class9), (_descriptor10 = _applyDecoratedDescriptor(_class8.prototype, "monsterCount", [_dec13], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 500;
         }
-      }), _descriptor9 = _applyDecoratedDescriptor(_class8.prototype, "maxSpawnPerFrame", [_dec12], {
+      }), _descriptor11 = _applyDecoratedDescriptor(_class8.prototype, "maxSpawnPerFrame", [_dec14], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 5;
         }
-      }), _descriptor10 = _applyDecoratedDescriptor(_class8.prototype, "monsterCreateQueue", [_dec13], {
+      }), _descriptor12 = _applyDecoratedDescriptor(_class8.prototype, "monsterCreateQueue", [_dec15], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return new MonsterCreateQueue();
         }
-      }), _descriptor11 = _applyDecoratedDescriptor(_class8.prototype, "brotherExcludeZ", [_dec14], {
+      }), _descriptor13 = _applyDecoratedDescriptor(_class8.prototype, "brotherExcludeZ", [_dec16], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 2;
         }
-      }), _descriptor12 = _applyDecoratedDescriptor(_class8.prototype, "disX", [_dec15], {
+      }), _descriptor14 = _applyDecoratedDescriptor(_class8.prototype, "disX", [_dec17], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 2.5;
         }
-      }), _descriptor13 = _applyDecoratedDescriptor(_class8.prototype, "monsterSpeed", [_dec16], {
+      }), _descriptor15 = _applyDecoratedDescriptor(_class8.prototype, "monsterSpeed", [_dec18], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 2;
         }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class8.prototype, "middleLaneHalfX", [_dec17], {
+      }), _descriptor16 = _applyDecoratedDescriptor(_class8.prototype, "middleLaneHalfX", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 2;
         }
-      }), _descriptor15 = _applyDecoratedDescriptor(_class8.prototype, "rowCount", [_dec18], {
+      }), _descriptor17 = _applyDecoratedDescriptor(_class8.prototype, "rowCount", [_dec20], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 8;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class8.prototype, "layerGapZ", [_dec19], {
+      }), _descriptor18 = _applyDecoratedDescriptor(_class8.prototype, "layerGapZ", [_dec21], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.8;
         }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class8.prototype, "spawnRandomX", [_dec20], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class8.prototype, "spawnRandomX", [_dec22], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.28;
         }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class8.prototype, "spawnRandomZ", [_dec21], {
+      }), _descriptor20 = _applyDecoratedDescriptor(_class8.prototype, "spawnRandomZ", [_dec23], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.25;
         }
-      }), _descriptor19 = _applyDecoratedDescriptor(_class8.prototype, "spawnScaleRandom", [_dec22], {
+      }), _descriptor21 = _applyDecoratedDescriptor(_class8.prototype, "spawnScaleRandom", [_dec24], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.06;
         }
-      }), _descriptor20 = _applyDecoratedDescriptor(_class8.prototype, "spawnYawRandom", [_dec23], {
+      }), _descriptor22 = _applyDecoratedDescriptor(_class8.prototype, "spawnYawRandom", [_dec25], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 8;
         }
-      }), _descriptor21 = _applyDecoratedDescriptor(_class8.prototype, "spawnPositionOffset", [_dec24], {
+      }), _descriptor23 = _applyDecoratedDescriptor(_class8.prototype, "spawnPositionOffset", [_dec26], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return new Vec3();
         }
-      }), _descriptor22 = _applyDecoratedDescriptor(_class8.prototype, "monsterDeathThrowBaseHeight", [_dec25], {
+      }), _descriptor24 = _applyDecoratedDescriptor(_class8.prototype, "monsterDeathThrowBaseHeight", [_dec27], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.5;
         }
-      }), _descriptor23 = _applyDecoratedDescriptor(_class8.prototype, "monsterDeathThrowRandomHeight", [_dec26], {
+      }), _descriptor25 = _applyDecoratedDescriptor(_class8.prototype, "monsterDeathThrowRandomHeight", [_dec28], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.35;
         }
-      }), _descriptor24 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleCount", [_dec27], {
+      }), _descriptor26 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleCount", [_dec29], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 3;
         }
-      }), _descriptor25 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleStageIndexList", [_dec28], {
+      }), _descriptor27 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleStageIndexList", [_dec30], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return [0, 2, 5];
+        }
+      }), _descriptor28 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleMonsterGap", [_dec31], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.02;
         }
       })), _class8)) || _class7));
 

@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 67200993.0687,
+      "mTimestamp": 83437512.8939,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -24022,7 +24022,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts": {
       "mTimestamp": {
-        "mtime": 1782988208745.8574,
+        "mtime": 1783059670281.6616,
         "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
       },
       "chunkId": "7cb3e78818d3ca7420c127c4f13ad5587e5cc5d3",
@@ -24463,7 +24463,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/ArmsUp.ts": {
       "mTimestamp": {
-        "mtime": 1782961547651.0178,
+        "mtime": 1783049945238.4275,
         "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
       },
       "chunkId": "7d88e9fa4d49091167d5648112015c50cab8c311",
@@ -24506,22 +24506,8 @@
           }
         },
         {
-          "value": "./PropArms",
-          "resolved": "__unresolved_2",
-          "loc": {
-            "start": {
-              "line": 3,
-              "column": 35
-            },
-            "end": {
-              "line": 3,
-              "column": 47
-            }
-          }
-        },
-        {
           "value": "../../Base/EventManager",
-          "resolved": "__unresolved_3",
+          "resolved": "__unresolved_2",
           "loc": {
             "start": {
               "line": 4,
@@ -24535,7 +24521,7 @@
         },
         {
           "value": "../../Base/EnumList",
-          "resolved": "__unresolved_4",
+          "resolved": "__unresolved_3",
           "loc": {
             "start": {
               "line": 5,
@@ -24549,7 +24535,7 @@
         },
         {
           "value": "../../Base/CameraMove",
-          "resolved": "__unresolved_5",
+          "resolved": "__unresolved_4",
           "loc": {
             "start": {
               "line": 6,
@@ -24563,7 +24549,7 @@
         },
         {
           "value": "../../Base/UnityUpComponent",
-          "resolved": "__unresolved_6",
+          "resolved": "__unresolved_5",
           "loc": {
             "start": {
               "line": 8,
@@ -24577,7 +24563,7 @@
         },
         {
           "value": "../Effect/EffectManager",
-          "resolved": "__unresolved_7",
+          "resolved": "__unresolved_6",
           "loc": {
             "start": {
               "line": 9,
@@ -24591,7 +24577,7 @@
         },
         {
           "value": "../../Base/AudioManager",
-          "resolved": "__unresolved_8",
+          "resolved": "__unresolved_7",
           "loc": {
             "start": {
               "line": 10,
@@ -24605,7 +24591,7 @@
         },
         {
           "value": "../../Base/LayerManager",
-          "resolved": "__unresolved_9",
+          "resolved": "__unresolved_8",
           "loc": {
             "start": {
               "line": 11,
@@ -24652,13 +24638,6 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Player.ts"
-          },
-          "messages": []
-        },
-        {
-          "resolved": {
-            "type": "module",
-            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts"
           },
           "messages": []
         },
@@ -25051,7 +25030,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts": {
       "mTimestamp": {
-        "mtime": 1782987101610.3286,
+        "mtime": 1783060413461.4624,
         "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
       },
       "chunkId": "aa6223cf35796d09344450a14919ad24c61174bb",

@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Quat, Tween, Vec3, Player, PropArms, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, WeaponFlyState, _dec, _dec2, _class, _class2, _descriptor, _class3, _crd, ccclass, property, ArmsUp;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Quat, Tween, Vec3, Player, EventManager, EffectEnum, EventType, LayerEnum, SoundEnum, CameraMove, UnityUpComponent, EffectManager, AudioManager, LayerManager, WeaponFlyState, _dec, _dec2, _class, _class2, _descriptor, _class3, _crd, ccclass, property, ArmsUp;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -15,10 +15,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfArmsInfo(extras) {
     _reporterNs.report("ArmsInfo", "./PropArms", _context.meta, extras);
-  }
-
-  function _reportPossibleCrUseOfPropArms(extras) {
-    _reporterNs.report("PropArms", "./PropArms", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfEventManager(extras) {
@@ -79,24 +75,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_2) {
       Player = _unresolved_2.Player;
     }, function (_unresolved_3) {
-      PropArms = _unresolved_3.PropArms;
+      EventManager = _unresolved_3.default;
     }, function (_unresolved_4) {
-      EventManager = _unresolved_4.default;
+      EffectEnum = _unresolved_4.EffectEnum;
+      EventType = _unresolved_4.EventType;
+      LayerEnum = _unresolved_4.LayerEnum;
+      SoundEnum = _unresolved_4.SoundEnum;
     }, function (_unresolved_5) {
-      EffectEnum = _unresolved_5.EffectEnum;
-      EventType = _unresolved_5.EventType;
-      LayerEnum = _unresolved_5.LayerEnum;
-      SoundEnum = _unresolved_5.SoundEnum;
+      CameraMove = _unresolved_5.CameraMove;
     }, function (_unresolved_6) {
-      CameraMove = _unresolved_6.CameraMove;
+      UnityUpComponent = _unresolved_6.UnityUpComponent;
     }, function (_unresolved_7) {
-      UnityUpComponent = _unresolved_7.UnityUpComponent;
+      EffectManager = _unresolved_7.EffectManager;
     }, function (_unresolved_8) {
-      EffectManager = _unresolved_8.EffectManager;
+      AudioManager = _unresolved_8.default;
     }, function (_unresolved_9) {
-      AudioManager = _unresolved_9.default;
-    }, function (_unresolved_10) {
-      LayerManager = _unresolved_10.default;
+      LayerManager = _unresolved_9.default;
     }],
     execute: function () {
       _crd = true;
@@ -140,42 +134,128 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         armsUPEvent(armsInfo) {
-          var _armsInfo$fbx;
+          var _weaponFlyInfo$node;
+
+          if (!armsInfo) {
+            return;
+          }
+
+          var weaponFlyInfo = this.getWeaponFlyNodeInfo(armsInfo);
+          var weaponNode = (_weaponFlyInfo$node = weaponFlyInfo == null ? void 0 : weaponFlyInfo.node) != null ? _weaponFlyInfo$node : null;
+
+          if (weaponNode && this.flyingWeaponNodes.has(weaponNode)) {
+            return;
+          }
+
+          this.player.prepareArmsUpgrade(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
+
+          if (!weaponNode) {
+            this.applyArmsUpgrade(armsInfo);
+            return;
+          }
+
+          this.flyingWeaponNodes.add(weaponNode);
+          var startPos = weaponNode.worldPosition.clone();
+          var startRot = weaponNode.worldRotation.clone();
+          var startScale = weaponNode.worldScale.clone();
+          Tween.stopAllByTarget(weaponNode);
+          var flyLayer = this.getWeaponFlyParent(weaponFlyInfo.facePlayer);
+          flyLayer.addChild(weaponNode);
+
+          if (weaponFlyInfo.facePlayer) {
+            this.setNodeLayerRecursive(weaponNode, flyLayer.layer);
+          }
+
+          weaponNode.setWorldPosition(startPos);
+          weaponNode.setWorldRotation(startRot);
+          weaponNode.setWorldScale(startScale);
+
+          if (weaponFlyInfo.facePlayer) {
+            this.faceNodeToPlayer(weaponNode, this.player.node.worldPosition);
+          }
+
+          weaponNode.active = true;
+          this.startWeaponFly(weaponNode, armsInfo, startPos, weaponFlyInfo.facePlayer);
+        }
+
+        getWeaponFlyNodeInfo(armsInfo) {
+          var _armsInfo$runtimeVisu, _armsInfo$fbx;
+
+          if (!armsInfo) {
+            return null;
+          }
+
+          if ((_armsInfo$runtimeVisu = armsInfo.runtimeVisualRoot) != null && _armsInfo$runtimeVisu.isValid) {
+            var weaponNode = this.findNodeByName(armsInfo.runtimeVisualRoot, ArmsUp.WEAPON_PICKUP_VISUAL_NAME);
+            return weaponNode != null && weaponNode.isValid ? {
+              node: weaponNode,
+              facePlayer: false
+            } : null;
+          }
 
           var fbxNode = (_armsInfo$fbx = armsInfo.fbx) == null ? void 0 : _armsInfo$fbx.node;
+          return fbxNode != null && fbxNode.isValid ? {
+            node: fbxNode,
+            facePlayer: true
+          } : null;
+        }
 
-          if (!fbxNode) {
+        findNodeByName(root, name) {
+          if (!root) {
+            return null;
+          }
+
+          if (root.name === name) {
+            return root;
+          }
+
+          for (var i = 0; i < root.children.length; i++) {
+            var result = this.findNodeByName(root.children[i], name);
+
+            if (result) {
+              return result;
+            }
+          }
+
+          return null;
+        }
+
+        setNodeLayerRecursive(node, layer) {
+          if (!node) {
             return;
           }
 
-          if (this.flyingWeaponNodes.has(fbxNode)) {
-            return;
-          }
+          node.layer = layer;
 
-          this.flyingWeaponNodes.add(fbxNode);
-          (_crd && PropArms === void 0 ? (_reportPossibleCrUseOfPropArms({
-            error: Error()
-          }), PropArms) : PropArms).prepareSpriteWeaponVisual(fbxNode);
-          this.player.prepareArmsUpgrade(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
-          var startPos = fbxNode.worldPosition.clone();
-          var startRot = fbxNode.worldRotation.clone();
-          this.scheduleOnce(() => {
-            Tween.stopAllByTarget(fbxNode);
-            (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
+          for (var i = 0; i < node.children.length; i++) {
+            this.setNodeLayerRecursive(node.children[i], layer);
+          }
+        }
+
+        getWeaponFlyParent(facePlayer) {
+          var _instance$getLayer;
+
+          if (facePlayer) {
+            return (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
               error: Error()
             }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
               error: Error()
-            }), LayerEnum) : LayerEnum).Layer_1_Ground).addChild(fbxNode);
-            fbxNode.setWorldPosition(startPos);
-            fbxNode.setWorldRotation(startRot);
-            this.faceNodeToPlayer(fbxNode, this.player.node.worldPosition);
-            fbxNode.active = true;
-            this.startWeaponFly(fbxNode, armsInfo, startPos);
-          }, 0);
+            }), LayerEnum) : LayerEnum).Layer_1_Ground);
+          }
+
+          return (_instance$getLayer = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
+            error: Error()
+          }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
+            error: Error()
+          }), LayerEnum) : LayerEnum).PropBrandLayer)) != null ? _instance$getLayer : (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
+            error: Error()
+          }), LayerManager) : LayerManager).instance.getLayer((_crd && LayerEnum === void 0 ? (_reportPossibleCrUseOfLayerEnum({
+            error: Error()
+          }), LayerEnum) : LayerEnum).Layer_1_Ground);
         }
 
-        startWeaponFly(node, armsInfo, startPos) {
-          this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos));
+        startWeaponFly(node, armsInfo, startPos, facePlayer) {
+          this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos, facePlayer));
         }
 
         completeWeaponFly(node, armsInfo) {
@@ -192,7 +272,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
             error: Error()
           }), SoundEnum) : SoundEnum).Sound_Ship_UpLevel);
-          this.player.upArms(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
+          this.applyArmsUpgrade(armsInfo);
           (_crd && EffectManager === void 0 ? (_reportPossibleCrUseOfEffectManager({
             error: Error()
           }), EffectManager) : EffectManager).instance.addShowEffect(pos, (_crd && EffectEnum === void 0 ? (_reportPossibleCrUseOfEffectEnum({
@@ -201,6 +281,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
             error: Error()
           }), CameraMove) : CameraMove).instance.Shake1(1.5);
+        }
+
+        applyArmsUpgrade(armsInfo) {
+          if (!armsInfo) {
+            return;
+          }
+
+          this.player.upArms(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
         }
 
         finishWeaponFly(node) {
@@ -242,7 +330,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             Vec3.lerp(ArmsUp.tempFlightPos, state.startPos, playerPos, t);
             ArmsUp.tempFlightPos.y += ArmsUp.WEAPON_FLY_ARC_HEIGHT * 4 * rawT * (1 - rawT);
             state.node.setWorldPosition(ArmsUp.tempFlightPos);
-            this.faceNodeToPlayer(state.node, playerPos);
+
+            if (state.facePlayer) {
+              this.faceNodeToPlayer(state.node, playerPos);
+            }
 
             if (rawT >= 1) {
               completeList.push(state);
@@ -317,7 +408,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._monsterList.length = 0;
         }
 
-      }, _class3.WEAPON_FLY_DURATION = 0.7, _class3.WEAPON_FLY_ARC_HEIGHT = 4, _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3.tempFlightPos = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
+      }, _class3.WEAPON_FLY_DURATION = 0.7, _class3.WEAPON_FLY_ARC_HEIGHT = 4, _class3.WEAPON_PICKUP_VISUAL_NAME = 'weapon', _class3.tempForward = new Vec3(), _class3.tempQuat = new Quat(), _class3.tempFlightPos = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "player", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -325,11 +416,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       })), _class2)) || _class));
 
       WeaponFlyState = class WeaponFlyState {
-        constructor(node, armsInfo, startPos) {
+        constructor(node, armsInfo, startPos, facePlayer) {
           this.elapsed = 0;
           this.startPos = new Vec3();
           this.node = node;
           this.armsInfo = armsInfo;
+          this.facePlayer = facePlayer;
           this.startPos.set(startPos);
         }
 

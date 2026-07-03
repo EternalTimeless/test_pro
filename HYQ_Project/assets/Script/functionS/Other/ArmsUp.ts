@@ -1,6 +1,6 @@
 import { _decorator, Node, Quat, Tween, Vec3 } from 'cc';
 import { Player } from '../Player/Player';
-import { ArmsInfo, PropArms } from './PropArms';
+import { ArmsInfo } from './PropArms';
 import EventManager from '../../Base/EventManager';
 import { EffectEnum, EventType, LayerEnum, SoundEnum } from '../../Base/EnumList';
 import { CameraMove } from '../../Base/CameraMove';
@@ -11,10 +11,16 @@ import AudioManager from '../../Base/AudioManager';
 import LayerManager from '../../Base/LayerManager';
 const { ccclass, property } = _decorator;
 
+type WeaponFlyNodeInfo = {
+    node: Node;
+    facePlayer: boolean;
+};
+
 @ccclass('ArmsUp')
 export class ArmsUp extends UnityUpComponent {
     private static readonly WEAPON_FLY_DURATION = 0.7;
     private static readonly WEAPON_FLY_ARC_HEIGHT = 4;
+    private static readonly WEAPON_PICKUP_VISUAL_NAME = 'weapon';
 
     @property(Player)
     public player: Player;
@@ -34,31 +40,87 @@ export class ArmsUp extends UnityUpComponent {
     }
 
     private armsUPEvent(armsInfo: ArmsInfo) {
-        const fbxNode = armsInfo.fbx?.node;
-        if (!fbxNode) {
+        if (!armsInfo) {
             return;
         }
-        if (this.flyingWeaponNodes.has(fbxNode)) {
+        const weaponFlyInfo = this.getWeaponFlyNodeInfo(armsInfo);
+        const weaponNode = weaponFlyInfo?.node ?? null;
+        if (weaponNode && this.flyingWeaponNodes.has(weaponNode)) {
             return;
         }
-        this.flyingWeaponNodes.add(fbxNode);
-        PropArms.prepareSpriteWeaponVisual(fbxNode);
         this.player.prepareArmsUpgrade(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
-        const startPos = fbxNode.worldPosition.clone();
-        const startRot = fbxNode.worldRotation.clone();
-        this.scheduleOnce(() => {
-            Tween.stopAllByTarget(fbxNode);
-            LayerManager.instance.getLayer(LayerEnum.Layer_1_Ground).addChild(fbxNode);
-            fbxNode.setWorldPosition(startPos);
-            fbxNode.setWorldRotation(startRot);
-            this.faceNodeToPlayer(fbxNode, this.player.node.worldPosition);
-            fbxNode.active = true;
-            this.startWeaponFly(fbxNode, armsInfo, startPos);
-        }, 0);
+        if (!weaponNode) {
+            this.applyArmsUpgrade(armsInfo);
+            return;
+        }
+        this.flyingWeaponNodes.add(weaponNode);
+        const startPos = weaponNode.worldPosition.clone();
+        const startRot = weaponNode.worldRotation.clone();
+        const startScale = weaponNode.worldScale.clone();
+        Tween.stopAllByTarget(weaponNode);
+        const flyLayer = this.getWeaponFlyParent(weaponFlyInfo.facePlayer);
+        flyLayer.addChild(weaponNode);
+        if (weaponFlyInfo.facePlayer) {
+            this.setNodeLayerRecursive(weaponNode, flyLayer.layer);
+        }
+        weaponNode.setWorldPosition(startPos);
+        weaponNode.setWorldRotation(startRot);
+        weaponNode.setWorldScale(startScale);
+        if (weaponFlyInfo.facePlayer) {
+            this.faceNodeToPlayer(weaponNode, this.player.node.worldPosition);
+        }
+        weaponNode.active = true;
+        this.startWeaponFly(weaponNode, armsInfo, startPos, weaponFlyInfo.facePlayer);
     }
 
-    private startWeaponFly(node: Node, armsInfo: ArmsInfo, startPos: Vec3): void {
-        this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos));
+    private getWeaponFlyNodeInfo(armsInfo: ArmsInfo): WeaponFlyNodeInfo | null {
+        if (!armsInfo) {
+            return null;
+        }
+        if (armsInfo.runtimeVisualRoot?.isValid) {
+            const weaponNode = this.findNodeByName(armsInfo.runtimeVisualRoot, ArmsUp.WEAPON_PICKUP_VISUAL_NAME);
+            return weaponNode?.isValid ? { node: weaponNode, facePlayer: false } : null;
+        }
+        const fbxNode = armsInfo.fbx?.node;
+        return fbxNode?.isValid ? { node: fbxNode, facePlayer: true } : null;
+    }
+
+    private findNodeByName(root: Node, name: string): Node | null {
+        if (!root) {
+            return null;
+        }
+        if (root.name === name) {
+            return root;
+        }
+        for (let i = 0; i < root.children.length; i++) {
+            const result = this.findNodeByName(root.children[i], name);
+            if (result) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    private setNodeLayerRecursive(node: Node, layer: number): void {
+        if (!node) {
+            return;
+        }
+        node.layer = layer;
+        for (let i = 0; i < node.children.length; i++) {
+            this.setNodeLayerRecursive(node.children[i], layer);
+        }
+    }
+
+    private getWeaponFlyParent(facePlayer: boolean): Node {
+        if (facePlayer) {
+            return LayerManager.instance.getLayer(LayerEnum.Layer_1_Ground);
+        }
+        return LayerManager.instance.getLayer(LayerEnum.PropBrandLayer)
+            ?? LayerManager.instance.getLayer(LayerEnum.Layer_1_Ground);
+    }
+
+    private startWeaponFly(node: Node, armsInfo: ArmsInfo, startPos: Vec3, facePlayer: boolean): void {
+        this.flyingWeaponStateMap.set(node, new WeaponFlyState(node, armsInfo, startPos, facePlayer));
     }
 
     private completeWeaponFly(node: Node, armsInfo: ArmsInfo): void {
@@ -68,9 +130,16 @@ export class ArmsUp extends UnityUpComponent {
         const pos = this.player.node.worldPosition;
         CameraMove.instance.Shake2(0.5);
         AudioManager.inst.playOneShot(SoundEnum.Sound_Ship_UpLevel);
-        this.player.upArms(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
+        this.applyArmsUpgrade(armsInfo);
         EffectManager.instance.addShowEffect(pos, EffectEnum.up, 3)
         CameraMove.instance.Shake1(1.5);
+    }
+
+    private applyArmsUpgrade(armsInfo: ArmsInfo): void {
+        if (!armsInfo) {
+            return;
+        }
+        this.player.upArms(armsInfo.armsType, armsInfo.weaponBulletConfigIndex);
     }
 
     private finishWeaponFly(node: Node): boolean {
@@ -105,7 +174,9 @@ export class ArmsUp extends UnityUpComponent {
             Vec3.lerp(ArmsUp.tempFlightPos, state.startPos, playerPos, t);
             ArmsUp.tempFlightPos.y += ArmsUp.WEAPON_FLY_ARC_HEIGHT * 4 * rawT * (1 - rawT);
             state.node.setWorldPosition(ArmsUp.tempFlightPos);
-            this.faceNodeToPlayer(state.node, playerPos);
+            if (state.facePlayer) {
+                this.faceNodeToPlayer(state.node, playerPos);
+            }
             if (rawT >= 1) {
                 completeList.push(state);
             }
@@ -175,7 +246,7 @@ export class ArmsUp extends UnityUpComponent {
 }
 
 class WeaponFlyState {
-    public constructor(public node: Node, public armsInfo: ArmsInfo, startPos: Vec3) {
+    public constructor(public node: Node, public armsInfo: ArmsInfo, startPos: Vec3, public facePlayer: boolean) {
         this.startPos.set(startPos);
     }
 

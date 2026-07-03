@@ -33,6 +33,12 @@ class MonsterCreateInfo {
     @property(CCInteger)
     public monsterCountMax: number = 50;
 
+    @property({ type: CCInteger, displayName: '实际生成数量(0=默认)', tooltip: '这一波实际生成的怪物数量。填 0 时沿用“每行生成的怪物数量”。' })
+    public actualSpawnCount: number = 0;
+
+    @property({ type: CCInteger, displayName: 'Z范围基准数量(0=默认)', tooltip: '这一波用于计算 Z 轴铺开范围的基准数量。大于实际生成数量时，怪物会在同样 Z 范围内变得更稀疏。' })
+    public zRangeCountBase: number = 0;
+
     @property({ type: CCFloat, displayName: '怪物生命(0=默认)', tooltip: '该配置生成的怪物生命值。填 0 时使用怪物预制体默认生命和原有难度倍率。' })
     public monsterHp: number = 0;
 
@@ -152,7 +158,8 @@ export class MonsterCreate extends UnityUpComponent {
     private _waveStageStartZList: number[] = [];
     private _waveStageIndexList: number[] = [];
     private _monsterWaveIndexMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();
-    private readonly waveRolePushGapInternal: number = 0.02;
+    @property({ type: CCFloat, displayName: '油桶怪物预留间距', tooltip: '创建怪物和初始化油桶时，油桶碰撞盒与怪物碰撞盒之间额外保留的 Z 轴距离。数值越大越不容易视觉穿模。' })
+    public waveRoleMonsterGap: number = 0.02;
     private readonly waveRolePlayerHalfX: number = 0.35;
     private readonly waveRolePlayerHalfZ: number = 0.35;
     private _isRestoringWaveRolesAfterRebirth: boolean = false;
@@ -175,6 +182,10 @@ export class MonsterCreate extends UnityUpComponent {
         // }, 2);
     }
     private monsterMatIns: number[] = [0, 0, 0];
+
+    private get waveRolePushGap() {
+        return Math.max(0, this.waveRoleMonsterGap);
+    }
 
     private prepareWaveRoles() {
         if (this._waveRoleNodes.length > 0) {
@@ -520,7 +531,7 @@ export class MonsterCreate extends UnityUpComponent {
         if (!role?.node) {
             return;
         }
-        const targetCenterZ = this.node.worldPositionZ + stageStartZ - this.getWaveRoleCollisionHalfZ(role) - this.waveRolePushGapInternal;
+        const targetCenterZ = this.node.worldPositionZ + stageStartZ - this.getWaveRoleCollisionHalfZ(role) - this.waveRolePushGap;
         this.setCollisionCenterWorldZ(role, targetCenterZ);
     }
 
@@ -539,7 +550,7 @@ export class MonsterCreate extends UnityUpComponent {
             const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
             const monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
             const monsterCenterZ = frontMonster.getCollisionWorldPosition(tempV3).z;
-            const targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGapInternal - roleHalfZ;
+            const targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGap - roleHalfZ;
             this.setCollisionCenterWorldZ(role, targetCenterZ);
             this.clampMonstersBehindWaveRole(i);
         }
@@ -599,12 +610,37 @@ export class MonsterCreate extends UnityUpComponent {
             const loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
             for (let loop = 0; loop < loopCount; loop++) {
                 const waveIndex = stageToBigWaveList[Math.min(stageCursor, stageToBigWaveList.length - 1)] ?? 0;
-                for (let count = 0; count < quest.monsterCountMax; count++) {
-                    if (quest.monsterType == MonsterType.ZombieBrother) {
-                        this.spawnBrother(quest, waveIndex);
-                    } else {
-                        this.spawnBaby(quest, waveIndex);
+                const spawnCount = this.getQuestSpawnCount(quest);
+                const rangeCount = this.getQuestRangeCount(quest);
+                if (quest.monsterType == MonsterType.ZombieBrother || spawnCount >= rangeCount) {
+                    for (let count = 0; count < spawnCount; count++) {
+                        if (quest.monsterType == MonsterType.ZombieBrother) {
+                            this.spawnBrother(quest, waveIndex);
+                        } else {
+                            this.spawnBaby(quest, waveIndex);
+                        }
                     }
+                } else {
+                    const spawnSlotSet = this.buildSparseWaveSpawnSlotSet(spawnCount, rangeCount);
+                    let cursorNextSpawnZ = this._nextSpawnZ;
+                    let cursorRowCount = this._rowCount;
+                    let cursorPosIndex = this.posIndex;
+
+                    for (let slot = 0; slot < rangeCount; slot++) {
+                        if (spawnSlotSet.has(slot)) {
+                            cursorNextSpawnZ = this.spawnBabyAtCursor(quest, waveIndex, cursorNextSpawnZ, cursorPosIndex);
+                        }
+                        cursorPosIndex = (cursorPosIndex + 1) % this.rowCount;
+                        cursorRowCount++;
+                        if (cursorRowCount == this.rowCount) {
+                            cursorNextSpawnZ += this.layerGapZ;
+                            cursorRowCount = 0;
+                        }
+                    }
+
+                    this._nextSpawnZ = cursorNextSpawnZ;
+                    this._rowCount = cursorRowCount;
+                    this.posIndex = cursorPosIndex;
                 }
                 this._nextSpawnZ += quest.brotherExcludeZ;
                 stageCursor++;
@@ -623,7 +659,8 @@ export class MonsterCreate extends UnityUpComponent {
             }
             if (this._monsterList.length < this.monsterCount) {
                 const quest = this.monsterCreateQueue.monsterCreateInfoList[this.monsterCreateQueue.curIndex];
-                const monsterCount = quest.monsterCountMax - quest.curMonsterCount;
+                const questSpawnCount = this.getQuestSpawnCount(quest);
+                const monsterCount = questSpawnCount - quest.curMonsterCount;
                 let count = this.monsterCount - monsterCount + this._monsterList.length;
                 if (count >= 0) {
                     count = monsterCount;
@@ -644,7 +681,7 @@ export class MonsterCreate extends UnityUpComponent {
 
                 }
                 quest.curMonsterCount += count;
-                if (quest.curMonsterCount == quest.monsterCountMax) {
+                if (quest.curMonsterCount == questSpawnCount) {
                     EventManager.instance.emit(EventType.MONSTER_WAVE_STAGE);
                     quest.curLoopCount++;
                     this._nextSpawnZ += quest.brotherExcludeZ;
@@ -810,17 +847,17 @@ export class MonsterCreate extends UnityUpComponent {
         const monsterCenter = monster.getCollisionWorldPosition(tempV3);
         const monsterCenterX = monsterCenter.x;
         const monsterCenterZ = monsterCenter.z;
-        if (Math.abs(monsterCenterX - roleCenterX) > roleHalfX + monsterHalfX + this.waveRolePushGapInternal) {
+        if (Math.abs(monsterCenterX - roleCenterX) > roleHalfX + monsterHalfX + this.waveRolePushGap) {
             return;
         }
-        const roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGapInternal;
-        const roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGapInternal;
+        const roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGap;
+        const roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGap;
         const monsterMinZ = monsterCenterZ - monsterHalfZ;
         const monsterMaxZ = monsterCenterZ + monsterHalfZ;
         if (monsterMaxZ < roleMinZ || monsterMinZ > roleMaxZ) {
             return;
         }
-        const limitCenterZ = roleCenterZ + roleHalfZ + monsterHalfZ + this.waveRolePushGapInternal;
+        const limitCenterZ = roleCenterZ + roleHalfZ + monsterHalfZ + this.waveRolePushGap;
         this.setCollisionCenterWorldZ(monster, limitCenterZ);
     }
 
@@ -924,6 +961,79 @@ export class MonsterCreate extends UnityUpComponent {
         return resultZ;
     }
 
+    private getQuestSpawnCount(quest: MonsterCreateInfo | null): number {
+        const defaultCount = Math.max(0, Math.floor(quest?.monsterCountMax ?? 0));
+        const actualCount = Math.max(0, Math.floor(quest?.actualSpawnCount ?? 0));
+        return actualCount > 0 ? actualCount : defaultCount;
+    }
+
+    private getQuestRangeCount(quest: MonsterCreateInfo | null): number {
+        const spawnCount = this.getQuestSpawnCount(quest);
+        const rangeCount = Math.max(0, Math.floor(quest?.zRangeCountBase ?? 0));
+        return Math.max(spawnCount, rangeCount > 0 ? rangeCount : spawnCount);
+    }
+
+    private buildSparseWaveSpawnSlotSet(spawnCount: number, rangeCount: number): Set<number> {
+        const slotSet: Set<number> = new Set();
+        if (spawnCount <= 0 || rangeCount <= 0) {
+            return slotSet;
+        }
+        if (spawnCount >= rangeCount) {
+            for (let i = 0; i < rangeCount; i++) {
+                slotSet.add(i);
+            }
+            return slotSet;
+        }
+        if (spawnCount === 1) {
+            slotSet.add(0);
+            return slotSet;
+        }
+        for (let i = 0; i < spawnCount; i++) {
+            const slotIndex = Math.round(i * (rangeCount - 1) / (spawnCount - 1));
+            slotSet.add(Math.min(rangeCount - 1, Math.max(0, slotIndex)));
+        }
+        return slotSet;
+    }
+
+    private spawnBabyAtCursor(
+        quest: MonsterCreateInfo | null,
+        waveIndex: number,
+        baseNextSpawnZ: number,
+        basePosIndex: number,
+    ) {
+        const type = this.getQuestBabyType(quest);
+        const monsterIns = this.monsterMatIns[type];
+
+        const monster = this.getMonster(type);
+        this._monsterList.push(monster);
+        this.node.addChild(monster.node);
+        if (!monsterIns) {
+            this.monsterMatIns[type] = 1;
+            monster.flashDie(0.01);
+        }
+
+        const rawZ = baseNextSpawnZ + (Math.random() - 0.5) * (this.layerGapZ + this.spawnRandomZ * 2);
+        const z = this.getWaveRoleLimitedSpawnZ(rawZ, monster);
+        const rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + (basePosIndex - (this.rowCount - 1) / 2) * this.offX;
+        const worldZ = this.getSpawnWorldZ(z);
+        const spawnX = this.getSpawnX(rawX);
+        const x = this.shouldLimitMonsterXAtZ(worldZ) ? this.clampMonsterX(spawnX) : spawnX;
+        monster.initX = spawnX;
+        monster.init(this.getQuestDifficulty(quest, 1), this.getQuestFixedHp(quest));
+        monster.move.moveMod = MoveModEnum.PosMove;
+        monster.node.setPosition(x, this.getSpawnY(), this.getSpawnZ(z));
+        this.applySpawnVariation(monster);
+
+        tempV3.set(monster.node.worldPosition);
+        tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
+        tempV3.z = this.stage_0;
+        monster.move.pos = tempV3;
+        if (waveIndex >= 0) {
+            this._monsterWaveIndexMap.set(monster, waveIndex);
+        }
+        return z > rawZ ? z : baseNextSpawnZ;
+    }
+
     private getSingleWaveRoleLimitedSpawnZ(localZ: number, waveRole: PropArms, monster: MonsterBattleTaerget) {
         if (!waveRole || !waveRole.node || !waveRole.node.active || waveRole.isDie) {
             return localZ;
@@ -936,13 +1046,13 @@ export class MonsterCreate extends UnityUpComponent {
         const monsterCenterZ = this.getSpawnWorldZ(localZ) + monsterCenterOffsetZ;
         const monsterMinZ = monsterCenterZ - monsterHalfZ;
         const monsterMaxZ = monsterCenterZ + monsterHalfZ;
-        const roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGapInternal;
-        const roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGapInternal;
+        const roleMinZ = roleCenterZ - roleHalfZ - this.waveRolePushGap;
+        const roleMaxZ = roleCenterZ + roleHalfZ + this.waveRolePushGap;
 
         if (monsterMaxZ < roleMinZ || monsterMinZ > roleMaxZ) {
             return localZ;
         }
-        return roleMaxZ + monsterHalfZ + this.waveRolePushGapInternal - monsterCenterOffsetZ - this.node.worldPositionZ - this.getSpawnOffsetZ();
+        return roleMaxZ + monsterHalfZ + this.waveRolePushGap - monsterCenterOffsetZ - this.node.worldPositionZ - this.getSpawnOffsetZ();
     }
 
     private getFrontMonsterByWave(waveIndex: number) {
@@ -1021,7 +1131,8 @@ export class MonsterCreate extends UnityUpComponent {
                     nextSpawnZ += this.brotherExcludeZ;
                     nextSpawnZ += this.brotherExcludeZ;
                 } else {
-                    for (let count = 0; count < quest.monsterCountMax; count++) {
+                    const rangeCount = this.getQuestRangeCount(quest);
+                    for (let count = 0; count < rangeCount; count++) {
                         rowCount++;
                         if (rowCount == this.rowCount) {
                             nextSpawnZ += this.layerGapZ;
@@ -1341,7 +1452,7 @@ export class MonsterCreate extends UnityUpComponent {
             const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
             const monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
             const monsterCenterZ = frontMonster.getCollisionWorldPosition(tempV3).z;
-            const targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGapInternal - roleHalfZ;
+            const targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGap - roleHalfZ;
             this.setCollisionCenterWorldZ(role, targetCenterZ);
             this.clampMonstersBehindWaveRole(i);
         }

@@ -89,6 +89,7 @@ export class PropArms extends BattleTarget3D {
     private static readonly oilHitFlashDuration: number = 0.16;
     private static readonly oilHitFlashColor: Color = new Color(255, 188, 36, 255);
     private static readonly oilHitFlashIntensity: number = 0.5;
+    private static readonly weaponPickupVisualName: string = "weapon";
     private static readonly spriteWeaponVisualName: string = "jiatelin";
     private static readonly modelWeaponVisualName: string = "jiateling01";
 
@@ -131,6 +132,15 @@ export class PropArms extends BattleTarget3D {
         for (let i = 0; i < root.children.length; i++) {
             PropArms.collectNodesByName(root.children[i], name, out);
         }
+    }
+
+    public static getWeaponPickupVisualRoot(root: Node | null): Node | null {
+        if (!root) {
+            return null;
+        }
+        const nodes: Node[] = [];
+        PropArms.collectNodesByName(root, PropArms.weaponPickupVisualName, nodes);
+        return nodes.length > 0 ? nodes[0] : null;
     }
 
     private static isAncestorOfAny(node: Node, targets: Node[]): boolean {
@@ -225,6 +235,12 @@ export class PropArms extends BattleTarget3D {
     // public effect: AttackParkPlay;
     @property({ type: CCFloat, displayName: '动画速度倍率', tooltip: '受击、底座消失、拉链收拢等动画的速度倍率。数值越大动画越慢。' })
     public animScale: number = 1;
+
+    @property({ type: CCFloat, displayName: '武器图片受击放大倍率', tooltip: '油桶受击时 weapon 图片先放大的倍率。' })
+    public weaponHitScaleUp: number = 1.22;
+
+    @property({ type: CCFloat, displayName: '武器图片受击压缩倍率', tooltip: '油桶受击时 weapon 图片回弹压缩的倍率。' })
+    public weaponHitScaleDown: number = 0.86;
 
     @property({ type: Node, displayName: '石板/承载节点', tooltip: '武器下方跟随抬升、死亡后下砸的承载节点。没有该节点时只触发武器完成事件。' })
     public wallNode: Node;
@@ -429,7 +445,6 @@ export class PropArms extends BattleTarget3D {
         AudioManager.inst.playOneShot(SoundEnum.Sound_tire_hit, 0.4, 0.08);
         const staggerDelay = 0.05;
         const lastIdx = this.tireList.length - 1;
-        this.playSpriteWeaponHitScale(lastIdx * staggerDelay);
         for (let i = 0; i < this.tireList.length; i++) {
             const tire = this.tireList[i];
             Tween.stopAllByTarget(tire);
@@ -665,7 +680,6 @@ export class PropArms extends BattleTarget3D {
         if (!this._curArms.isCanMove && this.tireList.length > this._curArms.canTireCount) {
             dropTargetY = fbxY;
         }
-        this.playSpriteWeaponHitScale(delay);
         tween(fbxNode)
             .delay(delay)
             .to(0.04 * this.animScale, { y: fbxY + bounceH }, { easing: 'sineOut' })
@@ -755,7 +769,6 @@ export class PropArms extends BattleTarget3D {
                 const arms = this.armsInfoList[i];
                 const visualRoot = this.getCurrentArmsVisualRoot(arms);
                 if (visualRoot) {
-                    PropArms.prepareSpriteWeaponVisual(visualRoot);
                     visualRoot.active = i === this._level;
                 }
             }
@@ -763,11 +776,12 @@ export class PropArms extends BattleTarget3D {
             this._curArms.weaponBulletConfigIndex = this._level;
             const currentArms = this._curArms;
             const visualRoot = this.getCurrentArmsVisualRoot(currentArms);
-            if (!currentArms?.fbx || !visualRoot) {
+            if (!currentArms || !visualRoot) {
                 this._isStageAlive = false;
                 return;
             }
-            this._curArmsUsesSpriteVisual = this.hasNodeByName(visualRoot, PropArms.spriteWeaponVisualName);
+            this._curArmsUsesSpriteVisual = this.hasNodeByName(visualRoot, PropArms.weaponPickupVisualName)
+                || this.hasNodeByName(visualRoot, PropArms.spriteWeaponVisualName);
             this._curArmsSpriteTargetY = visualRoot.y;
             this._isStageAlive = true;
             this.initLalian();
@@ -799,7 +813,7 @@ export class PropArms extends BattleTarget3D {
                 visualRoot.y = -1;
             }
             visualRoot.setScale(Vec3.ZERO);
-            currentArms.fbx.setAnimation(AnimArms.idle, true);
+            this.playArmsFbxAnimation(currentArms, AnimArms.idle, true);
             this.isWallH = false;
             this.resetBottomBaseRollState();
 
@@ -845,7 +859,7 @@ export class PropArms extends BattleTarget3D {
             // FBX快速升起
             tween(visualRoot)
                 .delay(phase1Delay)
-                .call(() => { currentArms.fbx.setAnimation(AnimArms.up_ju, true); })
+                .call(() => { this.playArmsFbxAnimation(currentArms, AnimArms.up_ju, true); })
                 .to(phase1RiseTime, { y: fbxPhase1TargetY, scale: scale }, { easing: "backOut" })
                 .start();
 
@@ -896,8 +910,8 @@ export class PropArms extends BattleTarget3D {
             // 计算总动画时长，结束后统一处理
             const totalTime = this.hasLalian ? phase1Delay + phase1RiseTime + 0.05 : tireStartDelay + (tireCount - 1) * tireInterval + tireRiseTime + 0.05;
             this.scheduleOnce(() => {
-                if (this._curArms === currentArms && currentArms.fbx?.node?.isValid) {
-                    currentArms.fbx.setAnimation(AnimArms.idle, true);
+                if (this._curArms === currentArms) {
+                    this.playArmsFbxAnimation(currentArms, AnimArms.idle, true);
                 }
                 this.hpLabel.node.setScale(hplSx, hplSy, hplSz);
                 PoolManager.instance.V3 = scale;
@@ -1078,6 +1092,21 @@ export class PropArms extends BattleTarget3D {
             return this.roleTemplateArmsPos.y + Math.max(0, liftCount - 1) * this.tireSpacing;
         }
         return liftCount * this.tireSpacing;
+    }
+
+    private playArmsFbxAnimation(arms: ArmsInfo | null, anim: AnimArms, loop: boolean = true): void {
+        if (!arms || PropArms.getWeaponPickupVisualRoot(arms.runtimeVisualRoot)?.isValid || !arms.fbx?.node?.isValid) {
+            return;
+        }
+        try {
+            const state = arms.fbx.getAnimState(anim);
+            if (!state) {
+                return;
+            }
+            arms.fbx.setAnimation(anim, loop);
+        } catch {
+            return;
+        }
     }
 
     private applyBottomBaseVisualTransform(node: Node): void {
@@ -1289,7 +1318,11 @@ export class PropArms extends BattleTarget3D {
     }
 
     private playOilBarrelHitFlash(): void {
-        if (this.tireList.length <= 0 || this.isDie || !this.meshFlashDataList?.length) {
+        if (this.isDie) {
+            return;
+        }
+        this.playSpriteWeaponHitScale(PropArms.oilHitFlashDuration);
+        if (this.tireList.length <= 0 || !this.meshFlashDataList?.length) {
             return;
         }
         FlashRedManager.instance.flashRed(
@@ -1541,17 +1574,17 @@ export class PropArms extends BattleTarget3D {
         }
     }
 
-    private playSpriteWeaponHitScale(delay: number = 0): void {
-        if (!this._curArmsUsesSpriteVisual) {
-            return;
-        }
+    private playSpriteWeaponHitScale(totalDuration: number): void {
         const weaponRoot = this.getCurrentArmsVisualRoot(this._curArms);
         if (!weaponRoot) {
             return;
         }
 
         const spriteNodes: Node[] = [];
-        PropArms.collectNodesByName(weaponRoot, PropArms.spriteWeaponVisualName, spriteNodes);
+        PropArms.collectNodesByName(weaponRoot, PropArms.weaponPickupVisualName, spriteNodes);
+        if (spriteNodes.length <= 0) {
+            PropArms.collectNodesByName(weaponRoot, PropArms.spriteWeaponVisualName, spriteNodes);
+        }
         if (spriteNodes.length <= 0) {
             return;
         }
@@ -1564,15 +1597,13 @@ export class PropArms extends BattleTarget3D {
 
             Tween.stopAllByTarget(spriteNode);
             const originalScale = this.getWeaponVisualOriginalScale(spriteNode);
-            const scaleUp = v3(originalScale.x * 1.06, originalScale.y * 1.06, originalScale.z * 1.06);
-            const scaleDown = v3(originalScale.x * 0.97, originalScale.y * 0.97, originalScale.z * 0.97);
+            const scaleUpRate = Math.max(1, this.weaponHitScaleUp);
+            const scaleUp = v3(originalScale.x * scaleUpRate, originalScale.y * scaleUpRate, originalScale.z * scaleUpRate);
+            const returnDuration = Math.max(0.01, totalDuration);
 
-            spriteNode.setScale(originalScale);
+            spriteNode.setScale(scaleUp);
             tween(spriteNode)
-                .delay(delay)
-                .to(0.08, { scale: scaleUp }, { easing: 'cubicOut' })
-                .to(0.08, { scale: scaleDown }, { easing: 'cubicOut' })
-                .to(0.08, { scale: originalScale }, { easing: 'backOut' })
+                .to(returnDuration, { scale: originalScale }, { easing: 'backOut' })
                 .start();
         }
     }

@@ -773,7 +773,9 @@
         "dd955aad-9fb4-43f7-93d3-04f3ebdefbbb@f9941",
         "ac6eb507-f8e3-437a-8986-b7b34e4f6c5e",
         "1dd89136-12dc-4b20-9296-810b3dc0ca2c",
+        "7c1c9016-7a6a-4cd2-a2cf-ef832350b8ce@f9941",
         "f96153eb-6f89-4aad-b84b-808954761c02",
+        "be5e2a2e-72d8-4c1e-9de3-eb5dbc1106f7@f9941",
         "799add5f-4370-4ee6-b0a4-aca1ebcd06a3",
         "195a1b86-f57e-4d07-af1b-3f836083249a",
         "9a96fc79-fcf2-4e2d-946e-0dca53a468fb@6016b",
@@ -10149,6 +10151,56 @@
         "6b7e860b-8ba2-45ae-b130-63eea1f9e208",
         "014ecdaa-a5a2-4340-9c31-c7571e3808b8@6c48a",
         "9e277dc1-576d-47e4-9508-4b4eef83e3a5@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "269e5a1a-3157-4766-9860-6a07a2374e6b": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/大壮带金边.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "be5e2a2e-72d8-4c1e-9de3-eb5dbc1106f7": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/大壮金光闪闪.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "be5e2a2e-72d8-4c1e-9de3-eb5dbc1106f7@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/大壮金光闪闪.png@6c48a",
+    "value": {
+      "depends": [
+        "be5e2a2e-72d8-4c1e-9de3-eb5dbc1106f7"
+      ]
+    },
+    "versionCode": 1
+  },
+  "269e5a1a-3157-4766-9860-6a07a2374e6b@6c48a": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/大壮带金边.png@6c48a",
+    "value": {
+      "depends": [
+        "269e5a1a-3157-4766-9860-6a07a2374e6b"
+      ]
+    },
+    "versionCode": 1
+  },
+  "be5e2a2e-72d8-4c1e-9de3-eb5dbc1106f7@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/大壮金光闪闪.png@f9941",
+    "value": {
+      "depends": [
+        "be5e2a2e-72d8-4c1e-9de3-eb5dbc1106f7@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "269e5a1a-3157-4766-9860-6a07a2374e6b@f9941": {
+    "url": "db://assets/GameRes/SLLYT_map/wuqi/大壮带金边.png@f9941",
+    "value": {
+      "depends": [
+        "269e5a1a-3157-4766-9860-6a07a2374e6b@6c48a"
       ]
     },
     "versionCode": 1

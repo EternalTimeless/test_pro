@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1783044482232.7551,
+      "time": 1783060648573.025,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1662,11 +1662,11 @@
       "uuid": "93b74258-97e4-4fcb-bfc0-851d38430b93"
     },
     "Script\\functionS\\Monster\\MonsterCreate.ts": {
-      "time": 1782988208745.8574,
+      "time": 1783059670281.6616,
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
-      "time": 1782961547651.0178,
+      "time": 1783049945238.4275,
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
-      "time": 1782987101610.3286,
+      "time": 1783060413461.4624,
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
@@ -5026,7 +5026,7 @@
       "time": 1782266699070.0193
     },
     "GameRes\\SLLYT_map\\wuqi": {
-      "time": 1782266693996.3413,
+      "time": 1783046458479.204,
       "uuid": "0e9007ea-e181-4ad8-b4d6-08fc5161f1ba"
     },
     "GameRes\\SLLYT_map\\wuqi\\UI-加特林蓝 光效增强.png": {
@@ -5139,6 +5139,20 @@
     "GameRes\\SLLYT_map\\mat\\M_youtong-001.mtl": {
       "time": 1782814215408.6003,
       "uuid": "7ef7d2ba-2053-4adf-b470-1602c7f8a98b"
+    },
+    "GameRes\\SLLYT_map\\wuqi\\大壮带金边.png.meta": {
+      "time": 1783046458456.498
+    },
+    "GameRes\\SLLYT_map\\wuqi\\大壮金光闪闪.png.meta": {
+      "time": 1783046458479.204
+    },
+    "GameRes\\SLLYT_map\\wuqi\\大壮金光闪闪.png": {
+      "time": 1783046458478.206,
+      "uuid": "be5e2a2e-72d8-4c1e-9de3-eb5dbc1106f7"
+    },
+    "GameRes\\SLLYT_map\\wuqi\\大壮带金边.png": {
+      "time": 1783046458454.503,
+      "uuid": "269e5a1a-3157-4766-9860-6a07a2374e6b"
     }
   },
   "missing": {}
