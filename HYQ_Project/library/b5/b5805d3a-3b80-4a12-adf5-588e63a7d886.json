@@ -2599,8 +2599,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 405,
-      "height": 395
+      "width": 389,
+      "height": 402
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3446,7 +3446,7 @@
       "__id__": 196
     },
     "tireCount": 1,
-    "hp": 424,
+    "hp": 454,
     "moveCount": 16,
     "isCanMove": true,
     "canHeight": 0,
@@ -12937,7 +12937,7 @@
     "loopMax": 1,
     "monsterType": 0,
     "monsterCountMax": 80,
-    "actualSpawnCount": 10,
+    "actualSpawnCount": 20,
     "zRangeCountBase": 80,
     "monsterHp": 0,
     "difficulty": 0,
@@ -12973,7 +12973,7 @@
     "actualSpawnCount": 0,
     "zRangeCountBase": 0,
     "monsterHp": 0,
-    "difficulty": 1,
+    "difficulty": 1.5,
     "brotherExcludeZ": 0
   },
   {
@@ -13006,7 +13006,7 @@
     "actualSpawnCount": 0,
     "zRangeCountBase": 0,
     "monsterHp": 0,
-    "difficulty": 5,
+    "difficulty": 6,
     "brotherExcludeZ": 0
   },
   {
