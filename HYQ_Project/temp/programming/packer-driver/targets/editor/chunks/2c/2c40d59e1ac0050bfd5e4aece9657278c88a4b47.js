@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -19,6 +19,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfMoveDrive(extras) {
     _reporterNs.report("MoveDrive", "../../Base/MoveRot/MoveDrive", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfMoveModEnum(extras) {
+    _reporterNs.report("MoveModEnum", "../../Base/MoveRot/MoveDrive", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfEventType(extras) {
@@ -92,6 +96,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       BulletMonsterCollisionManager = _unresolved_3.default;
     }, function (_unresolved_4) {
       MoveDrive = _unresolved_4.MoveDrive;
+      MoveModEnum = _unresolved_4.MoveModEnum;
     }, function (_unresolved_5) {
       EventType = _unresolved_5.EventType;
       MonsterType = _unresolved_5.MonsterType;
@@ -158,7 +163,37 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       }), _dec6 = property(_crd && MoveDrive === void 0 ? (_reportPossibleCrUseOfMoveDrive({
         error: Error()
-      }), MoveDrive) : MoveDrive), _dec7 = property(CCFloat), _dec(_class = (_class2 = class MonsterBattleTaerget extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
+      }), MoveDrive) : MoveDrive), _dec7 = property(CCFloat), _dec8 = property({
+        type: CCFloat,
+        displayName: 'Boss横向锁定范围',
+
+        visible() {
+          return this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        }
+
+      }), _dec9 = property({
+        type: CCFloat,
+        displayName: 'Boss攻击站位Z偏移',
+
+        visible() {
+          return this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        }
+
+      }), _dec10 = property({
+        type: CCFloat,
+        displayName: 'Boss站位Z容差',
+
+        visible() {
+          return this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        }
+
+      }), _dec(_class = (_class2 = class MonsterBattleTaerget extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
         constructor(...args) {
@@ -184,6 +219,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._hl = false;
           this.runAnimSpeed = 1;
           this.runAnimStartFrame = 0;
+          this.attackTimer = 0;
+          this.attackDuration = 1.5;
+          this.bossDesiredAttackPos = new Vec3();
+          this.bossFaceVector = new Vec3();
+
+          _initializerDefineProperty(this, "bossAttackLockOffsetX", _descriptor7, this);
+
+          _initializerDefineProperty(this, "bossAttackOffsetZ", _descriptor8, this);
+
+          _initializerDefineProperty(this, "bossAttackLockOffsetZ", _descriptor9, this);
+
           // public dieTimeScale: number = 1;
           this.isDieD = true;
 
@@ -212,6 +258,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.move.autoMove = true;
           this._hl = false;
           this._hlIn = false;
+          this.attackTimer = 0;
           this.runAnimSpeed = 0.9 + Math.random() * 0.25;
           this.runAnimStartFrame = Math.random();
           (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
@@ -318,33 +365,46 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), MonsterType) : MonsterType).ZombieBrother) {
             this.fixBossHpLabel();
-          } // if (this.monsterType == MonsterType.ZombieBrother) {
+          }
 
+          if (this.attackTimer > 0) {
+            this.attackTimer -= dt;
+
+            if (this.attackTimer <= 0) {
+              this.attackTimer = 0;
+              this.attackIn = false;
+            }
+          }
+
+          if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother) {
+            if (!this.ensureAttackTargetValid()) {
+              this.move.autoMove = true;
+            }
+
+            this.updateBossMoveTarget();
+            this.updateBossFacing(dt);
+          }
 
           if (this.attackTarget) {
-            const dis = Vec3.squaredDistance(this.attackTarget.worldPosition, this.node.worldPosition);
+            const canAttack = this.isAttackTargetInRange();
 
-            if (dis < this.attackR || this.attackIn) {
+            if (canAttack) {
               this.move.autoMove = false;
 
               if (!this.attackIn && !(_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
                 error: Error()
               }), Player) : Player).instance.isDie) {
-                const anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
-                const attackTime = 1.5;
-                const endTime = anim.duration;
-                const animScale = endTime / attackTime;
-                anim.speed = animScale;
-                this.scheduleOnce(() => {
-                  this.attackIn = false;
-                }, attackTime);
-                this.attackIn = true;
+                this.playAttackAnimation();
               }
             } else {
+              this.attackIn = false;
+              this.attackTimer = 0;
+              this.move.target = this.attackTarget;
               this.move.autoMove = true;
             }
-          } // }
-
+          }
 
           if (!this.attackIn) {
             if (this.move.isMove) {
@@ -363,6 +423,193 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }
             }
           }
+        }
+
+        playAttackAnimation() {
+          const anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
+
+          if (!anim) {
+            return;
+          }
+
+          const animScale = anim.duration / this.attackDuration;
+          anim.speed = animScale;
+          this.attackTimer = this.attackDuration;
+          this.attackIn = true;
+        }
+
+        ensureAttackTargetValid() {
+          var _this$attackTarget;
+
+          if (!((_this$attackTarget = this.attackTarget) != null && _this$attackTarget.activeInHierarchy)) {
+            return this.refreshAttackTarget();
+          }
+
+          const role = this.attackTarget.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role);
+
+          if (!role) {
+            return true;
+          }
+
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!player || player.isDie || role.hp <= 0 || player.roleList.indexOf(role) === -1) {
+            return this.refreshAttackTarget();
+          }
+
+          return true;
+        }
+
+        refreshAttackTarget() {
+          var _nextRole$node;
+
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!player || player.isDie || player.roleList.length <= 0) {
+            this.clearAttackTarget();
+            return false;
+          }
+
+          const nextRole = player.attackTarget;
+
+          if (!(nextRole != null && (_nextRole$node = nextRole.node) != null && _nextRole$node.activeInHierarchy)) {
+            this.clearAttackTarget();
+            return false;
+          }
+
+          this.attackTarget = nextRole.node;
+          this.move.target = this.attackTarget;
+          return true;
+        }
+
+        clearAttackTarget() {
+          this.attackTarget = null;
+          this.move.target = null;
+          this.attackIn = false;
+          this.attackTimer = 0;
+        }
+
+        isAttackTargetInRange() {
+          var _this$attackTarget2;
+
+          if (!((_this$attackTarget2 = this.attackTarget) != null && _this$attackTarget2.activeInHierarchy)) {
+            return false;
+          }
+
+          if (this.monsterType === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother) {
+            return this.isBossInAttackPosition();
+          }
+
+          const targetPos = this.attackTarget.worldPosition;
+          const dis = Vec3.squaredDistance(targetPos, this.node.worldPosition);
+
+          if (dis > this.attackR) {
+            return false;
+          }
+
+          return true;
+        }
+
+        getAttackRole() {
+          var _this$attackTarget3;
+
+          const role = (_this$attackTarget3 = this.attackTarget) == null ? void 0 : _this$attackTarget3.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role);
+
+          if (!role) {
+            return null;
+          }
+
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!player || player.isDie || role.hp <= 0 || player.roleList.indexOf(role) === -1) {
+            return null;
+          }
+
+          return role;
+        }
+
+        updateBossFacing(dt) {
+          var _this$move;
+
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!(player != null && player.node) || !((_this$move = this.move) != null && _this$move.isRot) || !this.move.rotDrive) {
+            return;
+          }
+
+          const targetPos = player.node.worldPosition;
+          const selfPos = this.node.worldPosition;
+          const dx = targetPos.x - selfPos.x;
+          const dz = targetPos.z - selfPos.z;
+
+          if (dx === 0 && dz === 0) {
+            return;
+          }
+
+          this.bossFaceVector.set(dx, 0, dz);
+          this.move.rotDrive.vector = this.bossFaceVector;
+          this.move.rotDrive.rotatLerpLookVector(dt);
+        }
+
+        updateBossMoveTarget() {
+          var _instance;
+
+          if (!this.attackTarget || !((_instance = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance) != null && _instance.node) || !this.move) {
+            return;
+          }
+
+          this.getBossDesiredAttackPosition(this.bossDesiredAttackPos);
+          this.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
+            error: Error()
+          }), MoveModEnum) : MoveModEnum).PosMove;
+          this.move.pos = this.bossDesiredAttackPos;
+        }
+
+        getBossDesiredAttackPosition(out) {
+          const playerPos = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance.node.worldPosition;
+          const selfPos = this.node.worldPosition;
+          const zDirection = selfPos.z <= playerPos.z ? -1 : 1;
+          out.set(playerPos.x, selfPos.y, playerPos.z + zDirection * this.bossAttackOffsetZ);
+          return out;
+        }
+
+        isBossInAttackPosition() {
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!(player != null && player.node) || player.isDie) {
+            return false;
+          }
+
+          const playerPos = player.node.worldPosition;
+          const dis = Vec3.squaredDistance(playerPos, this.node.worldPosition);
+
+          if (dis > this.attackR) {
+            return false;
+          }
+
+          this.getBossDesiredAttackPosition(this.bossDesiredAttackPos);
+          const selfPos = this.node.worldPosition;
+          return Math.abs(selfPos.x - this.bossDesiredAttackPos.x) <= this.bossAttackLockOffsetX && Math.abs(selfPos.z - this.bossDesiredAttackPos.z) <= this.bossAttackLockOffsetZ;
         }
 
         randomizeRunAnimation() {
@@ -394,6 +641,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
           }), MonsterType) : MonsterType).ZombieBrother) {
+            if (!this.isAttackTargetInRange()) {
+              return;
+            }
+
             (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
               error: Error()
             }), CameraMove) : CameraMove).instance.Shake2(1);
@@ -408,11 +659,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), EventType) : EventType).PLAYER_HIT, this.node.worldPosition, 10);
           } else {
-            var _this$attackTarget;
-
-            const role = (_this$attackTarget = this.attackTarget) == null ? void 0 : _this$attackTarget.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
-              error: Error()
-            }), Role) : Role);
+            const role = this.getAttackRole();
 
             if (role) {
               (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
@@ -461,6 +708,27 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         writable: true,
         initializer: function () {
           return 4;
+        }
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "bossAttackLockOffsetX", [_dec8], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.9;
+        }
+      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "bossAttackOffsetZ", [_dec9], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 1.4;
+        }
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "bossAttackLockOffsetZ", [_dec10], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.28;
         }
       })), _class2)) || _class));
 
