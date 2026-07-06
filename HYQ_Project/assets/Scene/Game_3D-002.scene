@@ -12832,17 +12832,17 @@
   {
     "__type__": "LalianHitStageConfig",
     "endProgress": 0.3,
-    "hitCountPerStep": 3
+    "hitCountPerStep": 5
   },
   {
     "__type__": "LalianHitStageConfig",
     "endProgress": 0.6,
-    "hitCountPerStep": 4
+    "hitCountPerStep": 7
   },
   {
     "__type__": "LalianHitStageConfig",
     "endProgress": 1,
-    "hitCountPerStep": 6
+    "hitCountPerStep": 9
   },
   {
     "__type__": "cc.Node",

@@ -521,6 +521,7 @@
     "smallMonsterAttackOffsetZ": 1.8,
     "smallMonsterAttackLockOffsetX": 0.55,
     "smallMonsterAttackLockOffsetZ": 0.22,
+    "smallMonsterDeathAnimPeakReduce": 3,
     "_id": ""
   },
   {
