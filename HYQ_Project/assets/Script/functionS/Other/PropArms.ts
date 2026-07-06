@@ -97,6 +97,10 @@ export class PropArms extends BattleTarget3D {
     private static readonly oilBurstDestroyScale: number = 1.01;
     private static readonly oilBurstShardCount: number = 8;
     private static readonly oilBurstShardDuration: number = 0.46;
+    private static readonly oilHitScaleStepDuration: number = 0.08;
+    private static readonly oilHitScaleTotalDuration: number = 0.24;
+    private static readonly oilHitScaleUpRate: number = 1.08;
+    private static readonly oilHitScaleDownRate: number = 0.96;
     private static readonly oilHitFlashDuration: number = 0.16;
     private static readonly oilHitFlashColor: Color = new Color(255, 188, 36, 255);
     private static readonly oilHitFlashIntensity: number = 0.5;
@@ -247,11 +251,11 @@ export class PropArms extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '动画速度倍率', tooltip: '受击、底座消失、拉链收拢等动画的速度倍率。数值越大动画越慢。' })
     public animScale: number = 1;
 
-    @property({ type: CCFloat, displayName: '武器图片受击放大倍率', tooltip: '油桶受击时 weapon 图片先放大的倍率。' })
-    public weaponHitScaleUp: number = 1.16;
+    @property({ type: CCFloat, displayName: '油桶/武器受击放大倍率', tooltip: '油桶和 weapon 图片受击时同步放大的倍率。' })
+    public weaponHitScaleUp: number = PropArms.oilHitScaleUpRate;
 
-    @property({ type: CCFloat, displayName: '武器图片受击压缩倍率', tooltip: '油桶受击时 weapon 图片回弹压缩的倍率。' })
-    public weaponHitScaleDown: number = 0.9;
+    @property({ type: CCFloat, displayName: '油桶/武器受击压缩倍率', tooltip: '油桶和 weapon 图片受击时同步回弹压缩的倍率。' })
+    public weaponHitScaleDown: number = PropArms.oilHitScaleDownRate;
 
     @property({ type: Node, displayName: '石板/承载节点', tooltip: '武器下方跟随抬升、死亡后下砸的承载节点。没有该节点时只触发武器完成事件。' })
     public wallNode: Node;
@@ -283,6 +287,7 @@ export class PropArms extends BattleTarget3D {
     private readonly weaponVisualScaleMap: Map<Node, Vec3> = new Map();
     private readonly weaponVisualHitPulseStateMap: Map<Node, WeaponVisualHitPulseState> = new Map();
     private readonly manualBottomBaseNodeSet: Set<Node> = new Set();
+    private stageVisualGroup: Node | null = null;
     private readonly bottomBaseRollAxis: Vec3 = new Vec3(0, 1, 0);
     private readonly roleTemplateBottomBasePos: Vec3 = new Vec3();
     private readonly roleTemplateArmsPos: Vec3 = new Vec3();
@@ -316,6 +321,7 @@ export class PropArms extends BattleTarget3D {
         if (this.tireList.length > shouldRemain) {
             this.destroyOneTire();
             this.playOilBarrelHitFlash();
+            this._playBottomTireHit();
         } else if (!this._isShake && this.tireList.length > 0) {
             // 没销毁轮胎：所有轮胎波浪缩放+闪红
             this._isShake = true;
@@ -454,37 +460,29 @@ export class PropArms extends BattleTarget3D {
 
     /** 正常受击：所有轮胎依次延迟播放松缩放（放大→回弹→恢复） */
     private _playBottomTireHit(): void {
-        if (this.tireList.length <= 0) return;
-        AudioManager.inst.playOneShot(SoundEnum.Sound_tire_hit, 0.4, 0.08);
-        const staggerDelay = 0.05;
-        const lastIdx = this.tireList.length - 1;
-        for (let i = 0; i < this.tireList.length; i++) {
-            const tire = this.tireList[i];
-            Tween.stopAllByTarget(tire);
-            this.resetBottomBaseRootScale(tire);
-
-            // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
-
-            const s1 = this.getBottomBaseRootScale(tire);
-            const s2 = this.getBottomBaseRootScale(tire, 1.08);
-
-            const s3 = this.getBottomBaseRootScale(tire, 0.96);
-            // s3.x = 0.8; s3.y = 0.8; s3.z = 0.8;
-
-            const isLast = i >= lastIdx;
-            tween(tire)
-                .delay(i * staggerDelay)
-                .to(0.08, { scale: s2 }, { easing: 'cubicOut' })
-                .to(0.08, { scale: s3 }, { easing: 'cubicOut' })
-                .to(0.08, { scale: s1 }, { easing: 'backOut' })
-                .call(() => {
-                    if (isLast) {
-                        this._isShake = false;
-                        this._shakeCooldown = 0;
-                    }
-                })
-                .start();
+        const stageVisualGroup = this.stageVisualGroup;
+        if (!stageVisualGroup?.isValid) {
+            this._isShake = false;
+            this._shakeCooldown = 0;
+            return;
         }
+        AudioManager.inst.playOneShot(SoundEnum.Sound_tire_hit, 0.4, 0.08);
+        const scaleUpRate = this.getOilHitScaleUpRate();
+        const scaleDownRate = this.getOilHitScaleDownRate(scaleUpRate);
+        const s1 = this.getWeaponVisualOriginalScale(stageVisualGroup);
+        const s2 = v3(s1.x * scaleUpRate, s1.y * scaleUpRate, s1.z * scaleUpRate);
+        const s3 = v3(s1.x * scaleDownRate, s1.y * scaleDownRate, s1.z * scaleDownRate);
+        Tween.stopAllByTarget(stageVisualGroup);
+        stageVisualGroup.setScale(s1);
+        tween(stageVisualGroup)
+            .to(PropArms.oilHitScaleStepDuration, { scale: s2 }, { easing: 'cubicOut' })
+            .to(PropArms.oilHitScaleStepDuration, { scale: s3 }, { easing: 'cubicOut' })
+            .to(PropArms.oilHitScaleStepDuration, { scale: s1 }, { easing: 'backOut' })
+            .call(() => {
+                this._isShake = false;
+                this._shakeCooldown = 0;
+            })
+            .start();
     }
 
     private playLalianHit(): void {
@@ -793,12 +791,13 @@ export class PropArms extends BattleTarget3D {
                 this._isStageAlive = false;
                 return;
             }
+            this.attachNodeToStageVisualGroup(visualRoot);
             this._curArmsUsesSpriteVisual = this.hasNodeByName(visualRoot, PropArms.weaponPickupVisualName)
                 || this.hasNodeByName(visualRoot, PropArms.spriteWeaponVisualName);
             this._curArmsSpriteTargetY = visualRoot.y;
             this._isStageAlive = true;
             this.clearWeaponVisualHitPulseState();
-            this.cacheWeaponVisualOriginalScales(visualRoot);
+            this.cacheWeaponVisualOriginalScales(this.getOrCreateStageVisualGroup());
             this.initLalian();
 
             const tireSpacing = this.tireSpacing;
@@ -837,8 +836,9 @@ export class PropArms extends BattleTarget3D {
                 for (let i = 0; i < tireCount; i++) {
                     const tire = manualBottomBases[i] ?? this.tire;
                     this.tireList.push(tire);
-                    if (tire.parent !== this.node) {
-                        this.node.addChild(tire);
+                    const stageVisualGroup = this.getOrCreateStageVisualGroup();
+                    if (tire.parent !== stageVisualGroup) {
+                        stageVisualGroup.addChild(tire);
                     }
                     const tireTargetPos = this.getBottomBaseTargetPosition(i, tire);
                     tire.setPosition(tireTargetPos.x, tireTargetPos.y - tireSpacing, tireTargetPos.z);
@@ -963,6 +963,7 @@ export class PropArms extends BattleTarget3D {
     private collectManualBottomBases(maxCount: number): Node[] {
         const result: Node[] = [];
         const roleNode = this.getCurrentArmsVisualRoot(this._curArms);
+        const stageVisualGroup = this.getOrCreateStageVisualGroup();
         if (roleNode) {
             this.collectBottomBaseNodes(roleNode, result, true);
         }
@@ -978,8 +979,8 @@ export class PropArms extends BattleTarget3D {
             Tween.stopAllByTarget(node);
             node.active = true;
             this.resetBottomBaseBurstVisual(node);
-            if (node.parent !== this.node) {
-                node.setParent(this.node, true);
+            if (node.parent !== stageVisualGroup) {
+                node.setParent(stageVisualGroup, true);
             }
             this.manualBottomBaseNodeSet.add(node);
             this.getBottomBaseOriginalScale(node);
@@ -988,6 +989,28 @@ export class PropArms extends BattleTarget3D {
             this.bottomBaseTargetPosMap.set(node, node.position.clone());
         }
         return selected;
+    }
+
+    private getOrCreateStageVisualGroup(): Node {
+        if (this.stageVisualGroup?.isValid) {
+            return this.stageVisualGroup;
+        }
+        const group = new Node("StageVisualGroup");
+        group.setPosition(Vec3.ZERO);
+        group.setScale(Vec3.ONE);
+        this.node.addChild(group);
+        this.stageVisualGroup = group;
+        return group;
+    }
+
+    private attachNodeToStageVisualGroup(node: Node | null): void {
+        if (!node?.isValid) {
+            return;
+        }
+        const group = this.getOrCreateStageVisualGroup();
+        if (node.parent !== group) {
+            node.setParent(group, true);
+        }
     }
 
     private collectBottomBaseNodes(root: Node, out: Node[], recursive: boolean): void {
@@ -1172,19 +1195,17 @@ export class PropArms extends BattleTarget3D {
         if (!root) {
             return;
         }
-        const spriteNodes: Node[] = [];
-        PropArms.collectNodesByName(root, PropArms.weaponPickupVisualName, spriteNodes);
-        PropArms.collectNodesByName(root, PropArms.spriteWeaponVisualName, spriteNodes);
-        for (let i = 0; i < spriteNodes.length; i++) {
-            const spriteNode = spriteNodes[i];
-            if (!spriteNode?.isValid) {
-                continue;
-            }
-            this.weaponVisualScaleMap.set(spriteNode, spriteNode.scale.clone());
-        }
+        this.weaponVisualScaleMap.set(root, root.scale.clone());
     }
 
     private clearWeaponVisualHitPulseState(resetScale: boolean = true): void {
+        const stageVisualGroup = this.stageVisualGroup;
+        if (stageVisualGroup?.isValid) {
+            Tween.stopAllByTarget(stageVisualGroup);
+            if (resetScale) {
+                stageVisualGroup.setScale(this.getWeaponVisualOriginalScale(stageVisualGroup));
+            }
+        }
         this.weaponVisualHitPulseStateMap.forEach((_, node) => {
             if (!node?.isValid) {
                 return;
@@ -1195,6 +1216,14 @@ export class PropArms extends BattleTarget3D {
             }
         });
         this.weaponVisualHitPulseStateMap.clear();
+    }
+
+    private getOilHitScaleUpRate(): number {
+        return Math.max(1, this.weaponHitScaleUp);
+    }
+
+    private getOilHitScaleDownRate(scaleUpRate: number = this.getOilHitScaleUpRate()): number {
+        return Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
     }
 
     private updateWeaponVisualHitPulse(dt: number): void {
@@ -1210,19 +1239,25 @@ export class PropArms extends BattleTarget3D {
 
             state.elapsed += dt;
             const originalScale = this.getWeaponVisualOriginalScale(node);
-            const scaleUpRate = Math.max(1, this.weaponHitScaleUp);
-            const scaleDownRate = Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
+            const scaleUpRate = this.getOilHitScaleUpRate();
+            const scaleDownRate = this.getOilHitScaleDownRate(scaleUpRate);
             const rawT = Math.min(1, state.elapsed / Math.max(0.01, state.duration));
             let currentRate = 1;
 
-            if (rawT < 0.35) {
-                const segmentT = rawT / 0.35;
-                const easedT = segmentT * segmentT * (3 - 2 * segmentT);
-                currentRate = scaleDownRate + (scaleUpRate - scaleDownRate) * easedT;
+            if (rawT < 1 / 3) {
+                const segmentT = rawT * 3;
+                const easedT = 1 - Math.pow(1 - segmentT, 3);
+                currentRate = 1 + (scaleUpRate - 1) * easedT;
+            } else if (rawT < 2 / 3) {
+                const segmentT = (rawT - 1 / 3) * 3;
+                const easedT = 1 - Math.pow(1 - segmentT, 3);
+                currentRate = scaleUpRate + (scaleDownRate - scaleUpRate) * easedT;
             } else {
-                const segmentT = (rawT - 0.35) / 0.65;
-                const easedT = 1 - Math.pow(1 - segmentT, 2);
-                currentRate = scaleUpRate + (1 - scaleUpRate) * easedT;
+                const segmentT = (rawT - 2 / 3) * 3;
+                const c1 = 1.70158;
+                const c3 = c1 + 1;
+                const easedT = 1 + c3 * Math.pow(segmentT - 1, 3) + c1 * Math.pow(segmentT - 1, 2);
+                currentRate = scaleDownRate + (1 - scaleDownRate) * easedT;
             }
 
             node.setScale(
@@ -1410,7 +1445,6 @@ export class PropArms extends BattleTarget3D {
         if (this.isDie) {
             return;
         }
-        this.playSpriteWeaponHitScale(PropArms.oilHitFlashDuration);
         if (this.tireList.length <= 0 || !this.meshFlashDataList?.length) {
             return;
         }
@@ -1645,44 +1679,23 @@ export class PropArms extends BattleTarget3D {
     }
 
     private playSpriteWeaponHitScale(totalDuration: number): void {
-        const weaponRoot = this.getCurrentArmsVisualRoot(this._curArms);
-        if (!weaponRoot) {
+        const stageVisualGroup = this.stageVisualGroup;
+        if (!stageVisualGroup?.isValid) {
             return;
         }
-
-        const spriteNodes: Node[] = [];
-        PropArms.collectNodesByName(weaponRoot, PropArms.weaponPickupVisualName, spriteNodes);
-        if (spriteNodes.length <= 0) {
-            PropArms.collectNodesByName(weaponRoot, PropArms.spriteWeaponVisualName, spriteNodes);
-        }
-        if (spriteNodes.length <= 0) {
-            return;
-        }
-
-        for (let i = 0; i < spriteNodes.length; i++) {
-            const spriteNode = spriteNodes[i];
-            if (!spriteNode || !spriteNode.isValid || !spriteNode.activeInHierarchy) {
-                continue;
-            }
-
-            const pulseState = this.weaponVisualHitPulseStateMap.get(spriteNode);
-            if (pulseState && pulseState.elapsed < pulseState.duration) {
-                continue;
-            }
-
-            Tween.stopAllByTarget(spriteNode);
-            const originalScale = this.getWeaponVisualOriginalScale(spriteNode);
-            const scaleDownRate = Math.max(0.01, Math.min(Math.max(1, this.weaponHitScaleUp), this.weaponHitScaleDown));
-            spriteNode.setScale(
-                originalScale.x * scaleDownRate,
-                originalScale.y * scaleDownRate,
-                originalScale.z * scaleDownRate,
-            );
-            this.weaponVisualHitPulseStateMap.set(spriteNode, {
-                elapsed: 0,
-                duration: Math.max(0.01, totalDuration),
-            });
-        }
+        const scaleUpRate = this.getOilHitScaleUpRate();
+        const scaleDownRate = this.getOilHitScaleDownRate(scaleUpRate);
+        const segmentDuration = Math.max(0.01, totalDuration) / 3;
+        const originalScale = this.getWeaponVisualOriginalScale(stageVisualGroup);
+        const scaleUp = v3(originalScale.x * scaleUpRate, originalScale.y * scaleUpRate, originalScale.z * scaleUpRate);
+        const scaleDown = v3(originalScale.x * scaleDownRate, originalScale.y * scaleDownRate, originalScale.z * scaleDownRate);
+        Tween.stopAllByTarget(stageVisualGroup);
+        stageVisualGroup.setScale(originalScale);
+        tween(stageVisualGroup)
+            .to(segmentDuration, { scale: scaleUp }, { easing: 'cubicOut' })
+            .to(segmentDuration, { scale: scaleDown }, { easing: 'cubicOut' })
+            .to(segmentDuration, { scale: originalScale }, { easing: 'backOut' })
+            .start();
     }
 
     private getOilBurstSourceMaterial(records: OilBurstMaterialRecord[]): Material | null {
@@ -2319,7 +2332,6 @@ export class PropArms extends BattleTarget3D {
         // 轮胎平滑插值到正确位置
         this._updateTireDrop(dt);
         this.updateBottomBaseRoll(dt);
-        this.updateWeaponVisualHitPulse(dt);
 
         // _isShake冷却（非销毁受击用）
         if (this._shakeCooldown > 0) {

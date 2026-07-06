@@ -355,12 +355,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '受击、底座消失、拉链收拢等动画的速度倍率。数值越大动画越慢。'
       }), _dec22 = property({
         type: CCFloat,
-        displayName: '武器图片受击放大倍率',
-        tooltip: '油桶受击时 weapon 图片先放大的倍率。'
+        displayName: '油桶/武器受击放大倍率',
+        tooltip: '油桶和 weapon 图片受击时同步放大的倍率。'
       }), _dec23 = property({
         type: CCFloat,
-        displayName: '武器图片受击压缩倍率',
-        tooltip: '油桶受击时 weapon 图片回弹压缩的倍率。'
+        displayName: '油桶/武器受击压缩倍率',
+        tooltip: '油桶和 weapon 图片受击时同步回弹压缩的倍率。'
       }), _dec24 = property({
         type: Node,
         displayName: '石板/承载节点',
@@ -482,6 +482,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.weaponVisualScaleMap = new Map();
           this.weaponVisualHitPulseStateMap = new Map();
           this.manualBottomBaseNodeSet = new Set();
+          this.stageVisualGroup = null;
           this.bottomBaseRollAxis = new Vec3(0, 1, 0);
           this.roleTemplateBottomBasePos = new Vec3();
           this.roleTemplateArmsPos = new Vec3();
@@ -620,6 +621,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (this.tireList.length > shouldRemain) {
             this.destroyOneTire();
             this.playOilBarrelHitFlash();
+
+            this._playBottomTireHit();
           } else if (!this._isShake && this.tireList.length > 0) {
             // 没销毁轮胎：所有轮胎波浪缩放+闪红
             this._isShake = true;
@@ -825,55 +828,42 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
 
         _playBottomTireHit() {
-          var _this2 = this;
+          var stageVisualGroup = this.stageVisualGroup;
 
-          if (this.tireList.length <= 0) return;
+          if (!(stageVisualGroup != null && stageVisualGroup.isValid)) {
+            this._isShake = false;
+            this._shakeCooldown = 0;
+            return;
+          }
+
           (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
             error: Error()
           }), AudioManager) : AudioManager).inst.playOneShot((_crd && SoundEnum === void 0 ? (_reportPossibleCrUseOfSoundEnum({
             error: Error()
           }), SoundEnum) : SoundEnum).Sound_tire_hit, 0.4, 0.08);
-          var staggerDelay = 0.05;
-          var lastIdx = this.tireList.length - 1;
-
-          var _loop2 = function _loop2() {
-            var tire = _this2.tireList[i];
-            Tween.stopAllByTarget(tire);
-
-            _this2.resetBottomBaseRootScale(tire); // const s1 = PoolManager.instance.V3.set(Vec3.ONE);
-
-
-            var s1 = _this2.getBottomBaseRootScale(tire);
-
-            var s2 = _this2.getBottomBaseRootScale(tire, 1.08);
-
-            var s3 = _this2.getBottomBaseRootScale(tire, 0.96); // s3.x = 0.8; s3.y = 0.8; s3.z = 0.8;
-
-
-            var isLast = i >= lastIdx;
-            tween(tire).delay(i * staggerDelay).to(0.08, {
-              scale: s2
-            }, {
-              easing: 'cubicOut'
-            }).to(0.08, {
-              scale: s3
-            }, {
-              easing: 'cubicOut'
-            }).to(0.08, {
-              scale: s1
-            }, {
-              easing: 'backOut'
-            }).call(() => {
-              if (isLast) {
-                _this2._isShake = false;
-                _this2._shakeCooldown = 0;
-              }
-            }).start();
-          };
-
-          for (var i = 0; i < this.tireList.length; i++) {
-            _loop2();
-          }
+          var scaleUpRate = this.getOilHitScaleUpRate();
+          var scaleDownRate = this.getOilHitScaleDownRate(scaleUpRate);
+          var s1 = this.getWeaponVisualOriginalScale(stageVisualGroup);
+          var s2 = v3(s1.x * scaleUpRate, s1.y * scaleUpRate, s1.z * scaleUpRate);
+          var s3 = v3(s1.x * scaleDownRate, s1.y * scaleDownRate, s1.z * scaleDownRate);
+          Tween.stopAllByTarget(stageVisualGroup);
+          stageVisualGroup.setScale(s1);
+          tween(stageVisualGroup).to(PropArms.oilHitScaleStepDuration, {
+            scale: s2
+          }, {
+            easing: 'cubicOut'
+          }).to(PropArms.oilHitScaleStepDuration, {
+            scale: s3
+          }, {
+            easing: 'cubicOut'
+          }).to(PropArms.oilHitScaleStepDuration, {
+            scale: s1
+          }, {
+            easing: 'backOut'
+          }).call(() => {
+            this._isShake = false;
+            this._shakeCooldown = 0;
+          }).start();
         }
 
         playLalianHit() {
@@ -1262,11 +1252,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               return;
             }
 
+            this.attachNodeToStageVisualGroup(visualRoot);
             this._curArmsUsesSpriteVisual = this.hasNodeByName(visualRoot, PropArms.weaponPickupVisualName) || this.hasNodeByName(visualRoot, PropArms.spriteWeaponVisualName);
             this._curArmsSpriteTargetY = visualRoot.y;
             this._isStageAlive = true;
             this.clearWeaponVisualHitPulseState();
-            this.cacheWeaponVisualOriginalScales(visualRoot);
+            this.cacheWeaponVisualOriginalScales(this.getOrCreateStageVisualGroup());
             this.initLalian();
             var tireSpacing = this.tireSpacing;
             var wallHeight = currentArms.wallHeight;
@@ -1308,9 +1299,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
                 var tire = (_manualBottomBases$_i = manualBottomBases[_i4]) != null ? _manualBottomBases$_i : this.tire;
                 this.tireList.push(tire);
+                var stageVisualGroup = this.getOrCreateStageVisualGroup();
 
-                if (tire.parent !== this.node) {
-                  this.node.addChild(tire);
+                if (tire.parent !== stageVisualGroup) {
+                  stageVisualGroup.addChild(tire);
                 }
 
                 var tireTargetPos = this.getBottomBaseTargetPosition(_i4, tire);
@@ -1458,6 +1450,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         collectManualBottomBases(maxCount) {
           var result = [];
           var roleNode = this.getCurrentArmsVisualRoot(this._curArms);
+          var stageVisualGroup = this.getOrCreateStageVisualGroup();
 
           if (roleNode) {
             this.collectBottomBaseNodes(roleNode, result, true);
@@ -1477,8 +1470,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             node.active = true;
             this.resetBottomBaseBurstVisual(node);
 
-            if (node.parent !== this.node) {
-              node.setParent(this.node, true);
+            if (node.parent !== stageVisualGroup) {
+              node.setParent(stageVisualGroup, true);
             }
 
             this.manualBottomBaseNodeSet.add(node);
@@ -1489,6 +1482,33 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           return selected;
+        }
+
+        getOrCreateStageVisualGroup() {
+          var _this$stageVisualGrou;
+
+          if ((_this$stageVisualGrou = this.stageVisualGroup) != null && _this$stageVisualGrou.isValid) {
+            return this.stageVisualGroup;
+          }
+
+          var group = new Node("StageVisualGroup");
+          group.setPosition(Vec3.ZERO);
+          group.setScale(Vec3.ONE);
+          this.node.addChild(group);
+          this.stageVisualGroup = group;
+          return group;
+        }
+
+        attachNodeToStageVisualGroup(node) {
+          if (!(node != null && node.isValid)) {
+            return;
+          }
+
+          var group = this.getOrCreateStageVisualGroup();
+
+          if (node.parent !== group) {
+            node.setParent(group, true);
+          }
         }
 
         collectBottomBaseNodes(root, out, recursive) {
@@ -1713,24 +1733,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          var spriteNodes = [];
-          PropArms.collectNodesByName(root, PropArms.weaponPickupVisualName, spriteNodes);
-          PropArms.collectNodesByName(root, PropArms.spriteWeaponVisualName, spriteNodes);
-
-          for (var i = 0; i < spriteNodes.length; i++) {
-            var spriteNode = spriteNodes[i];
-
-            if (!(spriteNode != null && spriteNode.isValid)) {
-              continue;
-            }
-
-            this.weaponVisualScaleMap.set(spriteNode, spriteNode.scale.clone());
-          }
+          this.weaponVisualScaleMap.set(root, root.scale.clone());
         }
 
         clearWeaponVisualHitPulseState(resetScale) {
           if (resetScale === void 0) {
             resetScale = true;
+          }
+
+          var stageVisualGroup = this.stageVisualGroup;
+
+          if (stageVisualGroup != null && stageVisualGroup.isValid) {
+            Tween.stopAllByTarget(stageVisualGroup);
+
+            if (resetScale) {
+              stageVisualGroup.setScale(this.getWeaponVisualOriginalScale(stageVisualGroup));
+            }
           }
 
           this.weaponVisualHitPulseStateMap.forEach((_, node) => {
@@ -1747,6 +1765,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.weaponVisualHitPulseStateMap.clear();
         }
 
+        getOilHitScaleUpRate() {
+          return Math.max(1, this.weaponHitScaleUp);
+        }
+
+        getOilHitScaleDownRate(scaleUpRate) {
+          if (scaleUpRate === void 0) {
+            scaleUpRate = this.getOilHitScaleUpRate();
+          }
+
+          return Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
+        }
+
         updateWeaponVisualHitPulse(dt) {
           if (this.weaponVisualHitPulseStateMap.size <= 0) {
             return;
@@ -1761,21 +1791,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             state.elapsed += dt;
             var originalScale = this.getWeaponVisualOriginalScale(node);
-            var scaleUpRate = Math.max(1, this.weaponHitScaleUp);
-            var scaleDownRate = Math.max(0.01, Math.min(scaleUpRate, this.weaponHitScaleDown));
+            var scaleUpRate = this.getOilHitScaleUpRate();
+            var scaleDownRate = this.getOilHitScaleDownRate(scaleUpRate);
             var rawT = Math.min(1, state.elapsed / Math.max(0.01, state.duration));
             var currentRate = 1;
 
-            if (rawT < 0.35) {
-              var segmentT = rawT / 0.35;
-              var easedT = segmentT * segmentT * (3 - 2 * segmentT);
-              currentRate = scaleDownRate + (scaleUpRate - scaleDownRate) * easedT;
+            if (rawT < 1 / 3) {
+              var segmentT = rawT * 3;
+              var easedT = 1 - Math.pow(1 - segmentT, 3);
+              currentRate = 1 + (scaleUpRate - 1) * easedT;
+            } else if (rawT < 2 / 3) {
+              var _segmentT = (rawT - 1 / 3) * 3;
+
+              var _easedT = 1 - Math.pow(1 - _segmentT, 3);
+
+              currentRate = scaleUpRate + (scaleDownRate - scaleUpRate) * _easedT;
             } else {
-              var _segmentT = (rawT - 0.35) / 0.65;
+              var _segmentT2 = (rawT - 2 / 3) * 3;
 
-              var _easedT = 1 - Math.pow(1 - _segmentT, 2);
+              var c1 = 1.70158;
+              var c3 = c1 + 1;
 
-              currentRate = scaleUpRate + (1 - scaleUpRate) * _easedT;
+              var _easedT2 = 1 + c3 * Math.pow(_segmentT2 - 1, 3) + c1 * Math.pow(_segmentT2 - 1, 2);
+
+              currentRate = scaleDownRate + (1 - scaleDownRate) * _easedT2;
             }
 
             node.setScale(originalScale.x * currentRate, originalScale.y * currentRate, originalScale.z * currentRate);
@@ -1996,8 +2035,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          this.playSpriteWeaponHitScale(PropArms.oilHitFlashDuration);
-
           if (this.tireList.length <= 0 || !((_this$meshFlashDataLi = this.meshFlashDataList) != null && _this$meshFlashDataLi.length)) {
             return;
           }
@@ -2062,7 +2099,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         spawnOilBurstShards(node, records, groupIndex) {
           var _this$getOilBurstSour,
-              _this3 = this;
+              _this2 = this;
 
           if (!node) {
             return;
@@ -2083,8 +2120,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var burstCenter = this.getOilBurstShardWorldCenter(node);
           var baseSize = this.getOilBurstShardBaseSize(node);
 
-          var _loop3 = function _loop3() {
-            var dir = _this3.getOilBurstShardDirection(i, burstCenter);
+          var _loop2 = function _loop2() {
+            var dir = _this2.getOilBurstShardDirection(i, burstCenter);
 
             var startRadius = baseSize * (0.04 + i % 3 * 0.02);
             var shardNode = new Node("OilBurstShard_" + groupIndex + "_" + i);
@@ -2094,9 +2131,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var startScale = 0.88 + i % 3 * 0.04;
             shardNode.setScale(startScale, startScale, startScale);
             var renderer = shardNode.addComponent(MeshRenderer);
-            renderer.mesh = _this3.createOilBurstShardMesh(baseSize, i);
+            renderer.mesh = _this2.createOilBurstShardMesh(baseSize, i);
 
-            var material = _this3.createOilBurstShardMaterial(sourceMaterial);
+            var material = _this2.createOilBurstShardMaterial(sourceMaterial);
 
             renderer.setSharedMaterial(material, 0);
             var spread = baseSize * (3.15 + i % 4 * 0.5) * 1.3;
@@ -2117,7 +2154,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 var scale = startScale + (endScale - startScale) * t;
                 shardNode.setScale(scale, scale, scale);
 
-                _this3.setOilBurstShardMaterialProgress(material, t);
+                _this2.setOilBurstShardMaterialProgress(material, t);
               }
             }).call(() => {
               var _renderer$mesh;
@@ -2129,12 +2166,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           };
 
           for (var i = 0; i < PropArms.oilBurstShardCount; i++) {
-            _loop3();
+            _loop2();
           }
         }
 
         playBottomBasePrefabBurst(node, groupIndex) {
-          var _this4 = this;
+          var _this3 = this;
 
           var burstRoot = this.getBottomBaseBurstRoot(node);
 
@@ -2152,7 +2189,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var baseSize = Math.max(0.22, this.getOilBurstShardBaseSize(node) * 0.72);
           var maxDelay = groupIndex * PropArms.oilBurstDestroyDelayStep;
 
-          var _loop4 = function _loop4() {
+          var _loop3 = function _loop3() {
             var shard = burstRoot.children[_i6];
 
             if (!shard) {
@@ -2161,11 +2198,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             Tween.stopAllByTarget(shard);
 
-            var originalPos = _this4.getBottomBaseOriginalPos(shard);
+            var originalPos = _this3.getBottomBaseOriginalPos(shard);
 
-            var originalScale = _this4.getBottomBaseOriginalScale(shard);
+            var originalScale = _this3.getBottomBaseOriginalScale(shard);
 
-            var originalEuler = _this4.getBottomBaseOriginalEuler(shard);
+            var originalEuler = _this3.getBottomBaseOriginalEuler(shard);
 
             shard.active = true;
             shard.setPosition(originalPos);
@@ -2173,12 +2210,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             shard.eulerAngles = originalEuler;
             var startWorldPos = shard.worldPosition.clone();
 
-            var dir = _this4.getOilBurstShardDirection(_i6, burstCenter, startWorldPos);
+            var dir = _this3.getOilBurstShardDirection(_i6, burstCenter, startWorldPos);
 
             var delay = groupIndex * PropArms.oilBurstDestroyDelayStep + _i6 * 0.012;
             var spread = baseSize * (2.1 + _i6 % 3 * 0.34) * 1.3;
 
-            var fadeMaterialRecords = _this4.createOilBurstShardFadeMaterialRecords(shard);
+            var fadeMaterialRecords = _this3.createOilBurstShardFadeMaterialRecords(shard);
 
             maxDelay = Math.max(maxDelay, delay);
             var flightState = {
@@ -2196,11 +2233,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 var scale = 1 - 0.5 * t;
                 shard.setScale(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
 
-                _this4.applyOilBurstShardFadeProgress(fadeMaterialRecords, t);
+                _this3.applyOilBurstShardFadeProgress(fadeMaterialRecords, t);
               }
             }).call(() => {
               if (!shard || !shard.isValid) {
-                _this4.restoreOilBurstShardFadeMaterials(fadeMaterialRecords);
+                _this3.restoreOilBurstShardFadeMaterials(fadeMaterialRecords);
 
                 return;
               }
@@ -2209,14 +2246,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               shard.setScale(originalScale);
               shard.eulerAngles = originalEuler;
 
-              _this4.restoreOilBurstShardFadeMaterials(fadeMaterialRecords);
+              _this3.restoreOilBurstShardFadeMaterials(fadeMaterialRecords);
 
               shard.active = false;
             }).start();
           };
 
           for (var _i6 = 0; _i6 < burstRoot.children.length; _i6++) {
-            if (_loop4()) continue;
+            if (_loop3()) continue;
           }
 
           return maxDelay + PropArms.oilBurstShardDuration;
@@ -2268,45 +2305,33 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         playSpriteWeaponHitScale(totalDuration) {
-          var weaponRoot = this.getCurrentArmsVisualRoot(this._curArms);
+          var stageVisualGroup = this.stageVisualGroup;
 
-          if (!weaponRoot) {
+          if (!(stageVisualGroup != null && stageVisualGroup.isValid)) {
             return;
           }
 
-          var spriteNodes = [];
-          PropArms.collectNodesByName(weaponRoot, PropArms.weaponPickupVisualName, spriteNodes);
-
-          if (spriteNodes.length <= 0) {
-            PropArms.collectNodesByName(weaponRoot, PropArms.spriteWeaponVisualName, spriteNodes);
-          }
-
-          if (spriteNodes.length <= 0) {
-            return;
-          }
-
-          for (var i = 0; i < spriteNodes.length; i++) {
-            var spriteNode = spriteNodes[i];
-
-            if (!spriteNode || !spriteNode.isValid || !spriteNode.activeInHierarchy) {
-              continue;
-            }
-
-            var pulseState = this.weaponVisualHitPulseStateMap.get(spriteNode);
-
-            if (pulseState && pulseState.elapsed < pulseState.duration) {
-              continue;
-            }
-
-            Tween.stopAllByTarget(spriteNode);
-            var originalScale = this.getWeaponVisualOriginalScale(spriteNode);
-            var scaleDownRate = Math.max(0.01, Math.min(Math.max(1, this.weaponHitScaleUp), this.weaponHitScaleDown));
-            spriteNode.setScale(originalScale.x * scaleDownRate, originalScale.y * scaleDownRate, originalScale.z * scaleDownRate);
-            this.weaponVisualHitPulseStateMap.set(spriteNode, {
-              elapsed: 0,
-              duration: Math.max(0.01, totalDuration)
-            });
-          }
+          var scaleUpRate = this.getOilHitScaleUpRate();
+          var scaleDownRate = this.getOilHitScaleDownRate(scaleUpRate);
+          var segmentDuration = Math.max(0.01, totalDuration) / 3;
+          var originalScale = this.getWeaponVisualOriginalScale(stageVisualGroup);
+          var scaleUp = v3(originalScale.x * scaleUpRate, originalScale.y * scaleUpRate, originalScale.z * scaleUpRate);
+          var scaleDown = v3(originalScale.x * scaleDownRate, originalScale.y * scaleDownRate, originalScale.z * scaleDownRate);
+          Tween.stopAllByTarget(stageVisualGroup);
+          stageVisualGroup.setScale(originalScale);
+          tween(stageVisualGroup).to(segmentDuration, {
+            scale: scaleUp
+          }, {
+            easing: 'cubicOut'
+          }).to(segmentDuration, {
+            scale: scaleDown
+          }, {
+            easing: 'cubicOut'
+          }).to(segmentDuration, {
+            scale: originalScale
+          }, {
+            easing: 'backOut'
+          }).start();
         }
 
         getOilBurstSourceMaterial(records) {
@@ -3068,8 +3093,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this._updateTireDrop(dt);
 
-          this.updateBottomBaseRoll(dt);
-          this.updateWeaponVisualHitPulse(dt); // _isShake冷却（非销毁受击用）
+          this.updateBottomBaseRoll(dt); // _isShake冷却（非销毁受击用）
 
           if (this._shakeCooldown > 0) {
             this._shakeCooldown -= dt;
@@ -3147,7 +3171,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return (_arms$runtimeVisualRo = arms.runtimeVisualRoot) != null && _arms$runtimeVisualRo.isValid ? arms.runtimeVisualRoot : null;
         }
 
-      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.12, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilBurstDestroyScale = 1.01, _class6.oilBurstShardCount = 8, _class6.oilBurstShardDuration = 0.46, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.oilHitFlashIntensity = 0.5, _class6.weaponPickupVisualName = "weapon", _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
+      }, _class6.oilBurstMaterialPath = "Materials/OilBarrelBurst", _class6.oilHitFlashMaterialPath = "Materials/OilBarrelHitFlash", _class6.oilBurstMaterial = null, _class6.oilBurstMaterialLoading = false, _class6.oilHitFlashMaterial = null, _class6.oilHitFlashMaterialLoading = false, _class6.oilBurstDestroyDuration = 0.12, _class6.oilBurstDestroyDelayStep = 0.05, _class6.oilBurstDestroyScale = 1.01, _class6.oilBurstShardCount = 8, _class6.oilBurstShardDuration = 0.46, _class6.oilHitScaleStepDuration = 0.08, _class6.oilHitScaleTotalDuration = 0.24, _class6.oilHitScaleUpRate = 1.08, _class6.oilHitScaleDownRate = 0.96, _class6.oilHitFlashDuration = 0.16, _class6.oilHitFlashColor = new Color(255, 188, 36, 255), _class6.oilHitFlashIntensity = 0.5, _class6.weaponPickupVisualName = "weapon", _class6.spriteWeaponVisualName = "jiatelin", _class6.modelWeaponVisualName = "jiateling01", _class6), (_descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "armsInfoList", [_dec12], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -3222,14 +3246,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return 1.16;
+          return PropArms.oilHitScaleUpRate;
         }
       }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "weaponHitScaleDown", [_dec23], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return 0.9;
+          return PropArms.oilHitScaleDownRate;
         }
       }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "wallNode", [_dec24], {
         configurable: true,

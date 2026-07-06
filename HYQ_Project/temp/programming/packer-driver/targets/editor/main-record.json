@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 95148094.4508,
+      "mTimestamp": 325148324.5421,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -24022,7 +24022,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts": {
       "mTimestamp": {
-        "mtime": 1783059670281.6616,
+        "mtime": 1783073862173.288,
         "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
       },
       "chunkId": "7cb3e78818d3ca7420c127c4f13ad5587e5cc5d3",
@@ -24042,11 +24042,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 106
+              "column": 117
             },
             "end": {
               "line": 1,
-              "column": 110
+              "column": 121
             }
           }
         },
@@ -25030,7 +25030,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts": {
       "mTimestamp": {
-        "mtime": 1783068797033.0225,
+        "mtime": 1783302149509.6555,
         "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
       },
       "chunkId": "aa6223cf35796d09344450a14919ad24c61174bb",
@@ -28064,7 +28064,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/Common/SuperPackage.ts": {
       "mTimestamp": {
-        "mtime": 1782979358838.526,
+        "mtime": 1783072571287.6997,
         "uuid": "aa6cd0a6-0e91-4013-94bc-e2063049f65a"
       },
       "chunkId": "fb231b7b47c244832aa3ed0055e0ff4d6bda9530",
@@ -28170,7 +28170,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PBASDK.ts": {
       "mTimestamp": {
-        "mtime": 1782979358850.6726,
+        "mtime": 1783072571288.698,
         "uuid": "de608ba4-76a0-4ad8-899e-06d88d0487fc"
       },
       "chunkId": "7ece20e41250ede0e4707962498ddfd8c4453b24",

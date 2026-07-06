@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Component, director, instantiate, Node, Pool, tween, Vec3 } from 'cc';
+import { _decorator, CCBoolean, CCFloat, CCInteger, Component, director, instantiate, Node, Pool, tween, Vec3 } from 'cc';
 import PoolManager from '../../Base/PoolManager';
 import { EffectEnum, EventType, MonsterType, PoolEnum, PrefabsEnum } from '../../Base/EnumList';
 import { MonsterBattleTaerget } from './MonsterBattleTaerget';
@@ -29,6 +29,12 @@ class MonsterCreateInfo {
 
     @property({ type: MonsterType })
     public monsterType: MonsterType = MonsterType.ZombieBaby_0;
+
+    @property({ type: CCBoolean, displayName: '混合0/1怪物', tooltip: '开启后，这一波普通怪会在 ZombieBaby_0 和 ZombieBaby_1 之间混合生成。Boss 波不受影响。' })
+    public mixBaby01: boolean = false;
+
+    @property({ type: CCFloat, displayName: '1号怪物占比(0-1)', tooltip: '混合0/1怪物开启时，生成 ZombieBaby_1 的概率。0=全0号，1=全1号，0.5=大致各半。', visible(this: MonsterCreateInfo) { return this.mixBaby01; } })
+    public baby1Ratio: number = 0.5;
 
     @property(CCInteger)
     public monsterCountMax: number = 50;
@@ -1276,6 +1282,10 @@ export class MonsterCreate extends UnityUpComponent {
     }
 
     private getQuestBabyType(quest: MonsterCreateInfo | null): MonsterType {
+        if (quest && quest.monsterType !== MonsterType.ZombieBrother && quest.mixBaby01) {
+            const baby1Ratio = Math.max(0, Math.min(1, quest.baby1Ratio));
+            return Math.random() < baby1Ratio ? MonsterType.ZombieBaby_1 : MonsterType.ZombieBaby_0;
+        }
         if (quest && quest.monsterType !== MonsterType.ZombieBrother) {
             return quest.monsterType;
         }
