@@ -1128,6 +1128,9 @@ export class Player extends UnityUpComponent {
     private TimeFlowsBackWard() {
         this.clearRolesForRetry();
         this.syncRespawnRoleCount();
+        this.isDie = false;
+        this.pendingAddRoleCount = 0;
+        this.pendingStaggerShots.length = 0;
         this._attackTime = 0.5;
         this.shootRoleStartIndex = 0;
         for (let i = 0; i < this.curCount; i++) {
@@ -1148,9 +1151,6 @@ export class Player extends UnityUpComponent {
         }
         this.selectIndex = 0;
         this.attackIn = false;
-        this.scheduleOnce(() => {
-            this.isDie = false;
-        }, 2);
     }
 
     private syncRespawnRoleCount(): void {

@@ -1669,6 +1669,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         TimeFlowsBackWard() {
           this.clearRolesForRetry();
           this.syncRespawnRoleCount();
+          this.isDie = false;
+          this.pendingAddRoleCount = 0;
+          this.pendingStaggerShots.length = 0;
           this._attackTime = 0.5;
           this.shootRoleStartIndex = 0;
 
@@ -1699,9 +1702,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.selectIndex = 0;
           this.attackIn = false;
-          this.scheduleOnce(() => {
-            this.isDie = false;
-          }, 2);
         }
 
         syncRespawnRoleCount() {
