@@ -60,6 +60,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     private readonly attackDuration: number = 1.5;
     private readonly bossDesiredAttackPos: Vec3 = new Vec3();
     private readonly bossFaceVector: Vec3 = new Vec3();
+    private readonly smallMonsterDesiredAttackPos: Vec3 = new Vec3();
 
     @property({
         type: CCFloat,
@@ -96,6 +97,33 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         }
     })
     public bossAttackLockOffsetZ: number = 0.28;
+
+    @property({
+        type: CCFloat,
+        displayName: '小怪攻击站位Z偏移',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        }
+    })
+    public smallMonsterAttackOffsetZ: number = 1.2;
+
+    @property({
+        type: CCFloat,
+        displayName: '小怪横向锁定范围',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        }
+    })
+    public smallMonsterAttackLockOffsetX: number = 0.55;
+
+    @property({
+        type: CCFloat,
+        displayName: '小怪站位Z容差',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        }
+    })
+    public smallMonsterAttackLockOffsetZ: number = 0.22;
 
     /** 重写init，在初始化后注册到碰撞管理器 */
     public init(difficulty: number, fixedHp: number = 0) {
@@ -215,6 +243,8 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             }
             this.updateBossMoveTarget();
             this.updateBossFacing(dt);
+        } else {
+            this.clampSmallMonsterAttackZ();
         }
 
         if (this.attackTarget) {
@@ -315,12 +345,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return this.isBossInAttackPosition();
         }
 
-        const targetPos = this.attackTarget.worldPosition;
-        const dis = Vec3.squaredDistance(targetPos, this.node.worldPosition);
-        if (dis > this.attackR) {
-            return false;
-        }
-        return true;
+        return this.isSmallMonsterInAttackPosition();
     }
 
     private getAttackRole(): Role | null {
@@ -389,6 +414,40 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         const selfPos = this.node.worldPosition;
         return Math.abs(selfPos.x - this.bossDesiredAttackPos.x) <= this.bossAttackLockOffsetX
             && Math.abs(selfPos.z - this.bossDesiredAttackPos.z) <= this.bossAttackLockOffsetZ;
+    }
+
+    private clampSmallMonsterAttackZ(): void {
+        if (!this.attackTarget) {
+            return;
+        }
+
+        this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
+        const desiredZ = this.smallMonsterDesiredAttackPos.z;
+        if (this.node.worldPosition.z < desiredZ) {
+            this.node.setWorldPosition(this.node.worldPosition.x, this.node.worldPosition.y, desiredZ);
+        }
+    }
+
+    private getSmallMonsterDesiredAttackPosition(out: Vec3): Vec3 {
+        const targetPos = this.attackTarget.worldPosition;
+        out.set(targetPos.x, this.node.worldPosition.y, targetPos.z + Math.abs(this.smallMonsterAttackOffsetZ));
+        return out;
+    }
+
+    private isSmallMonsterInAttackPosition(): boolean {
+        if (!this.attackTarget?.activeInHierarchy) {
+            return false;
+        }
+
+        const targetPos = this.attackTarget.worldPosition;
+        const dis = Vec3.squaredDistance(targetPos, this.node.worldPosition);
+        if (dis > this.attackR) {
+            return false;
+        }
+
+        this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
+        const selfPos = this.node.worldPosition;
+        return Math.abs(selfPos.z - this.smallMonsterDesiredAttackPos.z) <= this.smallMonsterAttackLockOffsetZ;
     }
 
     private _hlIn: boolean = false;

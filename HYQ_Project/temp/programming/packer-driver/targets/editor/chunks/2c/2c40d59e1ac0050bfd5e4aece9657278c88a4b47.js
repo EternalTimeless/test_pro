@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -203,6 +203,36 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), MonsterType) : MonsterType).ZombieBrother;
         }
 
+      }), _dec12 = property({
+        type: CCFloat,
+        displayName: '小怪攻击站位Z偏移',
+
+        visible() {
+          return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        }
+
+      }), _dec13 = property({
+        type: CCFloat,
+        displayName: '小怪横向锁定范围',
+
+        visible() {
+          return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        }
+
+      }), _dec14 = property({
+        type: CCFloat,
+        displayName: '小怪站位Z容差',
+
+        visible() {
+          return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        }
+
       }), _dec(_class = (_class2 = class MonsterBattleTaerget extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
@@ -233,6 +263,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.attackDuration = 1.5;
           this.bossDesiredAttackPos = new Vec3();
           this.bossFaceVector = new Vec3();
+          this.smallMonsterDesiredAttackPos = new Vec3();
 
           _initializerDefineProperty(this, "bossAttackLockOffsetX", _descriptor7, this);
 
@@ -241,6 +272,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "bossMinGapZ", _descriptor9, this);
 
           _initializerDefineProperty(this, "bossAttackLockOffsetZ", _descriptor10, this);
+
+          _initializerDefineProperty(this, "smallMonsterAttackOffsetZ", _descriptor11, this);
+
+          _initializerDefineProperty(this, "smallMonsterAttackLockOffsetX", _descriptor12, this);
+
+          _initializerDefineProperty(this, "smallMonsterAttackLockOffsetZ", _descriptor13, this);
 
           // public dieTimeScale: number = 1;
           this.isDieD = true;
@@ -397,6 +434,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             this.updateBossMoveTarget();
             this.updateBossFacing(dt);
+          } else {
+            this.clampSmallMonsterAttackZ();
           }
 
           if (this.attackTarget) {
@@ -520,14 +559,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return this.isBossInAttackPosition();
           }
 
-          const targetPos = this.attackTarget.worldPosition;
-          const dis = Vec3.squaredDistance(targetPos, this.node.worldPosition);
-
-          if (dis > this.attackR) {
-            return false;
-          }
-
-          return true;
+          return this.isSmallMonsterInAttackPosition();
         }
 
         getAttackRole() {
@@ -621,6 +653,44 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.getBossDesiredAttackPosition(this.bossDesiredAttackPos);
           const selfPos = this.node.worldPosition;
           return Math.abs(selfPos.x - this.bossDesiredAttackPos.x) <= this.bossAttackLockOffsetX && Math.abs(selfPos.z - this.bossDesiredAttackPos.z) <= this.bossAttackLockOffsetZ;
+        }
+
+        clampSmallMonsterAttackZ() {
+          if (!this.attackTarget) {
+            return;
+          }
+
+          this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
+          const desiredZ = this.smallMonsterDesiredAttackPos.z;
+
+          if (this.node.worldPosition.z < desiredZ) {
+            this.node.setWorldPosition(this.node.worldPosition.x, this.node.worldPosition.y, desiredZ);
+          }
+        }
+
+        getSmallMonsterDesiredAttackPosition(out) {
+          const targetPos = this.attackTarget.worldPosition;
+          out.set(targetPos.x, this.node.worldPosition.y, targetPos.z + Math.abs(this.smallMonsterAttackOffsetZ));
+          return out;
+        }
+
+        isSmallMonsterInAttackPosition() {
+          var _this$attackTarget4;
+
+          if (!((_this$attackTarget4 = this.attackTarget) != null && _this$attackTarget4.activeInHierarchy)) {
+            return false;
+          }
+
+          const targetPos = this.attackTarget.worldPosition;
+          const dis = Vec3.squaredDistance(targetPos, this.node.worldPosition);
+
+          if (dis > this.attackR) {
+            return false;
+          }
+
+          this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
+          const selfPos = this.node.worldPosition;
+          return Math.abs(selfPos.z - this.smallMonsterDesiredAttackPos.z) <= this.smallMonsterAttackLockOffsetZ;
         }
 
         randomizeRunAnimation() {
@@ -747,6 +817,27 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         writable: true,
         initializer: function () {
           return 0.28;
+        }
+      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterAttackOffsetZ", [_dec12], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 1.2;
+        }
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterAttackLockOffsetX", [_dec13], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.55;
+        }
+      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterAttackLockOffsetZ", [_dec14], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.22;
         }
       })), _class2)) || _class));
 
