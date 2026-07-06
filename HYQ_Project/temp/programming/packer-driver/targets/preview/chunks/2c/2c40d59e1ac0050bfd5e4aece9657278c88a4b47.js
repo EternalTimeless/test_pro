@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -185,6 +185,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       }), _dec10 = property({
         type: CCFloat,
+        displayName: 'Boss最小Z间距',
+
+        visible() {
+          return this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        }
+
+      }), _dec11 = property({
+        type: CCFloat,
         displayName: 'Boss站位Z容差',
 
         visible() {
@@ -228,7 +238,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "bossAttackOffsetZ", _descriptor8, this);
 
-          _initializerDefineProperty(this, "bossAttackLockOffsetZ", _descriptor9, this);
+          _initializerDefineProperty(this, "bossMinGapZ", _descriptor9, this);
+
+          _initializerDefineProperty(this, "bossAttackLockOffsetZ", _descriptor10, this);
 
           // public dieTimeScale: number = 1;
           this.isDieD = true;
@@ -590,9 +602,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var playerPos = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
             error: Error()
           }), Player) : Player).instance.node.worldPosition;
-          var selfPos = this.node.worldPosition;
-          var zDirection = selfPos.z <= playerPos.z ? -1 : 1;
-          out.set(playerPos.x, selfPos.y, playerPos.z + zDirection * this.bossAttackOffsetZ);
+          var desiredGapZ = Math.max(Math.abs(this.bossAttackOffsetZ), Math.abs(this.bossMinGapZ));
+          out.set(playerPos.x, this.node.worldPosition.y, playerPos.z + desiredGapZ);
           return out;
         }
 
@@ -728,7 +739,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 1.4;
         }
-      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "bossAttackLockOffsetZ", [_dec10], {
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "bossMinGapZ", [_dec10], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 1.4;
+        }
+      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "bossAttackLockOffsetZ", [_dec11], {
         configurable: true,
         enumerable: true,
         writable: true,

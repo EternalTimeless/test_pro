@@ -12738,7 +12738,7 @@
     "hpLabel": null,
     "nodeCount": 0,
     "hitPerNode": 3,
-    "hitCountPerStep": 5,
+    "hitCountPerStep": 6,
     "teethPerPair": 2,
     "initialClosedPairCount": 2,
     "nextPairInitialProgress": 0.5,

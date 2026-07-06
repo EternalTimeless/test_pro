@@ -81,6 +81,15 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
     @property({
         type: CCFloat,
+        displayName: 'Boss最小Z间距',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType == MonsterType.ZombieBrother;
+        }
+    })
+    public bossMinGapZ: number = 1.4;
+
+    @property({
+        type: CCFloat,
         displayName: 'Boss站位Z容差',
         visible(this: MonsterBattleTaerget) {
             return this.monsterType == MonsterType.ZombieBrother;
@@ -359,9 +368,8 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
     private getBossDesiredAttackPosition(out: Vec3): Vec3 {
         const playerPos = Player.instance.node.worldPosition;
-        const selfPos = this.node.worldPosition;
-        const zDirection = selfPos.z <= playerPos.z ? -1 : 1;
-        out.set(playerPos.x, selfPos.y, playerPos.z + zDirection * this.bossAttackOffsetZ);
+        const desiredGapZ = Math.max(Math.abs(this.bossAttackOffsetZ), Math.abs(this.bossMinGapZ));
+        out.set(playerPos.x, this.node.worldPosition.y, playerPos.z + desiredGapZ);
         return out;
     }
 

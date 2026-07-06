@@ -884,6 +884,10 @@
       "__id__": 68
     },
     "attackR": 57,
+    "bossAttackLockOffsetX": 0.9,
+    "bossAttackOffsetZ": 5,
+    "bossMinGapZ": 1.4,
+    "bossAttackLockOffsetZ": 0.28,
     "_id": ""
   },
   {
