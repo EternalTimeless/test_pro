@@ -9,6 +9,16 @@ import TweenTool from '../../Tool/TweenTool';
 
 const { ccclass, property } = _decorator;
 
+@ccclass('LalianHitStageConfig')
+class LalianHitStageConfig {
+
+    @property({ type: CCFloat, displayName: '阶段结束进度', tooltip: '0~1。表示这一段覆盖到拉链剩余推进进度的哪个位置，例如 0.33 / 0.66 / 1。' })
+    public endProgress: number = 1;
+
+    @property({ type: CCInteger, displayName: '每格受击次数', tooltip: '落在该阶段内的每一格推进，默认需要多少次受击。' })
+    public hitCountPerStep: number = 1;
+}
+
 @ccclass('PropLalianGate')
 export class PropLalianGate extends BattleTarget3D {
 
@@ -83,6 +93,9 @@ export class PropLalianGate extends BattleTarget3D {
 
     @property({ type: CCInteger, displayName: '每格推进所需受击次数', tooltip: '滑块推进当前一格需要多少次受击。1 表示保持当前逻辑，2/3 表示把当前一格拆成 2/3 段推进。' })
     public hitCountPerStep: number = 1;
+
+    @property({ type: [LalianHitStageConfig], displayName: '分段受击配置', tooltip: '留空时使用“每格推进所需受击次数”。填写后按剩余推进进度分段，例如 0.33/2、0.66/4、1/8。' })
+    public hitStageConfigList: LalianHitStageConfig[] = [];
 
     @property({ type: CCInteger, displayName: '每对齿条数量', tooltip: '默认 2，表示每 2 个 SM_lalian 齿条算作一对，一次受击推进一对。' })
     public teethPerPair: number = 2;
@@ -329,7 +342,7 @@ export class PropLalianGate extends BattleTarget3D {
         const startTooth = this.getSliderPairLeadTooth(this.pairIndex) ?? this.teeth[0];
         const closeTooth = this.getSliderPairLeadTooth(nextPairIndex);
         const nextStepHitCount = this.stepHitCount + 1;
-        const hitsPerStep = this.getHitCountPerStep();
+        const hitsPerStep = this.getHitCountPerStepForPair(nextPairIndex);
         const stepCompleted = nextStepHitCount >= hitsPerStep;
         if (!closeTooth) {
             this.completeGate();
@@ -977,12 +990,72 @@ export class PropLalianGate extends BattleTarget3D {
         return Math.max(1, Math.floor(this.hitCountPerStep));
     }
 
+    private getHitCountPerStepForPair(pairIndex: number): number {
+        const fallback = this.getHitCountPerStep();
+        const stageStartPairIndex = this.getStageStartPairIndex();
+        const remainingPairCount = this.pairCount - stageStartPairIndex;
+        if (remainingPairCount <= 0 || !this.hitStageConfigList?.length) {
+            return fallback;
+        }
+
+        const clampedPairIndex = Math.max(stageStartPairIndex, Math.min(pairIndex, this.pairCount - 1));
+        const pairOrdinal = clampedPairIndex - stageStartPairIndex + 1;
+        const progress = Math.max(0, Math.min(1, pairOrdinal / remainingPairCount));
+
+        let matchedCount = 0;
+        let matchedEndProgress = Number.POSITIVE_INFINITY;
+        let fallbackCount = 0;
+        let fallbackEndProgress = -1;
+        for (let i = 0; i < this.hitStageConfigList.length; i++) {
+            const config = this.hitStageConfigList[i];
+            if (!config) {
+                continue;
+            }
+            const endProgress = Math.max(0, Math.min(1, config.endProgress));
+            const hitCount = Math.max(1, Math.floor(config.hitCountPerStep));
+            if (endProgress > fallbackEndProgress) {
+                fallbackEndProgress = endProgress;
+                fallbackCount = hitCount;
+            }
+            if (endProgress >= progress && endProgress < matchedEndProgress) {
+                matchedEndProgress = endProgress;
+                matchedCount = hitCount;
+            }
+        }
+
+        if (matchedCount > 0) {
+            return matchedCount;
+        }
+        if (fallbackCount > 0) {
+            return fallbackCount;
+        }
+        return fallback;
+    }
+
     private getPairProgress(pairIndex: number): number {
         return this.getClampedProgress(this.pairProgressList[pairIndex] ?? 0);
     }
 
     private getRemainHitCount(pairIndex: number = this.pairIndex, stepHitCount: number = this.stepHitCount): number {
-        return Math.max(0, (this.pairCount - pairIndex - 1) * this.getHitCountPerStep() - stepHitCount);
+        const firstPendingPairIndex = Math.max(0, pairIndex + 1);
+        if (firstPendingPairIndex >= this.pairCount) {
+            return 0;
+        }
+
+        let remainHits = 0;
+        for (let i = firstPendingPairIndex; i < this.pairCount; i++) {
+            const requiredHits = this.getHitCountPerStepForPair(i);
+            if (i === firstPendingPairIndex) {
+                remainHits += Math.max(0, requiredHits - Math.max(0, stepHitCount));
+            } else {
+                remainHits += requiredHits;
+            }
+        }
+        return Math.max(0, remainHits);
+    }
+
+    private getStageStartPairIndex(): number {
+        return Math.max(0, Math.min(this.getInitialClosedPairCount(), this.pairCount));
     }
 
     private updateHpLabel(value: number): void {

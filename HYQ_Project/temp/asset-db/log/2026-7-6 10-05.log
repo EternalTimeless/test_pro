@@ -2199,3 +2199,973 @@
 2026-7-6 14:10:37-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (5ms)
 2026-7-6 14:10:37-log: run build task 整理部分构建选项内数据到 settings.json success in 5 ms√, progress: 15%
 2026-7-6 14:10:37-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:280.21MB, end 280.28MB, increase: 65.85KB
+2026-7-6 14:12:06-debug: refresh db internal success
+2026-7-6 14:12:06-debug: refresh db assets success
+2026-7-6 14:12:06-debug: refresh db super-packager success
+2026-7-6 14:12:06-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-6 14:12:06-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-6 14:12:06-debug: asset-db:refresh-all-database (252ms)
+2026-7-6 14:12:06-debug: asset-db:worker-effect-data-processing (2ms)
+2026-7-6 14:12:06-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-7-6 14:12:07-debug: Start record console... {file(D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\builder\log\web-mobile2026-6-30 10-27.log)}
+2026-7-6 14:12:07-debug: Start build task, options:{"name":"HYQ","server":"","engineModulesConfigKey":"defaultConfig","platform":"web-mobile","buildPath":"project://build","debug":false,"buildMode":"normal","mangleProperties":false,"md5Cache":false,"skipCompressTexture":false,"sourceMaps":false,"overwriteProjectSettings":{"includeModules":{"gfx-webgl2":"on","physics":"inherit-project-setting","physics-2d":"inherit-project-setting"},"macroConfig":{"cleanupImageCache":"inherit-project-setting"}},"nativeCodeBundleMode":"asmjs","polyfills":{"asyncFunctions":true},"experimentalEraseModules":false,"startSceneAssetBundle":false,"bundleConfigs":[],"inlineEnum":true,"useBuiltinServer":false,"md5CacheOptions":{"excludes":[],"includes":[],"replaceOnly":[],"handleTemplateMd5Link":true},"mainBundleIsRemote":false,"mainBundleCompressionType":"merge_dep","useSplashScreen":true,"bundleCommonChunk":false,"packAutoAtlas":true,"startScene":"b5805d3a-3b80-4a12-adf5-588e63a7d886","outputName":"web-mobile","taskName":"web-mobile","scenes":[{"url":"db://assets/Scene/Game_3D-002.scene","uuid":"b5805d3a-3b80-4a12-adf5-588e63a7d886"}],"wasmCompressionMode":false,"binGroupConfig":{"threshold":16,"enable":false},"packages":{"adsense-h5g-plugin":{"enableAdsense":false,"enableTestAd":false,"__version__":"1.0.1","AFPHostPropertyCode":"ca-host-pub-5396158963872751","AFPHostDomain":"douyougame.com","otherAFPHostPropertyCode":"","otherAFPDomain":""},"web-mobile":{"useWebGPU":false,"orientation":"auto","embedWebDebugger":false,"__version__":"1.0.1"},"cocos-service":{"configID":"56841a","services":[],"__version__":"3.0.9"},"super-packager":{"googlePlayUrl":"","appStoreUrl":"","__version__":"2.7.0"}},"__version__":"1.3.9","logDest":"project://temp/builder/log/web-mobile2026-6-30 10-27.log"}
+2026-7-6 14:12:07-debug: =================================== build Task (web-mobile) Start ================================
+2026-7-6 14:12:07-debug: Build with Cocos Creator 3.8.7
+2026-7-6 14:12:07-debug: cocos-service:(onBeforeBuild) start..., progress: 0%
+2026-7-6 14:12:07-debug: // ---- build task cocos-service：onBeforeBuild ----
+2026-7-6 14:12:07-debug: // ---- build task cocos-service：onBeforeBuild ---- (109ms)
+2026-7-6 14:12:07-debug: cocos-service:(onBeforeBuild) in 109 ms ✓, progress: 2%
+2026-7-6 14:12:07-debug: scene:(onBeforeBuild) start..., progress: 2%
+2026-7-6 14:12:07-debug: // ---- build task scene：onBeforeBuild ----
+2026-7-6 14:12:08-debug: // ---- build task scene：onBeforeBuild ---- (65ms)
+2026-7-6 14:12:08-debug: super-packager:(onBeforeBuild) start..., progress: 4%
+2026-7-6 14:12:08-debug: // ---- build task super-packager：onBeforeBuild ----
+2026-7-6 14:12:08-log: [SUPER_PACKAGE]商店链接配置:{"googlePlayUrl":"","appStoreUrl":""}
+2026-7-6 14:12:08-debug: scene:(onBeforeBuild) in 65 ms ✓, progress: 4%
+2026-7-6 14:12:08-log: [SUPER_PACKAGE]onBeforeBuild
+2026-7-6 14:12:08-log: [SUPER_PACKAGE]商店链接已同步到文件
+2026-7-6 14:12:08-debug: // ---- build task super-packager：onBeforeBuild ---- (55ms)
+2026-7-6 14:12:08-debug: super-packager:(onBeforeBuild) in 55 ms ✓, progress: 5%
+2026-7-6 14:12:08-debug: Query all assets info in project
+2026-7-6 14:12:08-debug: Start lock asset db..., progress: 5%
+2026-7-6 14:12:08-log: Asset DB is paused with build!
+2026-7-6 14:12:08-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-6 14:12:08-debug: web-mobile:(onAfterInit) start..., progress: 5%
+2026-7-6 14:12:08-debug: // ---- build task web-mobile：onAfterInit ----
+2026-7-6 14:12:08-debug: // ---- build task web-mobile：onAfterInit ---- (14ms)
+2026-7-6 14:12:08-debug: web-mobile:(onAfterInit) in 14 ms ✓, progress: 7%
+2026-7-6 14:12:08-debug: // ---- build task cocos-service：onAfterInit ----
+2026-7-6 14:12:08-debug: cocos-service:(onAfterInit) start..., progress: 7%
+2026-7-6 14:12:08-debug: // ---- build task cocos-service：onAfterInit ---- (118ms)
+2026-7-6 14:12:08-debug: cocos-service:(onAfterInit) in 118 ms ✓, progress: 9%
+2026-7-6 14:12:08-debug: Skip compress image, progress: 0%
+2026-7-6 14:12:08-debug: adsense-h5g-plugin:(onBeforeBundleInit) start..., progress: 9%
+2026-7-6 14:12:08-debug: // ---- build task adsense-h5g-plugin：onBeforeBundleInit ----
+2026-7-6 14:12:08-debug: adsense-h5g-plugin:(onBeforeBundleInit) start..., progress: 0%
+2026-7-6 14:12:08-debug: [adsense-h5g-plugin] remove script success
+2026-7-6 14:12:08-debug: adsense-h5g-plugin:(onBeforeBundleInit) in 59 ms ✓, progress: 9%
+2026-7-6 14:12:08-debug: // ---- build task adsense-h5g-plugin：onBeforeBundleInit ---- (59ms)
+2026-7-6 14:12:08-debug: adsense-h5g-plugin:(onBeforeBundleInit) in 59 ms ✓, progress: 7%
+2026-7-6 14:12:08-debug: Init all bundles start..., progress: 9%
+2026-7-6 14:12:08-debug: Num of bundles: 3..., progress: 7%
+2026-7-6 14:12:08-debug: web-mobile:(onAfterBundleInit) start..., progress: 9%
+2026-7-6 14:12:08-debug: web-mobile:(onAfterBundleInit) start..., progress: 7%
+2026-7-6 14:12:08-debug: // ---- build task web-mobile：onAfterBundleInit ----
+2026-7-6 14:12:08-debug: Num of bundles: 3..., progress: 9%
+2026-7-6 14:12:08-debug: Init all bundles start..., progress: 7%
+2026-7-6 14:12:08-debug: // ---- build task web-mobile：onAfterBundleInit ---- (83ms)
+2026-7-6 14:12:08-debug: web-mobile:(onAfterBundleInit) in 83 ms ✓, progress: 9%
+2026-7-6 14:12:08-debug: web-mobile:(onAfterBundleInit) in 83 ms ✓, progress: 13%
+2026-7-6 14:12:08-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 14:12:08-debug: Init bundle root assets start..., progress: 9%
+2026-7-6 14:12:08-debug: 查询 Asset Bundle start, progress: 9%
+2026-7-6 14:12:08-debug: Init bundle root assets start..., progress: 13%
+2026-7-6 14:12:08-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-6 14:12:08-debug:   Number of all scenes: 5
+2026-7-6 14:12:08-debug:   Number of all scripts: 109
+2026-7-6 14:12:08-debug: Init bundle root assets success..., progress: 9%
+2026-7-6 14:12:08-debug: Init bundle root assets success..., progress: 13%
+2026-7-6 14:12:08-debug: reload all scripts.
+2026-7-6 14:12:08-debug:   Number of other assets: 1158
+2026-7-6 14:12:08-debug: [[Executor]] reload before lock
+2026-7-6 14:12:08-debug: Set detail map pack:///resolution-detail-map.json: {}
+2026-7-6 14:12:08-debug: Unregister BuiltinPipelineSettings
+2026-7-6 14:12:08-debug: Unregister BuiltinPipelinePassBuilder
+2026-7-6 14:12:08-debug: Unregister Lightning
+2026-7-6 14:12:08-debug: Unregister DebugViewRuntimeControl
+2026-7-6 14:12:08-debug: Unregister BuiltinDepthOfFieldPass
+2026-7-6 14:12:08-debug: Unregister UnityUpComponent
+2026-7-6 14:12:08-debug: Unregister CameraMove
+2026-7-6 14:12:08-debug: Unregister LayerManager
+2026-7-6 14:12:08-debug: Unregister MoveDrive
+2026-7-6 14:12:08-debug: Unregister RotationDrive
+2026-7-6 14:12:08-debug: Unregister RotationVector
+2026-7-6 14:12:08-debug: Unregister PrefabsRes
+2026-7-6 14:12:08-debug: Unregister PrefabsManager
+2026-7-6 14:12:08-debug: Unregister L18nManager
+2026-7-6 14:12:08-debug: Unregister DownLoadL8
+2026-7-6 14:12:08-debug: Unregister LangArrAuto
+2026-7-6 14:12:08-debug: Unregister DownLoadL8
+2026-7-6 14:12:08-debug: Unregister ResurrectionL8
+2026-7-6 14:12:08-debug: Unregister JumpDriveEngine
+2026-7-6 14:12:08-debug: Unregister LangAuto
+2026-7-6 14:12:08-debug: Unregister FlayPropManager
+2026-7-6 14:12:08-debug: Unregister BagBase
+2026-7-6 14:12:08-debug: Unregister GroupBag3D
+2026-7-6 14:12:08-debug: Unregister GroupPropTransform
+2026-7-6 14:12:08-debug: Unregister LabBagUp
+2026-7-6 14:12:08-debug: Unregister CollectGetTarget
+2026-7-6 14:12:08-debug: Unregister AttackTargetBase
+2026-7-6 14:12:08-debug: Unregister Prop
+2026-7-6 14:12:08-debug: Unregister AreaAttack
+2026-7-6 14:12:08-debug: Unregister HpComponent
+2026-7-6 14:12:08-debug: Unregister MeshFlashPropData
+2026-7-6 14:12:08-debug: Unregister MeshFlashSwitchData
+2026-7-6 14:12:08-debug: Unregister MeleeAttack
+2026-7-6 14:12:08-debug: Unregister MeshFlashData
+2026-7-6 14:12:08-debug: Unregister EffectRemoveBase
+2026-7-6 14:12:08-debug: Unregister EffectTimePartRemove
+2026-7-6 14:12:08-debug: Unregister BattleTargetBase
+2026-7-6 14:12:08-debug: Unregister BulletMonsterCollisionManager
+2026-7-6 14:12:08-debug: Unregister ColliderTag
+2026-7-6 14:12:08-debug: Unregister EffectManager
+2026-7-6 14:12:08-debug: Unregister BulletBattle3D
+2026-7-6 14:12:08-debug: Unregister BulletCollideBase2D
+2026-7-6 14:12:08-debug: Unregister BattleTarget3D
+2026-7-6 14:12:08-debug: Unregister BulletBattle2D
+2026-7-6 14:12:08-debug: Unregister RangedAttack
+2026-7-6 14:12:08-debug: Unregister TriggerBase2D
+2026-7-6 14:12:08-debug: Unregister CollectBattleTarger2D
+2026-7-6 14:12:08-debug: Unregister AttackParkPlay
+2026-7-6 14:12:08-debug: Unregister BulletBatchRenderer
+2026-7-6 14:12:08-debug: Unregister BattleTarget2D
+2026-7-6 14:12:08-debug: Unregister RangeTowerAttack
+2026-7-6 14:12:08-debug: Unregister RangedAttack_Circle
+2026-7-6 14:12:08-debug: Unregister RangedAttack_Shrapnel
+2026-7-6 14:12:08-debug: Unregister CollectBattleTarger3D
+2026-7-6 14:12:08-debug: Unregister BulletCollideBase3D
+2026-7-6 14:12:08-debug: Unregister GuideLine
+2026-7-6 14:12:08-debug: Unregister TriggerBase3D
+2026-7-6 14:12:08-debug: Unregister FbxManager
+2026-7-6 14:12:08-debug: Unregister EffectTimeRemove
+2026-7-6 14:12:08-debug: Unregister GameOverPanel
+2026-7-6 14:12:08-debug: Unregister WeaponBulletConfig
+2026-7-6 14:12:08-debug: Unregister MonsterBattleTaerget
+2026-7-6 14:12:08-debug: Unregister Player
+2026-7-6 14:12:08-debug: Unregister ArmsInfo
+2026-7-6 14:12:08-debug: Unregister PropArms
+2026-7-6 14:12:08-debug: Unregister PropBrand
+2026-7-6 14:12:08-debug: Unregister PropLalianGate
+2026-7-6 14:12:08-debug: Unregister CreatePropBrand
+2026-7-6 14:12:08-debug: Unregister MonsterCreateInfo
+2026-7-6 14:12:08-debug: Unregister MonsterCreateQueue
+2026-7-6 14:12:08-debug: Unregister Role
+2026-7-6 14:12:08-debug: Unregister MonsterCreate
+2026-7-6 14:12:08-debug: Unregister GuideManager
+2026-7-6 14:12:08-debug: Unregister RockerUI
+2026-7-6 14:12:08-debug: Unregister PropTireGate
+2026-7-6 14:12:08-debug: Unregister RockerMouseEvent
+2026-7-6 14:12:08-debug: Unregister ShoppIngEvent
+2026-7-6 14:12:08-debug: Unregister BuyWayBase
+2026-7-6 14:12:08-debug: Unregister BuyWay2D
+2026-7-6 14:12:08-debug: Unregister Shopping
+2026-7-6 14:12:08-debug: Unregister BuyWay3D
+2026-7-6 14:12:08-debug: Unregister ShoppingItem
+2026-7-6 14:12:08-debug: Unregister Shopping_Super
+2026-7-6 14:12:08-debug: Unregister FrameAnimManager
+2026-7-6 14:12:08-debug: Unregister ArmsUp
+2026-7-6 14:12:08-debug: Unregister FrameManager
+2026-7-6 14:12:08-debug: Unregister UIButtonEvent
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/93/93ba276ea7b26ffcdc433fab14afc1ed6f05647b.js'
+2026-7-6 14:12:08-debug: Unregister StutterCheck
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/f2/f22794b1c95bc92b6e994a97e9b193af020adc12.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/6d/6d8fd2b0177941b032ddc0733af48a561fb60657.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/6a/6a5019a719a9014c047e67aa1cf34453ab8392ce.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/d9/d980f46bad1521f99cf9b02f6f4709610973859b.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/c9/c9d891290a54ec567f150962e76c6bf9cdf47b3b.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/84/84fdd98491917343dab9e13fe8b5a70bd6a363c2.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/04/04f62969dc20e2c08fceeca28e5f160f93c57d48.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e0/e099fc7c0597d98bad93ecd30952e1955267ade1.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e2/e2118395860d446afdd7349c12bbbbd5ff0a8915.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e9/e96bc804d4af33012a1ad5c19177a551c107f2ae.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/14/14cec8e3738599ab9965ee6a2127491eba1361af.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/4d/4d6662648c8c361d9de350d72c1ab0a8e7508014.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/31/31cebe8e0355019a96c8dc216aed673e195b2a53.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/3f/3fc33806253ded99e50ac9220c73832ef2904ca7.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/56/5601ae9cf318e5c14df7d30ca1cafe71734c982a.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/90/901a8f42214a0198b9aca11ce347c093cca5e26c.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/8a/8ae7d51cc818f718270f9e2ad9b78b6df4ffa62c.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/8b/8b1077471006cad018e02beccd0bed5dcc54c671.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/84/8436bf0d6f6a392b090fff8471ad48b32970414b.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/79/798785a3f67288cbb075d5efa15a2c266208a881.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/a1/a1d124b8795c6e55160d2ce5ecbd41437847152f.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/eb/eb316915c4446a477164305c14374917acb92a23.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/f2/f20c45b49501fbe07d44e99d95c2c506a06a0ecd.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/f0/f04c2dd9d3cc608a6f46e13bb5d3c46aa5633baf.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e9/e950dd2519065be1280daf69ce7f6b07e4d0caaa.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/ed/edbdde40fab9baf06e704beb85e64d72f20aefb8.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/63/633ac4308370832c1c78b9f28702617696f6e9fb.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/f5/f570589f727cbf96139a6869e201d7a87544da71.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/40/407fe08f85a1575a06beb3692d40cf36d9684f58.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/0f/0fd75e1d9556ba520ee98c89195f9d0594110ad2.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/f8/f8baeccf8cf047db05161c9b9e8b6b4ff9eefe2f.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/84/84bbaa7f2e1a0639f57f755b935e1acb7d73f78e.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/2e/2edb51f2f57b638345a2b9d561f476b67029b574.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/ec/ecb76259f390974cf14cad52564b11281c42a7e6.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/4c/4c2851018e56f823e74c2b3e2117156bcb9e76d0.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/38/38483f6f68b174c6aad120536d38c3642cb0e458.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e5/e5fea8c54230bb378b45e63a8ea8186bdeccbbe2.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/5f/5fdfd08a9c16dc742e66ef16a5a8e13f5f831a3e.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/d5/d58c1ab1b696259af8c3b1384857266dba055462.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/b6/b6919de7425c243c4e1697f376cb4f6f6b2769a4.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/f6/f6cf9b6088316a765dbcd0b22eb496d3f4be80dc.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/80/80f420cd19a5967732f7f177a68c3670990311d3.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/7e/7e52be47c960966fc7d962b7957dbbce1047514e.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/b5/b5c69e24499acddd297e4328687b0ea934b109d5.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/f4/f4bb2b73aacdc0370fc65face1ef60d9e8732bfd.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/41/4103e3b8e8be7d1b0e7a8a67f28a2c29fe9aa2dc.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/29/296009d632e65e6f653d790324d741c2d9759f34.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/80/803faff6203a98317cc86f08677de73b7112b743.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/3f/3ff8f1a74d7fbbd22ced04971b6ab15e04fd86a6.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/d5/d5f6e07e1b02d743fed3d9c2c8e155b0c3309d52.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/02/021cbce763294c7c4adf05845718c817a68ff9f3.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/b1/b12e427b1fcb487f729ef654542d8e9775a297cb.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/23/2370bd6a63dbba247d7fcab21c5244288f150386.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/9e/9ec8816866d723aea0e61547ea23bf04cc3c7c78.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/9b/9be30ad1a917cc0914201f1db5bdf1c5cb4d6e49.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/0e/0ea1c77c59b038eb4661ef171f440cbc7cc134ca.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/a7/a78b9d0a8af4315011c59f40b6c49da033e49269.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/43/4314f54defc530df4c3d4a14e3561038b8628ff3.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/9a/9a8786a747b555136cef77c9f5e7ad17e18a31eb.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/6c/6c35293030e947e52f03ea585990d17f31ea7df0.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/bb/bb66609565f0d30fbedfe7ab7019decca8a2726b.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/4a/4a75ba705e89112b3bcc356e77985c7a095b80f4.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/b0/b0316da27abe29af9f8a517d28257bc913762f57.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/ce/ced31965a759b2c1d777a8f0d98f8cd326020d87.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/dc/dcc18999575bc7125a793680f1b595554e7f2cde.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/05/0510980ff6e9ad26ec622e2230780bc7f1d96f08.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/8a/8a4b23fc8904a55daa926fa9bf2d450c2c59d378.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/6e/6e4d3e245933373fd13279940a5d6dee30418f49.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/5b/5b626ae965dfc8bbf67ffe6dd329ea95c382afe6.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/f0/f05038aedf4d7805ad91dbf59f1c87fe35c23bb5.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/05/05825d2a71d7765a90fbbdda8907aab57810f0a0.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/fa/fad9c36dab7fd23cbd0b1b9ebcbd02e6023aaadd.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/01/011c6605e93c83936bcaadc521a3f2df21bdd87a.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/7a/7a056ac353cd4f184635b76aa08c0d427085fda7.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/03/031aac2e2ea93f03b5422269c22800e822715034.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/29/2933ae65951958109aeb70104e6287b8240a8e01.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/cd/cd87286564d42a577ada1093f142b4db43415d61.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/11/1193ac27b94da532d27808ef712ed0fcd809d84d.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/dd/ddf9ec67bc21176ab14fd7bef2d6099af7cab4e3.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/78/7875e58dc11de4424867c114cd71cf4d379fd7ce.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/7c/7cb3e78818d3ca7420c127c4f13ad5587e5cc5d3.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e1/e13771ea8032dbc1728530af431c57de3b1e5e24.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/6b/6b5ef849a8a91f0cd956b88818795e47d9431e29.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/2c/2c40d59e1ac0050bfd5e4aece9657278c88a4b47.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/6b/6bf6369babd500e0802aeb38d4c346ae3462ef8b.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e2/e2cd37831230a7474a5c89ec9f0764c2d6ce1581.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/12/120cba8f856407335ad8a04347cd4d36bf752a1e.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/aa/aa6223cf35796d09344450a14919ad24c61174bb.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/c1/c14c87720f6e6e7b27f438925fae2cc2d4587268.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/fb/fb231b7b47c244832aa3ed0055e0ff4d6bda9530.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/ac/ac0e66d1df96447f3ea6b579b5067cb87a880d84.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/1e/1e9839fb85f612fea3030115a5d65b742de2db50.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/d0/d08abfe279c9195afbafb261981128dda32fee17.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e4/e49d377195f0f6ca8039098e5e76d909c726c89c.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/c8/c8d2fc621a68aadf290b9938ae81f70dbefcc8d6.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/7d/7d88e9fa4d49091167d5648112015c50cab8c311.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/41/41b6ef284e15d0779c96601cab9a95a7c5e5919b.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/1b/1b6bd2739873dc60bb0e67b18f2ae1f3b116fb07.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/5f/5fd5284b513982ea020d8e9513905cac6e75919a.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/99/9957d51b35d223fa476f8f6dcd2b5d011a93ab2f.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/c4/c409a49d391cd0107339e604abf784bacdef4b02.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/d8/d87351923699bbc0b3bf2e76b9d6665983f7b324.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/84/848ca7bc3c110f0554094ecf01b3a37b01ea9dfd.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/83/8354ac407215243163174d3e83d4cdab306051e3.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/b8/b8ff2efe0a5ef0b3134c1c0a100a2fc7e48d38e3.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/7e/7ece20e41250ede0e4707962498ddfd8c4453b24.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/95/95d64f4c8aa166ee79b72d7add5021b420a7ce33.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/4a/4a434c55814df4d84e6cd9fee04d3f21bfa74070.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/e9/e9668b02254f4db9826696b9dfb6914087bee6cc.js'
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/23/23f4bc413c460b50ee5cc83636bb099609a379fd.js'
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/93/93ba276ea7b26ffcdc433fab14afc1ed6f05647b.js" loaded.
+2026-7-6 14:12:08-debug: Invalidating 'pack:///chunks/4d/4d68417d37cd80fe73d65d56dfe11dd26e9ef91a.js'
+2026-7-6 14:12:08-debug: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\6d\6d8fd2b0177941b032ddc0733af48a561fb60657.js resolved to D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\6d\6d8fd2b0177941b032ddc0733af48a561fb60657.js is not in module cache!
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/6d/6d8fd2b0177941b032ddc0733af48a561fb60657.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/84/84fdd98491917343dab9e13fe8b5a70bd6a363c2.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/c9/c9d891290a54ec567f150962e76c6bf9cdf47b3b.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/6a/6a5019a719a9014c047e67aa1cf34453ab8392ce.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BuiltinPipelineSettings
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/d9/d980f46bad1521f99cf9b02f6f4709610973859b.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BuiltinPipelinePassBuilder
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/04/04f62969dc20e2c08fceeca28e5f160f93c57d48.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register DebugViewRuntimeControl
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/f2/f22794b1c95bc92b6e994a97e9b193af020adc12.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e0/e099fc7c0597d98bad93ecd30952e1955267ade1.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register Lightning
+2026-7-6 14:12:08-debug: [[Executor]] Register BuiltinDepthOfFieldPass
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e9/e96bc804d4af33012a1ad5c19177a551c107f2ae.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register LayerManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/31/31cebe8e0355019a96c8dc216aed673e195b2a53.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e2/e2118395860d446afdd7349c12bbbbd5ff0a8915.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/14/14cec8e3738599ab9965ee6a2127491eba1361af.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/4d/4d6662648c8c361d9de350d72c1ab0a8e7508014.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register CameraMove
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/56/5601ae9cf318e5c14df7d30ca1cafe71734c982a.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/3f/3fc33806253ded99e50ac9220c73832ef2904ca7.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register UnityUpComponent
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/79/798785a3f67288cbb075d5efa15a2c266208a881.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/f2/f20c45b49501fbe07d44e99d95c2c506a06a0ecd.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/84/8436bf0d6f6a392b090fff8471ad48b32970414b.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/8b/8b1077471006cad018e02beccd0bed5dcc54c671.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register RotationDrive
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/a1/a1d124b8795c6e55160d2ce5ecbd41437847152f.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/90/901a8f42214a0198b9aca11ce347c093cca5e26c.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/8a/8ae7d51cc818f718270f9e2ad9b78b6df4ffa62c.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register RotationVector
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/eb/eb316915c4446a477164305c14374917acb92a23.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register MoveDrive
+2026-7-6 14:12:08-debug: [[Executor]] Register PrefabsRes
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e9/e950dd2519065be1280daf69ce7f6b07e4d0caaa.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/ed/edbdde40fab9baf06e704beb85e64d72f20aefb8.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register L18nManager
+2026-7-6 14:12:08-debug: [[Executor]] Register PrefabsManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/f0/f04c2dd9d3cc608a6f46e13bb5d3c46aa5633baf.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register DownLoadL8
+2026-7-6 14:12:08-debug: [[Executor]] Register LangArrAuto
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/f8/f8baeccf8cf047db05161c9b9e8b6b4ff9eefe2f.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/63/633ac4308370832c1c78b9f28702617696f6e9fb.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/f5/f570589f727cbf96139a6869e201d7a87544da71.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register DownLoadL8
+2026-7-6 14:12:08-debug: [[Executor]] Register ResurrectionL8
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/40/407fe08f85a1575a06beb3692d40cf36d9684f58.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/0f/0fd75e1d9556ba520ee98c89195f9d0594110ad2.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register LangAuto
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/4c/4c2851018e56f823e74c2b3e2117156bcb9e76d0.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/ec/ecb76259f390974cf14cad52564b11281c42a7e6.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/f6/f6cf9b6088316a765dbcd0b22eb496d3f4be80dc.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register JumpDriveEngine
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/38/38483f6f68b174c6aad120536d38c3642cb0e458.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e5/e5fea8c54230bb378b45e63a8ea8186bdeccbbe2.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register Prop
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/d5/d58c1ab1b696259af8c3b1384857266dba055462.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/2e/2edb51f2f57b638345a2b9d561f476b67029b574.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/5f/5fdfd08a9c16dc742e66ef16a5a8e13f5f831a3e.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BagBase
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/b6/b6919de7425c243c4e1697f376cb4f6f6b2769a4.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/41/4103e3b8e8be7d1b0e7a8a67f28a2c29fe9aa2dc.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/84/84bbaa7f2e1a0639f57f755b935e1acb7d73f78e.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register GroupBag3D
+2026-7-6 14:12:08-debug: [[Executor]] Register FlayPropManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/80/80f420cd19a5967732f7f177a68c3670990311d3.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/b5/b5c69e24499acddd297e4328687b0ea934b109d5.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register GroupPropTransform
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/7e/7e52be47c960966fc7d962b7957dbbce1047514e.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/0e/0ea1c77c59b038eb4661ef171f440cbc7cc134ca.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/f4/f4bb2b73aacdc0370fc65face1ef60d9e8732bfd.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/80/803faff6203a98317cc86f08677de73b7112b743.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register CollectGetTarget
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/b1/b12e427b1fcb487f729ef654542d8e9775a297cb.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register LabBagUp
+2026-7-6 14:12:08-debug: [[Executor]] Register AttackTargetBase
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/3f/3ff8f1a74d7fbbd22ced04971b6ab15e04fd86a6.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register MeleeAttack
+2026-7-6 14:12:08-debug: [[Executor]] Register AreaAttack
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/29/296009d632e65e6f653d790324d741c2d9759f34.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/d5/d5f6e07e1b02d743fed3d9c2c8e155b0c3309d52.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/23/2370bd6a63dbba247d7fcab21c5244288f150386.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register HpComponent
+2026-7-6 14:12:08-debug: [[Executor]] Register MeshFlashPropData
+2026-7-6 14:12:08-debug: [[Executor]] Register MeshFlashSwitchData
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/9e/9ec8816866d723aea0e61547ea23bf04cc3c7c78.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BattleTargetBase
+2026-7-6 14:12:08-debug: [[Executor]] Register EffectRemoveBase
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/02/021cbce763294c7c4adf05845718c817a68ff9f3.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register EffectTimePartRemove
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/dc/dcc18999575bc7125a793680f1b595554e7f2cde.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register EffectManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/b0/b0316da27abe29af9f8a517d28257bc913762f57.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register ColliderTag
+2026-7-6 14:12:08-debug: [[Executor]] Register MeshFlashData
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/ce/ced31965a759b2c1d777a8f0d98f8cd326020d87.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BulletMonsterCollisionManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/4a/4a75ba705e89112b3bcc356e77985c7a095b80f4.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e1/e13771ea8032dbc1728530af431c57de3b1e5e24.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/a7/a78b9d0a8af4315011c59f40b6c49da033e49269.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BattleTarget3D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/9a/9a8786a747b555136cef77c9f5e7ad17e18a31eb.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BulletCollideBase2D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/bb/bb66609565f0d30fbedfe7ab7019decca8a2726b.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BulletBattle3D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/6c/6c35293030e947e52f03ea585990d17f31ea7df0.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register RangedAttack
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/9b/9be30ad1a917cc0914201f1db5bdf1c5cb4d6e49.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register TriggerBase2D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/8a/8a4b23fc8904a55daa926fa9bf2d450c2c59d378.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/43/4314f54defc530df4c3d4a14e3561038b8628ff3.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BattleTarget2D
+2026-7-6 14:12:08-debug: [[Executor]] Register CollectBattleTarger2D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/05/0510980ff6e9ad26ec622e2230780bc7f1d96f08.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BulletBattle2D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/f0/f05038aedf4d7805ad91dbf59f1c87fe35c23bb5.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register AttackParkPlay
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/05/05825d2a71d7765a90fbbdda8907aab57810f0a0.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register RangeTowerAttack
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/6e/6e4d3e245933373fd13279940a5d6dee30418f49.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register RangedAttack_Circle
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/fa/fad9c36dab7fd23cbd0b1b9ebcbd02e6023aaadd.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register RangedAttack_Shrapnel
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/01/011c6605e93c83936bcaadc521a3f2df21bdd87a.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BulletCollideBase3D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/7a/7a056ac353cd4f184635b76aa08c0d427085fda7.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register TriggerBase3D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/03/031aac2e2ea93f03b5422269c22800e822715034.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register CollectBattleTarger3D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/11/1193ac27b94da532d27808ef712ed0fcd809d84d.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register EffectTimeRemove
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/29/2933ae65951958109aeb70104e6287b8240a8e01.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register GuideLine
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/cd/cd87286564d42a577ada1093f142b4db43415d61.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BulletBatchRenderer
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/5b/5b626ae965dfc8bbf67ffe6dd329ea95c382afe6.js" loaded.
+2026-7-6 14:12:08-debug: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\2c\2c40d59e1ac0050bfd5e4aece9657278c88a4b47.js resolved to D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\2c\2c40d59e1ac0050bfd5e4aece9657278c88a4b47.js is not in module cache!
+2026-7-6 14:12:08-debug: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\12\120cba8f856407335ad8a04347cd4d36bf752a1e.js resolved to D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\12\120cba8f856407335ad8a04347cd4d36bf752a1e.js is not in module cache!
+2026-7-6 14:12:08-debug: [[Executor]] Register Role
+2026-7-6 14:12:08-debug: [[Executor]] Register FbxManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/78/7875e58dc11de4424867c114cd71cf4d379fd7ce.js" loaded.
+2026-7-6 14:12:08-debug: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\fb\fb231b7b47c244832aa3ed0055e0ff4d6bda9530.js resolved to D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\fb\fb231b7b47c244832aa3ed0055e0ff4d6bda9530.js is not in module cache!
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/1e/1e9839fb85f612fea3030115a5d65b742de2db50.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register GameOverPanel
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/6b/6bf6369babd500e0802aeb38d4c346ae3462ef8b.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register WeaponBulletConfig
+2026-7-6 14:12:08-debug: [[Executor]] Register Player
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/12/120cba8f856407335ad8a04347cd4d36bf752a1e.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register MonsterBattleTaerget
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/2c/2c40d59e1ac0050bfd5e4aece9657278c88a4b47.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register ArmsInfo
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/fb/fb231b7b47c244832aa3ed0055e0ff4d6bda9530.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register PropArms
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/aa/aa6223cf35796d09344450a14919ad24c61174bb.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register PropBrand
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/ac/ac0e66d1df96447f3ea6b579b5067cb87a880d84.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register PropLalianGate
+2026-7-6 14:12:08-debug: [[Executor]] Register CreatePropBrand
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/c1/c14c87720f6e6e7b27f438925fae2cc2d4587268.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e2/e2cd37831230a7474a5c89ec9f0764c2d6ce1581.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register MonsterCreateInfo
+2026-7-6 14:12:08-debug: [[Executor]] Register MonsterCreateQueue
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/7c/7cb3e78818d3ca7420c127c4f13ad5587e5cc5d3.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register MonsterCreate
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/dd/ddf9ec67bc21176ab14fd7bef2d6099af7cab4e3.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/6b/6b5ef849a8a91f0cd956b88818795e47d9431e29.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/7d/7d88e9fa4d49091167d5648112015c50cab8c311.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register ArmsUp
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/d0/d08abfe279c9195afbafb261981128dda32fee17.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register RockerUI
+2026-7-6 14:12:08-debug: [[Executor]] Register GuideManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/c8/c8d2fc621a68aadf290b9938ae81f70dbefcc8d6.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register RockerMouseEvent
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e4/e49d377195f0f6ca8039098e5e76d909c726c89c.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register ShoppIngEvent
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/c4/c409a49d391cd0107339e604abf784bacdef4b02.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register Shopping
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/5f/5fd5284b513982ea020d8e9513905cac6e75919a.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register BuyWayBase
+2026-7-6 14:12:08-debug: [[Executor]] Register BuyWay2D
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/41/41b6ef284e15d0779c96601cab9a95a7c5e5919b.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/99/9957d51b35d223fa476f8f6dcd2b5d011a93ab2f.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register ShoppingItem
+2026-7-6 14:12:08-debug: [[Executor]] Register Shopping_Super
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/d8/d87351923699bbc0b3bf2e76b9d6665983f7b324.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register FrameAnimManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/b8/b8ff2efe0a5ef0b3134c1c0a100a2fc7e48d38e3.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register FrameManager
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/83/8354ac407215243163174d3e83d4cdab306051e3.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register UIButtonEvent
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/84/848ca7bc3c110f0554094ecf01b3a37b01ea9dfd.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/1b/1b6bd2739873dc60bb0e67b18f2ae1f3b116fb07.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register PropTireGate
+2026-7-6 14:12:08-debug: [[Executor]] Register BuyWay3D
+2026-7-6 14:12:08-debug: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\7e\7ece20e41250ede0e4707962498ddfd8c4453b24.js resolved to D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\programming\packer-driver\targets\editor\chunks\7e\7ece20e41250ede0e4707962498ddfd8c4453b24.js is not in module cache!
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/23/23f4bc413c460b50ee5cc83636bb099609a379fd.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Register StutterCheck
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/4a/4a434c55814df4d84e6cd9fee04d3f21bfa74070.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/e9/e9668b02254f4db9826696b9dfb6914087bee6cc.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/7e/7ece20e41250ede0e4707962498ddfd8c4453b24.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/4d/4d68417d37cd80fe73d65d56dfe11dd26e9ef91a.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/6d/6d8fd2b0177941b032ddc0733af48a561fb60657.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] Module "pack:///chunks/95/95d64f4c8aa166ee79b72d7add5021b420a7ce33.js" loaded.
+2026-7-6 14:12:08-debug: [[Executor]] after unlock
+2026-7-6 14:12:08-debug: Incremental keys: 
+2026-7-6 14:12:08-debug: Init bundle share assets start..., progress: 13%
+2026-7-6 14:12:08-debug: Init bundle share assets start..., progress: 9%
+2026-7-6 14:12:09-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_1" is missing. Detailed information:Node path: "Role_1/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_1"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:09-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:09-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:09-debug: Init bundle share assets success..., progress: 9%
+2026-7-6 14:12:09-debug: Init bundle share assets success..., progress: 13%
+2026-7-6 14:12:09-debug: handle json group in bundle internal
+2026-7-6 14:12:09-debug: handle json group in bundle internal success
+2026-7-6 14:12:09-debug: handle json group in bundle resources
+2026-7-6 14:12:09-debug: handle json group in bundle main
+2026-7-6 14:12:09-debug: init image compress task 0 in bundle internal
+2026-7-6 14:12:09-debug: handle json group in bundle resources success
+2026-7-6 14:12:09-debug: init image compress task 0 in bundle resources
+2026-7-6 14:12:09-debug: [json-group] check self or raw asset, skip. 799add5f-4370-4ee6-b0a4-aca1ebcd06a3 depended by 799add5f-4370-4ee6-b0a4-aca1ebcd06a3 has checked in raw asset 799add5f-4370-4ee6-b0a4-aca1ebcd06a3/bundle(main)}
+2026-7-6 14:12:09-debug: [json-group] check self or raw asset, skip. f96153eb-6f89-4aad-b84b-808954761c02 depended by f96153eb-6f89-4aad-b84b-808954761c02 has checked in raw asset b5805d3a-3b80-4a12-adf5-588e63a7d886/bundle(main)}
+2026-7-6 14:12:09-debug: [json-group] check self or raw asset, skip. 799add5f-4370-4ee6-b0a4-aca1ebcd06a3 depended by 799add5f-4370-4ee6-b0a4-aca1ebcd06a3 has checked in raw asset b5805d3a-3b80-4a12-adf5-588e63a7d886/bundle(main)}
+2026-7-6 14:12:09-debug: [json-group] check self or raw asset, skip. f96153eb-6f89-4aad-b84b-808954761c02 depended by f96153eb-6f89-4aad-b84b-808954761c02 has checked in raw asset f96153eb-6f89-4aad-b84b-808954761c02/bundle(main)}
+2026-7-6 14:12:09-debug: handle json group in bundle main success
+2026-7-6 14:12:09-debug: init image compress task 0 in bundle main
+2026-7-6 14:12:09-debug: // ---- build task 查询 Asset Bundle ---- (522ms)
+2026-7-6 14:12:09-log: run build task 查询 Asset Bundle success in 522 ms√, progress: 14%
+2026-7-6 14:12:09-debug: [Build Memory track]: 查询 Asset Bundle start:283.49MB, end 293.10MB, increase: 9.61MB
+2026-7-6 14:12:09-debug: 查询 Asset Bundle start, progress: 14%
+2026-7-6 14:12:09-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 14:12:09-debug: // ---- build task 查询 Asset Bundle ---- (38ms)
+2026-7-6 14:12:09-log: run build task 查询 Asset Bundle success in 38 ms√, progress: 19%
+2026-7-6 14:12:09-debug: [Build Memory track]: 查询 Asset Bundle start:293.14MB, end 289.25MB, increase: -3981.86KB
+2026-7-6 14:12:09-debug: 打包脚本 start, progress: 19%
+2026-7-6 14:12:09-debug: // ---- build task 打包脚本 ----
+2026-7-6 14:12:09-log: 资源数据库已锁定，资源操作(refresh)将会延迟响应，请稍侯
+2026-7-6 14:12:10-log: [buildPolyfillsCommand]enter sub process 17416, 9229, see: chrome://inspect/#devices
+2026-7-6 14:12:14-debug: execute-script-end with buildPolyfillsCommand 5428ms
+2026-7-6 14:12:14-debug: Generate systemJs..., progress: 19%
+2026-7-6 14:12:18-debug: execute-script-end with buildSystemJsCommand 3823ms
+2026-7-6 14:12:18-debug: 构建项目脚本 start..., progress: 19%
+2026-7-6 14:12:18-debug: 构建项目脚本 start..., progress: 13%
+2026-7-6 14:12:24-warn: [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpManager.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpDriveEngine.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpManager.ts
+2026-7-6 14:12:24-warn: [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts[warning][[Build.Script.Rollup]] Circular dependency: file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PrintComponent.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/StutterCheck.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PrintComponent.ts
+2026-7-6 14:12:29-log: [buildScriptCommand]Number of non-entry chunks: 3
+2026-7-6 14:12:29-debug: execute-script-end with buildScriptCommand 10914ms
+2026-7-6 14:12:29-debug: Copy externalScripts success!
+2026-7-6 14:12:29-debug: 构建项目脚本 in (10962 ms) √, progress: 19%
+2026-7-6 14:12:29-debug: 构建项目脚本 in (10962 ms) √, progress: 13%
+2026-7-6 14:12:29-debug: 构建引擎脚本 start..., progress: 19%
+2026-7-6 14:12:29-debug: mangleProperties is enabled, found engine-mangle-config.json, use it
+2026-7-6 14:12:29-debug: Error: Exit process with code:null, signal:SIGTERM in task build-script    at ChildProcess.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.7\resources\app.asar\builtin\builder\dist\worker\worker-pools\sub-process-manager.ccc:1:2409)    at ChildProcess.emit (node:events:519:28)    at Process.ChildProcess._handle.onexit (node:internal/child_process:294:12)
+2026-7-6 14:12:29-debug: Use cache, options: {  "entry": "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine",  "debug": false,  "mangleProperties": false,  "inlineEnum": true,  "sourceMaps": false,  "includeModules": [    "2d",    "3d",    "animation",    "audio",    "base",    "custom-pipeline",    "gfx-webgl",    "gfx-webgl2",    "graphics",    "particle",    "physics-2d-box2d",    "physics-ammo",    "primitive",    "profiler",    "skeletal-animation",    "tween",    "ui",    "custom-pipeline-builtin-scripts"  ],  "engineVersion": "3.8.7",  "md5Map": [],  "engineName": "cocos-js",  "output": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\build\\web-mobile\\cocos-js",  "platformType": "HTML5",  "useCache": true,  "nativeCodeBundleMode": "asmjs",  "wasmCompressionMode": false,  "split": false,  "assetURLFormat": "runtime-resolved",  "flags": {    "DEBUG": false,    "LOAD_BULLET_MANUALLY": false,    "LOAD_SPINE_MANUALLY": false,    "WEBGPU": false  }}
+2026-7-6 14:12:29-debug: Use cache engine: {link(C:\Users\Admin\AppData\Local\Temp\CocosCreator\3.8.7\builder\engine\a154ee511c93165416d720dbd46d8d34)}
+2026-7-6 14:12:29-debug: Use cache, md5String: debug=false,sourceMaps=false,includeModules=["2d","3d","animation","audio","base","custom-pipeline","gfx-webgl","gfx-webgl2","graphics","particle","physics-2d-box2d","physics-ammo","primitive","profiler","skeletal-animation","tween","ui","custom-pipeline-builtin-scripts"],engineVersion="3.8.7",platformType="HTML5",split=false,nativeCodeBundleMode="asmjs",targets=undefined,entry="C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine",noDeprecatedFeatures=undefined,loose=true,assetURLFormat="runtime-resolved",flags={"DEBUG":false,"LOAD_BULLET_MANUALLY":false,"LOAD_SPINE_MANUALLY":false,"WEBGPU":false},preserveType=undefined,wasmCompressionMode=false,enableNamedRegisterForSystemJSModuleFormat=undefined,mangleProperties=false,inlineEnum=true,
+2026-7-6 14:12:29-debug: 构建引擎脚本 in (262 ms) √, progress: 19%
+2026-7-6 14:12:29-debug: Copy plugin script ..., progress: 19%
+2026-7-6 14:12:29-debug: Generate import-map..., progress: 19%
+2026-7-6 14:12:29-debug: // ---- build task 打包脚本 ---- (20584ms)
+2026-7-6 14:12:29-log: run build task 打包脚本 success in 20 s√, progress: 24%
+2026-7-6 14:12:29-debug: Build bundles..., progress: 24%
+2026-7-6 14:12:29-debug: Pack Images start, progress: 24%
+2026-7-6 14:12:29-debug: Pack Images start, progress: 13%
+2026-7-6 14:12:29-debug: Number of pac assets: 3
+2026-7-6 14:12:29-debug: [Build Memory track]: 打包脚本 start:289.41MB, end 294.72MB, increase: 5.31MB
+2026-7-6 14:12:29-debug: // ---- build task Build Assets ----
+2026-7-6 14:12:29-debug: Build Assets start, progress: 24%
+2026-7-6 14:12:30-debug: Get Cache info of pac success {asset(b74fc0c2-4c67-4dd4-8d74-9612ad56cfb1)}
+2026-7-6 14:12:30-debug: Get Cache info of pac success {asset(17513a27-4f11-4047-a0be-8d0cb6187b9e)}
+2026-7-6 14:12:30-debug: Number of pack results: 2
+2026-7-6 14:12:30-debug: start collect depend assets in pacb74fc0c2-4c67-4dd4-8d74-9612ad56cfb1
+2026-7-6 14:12:30-debug: start collect depend assets in pac17513a27-4f11-4047-a0be-8d0cb6187b9e
+2026-7-6 14:12:30-debug: start sort bundle in pacb74fc0c2-4c67-4dd4-8d74-9612ad56cfb1
+2026-7-6 14:12:30-debug: end sort bundle in pacb74fc0c2-4c67-4dd4-8d74-9612ad56cfb1
+2026-7-6 14:12:30-debug: start sort bundle in pac17513a27-4f11-4047-a0be-8d0cb6187b9e
+2026-7-6 14:12:30-debug: end sort bundle in pac17513a27-4f11-4047-a0be-8d0cb6187b9e
+2026-7-6 14:12:30-debug: builder:pack-auto-atlas-image (313ms)
+2026-7-6 14:12:30-debug: Pack Images success, progress: 24%
+2026-7-6 14:12:30-debug: Compress image start..., progress: 24%
+2026-7-6 14:12:30-debug: Pack Images success, progress: 13%
+2026-7-6 14:12:30-debug: Compress image start..., progress: 13%
+2026-7-6 14:12:30-debug: sort compress task {}
+2026-7-6 14:12:30-debug: Num of all image compress task 0, really: 0, configTasks: 0
+2026-7-6 14:12:30-debug: No image need to compress
+2026-7-6 14:12:30-debug: Compress image success..., progress: 24%
+2026-7-6 14:12:30-debug: Compress image success..., progress: 13%
+2026-7-6 14:12:30-debug: Output asset in bundles start, progress: 24%
+2026-7-6 14:12:30-debug: Output asset in bundles start, progress: 13%
+2026-7-6 14:12:30-debug: Handle all json groups in bundle internal
+2026-7-6 14:12:30-debug: handle json group
+2026-7-6 14:12:30-debug: Handle all json groups in bundle resources
+2026-7-6 14:12:30-debug: handle json group
+2026-7-6 14:12:30-debug: Handle all json groups in bundle main
+2026-7-6 14:12:30-debug: handle json group
+2026-7-6 14:12:30-debug: Json group(033f45a16) compile success，json number: 6
+2026-7-6 14:12:30-debug: Json group(0b54f34d0) compile success，json number: 6
+2026-7-6 14:12:30-debug: handle single json
+2026-7-6 14:12:30-debug: Json group(08cbea60a) compile success，json number: 6
+2026-7-6 14:12:30-debug: Json group(0a84a1761) compile success，json number: 6
+2026-7-6 14:12:30-debug: Json group(09e986d7f) compile success，json number: 6
+2026-7-6 14:12:30-debug: Json group(0a8b38f43) compile success，json number: 6
+2026-7-6 14:12:30-debug: Json group(0bd960b15) compile success，json number: 6
+2026-7-6 14:12:30-debug: Json group(05d786f3c) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(05a6ba422) compile success，json number: 6
+2026-7-6 14:12:31-debug: handle single json
+2026-7-6 14:12:31-debug: Json group(0a9a16365) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0939f5774) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(04d1efb95) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(05ff4bf9a) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(058888a4d) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0aa2d87de) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0936a916b) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0b3e0b1ce) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(03bca836c) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(018f8689b) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(09f4a3c5f) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0573d1736) compile success，json number: 6
+2026-7-6 14:12:31-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:31-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:31-debug: Json group(0d1405e99) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0fbb3d0d7) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0b756a9e5) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0acdaf410) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(045d59844) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(03d712220) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0418d0963) compile success，json number: 6
+2026-7-6 14:12:31-debug: Json group(0d46b5455) compile success，json number: 6
+2026-7-6 14:12:32-debug: Json group(0d76502e0) compile success，json number: 6
+2026-7-6 14:12:32-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_1" is missing. Detailed information:Node path: "Role_1/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_1"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:32-debug: Json group(03a0f8b8b) compile success，json number: 6
+2026-7-6 14:12:32-debug: Json group(05744dfbc) compile success，json number: 6
+2026-7-6 14:12:32-debug: handle single json
+2026-7-6 14:12:33-debug: Output asset in bundles success, progress: 24%
+2026-7-6 14:12:33-debug: Output asset in bundles success, progress: 13%
+2026-7-6 14:12:33-debug: Output asset in bundles start, progress: 24%
+2026-7-6 14:12:33-debug: compress config of bundle internal...
+2026-7-6 14:12:33-debug: compress config of bundle internal success
+2026-7-6 14:12:33-debug: compress config of bundle resources...
+2026-7-6 14:12:33-debug: compress config of bundle resources success
+2026-7-6 14:12:33-debug: compress config of bundle main...
+2026-7-6 14:12:33-debug: output config of bundle internal
+2026-7-6 14:12:33-debug: compress config of bundle main success
+2026-7-6 14:12:33-debug: output config of bundle internal success
+2026-7-6 14:12:33-debug: output config of bundle resources
+2026-7-6 14:12:33-debug: output config of bundle resources success
+2026-7-6 14:12:33-debug: output config of bundle main
+2026-7-6 14:12:33-debug: output config of bundle main success
+2026-7-6 14:12:33-debug: Output asset in bundles success, progress: 24%
+2026-7-6 14:12:33-debug: Output asset in bundles success, progress: 13%
+2026-7-6 14:12:33-debug: Output asset in bundles start, progress: 13%
+2026-7-6 14:12:33-log: run build task Build Assets success in 3 s√, progress: 29%
+2026-7-6 14:12:33-debug: [Build Memory track]: Build Assets start:294.76MB, end 278.30MB, increase: -16848.06KB
+2026-7-6 14:12:33-debug: // ---- build task Build Assets ---- (3772ms)
+2026-7-6 14:12:33-debug: 整理部分构建选项内数据到 settings.json start, progress: 29%
+2026-7-6 14:12:33-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 14:12:33-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (61ms)
+2026-7-6 14:12:33-log: run build task 整理部分构建选项内数据到 settings.json success in 61 ms√, progress: 31%
+2026-7-6 14:12:33-debug: 填充脚本数据到 settings.json start, progress: 31%
+2026-7-6 14:12:33-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:278.41MB, end 278.49MB, increase: 77.04KB
+2026-7-6 14:12:33-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-6 14:12:33-debug: // ---- build task 填充脚本数据到 settings.json ---- (51ms)
+2026-7-6 14:12:33-log: run build task 填充脚本数据到 settings.json success in 51 ms√, progress: 32%
+2026-7-6 14:12:33-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 14:12:33-debug: 整理部分构建选项内数据到 settings.json start, progress: 32%
+2026-7-6 14:12:33-debug: [Build Memory track]: 填充脚本数据到 settings.json start:278.53MB, end 278.61MB, increase: 81.36KB
+2026-7-6 14:12:33-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (300ms)
+2026-7-6 14:12:33-log: run build task 整理部分构建选项内数据到 settings.json success in 300 ms√, progress: 34%
+2026-7-6 14:12:33-debug: // ---- build task web-mobile：onBeforeCompressSettings ----
+2026-7-6 14:12:33-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:278.64MB, end 278.79MB, increase: 147.68KB
+2026-7-6 14:12:33-debug: web-mobile:(onBeforeCompressSettings) start..., progress: 34%
+2026-7-6 14:12:34-debug: // ---- build task web-mobile：onBeforeCompressSettings ---- (61ms)
+2026-7-6 14:12:34-debug: web-mobile:(onBeforeCompressSettings) in 61 ms ✓, progress: 36%
+2026-7-6 14:12:34-debug: cocos-service:(onBeforeCompressSettings) start..., progress: 36%
+2026-7-6 14:12:34-debug: // ---- build task cocos-service：onBeforeCompressSettings ----
+2026-7-6 14:12:34-debug: // ---- build task cocos-service：onBeforeCompressSettings ---- (156ms)
+2026-7-6 14:12:34-debug: cocos-service:(onBeforeCompressSettings) in 156 ms ✓, progress: 38%
+2026-7-6 14:12:34-debug: // ---- build task super-packager：onBeforeCompressSettings ----
+2026-7-6 14:12:34-debug: super-packager:(onBeforeCompressSettings) start..., progress: 38%
+2026-7-6 14:12:34-log: [SUPER_PACKAGE]onBeforeCompressSettings
+2026-7-6 14:12:34-debug: // ---- build task super-packager：onBeforeCompressSettings ---- (45ms)
+2026-7-6 14:12:34-debug: 整理静态模板文件 start, progress: 40%
+2026-7-6 14:12:34-debug: super-packager:(onBeforeCompressSettings) in 45 ms ✓, progress: 40%
+2026-7-6 14:12:34-debug: // ---- build task 整理静态模板文件 ----
+2026-7-6 14:12:34-debug: // ---- build task 整理静态模板文件 ---- (104ms)
+2026-7-6 14:12:34-log: run build task 整理静态模板文件 success in 104 ms√, progress: 45%
+2026-7-6 14:12:34-debug: // ---- build task cocos-service：onAfterCompressSettings ----
+2026-7-6 14:12:34-debug: [Build Memory track]: 整理静态模板文件 start:279.19MB, end 283.58MB, increase: 4.39MB
+2026-7-6 14:12:34-debug: cocos-service:(onAfterCompressSettings) start..., progress: 45%
+2026-7-6 14:12:34-debug: // ---- build task cocos-service：onAfterCompressSettings ---- (129ms)
+2026-7-6 14:12:34-debug: super-packager:(onAfterCompressSettings) start..., progress: 46%
+2026-7-6 14:12:34-debug: // ---- build task super-packager：onAfterCompressSettings ----
+2026-7-6 14:12:34-log: [SUPER_PACKAGE]onAfterCompressSettings
+2026-7-6 14:12:34-debug: cocos-service:(onAfterCompressSettings) in 129 ms ✓, progress: 46%
+2026-7-6 14:12:34-debug: // ---- build task super-packager：onAfterCompressSettings ---- (45ms)
+2026-7-6 14:12:34-debug: super-packager:(onAfterCompressSettings) in 45 ms ✓, progress: 48%
+2026-7-6 14:12:34-debug: web-mobile:(onBeforeCopyBuildTemplate) start..., progress: 48%
+2026-7-6 14:12:34-debug: // ---- build task web-mobile：onBeforeCopyBuildTemplate ----
+2026-7-6 14:12:34-debug: // ---- build task web-mobile：onBeforeCopyBuildTemplate ---- (127ms)
+2026-7-6 14:12:34-debug: web-mobile:(onBeforeCopyBuildTemplate) in 127 ms ✓, progress: 50%
+2026-7-6 14:12:34-debug: 给所有的资源加上 MD5 后缀 start, progress: 50%
+2026-7-6 14:12:34-debug: // ---- build task 给所有的资源加上 MD5 后缀 ----
+2026-7-6 14:12:34-debug: // ---- build task 给所有的资源加上 MD5 后缀 ---- (37ms)
+2026-7-6 14:12:34-log: run build task 给所有的资源加上 MD5 后缀 success in 37 ms√, progress: 60%
+2026-7-6 14:12:34-debug: web-mobile:(onAfterBuild) start..., progress: 60%
+2026-7-6 14:12:34-debug: // ---- build task web-mobile：onAfterBuild ----
+2026-7-6 14:12:34-debug: [Build Memory track]: 给所有的资源加上 MD5 后缀 start:279.84MB, end 279.91MB, increase: 76.23KB
+2026-7-6 14:12:34-debug: // ---- build task web-mobile：onAfterBuild ---- (37ms)
+2026-7-6 14:12:34-debug: web-mobile:(onAfterBuild) in 37 ms ✓, progress: 62%
+2026-7-6 14:12:34-debug: cocos-service:(onAfterBuild) start..., progress: 62%
+2026-7-6 14:12:34-debug: // ---- build task cocos-service：onAfterBuild ----
+2026-7-6 14:12:34-debug: // ---- build task cocos-service：onAfterBuild ---- (139ms)
+2026-7-6 14:12:34-debug: cocos-service:(onAfterBuild) in 139 ms ✓, progress: 64%
+2026-7-6 14:12:34-debug: adsense-h5g-plugin:(onAfterBuild) start..., progress: 64%
+2026-7-6 14:12:34-debug: // ---- build task adsense-h5g-plugin：onAfterBuild ----
+2026-7-6 14:12:34-debug: super-html:(onAfterBuild) start..., progress: 65%
+2026-7-6 14:12:34-debug: // ---- build task adsense-h5g-plugin：onAfterBuild ---- (68ms)
+2026-7-6 14:12:34-log: [super-html] : -- start --
+2026-7-6 14:12:34-log: [super-html] : engine version 3.8.7
+2026-7-6 14:12:34-log: [super-html] : s_input_dir D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\web-mobile
+2026-7-6 14:12:34-debug: // ---- build task super-html：onAfterBuild ----
+2026-7-6 14:12:34-log: [super-html] : s_out_dir D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html
+2026-7-6 14:12:34-debug: adsense-h5g-plugin:(onAfterBuild) in 68 ms ✓, progress: 65%
+2026-7-6 14:12:41-debug: // ---- build task super-html：onAfterBuild ---- (6422ms)
+2026-7-6 14:12:41-debug: super-html:(onAfterBuild) in 6422 ms ✓, progress: 67%
+2026-7-6 14:12:41-debug: super-packager:(onAfterBuild) start..., progress: 67%
+2026-7-6 14:12:41-debug: // ---- build task super-packager：onAfterBuild ----
+2026-7-6 14:12:41-log: [SUPER_PACKAGE]onAfterBuild
+2026-7-6 14:12:41-debug: // ---- build task super-packager：onAfterBuild ---- (75ms)
+2026-7-6 14:12:41-debug: super-packager:(onAfterBuild) in 75 ms ✓, progress: 69%
+2026-7-6 14:12:41-log: Asset DB is resume!
+2026-7-6 14:12:42-debug: builder:build-project-total (34098ms)
+2026-7-6 14:12:42-debug: build task(web-mobile) in 34098!
+2026-7-6 14:12:42-debug: [Build Memory track]: builder:build-project-total start:283.70MB, end 283.63MB, increase: -67.32KB
+2026-7-6 14:12:42-debug: ================================ build Task (web-mobile) Finished in (34 s)ms ================================
+2026-7-6 14:12:42-debug: Stop record console. {file(D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\builder\log\web-mobile2026-6-30 10-27.log)}
+2026-7-6 14:12:42-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:42-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:42-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_1" is missing. Detailed information:Node path: "Role_1/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_1"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-6 14:12:42-debug: refresh db internal success
+2026-7-6 14:12:43-debug: refresh db assets success
+2026-7-6 14:12:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\extensions\super-packager\package_assets\Common\SuperPackage.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-6 14:12:43-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\extensions\super-packager\package_assets\JiangYv\PBASDK-v3\PBASDK.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-6 14:12:43-debug: refresh db super-packager success
+2026-7-6 14:12:43-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-6 14:12:43-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-6 14:12:43-debug: asset-db:refresh-all-database (1435ms)
+2026-7-6 14:12:43-debug: asset-db:worker-effect-data-processing (3ms)
+2026-7-6 14:12:43-debug: asset-db-hook-engine-extends-afterRefresh (4ms)
+2026-7-6 14:12:45-debug: Query all assets info in project
+2026-7-6 14:12:45-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-6 14:12:45-debug: Skip compress image, progress: 0%
+2026-7-6 14:12:45-debug: Init all bundles start..., progress: 0%
+2026-7-6 14:12:45-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 14:12:45-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-6 14:12:45-debug: Init bundle root assets start..., progress: 0%
+2026-7-6 14:12:45-debug: Num of bundles: 3..., progress: 0%
+2026-7-6 14:12:45-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-6 14:12:45-debug:   Number of all scenes: 5
+2026-7-6 14:12:45-debug:   Number of all scripts: 109
+2026-7-6 14:12:45-debug:   Number of other assets: 1158
+2026-7-6 14:12:45-debug: Init bundle root assets success..., progress: 0%
+2026-7-6 14:12:45-debug: // ---- build task 查询 Asset Bundle ---- (15ms)
+2026-7-6 14:12:45-log: run build task 查询 Asset Bundle success in 15 ms√, progress: 5%
+2026-7-6 14:12:45-debug: [Build Memory track]: 查询 Asset Bundle start:285.73MB, end 287.34MB, increase: 1.61MB
+2026-7-6 14:12:45-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-6 14:12:45-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 14:12:45-log: run build task 查询 Asset Bundle success in 6 ms√, progress: 10%
+2026-7-6 14:12:45-debug: [Build Memory track]: 查询 Asset Bundle start:287.37MB, end 287.60MB, increase: 231.85KB
+2026-7-6 14:12:45-debug: // ---- build task 查询 Asset Bundle ---- (6ms)
+2026-7-6 14:12:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 14:12:45-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-6 14:12:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (3ms)
+2026-7-6 14:12:45-log: run build task 整理部分构建选项内数据到 settings.json success in 3 ms√, progress: 12%
+2026-7-6 14:12:45-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-6 14:12:45-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-6 14:12:45-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:287.63MB, end 287.67MB, increase: 38.97KB
+2026-7-6 14:12:45-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-7-6 14:12:45-debug: [Build Memory track]: 填充脚本数据到 settings.json start:287.70MB, end 287.73MB, increase: 29.48KB
+2026-7-6 14:12:45-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-6 14:12:45-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-7-6 14:12:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 14:12:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (5ms)
+2026-7-6 14:12:45-log: run build task 整理部分构建选项内数据到 settings.json success in 5 ms√, progress: 15%
+2026-7-6 14:12:45-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:287.77MB, end 287.83MB, increase: 66.69KB
+2026-7-6 14:12:47-log: [super-html] : [common] [13583 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\common\HYQ_common.html
+2026-7-6 14:12:47-log: [super-html] : [common] [6243 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\common\HYQ_common_min.html
+2026-7-6 14:12:47-log: [super-html] : [ironsource2025] [6244 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\ironsource2025\HYQ_ironsource2025.html
+2026-7-6 14:12:47-log: [super-html] : [applovin] [6243 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\applovin\HYQ_applovin.html
+2026-7-6 14:12:47-log: [super-html] : [ironsource] [6246 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\ironsource\HYQ_ironsource.html
+2026-7-6 14:12:49-log: [super-html] : [mintegral] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\mintegral\HYQ_mintegral.zip
+2026-7-6 14:12:49-log: [super-html] : [chartboost] [6243 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\chartboost\HYQ_chartboost.html
+2026-7-6 14:12:49-log: [super-html] : [unity] [6244 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\unity\HYQ_unity.html
+2026-7-6 14:12:50-log: [super-html] : [google] [4589 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\google\HYQ_google.zip
+2026-7-6 14:12:50-log: [super-html] : [google] [4589 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\google\HYQ_google_portrait.zip
+2026-7-6 14:12:51-log: [super-html] : [google] [4589 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\google\HYQ_google_landscape.zip
+2026-7-6 14:12:51-log: [super-html] : [facebook] [6243 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\facebook\HYQ_facebook.html
+2026-7-6 14:12:52-log: [super-html] : [facebook] [4589 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\facebook\HYQ_facebook.zip
+2026-7-6 14:12:53-log: [super-html] : [pangle] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\pangle\HYQ_pangle.zip
+2026-7-6 14:12:54-log: [super-html] : [pangle] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\pangle\HYQ_pangle_portrait.zip
+2026-7-6 14:12:55-log: [super-html] : [pangle] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\pangle\HYQ_pangle_landscape.zip
+2026-7-6 14:12:56-log: [super-html] : [liftoff] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\liftoff\HYQ_liftoff.zip
+2026-7-6 14:12:56-log: [super-html] : [moloco] [6243 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\moloco\HYQ_moloco.html
+2026-7-6 14:12:57-log: [super-html] : [tiktok] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\tiktok\HYQ_tiktok.zip
+2026-7-6 14:12:59-log: [super-html] : [vungle] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\vungle\HYQ_vungle.zip
+2026-7-6 14:13:00-log: [super-html] : [bigo] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\bigo\HYQ_bigo.zip
+2026-7-6 14:13:00-log: [super-html] : [kwai] : thumbnail_cover.jpg no find
+2026-7-6 14:13:01-log: [super-html] : [kwai] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\kwai\HYQ_kwai.zip
+2026-7-6 14:13:01-log: [super-html] : [nefta] [6243 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\nefta\HYQ_nefta.html
+2026-7-6 14:13:02-log: [super-html] : [nefta] [4520 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\nefta\HYQ_nefta.zip
+2026-7-6 14:13:03-log: [super-html] : [snapchat] [4589 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\snapchat\HYQ_snapchat_portrait.zip
+2026-7-6 14:13:03-log: [super-html] : [gdt] [4590 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\gdt\HYQ_gdt.zip
+2026-7-6 14:13:04-log: [super-html] : [gdt] [4590 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\gdt\HYQ_gdt_portrait.zip
+2026-7-6 14:13:05-log: [super-html] : [gdt] [4590 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\gdt\HYQ_gdt_landscape.zip
+2026-7-6 14:13:05-log: [super-html] : run time 30.287S
+2026-7-6 14:13:05-log: [super-html] : -- end -- 
+2026-7-6 14:14:55-debug: refresh db internal success
+2026-7-6 14:14:56-debug: refresh db assets success
+2026-7-6 14:14:56-debug: refresh db super-packager success
+2026-7-6 14:14:56-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-6 14:14:56-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-6 14:14:56-debug: asset-db:refresh-all-database (310ms)
+2026-7-6 14:14:56-debug: asset-db:worker-effect-data-processing (1ms)
+2026-7-6 14:14:56-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-7-6 14:31:46-debug: refresh db internal success
+2026-7-6 14:31:46-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\Other\PropLalianGate.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-6 14:31:46-debug: refresh db assets success
+2026-7-6 14:31:46-debug: refresh db super-packager success
+2026-7-6 14:31:46-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-6 14:31:46-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-6 14:31:46-debug: asset-db:refresh-all-database (349ms)
+2026-7-6 14:31:46-debug: asset-db:worker-effect-data-processing (3ms)
+2026-7-6 14:31:46-debug: asset-db-hook-engine-extends-afterRefresh (5ms)
+2026-7-6 14:31:49-debug: Query all assets info in project
+2026-7-6 14:31:49-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-6 14:31:49-debug: Skip compress image, progress: 0%
+2026-7-6 14:31:49-debug: Init all bundles start..., progress: 0%
+2026-7-6 14:31:49-debug: Num of bundles: 3..., progress: 0%
+2026-7-6 14:31:49-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-6 14:31:49-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 14:31:49-debug: Init bundle root assets start..., progress: 0%
+2026-7-6 14:31:49-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-6 14:31:49-debug:   Number of all scenes: 5
+2026-7-6 14:31:49-debug: Init bundle root assets success..., progress: 0%
+2026-7-6 14:31:49-debug:   Number of all scripts: 109
+2026-7-6 14:31:49-debug:   Number of other assets: 1158
+2026-7-6 14:31:49-debug: // ---- build task 查询 Asset Bundle ---- (16ms)
+2026-7-6 14:31:49-log: run build task 查询 Asset Bundle success in 16 ms√, progress: 5%
+2026-7-6 14:31:49-debug: [Build Memory track]: 查询 Asset Bundle start:283.95MB, end 285.55MB, increase: 1.60MB
+2026-7-6 14:31:49-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-6 14:31:49-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 14:31:49-debug: // ---- build task 查询 Asset Bundle ---- (8ms)
+2026-7-6 14:31:49-log: run build task 查询 Asset Bundle success in 8 ms√, progress: 10%
+2026-7-6 14:31:49-debug: [Build Memory track]: 查询 Asset Bundle start:285.58MB, end 285.81MB, increase: 232.97KB
+2026-7-6 14:31:49-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-6 14:31:49-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 14:31:49-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (5ms)
+2026-7-6 14:31:49-log: run build task 整理部分构建选项内数据到 settings.json success in 5 ms√, progress: 12%
+2026-7-6 14:31:49-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:285.84MB, end 285.87MB, increase: 29.50KB
+2026-7-6 14:31:49-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-6 14:31:49-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-6 14:31:49-debug: // ---- build task 填充脚本数据到 settings.json ---- (4ms)
+2026-7-6 14:31:49-log: run build task 填充脚本数据到 settings.json success in 4 ms√, progress: 13%
+2026-7-6 14:31:49-debug: [Build Memory track]: 填充脚本数据到 settings.json start:285.91MB, end 285.94MB, increase: 29.05KB
+2026-7-6 14:31:49-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-6 14:31:49-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 14:31:49-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (10ms)
+2026-7-6 14:31:49-log: run build task 整理部分构建选项内数据到 settings.json success in 10 ms√, progress: 15%
+2026-7-6 14:31:49-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:285.97MB, end 286.04MB, increase: 71.29KB
+2026-7-6 15:07:07-debug: refresh db internal success
+2026-7-6 15:07:07-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\Other\PropLalianGate.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-6 15:07:08-debug: refresh db assets success
+2026-7-6 15:07:08-debug: refresh db super-packager success
+2026-7-6 15:07:08-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-6 15:07:08-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-6 15:07:08-debug: asset-db:refresh-all-database (331ms)
+2026-7-6 15:07:08-debug: asset-db:worker-effect-data-processing (3ms)
+2026-7-6 15:07:08-debug: asset-db-hook-engine-extends-afterRefresh (4ms)
+2026-7-6 15:07:10-debug: Query all assets info in project
+2026-7-6 15:07:10-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-6 15:07:10-debug: Skip compress image, progress: 0%
+2026-7-6 15:07:10-debug: Init all bundles start..., progress: 0%
+2026-7-6 15:07:10-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 15:07:10-debug: Num of bundles: 3..., progress: 0%
+2026-7-6 15:07:10-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-6 15:07:10-debug: Init bundle root assets start..., progress: 0%
+2026-7-6 15:07:10-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-6 15:07:10-debug:   Number of all scenes: 5
+2026-7-6 15:07:10-debug:   Number of other assets: 1158
+2026-7-6 15:07:10-debug:   Number of all scripts: 109
+2026-7-6 15:07:10-debug: Init bundle root assets success..., progress: 0%
+2026-7-6 15:07:10-debug: // ---- build task 查询 Asset Bundle ---- (19ms)
+2026-7-6 15:07:10-log: run build task 查询 Asset Bundle success in 19 ms√, progress: 5%
+2026-7-6 15:07:10-debug: [Build Memory track]: 查询 Asset Bundle start:289.76MB, end 286.49MB, increase: -3349.65KB
+2026-7-6 15:07:10-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-6 15:07:10-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 15:07:10-debug: // ---- build task 查询 Asset Bundle ---- (6ms)
+2026-7-6 15:07:10-log: run build task 查询 Asset Bundle success in 6 ms√, progress: 10%
+2026-7-6 15:07:10-debug: [Build Memory track]: 查询 Asset Bundle start:286.52MB, end 286.75MB, increase: 236.45KB
+2026-7-6 15:07:10-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 15:07:10-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-6 15:07:10-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-7-6 15:07:10-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-7-6 15:07:10-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:286.79MB, end 286.82MB, increase: 28.77KB
+2026-7-6 15:07:10-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-6 15:07:10-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-6 15:07:10-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-7-6 15:07:10-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-7-6 15:07:10-debug: [Build Memory track]: 填充脚本数据到 settings.json start:286.86MB, end 286.89MB, increase: 28.44KB
+2026-7-6 15:07:10-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-6 15:07:10-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 15:07:10-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (19ms)
+2026-7-6 15:07:10-log: run build task 整理部分构建选项内数据到 settings.json success in 19 ms√, progress: 15%
+2026-7-6 15:07:10-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:286.93MB, end 286.99MB, increase: 66.71KB
+2026-7-6 15:07:57-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-7-6 15:07:57-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (58ms)
+2026-7-6 15:07:58-debug: Query all assets info in project
+2026-7-6 15:07:58-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-6 15:07:58-debug: Skip compress image, progress: 0%
+2026-7-6 15:07:58-debug: Init all bundles start..., progress: 0%
+2026-7-6 15:07:58-debug: Num of bundles: 3..., progress: 0%
+2026-7-6 15:07:58-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-6 15:07:58-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 15:07:58-debug: Init bundle root assets start..., progress: 0%
+2026-7-6 15:07:58-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-6 15:07:58-debug:   Number of all scenes: 5
+2026-7-6 15:07:58-debug:   Number of all scripts: 109
+2026-7-6 15:07:58-debug:   Number of other assets: 1158
+2026-7-6 15:07:58-debug: Init bundle root assets success..., progress: 0%
+2026-7-6 15:07:58-debug: // ---- build task 查询 Asset Bundle ---- (18ms)
+2026-7-6 15:07:58-log: run build task 查询 Asset Bundle success in 18 ms√, progress: 5%
+2026-7-6 15:07:58-debug: [Build Memory track]: 查询 Asset Bundle start:289.19MB, end 289.15MB, increase: -45.00KB
+2026-7-6 15:07:58-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-6 15:07:58-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 15:07:58-debug: // ---- build task 查询 Asset Bundle ---- (10ms)
+2026-7-6 15:07:58-log: run build task 查询 Asset Bundle success in 10 ms√, progress: 10%
+2026-7-6 15:07:58-debug: [Build Memory track]: 查询 Asset Bundle start:289.18MB, end 289.41MB, increase: 235.79KB
+2026-7-6 15:07:58-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-6 15:07:58-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 15:07:58-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-7-6 15:07:58-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-7-6 15:07:58-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:289.45MB, end 289.48MB, increase: 29.55KB
+2026-7-6 15:07:58-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-6 15:07:58-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-6 15:07:58-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-7-6 15:07:58-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-7-6 15:07:58-debug: [Build Memory track]: 填充脚本数据到 settings.json start:289.51MB, end 289.54MB, increase: 28.60KB
+2026-7-6 15:07:58-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-6 15:07:58-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 15:07:58-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (14ms)
+2026-7-6 15:07:58-log: run build task 整理部分构建选项内数据到 settings.json success in 14 ms√, progress: 15%
+2026-7-6 15:07:58-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:289.58MB, end 289.64MB, increase: 65.82KB
+2026-7-6 15:09:03-debug: refresh db internal success
+2026-7-6 15:09:03-debug: refresh db assets success
+2026-7-6 15:09:03-debug: refresh db super-packager success
+2026-7-6 15:09:03-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-6 15:09:03-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-6 15:09:03-debug: asset-db:refresh-all-database (191ms)
+2026-7-6 15:09:03-debug: asset-db:worker-effect-data-processing (1ms)
+2026-7-6 15:09:03-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-6 15:09:12-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-7-6 15:09:12-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (36ms)
+2026-7-6 15:09:13-debug: Query all assets info in project
+2026-7-6 15:09:13-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-6 15:09:13-debug: Skip compress image, progress: 0%
+2026-7-6 15:09:13-debug: Init all bundles start..., progress: 0%
+2026-7-6 15:09:13-debug: Num of bundles: 3..., progress: 0%
+2026-7-6 15:09:13-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-6 15:09:13-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 15:09:13-debug: Init bundle root assets start..., progress: 0%
+2026-7-6 15:09:13-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-6 15:09:13-debug:   Number of all scenes: 5
+2026-7-6 15:09:13-debug:   Number of all scripts: 109
+2026-7-6 15:09:13-debug:   Number of other assets: 1158
+2026-7-6 15:09:13-debug: Init bundle root assets success..., progress: 0%
+2026-7-6 15:09:13-debug: // ---- build task 查询 Asset Bundle ---- (15ms)
+2026-7-6 15:09:13-log: run build task 查询 Asset Bundle success in 15 ms√, progress: 5%
+2026-7-6 15:09:13-debug: [Build Memory track]: 查询 Asset Bundle start:293.61MB, end 293.63MB, increase: 20.99KB
+2026-7-6 15:09:13-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-6 15:09:13-debug: // ---- build task 查询 Asset Bundle ---- (8ms)
+2026-7-6 15:09:13-log: run build task 查询 Asset Bundle success in 8 ms√, progress: 10%
+2026-7-6 15:09:13-debug: [Build Memory track]: 查询 Asset Bundle start:293.66MB, end 293.91MB, increase: 250.34KB
+2026-7-6 15:09:13-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 15:09:13-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-6 15:09:13-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-6 15:09:13-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-7-6 15:09:13-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-7-6 15:09:13-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-6 15:09:13-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-6 15:09:13-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:293.94MB, end 293.97MB, increase: 29.29KB
+2026-7-6 15:09:13-debug: // ---- build task 填充脚本数据到 settings.json ---- (4ms)
+2026-7-6 15:09:13-log: run build task 填充脚本数据到 settings.json success in 4 ms√, progress: 13%
+2026-7-6 15:09:13-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-6 15:09:13-debug: [Build Memory track]: 填充脚本数据到 settings.json start:294.00MB, end 294.03MB, increase: 29.88KB
+2026-7-6 15:09:13-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-6 15:09:13-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (7ms)
+2026-7-6 15:09:13-log: run build task 整理部分构建选项内数据到 settings.json success in 7 ms√, progress: 15%
+2026-7-6 15:09:13-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:294.07MB, end 294.13MB, increase: 65.61KB
