@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, ColliderTag, COLLIDE_TYPE, EventType, SoundEnum, EventManager, AudioManager, TweenTool, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _descriptor38, _descriptor39, _descriptor40, _descriptor41, _descriptor42, _descriptor43, _descriptor44, _descriptor45, _crd, ccclass, property, PropLalianGate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, ColliderTag, COLLIDE_TYPE, EventType, SoundEnum, EventManager, AudioManager, TweenTool, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _descriptor38, _descriptor39, _descriptor40, _descriptor41, _descriptor42, _descriptor43, _descriptor44, _descriptor45, _descriptor46, _crd, ccclass, property, PropLalianGate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -182,93 +182,96 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '运行时实际使用多少个齿条。填 0 表示使用齿条列表/自动收集到的全部齿条；不会自动生成缺少的齿条。'
       }), _dec24 = property({
         type: CCInteger,
-        displayName: '每段受击次数(旧参数)',
-        tooltip: '旧拉链逻辑遗留参数，当前独立拉链不再读取。保留是为了避免旧场景序列化丢字段。'
+        visible: false
       }), _dec25 = property({
+        type: CCInteger,
+        displayName: '每格推进所需受击次数',
+        tooltip: '滑块推进当前一格需要多少次受击。1 表示保持当前逻辑，2/3 表示把当前一格拆成 2/3 段推进。'
+      }), _dec26 = property({
         type: CCInteger,
         displayName: '每对齿条数量',
         tooltip: '默认 2，表示每 2 个 SM_lalian 齿条算作一对，一次受击推进一对。'
-      }), _dec26 = property({
+      }), _dec27 = property({
         type: CCInteger,
         displayName: '初始闭合对数',
         tooltip: '默认前 2 对齿条完全闭合。'
-      }), _dec27 = property({
+      }), _dec28 = property({
         type: CCFloat,
         displayName: '下一对初始闭合度',
         tooltip: '初始闭合对数之后的下一对闭合度。默认 0.5 表示半闭合。'
-      }), _dec28 = property({
+      }), _dec29 = property({
         type: CCFloat,
         displayName: '再下一对初始闭合度',
         tooltip: '下一对之后的再下一对闭合度。默认 0.25 表示 1/4 闭合。'
-      }), _dec29 = property({
+      }), _dec30 = property({
         type: CCFloat,
         displayName: '齿条Z间距(兜底)',
         tooltip: '无法从齿条节点计算长度时，用这个值估算 +1/+99 的起始距离。'
-      }), _dec30 = property({
+      }), _dec31 = property({
         type: CCBoolean,
         displayName: '自动计算收拢中心X',
         tooltip: '开启后用本次使用齿条的最小/最大 X 计算中线；适合 lalian_01/lalian_02。关闭后使用“手动收拢中心X”。'
-      }), _dec31 = property({
+      }), _dec32 = property({
         type: CCFloat,
         displayName: '手动收拢中心X',
         tooltip: '关闭自动计算时生效。齿条会向这个本地 X 位置靠拢。'
-      }), _dec32 = property({
+      }), _dec33 = property({
         type: CCFloat,
         displayName: '最终保留半宽X(旧参数)',
         tooltip: '旧临时拉链参数。当前 lalian_01/lalian_02 默认闭合资源会直接收回到资源默认位置，不再读取这个值。'
-      }), _dec33 = property({
+      }), _dec34 = property({
         type: CCFloat,
         displayName: '开链外扩X',
         tooltip: '资源默认是闭合状态时，初始化会让齿条沿 X 轴向两侧外扩这个距离，形成打开状态。'
-      }), _dec34 = property({
+      }), _dec35 = property({
         type: CCBoolean,
         displayName: '反向开链方向',
         tooltip: '开链初始化方向反了就切这个。开启后，齿条沿 X 轴外扩的方向会整体反过来。'
-      }), _dec35 = property({
+      }), _dec36 = property({
         type: CCFloat,
         displayName: '道具队列间隔Z',
         tooltip: '+1/+99 队列与拉链末端之间额外保留的 Z 轴距离。'
-      }), _dec36 = property({
+      }), _dec37 = property({
         type: CCInteger,
         displayName: '完成后放出数量',
         tooltip: '拉链全部完成后，向玩家移动的 +1/+99 道具数量。填 0 表示持续放出，不主动停。'
-      }), _dec37 = property({
+      }), _dec38 = property({
         type: CCFloat,
         displayName: '受击动画时长',
         tooltip: '每次受击后，齿条收拢和滑块移动的动画时间。'
-      }), _dec38 = property({
+      }), _dec39 = property({
         type: CCFloat,
         displayName: '滑块消失时长',
         tooltip: '所有齿条完成后，滑块缩小消失动画的持续时间。'
-      }), _dec39 = property({
+      }), _dec40 = property({
         type: CCBoolean,
         displayName: '保留滑块Z偏移',
         tooltip: '开启后，初始化时会保留资源里滑块相对起始齿条的 Z 轴偏移。当前默认关闭，滑块直接放到齿条前沿。'
-      }), _dec40 = property({
+      }), _dec41 = property({
         type: CCFloat,
         displayName: '手动滑块Z偏移',
         tooltip: '关闭“保留滑块Z偏移”时生效。滑块移动目标会在齿条 Z 位置基础上额外加这个偏移。'
-      }), _dec41 = property({
+      }), _dec42 = property({
         type: CCBoolean,
         displayName: '反向滑块移动Z',
         tooltip: '只反转滑块沿 Z 轴的移动方向，不影响齿条从哪一端闭合。当前默认关闭，滑块跟随 Z 最大端顺序。'
-      }), _dec42 = property({
+      }), _dec43 = property({
         type: CCFloat,
         displayName: '子弹锁定范围X',
         tooltip: '玩家进入该拉链左右 X 范围后，子弹才会锁定滑块；玩家在中路时不锁定。'
-      }), _dec43 = property({
+      }), _dec44 = property({
         type: CCFloat,
         displayName: '锁定瞄准缩放',
         tooltip: '子弹锁定后，实际瞄准点落在滑块可受击范围内的比例。1=完整范围，0.92=略窄一点。'
-      }), _dec44 = property({
+      }), _dec45 = property({
         type: CCFloat,
         displayName: '受击区域Z偏移',
         tooltip: '只调整子弹锁定/碰撞中心，不移动滑块模型。负值通常是往玩家方向提前，正值是往远离玩家方向延后。'
-      }), _dec45 = property({
+      }), _dec46 = property({
         type: CCBoolean,
         displayName: '使用滑块模型中心',
         tooltip: '开启后用滑块模型的渲染包围盒中心作为受击中心，避免滑块节点锚点偏后导致子弹穿过模型后才命中。'
-      }), _dec46 = property({
+      }), _dec47 = property({
         type: CCFloat,
         displayName: '滑块厚度对齐偏移',
         tooltip: '滑块定位时，用模型包围盒中心再向厚的一侧偏移一点来对齐齿条位置。0=模型中心，0.2=向厚侧偏移 20% 半厚度。'
@@ -324,56 +327,60 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "hitPerNode", _descriptor23, this);
 
-          _initializerDefineProperty(this, "teethPerPair", _descriptor24, this);
+          _initializerDefineProperty(this, "hitCountPerStep", _descriptor24, this);
 
-          _initializerDefineProperty(this, "initialClosedPairCount", _descriptor25, this);
+          _initializerDefineProperty(this, "teethPerPair", _descriptor25, this);
 
-          _initializerDefineProperty(this, "nextPairInitialProgress", _descriptor26, this);
+          _initializerDefineProperty(this, "initialClosedPairCount", _descriptor26, this);
 
-          _initializerDefineProperty(this, "nextNextPairInitialProgress", _descriptor27, this);
+          _initializerDefineProperty(this, "nextPairInitialProgress", _descriptor27, this);
 
-          _initializerDefineProperty(this, "nodeSpacingZ", _descriptor28, this);
+          _initializerDefineProperty(this, "nextNextPairInitialProgress", _descriptor28, this);
 
-          _initializerDefineProperty(this, "autoCloseCenterX", _descriptor29, this);
+          _initializerDefineProperty(this, "nodeSpacingZ", _descriptor29, this);
 
-          _initializerDefineProperty(this, "closeCenterX", _descriptor30, this);
+          _initializerDefineProperty(this, "autoCloseCenterX", _descriptor30, this);
 
-          _initializerDefineProperty(this, "closeX", _descriptor31, this);
+          _initializerDefineProperty(this, "closeCenterX", _descriptor31, this);
 
-          _initializerDefineProperty(this, "openOffsetX", _descriptor32, this);
+          _initializerDefineProperty(this, "closeX", _descriptor32, this);
 
-          _initializerDefineProperty(this, "reverseOpenDirection", _descriptor33, this);
+          _initializerDefineProperty(this, "openOffsetX", _descriptor33, this);
 
-          _initializerDefineProperty(this, "propGapZ", _descriptor34, this);
+          _initializerDefineProperty(this, "reverseOpenDirection", _descriptor34, this);
 
-          _initializerDefineProperty(this, "moveCount", _descriptor35, this);
+          _initializerDefineProperty(this, "propGapZ", _descriptor35, this);
 
-          _initializerDefineProperty(this, "hitAnimTime", _descriptor36, this);
+          _initializerDefineProperty(this, "moveCount", _descriptor36, this);
 
-          _initializerDefineProperty(this, "cubeHideTime", _descriptor37, this);
+          _initializerDefineProperty(this, "hitAnimTime", _descriptor37, this);
 
-          _initializerDefineProperty(this, "keepSliderZOffset", _descriptor38, this);
+          _initializerDefineProperty(this, "cubeHideTime", _descriptor38, this);
 
-          _initializerDefineProperty(this, "sliderOffsetZ", _descriptor39, this);
+          _initializerDefineProperty(this, "keepSliderZOffset", _descriptor39, this);
 
-          _initializerDefineProperty(this, "reverseSliderMoveZ", _descriptor40, this);
+          _initializerDefineProperty(this, "sliderOffsetZ", _descriptor40, this);
 
-          _initializerDefineProperty(this, "bulletLockRangeX", _descriptor41, this);
+          _initializerDefineProperty(this, "reverseSliderMoveZ", _descriptor41, this);
 
-          _initializerDefineProperty(this, "bulletAimShrink", _descriptor42, this);
+          _initializerDefineProperty(this, "bulletLockRangeX", _descriptor42, this);
 
-          _initializerDefineProperty(this, "hitAreaOffsetZ", _descriptor43, this);
+          _initializerDefineProperty(this, "bulletAimShrink", _descriptor43, this);
 
-          _initializerDefineProperty(this, "useCubeBoundsHitCenter", _descriptor44, this);
+          _initializerDefineProperty(this, "hitAreaOffsetZ", _descriptor44, this);
 
-          _initializerDefineProperty(this, "sliderThickCenterBias", _descriptor45, this);
+          _initializerDefineProperty(this, "useCubeBoundsHitCenter", _descriptor45, this);
+
+          _initializerDefineProperty(this, "sliderThickCenterBias", _descriptor46, this);
 
           this.teeth = [];
           this.toothStartPos = [];
           this.toothClosedPos = [];
+          this.pairProgressList = [];
           this.toothIndex = 0;
           this.pairIndex = 0;
           this.pairCount = 0;
+          this.stepHitCount = 0;
           this.cubeStartScale = new Vec3(1, 1, 1);
           this.cubeStartPos = new Vec3();
           this.hasCubeStartData = false;
@@ -534,7 +541,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.prepareCollisionSize();
           const initialPairIndex = Math.max(0, Math.min(this.getInitialClosedPairCount(), this.pairCount) - 1);
-          const totalHp = Math.max(1, this.pairCount - initialPairIndex - 1);
+          const totalHp = Math.max(1, this.getRemainHitCount(initialPairIndex, 0));
           this.MaxHp = totalHp;
           this.curHp = totalHp;
           this.isDestroy = false;
@@ -568,11 +575,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         repelBattleTarget(target, reoel) {}
 
         playHitStep() {
-          var _this$hpLabel;
+          var _this$getSliderPairLe, _this$hpLabel;
 
           const animDuration = this.getHitAnimDuration();
-          const closePairIndex = this.pairIndex + 1;
-          const closeTooth = this.getSliderPairLeadTooth(closePairIndex);
+          const nextPairIndex = this.pairIndex + 1;
+          const startTooth = (_this$getSliderPairLe = this.getSliderPairLeadTooth(this.pairIndex)) != null ? _this$getSliderPairLe : this.teeth[0];
+          const closeTooth = this.getSliderPairLeadTooth(nextPairIndex);
+          const nextStepHitCount = this.stepHitCount + 1;
+          const hitsPerStep = this.getHitCountPerStep();
+          const stepCompleted = nextStepHitCount >= hitsPerStep;
 
           if (!closeTooth) {
             this.completeGate();
@@ -594,36 +605,60 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.flashRed();
           this.playPullRingSwing();
-          this.applyPairProgress(closePairIndex, 1, true, animDuration);
-          this.pairIndex = closePairIndex;
-          this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
-          const previewPairIndex = this.pairIndex + 1;
+          const currentPairProgress = this.getPairProgress(nextPairIndex);
+          const moveProgress = Math.min(1, nextStepHitCount / hitsPerStep);
+          const remainStepCount = Math.max(1, hitsPerStep - this.stepHitCount);
+          const targetPairProgress = stepCompleted ? 1 : currentPairProgress + (1 - currentPairProgress) / remainStepCount;
+          const targetPos = this.getSliderStepTargetPos(startTooth, closeTooth, moveProgress);
+          this.applyPairProgress(nextPairIndex, targetPairProgress, true, animDuration);
 
-          if (this.getPairLeadTooth(previewPairIndex)) {
-            this.applyPairProgress(previewPairIndex, this.getClampedProgress(this.nextPairInitialProgress), true, animDuration);
+          if (stepCompleted) {
+            const previewPairIndex = nextPairIndex + 1;
+
+            if (this.getPairLeadTooth(previewPairIndex)) {
+              this.applyPairProgress(previewPairIndex, this.getClampedProgress(this.nextPairInitialProgress), true, animDuration);
+            }
+
+            const nextPreviewPairIndex = nextPairIndex + 2;
+
+            if (this.getPairLeadTooth(nextPreviewPairIndex)) {
+              this.applyPairProgress(nextPreviewPairIndex, this.getClampedProgress(this.nextNextPairInitialProgress), true, animDuration);
+            }
           }
 
-          const nextPreviewPairIndex = this.pairIndex + 2;
-
-          if (this.getPairLeadTooth(nextPreviewPairIndex)) {
-            this.applyPairProgress(nextPreviewPairIndex, this.getClampedProgress(this.nextNextPairInitialProgress), true, animDuration);
-          }
-
-          const remainHits = this.getRemainToothCount();
+          const nextPairState = stepCompleted ? nextPairIndex : this.pairIndex;
+          const nextStepState = stepCompleted ? 0 : nextStepHitCount;
+          const remainHits = this.getRemainHitCount(nextPairState, nextStepState);
           this.curHp = Math.max(1, remainHits);
           this.updateHpLabel(remainHits);
 
           if (this.cube) {
             Tween.stopAllByTarget(this.cube);
             tween(this.cube).to(animDuration, {
-              position: this.getSliderTargetPos(closeTooth)
+              position: targetPos
             }, {
               easing: 'sineOut'
             }).call(() => {
+              if (stepCompleted) {
+                this.pairIndex = nextPairIndex;
+                this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
+                this.stepHitCount = 0;
+              } else {
+                this.stepHitCount = nextStepHitCount;
+              }
+
               this.finishHitStep();
             }).start();
           } else {
             this.scheduleOnce(() => {
+              if (stepCompleted) {
+                this.pairIndex = nextPairIndex;
+                this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
+                this.stepHitCount = 0;
+              } else {
+                this.stepHitCount = nextStepHitCount;
+              }
+
               this.finishHitStep();
             }, animDuration);
           }
@@ -684,9 +719,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.teeth.length = 0;
           this.toothStartPos.length = 0;
           this.toothClosedPos.length = 0;
+          this.pairProgressList.length = 0;
           this.toothIndex = 0;
           this.pairIndex = 0;
           this.pairCount = 0;
+          this.stepHitCount = 0;
           this.pullRingLoopStepIndex = 0;
 
           if (!this.cube) {
@@ -826,7 +863,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         applyInitialProgress() {
-          var _this$getSliderPairLe;
+          var _this$getSliderPairLe2;
 
           const closedPairCount = Math.min(this.getInitialClosedPairCount(), this.pairCount);
 
@@ -847,8 +884,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           this.pairIndex = Math.max(0, closedPairCount - 1);
+          this.stepHitCount = 0;
           this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
-          const sliderTooth = (_this$getSliderPairLe = this.getSliderPairLeadTooth(this.pairIndex)) != null ? _this$getSliderPairLe : this.teeth[0];
+          const sliderTooth = (_this$getSliderPairLe2 = this.getSliderPairLeadTooth(this.pairIndex)) != null ? _this$getSliderPairLe2 : this.teeth[0];
 
           if (this.cube && sliderTooth) {
             this.cube.setPosition(this.getSliderTargetPos(sliderTooth));
@@ -1089,7 +1127,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         prepareSliderOffset() {
-          var _this$getSliderPairLe2;
+          var _this$getSliderPairLe3;
 
           this.runtimeSliderOffsetZ = this.sliderOffsetZ;
 
@@ -1097,7 +1135,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          const offsetBaseTooth = (_this$getSliderPairLe2 = this.getSliderPairLeadTooth(Math.max(0, Math.min(this.getInitialClosedPairCount(), this.pairCount) - 1))) != null ? _this$getSliderPairLe2 : this.teeth[0];
+          const offsetBaseTooth = (_this$getSliderPairLe3 = this.getSliderPairLeadTooth(Math.max(0, Math.min(this.getInitialClosedPairCount(), this.pairCount) - 1))) != null ? _this$getSliderPairLe3 : this.teeth[0];
 
           if (!this.keepSliderZOffset || !this.cube || !offsetBaseTooth) {
             return;
@@ -1159,6 +1197,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         applyPairProgress(pairIndex, progress, useTween, duration = this.getHitAnimDuration()) {
+          const clampedProgress = this.getClampedProgress(progress);
+          this.pairProgressList[pairIndex] = clampedProgress;
           const startIndex = this.getPairStartToothIndex(pairIndex);
           const perPair = this.getTeethPerPair();
 
@@ -1169,7 +1209,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               continue;
             }
 
-            this.applyToothProgress(toothIndex, progress, useTween, duration);
+            this.applyToothProgress(toothIndex, clampedProgress, useTween, duration);
           }
         }
 
@@ -1263,6 +1303,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return this.tempSliderTargetPos.set(cubePos.x, cubePos.y, tooth.position.z + offsetZ - anchorOffsetZ);
         }
 
+        getSliderStepTargetPos(startTooth, endTooth, progress) {
+          const fromPos = this.getSliderTargetPos(startTooth).clone();
+          const toPos = this.getSliderTargetPos(endTooth).clone();
+          return v3(fromPos.x + (toPos.x - fromPos.x) * progress, fromPos.y + (toPos.y - fromPos.y) * progress, fromPos.z + (toPos.z - fromPos.z) * progress);
+        }
+
         getSliderVisualAnchorOffsetZ() {
           if (!this.cube || this.cubeMeshRenderers.length <= 0) {
             return 0;
@@ -1284,8 +1330,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return Math.max(0.08, this.hitAnimTime);
         }
 
-        getRemainToothCount() {
-          return Math.max(0, this.pairCount - this.pairIndex - 1);
+        getHitCountPerStep() {
+          return Math.max(1, Math.floor(this.hitCountPerStep));
+        }
+
+        getPairProgress(pairIndex) {
+          var _this$pairProgressLis;
+
+          return this.getClampedProgress((_this$pairProgressLis = this.pairProgressList[pairIndex]) != null ? _this$pairProgressLis : 0);
+        }
+
+        getRemainHitCount(pairIndex = this.pairIndex, stepHitCount = this.stepHitCount) {
+          return Math.max(0, (this.pairCount - pairIndex - 1) * this.getHitCountPerStep() - stepHitCount);
         }
 
         updateHpLabel(value) {
@@ -1493,154 +1549,161 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 2;
         }
-      }), _descriptor24 = _applyDecoratedDescriptor(_class2.prototype, "teethPerPair", [_dec25], {
+      }), _descriptor24 = _applyDecoratedDescriptor(_class2.prototype, "hitCountPerStep", [_dec25], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 1;
+        }
+      }), _descriptor25 = _applyDecoratedDescriptor(_class2.prototype, "teethPerPair", [_dec26], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor25 = _applyDecoratedDescriptor(_class2.prototype, "initialClosedPairCount", [_dec26], {
+      }), _descriptor26 = _applyDecoratedDescriptor(_class2.prototype, "initialClosedPairCount", [_dec27], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor26 = _applyDecoratedDescriptor(_class2.prototype, "nextPairInitialProgress", [_dec27], {
+      }), _descriptor27 = _applyDecoratedDescriptor(_class2.prototype, "nextPairInitialProgress", [_dec28], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.5;
         }
-      }), _descriptor27 = _applyDecoratedDescriptor(_class2.prototype, "nextNextPairInitialProgress", [_dec28], {
+      }), _descriptor28 = _applyDecoratedDescriptor(_class2.prototype, "nextNextPairInitialProgress", [_dec29], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.25;
         }
-      }), _descriptor28 = _applyDecoratedDescriptor(_class2.prototype, "nodeSpacingZ", [_dec29], {
+      }), _descriptor29 = _applyDecoratedDescriptor(_class2.prototype, "nodeSpacingZ", [_dec30], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.8;
         }
-      }), _descriptor29 = _applyDecoratedDescriptor(_class2.prototype, "autoCloseCenterX", [_dec30], {
+      }), _descriptor30 = _applyDecoratedDescriptor(_class2.prototype, "autoCloseCenterX", [_dec31], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return true;
         }
-      }), _descriptor30 = _applyDecoratedDescriptor(_class2.prototype, "closeCenterX", [_dec31], {
+      }), _descriptor31 = _applyDecoratedDescriptor(_class2.prototype, "closeCenterX", [_dec32], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0;
         }
-      }), _descriptor31 = _applyDecoratedDescriptor(_class2.prototype, "closeX", [_dec32], {
+      }), _descriptor32 = _applyDecoratedDescriptor(_class2.prototype, "closeX", [_dec33], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.1;
         }
-      }), _descriptor32 = _applyDecoratedDescriptor(_class2.prototype, "openOffsetX", [_dec33], {
+      }), _descriptor33 = _applyDecoratedDescriptor(_class2.prototype, "openOffsetX", [_dec34], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.45;
         }
-      }), _descriptor33 = _applyDecoratedDescriptor(_class2.prototype, "reverseOpenDirection", [_dec34], {
+      }), _descriptor34 = _applyDecoratedDescriptor(_class2.prototype, "reverseOpenDirection", [_dec35], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return false;
         }
-      }), _descriptor34 = _applyDecoratedDescriptor(_class2.prototype, "propGapZ", [_dec35], {
+      }), _descriptor35 = _applyDecoratedDescriptor(_class2.prototype, "propGapZ", [_dec36], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 1.2;
         }
-      }), _descriptor35 = _applyDecoratedDescriptor(_class2.prototype, "moveCount", [_dec36], {
+      }), _descriptor36 = _applyDecoratedDescriptor(_class2.prototype, "moveCount", [_dec37], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0;
         }
-      }), _descriptor36 = _applyDecoratedDescriptor(_class2.prototype, "hitAnimTime", [_dec37], {
+      }), _descriptor37 = _applyDecoratedDescriptor(_class2.prototype, "hitAnimTime", [_dec38], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.12;
         }
-      }), _descriptor37 = _applyDecoratedDescriptor(_class2.prototype, "cubeHideTime", [_dec38], {
+      }), _descriptor38 = _applyDecoratedDescriptor(_class2.prototype, "cubeHideTime", [_dec39], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.08;
         }
-      }), _descriptor38 = _applyDecoratedDescriptor(_class2.prototype, "keepSliderZOffset", [_dec39], {
+      }), _descriptor39 = _applyDecoratedDescriptor(_class2.prototype, "keepSliderZOffset", [_dec40], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return false;
         }
-      }), _descriptor39 = _applyDecoratedDescriptor(_class2.prototype, "sliderOffsetZ", [_dec40], {
+      }), _descriptor40 = _applyDecoratedDescriptor(_class2.prototype, "sliderOffsetZ", [_dec41], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0;
         }
-      }), _descriptor40 = _applyDecoratedDescriptor(_class2.prototype, "reverseSliderMoveZ", [_dec41], {
+      }), _descriptor41 = _applyDecoratedDescriptor(_class2.prototype, "reverseSliderMoveZ", [_dec42], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return false;
         }
-      }), _descriptor41 = _applyDecoratedDescriptor(_class2.prototype, "bulletLockRangeX", [_dec42], {
+      }), _descriptor42 = _applyDecoratedDescriptor(_class2.prototype, "bulletLockRangeX", [_dec43], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2.5;
         }
-      }), _descriptor42 = _applyDecoratedDescriptor(_class2.prototype, "bulletAimShrink", [_dec43], {
+      }), _descriptor43 = _applyDecoratedDescriptor(_class2.prototype, "bulletAimShrink", [_dec44], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.92;
         }
-      }), _descriptor43 = _applyDecoratedDescriptor(_class2.prototype, "hitAreaOffsetZ", [_dec44], {
+      }), _descriptor44 = _applyDecoratedDescriptor(_class2.prototype, "hitAreaOffsetZ", [_dec45], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return -0.18;
         }
-      }), _descriptor44 = _applyDecoratedDescriptor(_class2.prototype, "useCubeBoundsHitCenter", [_dec45], {
+      }), _descriptor45 = _applyDecoratedDescriptor(_class2.prototype, "useCubeBoundsHitCenter", [_dec46], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return true;
         }
-      }), _descriptor45 = _applyDecoratedDescriptor(_class2.prototype, "sliderThickCenterBias", [_dec46], {
+      }), _descriptor46 = _applyDecoratedDescriptor(_class2.prototype, "sliderThickCenterBias", [_dec47], {
         configurable: true,
         enumerable: true,
         writable: true,

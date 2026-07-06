@@ -531,6 +531,8 @@
             "GameRes\\SLLYT_map\\wuqi\\UI-加特林.png",
             "GameRes\\SLLYT_map\\wuqi\\UI-加特林蓝 光效增强.png",
             "GameRes\\SLLYT_map\\wuqi\\UI-加特林黄金.png",
+            "GameRes\\SLLYT_map\\wuqi\\大壮带金边.png",
+            "GameRes\\SLLYT_map\\wuqi\\大壮金光闪闪.png",
             "GameRes\\SLLYT_map\\zhujue\\AK.PNG",
             "GameRes\\SLLYT_map\\zhujue\\M_ak.mtl",
             "GameRes\\SLLYT_map\\zhujue\\zhujue-001.mtl",
@@ -733,9 +735,7 @@
             "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Shrapnel.ts",
             "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangeTowerAttack.ts",
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts",
-            "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts",
-            "GameRes\\SLLYT_map\\wuqi\\大壮带金边.png",
-            "GameRes\\SLLYT_map\\wuqi\\大壮金光闪闪.png"
+            "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts"
         ]
     }
 }

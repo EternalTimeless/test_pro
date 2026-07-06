@@ -78,8 +78,11 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCInteger, displayName: '使用齿条数量(0=全部)', tooltip: '运行时实际使用多少个齿条。填 0 表示使用齿条列表/自动收集到的全部齿条；不会自动生成缺少的齿条。' })
     public nodeCount: number = 0;
 
-    @property({ type: CCInteger, displayName: '每段受击次数(旧参数)', tooltip: '旧拉链逻辑遗留参数，当前独立拉链不再读取。保留是为了避免旧场景序列化丢字段。' })
+    @property({ type: CCInteger, visible: false })
     public hitPerNode: number = 2;
+
+    @property({ type: CCInteger, displayName: '每格推进所需受击次数', tooltip: '滑块推进当前一格需要多少次受击。1 表示保持当前逻辑，2/3 表示把当前一格拆成 2/3 段推进。' })
+    public hitCountPerStep: number = 1;
 
     @property({ type: CCInteger, displayName: '每对齿条数量', tooltip: '默认 2，表示每 2 个 SM_lalian 齿条算作一对，一次受击推进一对。' })
     public teethPerPair: number = 2;
@@ -150,9 +153,11 @@ export class PropLalianGate extends BattleTarget3D {
     private teeth: Node[] = [];
     private toothStartPos: Vec3[] = [];
     private toothClosedPos: Vec3[] = [];
+    private pairProgressList: number[] = [];
     private toothIndex: number = 0;
     private pairIndex: number = 0;
     private pairCount: number = 0;
+    private stepHitCount: number = 0;
     private cubeStartScale: Vec3 = new Vec3(1, 1, 1);
     private cubeStartPos: Vec3 = new Vec3();
     private hasCubeStartData: boolean = false;
@@ -285,7 +290,7 @@ export class PropLalianGate extends BattleTarget3D {
         this.prepareCollisionSize();
 
         const initialPairIndex = Math.max(0, Math.min(this.getInitialClosedPairCount(), this.pairCount) - 1);
-        const totalHp = Math.max(1, this.pairCount - initialPairIndex - 1);
+        const totalHp = Math.max(1, this.getRemainHitCount(initialPairIndex, 0));
         this.MaxHp = totalHp;
         this.curHp = totalHp;
         this.isDestroy = false;
@@ -320,8 +325,12 @@ export class PropLalianGate extends BattleTarget3D {
 
     private playHitStep(): void {
         const animDuration = this.getHitAnimDuration();
-        const closePairIndex = this.pairIndex + 1;
-        const closeTooth = this.getSliderPairLeadTooth(closePairIndex);
+        const nextPairIndex = this.pairIndex + 1;
+        const startTooth = this.getSliderPairLeadTooth(this.pairIndex) ?? this.teeth[0];
+        const closeTooth = this.getSliderPairLeadTooth(nextPairIndex);
+        const nextStepHitCount = this.stepHitCount + 1;
+        const hitsPerStep = this.getHitCountPerStep();
+        const stepCompleted = nextStepHitCount >= hitsPerStep;
         if (!closeTooth) {
             this.completeGate();
             return;
@@ -335,33 +344,56 @@ export class PropLalianGate extends BattleTarget3D {
         this.flashRed();
         this.playPullRingSwing();
 
-        this.applyPairProgress(closePairIndex, 1, true, animDuration);
-        this.pairIndex = closePairIndex;
-        this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
+        const currentPairProgress = this.getPairProgress(nextPairIndex);
+        const moveProgress = Math.min(1, nextStepHitCount / hitsPerStep);
+        const remainStepCount = Math.max(1, hitsPerStep - this.stepHitCount);
+        const targetPairProgress = stepCompleted
+            ? 1
+            : currentPairProgress + (1 - currentPairProgress) / remainStepCount;
+        const targetPos = this.getSliderStepTargetPos(startTooth, closeTooth, moveProgress);
+        this.applyPairProgress(nextPairIndex, targetPairProgress, true, animDuration);
 
-        const previewPairIndex = this.pairIndex + 1;
-        if (this.getPairLeadTooth(previewPairIndex)) {
-            this.applyPairProgress(previewPairIndex, this.getClampedProgress(this.nextPairInitialProgress), true, animDuration);
-        }
-        const nextPreviewPairIndex = this.pairIndex + 2;
-        if (this.getPairLeadTooth(nextPreviewPairIndex)) {
-            this.applyPairProgress(nextPreviewPairIndex, this.getClampedProgress(this.nextNextPairInitialProgress), true, animDuration);
+        if (stepCompleted) {
+            const previewPairIndex = nextPairIndex + 1;
+            if (this.getPairLeadTooth(previewPairIndex)) {
+                this.applyPairProgress(previewPairIndex, this.getClampedProgress(this.nextPairInitialProgress), true, animDuration);
+            }
+            const nextPreviewPairIndex = nextPairIndex + 2;
+            if (this.getPairLeadTooth(nextPreviewPairIndex)) {
+                this.applyPairProgress(nextPreviewPairIndex, this.getClampedProgress(this.nextNextPairInitialProgress), true, animDuration);
+            }
         }
 
-        const remainHits = this.getRemainToothCount();
+        const nextPairState = stepCompleted ? nextPairIndex : this.pairIndex;
+        const nextStepState = stepCompleted ? 0 : nextStepHitCount;
+        const remainHits = this.getRemainHitCount(nextPairState, nextStepState);
         this.curHp = Math.max(1, remainHits);
         this.updateHpLabel(remainHits);
 
         if (this.cube) {
             Tween.stopAllByTarget(this.cube);
             tween(this.cube)
-                .to(animDuration, { position: this.getSliderTargetPos(closeTooth) }, { easing: 'sineOut' })
+                .to(animDuration, { position: targetPos }, { easing: 'sineOut' })
                 .call(() => {
+                    if (stepCompleted) {
+                        this.pairIndex = nextPairIndex;
+                        this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
+                        this.stepHitCount = 0;
+                    } else {
+                        this.stepHitCount = nextStepHitCount;
+                    }
                     this.finishHitStep();
                 })
                 .start();
         } else {
             this.scheduleOnce(() => {
+                if (stepCompleted) {
+                    this.pairIndex = nextPairIndex;
+                    this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
+                    this.stepHitCount = 0;
+                } else {
+                    this.stepHitCount = nextStepHitCount;
+                }
                 this.finishHitStep();
             }, animDuration);
         }
@@ -411,9 +443,11 @@ export class PropLalianGate extends BattleTarget3D {
         this.teeth.length = 0;
         this.toothStartPos.length = 0;
         this.toothClosedPos.length = 0;
+        this.pairProgressList.length = 0;
         this.toothIndex = 0;
         this.pairIndex = 0;
         this.pairCount = 0;
+        this.stepHitCount = 0;
         this.pullRingLoopStepIndex = 0;
 
         if (!this.cube) {
@@ -551,6 +585,7 @@ export class PropLalianGate extends BattleTarget3D {
         }
 
         this.pairIndex = Math.max(0, closedPairCount - 1);
+        this.stepHitCount = 0;
         this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
         const sliderTooth = this.getSliderPairLeadTooth(this.pairIndex) ?? this.teeth[0];
         if (this.cube && sliderTooth) {
@@ -820,6 +855,8 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     private applyPairProgress(pairIndex: number, progress: number, useTween: boolean, duration: number = this.getHitAnimDuration()): void {
+        const clampedProgress = this.getClampedProgress(progress);
+        this.pairProgressList[pairIndex] = clampedProgress;
         const startIndex = this.getPairStartToothIndex(pairIndex);
         const perPair = this.getTeethPerPair();
         for (let i = 0; i < perPair; i++) {
@@ -827,7 +864,7 @@ export class PropLalianGate extends BattleTarget3D {
             if (!this.teeth[toothIndex]) {
                 continue;
             }
-            this.applyToothProgress(toothIndex, progress, useTween, duration);
+            this.applyToothProgress(toothIndex, clampedProgress, useTween, duration);
         }
     }
 
@@ -908,6 +945,16 @@ export class PropLalianGate extends BattleTarget3D {
         return this.tempSliderTargetPos.set(cubePos.x, cubePos.y, tooth.position.z + offsetZ - anchorOffsetZ);
     }
 
+    private getSliderStepTargetPos(startTooth: Node, endTooth: Node, progress: number): Vec3 {
+        const fromPos = this.getSliderTargetPos(startTooth).clone();
+        const toPos = this.getSliderTargetPos(endTooth).clone();
+        return v3(
+            fromPos.x + (toPos.x - fromPos.x) * progress,
+            fromPos.y + (toPos.y - fromPos.y) * progress,
+            fromPos.z + (toPos.z - fromPos.z) * progress,
+        );
+    }
+
     private getSliderVisualAnchorOffsetZ(): number {
         if (!this.cube || this.cubeMeshRenderers.length <= 0) {
             return 0;
@@ -926,8 +973,16 @@ export class PropLalianGate extends BattleTarget3D {
         return Math.max(0.08, this.hitAnimTime);
     }
 
-    private getRemainToothCount(): number {
-        return Math.max(0, this.pairCount - this.pairIndex - 1);
+    private getHitCountPerStep(): number {
+        return Math.max(1, Math.floor(this.hitCountPerStep));
+    }
+
+    private getPairProgress(pairIndex: number): number {
+        return this.getClampedProgress(this.pairProgressList[pairIndex] ?? 0);
+    }
+
+    private getRemainHitCount(pairIndex: number = this.pairIndex, stepHitCount: number = this.stepHitCount): number {
+        return Math.max(0, (this.pairCount - pairIndex - 1) * this.getHitCountPerStep() - stepHitCount);
     }
 
     private updateHpLabel(value: number): void {
