@@ -430,8 +430,30 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
     private getSmallMonsterDesiredAttackPosition(out: Vec3): Vec3 {
         const targetPos = this.attackTarget.worldPosition;
-        out.set(targetPos.x, this.node.worldPosition.y, targetPos.z + Math.abs(this.smallMonsterAttackOffsetZ));
+        const attackFrontZ = this.getPlayerAttackFrontWorldZ(targetPos.z);
+        out.set(targetPos.x, this.node.worldPosition.y, attackFrontZ + Math.abs(this.smallMonsterAttackOffsetZ));
         return out;
+    }
+
+    private getPlayerAttackFrontWorldZ(defaultZ: number): number {
+        const player = Player.instance;
+        if (!player || player.isDie || !player.roleList?.length) {
+            return defaultZ;
+        }
+
+        let frontZ = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < player.roleList.length; i++) {
+            const role = player.roleList[i];
+            if (!role?.node?.activeInHierarchy || role.attackIN) {
+                continue;
+            }
+            const roleAttackZ = role.shoot?.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
+            if (roleAttackZ > frontZ) {
+                frontZ = roleAttackZ;
+            }
+        }
+
+        return Number.isFinite(frontZ) ? frontZ : defaultZ;
     }
 
     private isSmallMonsterInAttackPosition(): boolean {
@@ -439,15 +461,11 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return false;
         }
 
-        const targetPos = this.attackTarget.worldPosition;
-        const dis = Vec3.squaredDistance(targetPos, this.node.worldPosition);
-        if (dis > this.attackR) {
-            return false;
-        }
-
         this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
         const selfPos = this.node.worldPosition;
-        return Math.abs(selfPos.z - this.smallMonsterDesiredAttackPos.z) <= this.smallMonsterAttackLockOffsetZ;
+        const targetPos = this.attackTarget.worldPosition;
+        return Math.abs(selfPos.x - targetPos.x) <= this.smallMonsterAttackLockOffsetX
+            && Math.abs(selfPos.z - this.smallMonsterDesiredAttackPos.z) <= this.smallMonsterAttackLockOffsetZ;
     }
 
     private _hlIn: boolean = false;

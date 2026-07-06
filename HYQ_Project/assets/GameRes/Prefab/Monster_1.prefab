@@ -544,8 +544,8 @@
       }
     ],
     "hitEffect": 1,
-    "collisionHalfX": 0.228,
-    "collisionHalfZ": 0.228,
+    "collisionHalfX": 0.32,
+    "collisionHalfZ": 0.28,
     "repelEnabled": true,
     "meshFlashDataList_Die": [
       {
@@ -565,8 +565,8 @@
     "bossMinGapZ": 1.4,
     "bossAttackLockOffsetZ": 0.28,
     "smallMonsterAttackOffsetZ": 1.8,
-    "smallMonsterAttackLockOffsetX": 0.55,
-    "smallMonsterAttackLockOffsetZ": 0.22,
+    "smallMonsterAttackLockOffsetX": 0.82,
+    "smallMonsterAttackLockOffsetZ": 0.28,
     "_id": ""
   },
   {

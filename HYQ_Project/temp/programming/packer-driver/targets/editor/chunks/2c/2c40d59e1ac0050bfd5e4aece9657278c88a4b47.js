@@ -670,8 +670,41 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         getSmallMonsterDesiredAttackPosition(out) {
           const targetPos = this.attackTarget.worldPosition;
-          out.set(targetPos.x, this.node.worldPosition.y, targetPos.z + Math.abs(this.smallMonsterAttackOffsetZ));
+          const attackFrontZ = this.getPlayerAttackFrontWorldZ(targetPos.z);
+          out.set(targetPos.x, this.node.worldPosition.y, attackFrontZ + Math.abs(this.smallMonsterAttackOffsetZ));
           return out;
+        }
+
+        getPlayerAttackFrontWorldZ(defaultZ) {
+          var _player$roleList;
+
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!player || player.isDie || !((_player$roleList = player.roleList) != null && _player$roleList.length)) {
+            return defaultZ;
+          }
+
+          let frontZ = Number.NEGATIVE_INFINITY;
+
+          for (let i = 0; i < player.roleList.length; i++) {
+            var _role$node, _role$shoot;
+
+            const role = player.roleList[i];
+
+            if (!(role != null && (_role$node = role.node) != null && _role$node.activeInHierarchy) || role.attackIN) {
+              continue;
+            }
+
+            const roleAttackZ = (_role$shoot = role.shoot) != null && _role$shoot.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
+
+            if (roleAttackZ > frontZ) {
+              frontZ = roleAttackZ;
+            }
+          }
+
+          return Number.isFinite(frontZ) ? frontZ : defaultZ;
         }
 
         isSmallMonsterInAttackPosition() {
@@ -681,16 +714,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return false;
           }
 
-          const targetPos = this.attackTarget.worldPosition;
-          const dis = Vec3.squaredDistance(targetPos, this.node.worldPosition);
-
-          if (dis > this.attackR) {
-            return false;
-          }
-
           this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
           const selfPos = this.node.worldPosition;
-          return Math.abs(selfPos.z - this.smallMonsterDesiredAttackPos.z) <= this.smallMonsterAttackLockOffsetZ;
+          const targetPos = this.attackTarget.worldPosition;
+          return Math.abs(selfPos.x - targetPos.x) <= this.smallMonsterAttackLockOffsetX && Math.abs(selfPos.z - this.smallMonsterDesiredAttackPos.z) <= this.smallMonsterAttackLockOffsetZ;
         }
 
         randomizeRunAnimation() {
