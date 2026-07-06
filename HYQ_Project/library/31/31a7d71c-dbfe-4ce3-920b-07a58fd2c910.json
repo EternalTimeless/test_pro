@@ -560,6 +560,13 @@
       "__id__": 55
     },
     "attackR": 16,
+    "bossAttackLockOffsetX": 0.9,
+    "bossAttackOffsetZ": 1.4,
+    "bossMinGapZ": 1.4,
+    "bossAttackLockOffsetZ": 0.28,
+    "smallMonsterAttackOffsetZ": 1.8,
+    "smallMonsterAttackLockOffsetX": 0.55,
+    "smallMonsterAttackLockOffsetZ": 0.22,
     "_id": ""
   },
   {
