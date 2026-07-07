@@ -29,11 +29,11 @@
       "1782786421939": {
         "type": "build",
         "id": "1782786421939",
-        "progress": 0.6363636363636364,
-        "state": "processing",
+        "progress": 1,
+        "state": "success",
         "stage": "build",
-        "message": "adsense-h5g-plugin:(onAfterBuild) start...",
-        "detailMessage": "[SUPER_PACKAGE]\ronAfterCompressSettings\r",
+        "message": "2026-7-7 17:33:40 build success in 32 s!",
+        "detailMessage": "build task(web-mobile) in 31826!\r",
         "options": {
           "name": "HYQ",
           "server": "",

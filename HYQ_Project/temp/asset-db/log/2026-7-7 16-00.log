@@ -9233,3 +9233,120 @@
 2026-7-7 17:33:32-debug: cocos-service:(onAfterBuild) in 108 ms ✓, progress: 64%
 2026-7-7 17:33:32-debug: adsense-h5g-plugin:(onAfterBuild) start..., progress: 64%
 2026-7-7 17:33:32-debug: // ---- build task adsense-h5g-plugin：onAfterBuild ----
+2026-7-7 17:33:32-debug: // ---- build task adsense-h5g-plugin：onAfterBuild ---- (42ms)
+2026-7-7 17:33:32-debug: super-html:(onAfterBuild) start..., progress: 65%
+2026-7-7 17:33:32-log: [super-html] : -- start --
+2026-7-7 17:33:32-debug: adsense-h5g-plugin:(onAfterBuild) in 42 ms ✓, progress: 65%
+2026-7-7 17:33:32-log: [super-html] : s_input_dir D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\web-mobile
+2026-7-7 17:33:32-log: [super-html] : engine version 3.8.7
+2026-7-7 17:33:32-debug: // ---- build task super-html：onAfterBuild ----
+2026-7-7 17:33:32-log: [super-html] : s_out_dir D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html
+2026-7-7 17:33:39-debug: // ---- build task super-html：onAfterBuild ---- (6935ms)
+2026-7-7 17:33:39-debug: super-html:(onAfterBuild) in 6935 ms ✓, progress: 67%
+2026-7-7 17:33:39-debug: // ---- build task super-packager：onAfterBuild ----
+2026-7-7 17:33:39-debug: super-packager:(onAfterBuild) start..., progress: 67%
+2026-7-7 17:33:39-log: [SUPER_PACKAGE]onAfterBuild
+2026-7-7 17:33:39-debug: // ---- build task super-packager：onAfterBuild ---- (227ms)
+2026-7-7 17:33:39-debug: super-packager:(onAfterBuild) in 227 ms ✓, progress: 69%
+2026-7-7 17:33:39-log: Asset DB is resume!
+2026-7-7 17:33:40-debug: builder:build-project-total (31826ms)
+2026-7-7 17:33:40-debug: build task(web-mobile) in 31826!
+2026-7-7 17:33:40-debug: [Build Memory track]: builder:build-project-total start:304.24MB, end 297.81MB, increase: -6593.04KB
+2026-7-7 17:33:40-debug: ================================ build Task (web-mobile) Finished in (32 s)ms ================================
+2026-7-7 17:33:40-debug: Stop record console. {file(D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\temp\builder\log\web-mobile2026-6-30 10-27.log)}
+2026-7-7 17:33:40-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-7 17:33:40-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-7 17:33:40-warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_1" is missing. Detailed information:Node path: "Role_1/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_1"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-7 17:33:44-log: [super-html] : [common] [6213 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\common\HYQ_common_min.html
+2026-7-7 17:33:44-log: [super-html] : [applovin] [6213 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\applovin\HYQ_applovin.html
+2026-7-7 17:33:44-log: [super-html] : [ironsource] [6216 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\ironsource\HYQ_ironsource.html
+2026-7-7 17:33:44-log: [super-html] : [ironsource2025] [6214 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\ironsource2025\HYQ_ironsource2025.html
+2026-7-7 17:33:44-log: [super-html] : [common] [13586 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\common\HYQ_common.html
+2026-7-7 17:33:46-log: [super-html] : [mintegral] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\mintegral\HYQ_mintegral.zip
+2026-7-7 17:33:46-log: [super-html] : [chartboost] [6213 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\chartboost\HYQ_chartboost.html
+2026-7-7 17:33:46-log: [super-html] : [unity] [6214 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\unity\HYQ_unity.html
+2026-7-7 17:33:46-log: [super-html] : [google] [4567 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\google\HYQ_google.zip
+2026-7-7 17:33:47-log: [super-html] : [google] [4567 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\google\HYQ_google_portrait.zip
+2026-7-7 17:33:47-debug: refresh db internal success
+2026-7-7 17:33:48-debug: refresh db assets success
+2026-7-7 17:33:48-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\extensions\super-packager\package_assets\JiangYv\PBASDK-v3\PBASDK.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-7 17:33:48-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\extensions\super-packager\package_assets\Common\SuperPackage.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-7 17:33:48-debug: refresh db super-packager success
+2026-7-7 17:33:48-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-7 17:33:48-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-7 17:33:48-debug: asset-db:refresh-all-database (660ms)
+2026-7-7 17:33:48-debug: asset-db:worker-effect-data-processing (3ms)
+2026-7-7 17:33:48-debug: asset-db-hook-engine-extends-afterRefresh (4ms)
+2026-7-7 17:33:48-log: [super-html] : [google] [4567 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\google\HYQ_google_landscape.zip
+2026-7-7 17:33:48-log: [super-html] : [facebook] [6213 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\facebook\HYQ_facebook.html
+2026-7-7 17:33:49-log: [super-html] : [facebook] [4566 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\facebook\HYQ_facebook.zip
+2026-7-7 17:33:49-debug: Query all assets info in project
+2026-7-7 17:33:49-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-7 17:33:49-debug: Skip compress image, progress: 0%
+2026-7-7 17:33:49-debug: Init all bundles start..., progress: 0%
+2026-7-7 17:33:50-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-7 17:33:50-debug: Num of bundles: 3..., progress: 0%
+2026-7-7 17:33:50-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-7 17:33:50-debug: Init bundle root assets start..., progress: 0%
+2026-7-7 17:33:50-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-7 17:33:50-debug:   Number of all scripts: 109
+2026-7-7 17:33:50-debug:   Number of other assets: 1158
+2026-7-7 17:33:50-debug: Init bundle root assets success..., progress: 0%
+2026-7-7 17:33:50-debug:   Number of all scenes: 5
+2026-7-7 17:33:50-debug: // ---- build task 查询 Asset Bundle ---- (24ms)
+2026-7-7 17:33:50-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-7 17:33:50-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-7 17:33:50-log: run build task 查询 Asset Bundle success in 24 ms√, progress: 5%
+2026-7-7 17:33:50-debug: [Build Memory track]: 查询 Asset Bundle start:469.93MB, end 471.55MB, increase: 1.62MB
+2026-7-7 17:33:50-debug: // ---- build task 查询 Asset Bundle ---- (9ms)
+2026-7-7 17:33:50-log: run build task 查询 Asset Bundle success in 9 ms√, progress: 10%
+2026-7-7 17:33:50-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-7 17:33:50-debug: [Build Memory track]: 查询 Asset Bundle start:471.58MB, end 471.82MB, increase: 237.64KB
+2026-7-7 17:33:50-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-7 17:33:50-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (4ms)
+2026-7-7 17:33:50-log: run build task 整理部分构建选项内数据到 settings.json success in 4 ms√, progress: 12%
+2026-7-7 17:33:50-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-7 17:33:50-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:471.85MB, end 471.88MB, increase: 30.15KB
+2026-7-7 17:33:50-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-7 17:33:50-debug: // ---- build task 填充脚本数据到 settings.json ---- (4ms)
+2026-7-7 17:33:50-log: run build task 填充脚本数据到 settings.json success in 4 ms√, progress: 13%
+2026-7-7 17:33:50-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-7 17:33:50-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-7 17:33:50-debug: [Build Memory track]: 填充脚本数据到 settings.json start:471.91MB, end 471.94MB, increase: 30.18KB
+2026-7-7 17:33:50-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (23ms)
+2026-7-7 17:33:50-log: run build task 整理部分构建选项内数据到 settings.json success in 23 ms√, progress: 15%
+2026-7-7 17:33:50-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:471.97MB, end 472.08MB, increase: 103.24KB
+2026-7-7 17:33:50-log: [super-html] : [pangle] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\pangle\HYQ_pangle.zip
+2026-7-7 17:33:51-log: [super-html] : [pangle] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\pangle\HYQ_pangle_portrait.zip
+2026-7-7 17:33:53-log: [super-html] : [pangle] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\pangle\HYQ_pangle_landscape.zip
+2026-7-7 17:33:53-debug: refresh db internal success
+2026-7-7 17:33:53-debug: refresh db assets success
+2026-7-7 17:33:53-debug: refresh db super-packager success
+2026-7-7 17:33:53-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-7 17:33:53-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-7 17:33:53-debug: asset-db:refresh-all-database (595ms)
+2026-7-7 17:33:53-debug: asset-db:worker-effect-data-processing (3ms)
+2026-7-7 17:33:53-debug: asset-db-hook-engine-extends-afterRefresh (3ms)
+2026-7-7 17:33:54-log: [super-html] : [liftoff] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\liftoff\HYQ_liftoff.zip
+2026-7-7 17:33:54-log: [super-html] : [moloco] [6213 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\moloco\HYQ_moloco.html
+2026-7-7 17:33:55-log: [super-html] : [tiktok] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\tiktok\HYQ_tiktok.zip
+2026-7-7 17:33:56-log: [super-html] : [vungle] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\vungle\HYQ_vungle.zip
+2026-7-7 17:33:57-log: [super-html] : [bigo] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\bigo\HYQ_bigo.zip
+2026-7-7 17:33:57-log: [super-html] : [kwai] : thumbnail_cover.jpg no find
+2026-7-7 17:33:58-log: [super-html] : [kwai] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\kwai\HYQ_kwai.zip
+2026-7-7 17:33:58-log: [super-html] : [nefta] [6213 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\nefta\HYQ_nefta.html
+2026-7-7 17:33:59-log: [super-html] : [nefta] [4498 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\nefta\HYQ_nefta.zip
+2026-7-7 17:33:59-log: [super-html] : [snapchat] [4567 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\snapchat\HYQ_snapchat_portrait.zip
+2026-7-7 17:34:00-log: [super-html] : [gdt] [4567 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\gdt\HYQ_gdt.zip
+2026-7-7 17:34:00-log: [super-html] : [gdt] [4567 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\gdt\HYQ_gdt_portrait.zip
+2026-7-7 17:34:01-log: [super-html] : [gdt] [4567 kb] D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html\gdt\HYQ_gdt_landscape.zip
+2026-7-7 17:34:01-log: [super-html] : run time 29.045S
+2026-7-7 17:34:01-log: [super-html] : -- end -- 
+2026-7-7 17:34:19-debug: refresh db internal success
+2026-7-7 17:34:19-debug: refresh db assets success
+2026-7-7 17:34:19-debug: refresh db super-packager success
+2026-7-7 17:34:19-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-7 17:34:19-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-7 17:34:19-debug: asset-db:refresh-all-database (213ms)
+2026-7-7 17:34:19-debug: asset-db:worker-effect-data-processing (1ms)
+2026-7-7 17:34:19-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
