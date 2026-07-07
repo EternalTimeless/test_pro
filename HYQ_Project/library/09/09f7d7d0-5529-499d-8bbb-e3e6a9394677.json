@@ -567,8 +567,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 265.48,
-      "height": 124
+      "width": 211.5546875,
+      "height": 159.2
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -619,7 +619,7 @@
     "_isBold": true,
     "_isUnderline": false,
     "_underlineHeight": 2,
-    "_cacheMode": 0,
+    "_cacheMode": 1,
     "_enableOutline": true,
     "_outlineColor": {
       "__type__": "cc.Color",
@@ -628,7 +628,7 @@
       "b": 0,
       "a": 255
     },
-    "_outlineWidth": 2,
+    "_outlineWidth": 4,
     "_enableShadow": false,
     "_shadowColor": {
       "__type__": "cc.Color",
@@ -674,6 +674,12 @@
     "__prefab": {
       "__id__": 35
     },
+    "MaxHp": 500,
+    "meshFlashDataList": [],
+    "hitEffect": 1,
+    "collisionHalfX": 0.23,
+    "collisionHalfZ": 0.23,
+    "repelEnabled": true,
     "lab": {
       "__id__": 31
     },
