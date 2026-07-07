@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, Label, MeshRenderer, Quat, SkinnedMeshRenderer, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, AnimationClip, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -85,11 +85,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
+      AnimationClip = _cc.AnimationClip;
       CCFloat = _cc.CCFloat;
       Label = _cc.Label;
-      MeshRenderer = _cc.MeshRenderer;
       Quat = _cc.Quat;
-      SkinnedMeshRenderer = _cc.SkinnedMeshRenderer;
       tween = _cc.tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -128,7 +127,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "93b74JYl+RPy7/AhR04QwuT", "MonsterBattleTaerget", undefined);
 
-      __checkObsolete__(['_decorator', 'CacheMode', 'CCFloat', 'Component', 'Label', 'labelAssembler', 'MeshRenderer', 'Node', 'Quat', 'SkinnedMeshRenderer', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'AnimationClip', 'CCFloat', 'Label', 'Node', 'Quat', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -236,8 +235,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
       }), _dec15 = property({
-        type: CCFloat,
-        displayName: '小怪死亡动画最高点压低',
+        type: AnimationClip,
+        displayName: '小怪死亡强制替换动画',
 
         visible() {
           return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
@@ -245,7 +244,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), MonsterType) : MonsterType).ZombieBrother;
         },
 
-        tooltip: '只影响玩家攻击打死小怪后的死亡动画抛起最高点。填正数会让轨迹从 0->5->0 变成 0->3->0 这类效果；Boss不受影响。'
+        tooltip: '填入后，运行时会强制替换小怪动画列表中的 die 槽位。用于绕过直接改 SkeletalAnimation clips 后被编辑器还原的问题；Boss不受影响。'
       }), _dec(_class = (_class2 = class MonsterBattleTaerget extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
@@ -292,15 +291,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "smallMonsterAttackLockOffsetZ", _descriptor13, this);
 
-          _initializerDefineProperty(this, "smallMonsterDeathAnimPeakReduce", _descriptor14, this);
+          _initializerDefineProperty(this, "smallMonsterDieOverrideClip", _descriptor14, this);
 
-          this.fbxOriginY = 0;
-          this.hasFbxOriginY = false;
-          this.normalDieAnimElapsed = 0;
-          this.normalDieAnimDuration = 0;
-          this.normalDieGroundMinWorldY = 0;
-          this.hasNormalDieGroundMinWorldY = false;
-          this.deathBoundRenderers = [];
           // public dieTimeScale: number = 1;
           this.isDieD = true;
 
@@ -309,7 +301,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._hlIn = false;
         }
 
+        onLoad() {
+          super.onLoad();
+          this.applyNormalDeathAnimationSetup();
+        }
         /** 重写init，在初始化后注册到碰撞管理器 */
+
+
         init(difficulty, fixedHp = 0) {
           super.init(difficulty);
 
@@ -329,7 +327,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.move.autoMove = true;
           this._hl = false;
           this._hlIn = false;
-          this.resetDeathAnimYOffset();
+          this.applyNormalDeathAnimationSetup();
           this.attackTimer = 0;
           this.runAnimSpeed = 0.9 + Math.random() * 0.25;
           this.runAnimStartFrame = Math.random();
@@ -374,10 +372,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           } else {
             const t = this.fbx.setAnimation(MonsterAnimEnum.die, true);
             endtime = t.duration;
-            this.normalDieAnimElapsed = 0;
-            this.normalDieAnimDuration = endtime;
-            this.cacheNormalDieGroundMinWorldY();
-            this.applyDeathAnimYOffset();
             const time = endtime * 0.8;
             const z = this.node.z + 6;
             tween(this.node).to(time * 0.5, {
@@ -432,110 +426,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        cacheFbxOriginY() {
-          var _this$fbx;
-
-          if (this.hasFbxOriginY || !((_this$fbx = this.fbx) != null && _this$fbx.node)) {
-            return;
-          }
-
-          this.fbxOriginY = this.fbx.node.y;
-          this.hasFbxOriginY = true;
-        }
-
-        resetDeathAnimYOffset() {
-          var _this$fbx2;
-
-          this.cacheFbxOriginY();
-          this.normalDieAnimElapsed = 0;
-          this.normalDieAnimDuration = 0;
-          this.hasNormalDieGroundMinWorldY = false;
-
-          if ((_this$fbx2 = this.fbx) != null && _this$fbx2.node) {
-            this.fbx.node.y = this.fbxOriginY;
-          }
-        }
-
-        shouldApplyDeathAnimYOffset() {
-          var _this$fbx3;
-
-          return this.isDieD && this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+        applyNormalDeathAnimationSetup() {
+          if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
-          }), MonsterType) : MonsterType).ZombieBrother && this.smallMonsterDeathAnimPeakReduce > 0 && this.normalDieAnimDuration > 0 && !!((_this$fbx3 = this.fbx) != null && _this$fbx3.node);
-        }
-
-        updateDeathAnimYOffset(dt) {
-          if (!this.shouldApplyDeathAnimYOffset()) {
+          }), MonsterType) : MonsterType).ZombieBrother || !this.fbx) {
             return;
           }
 
-          this.normalDieAnimElapsed = Math.min(this.normalDieAnimDuration, this.normalDieAnimElapsed + dt);
-          this.applyDeathAnimYOffset();
-        }
-
-        applyDeathAnimYOffset() {
-          if (!this.shouldApplyDeathAnimYOffset()) {
-            return;
+          if (this.smallMonsterDieOverrideClip) {
+            this.fbx.replaceAnimationClip(MonsterAnimEnum.die, this.smallMonsterDieOverrideClip);
           }
-
-          this.cacheFbxOriginY();
-          this.fbx.node.y = this.fbxOriginY;
-          this.cacheNormalDieGroundMinWorldY();
-          const progress = Math.max(0, Math.min(1, this.normalDieAnimElapsed / this.normalDieAnimDuration));
-          const peakWeight = Math.sin(progress * Math.PI);
-          const desiredReduce = this.smallMonsterDeathAnimPeakReduce * peakWeight;
-          const currentLift = Math.max(0, this.getDeathMeshMinWorldY() - this.normalDieGroundMinWorldY);
-          const actualReduce = Math.min(desiredReduce, currentLift);
-          this.fbx.node.y = this.fbxOriginY - actualReduce;
-        }
-
-        cacheNormalDieGroundMinWorldY() {
-          if (this.hasNormalDieGroundMinWorldY) {
-            return;
-          }
-
-          this.normalDieGroundMinWorldY = this.getDeathMeshMinWorldY();
-          this.hasNormalDieGroundMinWorldY = true;
-        }
-
-        getDeathMeshMinWorldY() {
-          var _this$fbx4;
-
-          if (!((_this$fbx4 = this.fbx) != null && _this$fbx4.node)) {
-            return this.node.worldPosition.y;
-          }
-
-          if (this.deathBoundRenderers.length <= 0) {
-            this.deathBoundRenderers.push(...this.fbx.node.getComponentsInChildren(MeshRenderer));
-            this.deathBoundRenderers.push(...this.fbx.node.getComponentsInChildren(SkinnedMeshRenderer));
-          }
-
-          let minY = Number.POSITIVE_INFINITY;
-
-          for (let i = 0; i < this.deathBoundRenderers.length; i++) {
-            var _renderer$model;
-
-            const renderer = this.deathBoundRenderers[i];
-
-            if (!(renderer != null && renderer.isValid) || !renderer.enabled) {
-              continue;
-            }
-
-            const bounds = (_renderer$model = renderer.model) == null ? void 0 : _renderer$model.worldBounds;
-
-            if (!bounds) {
-              continue;
-            }
-
-            minY = Math.min(minY, bounds.center.y - bounds.halfExtents.y);
-          }
-
-          return Number.isFinite(minY) ? minY : this.node.worldPosition.y;
         }
 
         _update(dt) {
           if (this.isDie) {
-            this.updateDeathAnimYOffset(dt);
             return;
           }
 
@@ -908,12 +812,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        lateUpdate() {
-          if (this.isDie) {
-            this.applyDeathAnimYOffset();
-          }
-        }
-
       }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "meshFlashDataList_Die", [_dec2], {
         configurable: true,
         enumerable: true,
@@ -1001,12 +899,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 0.22;
         }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathAnimPeakReduce", [_dec15], {
+      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDieOverrideClip", [_dec15], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
-          return 2;
+          return null;
         }
       })), _class2)) || _class));
 

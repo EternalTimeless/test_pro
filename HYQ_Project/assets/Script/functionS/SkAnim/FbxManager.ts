@@ -1,9 +1,8 @@
-import { _decorator, Component, Node, SkeletalAnimation } from 'cc';
+import { _decorator, AnimationClip, Component, SkeletalAnimation } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('FbxManager')
 export class FbxManager extends Component {
-
 
     private _animName: string[] = [];
 
@@ -31,6 +30,40 @@ export class FbxManager extends Component {
             }
         }
         return this._skeleta;
+    }
+
+    public replaceAnimationClip(skT: number, clip: AnimationClip): boolean {
+        if (!clip) {
+            return false;
+        }
+
+        const sk = this.skeleta;
+        const clips = sk.clips.slice();
+        if (skT < 0 || skT >= clips.length) {
+            return false;
+        }
+
+        if (clips[skT] === clip) {
+            this._animName[skT] = clip.name;
+            return true;
+        }
+
+        const oldClip = clips[skT];
+        clips[skT] = clip;
+        sk.clips = clips;
+        if (sk.defaultClip === oldClip) {
+            sk.defaultClip = clip;
+        }
+
+        this._animName.length = 0;
+        for (let i = 0; i < sk.clips.length; i++) {
+            const item = sk.clips[i];
+            this._animName[i] = item ? item.name : '';
+        }
+        if (this._cur === skT) {
+            this._cur = -1;
+        }
+        return true;
     }
 
     public setAnimation(skT: number, loop: boolean = true, frame: number = 0) {

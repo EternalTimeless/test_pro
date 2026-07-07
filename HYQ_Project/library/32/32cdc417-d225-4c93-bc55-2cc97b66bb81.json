@@ -521,7 +521,10 @@
     "smallMonsterAttackOffsetZ": 1.8,
     "smallMonsterAttackLockOffsetX": 0.55,
     "smallMonsterAttackLockOffsetZ": 0.22,
-    "smallMonsterDeathAnimPeakReduce": 3,
+    "smallMonsterDieOverrideClip": {
+      "__uuid__": "991d4abd-74e7-4fd3-ae59-7c26c0a7bb84@73b7f",
+      "__expectedType__": "cc.AnimationClip"
+    },
     "_id": ""
   },
   {

@@ -1,4 +1,4 @@
-import { _decorator, CacheMode, CCFloat, Component, Label, labelAssembler, MeshRenderer, Node, Quat, SkinnedMeshRenderer, tween, Vec3 } from 'cc';
+import { _decorator, AnimationClip, CCFloat, Label, Node, Quat, tween, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import { MoveDrive, MoveModEnum } from '../../Base/MoveRot/MoveDrive';
@@ -126,22 +126,19 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     public smallMonsterAttackLockOffsetZ: number = 0.22;
 
     @property({
-        type: CCFloat,
-        displayName: '小怪死亡动画最高点压低',
+        type: AnimationClip,
+        displayName: '小怪死亡强制替换动画',
         visible(this: MonsterBattleTaerget) {
             return this.monsterType != MonsterType.ZombieBrother;
         },
-        tooltip: '只影响玩家攻击打死小怪后的死亡动画抛起最高点。填正数会让轨迹从 0->5->0 变成 0->3->0 这类效果；Boss不受影响。'
+        tooltip: '填入后，运行时会强制替换小怪动画列表中的 die 槽位。用于绕过直接改 SkeletalAnimation clips 后被编辑器还原的问题；Boss不受影响。'
     })
-    public smallMonsterDeathAnimPeakReduce: number = 2;
+    public smallMonsterDieOverrideClip: AnimationClip = null;
 
-    private fbxOriginY: number = 0;
-    private hasFbxOriginY: boolean = false;
-    private normalDieAnimElapsed: number = 0;
-    private normalDieAnimDuration: number = 0;
-    private normalDieGroundMinWorldY: number = 0;
-    private hasNormalDieGroundMinWorldY: boolean = false;
-    private deathBoundRenderers: (MeshRenderer | SkinnedMeshRenderer)[] = [];
+    protected onLoad(): void {
+        super.onLoad();
+        this.applyNormalDeathAnimationSetup();
+    }
 
     /** 重写init，在初始化后注册到碰撞管理器 */
     public init(difficulty: number, fixedHp: number = 0) {
@@ -158,7 +155,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         this.move.autoMove = true;
         this._hl = false;
         this._hlIn = false;
-        this.resetDeathAnimYOffset();
+        this.applyNormalDeathAnimationSetup();
         this.attackTimer = 0;
         this.runAnimSpeed = 0.9 + Math.random() * 0.25;
         this.runAnimStartFrame = Math.random();
@@ -196,10 +193,6 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             const t = this.fbx.setAnimation(MonsterAnimEnum.die, true);
 
             endtime = t.duration;
-            this.normalDieAnimElapsed = 0;
-            this.normalDieAnimDuration = endtime;
-            this.cacheNormalDieGroundMinWorldY();
-            this.applyDeathAnimYOffset();
             const time = endtime * 0.8;
             const z = this.node.z + 6;
             tween(this.node).to(time * 0.5, { z: z }).start();
@@ -243,90 +236,18 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     /** 跳过死亡闪红效果（批量击杀时设为true以降低DC尖峰） */
     public skipDieFlash: boolean = false;
 
-    private cacheFbxOriginY(): void {
-        if (this.hasFbxOriginY || !this.fbx?.node) {
+    private applyNormalDeathAnimationSetup(): void {
+        if (this.monsterType == MonsterType.ZombieBrother || !this.fbx) {
             return;
         }
-        this.fbxOriginY = this.fbx.node.y;
-        this.hasFbxOriginY = true;
-    }
-
-    private resetDeathAnimYOffset(): void {
-        this.cacheFbxOriginY();
-        this.normalDieAnimElapsed = 0;
-        this.normalDieAnimDuration = 0;
-        this.hasNormalDieGroundMinWorldY = false;
-        if (this.fbx?.node) {
-            this.fbx.node.y = this.fbxOriginY;
+        if (this.smallMonsterDieOverrideClip) {
+            this.fbx.replaceAnimationClip(MonsterAnimEnum.die, this.smallMonsterDieOverrideClip);
         }
-    }
-
-    private shouldApplyDeathAnimYOffset(): boolean {
-        return this.isDieD
-            && this.monsterType != MonsterType.ZombieBrother
-            && this.smallMonsterDeathAnimPeakReduce > 0
-            && this.normalDieAnimDuration > 0
-            && !!this.fbx?.node;
-    }
-
-    private updateDeathAnimYOffset(dt: number): void {
-        if (!this.shouldApplyDeathAnimYOffset()) {
-            return;
-        }
-        this.normalDieAnimElapsed = Math.min(this.normalDieAnimDuration, this.normalDieAnimElapsed + dt);
-        this.applyDeathAnimYOffset();
-    }
-
-    private applyDeathAnimYOffset(): void {
-        if (!this.shouldApplyDeathAnimYOffset()) {
-            return;
-        }
-        this.cacheFbxOriginY();
-        this.fbx.node.y = this.fbxOriginY;
-        this.cacheNormalDieGroundMinWorldY();
-        const progress = Math.max(0, Math.min(1, this.normalDieAnimElapsed / this.normalDieAnimDuration));
-        const peakWeight = Math.sin(progress * Math.PI);
-        const desiredReduce = this.smallMonsterDeathAnimPeakReduce * peakWeight;
-        const currentLift = Math.max(0, this.getDeathMeshMinWorldY() - this.normalDieGroundMinWorldY);
-        const actualReduce = Math.min(desiredReduce, currentLift);
-        this.fbx.node.y = this.fbxOriginY - actualReduce;
-    }
-
-    private cacheNormalDieGroundMinWorldY(): void {
-        if (this.hasNormalDieGroundMinWorldY) {
-            return;
-        }
-        this.normalDieGroundMinWorldY = this.getDeathMeshMinWorldY();
-        this.hasNormalDieGroundMinWorldY = true;
-    }
-
-    private getDeathMeshMinWorldY(): number {
-        if (!this.fbx?.node) {
-            return this.node.worldPosition.y;
-        }
-        if (this.deathBoundRenderers.length <= 0) {
-            this.deathBoundRenderers.push(...this.fbx.node.getComponentsInChildren(MeshRenderer));
-            this.deathBoundRenderers.push(...this.fbx.node.getComponentsInChildren(SkinnedMeshRenderer));
-        }
-        let minY = Number.POSITIVE_INFINITY;
-        for (let i = 0; i < this.deathBoundRenderers.length; i++) {
-            const renderer = this.deathBoundRenderers[i] as any;
-            if (!renderer?.isValid || !renderer.enabled) {
-                continue;
-            }
-            const bounds = renderer.model?.worldBounds;
-            if (!bounds) {
-                continue;
-            }
-            minY = Math.min(minY, bounds.center.y - bounds.halfExtents.y);
-        }
-        return Number.isFinite(minY) ? minY : this.node.worldPosition.y;
     }
 
     protected _update(dt: number): void {
 
         if (this.isDie) {
-            this.updateDeathAnimYOffset(dt);
             return;
         }
         if (this.monsterType == MonsterType.ZombieBrother) {
@@ -608,12 +529,6 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             if (role) {
                 EventManager.instance.emit(EventType.PLAYER_HIT_2, role, 1);
             }
-        }
-    }
-
-    protected lateUpdate(): void {
-        if (this.isDie) {
-            this.applyDeathAnimYOffset();
         }
     }
 }

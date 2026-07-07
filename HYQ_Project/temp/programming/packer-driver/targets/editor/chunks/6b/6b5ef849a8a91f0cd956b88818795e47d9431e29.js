@@ -17,7 +17,7 @@ System.register(["cc"], function (_export, _context) {
 
       _cclegacy._RF.push({}, "6f259WVWu5B2JBJ1xiPoeeK", "FbxManager", undefined);
 
-      __checkObsolete__(['_decorator', 'Component', 'Node', 'SkeletalAnimation']);
+      __checkObsolete__(['_decorator', 'AnimationClip', 'Component', 'SkeletalAnimation']);
 
       ({
         ccclass,
@@ -52,6 +52,45 @@ System.register(["cc"], function (_export, _context) {
           }
 
           return this._skeleta;
+        }
+
+        replaceAnimationClip(skT, clip) {
+          if (!clip) {
+            return false;
+          }
+
+          const sk = this.skeleta;
+          const clips = sk.clips.slice();
+
+          if (skT < 0 || skT >= clips.length) {
+            return false;
+          }
+
+          if (clips[skT] === clip) {
+            this._animName[skT] = clip.name;
+            return true;
+          }
+
+          const oldClip = clips[skT];
+          clips[skT] = clip;
+          sk.clips = clips;
+
+          if (sk.defaultClip === oldClip) {
+            sk.defaultClip = clip;
+          }
+
+          this._animName.length = 0;
+
+          for (let i = 0; i < sk.clips.length; i++) {
+            const item = sk.clips[i];
+            this._animName[i] = item ? item.name : '';
+          }
+
+          if (this._cur === skT) {
+            this._cur = -1;
+          }
+
+          return true;
         }
 
         setAnimation(skT, loop = true, frame = 0) {
