@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, CCString, Color, instantiate, ITriggerEvent, Label, Node, tween, Tween, UIOpacity, Vec3 } from 'cc';
+import { _decorator, CCFloat, CCInteger, Color, instantiate, ITriggerEvent, Label, Node, tween, Tween, UIOpacity, Vec3 } from 'cc';
 import PoolManager from '../../Base/PoolManager';
 import { PropBrand } from './PropBrand';
 import { EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum } from '../../Base/EnumList';
@@ -71,9 +71,6 @@ export class CreatePropBrand extends UnityUpComponent {
 
     @property({ type: CCFloat, displayName: 'MAX文本字号倍数', tooltip: 'MAX! 飘字相对 +1 模板字号的放大倍数。' })
     public maxFeedbackFontScale: number = 1.15;
-
-    @property({ type: CCString, displayName: 'MAX文本字体', tooltip: 'MAX! 飘字使用的系统字体名。' })
-    public maxFeedbackFontFamily: string = 'Trebuchet MS';
 
     @property({ type: CCFloat, displayName: 'MAX触发间隔(秒)', tooltip: '上一次 MAX! 飘字出现后，至少间隔多少秒才允许再次出现。' })
     public maxFeedbackInterval: number = 1;
@@ -298,7 +295,7 @@ export class CreatePropBrand extends UnityUpComponent {
         if (!this.isWinPropBrand(propBrand) && !player.canReserveRoleSlot(addRoleMaxCount)) {
             if (player.isRoleCountAtLimit(addRoleMaxCount) && this.maxFeedbackCooldown <= 0) {
                 const maxTextPos = this.getMaxFeedbackWorldPos(player);
-                this.showFloatingFeedback(propBrand, "MAX!", maxTextPos, this.maxFeedbackColor, this.maxFeedbackFontScale, this.maxFeedbackFontFamily);
+                this.showFloatingFeedback(propBrand, "MAX!", maxTextPos, this.maxFeedbackColor, this.maxFeedbackFontScale);
                 this.maxFeedbackCooldown = Math.max(0, this.maxFeedbackInterval);
             }
             this.recycleTriggeredProp(propBrand);
@@ -433,7 +430,7 @@ export class CreatePropBrand extends UnityUpComponent {
         propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
     }
 
-    private showFloatingFeedback(propBrand: PropBrand, text: string, worldPos: Vec3, color: Color | null = null, fontScale: number = 1, fontFamily: string = ''): void {
+    private showFloatingFeedback(propBrand: PropBrand, text: string, worldPos: Vec3, color: Color | null = null, fontScale: number = 1): void {
         const templateNode = propBrand?.lab?.node;
         if (!templateNode || !this.labelVisualGroup) {
             return;
@@ -452,11 +449,6 @@ export class CreatePropBrand extends UnityUpComponent {
         label.string = text;
         const feedbackColor = color ? color.clone() : templateNode.getComponent(Label).color.clone();
         label.color = feedbackColor;
-        if (fontFamily) {
-            const labelAny = label as any;
-            labelAny.useSystemFont = true;
-            labelAny.fontFamily = fontFamily;
-        }
         if (fontScale > 0 && Math.abs(fontScale - 1) > 0.001) {
             label.fontSize = Math.round(label.fontSize * fontScale);
             label.lineHeight = Math.round(label.lineHeight * fontScale);

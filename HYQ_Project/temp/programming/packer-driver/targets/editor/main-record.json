@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 4778336.2492,
+      "mTimestamp": 6010034.0275,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -24694,7 +24694,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/CreatePropBrand.ts": {
       "mTimestamp": {
-        "mtime": 1783062462796.268,
+        "mtime": 1783393257150.0571,
         "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
       },
       "chunkId": "e2cd37831230a7474a5c89ec9f0764c2d6ce1581",
@@ -24714,11 +24714,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 136
+              "column": 126
             },
             "end": {
               "line": 1,
-              "column": 140
+              "column": 130
             }
           }
         },
@@ -27686,7 +27686,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/Common/SuperPackage.ts": {
       "mTimestamp": {
-        "mtime": 1783392032509.4087,
+        "mtime": 1783392903272.5613,
         "uuid": "aa6cd0a6-0e91-4013-94bc-e2063049f65a"
       },
       "chunkId": "fb231b7b47c244832aa3ed0055e0ff4d6bda9530",
@@ -27792,7 +27792,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PBASDK.ts": {
       "mTimestamp": {
-        "mtime": 1783392032509.4087,
+        "mtime": 1783392903272.5613,
         "uuid": "de608ba4-76a0-4ad8-899e-06d88d0487fc"
       },
       "chunkId": "7ece20e41250ede0e4707962498ddfd8c4453b24",

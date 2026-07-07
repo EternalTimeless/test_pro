@@ -11566,7 +11566,6 @@
       "a": 255
     },
     "maxFeedbackFontScale": 1,
-    "maxFeedbackFontFamily": "Comic Sans MS",
     "maxFeedbackInterval": 1,
     "wallNode": {
       "__id__": 201
@@ -12689,7 +12688,6 @@
       "a": 255
     },
     "maxFeedbackFontScale": 1.15,
-    "maxFeedbackFontFamily": "Comic Sans MS",
     "maxFeedbackInterval": 1,
     "wallNode": {
       "__id__": 749

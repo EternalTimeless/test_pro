@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, CCString, Color, instantiate, Label, Node, tween, Tween, UIOpacity, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, GameOverPanel, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _crd, ccclass, property, CreatePropBrand;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Color, instantiate, Label, Node, tween, Tween, UIOpacity, Vec3, PoolManager, PropBrand, EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum, PrefabsManager, Player, LayerManager, JumpManager, UnityUpComponent, EffectManager, AudioManager, FlashRedManager, PropLalianGate, GameOverPanel, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _crd, ccclass, property, CreatePropBrand;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -91,7 +91,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       _decorator = _cc._decorator;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
-      CCString = _cc.CCString;
       Color = _cc.Color;
       instantiate = _cc.instantiate;
       Label = _cc.Label;
@@ -137,7 +136,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "7ab0exJe1JDaaNCop2wV4XG", "CreatePropBrand", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'CCString', 'Color', 'instantiate', 'ITriggerEvent', 'Label', 'Node', 'tween', 'Tween', 'UIOpacity', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Color', 'instantiate', 'ITriggerEvent', 'Label', 'Node', 'tween', 'Tween', 'UIOpacity', 'Vec3']);
 
       ({
         ccclass,
@@ -215,18 +214,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         displayName: 'MAX文本字号倍数',
         tooltip: 'MAX! 飘字相对 +1 模板字号的放大倍数。'
       }), _dec19 = property({
-        type: CCString,
-        displayName: 'MAX文本字体',
-        tooltip: 'MAX! 飘字使用的系统字体名。'
-      }), _dec20 = property({
         type: CCFloat,
         displayName: 'MAX触发间隔(秒)',
         tooltip: '上一次 MAX! 飘字出现后，至少间隔多少秒才允许再次出现。'
-      }), _dec21 = property({
+      }), _dec20 = property({
         type: Node,
         displayName: '道具挂载父节点',
         tooltip: '生成出来的 +1/+99 道具会挂到这个节点下面。通常填当前通道的 wall/root 节点。'
-      }), _dec22 = property({
+      }), _dec21 = property({
         type: CCInteger,
         displayName: '道具类型',
         tooltip: '对应 PrefabsEnum.prop 的预制体类型编号。保持和原来左/右道具类型一致。'
@@ -270,13 +265,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "maxFeedbackFontScale", _descriptor17, this);
 
-          _initializerDefineProperty(this, "maxFeedbackFontFamily", _descriptor18, this);
+          _initializerDefineProperty(this, "maxFeedbackInterval", _descriptor18, this);
 
-          _initializerDefineProperty(this, "maxFeedbackInterval", _descriptor19, this);
+          _initializerDefineProperty(this, "wallNode", _descriptor19, this);
 
-          _initializerDefineProperty(this, "wallNode", _descriptor20, this);
-
-          _initializerDefineProperty(this, "type", _descriptor21, this);
+          _initializerDefineProperty(this, "type", _descriptor20, this);
 
           this.propBrandList = [];
           this.tempPropBrandList = [];
@@ -526,7 +519,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (!this.isWinPropBrand(propBrand) && !player.canReserveRoleSlot(addRoleMaxCount)) {
             if (player.isRoleCountAtLimit(addRoleMaxCount) && this.maxFeedbackCooldown <= 0) {
               const maxTextPos = this.getMaxFeedbackWorldPos(player);
-              this.showFloatingFeedback(propBrand, "MAX!", maxTextPos, this.maxFeedbackColor, this.maxFeedbackFontScale, this.maxFeedbackFontFamily);
+              this.showFloatingFeedback(propBrand, "MAX!", maxTextPos, this.maxFeedbackColor, this.maxFeedbackFontScale);
               this.maxFeedbackCooldown = Math.max(0, this.maxFeedbackInterval);
             }
 
@@ -742,7 +735,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
         }
 
-        showFloatingFeedback(propBrand, text, worldPos, color = null, fontScale = 1, fontFamily = '') {
+        showFloatingFeedback(propBrand, text, worldPos, color = null, fontScale = 1) {
           var _propBrand$lab;
 
           const templateNode = propBrand == null || (_propBrand$lab = propBrand.lab) == null ? void 0 : _propBrand$lab.node;
@@ -766,12 +759,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           label.string = text;
           const feedbackColor = color ? color.clone() : templateNode.getComponent(Label).color.clone();
           label.color = feedbackColor;
-
-          if (fontFamily) {
-            const labelAny = label;
-            labelAny.useSystemFont = true;
-            labelAny.fontFamily = fontFamily;
-          }
 
           if (fontScale > 0 && Math.abs(fontScale - 1) > 0.001) {
             label.fontSize = Math.round(label.fontSize * fontScale);
@@ -1017,26 +1004,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 1.15;
         }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class2.prototype, "maxFeedbackFontFamily", [_dec19], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function () {
-          return 'Trebuchet MS';
-        }
-      }), _descriptor19 = _applyDecoratedDescriptor(_class2.prototype, "maxFeedbackInterval", [_dec20], {
+      }), _descriptor18 = _applyDecoratedDescriptor(_class2.prototype, "maxFeedbackInterval", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 1;
         }
-      }), _descriptor20 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec21], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class2.prototype, "wallNode", [_dec20], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor21 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec22], {
+      }), _descriptor20 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec21], {
         configurable: true,
         enumerable: true,
         writable: true,
