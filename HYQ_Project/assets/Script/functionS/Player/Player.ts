@@ -879,6 +879,61 @@ export class Player extends UnityUpComponent {
         return role;
     }
 
+    public getMonsterAttackTarget(monsterWorldPos: Vec3): Role | null {
+        if (this.isDie || !this.roleList.length) {
+            return null;
+        }
+
+        let attackRearZ = Number.POSITIVE_INFINITY;
+        for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+            if (!this.isValidMonsterTargetRole(role)) {
+                continue;
+            }
+            const roleAttackZ = this.getRoleAttackWorldZ(role);
+            if (roleAttackZ < attackRearZ) {
+                attackRearZ = roleAttackZ;
+            }
+        }
+
+        if (!Number.isFinite(attackRearZ)) {
+            return null;
+        }
+
+        let bestRole: Role = null;
+        let bestXDistance = Number.POSITIVE_INFINITY;
+        let bestLayer = -1;
+        const zTolerance = Math.max(0.05, this.roleR * 0.35);
+        const targetX = monsterWorldPos?.x ?? this.node.worldPosition.x;
+        for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+            if (!this.isValidMonsterTargetRole(role)) {
+                continue;
+            }
+            const roleAttackZ = this.getRoleAttackWorldZ(role);
+            if (Math.abs(roleAttackZ - attackRearZ) > zTolerance) {
+                continue;
+            }
+            const xDistance = Math.abs(role.node.worldPosition.x - targetX);
+            const layer = this.getRoleLayer(i);
+            if (xDistance < bestXDistance || (Math.abs(xDistance - bestXDistance) <= 0.001 && layer > bestLayer)) {
+                bestRole = role;
+                bestXDistance = xDistance;
+                bestLayer = layer;
+            }
+        }
+
+        return bestRole;
+    }
+
+    private isValidMonsterTargetRole(role: Role): boolean {
+        return !!role?.node?.activeInHierarchy && !role.attackIN && role.hp > 0;
+    }
+
+    private getRoleAttackWorldZ(role: Role): number {
+        return role?.shoot?.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
+    }
+
 
     public upPos() {
         this.applyRoleLayout(false);

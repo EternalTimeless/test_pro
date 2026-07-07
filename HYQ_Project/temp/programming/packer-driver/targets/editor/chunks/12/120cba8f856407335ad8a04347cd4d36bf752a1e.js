@@ -1291,6 +1291,77 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return role;
         }
 
+        getMonsterAttackTarget(monsterWorldPos) {
+          var _monsterWorldPos$x;
+
+          if (this.isDie || !this.roleList.length) {
+            return null;
+          }
+
+          let attackRearZ = Number.POSITIVE_INFINITY;
+
+          for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+
+            if (!this.isValidMonsterTargetRole(role)) {
+              continue;
+            }
+
+            const roleAttackZ = this.getRoleAttackWorldZ(role);
+
+            if (roleAttackZ < attackRearZ) {
+              attackRearZ = roleAttackZ;
+            }
+          }
+
+          if (!Number.isFinite(attackRearZ)) {
+            return null;
+          }
+
+          let bestRole = null;
+          let bestXDistance = Number.POSITIVE_INFINITY;
+          let bestLayer = -1;
+          const zTolerance = Math.max(0.05, this.roleR * 0.35);
+          const targetX = (_monsterWorldPos$x = monsterWorldPos == null ? void 0 : monsterWorldPos.x) != null ? _monsterWorldPos$x : this.node.worldPosition.x;
+
+          for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+
+            if (!this.isValidMonsterTargetRole(role)) {
+              continue;
+            }
+
+            const roleAttackZ = this.getRoleAttackWorldZ(role);
+
+            if (Math.abs(roleAttackZ - attackRearZ) > zTolerance) {
+              continue;
+            }
+
+            const xDistance = Math.abs(role.node.worldPosition.x - targetX);
+            const layer = this.getRoleLayer(i);
+
+            if (xDistance < bestXDistance || Math.abs(xDistance - bestXDistance) <= 0.001 && layer > bestLayer) {
+              bestRole = role;
+              bestXDistance = xDistance;
+              bestLayer = layer;
+            }
+          }
+
+          return bestRole;
+        }
+
+        isValidMonsterTargetRole(role) {
+          var _role$node;
+
+          return !!(role != null && (_role$node = role.node) != null && _role$node.activeInHierarchy) && !role.attackIN && role.hp > 0;
+        }
+
+        getRoleAttackWorldZ(role) {
+          var _role$shoot;
+
+          return role != null && (_role$shoot = role.shoot) != null && _role$shoot.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
+        }
+
         upPos() {
           this.applyRoleLayout(false);
         }

@@ -519,7 +519,8 @@
     "bossMinGapZ": 1.4,
     "bossAttackLockOffsetZ": 0.28,
     "smallMonsterAttackOffsetZ": 1.8,
-    "smallMonsterAttackLockOffsetX": 0.55,
+    "smallMonsterAttackMinCenterGapZ": 0.85,
+    "smallMonsterAttackLockOffsetX": 0.8,
     "smallMonsterAttackLockOffsetZ": 0.22,
     "smallMonsterDieOverrideClip": {
       "__uuid__": "991d4abd-74e7-4fd3-ae59-7c26c0a7bb84@73b7f",

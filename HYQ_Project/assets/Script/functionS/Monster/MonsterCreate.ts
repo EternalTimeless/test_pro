@@ -164,8 +164,25 @@ export class MonsterCreate extends UnityUpComponent {
     private _waveStageStartZList: number[] = [];
     private _waveStageIndexList: number[] = [];
     private _monsterWaveIndexMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();
+    private _monsterRebirthOrderMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();
+    private _monsterSpawnLocalXMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();
+    private _monsterSpawnLocalZMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();
+    private _monsterRebirthOffsetMap: WeakMap<MonsterBattleTaerget, Vec3> = new WeakMap();
+    private _rebirthWaveInitialMinZList: number[] = [];
+    private _rebirthWaveInitialMaxZList: number[] = [];
+    private _monsterRebirthOrderIndex: number = 0;
     @property({ type: CCFloat, displayName: '油桶怪物预留间距', tooltip: '创建怪物和初始化油桶时，油桶碰撞盒与怪物碰撞盒之间额外保留的 Z 轴距离。数值越大越不容易视觉穿模。' })
     public waveRoleMonsterGap: number = 0.02;
+    @property({ type: CCFloat, displayName: '再来一次前排后退补偿' })
+    public rebirthMonsterFrontRetreatZ: number = 2.5;
+    @property({ type: CCFloat, displayName: '再来一次波次追加间距' })
+    public rebirthMonsterWaveExtraGapZ: number = 0;
+    @property({ type: CCFloat, displayName: '再来一次站位随机X' })
+    public rebirthMonsterRandomX: number = 0.15;
+    @property({ type: CCFloat, displayName: '再来一次站位随机Z' })
+    public rebirthMonsterRandomZ: number = 0.25;
+    @property({ type: CCBoolean, displayName: '再来一次距离日志' })
+    public rebirthMonsterDistanceLog: boolean = false;
     private readonly waveRolePlayerHalfX: number = 0.35;
     private readonly waveRolePlayerHalfZ: number = 0.35;
     private _isRestoringWaveRolesAfterRebirth: boolean = false;
@@ -604,6 +621,13 @@ export class MonsterCreate extends UnityUpComponent {
         this.bossDieCount = 0;
         this.monsterMatIns = [0, 0, 0];
         this._monsterWaveIndexMap = new WeakMap();
+        this._monsterRebirthOrderMap = new WeakMap();
+        this._monsterSpawnLocalXMap = new WeakMap();
+        this._monsterSpawnLocalZMap = new WeakMap();
+        this._monsterRebirthOffsetMap = new WeakMap();
+        this._rebirthWaveInitialMinZList.length = 0;
+        this._rebirthWaveInitialMaxZList.length = 0;
+        this._monsterRebirthOrderIndex = 0;
 
         const stageToBigWaveList = this.buildStageToWaveRoleIndexList(
             this.getConfiguredWaveCount(),
@@ -739,10 +763,9 @@ export class MonsterCreate extends UnityUpComponent {
                         if (!Player.instance || Player.instance.isDie || Player.instance.roleList.length <= 0) {
                             continue;
                         }
-                        monster.move.moveMod = MoveModEnum.targetMove;
-                        monster.attackTarget = Player.instance.attackTarget.node;
-
-                        monster.move.target = monster.attackTarget;
+                        if (!this.tryAssignMonsterAttackTarget(monster)) {
+                            continue;
+                        }
                         // if (monster.monsterType == MonsterType.ZombieBaby_0) {
                         //     EventManager.instance.emit(EventType.Monster_Attack_Player_ADD, monster);
                         // }
@@ -901,6 +924,203 @@ export class MonsterCreate extends UnityUpComponent {
         return target.getCollisionWorldPosition(tempV3).z - target.node.worldPosition.z;
     }
 
+    private registerMonsterRebirthLayoutData(monster: MonsterBattleTaerget, waveIndex: number, baseX: number = monster?.initX ?? 0, baseZ: number = monster?.node?.z ?? 0) {
+        if (!monster || !monster.node) {
+            return;
+        }
+        this._monsterRebirthOrderMap.set(monster, this._monsterRebirthOrderIndex++);
+        this._monsterSpawnLocalXMap.set(monster, monster.initX);
+        this._monsterSpawnLocalZMap.set(monster, monster.node.z);
+        this._monsterRebirthOffsetMap.set(monster, new Vec3(monster.initX - baseX, 0, monster.node.z - baseZ));
+        if (waveIndex < 0) {
+            return;
+        }
+        this._monsterWaveIndexMap.set(monster, waveIndex);
+        this.recordRebirthWaveInitialZ(waveIndex, monster.node.z);
+    }
+
+    private recordRebirthWaveInitialZ(waveIndex: number, localZ: number) {
+        if (waveIndex < 0 || !Number.isFinite(localZ)) {
+            return;
+        }
+        const currentMin = this._rebirthWaveInitialMinZList[waveIndex];
+        const currentMax = this._rebirthWaveInitialMaxZList[waveIndex];
+        this._rebirthWaveInitialMinZList[waveIndex] = Number.isFinite(currentMin) ? Math.min(currentMin, localZ) : localZ;
+        this._rebirthWaveInitialMaxZList[waveIndex] = Number.isFinite(currentMax) ? Math.max(currentMax, localZ) : localZ;
+    }
+
+    private getMonsterRebirthSortValue(monster: MonsterBattleTaerget) {
+        const order = this._monsterRebirthOrderMap.get(monster);
+        if (typeof order === 'number') {
+            return order;
+        }
+        const spawnZ = this._monsterSpawnLocalZMap.get(monster);
+        if (typeof spawnZ === 'number') {
+            return spawnZ;
+        }
+        return monster?.node?.z ?? 0;
+    }
+
+    private getInitialWaveBoundaryGap(prevWaveIndex: number, currentWaveIndex: number) {
+        let gap = 0;
+        for (let i = prevWaveIndex + 1; i <= currentWaveIndex; i++) {
+            const prevMax = this._rebirthWaveInitialMaxZList[i - 1];
+            const currentMin = this._rebirthWaveInitialMinZList[i];
+            if (!Number.isFinite(prevMax) || !Number.isFinite(currentMin)) {
+                continue;
+            }
+            gap += Math.max(0, currentMin - prevMax);
+        }
+        return gap;
+    }
+
+    private buildRebirthMonsterLayout(): WeakMap<MonsterBattleTaerget, Vec3> {
+        const layout = new WeakMap<MonsterBattleTaerget, Vec3>();
+        const waveMap = new Map<number, MonsterBattleTaerget[]>();
+
+        for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+            if (!monster || !monster.node || !monster.node.active || monster.isDie) {
+                continue;
+            }
+            const waveIndex = Math.max(0, this.getWaveIndexByMonster(monster));
+            let list = waveMap.get(waveIndex);
+            if (!list) {
+                list = [];
+                waveMap.set(waveIndex, list);
+            }
+            list.push(monster);
+        }
+
+        if (waveMap.size <= 0) {
+            return layout;
+        }
+
+        const waveIndexList = Array.from(waveMap.keys()).sort((a, b) => a - b);
+        let cursorZ = this.stage_1 + this.rebirthMonsterFrontRetreatZ;
+        const rowGapZ = Math.max(0.01, this.layerGapZ);
+        const bossExcludeZ = Math.max(0, this.brotherExcludeZ);
+        const waveExtraGapZ = Math.max(0, this.rebirthMonsterWaveExtraGapZ);
+        const randomZRange = Math.max(0, this.rebirthMonsterRandomZ);
+        let prevWaveIndex = waveIndexList[0];
+
+        for (let i = 0; i < waveIndexList.length; i++) {
+            const waveIndex = waveIndexList[i];
+            const list = waveMap.get(waveIndex);
+            if (!list || list.length <= 0) {
+                continue;
+            }
+            if (i > 0) {
+                cursorZ += this.getInitialWaveBoundaryGap(prevWaveIndex, waveIndex) + waveExtraGapZ;
+            }
+            list.sort((a, b) => this.getMonsterRebirthSortValue(a) - this.getMonsterRebirthSortValue(b));
+            const rowCount = Math.max(1, Math.floor(this.rowCount));
+            let waveCursorZ = cursorZ;
+
+            for (let j = 0; j < list.length;) {
+                const monster = list[j];
+                if (monster.monsterType === MonsterType.ZombieBrother) {
+                    const spawnX = this._monsterSpawnLocalXMap.get(monster) ?? this.getSpawnX(0);
+                    monster.initX = spawnX;
+                    const targetZ = waveCursorZ + bossExcludeZ;
+                    const targetX = this.getMonsterMoveTargetX(monster, this.node.worldPositionZ + targetZ);
+                    layout.set(monster, new Vec3(targetX, monster.node.y, targetZ));
+                    waveCursorZ += bossExcludeZ * 2;
+                    j++;
+                    continue;
+                }
+
+                const babyList: MonsterBattleTaerget[] = [];
+                while (j < list.length && list[j].monsterType !== MonsterType.ZombieBrother) {
+                    babyList.push(list[j]);
+                    j++;
+                }
+
+                const rowTotal = Math.max(1, Math.ceil(babyList.length / rowCount));
+                for (let k = 0; k < babyList.length; k++) {
+                    const baby = babyList[k];
+                    const row = Math.floor(k / rowCount);
+                    const offset = this._monsterRebirthOffsetMap.get(baby);
+                    const offsetZ = offset ? Math.max(-randomZRange, Math.min(randomZRange, offset.z)) : 0;
+                    const spawnX = this._monsterSpawnLocalXMap.get(baby) ?? baby.initX;
+                    baby.initX = spawnX;
+                    const targetZ = waveCursorZ + row * rowGapZ + offsetZ;
+                    const targetX = this.getMonsterMoveTargetX(baby, this.node.worldPositionZ + targetZ);
+                    layout.set(baby, new Vec3(targetX, baby.node.y, targetZ));
+                }
+                waveCursorZ += rowTotal * rowGapZ;
+            }
+
+            cursorZ = waveCursorZ;
+            prevWaveIndex = waveIndex;
+        }
+
+        return layout;
+    }
+
+    private logRebirthFrontDistance(layout: WeakMap<MonsterBattleTaerget, Vec3>) {
+        if (!this.rebirthMonsterDistanceLog) {
+            return;
+        }
+
+        let frontMonsterWorldZ = Number.POSITIVE_INFINITY;
+        let frontMonsterName = '';
+        for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+            const targetPos = layout.get(monster);
+            if (!targetPos) {
+                continue;
+            }
+            const targetWorldZ = this.node.worldPositionZ + targetPos.z;
+            if (targetWorldZ < frontMonsterWorldZ) {
+                frontMonsterWorldZ = targetWorldZ;
+                frontMonsterName = monster.node?.name ?? '';
+            }
+        }
+
+        if (!Number.isFinite(frontMonsterWorldZ)) {
+            return;
+        }
+
+        let playerFrontWorldZ = Number.NEGATIVE_INFINITY;
+        let playerFrontName = '';
+        const roleList = Player.instance?.roleList ?? [];
+        for (let i = 0; i < roleList.length; i++) {
+            const role = roleList[i];
+            if (!role?.node?.activeInHierarchy) {
+                continue;
+            }
+            const roleWorldZ = role.node.worldPositionZ;
+            if (roleWorldZ > playerFrontWorldZ) {
+                playerFrontWorldZ = roleWorldZ;
+                playerFrontName = role.node.name;
+            }
+        }
+
+        const stageLineWorldZ = this.node.worldPositionZ + this.stage_1;
+        const distanceToStageLine = frontMonsterWorldZ - stageLineWorldZ;
+        const distanceToPlayerFront = Number.isFinite(playerFrontWorldZ) ? frontMonsterWorldZ - playerFrontWorldZ : Number.NaN;
+        console.log(
+            `[MonsterCreate] 再来一次距离: frontMonster=${frontMonsterName}, frontMonsterWorldZ=${frontMonsterWorldZ.toFixed(3)}, stageLineWorldZ=${stageLineWorldZ.toFixed(3)}, distanceToStageLine=${distanceToStageLine.toFixed(3)}, playerFront=${playerFrontName}, playerFrontWorldZ=${Number.isFinite(playerFrontWorldZ) ? playerFrontWorldZ.toFixed(3) : 'NaN'}, distanceToPlayerFront=${Number.isFinite(distanceToPlayerFront) ? distanceToPlayerFront.toFixed(3) : 'NaN'}`,
+        );
+    }
+
+    private tryAssignMonsterAttackTarget(monster: MonsterBattleTaerget): boolean {
+        if (!monster?.move || !Player.instance || Player.instance.isDie || Player.instance.roleList.length <= 0) {
+            return false;
+        }
+
+        const targetRole = Player.instance.getMonsterAttackTarget(monster.node.worldPosition);
+        if (!targetRole?.node?.activeInHierarchy) {
+            return false;
+        }
+
+        monster.attackTarget = targetRole.node;
+        monster.move.moveMod = MoveModEnum.targetMove;
+        monster.move.target = monster.attackTarget;
+        return true;
+    }
+
     private checkWaveRolePlayerCollision() {
         const player = Player.instance;
         if (!player || player.isDie || !player.roleList || player.roleList.length <= 0 || this._waveRoleNodes.length <= 0) {
@@ -1018,9 +1238,11 @@ export class MonsterCreate extends UnityUpComponent {
             monster.flashDie(0.01);
         }
 
+        const baseLocalZ = this.getSpawnZ(baseNextSpawnZ);
+        const baseRawX = (basePosIndex - (this.rowCount - 1) / 2) * this.offX;
         const rawZ = baseNextSpawnZ + (Math.random() - 0.5) * (this.layerGapZ + this.spawnRandomZ * 2);
         const z = this.getWaveRoleLimitedSpawnZ(rawZ, monster);
-        const rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + (basePosIndex - (this.rowCount - 1) / 2) * this.offX;
+        const rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + baseRawX;
         const worldZ = this.getSpawnWorldZ(z);
         const spawnX = this.getSpawnX(rawX);
         const x = this.shouldLimitMonsterXAtZ(worldZ) ? this.clampMonsterX(spawnX) : spawnX;
@@ -1034,9 +1256,7 @@ export class MonsterCreate extends UnityUpComponent {
         tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
         tempV3.z = this.stage_0;
         monster.move.pos = tempV3;
-        if (waveIndex >= 0) {
-            this._monsterWaveIndexMap.set(monster, waveIndex);
-        }
+        this.registerMonsterRebirthLayoutData(monster, waveIndex, this.getSpawnX(baseRawX), baseLocalZ);
         return z > rawZ ? z : baseNextSpawnZ;
     }
 
@@ -1078,6 +1298,37 @@ export class MonsterCreate extends UnityUpComponent {
         }
 
         return frontMonster;
+    }
+
+    private getFrontMonsterByWaveLayout(waveIndex: number, layout: WeakMap<MonsterBattleTaerget, Vec3>) {
+        let frontMonster: MonsterBattleTaerget = null;
+        let frontZ = Number.POSITIVE_INFINITY;
+
+        for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+            if (!monster || !monster.node || !monster.node.active || monster.isDie) {
+                continue;
+            }
+            if (this.getWaveIndexByMonster(monster) !== waveIndex) {
+                continue;
+            }
+            const targetPos = layout?.get(monster);
+            const targetWorldZ = targetPos ? this.node.worldPositionZ + targetPos.z : monster.node.worldPositionZ;
+            if (targetWorldZ < frontZ) {
+                frontZ = targetWorldZ;
+                frontMonster = monster;
+            }
+        }
+
+        return frontMonster;
+    }
+
+    private getCollisionCenterWorldZByLayout(monster: MonsterBattleTaerget, layout: WeakMap<MonsterBattleTaerget, Vec3>) {
+        const targetPos = layout?.get(monster);
+        if (!targetPos) {
+            return monster.getCollisionWorldPosition(tempV3).z;
+        }
+        return this.node.worldPositionZ + targetPos.z + this.getCollisionCenterOffsetZ(monster);
     }
 
     private getWaveIndexByMonster(monster: MonsterBattleTaerget) {
@@ -1163,6 +1414,7 @@ export class MonsterCreate extends UnityUpComponent {
         // const l = this.brotherInterval / this.rowCount;
         // let z = this._finallyBoss ? this._finallyBoss.z + this.brotherExcludeZ * 2 + this.layerGapZ * layer : this.layerCount * (this.layerGapZ * l + this.brotherExcludeZ) + this.brotherExcludeZ + this.layerGapZ * layer;
         this._nextSpawnZ += this.brotherExcludeZ;
+        const baseLocalZ = this.getSpawnZ(this._nextSpawnZ);
         const z = this.getWaveRoleLimitedSpawnZ(this._nextSpawnZ, monster);
         const worldZ = this.getSpawnWorldZ(z);
         this._nextSpawnZ = z;
@@ -1176,9 +1428,7 @@ export class MonsterCreate extends UnityUpComponent {
         tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
         tempV3.z = this.stage_0;
         monster.move.pos = tempV3;
-        if (waveIndex >= 0) {
-            this._monsterWaveIndexMap.set(monster, waveIndex);
-        }
+        this.registerMonsterRebirthLayoutData(monster, waveIndex, this.getSpawnX(0), baseLocalZ);
         // this._brotherZPositions.push(z);
         this._monsterBossCount++;
     }
@@ -1213,9 +1463,11 @@ export class MonsterCreate extends UnityUpComponent {
         //         }
         //     }
         // }
+        const baseLocalZ = this.getSpawnZ(this._nextSpawnZ);
+        const baseRawX = (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
         const rawZ = this._nextSpawnZ + (Math.random() - 0.5) * (this.layerGapZ + this.spawnRandomZ * 2);
         const z = this.getWaveRoleLimitedSpawnZ(rawZ, monster);
-        const rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + (this.posIndex - (this.rowCount - 1) / 2) * this.offX;
+        const rawX = (Math.random() - 0.5) * (this.offX + this.spawnRandomX * 2) + baseRawX;
         const worldZ = this.getSpawnWorldZ(z);
         const spawnX = this.getSpawnX(rawX);
         const x = this.shouldLimitMonsterXAtZ(worldZ) ? this.clampMonsterX(spawnX) : spawnX;
@@ -1235,9 +1487,7 @@ export class MonsterCreate extends UnityUpComponent {
         tempV3.z = this.stage_0;
 
         monster.move.pos = tempV3;
-        if (waveIndex >= 0) {
-            this._monsterWaveIndexMap.set(monster, waveIndex);
-        }
+        this.registerMonsterRebirthLayoutData(monster, waveIndex, this.getSpawnX(baseRawX), baseLocalZ);
         if (z > rawZ && z > this._nextSpawnZ) {
             this._nextSpawnZ = z;
         }
@@ -1391,42 +1641,25 @@ export class MonsterCreate extends UnityUpComponent {
     private TimeFlowsBackWard() {
         // this.isFlowIN = true;
         this._isRestoringWaveRolesAfterRebirth = true;
+        const rebirthLayout = this.buildRebirthMonsterLayout();
+        this.logRebirthFrontDistance(rebirthLayout);
         this.hideWaveRolesDuringRebirth();
         for (let i = 0; i < this._monsterList.length; i++) {
             const monster = this._monsterList[i];
-            monster.move.autoMove = false;
-            if (monster.attackTarget) {
-                const z = -26.3 + Math.abs(-26.3 - monster.node.z) + 10 + Math.random() * 5;
-                const resetX = this.getMonsterMoveTargetX(monster, -26.3);
-                tween(monster.node).to(0.05, { x: resetX, z: -26.3 }).to(0.35, { z: z }).call(() => {
-                    monster.move.autoMove = true;
-                    monster.move.speed = Math.max(0, this.monsterSpeed);
-                    monster.move.moveMod = MoveModEnum.PosMove;
-                    tempV3.set(monster.node.worldPosition);
-                    tempV3.x = this.getMonsterMoveTargetX(monster, tempV3.z);
-                    tempV3.z = this.stage_1;
-                    monster.attackTarget = null;
-                    monster.move.pos = tempV3;
-                }).start();
-            } else {
-
-                tween(monster.node).to(0.4, { z: monster.node.z + 15 }).call(() => {
-
-                    monster.move.autoMove = true;
-
-                }).start();
-
+            if (!monster || monster.isDie || !monster.node?.active || !monster.move) {
+                continue;
             }
+            monster.prepareForRebirthRetreat();
+            const targetPos = rebirthLayout.get(monster);
+            if (!targetPos) {
+                monster.move.autoMove = true;
+                continue;
+            }
+            tween(monster.node).to(0.4, { x: targetPos.x, z: targetPos.z }).start();
         }
         this.scheduleOnce(() => {
-            this.restoreWaveRolesAfterRebirth();
-            for (let i = 0; i < this._monsterList.length; i++) {
-                const m = this._monsterList[i];
-                if (m && !m.isDie && m.node?.active) {
-                    BulletMonsterCollisionManager.instance.unregisterTarget(m);
-                    BulletMonsterCollisionManager.instance.registerTarget(m);
-                }
-            }
+            this.restoreWaveRolesAfterRebirth(rebirthLayout);
+            this.resumeMonstersAfterRebirth();
         }, 0.45);
         // this.scheduleOnce(() => {
         //     this.isFlowIN = false;
@@ -1446,7 +1679,7 @@ export class MonsterCreate extends UnityUpComponent {
         }
     }
 
-    private restoreWaveRolesAfterRebirth() {
+    private restoreWaveRolesAfterRebirth(rebirthLayout?: WeakMap<MonsterBattleTaerget, Vec3>) {
         if (!this._waveRoleNodes.length) {
             this._isRestoringWaveRolesAfterRebirth = false;
             return;
@@ -1465,18 +1698,47 @@ export class MonsterCreate extends UnityUpComponent {
             // 所以活着的 Role 也需要重新注册碰撞
             BulletMonsterCollisionManager.instance.registerTarget(role);
             role.node.active = true;
-            const frontMonster = this.getFrontMonsterByWave(i);
+            const frontMonster = rebirthLayout
+                ? this.getFrontMonsterByWaveLayout(i, rebirthLayout)
+                : this.getFrontMonsterByWave(i);
             if (!frontMonster || !frontMonster.node) {
                 continue;
             }
             const roleHalfZ = this.getWaveRoleCollisionHalfZ(role);
             const monsterHalfZ = this.getMonsterCollisionHalfZ(frontMonster);
-            const monsterCenterZ = frontMonster.getCollisionWorldPosition(tempV3).z;
+            const monsterCenterZ = rebirthLayout
+                ? this.getCollisionCenterWorldZByLayout(frontMonster, rebirthLayout)
+                : frontMonster.getCollisionWorldPosition(tempV3).z;
             const targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGap - roleHalfZ;
             this.setCollisionCenterWorldZ(role, targetCenterZ);
             this.clampMonstersBehindWaveRole(i);
         }
         this._isRestoringWaveRolesAfterRebirth = false;
+    }
+
+    private resumeMonstersAfterRebirth() {
+        for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+            if (!monster || monster.isDie || !monster.node?.active || !monster.move) {
+                continue;
+            }
+
+            monster.move.autoMove = true;
+            monster.move.speed = Math.max(0, this.monsterSpeed);
+            monster.attackTarget = null;
+            if (monster.monsterType === MonsterType.ZombieBrother && this.tryAssignMonsterAttackTarget(monster)) {
+                BulletMonsterCollisionManager.instance.unregisterTarget(monster);
+                BulletMonsterCollisionManager.instance.registerTarget(monster);
+                continue;
+            }
+            monster.move.moveMod = MoveModEnum.PosMove;
+            tempV3.set(monster.node.worldPosition);
+            tempV3.x = this.getMonsterMoveTargetX(monster, tempV3.z);
+            tempV3.z = this.stage_1;
+            monster.move.pos = tempV3;
+            BulletMonsterCollisionManager.instance.unregisterTarget(monster);
+            BulletMonsterCollisionManager.instance.registerTarget(monster);
+        }
     }
     private skillXRMonster(x: number, r: number, delay: number = 0) {
 

@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, AnimationClip, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, AnimationClip, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -216,7 +216,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       }), _dec13 = property({
         type: CCFloat,
-        displayName: '小怪横向锁定范围',
+        displayName: '小怪与玩家最小Z中心距',
 
         visible() {
           return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
@@ -226,7 +226,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       }), _dec14 = property({
         type: CCFloat,
-        displayName: '小怪站位Z容差',
+        displayName: '小怪横向锁定范围',
 
         visible() {
           return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
@@ -235,6 +235,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
       }), _dec15 = property({
+        type: CCFloat,
+        displayName: '小怪站位Z容差',
+
+        visible() {
+          return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        }
+
+      }), _dec16 = property({
         type: AnimationClip,
         displayName: '小怪死亡强制替换动画',
 
@@ -245,7 +255,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         },
 
         tooltip: '填入后，运行时会强制替换小怪动画列表中的 die 槽位。用于绕过直接改 SkeletalAnimation clips 后被编辑器还原的问题；Boss不受影响。'
-      }), _dec16 = property({
+      }), _dec17 = property({
         type: CCFloat,
         displayName: '小怪死亡抛飞高度',
 
@@ -256,7 +266,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         },
 
         tooltip: '玩家攻击打死小怪后，代码额外模拟的抛物线最高高度。0表示不向上抛飞；Boss不受影响。'
-      }), _dec17 = property({
+      }), _dec18 = property({
         type: CCFloat,
         displayName: '小怪死亡抛飞Z距离',
 
@@ -267,7 +277,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         },
 
         tooltip: '玩家攻击打死小怪后，死亡抛飞在Z方向移动的距离。Boss不受影响。'
-      }), _dec18 = property({
+      }), _dec19 = property({
         type: CCFloat,
         displayName: '小怪死亡抛飞时间比例',
 
@@ -320,17 +330,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "smallMonsterAttackOffsetZ", _descriptor11, this);
 
-          _initializerDefineProperty(this, "smallMonsterAttackLockOffsetX", _descriptor12, this);
+          _initializerDefineProperty(this, "smallMonsterAttackMinCenterGapZ", _descriptor12, this);
 
-          _initializerDefineProperty(this, "smallMonsterAttackLockOffsetZ", _descriptor13, this);
+          _initializerDefineProperty(this, "smallMonsterAttackLockOffsetX", _descriptor13, this);
 
-          _initializerDefineProperty(this, "smallMonsterDieOverrideClip", _descriptor14, this);
+          _initializerDefineProperty(this, "smallMonsterAttackLockOffsetZ", _descriptor14, this);
 
-          _initializerDefineProperty(this, "smallMonsterDeathThrowHeight", _descriptor15, this);
+          _initializerDefineProperty(this, "smallMonsterDieOverrideClip", _descriptor15, this);
 
-          _initializerDefineProperty(this, "smallMonsterDeathThrowDistanceZ", _descriptor16, this);
+          _initializerDefineProperty(this, "smallMonsterDeathThrowHeight", _descriptor16, this);
 
-          _initializerDefineProperty(this, "smallMonsterDeathThrowDurationRate", _descriptor17, this);
+          _initializerDefineProperty(this, "smallMonsterDeathThrowDistanceZ", _descriptor17, this);
+
+          _initializerDefineProperty(this, "smallMonsterDeathThrowDurationRate", _descriptor18, this);
 
           // public dieTimeScale: number = 1;
           this.isDieD = true;
@@ -545,13 +557,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          if (this.attackTarget && !this.ensureAttackTargetValid()) {
+            this.move.autoMove = true;
+          }
+
+          this.refreshSmallMonsterAttackTargetIfNeeded();
+
           if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
           }), MonsterType) : MonsterType).ZombieBrother) {
-            if (!this.ensureAttackTargetValid()) {
-              this.move.autoMove = true;
-            }
-
             this.updateBossMoveTarget();
             this.updateBossFacing(dt);
           }
@@ -657,7 +671,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return false;
           }
 
-          const nextRole = player.attackTarget;
+          const nextRole = player.getMonsterAttackTarget(this.node.worldPosition);
 
           if (!(nextRole != null && (_nextRole$node = nextRole.node) != null && _nextRole$node.activeInHierarchy)) {
             this.clearAttackTarget();
@@ -671,15 +685,72 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         clearAttackTarget() {
           this.attackTarget = null;
-          this.move.target = null;
+
+          if (this.move) {
+            this.move.target = null;
+          }
+
           this.attackIn = false;
           this.attackTimer = 0;
         }
 
-        isAttackTargetInRange() {
-          var _this$attackTarget2;
+        prepareForRebirthRetreat() {
+          var _this$fbx;
 
-          if (!((_this$attackTarget2 = this.attackTarget) != null && _this$attackTarget2.activeInHierarchy)) {
+          this.clearAttackTarget();
+
+          if (this.move) {
+            this.move.autoMove = false;
+            this.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
+              error: Error()
+            }), MoveModEnum) : MoveModEnum).PosMove;
+          }
+
+          this.node.setRotationFromEuler(0, 180, 0);
+          (_this$fbx = this.fbx) == null || (_this$fbx = _this$fbx.node) == null || _this$fbx.setRotationFromEuler(0, 0, 0);
+
+          if (this.fbx) {
+            this.playRunAnimation();
+          }
+        }
+
+        refreshSmallMonsterAttackTargetIfNeeded() {
+          var _this$attackTarget2, _nextRole$node2;
+
+          if (this.monsterType === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother || this.attackIn || !((_this$attackTarget2 = this.attackTarget) != null && _this$attackTarget2.activeInHierarchy)) {
+            return;
+          }
+
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!player || player.isDie || player.roleList.length <= 0) {
+            this.clearAttackTarget();
+            return;
+          }
+
+          const nextRole = player.getMonsterAttackTarget(this.node.worldPosition);
+
+          if (!(nextRole != null && (_nextRole$node2 = nextRole.node) != null && _nextRole$node2.activeInHierarchy)) {
+            this.clearAttackTarget();
+            return;
+          }
+
+          if (nextRole.node === this.attackTarget) {
+            return;
+          }
+
+          this.attackTarget = nextRole.node;
+          this.move.target = this.attackTarget;
+        }
+
+        isAttackTargetInRange() {
+          var _this$attackTarget3;
+
+          if (!((_this$attackTarget3 = this.attackTarget) != null && _this$attackTarget3.activeInHierarchy)) {
             return false;
           }
 
@@ -693,9 +764,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getAttackRole() {
-          var _this$attackTarget3;
+          var _this$attackTarget4;
 
-          const role = (_this$attackTarget3 = this.attackTarget) == null ? void 0 : _this$attackTarget3.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+          const role = (_this$attackTarget4 = this.attackTarget) == null ? void 0 : _this$attackTarget4.getComponent(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
             error: Error()
           }), Role) : Role);
 
@@ -788,7 +859,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         getSmallMonsterDesiredAttackPosition(out) {
           const targetPos = this.attackTarget.worldPosition;
           const attackRearZ = this.getPlayerAttackRearWorldZ(targetPos.z);
-          out.set(targetPos.x, this.node.worldPosition.y, attackRearZ + Math.abs(this.smallMonsterAttackOffsetZ));
+          const desiredAttackZ = attackRearZ + Math.abs(this.smallMonsterAttackOffsetZ);
+          const noOverlapZ = this.getPlayerBodyFrontWorldZ(targetPos.z) + Math.max(0, this.smallMonsterAttackMinCenterGapZ);
+          out.set(targetPos.x, this.node.worldPosition.y, Math.max(desiredAttackZ, noOverlapZ));
           return out;
         }
 
@@ -824,10 +897,42 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return Number.isFinite(rearZ) ? rearZ : defaultZ;
         }
 
-        isSmallMonsterInAttackPosition() {
-          var _this$attackTarget4;
+        getPlayerBodyFrontWorldZ(defaultZ) {
+          var _player$roleList2;
 
-          if (!((_this$attackTarget4 = this.attackTarget) != null && _this$attackTarget4.activeInHierarchy)) {
+          const player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!player || player.isDie || !((_player$roleList2 = player.roleList) != null && _player$roleList2.length)) {
+            return defaultZ;
+          }
+
+          let frontZ = Number.NEGATIVE_INFINITY;
+
+          for (let i = 0; i < player.roleList.length; i++) {
+            var _role$node2;
+
+            const role = player.roleList[i];
+
+            if (!(role != null && (_role$node2 = role.node) != null && _role$node2.activeInHierarchy) || role.attackIN || role.hp <= 0) {
+              continue;
+            }
+
+            const roleZ = role.node.worldPosition.z;
+
+            if (roleZ > frontZ) {
+              frontZ = roleZ;
+            }
+          }
+
+          return Number.isFinite(frontZ) ? frontZ : defaultZ;
+        }
+
+        isSmallMonsterInAttackPosition() {
+          var _this$attackTarget5;
+
+          if (!((_this$attackTarget5 = this.attackTarget) != null && _this$attackTarget5.activeInHierarchy)) {
             return false;
           }
 
@@ -969,42 +1074,49 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 1.2;
         }
-      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterAttackLockOffsetX", [_dec13], {
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterAttackMinCenterGapZ", [_dec13], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.85;
+        }
+      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterAttackLockOffsetX", [_dec14], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.55;
         }
-      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterAttackLockOffsetZ", [_dec14], {
+      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterAttackLockOffsetZ", [_dec15], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.22;
         }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDieOverrideClip", [_dec15], {
+      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDieOverrideClip", [_dec16], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return null;
         }
-      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowHeight", [_dec16], {
+      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowHeight", [_dec17], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.8;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowDistanceZ", [_dec17], {
+      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowDistanceZ", [_dec18], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 6;
         }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowDurationRate", [_dec18], {
+      }), _descriptor18 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowDurationRate", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,

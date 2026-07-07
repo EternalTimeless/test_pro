@@ -109,6 +109,15 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
     @property({
         type: CCFloat,
+        displayName: '小怪与玩家最小Z中心距',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        }
+    })
+    public smallMonsterAttackMinCenterGapZ: number = 0.85;
+
+    @property({
+        type: CCFloat,
         displayName: '小怪横向锁定范围',
         visible(this: MonsterBattleTaerget) {
             return this.monsterType != MonsterType.ZombieBrother;
@@ -332,10 +341,13 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return;
         }
 
+        if (this.attackTarget && !this.ensureAttackTargetValid()) {
+            this.move.autoMove = true;
+        }
+
+        this.refreshSmallMonsterAttackTargetIfNeeded();
+
         if (this.monsterType == MonsterType.ZombieBrother) {
-            if (!this.ensureAttackTargetValid()) {
-                this.move.autoMove = true;
-            }
             this.updateBossMoveTarget();
             this.updateBossFacing(dt);
         }
@@ -417,7 +429,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return false;
         }
 
-        const nextRole = player.attackTarget;
+        const nextRole = player.getMonsterAttackTarget(this.node.worldPosition);
         if (!nextRole?.node?.activeInHierarchy) {
             this.clearAttackTarget();
             return false;
@@ -430,9 +442,49 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
     private clearAttackTarget(): void {
         this.attackTarget = null;
-        this.move.target = null;
+        if (this.move) {
+            this.move.target = null;
+        }
         this.attackIn = false;
         this.attackTimer = 0;
+    }
+
+    public prepareForRebirthRetreat(): void {
+        this.clearAttackTarget();
+        if (this.move) {
+            this.move.autoMove = false;
+            this.move.moveMod = MoveModEnum.PosMove;
+        }
+        this.node.setRotationFromEuler(0, 180, 0);
+        this.fbx?.node?.setRotationFromEuler(0, 0, 0);
+        if (this.fbx) {
+            this.playRunAnimation();
+        }
+    }
+
+    private refreshSmallMonsterAttackTargetIfNeeded(): void {
+        if (this.monsterType === MonsterType.ZombieBrother || this.attackIn || !this.attackTarget?.activeInHierarchy) {
+            return;
+        }
+
+        const player = Player.instance;
+        if (!player || player.isDie || player.roleList.length <= 0) {
+            this.clearAttackTarget();
+            return;
+        }
+
+        const nextRole = player.getMonsterAttackTarget(this.node.worldPosition);
+        if (!nextRole?.node?.activeInHierarchy) {
+            this.clearAttackTarget();
+            return;
+        }
+
+        if (nextRole.node === this.attackTarget) {
+            return;
+        }
+
+        this.attackTarget = nextRole.node;
+        this.move.target = this.attackTarget;
     }
 
     private isAttackTargetInRange(): boolean {
@@ -518,7 +570,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     private getSmallMonsterDesiredAttackPosition(out: Vec3): Vec3 {
         const targetPos = this.attackTarget.worldPosition;
         const attackRearZ = this.getPlayerAttackRearWorldZ(targetPos.z);
-        out.set(targetPos.x, this.node.worldPosition.y, attackRearZ + Math.abs(this.smallMonsterAttackOffsetZ));
+        const desiredAttackZ = attackRearZ + Math.abs(this.smallMonsterAttackOffsetZ);
+        const noOverlapZ = this.getPlayerBodyFrontWorldZ(targetPos.z) + Math.max(0, this.smallMonsterAttackMinCenterGapZ);
+        out.set(targetPos.x, this.node.worldPosition.y, Math.max(desiredAttackZ, noOverlapZ));
         return out;
     }
 
@@ -541,6 +595,27 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         }
 
         return Number.isFinite(rearZ) ? rearZ : defaultZ;
+    }
+
+    private getPlayerBodyFrontWorldZ(defaultZ: number): number {
+        const player = Player.instance;
+        if (!player || player.isDie || !player.roleList?.length) {
+            return defaultZ;
+        }
+
+        let frontZ = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < player.roleList.length; i++) {
+            const role = player.roleList[i];
+            if (!role?.node?.activeInHierarchy || role.attackIN || role.hp <= 0) {
+                continue;
+            }
+            const roleZ = role.node.worldPosition.z;
+            if (roleZ > frontZ) {
+                frontZ = roleZ;
+            }
+        }
+
+        return Number.isFinite(frontZ) ? frontZ : defaultZ;
     }
 
     private isSmallMonsterInAttackPosition(): boolean {

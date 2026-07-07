@@ -1329,6 +1329,77 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return role;
         }
 
+        getMonsterAttackTarget(monsterWorldPos) {
+          var _monsterWorldPos$x;
+
+          if (this.isDie || !this.roleList.length) {
+            return null;
+          }
+
+          var attackRearZ = Number.POSITIVE_INFINITY;
+
+          for (var i = 0; i < this.roleList.length; i++) {
+            var role = this.roleList[i];
+
+            if (!this.isValidMonsterTargetRole(role)) {
+              continue;
+            }
+
+            var roleAttackZ = this.getRoleAttackWorldZ(role);
+
+            if (roleAttackZ < attackRearZ) {
+              attackRearZ = roleAttackZ;
+            }
+          }
+
+          if (!Number.isFinite(attackRearZ)) {
+            return null;
+          }
+
+          var bestRole = null;
+          var bestXDistance = Number.POSITIVE_INFINITY;
+          var bestLayer = -1;
+          var zTolerance = Math.max(0.05, this.roleR * 0.35);
+          var targetX = (_monsterWorldPos$x = monsterWorldPos == null ? void 0 : monsterWorldPos.x) != null ? _monsterWorldPos$x : this.node.worldPosition.x;
+
+          for (var _i = 0; _i < this.roleList.length; _i++) {
+            var _role = this.roleList[_i];
+
+            if (!this.isValidMonsterTargetRole(_role)) {
+              continue;
+            }
+
+            var _roleAttackZ = this.getRoleAttackWorldZ(_role);
+
+            if (Math.abs(_roleAttackZ - attackRearZ) > zTolerance) {
+              continue;
+            }
+
+            var xDistance = Math.abs(_role.node.worldPosition.x - targetX);
+            var layer = this.getRoleLayer(_i);
+
+            if (xDistance < bestXDistance || Math.abs(xDistance - bestXDistance) <= 0.001 && layer > bestLayer) {
+              bestRole = _role;
+              bestXDistance = xDistance;
+              bestLayer = layer;
+            }
+          }
+
+          return bestRole;
+        }
+
+        isValidMonsterTargetRole(role) {
+          var _role$node;
+
+          return !!(role != null && (_role$node = role.node) != null && _role$node.activeInHierarchy) && !role.attackIN && role.hp > 0;
+        }
+
+        getRoleAttackWorldZ(role) {
+          var _role$shoot;
+
+          return role != null && (_role$shoot = role.shoot) != null && _role$shoot.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
+        }
+
         upPos() {
           this.applyRoleLayout(false);
         }
@@ -1607,13 +1678,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var minIdx = -1;
             var minDist = 0;
 
-            for (var _i = 0; _i < total; _i++) {
-              if (used[_i]) continue;
-              if (dists[_i] === Number.MAX_VALUE) continue;
+            for (var _i2 = 0; _i2 < total; _i2++) {
+              if (used[_i2]) continue;
+              if (dists[_i2] === Number.MAX_VALUE) continue;
 
-              if (minIdx < 0 || dists[_i] < minDist) {
-                minIdx = _i;
-                minDist = dists[_i];
+              if (minIdx < 0 || dists[_i2] < minDist) {
+                minIdx = _i2;
+                minDist = dists[_i2];
               }
             }
 
@@ -1626,8 +1697,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           } // 从后往前删除，保证索引不错位
 
 
-          for (var _i2 = 0; _i2 < picked.length; _i2++) {
-            var role = list[picked[_i2]];
+          for (var _i3 = 0; _i3 < picked.length; _i3++) {
+            var role = list[picked[_i3]];
             role.hp -= 3;
             this.roleDie(role); // role.node.active = false;
             // PoolManager.instance.setPool(PoolEnum.role + this.roleType, role);
@@ -1637,8 +1708,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return b - a;
           });
 
-          for (var _i3 = 0; _i3 < picked.length; _i3++) {
-            list.splice(picked[_i3], 1);
+          for (var _i4 = 0; _i4 < picked.length; _i4++) {
+            list.splice(picked[_i4], 1);
           }
 
           this.requestShrinkAfterRoleLoss();
