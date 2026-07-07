@@ -13007,7 +13007,9 @@
       0,
       5
     ],
-    "waveRoleMonsterGap": 0.4,
+    "waveRoleMonsterGap": 0.5,
+    "waveRoleMonsterHalfZMin": 0.8,
+    "waveRoleBossHalfZMin": 2,
     "rebirthMonsterFrontRetreatZ": -10,
     "rebirthMonsterWaveExtraGapZ": 0.5,
     "rebirthMonsterRandomX": 0.15,

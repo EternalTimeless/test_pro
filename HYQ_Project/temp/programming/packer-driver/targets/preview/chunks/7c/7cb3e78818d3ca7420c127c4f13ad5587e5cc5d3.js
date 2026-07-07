@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16", "__unresolved_17", "__unresolved_18"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, director, instantiate, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, Role, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, BulletMonsterCollisionManager, PropLalianGate, FbxManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _dec12, _dec13, _class4, _class5, _descriptor11, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _class7, _class8, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, director, instantiate, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, Role, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, BulletMonsterCollisionManager, PropLalianGate, FbxManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _dec12, _dec13, _class4, _class5, _descriptor11, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _class7, _class8, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -374,17 +374,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '创建怪物和初始化油桶时，油桶碰撞盒与怪物碰撞盒之间额外保留的 Z 轴距离。数值越大越不容易视觉穿模。'
       }), _dec34 = property({
         type: CCFloat,
-        displayName: '再来一次前排后退补偿'
+        displayName: '油桶怪物半深下限'
       }), _dec35 = property({
         type: CCFloat,
-        displayName: '再来一次波次追加间距'
+        displayName: '油桶Boss半深下限'
       }), _dec36 = property({
         type: CCFloat,
-        displayName: '再来一次站位随机X'
+        displayName: '再来一次前排后退补偿'
       }), _dec37 = property({
         type: CCFloat,
-        displayName: '再来一次站位随机Z'
+        displayName: '再来一次波次追加间距'
       }), _dec38 = property({
+        type: CCFloat,
+        displayName: '再来一次站位随机X'
+      }), _dec39 = property({
+        type: CCFloat,
+        displayName: '再来一次站位随机Z'
+      }), _dec40 = property({
         type: CCBoolean,
         displayName: '再来一次距离日志'
       }), _dec14(_class7 = (_class8 = (_class9 = class MonsterCreate extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
@@ -463,15 +469,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "waveRoleMonsterGap", _descriptor30, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterFrontRetreatZ", _descriptor31, this);
+          _initializerDefineProperty(this, "waveRoleMonsterHalfZMin", _descriptor31, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterWaveExtraGapZ", _descriptor32, this);
+          _initializerDefineProperty(this, "waveRoleBossHalfZMin", _descriptor32, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterRandomX", _descriptor33, this);
+          _initializerDefineProperty(this, "rebirthMonsterFrontRetreatZ", _descriptor33, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterRandomZ", _descriptor34, this);
+          _initializerDefineProperty(this, "rebirthMonsterWaveExtraGapZ", _descriptor34, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterDistanceLog", _descriptor35, this);
+          _initializerDefineProperty(this, "rebirthMonsterRandomX", _descriptor35, this);
+
+          _initializerDefineProperty(this, "rebirthMonsterRandomZ", _descriptor36, this);
+
+          _initializerDefineProperty(this, "rebirthMonsterDistanceLog", _descriptor37, this);
 
           this.waveRolePlayerHalfX = 0.35;
           this.waveRolePlayerHalfZ = 0.35;
@@ -1936,7 +1946,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         getMonsterCollisionHalfZ(monster) {
           var _monster$collisionHal2;
 
-          return Math.max(0, (_monster$collisionHal2 = monster == null ? void 0 : monster.collisionHalfZ) != null ? _monster$collisionHal2 : 0);
+          var minHalfZ = (monster == null ? void 0 : monster.monsterType) === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother ? this.waveRoleBossHalfZMin : this.waveRoleMonsterHalfZMin;
+          return Math.max(0, minHalfZ, (_monster$collisionHal2 = monster == null ? void 0 : monster.collisionHalfZ) != null ? _monster$collisionHal2 : 0);
         }
 
         getWaveIndexByMonsterZ(z) {
@@ -2752,35 +2765,49 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 0.02;
         }
-      }), _descriptor31 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterFrontRetreatZ", [_dec34], {
+      }), _descriptor31 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleMonsterHalfZMin", [_dec34], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.8;
+        }
+      }), _descriptor32 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleBossHalfZMin", [_dec35], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 2;
+        }
+      }), _descriptor33 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterFrontRetreatZ", [_dec36], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 2.5;
         }
-      }), _descriptor32 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterWaveExtraGapZ", [_dec35], {
+      }), _descriptor34 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterWaveExtraGapZ", [_dec37], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor33 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterRandomX", [_dec36], {
+      }), _descriptor35 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterRandomX", [_dec38], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.15;
         }
-      }), _descriptor34 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterRandomZ", [_dec37], {
+      }), _descriptor36 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterRandomZ", [_dec39], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.25;
         }
-      }), _descriptor35 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterDistanceLog", [_dec38], {
+      }), _descriptor37 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterDistanceLog", [_dec40], {
         configurable: true,
         enumerable: true,
         writable: true,

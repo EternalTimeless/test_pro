@@ -173,6 +173,10 @@ export class MonsterCreate extends UnityUpComponent {
     private _monsterRebirthOrderIndex: number = 0;
     @property({ type: CCFloat, displayName: '油桶怪物预留间距', tooltip: '创建怪物和初始化油桶时，油桶碰撞盒与怪物碰撞盒之间额外保留的 Z 轴距离。数值越大越不容易视觉穿模。' })
     public waveRoleMonsterGap: number = 0.02;
+    @property({ type: CCFloat, displayName: '油桶怪物半深下限' })
+    public waveRoleMonsterHalfZMin: number = 0.8;
+    @property({ type: CCFloat, displayName: '油桶Boss半深下限' })
+    public waveRoleBossHalfZMin: number = 2;
     @property({ type: CCFloat, displayName: '再来一次前排后退补偿' })
     public rebirthMonsterFrontRetreatZ: number = 2.5;
     @property({ type: CCFloat, displayName: '再来一次波次追加间距' })
@@ -1347,7 +1351,10 @@ export class MonsterCreate extends UnityUpComponent {
     }
 
     private getMonsterCollisionHalfZ(monster: MonsterBattleTaerget) {
-        return Math.max(0, monster?.collisionHalfZ ?? 0);
+        const minHalfZ = monster?.monsterType === MonsterType.ZombieBrother
+            ? this.waveRoleBossHalfZMin
+            : this.waveRoleMonsterHalfZMin;
+        return Math.max(0, minHalfZ, monster?.collisionHalfZ ?? 0);
     }
 
     private getWaveIndexByMonsterZ(z: number) {
