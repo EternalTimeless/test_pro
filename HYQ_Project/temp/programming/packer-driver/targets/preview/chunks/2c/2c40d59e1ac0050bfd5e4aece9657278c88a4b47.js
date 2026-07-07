@@ -559,8 +559,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             this.updateBossMoveTarget();
             this.updateBossFacing(dt);
-          } else {
-            this.clampSmallMonsterAttackZ();
           }
 
           if (this.attackTarget) {
@@ -577,7 +575,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             } else {
               this.attackIn = false;
               this.attackTimer = 0;
-              this.move.target = this.attackTarget;
+
+              if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+                error: Error()
+              }), MonsterType) : MonsterType).ZombieBrother) {
+                this.move.target = this.attackTarget;
+              } else {
+                this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
+                this.move.moveMod = (_crd && MoveModEnum === void 0 ? (_reportPossibleCrUseOfMoveModEnum({
+                  error: Error()
+                }), MoveModEnum) : MoveModEnum).PosMove;
+                this.move.pos = this.smallMonsterDesiredAttackPos;
+              }
+
               this.move.autoMove = true;
             }
           }
@@ -780,27 +790,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return Math.abs(selfPos.x - this.bossDesiredAttackPos.x) <= this.bossAttackLockOffsetX && Math.abs(selfPos.z - this.bossDesiredAttackPos.z) <= this.bossAttackLockOffsetZ;
         }
 
-        clampSmallMonsterAttackZ() {
-          if (!this.attackTarget) {
-            return;
-          }
-
-          this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
-          var desiredZ = this.smallMonsterDesiredAttackPos.z;
-
-          if (this.node.worldPosition.z < desiredZ) {
-            this.node.setWorldPosition(this.node.worldPosition.x, this.node.worldPosition.y, desiredZ);
-          }
-        }
-
         getSmallMonsterDesiredAttackPosition(out) {
           var targetPos = this.attackTarget.worldPosition;
-          var attackFrontZ = this.getPlayerAttackFrontWorldZ(targetPos.z);
-          out.set(targetPos.x, this.node.worldPosition.y, attackFrontZ + Math.abs(this.smallMonsterAttackOffsetZ));
+          var attackRearZ = this.getPlayerAttackRearWorldZ(targetPos.z);
+          out.set(targetPos.x, this.node.worldPosition.y, attackRearZ + Math.abs(this.smallMonsterAttackOffsetZ));
           return out;
         }
 
-        getPlayerAttackFrontWorldZ(defaultZ) {
+        getPlayerAttackRearWorldZ(defaultZ) {
           var _player$roleList;
 
           var player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
@@ -811,7 +808,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return defaultZ;
           }
 
-          var frontZ = Number.NEGATIVE_INFINITY;
+          var rearZ = Number.POSITIVE_INFINITY;
 
           for (var i = 0; i < player.roleList.length; i++) {
             var _role$node, _role$shoot;
@@ -824,12 +821,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             var roleAttackZ = (_role$shoot = role.shoot) != null && _role$shoot.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
 
-            if (roleAttackZ > frontZ) {
-              frontZ = roleAttackZ;
+            if (roleAttackZ < rearZ) {
+              rearZ = roleAttackZ;
             }
           }
 
-          return Number.isFinite(frontZ) ? frontZ : defaultZ;
+          return Number.isFinite(rearZ) ? rearZ : defaultZ;
         }
 
         isSmallMonsterInAttackPosition() {

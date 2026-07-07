@@ -1349,10 +1349,16 @@ export class MonsterCreate extends UnityUpComponent {
         if (!monster.move || monster.move.moveMod != MoveModEnum.PosMove) {
             return;
         }
+        if (this.isTrackingPlayerTarget(monster)) {
+            return;
+        }
         monster.move.pos.x = this.getMonsterMoveTargetX(monster, monster.node.worldPositionZ);
     }
 
     private limitMonsterToMiddleLane(monster: MonsterBattleTaerget) {
+        if (this.isTrackingPlayerTarget(monster)) {
+            return;
+        }
         if (!this.shouldLimitMonsterXAtZ(monster.node.worldPositionZ)) {
             return;
         }
@@ -1360,6 +1366,10 @@ export class MonsterCreate extends UnityUpComponent {
         if (monster.node.x != x) {
             monster.node.x = x;
         }
+    }
+
+    private isTrackingPlayerTarget(monster: MonsterBattleTaerget): boolean {
+        return !!monster?.attackTarget;
     }
 
     private getMonster(type: MonsterType = MonsterType.ZombieBaby_0) {

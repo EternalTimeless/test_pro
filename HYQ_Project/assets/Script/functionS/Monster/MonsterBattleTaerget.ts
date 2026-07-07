@@ -338,8 +338,6 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             }
             this.updateBossMoveTarget();
             this.updateBossFacing(dt);
-        } else {
-            this.clampSmallMonsterAttackZ();
         }
 
         if (this.attackTarget) {
@@ -352,7 +350,13 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             } else {
                 this.attackIn = false;
                 this.attackTimer = 0;
-                this.move.target = this.attackTarget;
+                if (this.monsterType == MonsterType.ZombieBrother) {
+                    this.move.target = this.attackTarget;
+                } else {
+                    this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
+                    this.move.moveMod = MoveModEnum.PosMove;
+                    this.move.pos = this.smallMonsterDesiredAttackPos;
+                }
                 this.move.autoMove = true;
             }
         }
@@ -511,44 +515,32 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             && Math.abs(selfPos.z - this.bossDesiredAttackPos.z) <= this.bossAttackLockOffsetZ;
     }
 
-    private clampSmallMonsterAttackZ(): void {
-        if (!this.attackTarget) {
-            return;
-        }
-
-        this.getSmallMonsterDesiredAttackPosition(this.smallMonsterDesiredAttackPos);
-        const desiredZ = this.smallMonsterDesiredAttackPos.z;
-        if (this.node.worldPosition.z < desiredZ) {
-            this.node.setWorldPosition(this.node.worldPosition.x, this.node.worldPosition.y, desiredZ);
-        }
-    }
-
     private getSmallMonsterDesiredAttackPosition(out: Vec3): Vec3 {
         const targetPos = this.attackTarget.worldPosition;
-        const attackFrontZ = this.getPlayerAttackFrontWorldZ(targetPos.z);
-        out.set(targetPos.x, this.node.worldPosition.y, attackFrontZ + Math.abs(this.smallMonsterAttackOffsetZ));
+        const attackRearZ = this.getPlayerAttackRearWorldZ(targetPos.z);
+        out.set(targetPos.x, this.node.worldPosition.y, attackRearZ + Math.abs(this.smallMonsterAttackOffsetZ));
         return out;
     }
 
-    private getPlayerAttackFrontWorldZ(defaultZ: number): number {
+    private getPlayerAttackRearWorldZ(defaultZ: number): number {
         const player = Player.instance;
         if (!player || player.isDie || !player.roleList?.length) {
             return defaultZ;
         }
 
-        let frontZ = Number.NEGATIVE_INFINITY;
+        let rearZ = Number.POSITIVE_INFINITY;
         for (let i = 0; i < player.roleList.length; i++) {
             const role = player.roleList[i];
             if (!role?.node?.activeInHierarchy || role.attackIN) {
                 continue;
             }
             const roleAttackZ = role.shoot?.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
-            if (roleAttackZ > frontZ) {
-                frontZ = roleAttackZ;
+            if (roleAttackZ < rearZ) {
+                rearZ = roleAttackZ;
             }
         }
 
-        return Number.isFinite(frontZ) ? frontZ : defaultZ;
+        return Number.isFinite(rearZ) ? rearZ : defaultZ;
     }
 
     private isSmallMonsterInAttackPosition(): boolean {

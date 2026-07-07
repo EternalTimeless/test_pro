@@ -1907,10 +1907,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          if (this.isTrackingPlayerTarget(monster)) {
+            return;
+          }
+
           monster.move.pos.x = this.getMonsterMoveTargetX(monster, monster.node.worldPositionZ);
         }
 
         limitMonsterToMiddleLane(monster) {
+          if (this.isTrackingPlayerTarget(monster)) {
+            return;
+          }
+
           if (!this.shouldLimitMonsterXAtZ(monster.node.worldPositionZ)) {
             return;
           }
@@ -1920,6 +1928,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (monster.node.x != x) {
             monster.node.x = x;
           }
+        }
+
+        isTrackingPlayerTarget(monster) {
+          return !!(monster != null && monster.attackTarget);
         }
 
         getMonster(type) {
