@@ -135,6 +135,36 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     })
     public smallMonsterDieOverrideClip: AnimationClip = null;
 
+    @property({
+        type: CCFloat,
+        displayName: '小怪死亡抛飞高度',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        },
+        tooltip: '玩家攻击打死小怪后，代码额外模拟的抛物线最高高度。0表示不向上抛飞；Boss不受影响。'
+    })
+    public smallMonsterDeathThrowHeight: number = 0.8;
+
+    @property({
+        type: CCFloat,
+        displayName: '小怪死亡抛飞Z距离',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        },
+        tooltip: '玩家攻击打死小怪后，死亡抛飞在Z方向移动的距离。Boss不受影响。'
+    })
+    public smallMonsterDeathThrowDistanceZ: number = 6;
+
+    @property({
+        type: CCFloat,
+        displayName: '小怪死亡抛飞时间比例',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        },
+        tooltip: '抛飞持续时间占死亡动画总时长的比例，建议0到1。Boss不受影响。'
+    })
+    public smallMonsterDeathThrowDurationRate: number = 0.5;
+
     protected onLoad(): void {
         super.onLoad();
         this.applyNormalDeathAnimationSetup();
@@ -193,9 +223,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             const t = this.fbx.setAnimation(MonsterAnimEnum.die, true);
 
             endtime = t.duration;
-            const time = endtime * 0.8;
-            const z = this.node.z + 6;
-            tween(this.node).to(time * 0.5, { z: z }).start();
+            this.playSmallMonsterDeathThrow(endtime);
 
         }
 
@@ -243,6 +271,43 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         if (this.smallMonsterDieOverrideClip) {
             this.fbx.replaceAnimationClip(MonsterAnimEnum.die, this.smallMonsterDieOverrideClip);
         }
+    }
+
+    private playSmallMonsterDeathThrow(totalDuration: number): void {
+        if (this.monsterType == MonsterType.ZombieBrother) {
+            return;
+        }
+
+        const rate = Math.max(0, Math.min(1, this.smallMonsterDeathThrowDurationRate));
+        const duration = Math.max(0, totalDuration * rate);
+        const height = Math.max(0, this.smallMonsterDeathThrowHeight);
+        const distanceZ = this.smallMonsterDeathThrowDistanceZ;
+        if (duration <= 0 || (height <= 0 && distanceZ == 0)) {
+            return;
+        }
+
+        const startX = this.node.x;
+        const startY = this.node.y;
+        const startZ = this.node.z;
+        const state = { progress: 0 };
+
+        tween(state)
+            .to(duration, { progress: 1 }, {
+                onUpdate: (target: { progress: number }) => {
+                    if (!this.node?.isValid) {
+                        return;
+                    }
+                    const progress = Math.max(0, Math.min(1, target.progress));
+                    const parabolaY = 4 * height * progress * (1 - progress);
+                    this.node.setPosition(startX, startY + parabolaY, startZ + distanceZ * progress);
+                }
+            })
+            .call(() => {
+                if (this.node?.isValid) {
+                    this.node.setPosition(startX, startY, startZ + distanceZ);
+                }
+            })
+            .start();
     }
 
     protected _update(dt: number): void {

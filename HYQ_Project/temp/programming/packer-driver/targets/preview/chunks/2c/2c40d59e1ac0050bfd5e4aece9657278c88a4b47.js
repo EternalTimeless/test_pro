@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, AnimationClip, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, AnimationClip, CCFloat, Label, Quat, tween, Vec3, BattleTarget3D, BulletMonsterCollisionManager, MoveDrive, MoveModEnum, EventType, MonsterType, PoolEnum, SoundEnum, PoolManager, EventManager, FbxManager, CameraMove, MeshFlashData, FlashRedManager, AudioManager, Player, Role, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _crd, ccclass, property, MonsterAnimEnum, MonsterBattleTaerget;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -245,6 +245,39 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         },
 
         tooltip: '填入后，运行时会强制替换小怪动画列表中的 die 槽位。用于绕过直接改 SkeletalAnimation clips 后被编辑器还原的问题；Boss不受影响。'
+      }), _dec16 = property({
+        type: CCFloat,
+        displayName: '小怪死亡抛飞高度',
+
+        visible() {
+          return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        },
+
+        tooltip: '玩家攻击打死小怪后，代码额外模拟的抛物线最高高度。0表示不向上抛飞；Boss不受影响。'
+      }), _dec17 = property({
+        type: CCFloat,
+        displayName: '小怪死亡抛飞Z距离',
+
+        visible() {
+          return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        },
+
+        tooltip: '玩家攻击打死小怪后，死亡抛飞在Z方向移动的距离。Boss不受影响。'
+      }), _dec18 = property({
+        type: CCFloat,
+        displayName: '小怪死亡抛飞时间比例',
+
+        visible() {
+          return this.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother;
+        },
+
+        tooltip: '抛飞持续时间占死亡动画总时长的比例，建议0到1。Boss不受影响。'
       }), _dec(_class = (_class2 = class MonsterBattleTaerget extends (_crd && BattleTarget3D === void 0 ? (_reportPossibleCrUseOfBattleTarget3D({
         error: Error()
       }), BattleTarget3D) : BattleTarget3D) {
@@ -292,6 +325,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "smallMonsterAttackLockOffsetZ", _descriptor13, this);
 
           _initializerDefineProperty(this, "smallMonsterDieOverrideClip", _descriptor14, this);
+
+          _initializerDefineProperty(this, "smallMonsterDeathThrowHeight", _descriptor15, this);
+
+          _initializerDefineProperty(this, "smallMonsterDeathThrowDistanceZ", _descriptor16, this);
+
+          _initializerDefineProperty(this, "smallMonsterDeathThrowDurationRate", _descriptor17, this);
 
           // public dieTimeScale: number = 1;
           this.isDieD = true;
@@ -377,11 +416,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var _t = this.fbx.setAnimation(MonsterAnimEnum.die, true);
 
             endtime = _t.duration;
-            var time = endtime * 0.8;
-            var z = this.node.z + 6;
-            tween(this.node).to(time * 0.5, {
-              z: z
-            }).start();
+            this.playSmallMonsterDeathThrow(endtime);
           }
 
           this.flashDie(endtime); // this.scheduleOnce(() => {
@@ -441,6 +476,51 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (this.smallMonsterDieOverrideClip) {
             this.fbx.replaceAnimationClip(MonsterAnimEnum.die, this.smallMonsterDieOverrideClip);
           }
+        }
+
+        playSmallMonsterDeathThrow(totalDuration) {
+          if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother) {
+            return;
+          }
+
+          var rate = Math.max(0, Math.min(1, this.smallMonsterDeathThrowDurationRate));
+          var duration = Math.max(0, totalDuration * rate);
+          var height = Math.max(0, this.smallMonsterDeathThrowHeight);
+          var distanceZ = this.smallMonsterDeathThrowDistanceZ;
+
+          if (duration <= 0 || height <= 0 && distanceZ == 0) {
+            return;
+          }
+
+          var startX = this.node.x;
+          var startY = this.node.y;
+          var startZ = this.node.z;
+          var state = {
+            progress: 0
+          };
+          tween(state).to(duration, {
+            progress: 1
+          }, {
+            onUpdate: target => {
+              var _this$node;
+
+              if (!((_this$node = this.node) != null && _this$node.isValid)) {
+                return;
+              }
+
+              var progress = Math.max(0, Math.min(1, target.progress));
+              var parabolaY = 4 * height * progress * (1 - progress);
+              this.node.setPosition(startX, startY + parabolaY, startZ + distanceZ * progress);
+            }
+          }).call(() => {
+            var _this$node2;
+
+            if ((_this$node2 = this.node) != null && _this$node2.isValid) {
+              this.node.setPosition(startX, startY, startZ + distanceZ);
+            }
+          }).start();
         }
 
         _update(dt) {
@@ -910,6 +990,27 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         writable: true,
         initializer: function initializer() {
           return null;
+        }
+      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowHeight", [_dec16], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.8;
+        }
+      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowDistanceZ", [_dec17], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 6;
+        }
+      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "smallMonsterDeathThrowDurationRate", [_dec18], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.5;
         }
       })), _class2)) || _class));
 
