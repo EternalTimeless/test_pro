@@ -4773,3 +4773,196 @@
 2026-7-7 10:40:43 - debug: execute-script-end with buildSystemJsCommand 3941ms
 2026-7-7 10:40:43 - debug: 构建项目脚本 start..., progress: 19%
 2026-7-7 10:40:43 - debug: 构建项目脚本 start..., progress: 13%
+2026-7-7 10:40:49 - warn: [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpManager.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpDriveEngine.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpManager.ts
+2026-7-7 10:40:49 - warn: [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts[warning][[Build.Script.Rollup]] Circular dependency: file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PrintComponent.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/StutterCheck.ts -> file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PrintComponent.ts
+2026-7-7 10:40:53 - log: [buildScriptCommand]Number of non-entry chunks: 3
+2026-7-7 10:40:53 - debug: execute-script-end with buildScriptCommand 10441ms
+2026-7-7 10:40:53 - debug: Copy externalScripts success!
+2026-7-7 10:40:53 - debug: 构建项目脚本 in (10506 ms) √, progress: 19%
+2026-7-7 10:40:53 - debug: 构建项目脚本 in (10506 ms) √, progress: 13%
+2026-7-7 10:40:53 - debug: 构建引擎脚本 start..., progress: 19%
+2026-7-7 10:40:53 - debug: mangleProperties is enabled, found engine-mangle-config.json, use it
+2026-7-7 10:40:53 - debug: Use cache engine: {link(C:\Users\Admin\AppData\Local\Temp\CocosCreator\3.8.7\builder\engine\a154ee511c93165416d720dbd46d8d34)}
+2026-7-7 10:40:53 - debug: Use cache, md5String: debug=false,sourceMaps=false,includeModules=["2d","3d","animation","audio","base","custom-pipeline","gfx-webgl","gfx-webgl2","graphics","particle","physics-2d-box2d","physics-ammo","primitive","profiler","skeletal-animation","tween","ui","custom-pipeline-builtin-scripts"],engineVersion="3.8.7",platformType="HTML5",split=false,nativeCodeBundleMode="asmjs",targets=undefined,entry="C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine",noDeprecatedFeatures=undefined,loose=true,assetURLFormat="runtime-resolved",flags={"DEBUG":false,"LOAD_BULLET_MANUALLY":false,"LOAD_SPINE_MANUALLY":false,"WEBGPU":false},preserveType=undefined,wasmCompressionMode=false,enableNamedRegisterForSystemJSModuleFormat=undefined,mangleProperties=false,inlineEnum=true,
+2026-7-7 10:40:53 - debug: Use cache, options: {  "entry": "C:\\ProgramData\\cocos\\editors\\Creator\\3.8.7\\resources\\resources\\3d\\engine",  "debug": false,  "mangleProperties": false,  "inlineEnum": true,  "sourceMaps": false,  "includeModules": [    "2d",    "3d",    "animation",    "audio",    "base",    "custom-pipeline",    "gfx-webgl",    "gfx-webgl2",    "graphics",    "particle",    "physics-2d-box2d",    "physics-ammo",    "primitive",    "profiler",    "skeletal-animation",    "tween",    "ui",    "custom-pipeline-builtin-scripts"  ],  "engineVersion": "3.8.7",  "md5Map": [],  "engineName": "cocos-js",  "output": "D:\\工程项目\\PlayableAD\\Cocos\\TheW\\20260615_HYQ\\HYQ_Project\\build\\web-mobile\\cocos-js",  "platformType": "HTML5",  "useCache": true,  "nativeCodeBundleMode": "asmjs",  "wasmCompressionMode": false,  "split": false,  "assetURLFormat": "runtime-resolved",  "flags": {    "DEBUG": false,    "LOAD_BULLET_MANUALLY": false,    "LOAD_SPINE_MANUALLY": false,    "WEBGPU": false  }}
+2026-7-7 10:40:53 - debug: Error: Exit process with code:null, signal:SIGTERM in task build-script    at ChildProcess.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.7\resources\app.asar\builtin\builder\dist\worker\worker-pools\sub-process-manager.ccc:1:2409)    at ChildProcess.emit (node:events:519:28)    at Process.ChildProcess._handle.onexit (node:internal/child_process:294:12)
+2026-7-7 10:40:53 - debug: 构建引擎脚本 in (162 ms) √, progress: 19%
+2026-7-7 10:40:53 - debug: Copy plugin script ..., progress: 19%
+2026-7-7 10:40:53 - debug: Generate import-map..., progress: 19%
+2026-7-7 10:40:54 - debug: // ---- build task 打包脚本 ---- (20372ms)
+2026-7-7 10:40:54 - log: run build task 打包脚本 success in 20 s√, progress: 24%
+2026-7-7 10:40:54 - debug: [Build Memory track]: 打包脚本 start:291.78MB, end 289.05MB, increase: -2795.36KB
+2026-7-7 10:40:54 - debug: Build Assets start, progress: 24%
+2026-7-7 10:40:54 - debug: // ---- build task Build Assets ----
+2026-7-7 10:40:54 - debug: Build bundles..., progress: 24%
+2026-7-7 10:40:54 - debug: Pack Images start, progress: 24%
+2026-7-7 10:40:54 - debug: Pack Images start, progress: 13%
+2026-7-7 10:40:54 - debug: Number of pac assets: 3
+2026-7-7 10:40:54 - debug: Get Cache info of pac success {asset(17513a27-4f11-4047-a0be-8d0cb6187b9e)}
+2026-7-7 10:40:54 - debug: Get Cache info of pac success {asset(b74fc0c2-4c67-4dd4-8d74-9612ad56cfb1)}
+2026-7-7 10:40:54 - debug: Number of pack results: 2
+2026-7-7 10:40:54 - debug: start collect depend assets in pac17513a27-4f11-4047-a0be-8d0cb6187b9e
+2026-7-7 10:40:54 - debug: start collect depend assets in pacb74fc0c2-4c67-4dd4-8d74-9612ad56cfb1
+2026-7-7 10:40:54 - debug: start sort bundle in pacb74fc0c2-4c67-4dd4-8d74-9612ad56cfb1
+2026-7-7 10:40:54 - debug: end sort bundle in pacb74fc0c2-4c67-4dd4-8d74-9612ad56cfb1
+2026-7-7 10:40:54 - debug: start sort bundle in pac17513a27-4f11-4047-a0be-8d0cb6187b9e
+2026-7-7 10:40:54 - debug: end sort bundle in pac17513a27-4f11-4047-a0be-8d0cb6187b9e
+2026-7-7 10:40:54 - debug: builder:pack-auto-atlas-image (215ms)
+2026-7-7 10:40:54 - debug: Pack Images success, progress: 24%
+2026-7-7 10:40:54 - debug: Pack Images success, progress: 13%
+2026-7-7 10:40:54 - debug: Compress image start..., progress: 24%
+2026-7-7 10:40:54 - debug: Compress image start..., progress: 13%
+2026-7-7 10:40:54 - group: Compress image...
+2026-7-7 10:40:54 - debug: sort compress task {}
+2026-7-7 10:40:54 - debug: Num of all image compress task 0, really: 0, configTasks: 0
+2026-7-7 10:40:54 - debug: No image need to compress
+2026-7-7 10:40:54 - groupEnd: Compress image...
+2026-7-7 10:40:54 - debug: Compress image success..., progress: 24%
+2026-7-7 10:40:54 - debug: Compress image success..., progress: 13%
+2026-7-7 10:40:54 - debug: Output asset in bundles start, progress: 24%
+2026-7-7 10:40:54 - debug: Output asset in bundles start, progress: 13%
+2026-7-7 10:40:54 - debug: Handle all json groups in bundle internal
+2026-7-7 10:40:54 - debug: handle json group
+2026-7-7 10:40:54 - debug: Handle all json groups in bundle resources
+2026-7-7 10:40:54 - debug: handle json group
+2026-7-7 10:40:54 - debug: Handle all json groups in bundle main
+2026-7-7 10:40:54 - debug: handle json group
+2026-7-7 10:40:54 - debug: Json group(033f45a16) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0b54f34d0) compile success，json number: 6
+2026-7-7 10:40:54 - debug: handle single json
+2026-7-7 10:40:54 - debug: Json group(08cbea60a) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0a84a1761) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(09e986d7f) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0a8b38f43) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(05a6ba422) compile success，json number: 6
+2026-7-7 10:40:54 - debug: handle single json
+2026-7-7 10:40:54 - debug: Json group(0bd960b15) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(05d786f3c) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0a9a16365) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0939f5774) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(04d1efb95) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(05ff4bf9a) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(058888a4d) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0aa2d87de) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0936a916b) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0b3e0b1ce) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(03bca836c) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(018f8689b) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(09f4a3c5f) compile success，json number: 6
+2026-7-7 10:40:54 - debug: Json group(0573d1736) compile success，json number: 6
+2026-7-7 10:40:54 - warn(2): The Mesh used by component "cc.MeshRenderer" in prefab "Role_2" is missing. Detailed information:Node path: "Role_2/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_2"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-7 10:40:54 - debug: Json group(0d1405e99) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(0fbb3d0d7) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(0b756a9e5) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(0acdaf410) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(045d59844) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(03d712220) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(0418d0963) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(0d46b5455) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(0d76502e0) compile success，json number: 6
+2026-7-7 10:40:55 - warn: The Mesh used by component "cc.MeshRenderer" in prefab "Role_1" is missing. Detailed information:Node path: "Role_1/New Node/Bip001 Prop1 Socket/jiateling01"Asset url: "db://assets/GameRes/Prefab/Role_1"Missing uuid: "03189dd5-73dd-4e52-8644-1ff1a122b972@18a45"
+2026-7-7 10:40:55 - debug: Json group(03a0f8b8b) compile success，json number: 6
+2026-7-7 10:40:55 - debug: Json group(05744dfbc) compile success，json number: 6
+2026-7-7 10:40:55 - debug: handle single json
+2026-7-7 10:40:55 - debug: Output asset in bundles success, progress: 24%
+2026-7-7 10:40:55 - debug: Output asset in bundles success, progress: 13%
+2026-7-7 10:40:55 - debug: Output asset in bundles start, progress: 24%
+2026-7-7 10:40:55 - debug: Output asset in bundles start, progress: 13%
+2026-7-7 10:40:55 - debug: compress config of bundle internal...
+2026-7-7 10:40:55 - debug: compress config of bundle internal success
+2026-7-7 10:40:55 - debug: compress config of bundle resources...
+2026-7-7 10:40:55 - debug: compress config of bundle resources success
+2026-7-7 10:40:55 - debug: compress config of bundle main...
+2026-7-7 10:40:55 - debug: compress config of bundle main success
+2026-7-7 10:40:55 - debug: output config of bundle internal
+2026-7-7 10:40:55 - debug: output config of bundle internal success
+2026-7-7 10:40:55 - debug: output config of bundle resources
+2026-7-7 10:40:56 - debug: output config of bundle resources success
+2026-7-7 10:40:56 - debug: output config of bundle main
+2026-7-7 10:40:56 - debug: output config of bundle main success
+2026-7-7 10:40:56 - debug: Output asset in bundles success, progress: 24%
+2026-7-7 10:40:56 - debug: Output asset in bundles success, progress: 13%
+2026-7-7 10:40:56 - debug: // ---- build task Build Assets ---- (2030ms)
+2026-7-7 10:40:56 - log: run build task Build Assets success in 2 s√, progress: 29%
+2026-7-7 10:40:56 - debug: [Build Memory track]: Build Assets start:289.08MB, end 285.62MB, increase: -3544.91KB
+2026-7-7 10:40:56 - debug: 整理部分构建选项内数据到 settings.json start, progress: 29%
+2026-7-7 10:40:56 - debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-7 10:40:56 - debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (61ms)
+2026-7-7 10:40:56 - log: run build task 整理部分构建选项内数据到 settings.json success in 61 ms√, progress: 31%
+2026-7-7 10:40:56 - debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:285.73MB, end 285.81MB, increase: 77.21KB
+2026-7-7 10:40:56 - debug: 填充脚本数据到 settings.json start, progress: 31%
+2026-7-7 10:40:56 - debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-7 10:40:56 - debug: // ---- build task 填充脚本数据到 settings.json ---- (50ms)
+2026-7-7 10:40:56 - log: run build task 填充脚本数据到 settings.json success in 50 ms√, progress: 32%
+2026-7-7 10:40:56 - debug: [Build Memory track]: 填充脚本数据到 settings.json start:285.85MB, end 285.92MB, increase: 79.09KB
+2026-7-7 10:40:56 - debug: 整理部分构建选项内数据到 settings.json start, progress: 32%
+2026-7-7 10:40:56 - debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-7 10:40:56 - debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (299ms)
+2026-7-7 10:40:56 - log: run build task 整理部分构建选项内数据到 settings.json success in 299 ms√, progress: 34%
+2026-7-7 10:40:56 - debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:285.96MB, end 286.11MB, increase: 151.81KB
+2026-7-7 10:40:56 - debug: web-mobile:(onBeforeCompressSettings) start..., progress: 34%
+2026-7-7 10:40:56 - debug: // ---- build task web-mobile：onBeforeCompressSettings ----
+2026-7-7 10:40:56 - debug: // ---- build task web-mobile：onBeforeCompressSettings ---- (69ms)
+2026-7-7 10:40:56 - debug: web-mobile:(onBeforeCompressSettings) in 69 ms ✓, progress: 36%
+2026-7-7 10:40:56 - debug: cocos-service:(onBeforeCompressSettings) start..., progress: 36%
+2026-7-7 10:40:56 - debug: // ---- build task cocos-service：onBeforeCompressSettings ----
+2026-7-7 10:40:56 - debug: // ---- build task cocos-service：onBeforeCompressSettings ---- (126ms)
+2026-7-7 10:40:56 - debug: cocos-service:(onBeforeCompressSettings) in 126 ms ✓, progress: 38%
+2026-7-7 10:40:56 - debug: super-packager:(onBeforeCompressSettings) start..., progress: 38%
+2026-7-7 10:40:56 - debug: // ---- build task super-packager：onBeforeCompressSettings ----
+2026-7-7 10:40:56 - log: [SUPER_PACKAGE]onBeforeCompressSettings
+2026-7-7 10:40:56 - debug: // ---- build task super-packager：onBeforeCompressSettings ---- (52ms)
+2026-7-7 10:40:56 - debug: super-packager:(onBeforeCompressSettings) in 52 ms ✓, progress: 40%
+2026-7-7 10:40:56 - debug: 整理静态模板文件 start, progress: 40%
+2026-7-7 10:40:56 - debug: // ---- build task 整理静态模板文件 ----
+2026-7-7 10:40:56 - debug: // ---- build task 整理静态模板文件 ---- (125ms)
+2026-7-7 10:40:56 - log: run build task 整理静态模板文件 success in 125 ms√, progress: 45%
+2026-7-7 10:40:56 - debug: [Build Memory track]: 整理静态模板文件 start:286.51MB, end 290.95MB, increase: 4.44MB
+2026-7-7 10:40:56 - debug: cocos-service:(onAfterCompressSettings) start..., progress: 45%
+2026-7-7 10:40:56 - debug: // ---- build task cocos-service：onAfterCompressSettings ----
+2026-7-7 10:40:56 - debug: // ---- build task cocos-service：onAfterCompressSettings ---- (103ms)
+2026-7-7 10:40:56 - debug: cocos-service:(onAfterCompressSettings) in 103 ms ✓, progress: 46%
+2026-7-7 10:40:56 - debug: super-packager:(onAfterCompressSettings) start..., progress: 46%
+2026-7-7 10:40:56 - debug: // ---- build task super-packager：onAfterCompressSettings ----
+2026-7-7 10:40:56 - log: [SUPER_PACKAGE]onAfterCompressSettings
+2026-7-7 10:40:56 - debug: // ---- build task super-packager：onAfterCompressSettings ---- (44ms)
+2026-7-7 10:40:56 - debug: super-packager:(onAfterCompressSettings) in 44 ms ✓, progress: 48%
+2026-7-7 10:40:56 - debug: web-mobile:(onBeforeCopyBuildTemplate) start..., progress: 48%
+2026-7-7 10:40:56 - debug: // ---- build task web-mobile：onBeforeCopyBuildTemplate ----
+2026-7-7 10:40:57 - debug: // ---- build task web-mobile：onBeforeCopyBuildTemplate ---- (81ms)
+2026-7-7 10:40:57 - debug: web-mobile:(onBeforeCopyBuildTemplate) in 81 ms ✓, progress: 50%
+2026-7-7 10:40:57 - debug: 给所有的资源加上 MD5 后缀 start, progress: 50%
+2026-7-7 10:40:57 - debug: // ---- build task 给所有的资源加上 MD5 后缀 ----
+2026-7-7 10:40:57 - debug: // ---- build task 给所有的资源加上 MD5 后缀 ---- (55ms)
+2026-7-7 10:40:57 - log: run build task 给所有的资源加上 MD5 后缀 success in 55 ms√, progress: 60%
+2026-7-7 10:40:57 - debug: [Build Memory track]: 给所有的资源加上 MD5 后缀 start:287.25MB, end 287.32MB, increase: 76.38KB
+2026-7-7 10:40:57 - debug: web-mobile:(onAfterBuild) start..., progress: 60%
+2026-7-7 10:40:57 - debug: // ---- build task web-mobile：onAfterBuild ----
+2026-7-7 10:40:57 - debug: // ---- build task web-mobile：onAfterBuild ---- (66ms)
+2026-7-7 10:40:57 - debug: web-mobile:(onAfterBuild) in 66 ms ✓, progress: 62%
+2026-7-7 10:40:57 - debug: cocos-service:(onAfterBuild) start..., progress: 62%
+2026-7-7 10:40:57 - debug: // ---- build task cocos-service：onAfterBuild ----
+2026-7-7 10:40:57 - debug: // ---- build task cocos-service：onAfterBuild ---- (105ms)
+2026-7-7 10:40:57 - debug: cocos-service:(onAfterBuild) in 105 ms ✓, progress: 64%
+2026-7-7 10:40:57 - debug: adsense-h5g-plugin:(onAfterBuild) start..., progress: 64%
+2026-7-7 10:40:57 - debug: // ---- build task adsense-h5g-plugin：onAfterBuild ----
+2026-7-7 10:40:57 - debug: // ---- build task adsense-h5g-plugin：onAfterBuild ---- (45ms)
+2026-7-7 10:40:57 - debug: adsense-h5g-plugin:(onAfterBuild) in 45 ms ✓, progress: 65%
+2026-7-7 10:40:57 - debug: super-html:(onAfterBuild) start..., progress: 65%
+2026-7-7 10:40:57 - debug: // ---- build task super-html：onAfterBuild ----
+2026-7-7 10:40:57 - log: [super-html] : -- start --
+2026-7-7 10:40:57 - log: [super-html] : engine version 3.8.7
+2026-7-7 10:40:57 - log: [super-html] : s_input_dir D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\web-mobile
+2026-7-7 10:40:57 - log: [super-html] : s_out_dir D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\build\super-html
+2026-7-7 10:41:03 - debug: // ---- build task super-html：onAfterBuild ---- (6104ms)
+2026-7-7 10:41:03 - debug: super-html:(onAfterBuild) in 6104 ms ✓, progress: 67%
+2026-7-7 10:41:03 - debug: super-packager:(onAfterBuild) start..., progress: 67%
+2026-7-7 10:41:03 - debug: // ---- build task super-packager：onAfterBuild ----
+2026-7-7 10:41:03 - log: [SUPER_PACKAGE]onAfterBuild
+2026-7-7 10:41:03 - debug: // ---- build task super-packager：onAfterBuild ---- (76ms)
+2026-7-7 10:41:03 - debug: super-packager:(onAfterBuild) in 76 ms ✓, progress: 69%
+2026-7-7 10:41:03 - log: Asset DB is resume!
+2026-7-7 10:41:04 - debug: builder:build-project-total (31695ms)
+2026-7-7 10:41:04 - debug: build task(web-mobile) in 31695!
+2026-7-7 10:41:04 - debug: [Build Memory track]: builder:build-project-total start:284.45MB, end 288.60MB, increase: 4.15MB
+2026-7-7 10:41:04 - debug: ================================ build Task (web-mobile) Finished in (32 s)ms ================================

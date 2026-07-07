@@ -12837,12 +12837,12 @@
   {
     "__type__": "LalianHitStageConfig",
     "endProgress": 0.6,
-    "hitCountPerStep": 8
+    "hitCountPerStep": 7
   },
   {
     "__type__": "LalianHitStageConfig",
     "endProgress": 1,
-    "hitCountPerStep": 10
+    "hitCountPerStep": 9
   },
   {
     "__type__": "cc.Node",
