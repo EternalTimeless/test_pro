@@ -12,13 +12,10 @@ CCEffect %{
         cullMode: none
       depthStencilState:
         depthTest: true
-        depthWrite: false
+        depthWrite: true
       blendState:
         targets:
-        - blend: true
-          blendSrc: src_alpha
-          blendDst: one_minus_src_alpha
-          blendDstAlpha: one_minus_src_alpha
+        - blend: false
       properties: &props
         # ========== 波浪(高级参数) ==========
         windAngle:       { value: 0.0, target: waveControl.x, editor: { displayName: "风向角度", slide: true, range: [0.0, 6.28], step: 0.01, tooltip: "风向角度(弧度),0=+X方向,PI/2=+Z方向" } }
@@ -443,10 +440,6 @@ CCProgram ocean-fs %{
     waterFinal += cc_ambientSky.xyz * (1.0 - fresnel) * 0.15;
 
     // 透明度
-    float alpha = mix(0.55, 0.95, fresnel);
-    alpha = mix(alpha, 1.0, foamFactor);
-    alpha = clamp(alpha, 0.0, 1.0);
-
-    return vec4(waterFinal, alpha);
+    return vec4(waterFinal, 1.0);
   }
 }%
