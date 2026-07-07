@@ -327,6 +327,11 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             }
         }
 
+        if (this.monsterType == MonsterType.ZombieBrother && this.attackIn) {
+            this.move.autoMove = false;
+            return;
+        }
+
         if (this.monsterType == MonsterType.ZombieBrother) {
             if (!this.ensureAttackTargetValid()) {
                 this.move.autoMove = true;

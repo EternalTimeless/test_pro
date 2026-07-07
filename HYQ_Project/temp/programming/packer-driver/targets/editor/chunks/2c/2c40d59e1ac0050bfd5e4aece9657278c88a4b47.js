@@ -540,6 +540,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother && this.attackIn) {
+            this.move.autoMove = false;
+            return;
+          }
+
+          if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
           }), MonsterType) : MonsterType).ZombieBrother) {
             if (!this.ensureAttackTargetValid()) {
               this.move.autoMove = true;
