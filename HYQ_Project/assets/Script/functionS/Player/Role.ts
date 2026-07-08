@@ -240,11 +240,12 @@ export class Role extends Component {
         const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
-        Role.aimBulletToCurrentTarget(bullet, lockWorldX);
         const firstBulletRandomX = Math.max(0, initialBulletRandomX);
         if (firstBulletRandomX > 0) {
             bullet.node.x += (Math.random() - 0.5) * 2 * firstBulletRandomX;
         }
+        const lockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
+        Role.aimBulletToCurrentTarget(bullet, lockWorldX);
         batchRenderer.registerBullet(bullet);
         if (playEffect) {
             this.effect?.play();
@@ -256,22 +257,33 @@ export class Role extends Component {
             bullet.node.setWorldPosition(pos);
             const x = (Math.random() - 0.5) * 2;
             bullet.node.x += x;
-            const z = (Math.random() - 0.5) * 4;
-            bullet.node.z += z;
+            const bulletLockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
+            if (!bulletLockLalian) {
+                const z = (Math.random() - 0.5) * 4;
+                bullet.node.z += z;
+            }
             Role.aimBulletToCurrentTarget(bullet, lockWorldX);
             batchRenderer.registerBullet(bullet);
         }
 
     }
 
+    private static getLockableLalianTarget(bullet: BulletBattle3D, lockWorldX: number): PropLalianGate | null {
+        const target = BulletMonsterCollisionManager.instance.getLockableLalianTarget(
+            bullet.node.worldPosition,
+            lockWorldX,
+            bullet.attackTargetTag,
+        );
+        return target instanceof PropLalianGate ? target : null;
+    }
+
     public static aimBulletToCurrentTarget(bullet: BulletBattle3D, lockWorldX: number = bullet.node.worldPosition.x): void {
-        const target = BulletMonsterCollisionManager.instance.getLockableLalianTarget(bullet.node.worldPosition, lockWorldX, bullet.attackTargetTag);
+        const target = Role.getLockableLalianTarget(bullet, lockWorldX);
         if (!target) {
             return;
         }
-        const gate = target as PropLalianGate;
-        const aimPos = gate.getLockAimWorldPosition
-            ? gate.getLockAimWorldPosition(bullet.node.worldPosition, Role.aimVector)
+        const aimPos = target.getLockAimWorldPosition
+            ? target.getLockAimWorldPosition(bullet.node.worldPosition, Role.aimVector)
             : target.hitNode.worldPosition;
         Vec3.subtract(Role.aimVector, aimPos, bullet.node.worldPosition);
         Role.aimVector.y = 0;

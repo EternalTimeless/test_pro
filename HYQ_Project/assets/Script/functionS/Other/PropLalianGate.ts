@@ -157,11 +157,20 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '锁定瞄准缩放', tooltip: '子弹锁定后，实际瞄准点落在滑块可受击范围内的比例。1=完整范围，0.92=略窄一点。' })
     public bulletAimShrink: number = 0.92;
 
+    @property({ type: CCFloat, displayName: '锁定前沿深度比例', tooltip: '锁定滑块后，只在朝玩家这一侧前沿带内分布瞄准点。0.25=只用前25%深度，0.5=前半段。' })
+    public bulletAimFrontDepthRatio: number = 0.35;
+
     @property({ type: CCFloat, displayName: '受击区域Z偏移', tooltip: '只调整子弹锁定/碰撞中心，不移动滑块模型。负值通常是往玩家方向提前，正值是往远离玩家方向延后。' })
     public hitAreaOffsetZ: number = -0.18;
 
     @property({ type: CCBoolean, displayName: '使用滑块模型中心', tooltip: '开启后用滑块模型的渲染包围盒中心作为受击中心，避免滑块节点锚点偏后导致子弹穿过模型后才命中。' })
     public useCubeBoundsHitCenter: boolean = true;
+
+    @property({ type: CCFloat, displayName: '滑块命中补偿X', tooltip: '在滑块模型包围盒半宽基础上额外补一点 X，减少子弹贴边穿过。' })
+    public sliderHitPaddingX: number = 0.08;
+
+    @property({ type: CCFloat, displayName: '滑块命中补偿Z', tooltip: '在滑块模型包围盒半深基础上额外补一点 Z，减少子弹沿前后方向漏判。' })
+    public sliderHitPaddingZ: number = 0.18;
 
     @property({ type: CCFloat, displayName: '滑块厚度对齐偏移', tooltip: '滑块定位时，用模型包围盒中心再向厚的一侧偏移一点来对齐齿条位置。0=模型中心，0.2=向厚侧偏移 20% 半厚度。' })
     public sliderThickCenterBias: number = 0.2;
@@ -189,6 +198,7 @@ export class PropLalianGate extends BattleTarget3D {
     private tempWorldPos: Vec3 = new Vec3();
     private tempSliderVisualCenterWorldPos: Vec3 = new Vec3();
     private tempSliderVisualCenterParentPos: Vec3 = new Vec3();
+    private tempCubeBoundsHalfExtents: Vec3 = new Vec3();
     private cubeMeshRenderers: MeshRenderer[] = [];
     private originalToothPositions: Map<Node, Vec3> = new Map();
     private closeCenter: number = 0;
@@ -200,6 +210,7 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     public getCollisionWorldPosition(out: Vec3 = this.tempCollisionWorldPos): Vec3 {
+        this.refreshCollisionSizeFromBounds();
         const hitNode = this.hitNode;
         const center = hitNode?.worldPosition ?? this.node.worldPosition;
         if (this.useCubeBoundsHitCenter && this.setCubeBoundsCenter(out)) {
@@ -277,12 +288,23 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     public getLockAimWorldPosition(fromPos: Vec3, out: Vec3 = this.tempLockAimPos): Vec3 {
+        this.refreshCollisionSizeFromBounds();
         const center = this.getCollisionWorldPosition(out);
         const shrink = Math.max(0.1, Math.min(1, this.bulletAimShrink));
         const halfX = Math.max(0.02, this.collisionHalfX * shrink);
         const halfZ = Math.max(0.02, this.collisionHalfZ * shrink);
-        const x = Math.min(center.x + halfX, Math.max(center.x - halfX, fromPos.x));
-        const z = Math.min(center.z + halfZ, Math.max(center.z - halfZ, fromPos.z));
+        const baseX = Math.min(center.x + halfX, Math.max(center.x - halfX, fromPos.x));
+        const spreadSeed = fromPos.x * 12.9898 + fromPos.z * 78.233;
+        const spreadX = (this.sampleAimSpread01(spreadSeed) - 0.5) * halfX * 0.9;
+        const x = Math.min(center.x + halfX, Math.max(center.x - halfX, baseX + spreadX));
+        const frontRatio = Math.max(0.05, Math.min(1, this.bulletAimFrontDepthRatio));
+        const fromFront = fromPos.z <= center.z;
+        const frontZ = fromFront ? center.z - halfZ : center.z + halfZ;
+        const depthBand = Math.max(0.02, halfZ * frontRatio);
+        const depthT = this.sampleAimSpread01(spreadSeed + 17.371);
+        const z = fromFront
+            ? frontZ + depthBand * depthT
+            : frontZ - depthBand * depthT;
         return out.set(x, center.y, z);
     }
 
@@ -317,12 +339,20 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     private prepareCollisionSize(): void {
-        if (this.collisionHalfX <= 0.24) {
-            this.collisionHalfX = 0.45;
+        this.refreshCollisionSizeFromBounds();
+    }
+
+    private refreshCollisionSizeFromBounds(): void {
+        const minHalfX = 0.45;
+        const minHalfZ = 0.32;
+        let targetHalfX = Math.max(this.collisionHalfX, minHalfX);
+        let targetHalfZ = Math.max(this.collisionHalfZ, minHalfZ);
+        if (this.tryGetCubeBoundsHalfExtents(this.tempCubeBoundsHalfExtents)) {
+            targetHalfX = Math.max(targetHalfX, this.tempCubeBoundsHalfExtents.x + Math.max(0, this.sliderHitPaddingX));
+            targetHalfZ = Math.max(targetHalfZ, this.tempCubeBoundsHalfExtents.z + Math.max(0, this.sliderHitPaddingZ));
         }
-        if (this.collisionHalfZ <= 0) {
-            this.collisionHalfZ = 0.32;
-        }
+        this.collisionHalfX = targetHalfX;
+        this.collisionHalfZ = targetHalfZ;
     }
 
     protected damage(power: number): void {
@@ -656,6 +686,34 @@ export class PropLalianGate extends BattleTarget3D {
 
     private setCubeBoundsCenter(out: Vec3): boolean {
         return this.setCubeVisualCenter(out, false);
+    }
+
+    private sampleAimSpread01(seed: number): number {
+        const sinValue = Math.sin(seed) * 43758.5453123;
+        return sinValue - Math.floor(sinValue);
+    }
+
+    private tryGetCubeBoundsHalfExtents(out: Vec3): boolean {
+        let maxHalfX = 0;
+        let maxHalfY = 0;
+        let maxHalfZ = 0;
+        let found = false;
+        for (let i = 0; i < this.cubeMeshRenderers.length; i++) {
+            const worldBounds = (this.cubeMeshRenderers[i] as any)?.model?.worldBounds;
+            const halfExtents = worldBounds?.halfExtents;
+            if (!halfExtents) {
+                continue;
+            }
+            maxHalfX = Math.max(maxHalfX, halfExtents.x);
+            maxHalfY = Math.max(maxHalfY, halfExtents.y);
+            maxHalfZ = Math.max(maxHalfZ, halfExtents.z);
+            found = true;
+        }
+        if (!found) {
+            return false;
+        }
+        out.set(maxHalfX, maxHalfY, maxHalfZ);
+        return true;
     }
 
     private setCubeVisualCenter(out: Vec3, useThickBias: boolean = true): boolean {

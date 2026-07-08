@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, PropLalianGate, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -106,7 +106,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_10) {
       BulletMonsterCollisionManager = _unresolved_10.default;
     }, function (_unresolved_11) {
-      BulletBatchRenderer = _unresolved_11.BulletBatchRenderer;
+      PropLalianGate = _unresolved_11.PropLalianGate;
+    }, function (_unresolved_12) {
+      BulletBatchRenderer = _unresolved_12.BulletBatchRenderer;
     }],
     execute: function () {
       _crd = true;
@@ -387,6 +389,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const bullet = (_crd && BulletManager === void 0 ? (_reportPossibleCrUseOfBulletManager({
             error: Error()
           }), BulletManager) : BulletManager).instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
+          const lalianTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
+          const lockLalian = !!lalianTarget;
           Role.bulletLayer.addChild(bullet.node);
           bullet.node.setWorldPosition(pos);
           Role.aimBulletToCurrentTarget(bullet, lockWorldX);
@@ -412,24 +416,34 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             bullet.node.setWorldPosition(pos);
             const x = (Math.random() - 0.5) * 2;
             bullet.node.x += x;
-            const z = (Math.random() - 0.5) * 4;
-            bullet.node.z += z;
+
+            if (!lockLalian) {
+              const z = (Math.random() - 0.5) * 4;
+              bullet.node.z += z;
+            }
+
             Role.aimBulletToCurrentTarget(bullet, lockWorldX);
             batchRenderer.registerBullet(bullet);
           }
         }
 
-        static aimBulletToCurrentTarget(bullet, lockWorldX = bullet.node.worldPosition.x) {
+        static getLockableLalianTarget(bullet, lockWorldX) {
           const target = (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
             error: Error()
           }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.getLockableLalianTarget(bullet.node.worldPosition, lockWorldX, bullet.attackTargetTag);
+          return target instanceof (_crd && PropLalianGate === void 0 ? (_reportPossibleCrUseOfPropLalianGate({
+            error: Error()
+          }), PropLalianGate) : PropLalianGate) ? target : null;
+        }
+
+        static aimBulletToCurrentTarget(bullet, lockWorldX = bullet.node.worldPosition.x) {
+          const target = Role.getLockableLalianTarget(bullet, lockWorldX);
 
           if (!target) {
             return;
           }
 
-          const gate = target;
-          const aimPos = gate.getLockAimWorldPosition ? gate.getLockAimWorldPosition(bullet.node.worldPosition, Role.aimVector) : target.hitNode.worldPosition;
+          const aimPos = target.getLockAimWorldPosition ? target.getLockAimWorldPosition(bullet.node.worldPosition, Role.aimVector) : target.hitNode.worldPosition;
           Vec3.subtract(Role.aimVector, aimPos, bullet.node.worldPosition);
           Role.aimVector.y = 0;
 

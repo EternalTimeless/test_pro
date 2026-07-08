@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, ColliderTag, COLLIDE_TYPE, EventType, SoundEnum, EventManager, AudioManager, TweenTool, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _dec48, _dec49, _dec50, _dec51, _dec52, _class4, _class5, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _descriptor38, _descriptor39, _descriptor40, _descriptor41, _descriptor42, _descriptor43, _descriptor44, _descriptor45, _descriptor46, _descriptor47, _descriptor48, _descriptor49, _descriptor50, _crd, ccclass, property, LalianHitStageConfig, PropLalianGate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3, BattleTarget3D, BulletMonsterCollisionManager, ColliderTag, COLLIDE_TYPE, EventType, SoundEnum, EventManager, AudioManager, TweenTool, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _dec48, _dec49, _dec50, _dec51, _dec52, _dec53, _dec54, _dec55, _class4, _class5, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _descriptor38, _descriptor39, _descriptor40, _descriptor41, _descriptor42, _descriptor43, _descriptor44, _descriptor45, _descriptor46, _descriptor47, _descriptor48, _descriptor49, _descriptor50, _descriptor51, _descriptor52, _descriptor53, _crd, ccclass, property, LalianHitStageConfig, PropLalianGate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -303,13 +303,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '子弹锁定后，实际瞄准点落在滑块可受击范围内的比例。1=完整范围，0.92=略窄一点。'
       }), _dec50 = property({
         type: CCFloat,
+        displayName: '锁定前沿深度比例',
+        tooltip: '锁定滑块后，只在朝玩家这一侧前沿带内分布瞄准点。0.25=只用前25%深度，0.5=前半段。'
+      }), _dec51 = property({
+        type: CCFloat,
         displayName: '受击区域Z偏移',
         tooltip: '只调整子弹锁定/碰撞中心，不移动滑块模型。负值通常是往玩家方向提前，正值是往远离玩家方向延后。'
-      }), _dec51 = property({
+      }), _dec52 = property({
         type: CCBoolean,
         displayName: '使用滑块模型中心',
         tooltip: '开启后用滑块模型的渲染包围盒中心作为受击中心，避免滑块节点锚点偏后导致子弹穿过模型后才命中。'
-      }), _dec52 = property({
+      }), _dec53 = property({
+        type: CCFloat,
+        displayName: '滑块命中补偿X',
+        tooltip: '在滑块模型包围盒半宽基础上额外补一点 X，减少子弹贴边穿过。'
+      }), _dec54 = property({
+        type: CCFloat,
+        displayName: '滑块命中补偿Z',
+        tooltip: '在滑块模型包围盒半深基础上额外补一点 Z，减少子弹沿前后方向漏判。'
+      }), _dec55 = property({
         type: CCFloat,
         displayName: '滑块厚度对齐偏移',
         tooltip: '滑块定位时，用模型包围盒中心再向厚的一侧偏移一点来对齐齿条位置。0=模型中心，0.2=向厚侧偏移 20% 半厚度。'
@@ -409,11 +421,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "bulletAimShrink", _descriptor47, this);
 
-          _initializerDefineProperty(this, "hitAreaOffsetZ", _descriptor48, this);
+          _initializerDefineProperty(this, "bulletAimFrontDepthRatio", _descriptor48, this);
 
-          _initializerDefineProperty(this, "useCubeBoundsHitCenter", _descriptor49, this);
+          _initializerDefineProperty(this, "hitAreaOffsetZ", _descriptor49, this);
 
-          _initializerDefineProperty(this, "sliderThickCenterBias", _descriptor50, this);
+          _initializerDefineProperty(this, "useCubeBoundsHitCenter", _descriptor50, this);
+
+          _initializerDefineProperty(this, "sliderHitPaddingX", _descriptor51, this);
+
+          _initializerDefineProperty(this, "sliderHitPaddingZ", _descriptor52, this);
+
+          _initializerDefineProperty(this, "sliderThickCenterBias", _descriptor53, this);
 
           this.teeth = [];
           this.toothStartPos = [];
@@ -438,6 +456,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.tempWorldPos = new Vec3();
           this.tempSliderVisualCenterWorldPos = new Vec3();
           this.tempSliderVisualCenterParentPos = new Vec3();
+          this.tempCubeBoundsHalfExtents = new Vec3();
           this.cubeMeshRenderers = [];
           this.originalToothPositions = new Map();
           this.closeCenter = 0;
@@ -455,6 +474,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         getCollisionWorldPosition(out = this.tempCollisionWorldPos) {
           var _hitNode$worldPositio;
 
+          this.refreshCollisionSizeFromBounds();
           const hitNode = this.hitNode;
           const center = (_hitNode$worldPositio = hitNode == null ? void 0 : hitNode.worldPosition) != null ? _hitNode$worldPositio : this.node.worldPosition;
 
@@ -554,12 +574,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getLockAimWorldPosition(fromPos, out = this.tempLockAimPos) {
+          this.refreshCollisionSizeFromBounds();
           const center = this.getCollisionWorldPosition(out);
           const shrink = Math.max(0.1, Math.min(1, this.bulletAimShrink));
           const halfX = Math.max(0.02, this.collisionHalfX * shrink);
           const halfZ = Math.max(0.02, this.collisionHalfZ * shrink);
-          const x = Math.min(center.x + halfX, Math.max(center.x - halfX, fromPos.x));
-          const z = Math.min(center.z + halfZ, Math.max(center.z - halfZ, fromPos.z));
+          const baseX = Math.min(center.x + halfX, Math.max(center.x - halfX, fromPos.x));
+          const spreadSeed = fromPos.x * 12.9898 + fromPos.z * 78.233;
+          const spreadX = (this.sampleAimSpread01(spreadSeed) - 0.5) * halfX * 0.9;
+          const x = Math.min(center.x + halfX, Math.max(center.x - halfX, baseX + spreadX));
+          const frontRatio = Math.max(0.05, Math.min(1, this.bulletAimFrontDepthRatio));
+          const fromFront = fromPos.z <= center.z;
+          const frontZ = fromFront ? center.z - halfZ : center.z + halfZ;
+          const depthBand = Math.max(0.02, halfZ * frontRatio);
+          const depthT = this.sampleAimSpread01(spreadSeed + 17.371);
+          const z = fromFront ? frontZ + depthBand * depthT : frontZ - depthBand * depthT;
           return out.set(x, center.y, z);
         }
 
@@ -594,13 +623,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         prepareCollisionSize() {
-          if (this.collisionHalfX <= 0.24) {
-            this.collisionHalfX = 0.45;
+          this.refreshCollisionSizeFromBounds();
+        }
+
+        refreshCollisionSizeFromBounds() {
+          const minHalfX = 0.45;
+          const minHalfZ = 0.32;
+          let targetHalfX = Math.max(this.collisionHalfX, minHalfX);
+          let targetHalfZ = Math.max(this.collisionHalfZ, minHalfZ);
+
+          if (this.tryGetCubeBoundsHalfExtents(this.tempCubeBoundsHalfExtents)) {
+            targetHalfX = Math.max(targetHalfX, this.tempCubeBoundsHalfExtents.x + Math.max(0, this.sliderHitPaddingX));
+            targetHalfZ = Math.max(targetHalfZ, this.tempCubeBoundsHalfExtents.z + Math.max(0, this.sliderHitPaddingZ));
           }
 
-          if (this.collisionHalfZ <= 0) {
-            this.collisionHalfZ = 0.32;
-          }
+          this.collisionHalfX = targetHalfX;
+          this.collisionHalfZ = targetHalfZ;
         }
 
         damage(power) {
@@ -996,6 +1034,41 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return this.setCubeVisualCenter(out, false);
         }
 
+        sampleAimSpread01(seed) {
+          const sinValue = Math.sin(seed) * 43758.5453123;
+          return sinValue - Math.floor(sinValue);
+        }
+
+        tryGetCubeBoundsHalfExtents(out) {
+          let maxHalfX = 0;
+          let maxHalfY = 0;
+          let maxHalfZ = 0;
+          let found = false;
+
+          for (let i = 0; i < this.cubeMeshRenderers.length; i++) {
+            var _this$cubeMeshRendere;
+
+            const worldBounds = (_this$cubeMeshRendere = this.cubeMeshRenderers[i]) == null || (_this$cubeMeshRendere = _this$cubeMeshRendere.model) == null ? void 0 : _this$cubeMeshRendere.worldBounds;
+            const halfExtents = worldBounds == null ? void 0 : worldBounds.halfExtents;
+
+            if (!halfExtents) {
+              continue;
+            }
+
+            maxHalfX = Math.max(maxHalfX, halfExtents.x);
+            maxHalfY = Math.max(maxHalfY, halfExtents.y);
+            maxHalfZ = Math.max(maxHalfZ, halfExtents.z);
+            found = true;
+          }
+
+          if (!found) {
+            return false;
+          }
+
+          out.set(maxHalfX, maxHalfY, maxHalfZ);
+          return true;
+        }
+
         setCubeVisualCenter(out, useThickBias = true) {
           let minX = Number.POSITIVE_INFINITY;
           let maxX = Number.NEGATIVE_INFINITY;
@@ -1006,9 +1079,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           let found = false;
 
           for (let i = 0; i < this.cubeMeshRenderers.length; i++) {
-            var _this$cubeMeshRendere;
+            var _this$cubeMeshRendere2;
 
-            const worldBounds = (_this$cubeMeshRendere = this.cubeMeshRenderers[i]) == null || (_this$cubeMeshRendere = _this$cubeMeshRendere.model) == null ? void 0 : _this$cubeMeshRendere.worldBounds;
+            const worldBounds = (_this$cubeMeshRendere2 = this.cubeMeshRenderers[i]) == null || (_this$cubeMeshRendere2 = _this$cubeMeshRendere2.model) == null ? void 0 : _this$cubeMeshRendere2.worldBounds;
             const center = worldBounds == null ? void 0 : worldBounds.center;
             const halfExtents = worldBounds == null ? void 0 : worldBounds.halfExtents;
 
@@ -1850,21 +1923,42 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 0.92;
         }
-      }), _descriptor48 = _applyDecoratedDescriptor(_class5.prototype, "hitAreaOffsetZ", [_dec50], {
+      }), _descriptor48 = _applyDecoratedDescriptor(_class5.prototype, "bulletAimFrontDepthRatio", [_dec50], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.35;
+        }
+      }), _descriptor49 = _applyDecoratedDescriptor(_class5.prototype, "hitAreaOffsetZ", [_dec51], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return -0.18;
         }
-      }), _descriptor49 = _applyDecoratedDescriptor(_class5.prototype, "useCubeBoundsHitCenter", [_dec51], {
+      }), _descriptor50 = _applyDecoratedDescriptor(_class5.prototype, "useCubeBoundsHitCenter", [_dec52], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return true;
         }
-      }), _descriptor50 = _applyDecoratedDescriptor(_class5.prototype, "sliderThickCenterBias", [_dec52], {
+      }), _descriptor51 = _applyDecoratedDescriptor(_class5.prototype, "sliderHitPaddingX", [_dec53], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.08;
+        }
+      }), _descriptor52 = _applyDecoratedDescriptor(_class5.prototype, "sliderHitPaddingZ", [_dec54], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.18;
+        }
+      }), _descriptor53 = _applyDecoratedDescriptor(_class5.prototype, "sliderThickCenterBias", [_dec55], {
         configurable: true,
         enumerable: true,
         writable: true,
