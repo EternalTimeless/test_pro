@@ -621,46 +621,56 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           const animDuration = this.getHitAnimDuration();
           const pairAdvancePerHit = this.getPairAdvancePerHit();
-          let remainingAdvance = pairAdvancePerHit;
           let nextPairState = this.pairIndex;
           let nextStepState = this.stepHitCount;
           let targetPos = null;
-          let touchedPair = false;
+          const nextPairIndex = nextPairState + 1;
+          const closeTooth = this.getSliderPairLeadTooth(nextPairIndex);
 
-          while (remainingAdvance > 0) {
+          if (!closeTooth) {
+            this.completeGate();
+            return;
+          }
+
+          const hitsPerStep = this.getHitCountPerStepForPair(nextPairIndex);
+          const nextStepHitCount = nextStepState + 1;
+          const stepCompleted = nextStepHitCount >= hitsPerStep;
+
+          if (!stepCompleted) {
+            this.stepHitCount = nextStepHitCount;
+            const remainHits = this.getRemainHitCount(nextPairState, this.stepHitCount);
+            this.curHp = Math.max(1, remainHits);
+            this.updateHpLabel(remainHits);
+            return;
+          } else {
             var _this$getSliderPairLe;
 
-            const nextPairIndex = nextPairState + 1;
-            const startTooth = (_this$getSliderPairLe = this.getSliderPairLeadTooth(nextPairState)) != null ? _this$getSliderPairLe : this.teeth[0];
-            const closeTooth = this.getSliderPairLeadTooth(nextPairIndex);
+            let advancedPairCount = 0;
 
-            if (!closeTooth) {
-              break;
+            for (let i = 0; i < pairAdvancePerHit; i++) {
+              const closePairIndex = nextPairState + 1;
+              const leadTooth = this.getSliderPairLeadTooth(closePairIndex);
+
+              if (!leadTooth) {
+                break;
+              }
+
+              this.applyPairProgress(closePairIndex, 1, true, animDuration);
+              nextPairState = closePairIndex;
+              advancedPairCount++;
             }
 
-            const hitsPerStep = pairAdvancePerHit > 1 ? 1 : this.getHitCountPerStepForPair(nextPairIndex);
-            const remainStepCount = Math.max(1, hitsPerStep - nextStepState);
-            const advanceForPair = Math.min(remainingAdvance, remainStepCount);
-            const nextStepHitCount = nextStepState + advanceForPair;
-            const stepCompleted = nextStepHitCount >= hitsPerStep;
-            const currentPairProgress = this.getPairProgress(nextPairIndex);
-            const moveProgress = Math.min(1, nextStepHitCount / hitsPerStep);
-            const targetPairProgress = stepCompleted ? 1 : currentPairProgress + (1 - currentPairProgress) * (advanceForPair / remainStepCount);
-            this.applyPairProgress(nextPairIndex, targetPairProgress, true, animDuration);
-            targetPos = this.getSliderStepTargetPos(startTooth, closeTooth, moveProgress);
-            touchedPair = true;
-            remainingAdvance -= advanceForPair;
-
-            if (!stepCompleted) {
-              nextStepState = nextStepHitCount;
-              break;
+            if (advancedPairCount <= 0) {
+              this.completeGate();
+              return;
             }
 
-            nextPairState = nextPairIndex;
+            const targetTooth = (_this$getSliderPairLe = this.getSliderPairLeadTooth(nextPairState)) != null ? _this$getSliderPairLe : closeTooth;
+            targetPos = this.getSliderTargetPos(targetTooth).clone();
             nextStepState = 0;
           }
 
-          if (!touchedPair || !targetPos) {
+          if (!targetPos) {
             this.completeGate();
             return;
           }
@@ -1407,8 +1417,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           const clampedPairIndex = Math.max(stageStartPairIndex, Math.min(pairIndex, this.pairCount - 1));
-          const pairOrdinal = clampedPairIndex - stageStartPairIndex + 1;
-          const progress = Math.max(0, Math.min(1, pairOrdinal / remainingPairCount));
+          const pairAdvancePerHit = this.getPairAdvancePerHit();
+          const logicalStepCount = Math.max(1, Math.ceil(remainingPairCount / pairAdvancePerHit));
+          const logicalStepOrdinal = Math.floor((clampedPairIndex - stageStartPairIndex) / pairAdvancePerHit) + 1;
+          const progress = Math.max(0, Math.min(1, logicalStepOrdinal / logicalStepCount));
           let matchedCount = 0;
           let matchedEndProgress = Number.POSITIVE_INFINITY;
           let fallbackCount = 0;
@@ -1460,14 +1472,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           const pairAdvancePerHit = this.getPairAdvancePerHit();
-
-          if (pairAdvancePerHit > 1) {
-            return Math.max(0, Math.ceil((this.pairCount - firstPendingPairIndex) / pairAdvancePerHit));
-          }
-
           let remainAdvance = 0;
 
-          for (let i = firstPendingPairIndex; i < this.pairCount; i++) {
+          for (let i = firstPendingPairIndex; i < this.pairCount; i += pairAdvancePerHit) {
             const requiredHits = this.getHitCountPerStepForPair(i);
 
             if (i === firstPendingPairIndex) {

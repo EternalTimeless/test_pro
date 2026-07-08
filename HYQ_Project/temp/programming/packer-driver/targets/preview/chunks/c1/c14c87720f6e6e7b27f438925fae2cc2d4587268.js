@@ -629,46 +629,58 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           var animDuration = this.getHitAnimDuration();
           var pairAdvancePerHit = this.getPairAdvancePerHit();
-          var remainingAdvance = pairAdvancePerHit;
           var nextPairState = this.pairIndex;
           var nextStepState = this.stepHitCount;
           var targetPos = null;
-          var touchedPair = false;
+          var nextPairIndex = nextPairState + 1;
+          var closeTooth = this.getSliderPairLeadTooth(nextPairIndex);
 
-          while (remainingAdvance > 0) {
+          if (!closeTooth) {
+            this.completeGate();
+            return;
+          }
+
+          var hitsPerStep = this.getHitCountPerStepForPair(nextPairIndex);
+          var nextStepHitCount = nextStepState + 1;
+          var stepCompleted = nextStepHitCount >= hitsPerStep;
+
+          if (!stepCompleted) {
+            this.stepHitCount = nextStepHitCount;
+
+            var _remainHits = this.getRemainHitCount(nextPairState, this.stepHitCount);
+
+            this.curHp = Math.max(1, _remainHits);
+            this.updateHpLabel(_remainHits);
+            return;
+          } else {
             var _this$getSliderPairLe;
 
-            var nextPairIndex = nextPairState + 1;
-            var startTooth = (_this$getSliderPairLe = this.getSliderPairLeadTooth(nextPairState)) != null ? _this$getSliderPairLe : this.teeth[0];
-            var closeTooth = this.getSliderPairLeadTooth(nextPairIndex);
+            var advancedPairCount = 0;
 
-            if (!closeTooth) {
-              break;
+            for (var i = 0; i < pairAdvancePerHit; i++) {
+              var closePairIndex = nextPairState + 1;
+              var leadTooth = this.getSliderPairLeadTooth(closePairIndex);
+
+              if (!leadTooth) {
+                break;
+              }
+
+              this.applyPairProgress(closePairIndex, 1, true, animDuration);
+              nextPairState = closePairIndex;
+              advancedPairCount++;
             }
 
-            var hitsPerStep = pairAdvancePerHit > 1 ? 1 : this.getHitCountPerStepForPair(nextPairIndex);
-            var remainStepCount = Math.max(1, hitsPerStep - nextStepState);
-            var advanceForPair = Math.min(remainingAdvance, remainStepCount);
-            var nextStepHitCount = nextStepState + advanceForPair;
-            var stepCompleted = nextStepHitCount >= hitsPerStep;
-            var currentPairProgress = this.getPairProgress(nextPairIndex);
-            var moveProgress = Math.min(1, nextStepHitCount / hitsPerStep);
-            var targetPairProgress = stepCompleted ? 1 : currentPairProgress + (1 - currentPairProgress) * (advanceForPair / remainStepCount);
-            this.applyPairProgress(nextPairIndex, targetPairProgress, true, animDuration);
-            targetPos = this.getSliderStepTargetPos(startTooth, closeTooth, moveProgress);
-            touchedPair = true;
-            remainingAdvance -= advanceForPair;
-
-            if (!stepCompleted) {
-              nextStepState = nextStepHitCount;
-              break;
+            if (advancedPairCount <= 0) {
+              this.completeGate();
+              return;
             }
 
-            nextPairState = nextPairIndex;
+            var targetTooth = (_this$getSliderPairLe = this.getSliderPairLeadTooth(nextPairState)) != null ? _this$getSliderPairLe : closeTooth;
+            targetPos = this.getSliderTargetPos(targetTooth).clone();
             nextStepState = 0;
           }
 
-          if (!touchedPair || !targetPos) {
+          if (!targetPos) {
             this.completeGate();
             return;
           }
@@ -1431,8 +1443,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           var clampedPairIndex = Math.max(stageStartPairIndex, Math.min(pairIndex, this.pairCount - 1));
-          var pairOrdinal = clampedPairIndex - stageStartPairIndex + 1;
-          var progress = Math.max(0, Math.min(1, pairOrdinal / remainingPairCount));
+          var pairAdvancePerHit = this.getPairAdvancePerHit();
+          var logicalStepCount = Math.max(1, Math.ceil(remainingPairCount / pairAdvancePerHit));
+          var logicalStepOrdinal = Math.floor((clampedPairIndex - stageStartPairIndex) / pairAdvancePerHit) + 1;
+          var progress = Math.max(0, Math.min(1, logicalStepOrdinal / logicalStepCount));
           var matchedCount = 0;
           var matchedEndProgress = Number.POSITIVE_INFINITY;
           var fallbackCount = 0;
@@ -1492,14 +1506,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           var pairAdvancePerHit = this.getPairAdvancePerHit();
-
-          if (pairAdvancePerHit > 1) {
-            return Math.max(0, Math.ceil((this.pairCount - firstPendingPairIndex) / pairAdvancePerHit));
-          }
-
           var remainAdvance = 0;
 
-          for (var i = firstPendingPairIndex; i < this.pairCount; i++) {
+          for (var i = firstPendingPairIndex; i < this.pairCount; i += pairAdvancePerHit) {
             var requiredHits = this.getHitCountPerStepForPair(i);
 
             if (i === firstPendingPairIndex) {
