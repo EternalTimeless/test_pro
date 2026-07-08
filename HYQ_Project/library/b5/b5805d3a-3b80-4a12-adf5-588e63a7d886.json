@@ -12706,7 +12706,7 @@
     "spawnRandomX": 0.28,
     "spawnRandomZ": 0.5,
     "spawnScaleRandom": 0.06,
-    "spawnYawRandom": 6,
+    "spawnYawRandom": 0,
     "spawnPositionOffset": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -14286,6 +14286,7 @@
     ],
     "attackSpeed": 2,
     "maxRoleCount": 53,
+    "retryMaxRoleLayerCount": 3,
     "outerLayerRoleCount": 28,
     "shrinkAfterRoleLossDelay": 2,
     "maxShootingRoleCount": 32,

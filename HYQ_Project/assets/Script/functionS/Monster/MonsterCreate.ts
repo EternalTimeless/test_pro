@@ -1103,6 +1103,7 @@ export class MonsterCreate extends UnityUpComponent {
         }
 
         monster.attackTarget = targetRole.node;
+        monster.move.isRot = true;
         monster.move.moveMod = MoveModEnum.targetMove;
         monster.move.target = monster.attackTarget;
         return true;
@@ -1236,6 +1237,7 @@ export class MonsterCreate extends UnityUpComponent {
         monster.initX = spawnX;
         monster.init(this.getQuestDifficulty(quest, 1), this.getQuestFixedHp(quest));
         monster.move.moveMod = MoveModEnum.PosMove;
+        monster.move.isRot = false;
         monster.node.setPosition(x, this.getSpawnY(), this.getSpawnZ(z));
         this.applySpawnVariation(monster);
 
@@ -1411,6 +1413,7 @@ export class MonsterCreate extends UnityUpComponent {
         this._nextSpawnZ += this.brotherExcludeZ;
         monster.init(this.getQuestDifficulty(quest, (this._monsterBossCount * 2) + 1), this.getQuestFixedHp(quest));
         monster.move.moveMod = MoveModEnum.PosMove;
+        monster.move.isRot = false;
         monster.initX = this.getSpawnX(0);
         monster.node.setPosition(this.clampMonsterX(monster.initX), this.getSpawnY(), this.getSpawnZ(z));
         this.applySpawnVariation(monster);
@@ -1467,6 +1470,7 @@ export class MonsterCreate extends UnityUpComponent {
         this.posIndex = (this.posIndex + 1) % this.rowCount;
 
         monster.move.moveMod = MoveModEnum.PosMove;
+        monster.move.isRot = false;
 
         monster.node.setPosition(x, this.getSpawnY(), this.getSpawnZ(z));
         this.applySpawnVariation(monster);
@@ -1535,8 +1539,7 @@ export class MonsterCreate extends UnityUpComponent {
     private applySpawnVariation(monster: MonsterBattleTaerget) {
         const scale = 1 + (Math.random() - 0.5) * this.spawnScaleRandom * 2;
         monster.node.setScale(scale, scale, scale);
-        const yaw = monster.monsterType === MonsterType.ZombieBrother ? 0 : (Math.random() - 0.5) * this.spawnYawRandom * 2;
-        monster.node.setRotationFromEuler(0, 180 + yaw, 0);
+        monster.node.setRotationFromEuler(0, 180, 0);
         monster.fbx?.node?.setRotationFromEuler(0, 0, 0);
         monster.randomizeRunAnimation();
     }
@@ -1723,6 +1726,7 @@ export class MonsterCreate extends UnityUpComponent {
                 continue;
             }
             monster.move.moveMod = MoveModEnum.PosMove;
+            monster.move.isRot = false;
             tempV3.set(monster.node.worldPosition);
             tempV3.x = this.getMonsterMoveTargetX(monster, tempV3.z);
             tempV3.z = this.stage_1;
