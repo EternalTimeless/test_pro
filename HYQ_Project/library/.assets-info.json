@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1783497137464.4692,
+      "time": 1783500253582.317,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -622,11 +622,11 @@
       "uuid": "d16848b5-18b3-400e-8cad-f629e5124e7c"
     },
     "GameRes\\Prefab\\Prop_Brand.prefab": {
-      "time": 1783411714431.6836,
+      "time": 1783500251064.9622,
       "uuid": "0138029d-bfaa-4d43-aa1c-63b3be01e8e5"
     },
     "GameRes\\Prefab\\Prop_Brand_2.prefab": {
-      "time": 1783411708764.5044,
+      "time": 1783500235468.8767,
       "uuid": "09f7d7d0-5529-499d-8bbb-e3e6a9394677"
     },
     "GameRes\\Prefab\\Role.prefab": {
@@ -1670,7 +1670,7 @@
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
-      "time": 1783393257150.0571,
+      "time": 1783498272189.687,
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
@@ -1678,7 +1678,7 @@
       "uuid": "4c579f82-105c-430a-bfd7-23b68345d492"
     },
     "Script\\functionS\\Other\\PropBrand.ts": {
-      "time": 1783062752924.9905,
+      "time": 1783499290390.1216,
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {

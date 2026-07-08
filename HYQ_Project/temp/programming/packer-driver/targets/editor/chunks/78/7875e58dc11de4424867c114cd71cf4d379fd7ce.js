@@ -389,17 +389,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const bullet = (_crd && BulletManager === void 0 ? (_reportPossibleCrUseOfBulletManager({
             error: Error()
           }), BulletManager) : BulletManager).instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
-          const lalianTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
-          const lockLalian = !!lalianTarget;
           Role.bulletLayer.addChild(bullet.node);
           bullet.node.setWorldPosition(pos);
-          Role.aimBulletToCurrentTarget(bullet, lockWorldX);
           const firstBulletRandomX = Math.max(0, initialBulletRandomX);
 
           if (firstBulletRandomX > 0) {
             bullet.node.x += (Math.random() - 0.5) * 2 * firstBulletRandomX;
           }
 
+          const lockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
+          Role.aimBulletToCurrentTarget(bullet, lockWorldX);
           batchRenderer.registerBullet(bullet);
 
           if (playEffect) {
@@ -416,8 +415,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             bullet.node.setWorldPosition(pos);
             const x = (Math.random() - 0.5) * 2;
             bullet.node.x += x;
+            const bulletLockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
 
-            if (!lockLalian) {
+            if (!bulletLockLalian) {
               const z = (Math.random() - 0.5) * 4;
               bullet.node.z += z;
             }

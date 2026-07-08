@@ -3111,7 +3111,7 @@
       "__id__": 178
     },
     "tireCount": 1,
-    "hp": 1,
+    "hp": 2,
     "moveCount": 8,
     "isCanMove": true,
     "canHeight": 0,
@@ -12766,7 +12766,7 @@
     "mixBaby01": false,
     "baby1Ratio": 0.5,
     "monsterCountMax": 80,
-    "actualSpawnCount": 20,
+    "actualSpawnCount": 40,
     "zRangeCountBase": 80,
     "monsterHp": 0,
     "difficulty": 0,
