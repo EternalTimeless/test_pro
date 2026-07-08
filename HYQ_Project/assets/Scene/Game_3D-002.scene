@@ -11317,6 +11317,7 @@
     "hpLabel": null,
     "nodeCount": 0,
     "hitPerNode": 2,
+    "pairAdvancePerHit": 3,
     "hitCountPerStep": 1,
     "hitStageConfigList": [],
     "teethPerPair": 2,
@@ -12322,6 +12323,7 @@
     "hpLabel": null,
     "nodeCount": 25,
     "hitPerNode": 4,
+    "pairAdvancePerHit": 1,
     "hitCountPerStep": 1,
     "hitStageConfigList": [],
     "teethPerPair": 2,
@@ -12439,6 +12441,7 @@
     "hpLabel": null,
     "nodeCount": 0,
     "hitPerNode": 3,
+    "pairAdvancePerHit": 2,
     "hitCountPerStep": 6,
     "hitStageConfigList": [
       {
@@ -12705,7 +12708,7 @@
     "monsterDeathThrowRandomHeight": 0.35,
     "waveRoleCount": 3,
     "waveRoleStageIndexList": [
-      0,
+      1,
       5
     ],
     "waveRoleMonsterGap": 0.5,

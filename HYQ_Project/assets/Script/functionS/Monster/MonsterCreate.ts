@@ -158,9 +158,10 @@ export class MonsterCreate extends UnityUpComponent {
     private _spawnAllWavesOnStart: boolean = true;
     @property({ type: CCInteger, displayName: '油桶大波次数量', tooltip: '兼容旧配置：当“油桶对应波次索引”为空时，使用这里的数量从第 0 波开始顺序生成油桶。' })
     public waveRoleCount: number = 3;
-    @property({ type: [CCInteger], displayName: '油桶对应波次索引', tooltip: '数组内每一项生成一个油桶，并对应一个怪物波次；例如 [0, 2] 表示只生成两个油桶。0 表示第 0 波。' })
+    @property({ type: [CCInteger], displayName: '油桶所在怪物波次索引(0=第0波)', tooltip: '数组内每一项生成一个油桶。填 0 表示放在第 0 波怪物前面，填 1 表示放在第 1 波怪物前面。' })
     public waveRoleStageIndexList: number[] = [0, 2, 5];
     private _waveRoleNodes: PropArms[] = [];
+    private _stageStartZList: number[] = [];
     private _waveStageStartZList: number[] = [];
     private _waveStageIndexList: number[] = [];
     private _monsterWaveIndexMap: WeakMap<MonsterBattleTaerget, number> = new WeakMap();
@@ -234,6 +235,7 @@ export class MonsterCreate extends UnityUpComponent {
         if (stageIndexList.length <= 0) {
             return;
         }
+        this._stageStartZList = allStageStartZList.slice();
         const stageZList = stageIndexList.map((stageIndex) => allStageStartZList[stageIndex]);
         this._waveStageIndexList = stageIndexList.slice();
         this._waveStageStartZList = stageZList.slice();
@@ -434,22 +436,6 @@ export class MonsterCreate extends UnityUpComponent {
         return result;
     }
 
-    private buildStageToWaveRoleIndexList(stageCount: number, stageStartIndexList: number[]) {
-        const result: number[] = [];
-        if (stageCount <= 0 || stageStartIndexList.length <= 0) {
-            return result;
-        }
-
-        let waveIndex = 0;
-        for (let i = 0; i < stageCount; i++) {
-            while (waveIndex + 1 < stageStartIndexList.length && i >= stageStartIndexList[waveIndex + 1]) {
-                waveIndex++;
-            }
-            result.push(waveIndex);
-        }
-        return result;
-    }
-
     private getBigWaveStartZList(allStageStartZList: number[], bigWaveCount: number) {
         const result: number[] = [];
         if (!allStageStartZList.length || bigWaveCount <= 0) {
@@ -569,7 +555,8 @@ export class MonsterCreate extends UnityUpComponent {
 
         for (let i = 0; i < this._waveRoleNodes.length; i++) {
             const role = this._waveRoleNodes[i];
-            const frontMonster = this.getFrontMonsterByWave(i);
+            const targetWaveIndex = this._waveStageIndexList[i] ?? i;
+            const frontMonster = this.getFrontMonsterByWave(targetWaveIndex);
             if (!role?.node || !frontMonster?.node) {
                 continue;
             }
@@ -633,17 +620,13 @@ export class MonsterCreate extends UnityUpComponent {
         this._rebirthWaveInitialMaxZList.length = 0;
         this._monsterRebirthOrderIndex = 0;
 
-        const stageToBigWaveList = this.buildStageToWaveRoleIndexList(
-            this.getConfiguredWaveCount(),
-            this.getWaveRoleStageIndexList(this.getConfiguredWaveCount()),
-        );
         let stageCursor = 0;
 
         for (let i = 0; i < stageList.length; i++) {
             const quest = stageList[i];
             const loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
             for (let loop = 0; loop < loopCount; loop++) {
-                const waveIndex = stageToBigWaveList[Math.min(stageCursor, stageToBigWaveList.length - 1)] ?? 0;
+                const waveIndex = stageCursor;
                 const spawnCount = this.getQuestSpawnCount(quest);
                 const rangeCount = this.getQuestRangeCount(quest);
                 if (quest.monsterType == MonsterType.ZombieBrother || spawnCount >= rangeCount) {
@@ -1358,19 +1341,19 @@ export class MonsterCreate extends UnityUpComponent {
     }
 
     private getWaveIndexByMonsterZ(z: number) {
-        if (this._waveStageStartZList.length <= 0) {
+        if (this._stageStartZList.length <= 0) {
             return -1;
         }
 
         const localZ = z - this.node.worldPositionZ;
-        for (let i = 0; i < this._waveStageStartZList.length; i++) {
-            const currentStart = this._waveStageStartZList[i];
-            const nextStart = i + 1 < this._waveStageStartZList.length ? this._waveStageStartZList[i + 1] : Number.POSITIVE_INFINITY;
+        for (let i = 0; i < this._stageStartZList.length; i++) {
+            const currentStart = this._stageStartZList[i];
+            const nextStart = i + 1 < this._stageStartZList.length ? this._stageStartZList[i + 1] : Number.POSITIVE_INFINITY;
             if (localZ >= currentStart && localZ < nextStart) {
                 return i;
             }
         }
-        return localZ < this._waveStageStartZList[0] ? 0 : this._waveStageStartZList.length - 1;
+        return localZ < this._stageStartZList[0] ? 0 : this._stageStartZList.length - 1;
     }
 
     public getWaveStageStartZList(stageCount: number): number[] {
@@ -1705,9 +1688,10 @@ export class MonsterCreate extends UnityUpComponent {
             // 所以活着的 Role 也需要重新注册碰撞
             BulletMonsterCollisionManager.instance.registerTarget(role);
             role.node.active = true;
+            const targetWaveIndex = this._waveStageIndexList[i] ?? i;
             const frontMonster = rebirthLayout
-                ? this.getFrontMonsterByWaveLayout(i, rebirthLayout)
-                : this.getFrontMonsterByWave(i);
+                ? this.getFrontMonsterByWaveLayout(targetWaveIndex, rebirthLayout)
+                : this.getFrontMonsterByWave(targetWaveIndex);
             if (!frontMonster || !frontMonster.node) {
                 continue;
             }
