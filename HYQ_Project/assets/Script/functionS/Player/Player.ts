@@ -86,6 +86,9 @@ export class Player extends UnityUpComponent {
     @property({ type: CCInteger, displayName: '+1人数上限', tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。' })
     public maxRoleCount: number = 53;
 
+    @property({ type: CCInteger, displayName: '再来一次补人圈数上限', tooltip: '按画面可见圈数限制。3 表示中心第1圈 + 外围第2圈 + 外围第3圈。' })
+    public retryMaxRoleLayerCount: number = 3;
+
     @property({ type: CCInteger, displayName: '最外圈角色数', tooltip: '最外圈排满需要的角色数量。填 28 时，满员阵型为 1 + 8 + 16 + 28 = 53。' })
     public outerLayerRoleCount: number = 28;
 
@@ -1244,7 +1247,8 @@ export class Player extends UnityUpComponent {
         this.pendingStaggerShots.length = 0;
         this._attackTime = 0.5;
         this.shootRoleStartIndex = 0;
-        for (let i = 0; i < this.curCount; i++) {
+        const retryRoleCount = Math.min(this.curCount, this.getRetryMaxRoleCount());
+        for (let i = 0; i < retryRoleCount; i++) {
             const role = this.role;
             this.roleList.push(role);
             this.node.addChild(role.node);
@@ -1267,6 +1271,15 @@ export class Player extends UnityUpComponent {
     private syncRespawnRoleCount(): void {
         const currentRoleCount = this.roleList?.length ?? 0;
         this.curCount = Math.min(this.getEffectiveMaxRoleCount(), Math.max(1, this.curCount, currentRoleCount));
+    }
+
+    private getRetryMaxRoleCount(): number {
+        const circleCount = Math.max(1, Math.floor(this.retryMaxRoleLayerCount));
+        let maxCount = 1;
+        for (let layer = 0; layer < circleCount - 1; layer++) {
+            maxCount += this.getRoleLayerCount(layer);
+        }
+        return Math.min(this.getEffectiveMaxRoleCount(), maxCount);
     }
 
     private clearRolesForRetry(): void {
