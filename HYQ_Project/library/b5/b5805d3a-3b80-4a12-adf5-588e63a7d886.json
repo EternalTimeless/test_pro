@@ -14329,28 +14329,40 @@
     "armsType": 2,
     "weaponModel": 1,
     "bulletPower": 1,
-    "bulletType": 0
+    "bulletType": 0,
+    "randomizeShotOrder": true,
+    "randomShotDelayWindowRatio": 0.75,
+    "initialBulletRandomX": 0.2
   },
   {
     "__type__": "WeaponBulletConfig",
     "armsType": 3,
     "weaponModel": -1,
     "bulletPower": 0.8,
-    "bulletType": 3
+    "bulletType": 3,
+    "randomizeShotOrder": false,
+    "randomShotDelayWindowRatio": 0.75,
+    "initialBulletRandomX": 0
   },
   {
     "__type__": "WeaponBulletConfig",
     "armsType": 3,
     "weaponModel": -1,
     "bulletPower": 1.5,
-    "bulletType": 4
+    "bulletType": 4,
+    "randomizeShotOrder": false,
+    "randomShotDelayWindowRatio": 0.75,
+    "initialBulletRandomX": 0
   },
   {
     "__type__": "WeaponBulletConfig",
     "armsType": -1,
     "weaponModel": 0,
     "bulletPower": 1,
-    "bulletType": 1
+    "bulletType": 1,
+    "randomizeShotOrder": false,
+    "randomShotDelayWindowRatio": 0.75,
+    "initialBulletRandomX": 0
   },
   {
     "__type__": "cc.Node",

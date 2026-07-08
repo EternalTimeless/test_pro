@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _class4, _class5, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _class4, _class5, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -184,6 +184,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }), BulletEnum) : BulletEnum,
         displayName: '子弹模型',
         tooltip: '该武器使用的子弹预制体类型。'
+      }), _dec6 = property({
+        type: CCBoolean,
+        displayName: '打乱发射顺序',
+        tooltip: '复数角色时随机打乱该武器的发射时机，不改变子弹方向。'
+      }), _dec7 = property({
+        type: CCFloat,
+        displayName: '随机发射延迟比例',
+        tooltip: '每个角色随机延迟发射的最大时间占攻击间隔的比例。只影响发射顺序。'
+      }), _dec8 = property({
+        type: CCFloat,
+        displayName: '初始子弹随机X',
+        tooltip: '只给每个角色本次发射的第一颗子弹增加轻微 X 轴随机。0 表示关闭。'
       }), _dec(_class = (_class2 = class WeaponBulletConfig {
         constructor() {
           _initializerDefineProperty(this, "armsType", _descriptor, this);
@@ -193,6 +205,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "bulletPower", _descriptor3, this);
 
           _initializerDefineProperty(this, "bulletType", _descriptor4, this);
+
+          _initializerDefineProperty(this, "randomizeShotOrder", _descriptor5, this);
+
+          _initializerDefineProperty(this, "randomShotDelayWindowRatio", _descriptor6, this);
+
+          _initializerDefineProperty(this, "initialBulletRandomX", _descriptor7, this);
         }
 
       }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "armsType", [_dec2], {
@@ -229,6 +247,27 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), BulletEnum) : BulletEnum).arrow;
         }
+      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "randomizeShotOrder", [_dec6], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return false;
+        }
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "randomShotDelayWindowRatio", [_dec7], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0.75;
+        }
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "initialBulletRandomX", [_dec8], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 0;
+        }
       })), _class2)) || _class);
 
       PlayerFBXAnimName = /*#__PURE__*/function (PlayerFBXAnimName) {
@@ -240,45 +279,45 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         return PlayerFBXAnimName;
       }(PlayerFBXAnimName || {});
 
-      _export("Player", Player = (_dec6 = ccclass('Player'), _dec7 = property(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+      _export("Player", Player = (_dec9 = ccclass('Player'), _dec10 = property(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
         error: Error()
-      }), Role) : Role), _dec8 = property(CCFloat), _dec9 = property({
+      }), Role) : Role), _dec11 = property(CCFloat), _dec12 = property({
         type: CCInteger,
         displayName: '+1人数上限',
         tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。'
-      }), _dec10 = property({
+      }), _dec13 = property({
         type: CCInteger,
         displayName: '最外圈角色数',
         tooltip: '最外圈排满需要的角色数量。填 28 时，满员阵型为 1 + 8 + 16 + 28 = 53。'
-      }), _dec11 = property({
+      }), _dec14 = property({
         type: CCFloat,
         displayName: '减员缩圈延迟(秒)',
         tooltip: '角色减少后等待多久再重新排列缩圈。等待期间再次减员会重新计时。'
-      }), _dec12 = property({
+      }), _dec15 = property({
         type: CCInteger,
         displayName: '同时发射子弹人数上限',
         tooltip: '每轮最多允许多少个角色同时发射子弹。只限制射击人数，不影响 +1 总人数。'
-      }), _dec13 = property({
+      }), _dec16 = property({
         type: CCInteger,
         displayName: '枪口特效最大播放数',
         tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。'
-      }), _dec14 = property({
+      }), _dec17 = property({
         type: CCInteger,
         displayName: '错峰发射武器配置索引',
         tooltip: '指定哪一个武器子弹配置使用错峰发射。0 表示第一个油桶给出的武器；负数表示关闭。'
-      }), _dec15 = property({
+      }), _dec18 = property({
         type: CCFloat,
         displayName: '错峰发射占攻击间隔比例',
         tooltip: '错峰武器每轮射击摊开的时间比例。0.85 表示在本轮攻击间隔的 85% 时间内连续发射，伤害和总弹量不变。'
-      }), _dec16 = property({
+      }), _dec19 = property({
         type: CCInteger,
         displayName: '默认武器配置索引',
         tooltip: '开局默认使用的“武器子弹配置”索引。-1 表示保持旧默认值：子弹 arrow、威力 1、攻击速度使用 Player.attackSpeed。'
-      }), _dec17 = property(CCBoolean), _dec18 = property({
+      }), _dec20 = property(CCBoolean), _dec21 = property({
         type: [WeaponBulletConfig],
         displayName: '武器子弹配置',
         tooltip: '配置各武器的子弹威力和子弹模型。'
-      }), _dec19 = property(Node), _dec6(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), _dec22 = property(Node), _dec9(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor(...args) {
@@ -288,35 +327,35 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), RoleEnum) : RoleEnum).underling;
 
-          _initializerDefineProperty(this, "roleList", _descriptor5, this);
+          _initializerDefineProperty(this, "roleList", _descriptor8, this);
 
           this.move = void 0;
 
-          _initializerDefineProperty(this, "attackSpeed", _descriptor6, this);
+          _initializerDefineProperty(this, "attackSpeed", _descriptor9, this);
 
           this.isDie = false;
           this.curCount = 1;
           this.pendingAddRoleCount = 0;
 
-          _initializerDefineProperty(this, "maxRoleCount", _descriptor7, this);
+          _initializerDefineProperty(this, "maxRoleCount", _descriptor10, this);
 
-          _initializerDefineProperty(this, "outerLayerRoleCount", _descriptor8, this);
+          _initializerDefineProperty(this, "outerLayerRoleCount", _descriptor11, this);
 
-          _initializerDefineProperty(this, "shrinkAfterRoleLossDelay", _descriptor9, this);
+          _initializerDefineProperty(this, "shrinkAfterRoleLossDelay", _descriptor12, this);
 
-          _initializerDefineProperty(this, "maxShootingRoleCount", _descriptor10, this);
+          _initializerDefineProperty(this, "maxShootingRoleCount", _descriptor13, this);
 
-          _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor11, this);
+          _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor14, this);
 
-          _initializerDefineProperty(this, "staggerShotWeaponConfigIndex", _descriptor12, this);
+          _initializerDefineProperty(this, "staggerShotWeaponConfigIndex", _descriptor15, this);
 
-          _initializerDefineProperty(this, "staggerShotWindowRatio", _descriptor13, this);
+          _initializerDefineProperty(this, "staggerShotWindowRatio", _descriptor16, this);
 
-          _initializerDefineProperty(this, "defaultWeaponConfigIndex", _descriptor14, this);
+          _initializerDefineProperty(this, "defaultWeaponConfigIndex", _descriptor17, this);
 
-          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor15, this);
+          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor18, this);
 
-          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor16, this);
+          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor19, this);
 
           this.shootRoleStartIndex = 0;
           this.pendingRoleSwitchType = null;
@@ -329,6 +368,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.pendingBulletPrewarmCount = 0;
           this.pendingBulletBatchWarmType = null;
           this.bulletPrewarmPerFrame = 2;
+          this.currentWeaponBulletConfig = null;
           this.currentWeaponBulletConfigIndex = -1;
           this.staggerShotClock = 0;
           this.pendingStaggerShots = [];
@@ -340,7 +380,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isLock = false;
 
           // public MoveX: number = 8;
-          _initializerDefineProperty(this, "shootList", _descriptor17, this);
+          _initializerDefineProperty(this, "shootList", _descriptor20, this);
 
           this.shootIndex = 1;
           this.attackIn = false;
@@ -402,6 +442,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
             const outerLayer = this.getShootingOuterLayer(shootCount);
             const useStaggerShot = this.shouldUseStaggerShot();
+            const useRandomShot = shootCount > 1 && this.shouldUseRandomShot();
+            const randomShotConfig = this.currentWeaponBulletConfig;
             let effectPlayCount = 0;
 
             for (let i = 0; i < shootCount; i++) {
@@ -415,7 +457,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                   effectPlayCount++;
                 }
 
-                if (useStaggerShot) {
+                if (useRandomShot) {
+                  var _randomShotConfig$ran, _randomShotConfig$ini;
+
+                  this.enqueueRandomShot(role, attackTime, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect, (_randomShotConfig$ran = randomShotConfig == null ? void 0 : randomShotConfig.randomShotDelayWindowRatio) != null ? _randomShotConfig$ran : 0, (_randomShotConfig$ini = randomShotConfig == null ? void 0 : randomShotConfig.initialBulletRandomX) != null ? _randomShotConfig$ini : 0);
+                } else if (useStaggerShot) {
                   this.enqueueStaggerShot(role, i, shootCount, attackTime, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
                 } else {
                   role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
@@ -440,7 +486,35 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         shouldUseStaggerShot() {
+          if (this.currentWeaponBulletConfig) {
+            return false;
+          }
+
           return this.staggerShotWeaponConfigIndex >= 0 && this.currentWeaponBulletConfigIndex === Math.floor(this.staggerShotWeaponConfigIndex) && this.staggerShotWindowRatio > 0;
+        }
+
+        shouldUseRandomShot() {
+          var _this$currentWeaponBu;
+
+          return !!((_this$currentWeaponBu = this.currentWeaponBulletConfig) != null && _this$currentWeaponBu.randomizeShotOrder);
+        }
+
+        enqueueRandomShot(role, attackTime, visualBulletCount, damageScale, lockWorldX, playEffect, delayWindowRatio, initialBulletRandomX) {
+          if (!role) {
+            return;
+          }
+
+          const windowRatio = Math.max(0, Math.min(0.95, delayWindowRatio));
+          const delay = Math.random() * Math.max(0, attackTime * windowRatio);
+          this.pendingStaggerShots.push({
+            role,
+            fireTime: this.staggerShotClock + delay,
+            visualBulletCount,
+            damageScale,
+            lockWorldX,
+            playEffect,
+            initialBulletRandomX: Math.max(0, initialBulletRandomX)
+          });
         }
 
         enqueueStaggerShot(role, shotIndex, shootCount, attackTime, visualBulletCount, damageScale, lockWorldX, playEffect) {
@@ -458,7 +532,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             visualBulletCount,
             damageScale,
             lockWorldX,
-            playEffect
+            playEffect,
+            initialBulletRandomX: 0
           });
         }
 
@@ -477,7 +552,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               continue;
             }
 
-            shot.role.attackEvent(0, shot.visualBulletCount, shot.damageScale, shot.lockWorldX, shot.playEffect);
+            shot.role.attackEvent(0, shot.visualBulletCount, shot.damageScale, shot.lockWorldX, shot.playEffect, shot.initialBulletRandomX);
           }
         }
 
@@ -529,6 +604,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const weaponBulletConfig = this.getWeaponBulletConfig(armwType, weaponBulletConfigIndex);
           const upgradeArmsType = (_weaponBulletConfig$a = weaponBulletConfig == null ? void 0 : weaponBulletConfig.armsType) != null ? _weaponBulletConfig$a : armwType;
           this.pendingStaggerShots.length = 0;
+          this.currentWeaponBulletConfig = weaponBulletConfig;
           this.currentWeaponBulletConfigIndex = weaponBulletConfig ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex) : -1;
           let shouldApplyRoleModel = false;
 
@@ -744,6 +820,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const config = this.getWeaponBulletConfigByIndex(this.defaultWeaponConfigIndex);
 
           if (!config) {
+            this.currentWeaponBulletConfig = null;
             this.currentWeaponBulletConfigIndex = -1;
             return;
           }
@@ -759,6 +836,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), Role) : Role).soundType = soundType;
           }
 
+          this.currentWeaponBulletConfig = config;
           this.currentWeaponBulletConfigIndex = this.getWeaponBulletConfigResolvedIndex(config, this.defaultWeaponConfigIndex);
         }
 
@@ -1855,84 +1933,84 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         // }
 
 
-      }, _class6.instance = void 0, _class6), (_descriptor5 = _applyDecoratedDescriptor(_class5.prototype, "roleList", [_dec7], {
+      }, _class6.instance = void 0, _class6), (_descriptor8 = _applyDecoratedDescriptor(_class5.prototype, "roleList", [_dec10], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return [];
         }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class5.prototype, "attackSpeed", [_dec8], {
+      }), _descriptor9 = _applyDecoratedDescriptor(_class5.prototype, "attackSpeed", [_dec11], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor7 = _applyDecoratedDescriptor(_class5.prototype, "maxRoleCount", [_dec9], {
+      }), _descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "maxRoleCount", [_dec12], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 53;
         }
-      }), _descriptor8 = _applyDecoratedDescriptor(_class5.prototype, "outerLayerRoleCount", [_dec10], {
+      }), _descriptor11 = _applyDecoratedDescriptor(_class5.prototype, "outerLayerRoleCount", [_dec13], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 28;
         }
-      }), _descriptor9 = _applyDecoratedDescriptor(_class5.prototype, "shrinkAfterRoleLossDelay", [_dec11], {
+      }), _descriptor12 = _applyDecoratedDescriptor(_class5.prototype, "shrinkAfterRoleLossDelay", [_dec14], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "maxShootingRoleCount", [_dec12], {
+      }), _descriptor13 = _applyDecoratedDescriptor(_class5.prototype, "maxShootingRoleCount", [_dec15], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 30;
         }
-      }), _descriptor11 = _applyDecoratedDescriptor(_class5.prototype, "maxMuzzleEffectCount", [_dec13], {
+      }), _descriptor14 = _applyDecoratedDescriptor(_class5.prototype, "maxMuzzleEffectCount", [_dec16], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 8;
         }
-      }), _descriptor12 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWeaponConfigIndex", [_dec14], {
+      }), _descriptor15 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWeaponConfigIndex", [_dec17], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0;
         }
-      }), _descriptor13 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWindowRatio", [_dec15], {
+      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWindowRatio", [_dec18], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.85;
         }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class5.prototype, "defaultWeaponConfigIndex", [_dec16], {
+      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "defaultWeaponConfigIndex", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return -1;
         }
-      }), _descriptor15 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec17], {
+      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec20], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return false;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec18], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec21], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -1949,6 +2027,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             config.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
               error: Error()
             }), BulletEnum) : BulletEnum).arrow_1;
+            config.randomizeShotOrder = true;
+            config.initialBulletRandomX = 0.35;
             return config;
           })(), (() => {
             const config = new WeaponBulletConfig();
@@ -1962,6 +2042,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             config.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
               error: Error()
             }), BulletEnum) : BulletEnum).arrow_2;
+            config.randomizeShotOrder = true;
+            config.initialBulletRandomX = 0.35;
             return config;
           })(), (() => {
             const config = new WeaponBulletConfig();
@@ -1991,7 +2073,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return config;
           })()];
         }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec19], {
+      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec22], {
         configurable: true,
         enumerable: true,
         writable: true,

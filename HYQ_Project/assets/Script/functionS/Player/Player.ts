@@ -32,6 +32,15 @@ class WeaponBulletConfig {
 
     @property({ type: BulletEnum, displayName: '子弹模型', tooltip: '该武器使用的子弹预制体类型。' })
     public bulletType: BulletEnum = BulletEnum.arrow;
+
+    @property({ type: CCBoolean, displayName: '打乱发射顺序', tooltip: '复数角色时随机打乱该武器的发射时机，不改变子弹方向。' })
+    public randomizeShotOrder: boolean = false;
+
+    @property({ type: CCFloat, displayName: '随机发射延迟比例', tooltip: '每个角色随机延迟发射的最大时间占攻击间隔的比例。只影响发射顺序。' })
+    public randomShotDelayWindowRatio: number = 0.75;
+
+    @property({ type: CCFloat, displayName: '初始子弹随机X', tooltip: '只给每个角色本次发射的第一颗子弹增加轻微 X 轴随机。0 表示关闭。' })
+    public initialBulletRandomX: number = 0;
 }
 
 type PendingRoleShot = {
@@ -41,6 +50,7 @@ type PendingRoleShot = {
     damageScale: number;
     lockWorldX: number;
     playEffect: boolean;
+    initialBulletRandomX: number;
 };
 
 
@@ -103,6 +113,8 @@ export class Player extends UnityUpComponent {
             config.weaponModel = ArmsTypeEnum.none;
             config.bulletPower = 2;
             config.bulletType = BulletEnum.arrow_1;
+            config.randomizeShotOrder = true;
+            config.initialBulletRandomX = 0.35;
             return config;
         })(),
         (() => {
@@ -111,6 +123,8 @@ export class Player extends UnityUpComponent {
             config.weaponModel = ArmsTypeEnum.none;
             config.bulletPower = 2;
             config.bulletType = BulletEnum.arrow_2;
+            config.randomizeShotOrder = true;
+            config.initialBulletRandomX = 0.35;
             return config;
         })(),
         (() => {
@@ -142,6 +156,7 @@ export class Player extends UnityUpComponent {
     private pendingBulletPrewarmCount: number = 0;
     private pendingBulletBatchWarmType: BulletEnum = null;
     private readonly bulletPrewarmPerFrame: number = 2;
+    private currentWeaponBulletConfig: WeaponBulletConfig | null = null;
     private currentWeaponBulletConfigIndex: number = -1;
     private staggerShotClock: number = 0;
     private pendingStaggerShots: PendingRoleShot[] = [];
@@ -214,6 +229,8 @@ export class Player extends UnityUpComponent {
             const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
             const outerLayer = this.getShootingOuterLayer(shootCount);
             const useStaggerShot = this.shouldUseStaggerShot();
+            const useRandomShot = shootCount > 1 && this.shouldUseRandomShot();
+            const randomShotConfig = this.currentWeaponBulletConfig;
             let effectPlayCount = 0;
             for (let i = 0; i < shootCount; i++) {
                 const roleIndex = (this.shootRoleStartIndex + i) % this.roleList.length;
@@ -223,7 +240,18 @@ export class Player extends UnityUpComponent {
                     if (playEffect) {
                         effectPlayCount++;
                     }
-                    if (useStaggerShot) {
+                    if (useRandomShot) {
+                        this.enqueueRandomShot(
+                            role,
+                            attackTime,
+                            role.visualBulletCount,
+                            1,
+                            this.node.worldPosition.x,
+                            playEffect,
+                            randomShotConfig?.randomShotDelayWindowRatio ?? 0,
+                            randomShotConfig?.initialBulletRandomX ?? 0,
+                        );
+                    } else if (useStaggerShot) {
                         this.enqueueStaggerShot(role, i, shootCount, attackTime, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
                     } else {
                         role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
@@ -248,9 +276,33 @@ export class Player extends UnityUpComponent {
     }
 
     private shouldUseStaggerShot(): boolean {
+        if (this.currentWeaponBulletConfig) {
+            return false;
+        }
         return this.staggerShotWeaponConfigIndex >= 0
             && this.currentWeaponBulletConfigIndex === Math.floor(this.staggerShotWeaponConfigIndex)
             && this.staggerShotWindowRatio > 0;
+    }
+
+    private shouldUseRandomShot(): boolean {
+        return !!this.currentWeaponBulletConfig?.randomizeShotOrder;
+    }
+
+    private enqueueRandomShot(role: Role, attackTime: number, visualBulletCount: number, damageScale: number, lockWorldX: number, playEffect: boolean, delayWindowRatio: number, initialBulletRandomX: number): void {
+        if (!role) {
+            return;
+        }
+        const windowRatio = Math.max(0, Math.min(0.95, delayWindowRatio));
+        const delay = Math.random() * Math.max(0, attackTime * windowRatio);
+        this.pendingStaggerShots.push({
+            role,
+            fireTime: this.staggerShotClock + delay,
+            visualBulletCount,
+            damageScale,
+            lockWorldX,
+            playEffect,
+            initialBulletRandomX: Math.max(0, initialBulletRandomX),
+        });
     }
 
     private enqueueStaggerShot(role: Role, shotIndex: number, shootCount: number, attackTime: number, visualBulletCount: number, damageScale: number, lockWorldX: number, playEffect: boolean): void {
@@ -269,6 +321,7 @@ export class Player extends UnityUpComponent {
             damageScale,
             lockWorldX,
             playEffect,
+            initialBulletRandomX: 0,
         });
     }
 
@@ -283,7 +336,7 @@ export class Player extends UnityUpComponent {
             if (!shot.role || !shot.role.node || !shot.role.node.activeInHierarchy || shot.role.attackIN) {
                 continue;
             }
-            shot.role.attackEvent(0, shot.visualBulletCount, shot.damageScale, shot.lockWorldX, shot.playEffect);
+            shot.role.attackEvent(0, shot.visualBulletCount, shot.damageScale, shot.lockWorldX, shot.playEffect, shot.initialBulletRandomX);
         }
     }
 
@@ -326,6 +379,7 @@ export class Player extends UnityUpComponent {
         const weaponBulletConfig = this.getWeaponBulletConfig(armwType, weaponBulletConfigIndex);
         const upgradeArmsType = weaponBulletConfig?.armsType ?? armwType;
         this.pendingStaggerShots.length = 0;
+        this.currentWeaponBulletConfig = weaponBulletConfig;
         this.currentWeaponBulletConfigIndex = weaponBulletConfig ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex) : -1;
         let shouldApplyRoleModel = false;
         switch (upgradeArmsType) {
@@ -462,6 +516,7 @@ export class Player extends UnityUpComponent {
     private applyDefaultWeaponConfig(): void {
         const config = this.getWeaponBulletConfigByIndex(this.defaultWeaponConfigIndex);
         if (!config) {
+            this.currentWeaponBulletConfig = null;
             this.currentWeaponBulletConfigIndex = -1;
             return;
         }
@@ -472,6 +527,7 @@ export class Player extends UnityUpComponent {
         if (soundType !== null) {
             Role.soundType = soundType;
         }
+        this.currentWeaponBulletConfig = config;
         this.currentWeaponBulletConfigIndex = this.getWeaponBulletConfigResolvedIndex(config, this.defaultWeaponConfigIndex);
     }
 

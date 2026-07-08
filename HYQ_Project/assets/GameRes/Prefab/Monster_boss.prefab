@@ -186,7 +186,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 0.461,
       "z": 0
     },
     "_lrot": {
@@ -888,6 +888,14 @@
     "bossAttackOffsetZ": 5,
     "bossMinGapZ": 1.4,
     "bossAttackLockOffsetZ": 0.28,
+    "smallMonsterAttackOffsetZ": 1.2,
+    "smallMonsterAttackMinCenterGapZ": 0.85,
+    "smallMonsterAttackLockOffsetX": 0.55,
+    "smallMonsterAttackLockOffsetZ": 0.22,
+    "smallMonsterDieOverrideClip": null,
+    "smallMonsterDeathThrowHeight": 0.8,
+    "smallMonsterDeathThrowDistanceZ": 6,
+    "smallMonsterDeathThrowDurationRate": 0.5,
     "_id": ""
   },
   {

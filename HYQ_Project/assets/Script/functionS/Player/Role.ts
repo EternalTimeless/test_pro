@@ -228,7 +228,7 @@ export class Role extends Component {
         return 1 + this.attackNum;
     }
 
-    public attackEvent(num: number, visualBulletCount: number = this.visualBulletCount, damageScale: number = 1, lockWorldX: number = this.node.worldPosition.x, playEffect: boolean = true) {
+    public attackEvent(num: number, visualBulletCount: number = this.visualBulletCount, damageScale: number = 1, lockWorldX: number = this.node.worldPosition.x, playEffect: boolean = true, initialBulletRandomX: number = 0) {
         if (visualBulletCount <= 0) {
             return;
         }
@@ -241,6 +241,10 @@ export class Role extends Component {
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
         Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+        const firstBulletRandomX = Math.max(0, initialBulletRandomX);
+        if (firstBulletRandomX > 0) {
+            bullet.node.x += (Math.random() - 0.5) * 2 * firstBulletRandomX;
+        }
         batchRenderer.registerBullet(bullet);
         if (playEffect) {
             this.effect?.play();

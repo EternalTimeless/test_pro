@@ -371,7 +371,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return 1 + this.attackNum;
         }
 
-        attackEvent(num, visualBulletCount = this.visualBulletCount, damageScale = 1, lockWorldX = this.node.worldPosition.x, playEffect = true) {
+        attackEvent(num, visualBulletCount = this.visualBulletCount, damageScale = 1, lockWorldX = this.node.worldPosition.x, playEffect = true, initialBulletRandomX = 0) {
           if (visualBulletCount <= 0) {
             return;
           }
@@ -390,6 +390,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           Role.bulletLayer.addChild(bullet.node);
           bullet.node.setWorldPosition(pos);
           Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+          const firstBulletRandomX = Math.max(0, initialBulletRandomX);
+
+          if (firstBulletRandomX > 0) {
+            bullet.node.x += (Math.random() - 0.5) * 2 * firstBulletRandomX;
+          }
+
           batchRenderer.registerBullet(bullet);
 
           if (playEffect) {
