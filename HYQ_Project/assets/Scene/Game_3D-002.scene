@@ -11337,6 +11337,8 @@
     "pairAdvancePerHit": 3,
     "hitCountPerStep": 1,
     "hitStageConfigList": [],
+    "smoothTotalHitCount": 10,
+    "smoothProgressEasePower": 1.2,
     "teethPerPair": 2,
     "initialClosedPairCount": 2,
     "nextPairInitialProgress": 0.5,
@@ -12361,6 +12363,8 @@
     "pairAdvancePerHit": 1,
     "hitCountPerStep": 1,
     "hitStageConfigList": [],
+    "smoothTotalHitCount": 1000,
+    "smoothProgressEasePower": 2,
     "teethPerPair": 2,
     "initialClosedPairCount": 2,
     "nextPairInitialProgress": 0.5,
@@ -12507,6 +12511,8 @@
         "__id__": 760
       }
     ],
+    "smoothTotalHitCount": 500,
+    "smoothProgressEasePower": 1.5,
     "teethPerPair": 2,
     "initialClosedPairCount": 2,
     "nextPairInitialProgress": 0.5,

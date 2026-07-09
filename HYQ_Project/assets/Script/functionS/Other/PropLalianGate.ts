@@ -136,14 +136,20 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCInteger, visible: false })
     public hitPerNode: number = 2;
 
-    @property({ type: CCInteger, displayName: '单次推进格数', tooltip: '每次受击最多推进几对齿条。填 1 保持原逻辑；填 2 表示一次推进 2 格，填 3 表示一次推进 3 格。分段配置开启时也生效。' })
+    @property({ type: CCInteger, visible: false })
     public pairAdvancePerHit: number = 1;
 
-    @property({ type: CCInteger, displayName: '每格推进所需受击次数', tooltip: '滑块推进当前一格需要多少次受击。1 表示保持当前逻辑，2/3 表示把当前一格拆成 2/3 段推进。' })
+    @property({ type: CCInteger, visible: false })
     public hitCountPerStep: number = 1;
 
-    @property({ type: [LalianHitStageConfig], displayName: '分段受击配置', tooltip: '留空时使用“每格推进所需受击次数”。填写后按剩余推进进度分段，例如 0.33/2、0.66/4、1/8。' })
+    @property({ type: [LalianHitStageConfig], visible: false })
     public hitStageConfigList: LalianHitStageConfig[] = [];
+
+    @property({ type: CCInteger, displayName: '整体顺滑总受击次数', tooltip: '整条拉链从初始状态推进到完成需要的总受击次数。1000 表示每次受击只推进很小一段。' })
+    public smoothTotalHitCount: number = 1000;
+
+    @property({ type: CCFloat, displayName: '整体推进前快后慢强度', tooltip: '1 表示匀速；大于 1 时前期每次推进更长，后期每次推进更短。建议 1.5~3。' })
+    public smoothProgressEasePower: number = 2;
 
     @property({ type: CCInteger, displayName: '每对齿条数量', tooltip: '默认 2，表示每 2 个 SM_lalian 齿条算作一对，一次受击推进一对。' })
     public teethPerPair: number = 2;
@@ -228,6 +234,7 @@ export class PropLalianGate extends BattleTarget3D {
     private pairIndex: number = 0;
     private pairCount: number = 0;
     private stepHitCount: number = 0;
+    private smoothHitCount: number = 0;
     private cubeStartScale: Vec3 = new Vec3(1, 1, 1);
     private cubeStartPos: Vec3 = new Vec3();
     private hasCubeStartData: boolean = false;
@@ -252,6 +259,9 @@ export class PropLalianGate extends BattleTarget3D {
     private tempLockAimPos: Vec3 = new Vec3();
     private tempCollisionWorldPos: Vec3 = new Vec3();
     private tempSliderTargetPos: Vec3 = new Vec3();
+    private tempSmoothSliderFromPos: Vec3 = new Vec3();
+    private tempSmoothSliderToPos: Vec3 = new Vec3();
+    private tempSmoothSliderTargetPos: Vec3 = new Vec3();
     private tempWorldPos: Vec3 = new Vec3();
     private tempSliderVisualCenterWorldPos: Vec3 = new Vec3();
     private tempSliderVisualCenterParentPos: Vec3 = new Vec3();
@@ -333,7 +343,10 @@ export class PropLalianGate extends BattleTarget3D {
         if (this.animating && !this.finished) {
             return this.MaxHp > 0 ? this.curHp / this.MaxHp : 0;
         }
-        return super.Hit(damage);
+        if (this.finished) {
+            return 0;
+        }
+        return super.Hit(1);
     }
 
     public canLockBulletFromWorldX(worldX: number): boolean {
@@ -385,8 +398,7 @@ export class PropLalianGate extends BattleTarget3D {
         }
         this.prepareCollisionSize();
 
-        const initialPairIndex = Math.max(0, Math.min(this.getInitialClosedPairCount(), this.pairCount) - 1);
-        const totalHp = Math.max(1, this.getRemainHitCount(initialPairIndex, 0));
+        const totalHp = this.getSmoothTotalHitCount();
         this.MaxHp = totalHp;
         this.curHp = totalHp;
         this.isDestroy = false;
@@ -429,48 +441,11 @@ export class PropLalianGate extends BattleTarget3D {
 
     private playHitStep(): void {
         const animDuration = this.getHitAnimDuration();
-        const pairAdvancePerHit = this.getPairAdvancePerHit();
-        let nextPairState = this.pairIndex;
-        let nextStepState = this.stepHitCount;
-        let targetPos: Vec3 | null = null;
-
-        const nextPairIndex = nextPairState + 1;
-        const closeTooth = this.getSliderPairLeadTooth(nextPairIndex);
-        if (!closeTooth) {
-            this.completeGate();
-            return;
-        }
-
-        const hitsPerStep = this.getHitCountPerStepForPair(nextPairIndex);
-        const nextStepHitCount = nextStepState + 1;
-        const stepCompleted = nextStepHitCount >= hitsPerStep;
-
-        if (!stepCompleted) {
-            this.stepHitCount = nextStepHitCount;
-            const remainHits = this.getRemainHitCount(nextPairState, this.stepHitCount);
-            this.curHp = Math.max(1, remainHits);
-            this.updateHpLabel(remainHits);
-            return;
-        } else {
-            let advancedPairCount = 0;
-            for (let i = 0; i < pairAdvancePerHit; i++) {
-                const closePairIndex = nextPairState + 1;
-                const leadTooth = this.getSliderPairLeadTooth(closePairIndex);
-                if (!leadTooth) {
-                    break;
-                }
-                this.applyPairProgress(closePairIndex, 1, true, animDuration);
-                nextPairState = closePairIndex;
-                advancedPairCount++;
-            }
-            if (advancedPairCount <= 0) {
-                this.completeGate();
-                return;
-            }
-            const targetTooth = this.getSliderPairLeadTooth(nextPairState) ?? closeTooth;
-            targetPos = this.getSliderTargetPos(targetTooth).clone();
-            nextStepState = 0;
-        }
+        const totalHits = this.getSmoothTotalHitCount();
+        this.smoothHitCount = Math.min(totalHits, this.smoothHitCount + 1);
+        const linearProgress = totalHits > 0 ? this.smoothHitCount / totalHits : 1;
+        const smoothProgress = this.getSmoothWholeProgress(linearProgress);
+        const targetPos = this.getSmoothSliderTargetPos(smoothProgress);
 
         if (!targetPos) {
             this.completeGate();
@@ -485,19 +460,10 @@ export class PropLalianGate extends BattleTarget3D {
         this.flashRed();
         this.playPullRingSwing();
 
-        if (nextStepState === 0) {
-            const previewPairIndex = nextPairState + 1;
-            if (this.getPairLeadTooth(previewPairIndex)) {
-                this.applyPairProgress(previewPairIndex, this.getClampedProgress(this.nextPairInitialProgress), true, animDuration);
-            }
-            const nextPreviewPairIndex = nextPairState + 2;
-            if (this.getPairLeadTooth(nextPreviewPairIndex)) {
-                this.applyPairProgress(nextPreviewPairIndex, this.getClampedProgress(this.nextNextPairInitialProgress), true, animDuration);
-            }
-        }
+        this.applyWholeSmoothProgress(smoothProgress, true, animDuration);
 
-        const remainHits = this.getRemainHitCount(nextPairState, nextStepState);
-        this.curHp = Math.max(1, remainHits);
+        const remainHits = Math.max(0, totalHits - this.smoothHitCount);
+        this.curHp = remainHits;
         this.updateHpLabel(remainHits);
 
         if (this.cube) {
@@ -505,17 +471,11 @@ export class PropLalianGate extends BattleTarget3D {
             tween(this.cube)
                 .to(animDuration, { position: targetPos }, { easing: 'sineOut' })
                 .call(() => {
-                    this.pairIndex = nextPairState;
-                    this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
-                    this.stepHitCount = nextStepState;
                     this.finishHitStep();
                 })
                 .start();
         } else {
             this.scheduleOnce(() => {
-                this.pairIndex = nextPairState;
-                this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
-                this.stepHitCount = nextStepState;
                 this.finishHitStep();
             }, animDuration);
         }
@@ -523,7 +483,7 @@ export class PropLalianGate extends BattleTarget3D {
 
     private finishHitStep(): void {
         this.animating = false;
-        if (this.pairIndex >= this.pairCount - 1) {
+        if (this.smoothHitCount >= this.getSmoothTotalHitCount()) {
             this.completeGate();
         }
     }
@@ -570,6 +530,7 @@ export class PropLalianGate extends BattleTarget3D {
         this.pairIndex = 0;
         this.pairCount = 0;
         this.stepHitCount = 0;
+        this.smoothHitCount = 0;
         this.pullRingLoopStepIndex = 0;
 
         if (!this.cube) {
@@ -691,28 +652,66 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     private applyInitialProgress(): void {
-        const closedPairCount = Math.min(this.getInitialClosedPairCount(), this.pairCount);
-        for (let i = 0; i < closedPairCount; i++) {
-            this.applyPairProgress(i, 1, false);
-        }
-
-        const halfPairIndex = closedPairCount;
-        if (this.getPairLeadTooth(halfPairIndex)) {
-            this.applyPairProgress(halfPairIndex, this.getClampedProgress(this.nextPairInitialProgress), false);
-        }
-
-        const quarterPairIndex = closedPairCount + 1;
-        if (this.getPairLeadTooth(quarterPairIndex)) {
-            this.applyPairProgress(quarterPairIndex, this.getClampedProgress(this.nextNextPairInitialProgress), false);
-        }
-
-        this.pairIndex = Math.max(0, closedPairCount - 1);
+        this.smoothHitCount = 0;
+        this.applyWholeSmoothProgress(0, false);
         this.stepHitCount = 0;
-        this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
-        const sliderTooth = this.getSliderPairLeadTooth(this.pairIndex) ?? this.teeth[0];
-        if (this.cube && sliderTooth) {
-            this.cube.setPosition(this.getSliderTargetPos(sliderTooth));
+        const targetPos = this.getSmoothSliderTargetPos(0);
+        if (this.cube && targetPos) {
+            this.cube.setPosition(targetPos);
         }
+    }
+
+    private applyWholeSmoothProgress(progress: number, useTween: boolean, duration: number = this.getHitAnimDuration()): void {
+        if (this.pairCount <= 0) {
+            return;
+        }
+        const clampedProgress = this.getClampedProgress(progress);
+        const closedPairCount = Math.max(0, Math.min(this.getInitialClosedPairCount(), this.pairCount));
+        const movingPairCount = Math.max(1, this.pairCount - closedPairCount);
+        const wholePairProgress = closedPairCount + movingPairCount * clampedProgress;
+        const currentPairIndex = Math.max(closedPairCount, Math.min(this.pairCount - 1, Math.floor(wholePairProgress)));
+        const pairT = clampedProgress >= 1 ? 1 : this.getClampedProgress(wholePairProgress - currentPairIndex);
+        const nextProgress = this.getClampedProgress(this.nextPairInitialProgress);
+        const nextNextProgress = this.getClampedProgress(this.nextNextPairInitialProgress);
+        for (let i = 0; i < this.pairCount; i++) {
+            let pairProgress = 0;
+            if (clampedProgress >= 1 || i < currentPairIndex) {
+                pairProgress = 1;
+            } else if (i === currentPairIndex) {
+                pairProgress = nextProgress + (1 - nextProgress) * pairT;
+            } else if (i === currentPairIndex + 1) {
+                pairProgress = nextNextProgress + (nextProgress - nextNextProgress) * pairT;
+            } else if (i === currentPairIndex + 2) {
+                pairProgress = nextNextProgress * pairT;
+            }
+            this.applyPairProgress(i, this.getClampedProgress(pairProgress), useTween && i >= currentPairIndex && i <= currentPairIndex + 2, duration);
+        }
+        this.pairIndex = Math.max(0, Math.min(this.pairCount - 1, Math.floor(wholePairProgress)));
+        this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
+    }
+
+    private getSmoothSliderTargetPos(progress: number): Vec3 | null {
+        if (!this.cube || this.pairCount <= 0) {
+            return null;
+        }
+        const closedPairCount = Math.max(0, Math.min(this.getInitialClosedPairCount(), this.pairCount));
+        const movingPairCount = Math.max(1, this.pairCount - closedPairCount);
+        const sliderCursor = Math.max(0, Math.min(this.pairCount - 1, closedPairCount - 1 + movingPairCount * this.getClampedProgress(progress)));
+        const fromPairIndex = Math.max(0, Math.min(this.pairCount - 1, Math.floor(sliderCursor)));
+        const toPairIndex = Math.max(fromPairIndex, Math.min(this.pairCount - 1, fromPairIndex + 1));
+        const pairT = this.getClampedProgress(sliderCursor - fromPairIndex);
+        const fromTooth = this.getSliderPairLeadTooth(fromPairIndex) ?? this.teeth[0];
+        const toTooth = this.getSliderPairLeadTooth(toPairIndex) ?? fromTooth;
+        if (!fromTooth || !toTooth) {
+            return null;
+        }
+        this.tempSmoothSliderFromPos.set(this.getSliderTargetPos(fromTooth));
+        this.tempSmoothSliderToPos.set(this.getSliderTargetPos(toTooth));
+        return this.tempSmoothSliderTargetPos.set(
+            this.tempSmoothSliderFromPos.x + (this.tempSmoothSliderToPos.x - this.tempSmoothSliderFromPos.x) * pairT,
+            this.tempSmoothSliderFromPos.y + (this.tempSmoothSliderToPos.y - this.tempSmoothSliderFromPos.y) * pairT,
+            this.tempSmoothSliderFromPos.z + (this.tempSmoothSliderToPos.z - this.tempSmoothSliderFromPos.z) * pairT,
+        );
     }
 
     private cacheCubeStartData(): void {
@@ -1361,6 +1360,16 @@ export class PropLalianGate extends BattleTarget3D {
 
     private getHitAnimDuration(): number {
         return Math.max(0.08, this.hitAnimTime);
+    }
+
+    private getSmoothTotalHitCount(): number {
+        return Math.max(1, Math.floor(this.smoothTotalHitCount));
+    }
+
+    private getSmoothWholeProgress(linearProgress: number): number {
+        const clampedProgress = this.getClampedProgress(linearProgress);
+        const easePower = Math.max(0.1, this.smoothProgressEasePower);
+        return this.getClampedProgress(1 - Math.pow(1 - clampedProgress, easePower));
     }
 
     private getHitCountPerStep(): number {
