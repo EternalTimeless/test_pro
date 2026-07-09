@@ -12595,7 +12595,7 @@
   {
     "__type__": "LalianHitStageConfig",
     "endProgress": 0.6,
-    "hitCountPerStep": 300
+    "hitCountPerStep": 350
   },
   {
     "__type__": "LalianHitStageConfig",
