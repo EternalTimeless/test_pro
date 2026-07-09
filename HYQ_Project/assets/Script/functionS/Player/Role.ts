@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Color, Component, Node, Quat, Tween, Vec3 } from 'cc';
+import { _decorator, CCFloat, CCInteger, Color, Component, Node, Quat, Tween, Vec3 } from 'cc';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { BulletEnum, LayerEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import BulletManager from '../Battle/BulletManager';
@@ -24,6 +24,9 @@ export class Role extends Component {
 
     @property(Node)
     public shoot: Node;
+
+    @property({ type: CCFloat, displayName: '子弹发射高度偏移Y', tooltip: '直接调整该角色子弹出生点高度；负值降低。' })
+    public bulletSpawnOffsetY: number = -1.4;
 
     public hp: number = 2;
 
@@ -57,6 +60,7 @@ export class Role extends Component {
 
     private static aimVector: Vec3 = new Vec3();
     private static aimQuat: Quat = new Quat();
+    private static readonly bulletSpawnPos: Vec3 = new Vec3();
     // public attackTime: number = 0;
     // ==================== 闪红效果 ====================
     @property({ type: [MeshFlashData], tooltip: '闪红MeshRenderer配置列表，可在属性检查器中编辑' })
@@ -233,7 +237,8 @@ export class Role extends Component {
             return;
         }
         AudioManager.inst.playOneShot(Role.soundType, 0.3, 0.08);
-        const pos = this.shoot.worldPosition;
+        const shootPos = this.shoot.worldPosition;
+        const pos = Role.bulletSpawnPos.set(shootPos.x, shootPos.y + this.bulletSpawnOffsetY, shootPos.z);
         const damage = Role.power * damageScale;
         const batchRenderer = BulletBatchRenderer.getOrCreate(Role.bulletLayer);
 

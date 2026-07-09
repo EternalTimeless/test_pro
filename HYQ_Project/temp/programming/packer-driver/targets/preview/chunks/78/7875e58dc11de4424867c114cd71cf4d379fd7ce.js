@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCInteger, Color, Component, Node, Quat, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, PropLalianGate, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _class3, _crd, ccclass, property, Role;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Color, Component, Node, Quat, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, PropLalianGate, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _class3, _crd, ccclass, property, Role;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -77,6 +77,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
+      CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
       Color = _cc.Color;
       Component = _cc.Component;
@@ -115,7 +116,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "86381loO/lKPYw+1SpcYu+c", "Role", undefined);
 
-      __checkObsolete__(['_decorator', 'CCInteger', 'Color', 'Component', 'Node', 'Quat', 'Tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Color', 'Component', 'Node', 'Quat', 'Tween', 'Vec3']);
 
       ({
         ccclass,
@@ -128,19 +129,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }), RoleEnum) : RoleEnum
       }), _dec3 = property(_crd && FbxManager === void 0 ? (_reportPossibleCrUseOfFbxManager({
         error: Error()
-      }), FbxManager) : FbxManager), _dec4 = property(Node), _dec5 = property(Node), _dec6 = property(CCInteger), _dec7 = property(_crd && AttackParkPlay === void 0 ? (_reportPossibleCrUseOfAttackParkPlay({
+      }), FbxManager) : FbxManager), _dec4 = property(Node), _dec5 = property({
+        type: CCFloat,
+        displayName: '子弹发射高度偏移Y',
+        tooltip: '直接调整该角色子弹出生点高度；负值降低。'
+      }), _dec6 = property(Node), _dec7 = property(CCInteger), _dec8 = property(_crd && AttackParkPlay === void 0 ? (_reportPossibleCrUseOfAttackParkPlay({
         error: Error()
-      }), AttackParkPlay) : AttackParkPlay), _dec8 = property({
-        type: [_crd && MeshFlashData === void 0 ? (_reportPossibleCrUseOfMeshFlashData({
-          error: Error()
-        }), MeshFlashData) : MeshFlashData],
-        tooltip: '闪红MeshRenderer配置列表，可在属性检查器中编辑'
-      }), _dec9 = property({
+      }), AttackParkPlay) : AttackParkPlay), _dec9 = property({
         type: [_crd && MeshFlashData === void 0 ? (_reportPossibleCrUseOfMeshFlashData({
           error: Error()
         }), MeshFlashData) : MeshFlashData],
         tooltip: '闪红MeshRenderer配置列表，可在属性检查器中编辑'
       }), _dec10 = property({
+        type: [_crd && MeshFlashData === void 0 ? (_reportPossibleCrUseOfMeshFlashData({
+          error: Error()
+        }), MeshFlashData) : MeshFlashData],
+        tooltip: '闪红MeshRenderer配置列表，可在属性检查器中编辑'
+      }), _dec11 = property({
         type: [_crd && MeshFlashData === void 0 ? (_reportPossibleCrUseOfMeshFlashData({
           error: Error()
         }), MeshFlashData) : MeshFlashData],
@@ -155,15 +160,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "shoot", _descriptor3, this);
 
+          _initializerDefineProperty(this, "bulletSpawnOffsetY", _descriptor4, this);
+
           this.hp = 2;
 
-          _initializerDefineProperty(this, "arms", _descriptor4, this);
+          _initializerDefineProperty(this, "arms", _descriptor5, this);
 
-          _initializerDefineProperty(this, "attackNum", _descriptor5, this);
+          _initializerDefineProperty(this, "attackNum", _descriptor6, this);
 
           this.attackIN = false;
 
-          _initializerDefineProperty(this, "effect", _descriptor6, this);
+          _initializerDefineProperty(this, "effect", _descriptor7, this);
 
           this.initialArmsParent = null;
           this.initialArmsPosition = new Vec3();
@@ -174,11 +181,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           // public attackTime: number = 0;
           // ==================== 闪红效果 ====================
-          _initializerDefineProperty(this, "meshFlashDataList", _descriptor7, this);
+          _initializerDefineProperty(this, "meshFlashDataList", _descriptor8, this);
 
-          _initializerDefineProperty(this, "meshRedDataList", _descriptor8, this);
+          _initializerDefineProperty(this, "meshRedDataList", _descriptor9, this);
 
-          _initializerDefineProperty(this, "meshCreateDataList", _descriptor9, this);
+          _initializerDefineProperty(this, "meshCreateDataList", _descriptor10, this);
         }
 
         onLoad() {
@@ -401,7 +408,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_crd && AudioManager === void 0 ? (_reportPossibleCrUseOfAudioManager({
             error: Error()
           }), AudioManager) : AudioManager).inst.playOneShot(Role.soundType, 0.3, 0.08);
-          var pos = this.shoot.worldPosition;
+          var shootPos = this.shoot.worldPosition;
+          var pos = Role.bulletSpawnPos.set(shootPos.x, shootPos.y + this.bulletSpawnOffsetY, shootPos.z);
           var damage = Role.power * damageScale;
           var batchRenderer = (_crd && BulletBatchRenderer === void 0 ? (_reportPossibleCrUseOfBulletBatchRenderer({
             error: Error()
@@ -487,7 +495,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         error: Error()
       }), SoundEnum) : SoundEnum).Sound_Gun, _class3.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
         error: Error()
-      }), BulletEnum) : BulletEnum).arrow, _class3.power = 1, _class3.repelPower = 0, _class3.bulletLayer = void 0, _class3.propSocketNodeName = 'Bip001 Prop1 Socket', _class3.idleAnimIndex = 0, _class3.aimVector = new Vec3(), _class3.aimQuat = new Quat(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec2], {
+      }), BulletEnum) : BulletEnum).arrow, _class3.power = 1, _class3.repelPower = 0, _class3.bulletLayer = void 0, _class3.propSocketNodeName = 'Bip001 Prop1 Socket', _class3.idleAnimIndex = 0, _class3.aimVector = new Vec3(), _class3.aimQuat = new Quat(), _class3.bulletSpawnPos = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -506,38 +514,45 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "arms", [_dec5], {
+      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "bulletSpawnOffsetY", [_dec5], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return -1.4;
+        }
+      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "arms", [_dec6], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "attackNum", [_dec6], {
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "attackNum", [_dec7], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "effect", [_dec7], {
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "effect", [_dec8], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: null
-      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "meshFlashDataList", [_dec8], {
+      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "meshFlashDataList", [_dec9], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return [];
         }
-      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "meshRedDataList", [_dec9], {
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "meshRedDataList", [_dec10], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return [];
         }
-      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "meshCreateDataList", [_dec10], {
+      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "meshCreateDataList", [_dec11], {
         configurable: true,
         enumerable: true,
         writable: true,
