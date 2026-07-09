@@ -94,18 +94,6 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '左右摆动增强倍率', tooltip: '只增强拉环根和尾巴的 Y 轴左右甩动，不影响上下抬起角度；建议 1~1.6。' })
     public pullRingSpringSideSwingScale: number = 1.45;
 
-    @property({ type: CCFloat, displayName: '左右摆动上扬补偿', tooltip: '左右摆动越大，X 轴越往上补一点，减少侧摆时下压的观感；当前模型建议 2~5。' })
-    public pullRingSpringSideLiftScale: number = 3;
-
-    @property({ type: CCFloat, displayName: '根部上扬最大角', tooltip: '限制左右摆动补偿给根部带来的最大上扬角，避免根部翻得太过。' })
-    public pullRingSpringRootUpMaxAngle: number = 10;
-
-    @property({ type: CCFloat, displayName: '尾巴上扬最大角', tooltip: '限制左右摆动补偿给尾巴带来的最大上扬角。尾巴贴地时优先调大这个值。' })
-    public pullRingSpringTailUpMaxAngle: number = 22;
-
-    @property({ type: CCBoolean, displayName: '反向上扬补偿', tooltip: '开启后使用负 X 作为上扬方向。若现场发现越调越下压，就关闭这个开关。' })
-    public reversePullRingSideLift: boolean = true;
-
     @property({ type: [Node], displayName: '拉链齿条列表', tooltip: '拖入需要参与推进的 SM_lalian-xxx 节点。列表为空且开启自动收集时，会从拉链根节点下自动收集 SM_lalian-xxx。' })
     public teethNodes: Node[] = [];
 
@@ -975,22 +963,16 @@ export class PropLalianGate extends BattleTarget3D {
     private applyPullRingSpringEuler(): void {
         this.cachePullRingStartData();
         if (this.pullRingRoot) {
-            const rootMaxX = this.getPullRingSpringRootMaxX();
-            const rootSideLift = this.getPullRingSpringSideLift(this.pullRingSpringRootAngleY, this.getPullRingSpringRootMaxY(), rootMaxX);
-            const rootAngleX = this.clampRange(this.pullRingSpringRootAngleX + rootSideLift, -this.getPullRingSpringRootUpMaxAngle(), rootMaxX);
             this.tempPullRingRootEuler.set(
-                this.pullRingRootStartEuler.x + rootAngleX,
+                this.pullRingRootStartEuler.x + this.pullRingSpringRootAngleX,
                 this.pullRingRootStartEuler.y + this.pullRingSpringRootAngleY,
                 this.pullRingRootStartEuler.z,
             );
             this.pullRingRoot.eulerAngles = this.tempPullRingRootEuler;
         }
         if (this.pullRingTail) {
-            const tailMaxX = this.getPullRingSpringTailMaxX();
-            const tailSideLift = this.getPullRingSpringSideLift(this.pullRingSpringTailAngleY, this.getPullRingSpringTailMaxY(), tailMaxX);
-            const tailAngleX = this.clampRange(this.pullRingSpringTailAngleX + tailSideLift, -this.getPullRingSpringTailUpMaxAngle(), tailMaxX);
             this.tempPullRingTailEuler.set(
-                this.pullRingTailStartEuler.x + tailAngleX,
+                this.pullRingTailStartEuler.x + this.pullRingSpringTailAngleX,
                 this.pullRingTailStartEuler.y + this.pullRingSpringTailAngleY,
                 this.pullRingTailStartEuler.z,
             );
@@ -1154,27 +1136,6 @@ export class PropLalianGate extends BattleTarget3D {
 
     private getPullRingSpringSideLimitScale(): number {
         return Math.max(1, Math.min(1.12, this.getPullRingSpringSideSwingScale()));
-    }
-
-    private getPullRingSpringSideLift(angleY: number, maxY: number, maxX: number): number {
-        if (maxY <= 0 || maxX <= 0) {
-            return 0;
-        }
-        const sideRate = Math.min(1, Math.abs(angleY) / maxY);
-        const lift = maxX * this.getPullRingSpringSideLiftScale() * sideRate;
-        return this.reversePullRingSideLift ? -lift : lift;
-    }
-
-    private getPullRingSpringSideLiftScale(): number {
-        return Math.max(0, Math.min(8, this.pullRingSpringSideLiftScale));
-    }
-
-    private getPullRingSpringRootUpMaxAngle(): number {
-        return Math.max(0, this.pullRingSpringRootUpMaxAngle);
-    }
-
-    private getPullRingSpringTailUpMaxAngle(): number {
-        return Math.max(0, this.pullRingSpringTailUpMaxAngle);
     }
 
     private clampSigned(value: number, maxAbs: number): number {

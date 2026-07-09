@@ -29,9 +29,6 @@ type BulletVisualInfo = {
 
 @ccclass("BulletBatchRenderer")
 export class BulletBatchRenderer extends Component {
-    public visualOffsetY: number = -0.65;
-
-    public static defaultVisualOffsetY: number = -0.65;
     public static instance: BulletBatchRenderer | null = null;
     private static readonly _instances: WeakMap<Node, BulletBatchRenderer> = new WeakMap();
 
@@ -56,7 +53,6 @@ export class BulletBatchRenderer extends Component {
         if (!renderer) {
             renderer = node.addComponent(BulletBatchRenderer);
         }
-        renderer.visualOffsetY = BulletBatchRenderer.defaultVisualOffsetY;
         BulletBatchRenderer._instances.set(parent, renderer);
         BulletBatchRenderer.instance = renderer;
         return renderer;
@@ -77,6 +73,9 @@ export class BulletBatchRenderer extends Component {
         if (!visual.spriteFrame) {
             return;
         }
+        if (visual.sprite) {
+            visual.sprite.enabled = false;
+        }
         if (bullet.batchRenderer && bullet.batchRenderer !== this) {
             bullet.batchRenderer.unregisterBullet(bullet);
         }
@@ -84,18 +83,11 @@ export class BulletBatchRenderer extends Component {
         const index = bullet.bulletEnum as number;
         const batch = this._getBatch(index, visual);
         if (batch.bullets.indexOf(bullet) !== -1) {
-            if (visual.sprite) {
-                visual.sprite.enabled = false;
-            }
             return;
         }
 
         batch.bullets.push(bullet);
         bullet.batchRenderer = this;
-        this._updateBatch(batch);
-        if (visual.sprite) {
-            visual.sprite.enabled = false;
-        }
     }
 
     public prewarmBullet(bullet: BulletBattle3D): void {
@@ -292,7 +284,7 @@ export class BulletBatchRenderer extends Component {
             const fz = this._tempForward.z * halfHeight;
             const rx = this._tempRight.x * halfWidth;
             const rz = this._tempRight.z * halfWidth;
-            const py = pos.y + this.visualOffsetY;
+            const py = pos.y;
 
             const pOffset = i * 12;
             this._setPosition(batch.positions, pOffset, pos.x - rx - fx, py - fy, pos.z - rz - fz);
