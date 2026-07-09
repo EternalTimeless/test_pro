@@ -45,6 +45,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
       _export("BulletBatchRenderer", BulletBatchRenderer = (_dec = ccclass("BulletBatchRenderer"), _dec(_class = (_class2 = class BulletBatchRenderer extends Component {
         constructor(...args) {
           super(...args);
+          this.visualOffsetY = -0.65;
           this._batches = [];
           this._tempForward = new Vec3();
           this._tempRight = new Vec3();
@@ -71,6 +72,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             renderer = node.addComponent(BulletBatchRenderer);
           }
 
+          renderer.visualOffsetY = BulletBatchRenderer.defaultVisualOffsetY;
+
           BulletBatchRenderer._instances.set(parent, renderer);
 
           BulletBatchRenderer.instance = renderer;
@@ -94,10 +97,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             return;
           }
 
-          if (visual.sprite) {
-            visual.sprite.enabled = false;
-          }
-
           if (bullet.batchRenderer && bullet.batchRenderer !== this) {
             bullet.batchRenderer.unregisterBullet(bullet);
           }
@@ -107,11 +106,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           const batch = this._getBatch(index, visual);
 
           if (batch.bullets.indexOf(bullet) !== -1) {
+            if (visual.sprite) {
+              visual.sprite.enabled = false;
+            }
+
             return;
           }
 
           batch.bullets.push(bullet);
           bullet.batchRenderer = this;
+
+          this._updateBatch(batch);
+
+          if (visual.sprite) {
+            visual.sprite.enabled = false;
+          }
         }
 
         prewarmBullet(bullet) {
@@ -343,7 +352,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             const fz = this._tempForward.z * halfHeight;
             const rx = this._tempRight.x * halfWidth;
             const rz = this._tempRight.z * halfWidth;
-            const py = pos.y;
+            const py = pos.y + this.visualOffsetY;
             const pOffset = i * 12;
 
             this._setPosition(batch.positions, pOffset, pos.x - rx - fx, py - fy, pos.z - rz - fz);
@@ -424,7 +433,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           return [left, bottom, right, bottom, left, top, right, top];
         }
 
-      }, _class2.instance = null, _class2._instances = new WeakMap(), _class2)) || _class));
+      }, _class2.defaultVisualOffsetY = -0.65, _class2.instance = null, _class2._instances = new WeakMap(), _class2)) || _class));
 
       _cclegacy._RF.pop();
 

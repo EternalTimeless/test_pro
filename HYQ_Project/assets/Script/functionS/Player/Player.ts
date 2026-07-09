@@ -79,6 +79,9 @@ export class Player extends UnityUpComponent {
     @property(CCFloat)
     public attackSpeed: number = 2;
 
+    @property({ type: CCFloat, displayName: '子弹视觉高度偏移Y', tooltip: '同步到子弹合批渲染器，只降低画面中的子弹贴片，不改变子弹节点、碰撞和锁定。负值降低。' })
+    public bulletVisualOffsetY: number = -0.65;
+
     public isDie: boolean = false;
     private curCount: number = 1;
     private pendingAddRoleCount: number = 0;
@@ -182,6 +185,7 @@ export class Player extends UnityUpComponent {
         Player.instance = this;
         this.move = this.node.getComponent(MoveDrive);
         this.applyDefaultWeaponConfig();
+        this.syncBulletVisualOffset();
         this.syncRespawnRoleCount();
         EventManager.instance.on(EventType.PLAYER_HIT, this.hit, this);
         EventManager.instance.on(EventType.PLAYER_HIT_2, this.hit_2, this);
@@ -601,6 +605,7 @@ export class Player extends UnityUpComponent {
         if (!bulletLayer) {
             return;
         }
+        this.syncBulletVisualOffset(bulletLayer);
 
         let count = this.bulletPrewarmPerFrame;
         while (count > 0 && this.pendingBulletPrewarmType !== null && this.pendingBulletPrewarmCount > 0) {
@@ -627,6 +632,14 @@ export class Player extends UnityUpComponent {
         }
         Role.bulletLayer = LayerManager.instance.getLayer(LayerEnum.BulletLayer);
         return Role.bulletLayer;
+    }
+
+    private syncBulletVisualOffset(bulletLayer: Node = this.getBulletLayer()): void {
+        BulletBatchRenderer.defaultVisualOffsetY = this.bulletVisualOffsetY;
+        if (!bulletLayer) {
+            return;
+        }
+        BulletBatchRenderer.getOrCreate(bulletLayer).visualOffsetY = this.bulletVisualOffsetY;
     }
 
     private startRolePrewarm(roleType: RoleEnum, needCount: number) {
@@ -1348,6 +1361,7 @@ export class Player extends UnityUpComponent {
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
         Role.aimBulletToCurrentTarget(bullet, this.node.worldPosition.x);
+        this.syncBulletVisualOffset(Role.bulletLayer);
         BulletBatchRenderer.getOrCreate(Role.bulletLayer).registerBullet(bullet);
         // this.effect?.play();
     }
