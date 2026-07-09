@@ -61,6 +61,39 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '拉环尾下压角度比例', tooltip: '只缩放尾部 X 轴下压角度，不影响左右摆幅；数值越小越不容易穿模。' })
     public pullRingTailDownAngleScale: number = 0.65;
 
+    @property({ type: CCBoolean, displayName: '使用弹簧拉环反馈', tooltip: '开启后，滑块受击时拉环使用伪物理弹簧冲量反馈；关闭则回到原来的固定 tween 摆动。' })
+    public usePullRingSpringFeedback: boolean = true;
+
+    @property({ type: CCFloat, displayName: '拉环根左右冲量', tooltip: '受击瞬间给拉环根节点 Y 轴的速度冲量，数值越大左右甩动越明显。' })
+    public pullRingSpringRootImpulseY: number = 700;
+
+    @property({ type: CCFloat, displayName: '拉环根抬起冲量', tooltip: '受击瞬间给拉环根节点 X 轴的速度冲量，数值越大跳起感越明显。' })
+    public pullRingSpringRootImpulseX: number = 260;
+
+    @property({ type: CCFloat, displayName: '拉环尾巴左右冲量', tooltip: '受击瞬间给拉环尾巴节点 Y 轴的速度冲量，主要控制尾巴甩动幅度。' })
+    public pullRingSpringTailImpulseY: number = 1250;
+
+    @property({ type: CCFloat, displayName: '拉环尾巴抬起冲量', tooltip: '受击瞬间给拉环尾巴节点 X 轴的速度冲量，主要控制尾巴上下跳动。' })
+    public pullRingSpringTailImpulseX: number = 360;
+
+    @property({ type: CCFloat, displayName: '拉环弹簧强度', tooltip: '拉环回到初始角度的力度，数值越大回正越快。' })
+    public pullRingSpringStiffness: number = 130;
+
+    @property({ type: CCFloat, displayName: '拉环弹簧阻尼', tooltip: '拉环摆动衰减速度，数值越大越快停住。' })
+    public pullRingSpringDamping: number = 13;
+
+    @property({ type: CCFloat, displayName: '拉环根最大摆角', tooltip: '拉环根节点最终会同时受这个值和旧的根左右/抬起参数限制，防止加强反馈后穿模。' })
+    public pullRingSpringRootMaxAngle: number = 18;
+
+    @property({ type: CCFloat, displayName: '拉环尾巴最大摆角', tooltip: '拉环尾巴最终会同时受这个值和旧的尾巴左右/抬起参数限制，防止加强反馈后穿模。' })
+    public pullRingSpringTailMaxAngle: number = 46;
+
+    @property({ type: CCFloat, displayName: '拉环尾巴回弹倍率', tooltip: '尾巴相对根节点的回弹速度倍率。低于 1 会更拖尾，高于 1 会更紧。' })
+    public pullRingSpringTailReturnScale: number = 0.9;
+
+    @property({ type: CCFloat, displayName: '左右摆动增强倍率', tooltip: '只增强拉环根和尾巴的 Y 轴左右甩动，不影响上下抬起角度；建议 1~1.6。' })
+    public pullRingSpringSideSwingScale: number = 1.45;
+
     @property({ type: [Node], displayName: '拉链齿条列表', tooltip: '拖入需要参与推进的 SM_lalian-xxx 节点。列表为空且开启自动收集时，会从拉链根节点下自动收集 SM_lalian-xxx。' })
     public teethNodes: Node[] = [];
 
@@ -191,6 +224,18 @@ export class PropLalianGate extends BattleTarget3D {
     private pullRingTailStartEuler: Vec3 = new Vec3();
     private hasPullRingStartData: boolean = false;
     private pullRingLoopStepIndex: number = 0;
+    private pullRingSpringActive: boolean = false;
+    private pullRingSpringHitDirection: number = 1;
+    private pullRingSpringRootAngleX: number = 0;
+    private pullRingSpringRootAngleY: number = 0;
+    private pullRingSpringRootVelX: number = 0;
+    private pullRingSpringRootVelY: number = 0;
+    private pullRingSpringTailAngleX: number = 0;
+    private pullRingSpringTailAngleY: number = 0;
+    private pullRingSpringTailVelX: number = 0;
+    private pullRingSpringTailVelY: number = 0;
+    private tempPullRingRootEuler: Vec3 = new Vec3();
+    private tempPullRingTailEuler: Vec3 = new Vec3();
     private runtimeSliderOffsetZ: number = 0;
     private tempLockAimPos: Vec3 = new Vec3();
     private tempCollisionWorldPos: Vec3 = new Vec3();
@@ -317,6 +362,7 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     protected _update(dt: number): void {
+        this.updatePullRingSpring(dt);
     }
 
     public initGate(): void {
@@ -798,6 +844,7 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     private resetPullRing(): void {
+        this.resetPullRingSpring();
         if (this.pullRingRoot) {
             Tween.stopAllByTarget(this.pullRingRoot);
             this.pullRingRoot.setWorldPosition(this.getPullRingRootLiftedWorldPosition());
@@ -814,6 +861,12 @@ export class PropLalianGate extends BattleTarget3D {
         if (!this.pullRingRoot) {
             return;
         }
+
+        if (this.usePullRingSpringFeedback) {
+            this.kickPullRingSpring();
+            return;
+        }
+        this.resetPullRingSpring();
 
         const loopStepCount = this.getPullRingLoopStepCount();
         const stepPerHit = this.getPullRingStepPerHit();
@@ -844,6 +897,143 @@ export class PropLalianGate extends BattleTarget3D {
             tailTween = tailTween.to(stepTime, { eulerAngles: this.getPullRingTailStepEuler(targetSteps[i]) }, { easing: 'sineInOut' });
         }
         tailTween.start();
+    }
+
+    private kickPullRingSpring(): void {
+        if (!this.pullRingRoot) {
+            return;
+        }
+
+        Tween.stopAllByTarget(this.pullRingRoot);
+        if (this.pullRingTail) {
+            Tween.stopAllByTarget(this.pullRingTail);
+        }
+
+        this.pullRingSpringHitDirection *= -1;
+        const direction = this.pullRingSpringHitDirection;
+        this.pullRingSpringRootVelY += direction * this.getPullRingSpringRootImpulseY();
+        this.pullRingSpringRootVelX += this.getPullRingSpringRootImpulseX();
+        this.pullRingSpringTailVelY += -direction * this.getPullRingSpringTailImpulseY();
+        this.pullRingSpringTailVelX += this.getPullRingSpringTailImpulseX();
+        this.pullRingSpringActive = true;
+        this.applyPullRingSpringEuler();
+    }
+
+    private updatePullRingSpring(dt: number): void {
+        if (!this.usePullRingSpringFeedback) {
+            if (this.pullRingSpringActive) {
+                this.resetPullRingSpring();
+                this.applyPullRingSpringEuler();
+            }
+            return;
+        }
+        if (!this.pullRingSpringActive) {
+            return;
+        }
+
+        const stepDt = Math.max(0, Math.min(0.033, dt));
+        if (stepDt <= 0) {
+            return;
+        }
+
+        const rootStiffness = this.getPullRingSpringStiffness();
+        const rootDamping = this.getPullRingSpringDamping();
+        const tailReturnScale = this.getPullRingSpringTailReturnScale();
+        const tailStiffness = rootStiffness * tailReturnScale;
+        const tailDamping = rootDamping * Math.sqrt(tailReturnScale);
+
+        this.pullRingSpringRootVelX += (-this.pullRingSpringRootAngleX * rootStiffness - this.pullRingSpringRootVelX * rootDamping) * stepDt;
+        this.pullRingSpringRootVelY += (-this.pullRingSpringRootAngleY * rootStiffness - this.pullRingSpringRootVelY * rootDamping) * stepDt;
+        this.pullRingSpringTailVelX += (-this.pullRingSpringTailAngleX * tailStiffness - this.pullRingSpringTailVelX * tailDamping) * stepDt;
+        this.pullRingSpringTailVelY += (-this.pullRingSpringTailAngleY * tailStiffness - this.pullRingSpringTailVelY * tailDamping) * stepDt;
+
+        this.pullRingSpringRootAngleX += this.pullRingSpringRootVelX * stepDt;
+        this.pullRingSpringRootAngleY += this.pullRingSpringRootVelY * stepDt;
+        this.pullRingSpringTailAngleX += this.pullRingSpringTailVelX * stepDt;
+        this.pullRingSpringTailAngleY += this.pullRingSpringTailVelY * stepDt;
+
+        this.limitPullRingSpringAngles();
+
+        if (this.isPullRingSpringSettled()) {
+            this.resetPullRingSpring();
+        }
+        this.applyPullRingSpringEuler();
+    }
+
+    private applyPullRingSpringEuler(): void {
+        this.cachePullRingStartData();
+        if (this.pullRingRoot) {
+            this.tempPullRingRootEuler.set(
+                this.pullRingRootStartEuler.x + this.pullRingSpringRootAngleX,
+                this.pullRingRootStartEuler.y + this.pullRingSpringRootAngleY,
+                this.pullRingRootStartEuler.z,
+            );
+            this.pullRingRoot.eulerAngles = this.tempPullRingRootEuler;
+        }
+        if (this.pullRingTail) {
+            this.tempPullRingTailEuler.set(
+                this.pullRingTailStartEuler.x + this.pullRingSpringTailAngleX,
+                this.pullRingTailStartEuler.y + this.pullRingSpringTailAngleY,
+                this.pullRingTailStartEuler.z,
+            );
+            this.pullRingTail.eulerAngles = this.tempPullRingTailEuler;
+        }
+    }
+
+    private resetPullRingSpring(): void {
+        this.pullRingSpringActive = false;
+        this.pullRingSpringRootAngleX = 0;
+        this.pullRingSpringRootAngleY = 0;
+        this.pullRingSpringRootVelX = 0;
+        this.pullRingSpringRootVelY = 0;
+        this.pullRingSpringTailAngleX = 0;
+        this.pullRingSpringTailAngleY = 0;
+        this.pullRingSpringTailVelX = 0;
+        this.pullRingSpringTailVelY = 0;
+    }
+
+    private isPullRingSpringSettled(): boolean {
+        const angleEpsilon = 0.08;
+        const velocityEpsilon = 1.5;
+        return Math.abs(this.pullRingSpringRootAngleX) < angleEpsilon
+            && Math.abs(this.pullRingSpringRootAngleY) < angleEpsilon
+            && Math.abs(this.pullRingSpringTailAngleX) < angleEpsilon
+            && Math.abs(this.pullRingSpringTailAngleY) < angleEpsilon
+            && Math.abs(this.pullRingSpringRootVelX) < velocityEpsilon
+            && Math.abs(this.pullRingSpringRootVelY) < velocityEpsilon
+            && Math.abs(this.pullRingSpringTailVelX) < velocityEpsilon
+            && Math.abs(this.pullRingSpringTailVelY) < velocityEpsilon;
+    }
+
+    private limitPullRingSpringAngles(): void {
+        const rootMaxX = this.getPullRingSpringRootMaxX();
+        const rootMaxY = this.getPullRingSpringRootMaxY();
+        const tailMaxX = this.getPullRingSpringTailMaxX();
+        const tailMaxY = this.getPullRingSpringTailMaxY();
+
+        const nextRootAngleX = this.clampRange(this.pullRingSpringRootAngleX, -rootMaxX * 0.35, rootMaxX);
+        if (nextRootAngleX !== this.pullRingSpringRootAngleX) {
+            this.pullRingSpringRootVelX = 0;
+            this.pullRingSpringRootAngleX = nextRootAngleX;
+        }
+
+        const nextRootAngleY = this.clampSigned(this.pullRingSpringRootAngleY, rootMaxY);
+        if (nextRootAngleY !== this.pullRingSpringRootAngleY) {
+            this.pullRingSpringRootVelY = 0;
+            this.pullRingSpringRootAngleY = nextRootAngleY;
+        }
+
+        const nextTailAngleX = this.clampRange(this.pullRingSpringTailAngleX, -tailMaxX * 0.25, tailMaxX);
+        if (nextTailAngleX !== this.pullRingSpringTailAngleX) {
+            this.pullRingSpringTailVelX = 0;
+            this.pullRingSpringTailAngleX = nextTailAngleX;
+        }
+
+        const nextTailAngleY = this.clampSigned(this.pullRingSpringTailAngleY, tailMaxY);
+        if (nextTailAngleY !== this.pullRingSpringTailAngleY) {
+            this.pullRingSpringTailVelY = 0;
+            this.pullRingSpringTailAngleY = nextTailAngleY;
+        }
     }
 
     private getPullRingRootStepEuler(stepIndex: number): Vec3 {
@@ -885,6 +1075,75 @@ export class PropLalianGate extends BattleTarget3D {
 
     private getPullRingTailDownAngleScale(): number {
         return Math.max(0.1, Math.min(1, this.pullRingTailDownAngleScale));
+    }
+
+    private getPullRingSpringRootImpulseY(): number {
+        return Math.max(0, this.pullRingSpringRootImpulseY) * this.getPullRingSpringSideSwingScale();
+    }
+
+    private getPullRingSpringRootImpulseX(): number {
+        return Math.max(0, this.pullRingSpringRootImpulseX);
+    }
+
+    private getPullRingSpringTailImpulseY(): number {
+        return Math.max(0, this.pullRingSpringTailImpulseY) * this.getPullRingSpringSideSwingScale();
+    }
+
+    private getPullRingSpringTailImpulseX(): number {
+        return Math.max(0, this.pullRingSpringTailImpulseX);
+    }
+
+    private getPullRingSpringStiffness(): number {
+        return Math.max(110, this.pullRingSpringStiffness);
+    }
+
+    private getPullRingSpringDamping(): number {
+        return Math.max(8, this.pullRingSpringDamping);
+    }
+
+    private getPullRingSpringRootMaxAngle(): number {
+        return Math.max(1, this.pullRingSpringRootMaxAngle);
+    }
+
+    private getPullRingSpringTailMaxAngle(): number {
+        return Math.max(1, this.pullRingSpringTailMaxAngle);
+    }
+
+    private getPullRingSpringTailReturnScale(): number {
+        return Math.max(0.65, Math.min(2, this.pullRingSpringTailReturnScale));
+    }
+
+    private getPullRingSpringSideSwingScale(): number {
+        return Math.max(0.1, Math.min(3, this.pullRingSpringSideSwingScale));
+    }
+
+    private getPullRingSpringRootMaxX(): number {
+        return Math.min(this.getPullRingSpringRootMaxAngle(), Math.max(0.5, this.pullRingRootLiftX));
+    }
+
+    private getPullRingSpringRootMaxY(): number {
+        return Math.min(this.getPullRingSpringRootMaxAngle(), Math.max(1, this.pullRingRootSwingY * this.getPullRingSpringSideLimitScale()));
+    }
+
+    private getPullRingSpringTailMaxX(): number {
+        const authoredMaxX = this.pullRingTailLiftX * this.getPullRingTailDownAngleScale();
+        return Math.min(this.getPullRingSpringTailMaxAngle(), Math.max(0.5, authoredMaxX));
+    }
+
+    private getPullRingSpringTailMaxY(): number {
+        return Math.min(this.getPullRingSpringTailMaxAngle(), Math.max(1, this.pullRingTailSwingY * this.getPullRingSpringSideLimitScale()));
+    }
+
+    private getPullRingSpringSideLimitScale(): number {
+        return Math.max(1, Math.min(1.12, this.getPullRingSpringSideSwingScale()));
+    }
+
+    private clampSigned(value: number, maxAbs: number): number {
+        return Math.max(-maxAbs, Math.min(maxAbs, value));
+    }
+
+    private clampRange(value: number, min: number, max: number): number {
+        return Math.max(min, Math.min(max, value));
     }
 
     private prepareSliderOffset(): void {
