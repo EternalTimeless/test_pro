@@ -15565,7 +15565,7 @@
     "propertyPath": [
       "bulletSpawnOffsetY"
     ],
-    "value": -1.2
+    "value": -0.7
   },
   {
     "__type__": "cc.TargetOverrideInfo",
