@@ -26,7 +26,7 @@ export class Role extends Component {
     public shoot: Node;
 
     @property({ type: CCFloat, displayName: '子弹发射高度偏移Y', tooltip: '直接调整该角色子弹出生点高度；负值降低。' })
-    public bulletSpawnOffsetY: number = -1.2;
+    public bulletSpawnOffsetY: number = -1.1;
 
     public hp: number = 2;
 
