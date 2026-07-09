@@ -10,7 +10,7 @@
       "uuid": "caffc481-8e86-4f96-8867-9213f3a378f4"
     },
     "Scene": {
-      "time": 1783580175397.9355,
+      "time": 1783584996022.3464,
       "uuid": "e72949cf-3923-4906-b42c-4ca5bc00f29a"
     },
     "Script": {
@@ -254,7 +254,7 @@
       "uuid": "31a1e406-7653-4a32-9a59-655e6188e99e"
     },
     "Script\\functionS\\Player": {
-      "time": 1783581362290.818,
+      "time": 1783584996024.342,
       "uuid": "e19290d4-e44e-4c69-93cb-1471d99d1597"
     },
     "Script\\functionS\\Rocker": {
@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1783584449412.224,
+      "time": 1783584996023.3452,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1686,7 +1686,7 @@
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
-      "time": 1783583220088.684,
+      "time": 1783585053221.9543,
       "uuid": "86381968-3bf9-4a3d-8c3e-d52a5c62ef9c"
     },
     "Script\\functionS\\Rocker\\RockerLogic.ts": {

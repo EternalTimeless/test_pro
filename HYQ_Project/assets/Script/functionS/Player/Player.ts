@@ -82,6 +82,8 @@ export class Player extends UnityUpComponent {
     public isDie: boolean = false;
     private curCount: number = 1;
     private pendingAddRoleCount: number = 0;
+    private currentTeamAnim: PlayerFBXAnimName = -1;
+    private currentTeamAnimRoleCount: number = -1;
 
     @property({ type: CCInteger, displayName: '+1人数上限', tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。' })
     public maxRoleCount: number = 53;
@@ -726,11 +728,16 @@ export class Player extends UnityUpComponent {
 
     private roleMove() {
         const animName = this.getCurrentRoleAnimName();
+        if (this.currentTeamAnim === animName && this.currentTeamAnimRoleCount === this.roleList.length) {
+            return;
+        }
+
+        this.currentTeamAnim = animName;
+        this.currentTeamAnimRoleCount = this.roleList.length;
 
         for (let i = 0; i < this.roleList.length; i++) {
             const fbx = this.roleList[i].fbxManager;
-            const state = fbx.getAnimState(animName);
-            if (fbx.curState !== animName || !state?.isPlaying) {
+            if (fbx.curState !== animName) {
                 fbx.setAnimation(animName, true);
             }
         }

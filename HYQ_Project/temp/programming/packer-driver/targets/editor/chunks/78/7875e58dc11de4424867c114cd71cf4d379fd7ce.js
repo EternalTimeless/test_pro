@@ -492,7 +492,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function () {
-          return -1.4;
+          return -1.2;
         }
       }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "arms", [_dec6], {
         configurable: true,
