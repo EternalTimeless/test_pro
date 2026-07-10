@@ -85,6 +85,9 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '拉环根部跟随强度', tooltip: '控制拉环根节点跟随尾巴摆动的幅度。0 表示根部不动，建议使用 0.2~0.5；只旋转拉环，不改变滑块位置。' })
     public pullRingRootSpringRate: number = 0.3;
 
+    @property({ type: CCFloat, displayName: '连续受击速度保留(0-1)', tooltip: '上一段摆动未结束时保留多少当前速度。0 表示只从当前姿态接新冲量，1 表示完整叠加旧速度；建议 0.25~0.5。' })
+    public pullRingSpringHitVelocityRetain: number = 0.35;
+
     @property({ type: CCFloat, displayName: '拉环弹簧强度', tooltip: '拉环回到初始角度的力度，数值越大回正越快。' })
     public pullRingSpringStiffness: number = 130;
 
@@ -253,7 +256,6 @@ export class PropLalianGate extends BattleTarget3D {
     private hasPullRingStartData: boolean = false;
     private pullRingLoopStepIndex: number = 0;
     private pullRingSpringActive: boolean = false;
-    private pullRingSpringHitDirection: number = 1;
     private pullRingSpringRootAngleX: number = 0;
     private pullRingSpringRootAngleY: number = 0;
     private pullRingSpringRootVelX: number = 0;
@@ -988,14 +990,47 @@ export class PropLalianGate extends BattleTarget3D {
             Tween.stopAllByTarget(this.pullRingTail);
         }
 
-        this.pullRingSpringHitDirection *= -1;
-        const direction = this.pullRingSpringHitDirection;
+        const direction = this.getNextPullRingSpringSwingDirection();
         if (this.isPullRingRootSpringEnabled()) {
-            this.pullRingSpringRootVelY += direction * this.getPullRingSpringRootImpulseY() * this.getPullRingRootSpringRate();
-            this.pullRingSpringRootVelX += this.getPullRingSpringRootImpulseX() * this.getPullRingRootSpringRate();
+            const rootRate = this.getPullRingRootSpringRate();
+            const rootImpulseY = direction * this.getPullRingSpringRootImpulseY() * rootRate;
+            const rootImpulseX = this.getPullRingSpringRootImpulseX() * rootRate;
+            this.pullRingSpringRootVelY = this.blendPullRingSpringVelocity(
+                this.pullRingSpringRootVelY,
+                rootImpulseY,
+                this.pullRingSpringRootAngleY,
+                -this.getPullRingSpringRootMaxY(),
+                this.getPullRingSpringRootMaxY(),
+                this.getPullRingSpringRootImpulseY() * rootRate * 1.35,
+            );
+            this.pullRingSpringRootVelX = this.blendPullRingSpringVelocity(
+                this.pullRingSpringRootVelX,
+                rootImpulseX,
+                this.pullRingSpringRootAngleX,
+                -this.getPullRingSpringRootMaxX() * 0.35,
+                this.getPullRingSpringRootMaxX(),
+                this.getPullRingSpringRootImpulseX() * rootRate * 1.35,
+            );
         }
-        this.pullRingSpringTailVelY += this.getRandomPullRingTailSpringSwingImpulse();
-        this.pullRingSpringTailVelX += this.getRandomPullRingTailSpringLiftImpulse();
+        const tailRandomMaxScale = 1 + this.getPullRingTailRandomSwingRate();
+        const tailImpulseY = this.getRandomPullRingTailSpringSwingImpulse(direction);
+        const tailImpulseX = this.getRandomPullRingTailSpringLiftImpulse();
+        this.pullRingSpringTailVelY = this.blendPullRingSpringVelocity(
+            this.pullRingSpringTailVelY,
+            tailImpulseY,
+            this.pullRingSpringTailAngleY,
+            -this.getPullRingSpringTailMaxY(),
+            this.getPullRingSpringTailMaxY(),
+            this.getPullRingSpringTailImpulseY() * tailRandomMaxScale * 1.35,
+        );
+        this.pullRingSpringTailVelX = this.blendPullRingSpringVelocity(
+            this.pullRingSpringTailVelX,
+            tailImpulseX,
+            this.pullRingSpringTailAngleX,
+            -this.getPullRingSpringTailMaxX() * 0.25,
+            this.getPullRingSpringTailMaxX(),
+            this.getPullRingSpringTailImpulseX() * tailRandomMaxScale * 1.35,
+        );
         this.pullRingSpringActive = true;
         this.applyPullRingSpringEuler();
     }
@@ -1182,6 +1217,10 @@ export class PropLalianGate extends BattleTarget3D {
         return Math.max(0, Math.min(1, this.pullRingRootSpringRate));
     }
 
+    private getPullRingSpringHitVelocityRetain(): number {
+        return Math.max(0, Math.min(1, this.pullRingSpringHitVelocityRetain));
+    }
+
     private isPullRingRootSpringEnabled(): boolean {
         return this.getPullRingRootSpringRate() > 0.001;
     }
@@ -1198,14 +1237,25 @@ export class PropLalianGate extends BattleTarget3D {
         this.pullRingRoot.eulerAngles = this.pullRingRootStartEuler;
     }
 
-    private getRandomPullRingTailSpringSwingImpulse(): number {
+    private getNextPullRingSpringSwingDirection(): number {
+        const maxY = this.getPullRingSpringTailMaxY();
+        const edgeThreshold = maxY * 0.65;
+        if (this.pullRingSpringTailAngleY >= edgeThreshold) {
+            return -1;
+        }
+        if (this.pullRingSpringTailAngleY <= -edgeThreshold) {
+            return 1;
+        }
+        return Math.random() < 0.5 ? -1 : 1;
+    }
+
+    private getRandomPullRingTailSpringSwingImpulse(direction: number): number {
         const baseImpulse = this.getPullRingSpringTailImpulseY();
         const randomRate = this.getPullRingTailRandomSwingRate();
         if (randomRate <= 0) {
-            return -this.pullRingSpringHitDirection * baseImpulse;
+            return direction * baseImpulse;
         }
 
-        const direction = Math.random() < 0.5 ? -1 : 1;
         return direction * baseImpulse * this.randomRange(0, 1 + randomRate);
     }
 
@@ -1217,6 +1267,23 @@ export class PropLalianGate extends BattleTarget3D {
         }
 
         return baseImpulse * this.randomRange(0.25, 1 + randomRate);
+    }
+
+    private blendPullRingSpringVelocity(currentVelocity: number, impulse: number, angle: number, minAngle: number, maxAngle: number, velocityLimit: number): number {
+        const retain = this.getPullRingSpringHitVelocityRetain();
+        const retainedHeadroom = this.getPullRingSpringImpulseHeadroom(angle, currentVelocity, minAngle, maxAngle);
+        const impulseHeadroom = this.getPullRingSpringImpulseHeadroom(angle, impulse, minAngle, maxAngle);
+        const nextVelocity = currentVelocity * retain * retainedHeadroom + impulse * impulseHeadroom;
+        return this.clampSigned(nextVelocity, Math.max(1, velocityLimit));
+    }
+
+    private getPullRingSpringImpulseHeadroom(angle: number, velocity: number, minAngle: number, maxAngle: number): number {
+        if (velocity === 0 || maxAngle <= minAngle) {
+            return 1;
+        }
+        const distanceToLimit = velocity > 0 ? maxAngle - angle : angle - minAngle;
+        const halfRange = (maxAngle - minAngle) * 0.5;
+        return this.clampRange(distanceToLimit / Math.max(0.001, halfRange), 0, 1);
     }
 
     private getPullRingSpringRootImpulseY(): number {
