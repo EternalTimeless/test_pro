@@ -36,12 +36,15 @@
       },
       {
         "__id__": 1154
+      },
+      {
+        "__id__": 1156
       }
     ],
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 1156
+      "__id__": 1158
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -72,7 +75,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 1217
+      "__id__": 1219
     },
     "_id": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
   },
@@ -12844,7 +12847,7 @@
     "monsterCount": 800,
     "maxSpawnPerFrame": 5,
     "viewportSpawnTriggerDistance": 10,
-    "viewportSpawnBufferDistance": 55,
+    "viewportSpawnBufferDistance": 40,
     "monsterCreateQueue": {
       "__id__": 774
     },
@@ -14436,9 +14439,9 @@
       null
     ],
     "attackSpeed": 3,
-    "maxRoleCount": 53,
+    "maxRoleCount": 50,
     "retryMaxRoleLayerCount": 3,
-    "outerLayerRoleCount": 28,
+    "outerLayerRoleCount": 25,
     "shrinkAfterRoleLossDelay": 2,
     "maxShootingRoleCount": 32,
     "maxMuzzleEffectCount": 10,
@@ -19386,6 +19389,81 @@
     "_id": "17U0bx9MpDYp+CWYblVckr"
   },
   {
+    "__type__": "cc.Node",
+    "_name": "PerformanceBlockHUD",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 1157
+      }
+    ],
+    "_prefab": null,
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_mobility": 0,
+    "_layer": 1073741824,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": "5c+LO2iYdNwqmaBwCd7Nr1"
+  },
+  {
+    "__type__": "5b225YhyHtEuZ1GUUWBREaS",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1156
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "refreshInterval": 1,
+    "enableCpuSampling": true,
+    "fontSize": 15,
+    "panelWidth": 700,
+    "panelHeight": 560,
+    "panelPosition": 1,
+    "textAlignment": 1,
+    "horizontalOffset": 8,
+    "topOffset": 8,
+    "showEmptyBlocks": false,
+    "hidePlayer": false,
+    "hideMonster": false,
+    "hideBullet": false,
+    "hideProp": false,
+    "hideEffect": false,
+    "hideUi": false,
+    "hideEnvironment": false,
+    "hideOther": false,
+    "_id": "8dOHRQVLdCKq0qS5IHGm4h"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": null,
     "asset": null,
@@ -19393,13 +19471,10 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 1157
+        "__id__": 1159
       },
       {
-        "__id__": 1160
-      },
-      {
-        "__id__": 1163
+        "__id__": 1162
       },
       {
         "__id__": 1165
@@ -19408,25 +19483,25 @@
         "__id__": 1167
       },
       {
-        "__id__": 1170
+        "__id__": 1169
       },
       {
-        "__id__": 1173
+        "__id__": 1172
       },
       {
-        "__id__": 1176
+        "__id__": 1175
       },
       {
-        "__id__": 1179
+        "__id__": 1178
       },
       {
-        "__id__": 1182
+        "__id__": 1181
       },
       {
-        "__id__": 1185
+        "__id__": 1184
       },
       {
-        "__id__": 1188
+        "__id__": 1187
       },
       {
         "__id__": 1190
@@ -19459,10 +19534,13 @@
         "__id__": 1208
       },
       {
-        "__id__": 1211
+        "__id__": 1210
       },
       {
-        "__id__": 1214
+        "__id__": 1213
+      },
+      {
+        "__id__": 1216
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -19672,7 +19750,7 @@
       "__id__": 908
     },
     "sourceInfo": {
-      "__id__": 1158
+      "__id__": 1160
     },
     "propertyPath": [
       "_sockets",
@@ -19683,7 +19761,7 @@
       "__id__": 908
     },
     "targetInfo": {
-      "__id__": 1159
+      "__id__": 1161
     }
   },
   {
@@ -19704,7 +19782,7 @@
       "__id__": 212
     },
     "sourceInfo": {
-      "__id__": 1161
+      "__id__": 1163
     },
     "propertyPath": [
       "_trailModule",
@@ -19714,7 +19792,7 @@
       "__id__": 212
     },
     "targetInfo": {
-      "__id__": 1162
+      "__id__": 1164
     }
   },
   {
@@ -19740,7 +19818,7 @@
     ],
     "target": null,
     "targetInfo": {
-      "__id__": 1164
+      "__id__": 1166
     }
   },
   {
@@ -19763,7 +19841,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1166
+      "__id__": 1168
     }
   },
   {
@@ -19778,7 +19856,7 @@
       "__id__": 917
     },
     "sourceInfo": {
-      "__id__": 1168
+      "__id__": 1170
     },
     "propertyPath": [
       "fbxManager"
@@ -19787,7 +19865,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1169
+      "__id__": 1171
     }
   },
   {
@@ -19809,7 +19887,7 @@
       "__id__": 917
     },
     "sourceInfo": {
-      "__id__": 1171
+      "__id__": 1173
     },
     "propertyPath": [
       "shoot"
@@ -19818,7 +19896,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1172
+      "__id__": 1174
     }
   },
   {
@@ -19840,7 +19918,7 @@
       "__id__": 917
     },
     "sourceInfo": {
-      "__id__": 1174
+      "__id__": 1176
     },
     "propertyPath": [
       "effect"
@@ -19849,7 +19927,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1175
+      "__id__": 1177
     }
   },
   {
@@ -19872,7 +19950,7 @@
       "__id__": 917
     },
     "sourceInfo": {
-      "__id__": 1177
+      "__id__": 1179
     },
     "propertyPath": [
       "meshFlashDataList",
@@ -19883,7 +19961,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1178
+      "__id__": 1180
     }
   },
   {
@@ -19905,7 +19983,7 @@
       "__id__": 917
     },
     "sourceInfo": {
-      "__id__": 1180
+      "__id__": 1182
     },
     "propertyPath": [
       "meshFlashDataList",
@@ -19916,7 +19994,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1181
+      "__id__": 1183
     }
   },
   {
@@ -19938,7 +20016,7 @@
       "__id__": 917
     },
     "sourceInfo": {
-      "__id__": 1183
+      "__id__": 1185
     },
     "propertyPath": [
       "meshRedDataList",
@@ -19949,7 +20027,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1184
+      "__id__": 1186
     }
   },
   {
@@ -19971,7 +20049,7 @@
       "__id__": 917
     },
     "sourceInfo": {
-      "__id__": 1186
+      "__id__": 1188
     },
     "propertyPath": [
       "meshCreateDataList",
@@ -19982,7 +20060,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1187
+      "__id__": 1189
     }
   },
   {
@@ -20009,7 +20087,7 @@
     ],
     "target": null,
     "targetInfo": {
-      "__id__": 1189
+      "__id__": 1191
     }
   },
   {
@@ -20029,7 +20107,7 @@
     ],
     "target": null,
     "targetInfo": {
-      "__id__": 1191
+      "__id__": 1193
     }
   },
   {
@@ -20051,7 +20129,7 @@
       "__id__": 12
     },
     "targetInfo": {
-      "__id__": 1193
+      "__id__": 1195
     }
   },
   {
@@ -20074,7 +20152,7 @@
       "__id__": 12
     },
     "targetInfo": {
-      "__id__": 1195
+      "__id__": 1197
     }
   },
   {
@@ -20098,7 +20176,7 @@
       "__id__": 12
     },
     "targetInfo": {
-      "__id__": 1197
+      "__id__": 1199
     }
   },
   {
@@ -20121,7 +20199,7 @@
       "__id__": 12
     },
     "targetInfo": {
-      "__id__": 1199
+      "__id__": 1201
     }
   },
   {
@@ -20145,7 +20223,7 @@
       "__id__": 12
     },
     "targetInfo": {
-      "__id__": 1201
+      "__id__": 1203
     }
   },
   {
@@ -20169,7 +20247,7 @@
       "__id__": 12
     },
     "targetInfo": {
-      "__id__": 1203
+      "__id__": 1205
     }
   },
   {
@@ -20193,7 +20271,7 @@
       "__id__": 12
     },
     "targetInfo": {
-      "__id__": 1205
+      "__id__": 1207
     }
   },
   {
@@ -20217,7 +20295,7 @@
       "__id__": 12
     },
     "targetInfo": {
-      "__id__": 1207
+      "__id__": 1209
     }
   },
   {
@@ -20234,7 +20312,7 @@
       "__id__": 92
     },
     "sourceInfo": {
-      "__id__": 1209
+      "__id__": 1211
     },
     "propertyPath": [
       "_sockets",
@@ -20245,7 +20323,7 @@
       "__id__": 92
     },
     "targetInfo": {
-      "__id__": 1210
+      "__id__": 1212
     }
   },
   {
@@ -20268,7 +20346,7 @@
       "__id__": 140
     },
     "sourceInfo": {
-      "__id__": 1212
+      "__id__": 1214
     },
     "propertyPath": [
       "_sockets",
@@ -20279,7 +20357,7 @@
       "__id__": 140
     },
     "targetInfo": {
-      "__id__": 1213
+      "__id__": 1215
     }
   },
   {
@@ -20302,7 +20380,7 @@
       "__id__": 917
     },
     "sourceInfo": {
-      "__id__": 1215
+      "__id__": 1217
     },
     "propertyPath": [
       "_sockets",
@@ -20313,7 +20391,7 @@
       "__id__": 917
     },
     "targetInfo": {
-      "__id__": 1216
+      "__id__": 1218
     }
   },
   {
@@ -20333,28 +20411,28 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 1218
-    },
-    "shadows": {
-      "__id__": 1219
-    },
-    "_skybox": {
       "__id__": 1220
     },
-    "fog": {
+    "shadows": {
       "__id__": 1221
     },
-    "octree": {
+    "_skybox": {
       "__id__": 1222
     },
-    "skin": {
+    "fog": {
       "__id__": 1223
     },
-    "lightProbeInfo": {
+    "octree": {
       "__id__": 1224
     },
-    "postSettings": {
+    "skin": {
       "__id__": 1225
+    },
+    "lightProbeInfo": {
+      "__id__": 1226
+    },
+    "postSettings": {
+      "__id__": 1227
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
