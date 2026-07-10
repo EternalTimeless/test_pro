@@ -224,6 +224,7 @@
             "Script\\Base\\Singleton.ts",
             "Script\\Base\\UnityUpComponent.ts",
             "Script\\Tool\\Index.ts",
+            "Script\\Tool\\PerformanceBlockHUD.ts",
             "Script\\Tool\\TweenTool.ts",
             "Script\\Tween\\tweener-cheat-sheet.png",
             "Script\\Tween\\TweenExamples.md",
@@ -735,8 +736,7 @@
             "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Shrapnel.ts",
             "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangeTowerAttack.ts",
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts",
-            "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts",
-            "Script\\Tool\\PerformanceBlockHUD.ts"
+            "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts"
         ]
     }
 }

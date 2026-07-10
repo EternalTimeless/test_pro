@@ -752,6 +752,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
+          label.customMaterial = null;
           this.labelVisualGroup.addChild(feedbackNode);
           feedbackNode.active = true;
           feedbackNode.setWorldPosition(worldPos.x, worldPos.y + this.feedbackStartYOffset, worldPos.z);

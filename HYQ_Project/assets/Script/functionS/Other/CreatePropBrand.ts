@@ -441,6 +441,7 @@ export class CreatePropBrand extends UnityUpComponent {
             feedbackNode.destroy();
             return;
         }
+        label.customMaterial = null;
 
         this.labelVisualGroup.addChild(feedbackNode);
         feedbackNode.active = true;
