@@ -12523,8 +12523,8 @@
         "__id__": 760
       }
     ],
-    "smoothTotalHitCount": 500,
-    "smoothProgressEasePower": 1.5,
+    "smoothTotalHitCount": 550,
+    "smoothProgressEasePower": 1.8,
     "teethPerPair": 2,
     "initialClosedPairCount": 2,
     "nextPairInitialProgress": 0.5,
@@ -14349,7 +14349,7 @@
     "roleList": [
       null
     ],
-    "attackSpeed": 2,
+    "attackSpeed": 3,
     "maxRoleCount": 53,
     "retryMaxRoleLayerCount": 3,
     "outerLayerRoleCount": 28,

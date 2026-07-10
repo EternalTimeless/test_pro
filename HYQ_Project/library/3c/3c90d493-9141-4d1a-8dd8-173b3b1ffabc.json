@@ -14721,7 +14721,7 @@
     "roleList": [
       null
     ],
-    "attackSpeed": 2,
+    "attackSpeed": 3,
     "maxRoleCount": 53,
     "outerLayerRoleCount": 28,
     "maxShootingRoleCount": 40,

@@ -281,7 +281,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _export("Player", Player = (_dec9 = ccclass('Player'), _dec10 = property(_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
         error: Error()
-      }), Role) : Role), _dec11 = property(CCFloat), _dec12 = property({
+      }), Role) : Role), _dec11 = property({
+        type: CCFloat,
+        displayName: '初始武器射速(次/秒)',
+        tooltip: '开局默认武器每秒攻击次数。武器升级后会使用对应武器自己的射速配置。'
+      }), _dec12 = property({
         type: CCInteger,
         displayName: '+1人数上限',
         tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。'
@@ -2012,7 +2016,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return 2;
+          return 3;
         }
       }), _descriptor10 = _applyDecoratedDescriptor(_class5.prototype, "maxRoleCount", [_dec12], {
         configurable: true,

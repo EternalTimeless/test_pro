@@ -8304,7 +8304,7 @@
     "roleList": [
       null
     ],
-    "attackSpeed": 2,
+    "attackSpeed": 3,
     "shootList": [
       {
         "__id__": 394

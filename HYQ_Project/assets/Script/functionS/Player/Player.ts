@@ -76,8 +76,8 @@ export class Player extends UnityUpComponent {
 
     public move: MoveDrive;
 
-    @property(CCFloat)
-    public attackSpeed: number = 2;
+    @property({ type: CCFloat, displayName: '初始武器射速(次/秒)', tooltip: '开局默认武器每秒攻击次数。武器升级后会使用对应武器自己的射速配置。' })
+    public attackSpeed: number = 3;
 
     public isDie: boolean = false;
     private curCount: number = 1;
