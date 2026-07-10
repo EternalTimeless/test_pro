@@ -100,6 +100,10 @@ export class Player extends UnityUpComponent {
 
     @property({ type: CCInteger, displayName: '枪口特效最大播放数', tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。' })
     public maxMuzzleEffectCount: number = 8;
+
+    @property({ type: CCBoolean, displayName: 'jtl2合并多发逻辑弹', tooltip: '仅对 jtl2 生效。多发子弹的视觉数量保持不变，但合并为一颗逻辑子弹参与移动和碰撞，并自动补偿总伤害。' })
+    public mergeJtl2MultiBulletLogic: boolean = true;
+
     @property({ type: CCInteger, displayName: '错峰发射武器配置索引', tooltip: '指定哪一个武器子弹配置使用错峰发射。0 表示第一个油桶给出的武器；负数表示关闭。' })
     public staggerShotWeaponConfigIndex: number = 0;
     @property({ type: CCFloat, displayName: '错峰发射占攻击间隔比例', tooltip: '错峰武器每轮射击摊开的时间比例。0.85 表示在本轮攻击间隔的 85% 时间内连续发射，伤害和总弹量不变。' })
@@ -381,6 +385,7 @@ export class Player extends UnityUpComponent {
     public upArms(armwType: ArmsTypeEnum, weaponBulletConfigIndex: number = -1) {
         const weaponBulletConfig = this.getWeaponBulletConfig(armwType, weaponBulletConfigIndex);
         const upgradeArmsType = weaponBulletConfig?.armsType ?? armwType;
+        Role.mergeVisualBullets = this.mergeJtl2MultiBulletLogic && upgradeArmsType === ArmsTypeEnum.jtl2;
         this.pendingStaggerShots.length = 0;
         this.currentWeaponBulletConfig = weaponBulletConfig;
         this.currentWeaponBulletConfigIndex = weaponBulletConfig ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex) : -1;
@@ -521,10 +526,12 @@ export class Player extends UnityUpComponent {
         if (!config) {
             this.currentWeaponBulletConfig = null;
             this.currentWeaponBulletConfigIndex = -1;
+            Role.mergeVisualBullets = false;
             return;
         }
         this.applyWeaponBulletConfig(config);
         const armsType = config.armsType;
+        Role.mergeVisualBullets = this.mergeJtl2MultiBulletLogic && armsType === ArmsTypeEnum.jtl2;
         this.applyWeaponAttackSpeed(armsType);
         const soundType = this.getSoundTypeByArms(armsType);
         if (soundType !== null) {

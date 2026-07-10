@@ -159,6 +159,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.batchHeight = 0;
           this.batchLocalEulerX = 0;
           this.batchRenderer = null;
+          this.batchVisualCount = 1;
+          this._batchVisualOffsets = [new Vec3()];
 
           /** 是否已注册到碰撞管理器 */
           this._registered = false;
@@ -250,6 +252,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._triggerDieTime = this.triggerDieTime;
           this._isTrigger = false;
           this._hasPreviousWorldPosition = false;
+          this.batchVisualCount = 1;
+
+          this._batchVisualOffsets[0].set(Vec3.ZERO);
+
           var sprite = this.batchSprite && this.batchSprite.isValid ? this.batchSprite : this.node.getComponentInChildren(Sprite);
 
           if (sprite && sprite.isValid) {
@@ -265,6 +271,32 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.registerBullet(this);
             this._registered = true;
           }
+        }
+
+        configureBatchVisualCopies(count, spreadForward) {
+          this.batchVisualCount = Math.max(1, Math.floor(count));
+
+          for (var i = 0; i < this.batchVisualCount; i++) {
+            var offset = this._batchVisualOffsets[i];
+
+            if (!offset) {
+              offset = new Vec3();
+              this._batchVisualOffsets[i] = offset;
+            }
+
+            if (i === 0) {
+              offset.set(Vec3.ZERO);
+              continue;
+            }
+
+            offset.set((Math.random() - 0.5) * 2, 0, spreadForward ? (Math.random() - 0.5) * 4 : 0);
+          }
+        }
+
+        getBatchVisualOffset(index) {
+          var _this$_batchVisualOff;
+
+          return (_this$_batchVisualOff = this._batchVisualOffsets[index]) != null ? _this$_batchVisualOff : Vec3.ZERO;
         }
 
         getPreviousWorldPosition(out) {

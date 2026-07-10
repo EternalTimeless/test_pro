@@ -43,6 +43,7 @@ export class Role extends Component {
     public static soundType: SoundEnum = SoundEnum.Sound_Gun;
     public static bulletType: BulletEnum = BulletEnum.arrow;
     public static power: number = 1;
+    public static mergeVisualBullets: boolean = false;
     public static repelPower: number = 0;
     public static bulletLayer: Node;
 
@@ -239,7 +240,8 @@ export class Role extends Component {
         AudioManager.inst.playOneShot(Role.soundType, 0.3, 0.08);
         const shootPos = this.shoot.worldPosition;
         const pos = Role.bulletSpawnPos.set(shootPos.x, shootPos.y + this.bulletSpawnOffsetY, shootPos.z);
-        const damage = Role.power * damageScale;
+        const mergeVisualBullets = Role.mergeVisualBullets && visualBulletCount > 1;
+        const damage = Role.power * damageScale * (mergeVisualBullets ? visualBulletCount : 1);
         const batchRenderer = BulletBatchRenderer.getOrCreate(Role.bulletLayer);
 
         const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
@@ -249,11 +251,21 @@ export class Role extends Component {
         if (firstBulletRandomX > 0) {
             bullet.node.x += (Math.random() - 0.5) * 2 * firstBulletRandomX;
         }
-        const lockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
-        Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+        if (mergeVisualBullets) {
+            const lockTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
+            Role.aimBulletToTarget(bullet, lockTarget);
+            bullet.configureBatchVisualCopies(visualBulletCount, !lockTarget);
+        } else {
+            const lockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
+            Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+        }
         batchRenderer.registerBullet(bullet);
         if (playEffect) {
             this.effect?.play();
+        }
+
+        if (mergeVisualBullets) {
+            return;
         }
 
         for (let i = 1; i < visualBulletCount; i++) {
@@ -284,6 +296,10 @@ export class Role extends Component {
 
     public static aimBulletToCurrentTarget(bullet: BulletBattle3D, lockWorldX: number = bullet.node.worldPosition.x): void {
         const target = Role.getLockableLalianTarget(bullet, lockWorldX);
+        Role.aimBulletToTarget(bullet, target);
+    }
+
+    private static aimBulletToTarget(bullet: BulletBattle3D, target: PropLalianGate | null): void {
         if (!target) {
             return;
         }

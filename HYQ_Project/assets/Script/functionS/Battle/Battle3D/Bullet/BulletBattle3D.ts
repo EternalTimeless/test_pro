@@ -58,6 +58,8 @@ export default class BulletBattle3D extends Component {
     public batchHeight: number = 0;
     public batchLocalEulerX: number = 0;
     public batchRenderer: BulletBatchRenderer | null = null;
+    public batchVisualCount: number = 1;
+    private readonly _batchVisualOffsets: Vec3[] = [new Vec3()];
 
     /** 是否已注册到碰撞管理器 */
     private _registered: boolean = false;
@@ -126,6 +128,8 @@ export default class BulletBattle3D extends Component {
         this._triggerDieTime = this.triggerDieTime;
         this._isTrigger = false;
         this._hasPreviousWorldPosition = false;
+        this.batchVisualCount = 1;
+        this._batchVisualOffsets[0].set(Vec3.ZERO);
         const sprite = this.batchSprite && this.batchSprite.isValid
             ? this.batchSprite
             : this.node.getComponentInChildren(Sprite);
@@ -140,6 +144,30 @@ export default class BulletBattle3D extends Component {
             BulletMonsterCollisionManager.instance.registerBullet(this);
             this._registered = true;
         }
+    }
+
+    public configureBatchVisualCopies(count: number, spreadForward: boolean): void {
+        this.batchVisualCount = Math.max(1, Math.floor(count));
+        for (let i = 0; i < this.batchVisualCount; i++) {
+            let offset = this._batchVisualOffsets[i];
+            if (!offset) {
+                offset = new Vec3();
+                this._batchVisualOffsets[i] = offset;
+            }
+            if (i === 0) {
+                offset.set(Vec3.ZERO);
+                continue;
+            }
+            offset.set(
+                (Math.random() - 0.5) * 2,
+                0,
+                spreadForward ? (Math.random() - 0.5) * 4 : 0,
+            );
+        }
+    }
+
+    public getBatchVisualOffset(index: number): Readonly<Vec3> {
+        return this._batchVisualOffsets[index] ?? Vec3.ZERO;
     }
 
 

@@ -14498,7 +14498,7 @@
     "armsType": 3,
     "weaponModel": -1,
     "bulletPower": 0.8,
-    "bulletType": 3,
+    "bulletType": 0,
     "randomizeShotOrder": false,
     "randomShotDelayWindowRatio": 0.75,
     "initialBulletRandomX": 0

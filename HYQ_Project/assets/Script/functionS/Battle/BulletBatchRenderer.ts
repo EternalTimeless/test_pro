@@ -247,22 +247,26 @@ export class BulletBatchRenderer extends Component {
             }
         }
 
-        const count = bullets.length;
-        batch.node.active = count > 0;
-        if (count <= 0) {
+        let visualCount = 0;
+        for (let i = 0; i < bullets.length; i++) {
+            visualCount += Math.max(1, bullets[i].batchVisualCount);
+        }
+        batch.node.active = visualCount > 0;
+        if (visualCount <= 0) {
             return;
         }
 
-        batch.positions.length = count * 12;
-        batch.uvs.length = count * 8;
-        batch.indices.length = count * 6;
+        batch.positions.length = visualCount * 12;
+        batch.uvs.length = visualCount * 8;
+        batch.indices.length = visualCount * 6;
 
         const halfWidth = batch.width * 0.5;
         const halfHeight = batch.height * 0.5;
         const useGroundPlane = Math.abs(batch.localEulerX) > 45;
         const uv = this._getUV(batch.spriteFrame);
 
-        for (let i = 0; i < count; i++) {
+        let visualIndex = 0;
+        for (let i = 0; i < bullets.length; i++) {
             const bullet = bullets[i];
             const pos = bullet.node.position;
 
@@ -284,32 +288,37 @@ export class BulletBatchRenderer extends Component {
             const fz = this._tempForward.z * halfHeight;
             const rx = this._tempRight.x * halfWidth;
             const rz = this._tempRight.z * halfWidth;
-            const py = pos.y;
+            const copyCount = Math.max(1, bullet.batchVisualCount);
+            for (let copyIndex = 0; copyIndex < copyCount; copyIndex++, visualIndex++) {
+                const copyOffset = bullet.getBatchVisualOffset(copyIndex);
+                const px = pos.x + copyOffset.x;
+                const py = pos.y + copyOffset.y;
+                const pz = pos.z + copyOffset.z;
+                const pOffset = visualIndex * 12;
+                this._setPosition(batch.positions, pOffset, px - rx - fx, py - fy, pz - rz - fz);
+                this._setPosition(batch.positions, pOffset + 3, px + rx - fx, py - fy, pz + rz - fz);
+                this._setPosition(batch.positions, pOffset + 6, px - rx + fx, py + fy, pz - rz + fz);
+                this._setPosition(batch.positions, pOffset + 9, px + rx + fx, py + fy, pz + rz + fz);
 
-            const pOffset = i * 12;
-            this._setPosition(batch.positions, pOffset, pos.x - rx - fx, py - fy, pos.z - rz - fz);
-            this._setPosition(batch.positions, pOffset + 3, pos.x + rx - fx, py - fy, pos.z + rz - fz);
-            this._setPosition(batch.positions, pOffset + 6, pos.x - rx + fx, py + fy, pos.z - rz + fz);
-            this._setPosition(batch.positions, pOffset + 9, pos.x + rx + fx, py + fy, pos.z + rz + fz);
+                const uvOffset = visualIndex * 8;
+                batch.uvs[uvOffset] = uv[0];
+                batch.uvs[uvOffset + 1] = uv[1];
+                batch.uvs[uvOffset + 2] = uv[2];
+                batch.uvs[uvOffset + 3] = uv[3];
+                batch.uvs[uvOffset + 4] = uv[4];
+                batch.uvs[uvOffset + 5] = uv[5];
+                batch.uvs[uvOffset + 6] = uv[6];
+                batch.uvs[uvOffset + 7] = uv[7];
 
-            const uvOffset = i * 8;
-            batch.uvs[uvOffset] = uv[0];
-            batch.uvs[uvOffset + 1] = uv[1];
-            batch.uvs[uvOffset + 2] = uv[2];
-            batch.uvs[uvOffset + 3] = uv[3];
-            batch.uvs[uvOffset + 4] = uv[4];
-            batch.uvs[uvOffset + 5] = uv[5];
-            batch.uvs[uvOffset + 6] = uv[6];
-            batch.uvs[uvOffset + 7] = uv[7];
-
-            const vertexOffset = i * 4;
-            const indexOffset = i * 6;
-            batch.indices[indexOffset] = vertexOffset;
-            batch.indices[indexOffset + 1] = vertexOffset + 1;
-            batch.indices[indexOffset + 2] = vertexOffset + 2;
-            batch.indices[indexOffset + 3] = vertexOffset + 2;
-            batch.indices[indexOffset + 4] = vertexOffset + 1;
-            batch.indices[indexOffset + 5] = vertexOffset + 3;
+                const vertexOffset = visualIndex * 4;
+                const indexOffset = visualIndex * 6;
+                batch.indices[indexOffset] = vertexOffset;
+                batch.indices[indexOffset + 1] = vertexOffset + 1;
+                batch.indices[indexOffset + 2] = vertexOffset + 2;
+                batch.indices[indexOffset + 3] = vertexOffset + 2;
+                batch.indices[indexOffset + 4] = vertexOffset + 1;
+                batch.indices[indexOffset + 5] = vertexOffset + 3;
+            }
         }
 
         const geometry: primitives.IGeometry = {

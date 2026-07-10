@@ -410,7 +410,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), AudioManager) : AudioManager).inst.playOneShot(Role.soundType, 0.3, 0.08);
           var shootPos = this.shoot.worldPosition;
           var pos = Role.bulletSpawnPos.set(shootPos.x, shootPos.y + this.bulletSpawnOffsetY, shootPos.z);
-          var damage = Role.power * damageScale;
+          var mergeVisualBullets = Role.mergeVisualBullets && visualBulletCount > 1;
+          var damage = Role.power * damageScale * (mergeVisualBullets ? visualBulletCount : 1);
           var batchRenderer = (_crd && BulletBatchRenderer === void 0 ? (_reportPossibleCrUseOfBulletBatchRenderer({
             error: Error()
           }), BulletBatchRenderer) : BulletBatchRenderer).getOrCreate(Role.bulletLayer);
@@ -425,14 +426,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             bullet.node.x += (Math.random() - 0.5) * 2 * firstBulletRandomX;
           }
 
-          var lockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
-          Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+          if (mergeVisualBullets) {
+            var lockTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
+            Role.aimBulletToTarget(bullet, lockTarget);
+            bullet.configureBatchVisualCopies(visualBulletCount, !lockTarget);
+          } else {
+            var lockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
+            Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+          }
+
           batchRenderer.registerBullet(bullet);
 
           if (playEffect) {
             var _this$effect;
 
             (_this$effect = this.effect) == null || _this$effect.play();
+          }
+
+          if (mergeVisualBullets) {
+            return;
           }
 
           for (var i = 1; i < visualBulletCount; i++) {
@@ -473,7 +485,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           var target = Role.getLockableLalianTarget(bullet, lockWorldX);
+          Role.aimBulletToTarget(bullet, target);
+        }
 
+        static aimBulletToTarget(bullet, target) {
           if (!target) {
             return;
           }
@@ -495,7 +510,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         error: Error()
       }), SoundEnum) : SoundEnum).Sound_Gun, _class3.bulletType = (_crd && BulletEnum === void 0 ? (_reportPossibleCrUseOfBulletEnum({
         error: Error()
-      }), BulletEnum) : BulletEnum).arrow, _class3.power = 1, _class3.repelPower = 0, _class3.bulletLayer = void 0, _class3.propSocketNodeName = 'Bip001 Prop1 Socket', _class3.idleAnimIndex = 0, _class3.aimVector = new Vec3(), _class3.aimQuat = new Quat(), _class3.bulletSpawnPos = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec2], {
+      }), BulletEnum) : BulletEnum).arrow, _class3.power = 1, _class3.mergeVisualBullets = false, _class3.repelPower = 0, _class3.bulletLayer = void 0, _class3.propSocketNodeName = 'Bip001 Prop1 Socket', _class3.idleAnimIndex = 0, _class3.aimVector = new Vec3(), _class3.aimQuat = new Quat(), _class3.bulletSpawnPos = new Vec3(), _class3), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec2], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -519,7 +534,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return -1.2;
+          return -1.1;
         }
       }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "arms", [_dec6], {
         configurable: true,

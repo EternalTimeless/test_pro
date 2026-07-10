@@ -303,24 +303,31 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             }
           }
 
-          var count = bullets.length;
-          batch.node.active = count > 0;
+          var visualCount = 0;
 
-          if (count <= 0) {
+          for (var _i = 0; _i < bullets.length; _i++) {
+            visualCount += Math.max(1, bullets[_i].batchVisualCount);
+          }
+
+          batch.node.active = visualCount > 0;
+
+          if (visualCount <= 0) {
             return;
           }
 
-          batch.positions.length = count * 12;
-          batch.uvs.length = count * 8;
-          batch.indices.length = count * 6;
+          batch.positions.length = visualCount * 12;
+          batch.uvs.length = visualCount * 8;
+          batch.indices.length = visualCount * 6;
           var halfWidth = batch.width * 0.5;
           var halfHeight = batch.height * 0.5;
           var useGroundPlane = Math.abs(batch.localEulerX) > 45;
 
           var uv = this._getUV(batch.spriteFrame);
 
-          for (var _i = 0; _i < count; _i++) {
-            var _bullet = bullets[_i];
+          var visualIndex = 0;
+
+          for (var _i2 = 0; _i2 < bullets.length; _i2++) {
+            var _bullet = bullets[_i2];
             var pos = _bullet.node.position;
             Vec3.transformQuat(this._tempForward, Vec3.FORWARD, _bullet.node.rotation);
 
@@ -343,34 +350,42 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             var fz = this._tempForward.z * halfHeight;
             var rx = this._tempRight.x * halfWidth;
             var rz = this._tempRight.z * halfWidth;
-            var py = pos.y;
-            var pOffset = _i * 12;
+            var copyCount = Math.max(1, _bullet.batchVisualCount);
 
-            this._setPosition(batch.positions, pOffset, pos.x - rx - fx, py - fy, pos.z - rz - fz);
+            for (var copyIndex = 0; copyIndex < copyCount; copyIndex++, visualIndex++) {
+              var copyOffset = _bullet.getBatchVisualOffset(copyIndex);
 
-            this._setPosition(batch.positions, pOffset + 3, pos.x + rx - fx, py - fy, pos.z + rz - fz);
+              var px = pos.x + copyOffset.x;
+              var py = pos.y + copyOffset.y;
+              var pz = pos.z + copyOffset.z;
+              var pOffset = visualIndex * 12;
 
-            this._setPosition(batch.positions, pOffset + 6, pos.x - rx + fx, py + fy, pos.z - rz + fz);
+              this._setPosition(batch.positions, pOffset, px - rx - fx, py - fy, pz - rz - fz);
 
-            this._setPosition(batch.positions, pOffset + 9, pos.x + rx + fx, py + fy, pos.z + rz + fz);
+              this._setPosition(batch.positions, pOffset + 3, px + rx - fx, py - fy, pz + rz - fz);
 
-            var uvOffset = _i * 8;
-            batch.uvs[uvOffset] = uv[0];
-            batch.uvs[uvOffset + 1] = uv[1];
-            batch.uvs[uvOffset + 2] = uv[2];
-            batch.uvs[uvOffset + 3] = uv[3];
-            batch.uvs[uvOffset + 4] = uv[4];
-            batch.uvs[uvOffset + 5] = uv[5];
-            batch.uvs[uvOffset + 6] = uv[6];
-            batch.uvs[uvOffset + 7] = uv[7];
-            var vertexOffset = _i * 4;
-            var indexOffset = _i * 6;
-            batch.indices[indexOffset] = vertexOffset;
-            batch.indices[indexOffset + 1] = vertexOffset + 1;
-            batch.indices[indexOffset + 2] = vertexOffset + 2;
-            batch.indices[indexOffset + 3] = vertexOffset + 2;
-            batch.indices[indexOffset + 4] = vertexOffset + 1;
-            batch.indices[indexOffset + 5] = vertexOffset + 3;
+              this._setPosition(batch.positions, pOffset + 6, px - rx + fx, py + fy, pz - rz + fz);
+
+              this._setPosition(batch.positions, pOffset + 9, px + rx + fx, py + fy, pz + rz + fz);
+
+              var uvOffset = visualIndex * 8;
+              batch.uvs[uvOffset] = uv[0];
+              batch.uvs[uvOffset + 1] = uv[1];
+              batch.uvs[uvOffset + 2] = uv[2];
+              batch.uvs[uvOffset + 3] = uv[3];
+              batch.uvs[uvOffset + 4] = uv[4];
+              batch.uvs[uvOffset + 5] = uv[5];
+              batch.uvs[uvOffset + 6] = uv[6];
+              batch.uvs[uvOffset + 7] = uv[7];
+              var vertexOffset = visualIndex * 4;
+              var indexOffset = visualIndex * 6;
+              batch.indices[indexOffset] = vertexOffset;
+              batch.indices[indexOffset + 1] = vertexOffset + 1;
+              batch.indices[indexOffset + 2] = vertexOffset + 2;
+              batch.indices[indexOffset + 3] = vertexOffset + 2;
+              batch.indices[indexOffset + 4] = vertexOffset + 1;
+              batch.indices[indexOffset + 5] = vertexOffset + 3;
+            }
           }
 
           var geometry = {

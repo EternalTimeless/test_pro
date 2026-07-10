@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _class4, _class5, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _class4, _class5, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -310,22 +310,26 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         displayName: '枪口特效最大播放数',
         tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。'
       }), _dec18 = property({
+        type: CCBoolean,
+        displayName: 'jtl2合并多发逻辑弹',
+        tooltip: '仅对 jtl2 生效。多发子弹的视觉数量保持不变，但合并为一颗逻辑子弹参与移动和碰撞，并自动补偿总伤害。'
+      }), _dec19 = property({
         type: CCInteger,
         displayName: '错峰发射武器配置索引',
         tooltip: '指定哪一个武器子弹配置使用错峰发射。0 表示第一个油桶给出的武器；负数表示关闭。'
-      }), _dec19 = property({
+      }), _dec20 = property({
         type: CCFloat,
         displayName: '错峰发射占攻击间隔比例',
         tooltip: '错峰武器每轮射击摊开的时间比例。0.85 表示在本轮攻击间隔的 85% 时间内连续发射，伤害和总弹量不变。'
-      }), _dec20 = property({
+      }), _dec21 = property({
         type: CCInteger,
         displayName: '默认武器配置索引',
         tooltip: '开局默认使用的“武器子弹配置”索引。-1 表示保持旧默认值：子弹 arrow、威力 1、攻击速度使用 Player.attackSpeed。'
-      }), _dec21 = property(CCBoolean), _dec22 = property({
+      }), _dec22 = property(CCBoolean), _dec23 = property({
         type: [WeaponBulletConfig],
         displayName: '武器子弹配置',
         tooltip: '配置各武器的子弹威力和子弹模型。'
-      }), _dec23 = property(Node), _dec9(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), _dec24 = property(Node), _dec9(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
@@ -357,15 +361,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor15, this);
 
-          _initializerDefineProperty(this, "staggerShotWeaponConfigIndex", _descriptor16, this);
+          _initializerDefineProperty(this, "mergeJtl2MultiBulletLogic", _descriptor16, this);
 
-          _initializerDefineProperty(this, "staggerShotWindowRatio", _descriptor17, this);
+          _initializerDefineProperty(this, "staggerShotWeaponConfigIndex", _descriptor17, this);
 
-          _initializerDefineProperty(this, "defaultWeaponConfigIndex", _descriptor18, this);
+          _initializerDefineProperty(this, "staggerShotWindowRatio", _descriptor18, this);
 
-          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor19, this);
+          _initializerDefineProperty(this, "defaultWeaponConfigIndex", _descriptor19, this);
 
-          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor20, this);
+          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor20, this);
+
+          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor21, this);
 
           this.shootRoleStartIndex = 0;
           this.pendingRoleSwitchType = null;
@@ -390,7 +396,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isLock = false;
 
           // public MoveX: number = 8;
-          _initializerDefineProperty(this, "shootList", _descriptor21, this);
+          _initializerDefineProperty(this, "shootList", _descriptor22, this);
 
           this.shootIndex = 1;
           this.attackIn = false;
@@ -617,6 +623,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           var weaponBulletConfig = this.getWeaponBulletConfig(armwType, weaponBulletConfigIndex);
           var upgradeArmsType = (_weaponBulletConfig$a = weaponBulletConfig == null ? void 0 : weaponBulletConfig.armsType) != null ? _weaponBulletConfig$a : armwType;
+          (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).mergeVisualBullets = this.mergeJtl2MultiBulletLogic && upgradeArmsType === (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+            error: Error()
+          }), ArmsTypeEnum) : ArmsTypeEnum).jtl2;
           this.pendingStaggerShots.length = 0;
           this.currentWeaponBulletConfig = weaponBulletConfig;
           this.currentWeaponBulletConfigIndex = weaponBulletConfig ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex) : -1;
@@ -844,11 +855,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           if (!config) {
             this.currentWeaponBulletConfig = null;
             this.currentWeaponBulletConfigIndex = -1;
+            (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+              error: Error()
+            }), Role) : Role).mergeVisualBullets = false;
             return;
           }
 
           this.applyWeaponBulletConfig(config);
           var armsType = config.armsType;
+          (_crd && Role === void 0 ? (_reportPossibleCrUseOfRole({
+            error: Error()
+          }), Role) : Role).mergeVisualBullets = this.mergeJtl2MultiBulletLogic && armsType === (_crd && ArmsTypeEnum === void 0 ? (_reportPossibleCrUseOfArmsTypeEnum({
+            error: Error()
+          }), ArmsTypeEnum) : ArmsTypeEnum).jtl2;
           this.applyWeaponAttackSpeed(armsType);
           var soundType = this.getSoundTypeByArms(armsType);
 
@@ -2060,35 +2079,42 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 8;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWeaponConfigIndex", [_dec18], {
+      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "mergeJtl2MultiBulletLogic", [_dec18], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return true;
+        }
+      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWeaponConfigIndex", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0;
         }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWindowRatio", [_dec19], {
+      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWindowRatio", [_dec20], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 0.85;
         }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "defaultWeaponConfigIndex", [_dec20], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "defaultWeaponConfigIndex", [_dec21], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return -1;
         }
-      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec21], {
+      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec22], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return false;
         }
-      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec22], {
+      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec23], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -2151,7 +2177,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return config;
           })()];
         }
-      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec23], {
+      }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec24], {
         configurable: true,
         enumerable: true,
         writable: true,
