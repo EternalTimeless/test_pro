@@ -735,7 +735,8 @@
             "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Shrapnel.ts",
             "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangeTowerAttack.ts",
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts",
-            "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts"
+            "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts",
+            "Script\\Tool\\PerformanceBlockHUD.ts"
         ]
     }
 }

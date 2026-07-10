@@ -3822,7 +3822,7 @@
       "__uuid__": "e8aabdc2-bc10-4f97-95c0-c41ee701c0f1@77ca5",
       "__expectedType__": "cc.Mesh"
     },
-    "_shadowCastingMode": 0,
+    "_shadowCastingMode": 1,
     "_shadowReceivingMode": 1,
     "_shadowBias": 0,
     "_shadowNormalBias": 0,

@@ -25,11 +25,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 52
+        "__id__": 53
       }
     ],
     "_prefab": {
-      "__id__": 68
+      "__id__": 69
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -147,6 +147,9 @@
       },
       {
         "__id__": 51
+      },
+      {
+        "__id__": 52
       }
     ],
     "removedComponents": []
@@ -851,6 +854,16 @@
     "value": 1
   },
   {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 34
+    },
+    "propertyPath": [
+      "_active"
+    ],
+    "value": true
+  },
+  {
     "__type__": "86381loO/lKPYw+1SpcYu+c",
     "_name": "",
     "_objFlags": 0,
@@ -860,7 +873,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 53
+      "__id__": 54
     },
     "type": 0,
     "fbxManager": {
@@ -869,25 +882,27 @@
     "shoot": {
       "__id__": 7
     },
+    "bulletSpawnOffsetY": -1.2,
+    "attackNum": 0,
     "effect": {
       "__id__": 20
     },
     "meshFlashDataList": [
       {
-        "__id__": 54
+        "__id__": 55
       },
       {
-        "__id__": 61
+        "__id__": 62
       }
     ],
     "meshRedDataList": [
       {
-        "__id__": 64
+        "__id__": 65
       }
     ],
     "meshCreateDataList": [
       {
-        "__id__": 66
+        "__id__": 67
       }
     ],
     "_id": ""
@@ -899,12 +914,12 @@
   {
     "__type__": "MeshFlashData",
     "meshRender": {
-      "__id__": 55
+      "__id__": 56
     },
     "colorProps": [],
     "switchProps": [
       {
-        "__id__": 60
+        "__id__": 61
       }
     ]
   },
@@ -914,11 +929,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 56
+      "__id__": 57
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 58
+      "__id__": 59
     },
     "_materials": [
       {
@@ -928,7 +943,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 59
+      "__id__": 60
     },
     "_mesh": {
       "__uuid__": "f6fb758b-ca27-49a3-9074-b55054373a42@74d97",
@@ -964,11 +979,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 55
+        "__id__": 56
       }
     ],
     "_prefab": {
-      "__id__": 57
+      "__id__": 58
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1053,10 +1068,10 @@
     "colorProps": [],
     "switchProps": [
       {
-        "__id__": 62
+        "__id__": 63
       },
       {
-        "__id__": 63
+        "__id__": 64
       }
     ]
   },
@@ -1081,11 +1096,11 @@
   {
     "__type__": "MeshFlashData",
     "meshRender": {
-      "__id__": 55
+      "__id__": 56
     },
     "colorProps": [
       {
-        "__id__": 65
+        "__id__": 66
       }
     ],
     "switchProps": []
@@ -1099,12 +1114,12 @@
   {
     "__type__": "MeshFlashData",
     "meshRender": {
-      "__id__": 55
+      "__id__": 56
     },
     "colorProps": [],
     "switchProps": [
       {
-        "__id__": 67
+        "__id__": 68
       }
     ]
   },
@@ -1129,28 +1144,28 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 69
+        "__id__": 70
       },
       {
-        "__id__": 71
+        "__id__": 72
       },
       {
-        "__id__": 73
+        "__id__": 74
       },
       {
-        "__id__": 75
+        "__id__": 76
       },
       {
-        "__id__": 77
+        "__id__": 78
       },
       {
-        "__id__": 79
+        "__id__": 80
       },
       {
-        "__id__": 82
+        "__id__": 83
       },
       {
-        "__id__": 84
+        "__id__": 85
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -1165,7 +1180,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 52
+      "__id__": 53
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1173,7 +1188,7 @@
     ],
     "target": null,
     "targetInfo": {
-      "__id__": 70
+      "__id__": 71
     }
   },
   {
@@ -1185,7 +1200,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 52
+      "__id__": 53
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1195,7 +1210,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 72
+      "__id__": 73
     }
   },
   {
@@ -1207,7 +1222,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 52
+      "__id__": 53
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1219,7 +1234,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 74
+      "__id__": 75
     }
   },
   {
@@ -1231,7 +1246,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 52
+      "__id__": 53
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1243,7 +1258,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 76
+      "__id__": 77
     }
   },
   {
@@ -1255,7 +1270,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 52
+      "__id__": 53
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1265,7 +1280,7 @@
       "__id__": 15
     },
     "targetInfo": {
-      "__id__": 78
+      "__id__": 79
     }
   },
   {
@@ -1281,7 +1296,7 @@
       "__id__": 2
     },
     "sourceInfo": {
-      "__id__": 80
+      "__id__": 81
     },
     "propertyPath": [
       "_sockets",
@@ -1292,7 +1307,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 81
+      "__id__": 82
     }
   },
   {
@@ -1310,7 +1325,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 52
+      "__id__": 53
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1322,7 +1337,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 83
+      "__id__": 84
     }
   },
   {
@@ -1334,7 +1349,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 52
+      "__id__": 53
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1346,7 +1361,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 85
+      "__id__": 86
     }
   },
   {

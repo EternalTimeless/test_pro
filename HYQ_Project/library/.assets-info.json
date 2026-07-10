@@ -86,7 +86,7 @@
       "uuid": "eafc0e9d-bb59-4905-955a-71ed10274751"
     },
     "Script\\Tool": {
-      "time": 1781493203549.7878,
+      "time": 1783663783421.7932,
       "uuid": "60e1114a-09c5-4426-bc29-b3c90b18cec6"
     },
     "Script\\Tween": {
@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1783662848611.6045,
+      "time": 1783668280586.9883,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -618,7 +618,7 @@
       "uuid": "31a7d71c-dbfe-4ce3-920b-07a58fd2c910"
     },
     "GameRes\\Prefab\\Monster_boss.prefab": {
-      "time": 1783492501826.6025,
+      "time": 1783667784230.041,
       "uuid": "d16848b5-18b3-400e-8cad-f629e5124e7c"
     },
     "GameRes\\Prefab\\Prop_Brand.prefab": {
@@ -634,7 +634,7 @@
       "uuid": "8d8c8972-548e-4871-9402-0815207b5c60"
     },
     "GameRes\\Prefab\\Role_0.prefab": {
-      "time": 1783662618089.4622,
+      "time": 1783666356769.9922,
       "uuid": "ac6eb507-f8e3-437a-8986-b7b34e4f6c5e"
     },
     "GameRes\\Prefab\\Role_1.prefab": {
@@ -642,7 +642,7 @@
       "uuid": "f96153eb-6f89-4aad-b84b-808954761c02"
     },
     "GameRes\\Prefab\\Role_2.prefab": {
-      "time": 1782958427109.6382,
+      "time": 1783667859485.4888,
       "uuid": "799add5f-4370-4ee6-b0a4-aca1ebcd06a3"
     },
     "GameRes\\Prefab\\tire.prefab": {
@@ -1518,7 +1518,7 @@
       "uuid": "ac2e0ce8-427b-413a-b957-031450d6f06c"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_3.prefab": {
-      "time": 1782813091011.3408,
+      "time": 1783668270052.6975,
       "uuid": "2be39540-c3f7-4309-a0f6-bffb11e792ab"
     },
     "GameRes\\Prefab\\Bullet\\Bullet_4.prefab": {
@@ -1682,7 +1682,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1783652968019.489,
+      "time": 1783666993161.6025,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
@@ -5153,6 +5153,13 @@
     "GameRes\\SLLYT_map\\wuqi\\大壮带金边.png": {
       "time": 1783046458454.503,
       "uuid": "269e5a1a-3157-4766-9860-6a07a2374e6b"
+    },
+    "Script\\Tool\\PerformanceBlockHUD.ts.meta": {
+      "time": 1783663783487.6868
+    },
+    "Script\\Tool\\PerformanceBlockHUD.ts": {
+      "time": 1783665026150.042,
+      "uuid": "5b225621-c87b-44b9-9d46-514581444692"
     }
   },
   "missing": {}

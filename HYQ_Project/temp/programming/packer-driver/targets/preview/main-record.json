@@ -430,7 +430,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 277000.1172,
+      "mTimestamp": 12156187.3314,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -798,7 +798,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Tool/TweenTool.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Tool/PerformanceBlockHUD.ts",
           "resolved": "__unresolved_26",
           "loc": {
             "start": {
@@ -807,12 +807,12 @@
             },
             "end": {
               "line": 30,
-              "column": 135
+              "column": 145
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/Base/BagBase.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Tool/TweenTool.ts",
           "resolved": "__unresolved_27",
           "loc": {
             "start": {
@@ -821,12 +821,12 @@
             },
             "end": {
               "line": 31,
-              "column": 147
+              "column": 135
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/FlayPropManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/Base/BagBase.ts",
           "resolved": "__unresolved_28",
           "loc": {
             "start": {
@@ -835,12 +835,12 @@
             },
             "end": {
               "line": 32,
-              "column": 150
+              "column": 147
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/GroupBag3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/FlayPropManager.ts",
           "resolved": "__unresolved_29",
           "loc": {
             "start": {
@@ -849,12 +849,12 @@
             },
             "end": {
               "line": 33,
-              "column": 145
+              "column": 150
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/GroupPropTransform.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/GroupBag3D.ts",
           "resolved": "__unresolved_30",
           "loc": {
             "start": {
@@ -863,12 +863,12 @@
             },
             "end": {
               "line": 34,
-              "column": 153
+              "column": 145
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/IPropFly.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/GroupPropTransform.ts",
           "resolved": "__unresolved_31",
           "loc": {
             "start": {
@@ -877,12 +877,12 @@
             },
             "end": {
               "line": 35,
-              "column": 143
+              "column": 153
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/LabBagUp.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/IPropFly.ts",
           "resolved": "__unresolved_32",
           "loc": {
             "start": {
@@ -896,7 +896,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/Prop.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/LabBagUp.ts",
           "resolved": "__unresolved_33",
           "loc": {
             "start": {
@@ -905,12 +905,12 @@
             },
             "end": {
               "line": 37,
-              "column": 139
+              "column": 143
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/PropManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/Prop.ts",
           "resolved": "__unresolved_34",
           "loc": {
             "start": {
@@ -919,12 +919,12 @@
             },
             "end": {
               "line": 38,
-              "column": 146
+              "column": 139
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Attack/AreaAttack.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Bag/PropManager.ts",
           "resolved": "__unresolved_35",
           "loc": {
             "start": {
@@ -933,12 +933,12 @@
             },
             "end": {
               "line": 39,
-              "column": 155
+              "column": 146
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Attack/AttackState.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Attack/AreaAttack.ts",
           "resolved": "__unresolved_36",
           "loc": {
             "start": {
@@ -947,12 +947,12 @@
             },
             "end": {
               "line": 40,
-              "column": 156
+              "column": 155
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Attack/MeleeAttack.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Attack/AttackState.ts",
           "resolved": "__unresolved_37",
           "loc": {
             "start": {
@@ -966,7 +966,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/AttackTargetBase.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Attack/MeleeAttack.ts",
           "resolved": "__unresolved_38",
           "loc": {
             "start": {
@@ -975,12 +975,12 @@
             },
             "end": {
               "line": 42,
-              "column": 159
+              "column": 156
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/BattleTargetBase.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/AttackTargetBase.ts",
           "resolved": "__unresolved_39",
           "loc": {
             "start": {
@@ -994,7 +994,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/FlashRedManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/BattleTargetBase.ts",
           "resolved": "__unresolved_40",
           "loc": {
             "start": {
@@ -1003,12 +1003,12 @@
             },
             "end": {
               "line": 44,
-              "column": 158
+              "column": 159
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/Attack2D/RangedAttack.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Base/FlashRedManager.ts",
           "resolved": "__unresolved_41",
           "loc": {
             "start": {
@@ -1017,12 +1017,12 @@
             },
             "end": {
               "line": 45,
-              "column": 168
+              "column": 158
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/Bullet/BulletBattle2D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/Attack2D/RangedAttack.ts",
           "resolved": "__unresolved_42",
           "loc": {
             "start": {
@@ -1036,7 +1036,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/Bullet/BulletCollideBase2D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/Bullet/BulletBattle2D.ts",
           "resolved": "__unresolved_43",
           "loc": {
             "start": {
@@ -1045,12 +1045,12 @@
             },
             "end": {
               "line": 47,
-              "column": 173
+              "column": 168
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/CollectBattleTarger2D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/Bullet/BulletCollideBase2D.ts",
           "resolved": "__unresolved_44",
           "loc": {
             "start": {
@@ -1059,12 +1059,12 @@
             },
             "end": {
               "line": 48,
-              "column": 168
+              "column": 173
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/TriggerBase2D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/CollectBattleTarger2D.ts",
           "resolved": "__unresolved_45",
           "loc": {
             "start": {
@@ -1073,12 +1073,12 @@
             },
             "end": {
               "line": 49,
-              "column": 160
+              "column": 168
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Attack3D/RangeTowerAttack.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle2D/TriggerBase2D.ts",
           "resolved": "__unresolved_46",
           "loc": {
             "start": {
@@ -1087,12 +1087,12 @@
             },
             "end": {
               "line": 50,
-              "column": 172
+              "column": 160
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Attack3D/RangedAttack_Circle.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Attack3D/RangeTowerAttack.ts",
           "resolved": "__unresolved_47",
           "loc": {
             "start": {
@@ -1101,12 +1101,12 @@
             },
             "end": {
               "line": 51,
-              "column": 175
+              "column": 172
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Attack3D/RangedAttack_Shrapnel.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Attack3D/RangedAttack_Circle.ts",
           "resolved": "__unresolved_48",
           "loc": {
             "start": {
@@ -1115,12 +1115,12 @@
             },
             "end": {
               "line": 52,
-              "column": 177
+              "column": 175
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/AttackParkPlay.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Attack3D/RangedAttack_Shrapnel.ts",
           "resolved": "__unresolved_49",
           "loc": {
             "start": {
@@ -1129,12 +1129,12 @@
             },
             "end": {
               "line": 53,
-              "column": 161
+              "column": 177
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Bullet/BulletBattle3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/AttackParkPlay.ts",
           "resolved": "__unresolved_50",
           "loc": {
             "start": {
@@ -1143,12 +1143,12 @@
             },
             "end": {
               "line": 54,
-              "column": 168
+              "column": 161
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Bullet/BulletCollideBase3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Bullet/BulletBattle3D.ts",
           "resolved": "__unresolved_51",
           "loc": {
             "start": {
@@ -1157,12 +1157,12 @@
             },
             "end": {
               "line": 55,
-              "column": 173
+              "column": 168
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/CollectBattleTarger3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/Bullet/BulletCollideBase3D.ts",
           "resolved": "__unresolved_52",
           "loc": {
             "start": {
@@ -1171,12 +1171,12 @@
             },
             "end": {
               "line": 56,
-              "column": 168
+              "column": 173
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/TriggerBase3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/CollectBattleTarger3D.ts",
           "resolved": "__unresolved_53",
           "loc": {
             "start": {
@@ -1185,12 +1185,12 @@
             },
             "end": {
               "line": 57,
-              "column": 160
+              "column": 168
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BattleTarger/BattleTarget2D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/Battle3D/TriggerBase3D.ts",
           "resolved": "__unresolved_54",
           "loc": {
             "start": {
@@ -1199,12 +1199,12 @@
             },
             "end": {
               "line": 58,
-              "column": 165
+              "column": 160
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BattleTarger/BattleTarget3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BattleTarger/BattleTarget2D.ts",
           "resolved": "__unresolved_55",
           "loc": {
             "start": {
@@ -1218,7 +1218,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletBatchRenderer.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BattleTarger/BattleTarget3D.ts",
           "resolved": "__unresolved_56",
           "loc": {
             "start": {
@@ -1227,12 +1227,12 @@
             },
             "end": {
               "line": 60,
-              "column": 157
+              "column": 165
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletBatchRenderer.ts",
           "resolved": "__unresolved_57",
           "loc": {
             "start": {
@@ -1241,12 +1241,12 @@
             },
             "end": {
               "line": 61,
-              "column": 151
+              "column": 157
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletMonsterCollisionManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletManager.ts",
           "resolved": "__unresolved_58",
           "loc": {
             "start": {
@@ -1255,12 +1255,12 @@
             },
             "end": {
               "line": 62,
-              "column": 167
+              "column": 151
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/CollectBattleTarger/CollectGetTarget.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletMonsterCollisionManager.ts",
           "resolved": "__unresolved_59",
           "loc": {
             "start": {
@@ -1269,12 +1269,12 @@
             },
             "end": {
               "line": 63,
-              "column": 174
+              "column": 167
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/CollectBattleTarger/ColliderTag.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/CollectBattleTarger/CollectGetTarget.ts",
           "resolved": "__unresolved_60",
           "loc": {
             "start": {
@@ -1283,12 +1283,12 @@
             },
             "end": {
               "line": 64,
-              "column": 169
+              "column": 174
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/HpComponent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/CollectBattleTarger/ColliderTag.ts",
           "resolved": "__unresolved_61",
           "loc": {
             "start": {
@@ -1297,12 +1297,12 @@
             },
             "end": {
               "line": 65,
-              "column": 149
+              "column": 169
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/HpComponent.ts",
           "resolved": "__unresolved_62",
           "loc": {
             "start": {
@@ -1311,12 +1311,12 @@
             },
             "end": {
               "line": 66,
-              "column": 151
+              "column": 149
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectRemoveBase.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectManager.ts",
           "resolved": "__unresolved_63",
           "loc": {
             "start": {
@@ -1325,12 +1325,12 @@
             },
             "end": {
               "line": 67,
-              "column": 154
+              "column": 151
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectTimePartRemove.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectRemoveBase.ts",
           "resolved": "__unresolved_64",
           "loc": {
             "start": {
@@ -1339,12 +1339,12 @@
             },
             "end": {
               "line": 68,
-              "column": 158
+              "column": 154
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectTimeRemove.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectTimePartRemove.ts",
           "resolved": "__unresolved_65",
           "loc": {
             "start": {
@@ -1353,12 +1353,12 @@
             },
             "end": {
               "line": 69,
-              "column": 154
+              "column": 158
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Guide/GuideLine.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Effect/EffectTimeRemove.ts",
           "resolved": "__unresolved_66",
           "loc": {
             "start": {
@@ -1367,12 +1367,12 @@
             },
             "end": {
               "line": 70,
-              "column": 146
+              "column": 154
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Guide/GuideManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Guide/GuideLine.ts",
           "resolved": "__unresolved_67",
           "loc": {
             "start": {
@@ -1381,12 +1381,12 @@
             },
             "end": {
               "line": 71,
-              "column": 149
+              "column": 146
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/BezierCurve.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Guide/GuideManager.ts",
           "resolved": "__unresolved_68",
           "loc": {
             "start": {
@@ -1395,12 +1395,12 @@
             },
             "end": {
               "line": 72,
-              "column": 147
+              "column": 149
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpCurve.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/BezierCurve.ts",
           "resolved": "__unresolved_69",
           "loc": {
             "start": {
@@ -1409,12 +1409,12 @@
             },
             "end": {
               "line": 73,
-              "column": 145
+              "column": 147
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpCurve3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpCurve.ts",
           "resolved": "__unresolved_70",
           "loc": {
             "start": {
@@ -1423,12 +1423,12 @@
             },
             "end": {
               "line": 74,
-              "column": 147
+              "column": 145
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpDriveEngine.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpCurve3D.ts",
           "resolved": "__unresolved_71",
           "loc": {
             "start": {
@@ -1437,12 +1437,12 @@
             },
             "end": {
               "line": 75,
-              "column": 151
+              "column": 147
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpDriveEngine.ts",
           "resolved": "__unresolved_72",
           "loc": {
             "start": {
@@ -1451,12 +1451,12 @@
             },
             "end": {
               "line": 76,
-              "column": 147
+              "column": 151
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpParabola.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpManager.ts",
           "resolved": "__unresolved_73",
           "loc": {
             "start": {
@@ -1465,12 +1465,12 @@
             },
             "end": {
               "line": 77,
-              "column": 148
+              "column": 147
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpScatter.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpParabola.ts",
           "resolved": "__unresolved_74",
           "loc": {
             "start": {
@@ -1479,12 +1479,12 @@
             },
             "end": {
               "line": 78,
-              "column": 147
+              "column": 148
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpSequenceBase.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpScatter.ts",
           "resolved": "__unresolved_75",
           "loc": {
             "start": {
@@ -1493,12 +1493,12 @@
             },
             "end": {
               "line": 79,
-              "column": 152
+              "column": 147
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterBattleTaerget.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Jump/JumpSequenceBase.ts",
           "resolved": "__unresolved_76",
           "loc": {
             "start": {
@@ -1507,12 +1507,12 @@
             },
             "end": {
               "line": 80,
-              "column": 159
+              "column": 152
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterBattleTaerget.ts",
           "resolved": "__unresolved_77",
           "loc": {
             "start": {
@@ -1521,12 +1521,12 @@
             },
             "end": {
               "line": 81,
-              "column": 152
+              "column": 159
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/ArmsUp.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Monster/MonsterCreate.ts",
           "resolved": "__unresolved_78",
           "loc": {
             "start": {
@@ -1535,12 +1535,12 @@
             },
             "end": {
               "line": 82,
-              "column": 143
+              "column": 152
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/CreatePropBrand.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/ArmsUp.ts",
           "resolved": "__unresolved_79",
           "loc": {
             "start": {
@@ -1549,12 +1549,12 @@
             },
             "end": {
               "line": 83,
-              "column": 152
+              "column": 143
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/CreatePropBrand.ts",
           "resolved": "__unresolved_80",
           "loc": {
             "start": {
@@ -1563,12 +1563,12 @@
             },
             "end": {
               "line": 84,
-              "column": 145
+              "column": 152
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropBrand.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropArms.ts",
           "resolved": "__unresolved_81",
           "loc": {
             "start": {
@@ -1577,12 +1577,12 @@
             },
             "end": {
               "line": 85,
-              "column": 146
+              "column": 145
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropLalianGate.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropBrand.ts",
           "resolved": "__unresolved_82",
           "loc": {
             "start": {
@@ -1591,12 +1591,12 @@
             },
             "end": {
               "line": 86,
-              "column": 151
+              "column": 146
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropTireGate.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropLalianGate.ts",
           "resolved": "__unresolved_83",
           "loc": {
             "start": {
@@ -1605,12 +1605,12 @@
             },
             "end": {
               "line": 87,
-              "column": 149
+              "column": 151
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Player.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Other/PropTireGate.ts",
           "resolved": "__unresolved_84",
           "loc": {
             "start": {
@@ -1619,12 +1619,12 @@
             },
             "end": {
               "line": 88,
-              "column": 144
+              "column": 149
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Role.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Player.ts",
           "resolved": "__unresolved_85",
           "loc": {
             "start": {
@@ -1633,12 +1633,12 @@
             },
             "end": {
               "line": 89,
-              "column": 142
+              "column": 144
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Rocker/RockerLogic.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Role.ts",
           "resolved": "__unresolved_86",
           "loc": {
             "start": {
@@ -1647,12 +1647,12 @@
             },
             "end": {
               "line": 90,
-              "column": 149
+              "column": 142
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Rocker/RockerManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Rocker/RockerLogic.ts",
           "resolved": "__unresolved_87",
           "loc": {
             "start": {
@@ -1661,12 +1661,12 @@
             },
             "end": {
               "line": 91,
-              "column": 151
+              "column": 149
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Rocker/RockerMouseEvent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Rocker/RockerManager.ts",
           "resolved": "__unresolved_88",
           "loc": {
             "start": {
@@ -1675,12 +1675,12 @@
             },
             "end": {
               "line": 92,
-              "column": 154
+              "column": 151
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Rocker/RockerUI.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Rocker/RockerMouseEvent.ts",
           "resolved": "__unresolved_89",
           "loc": {
             "start": {
@@ -1689,12 +1689,12 @@
             },
             "end": {
               "line": 93,
-              "column": 146
+              "column": 154
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWay2D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Rocker/RockerUI.ts",
           "resolved": "__unresolved_90",
           "loc": {
             "start": {
@@ -1703,12 +1703,12 @@
             },
             "end": {
               "line": 94,
-              "column": 152
+              "column": 146
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWay3D.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWay2D.ts",
           "resolved": "__unresolved_91",
           "loc": {
             "start": {
@@ -1722,7 +1722,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWayBase.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWay3D.ts",
           "resolved": "__unresolved_92",
           "loc": {
             "start": {
@@ -1731,12 +1731,12 @@
             },
             "end": {
               "line": 96,
-              "column": 154
+              "column": 152
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/ShoppIngEvent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Buy/BuyWayBase.ts",
           "resolved": "__unresolved_93",
           "loc": {
             "start": {
@@ -1745,12 +1745,12 @@
             },
             "end": {
               "line": 97,
-              "column": 153
+              "column": 154
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Shopping.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/ShoppIngEvent.ts",
           "resolved": "__unresolved_94",
           "loc": {
             "start": {
@@ -1759,12 +1759,12 @@
             },
             "end": {
               "line": 98,
-              "column": 148
+              "column": 153
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Shopping_Super.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Shopping.ts",
           "resolved": "__unresolved_95",
           "loc": {
             "start": {
@@ -1773,12 +1773,12 @@
             },
             "end": {
               "line": 99,
-              "column": 154
+              "column": 148
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/FbxManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/ShoppIng/Shopping_Super.ts",
           "resolved": "__unresolved_96",
           "loc": {
             "start": {
@@ -1787,12 +1787,12 @@
             },
             "end": {
               "line": 100,
-              "column": 148
+              "column": 154
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/SequenceFrameAnim/FrameAnimManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/FbxManager.ts",
           "resolved": "__unresolved_97",
           "loc": {
             "start": {
@@ -1801,12 +1801,12 @@
             },
             "end": {
               "line": 101,
-              "column": 172
+              "column": 148
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/SequenceFrameAnim/FrameManager.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/SequenceFrameAnim/FrameAnimManager.ts",
           "resolved": "__unresolved_98",
           "loc": {
             "start": {
@@ -1815,12 +1815,12 @@
             },
             "end": {
               "line": 102,
-              "column": 168
+              "column": 172
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/UI/GameOver/GameOverPanel.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/SkAnim/SequenceFrameAnim/FrameManager.ts",
           "resolved": "__unresolved_99",
           "loc": {
             "start": {
@@ -1829,12 +1829,12 @@
             },
             "end": {
               "line": 103,
-              "column": 156
+              "column": 168
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/UI/GameOver/UIButtonEvent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/UI/GameOver/GameOverPanel.ts",
           "resolved": "__unresolved_100",
           "loc": {
             "start": {
@@ -1848,7 +1848,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/Common/SuperPackage.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/UI/GameOver/UIButtonEvent.ts",
           "resolved": "__unresolved_101",
           "loc": {
             "start": {
@@ -1857,12 +1857,12 @@
             },
             "end": {
               "line": 105,
-              "column": 167
+              "column": 156
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/Common/super_html_playable.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/Common/SuperPackage.ts",
           "resolved": "__unresolved_102",
           "loc": {
             "start": {
@@ -1871,12 +1871,12 @@
             },
             "end": {
               "line": 106,
-              "column": 174
+              "column": 167
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PBASDK.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/Common/super_html_playable.ts",
           "resolved": "__unresolved_103",
           "loc": {
             "start": {
@@ -1885,12 +1885,12 @@
             },
             "end": {
               "line": 107,
-              "column": 172
+              "column": 174
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PLASDK.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PBASDK.ts",
           "resolved": "__unresolved_104",
           "loc": {
             "start": {
@@ -1904,7 +1904,7 @@
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PrintComponent.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PLASDK.ts",
           "resolved": "__unresolved_105",
           "loc": {
             "start": {
@@ -1913,12 +1913,12 @@
             },
             "end": {
               "line": 109,
-              "column": 180
+              "column": 172
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/StutterCheck.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/PrintComponent.ts",
           "resolved": "__unresolved_106",
           "loc": {
             "start": {
@@ -1927,12 +1927,12 @@
             },
             "end": {
               "line": 110,
-              "column": 178
+              "column": 180
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/super_html_playable.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/StutterCheck.ts",
           "resolved": "__unresolved_107",
           "loc": {
             "start": {
@@ -1941,12 +1941,12 @@
             },
             "end": {
               "line": 111,
-              "column": 185
+              "column": 178
             }
           }
         },
         {
-          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/SuperPackageJY.ts",
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/PBASDK-v3/super_html_playable.ts",
           "resolved": "__unresolved_108",
           "loc": {
             "start": {
@@ -1955,6 +1955,20 @@
             },
             "end": {
               "line": 112,
+              "column": 185
+            }
+          }
+        },
+        {
+          "value": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/extensions/super-packager/package_assets/JiangYv/SuperPackageJY.ts",
+          "resolved": "__unresolved_109",
+          "loc": {
+            "start": {
+              "line": 113,
+              "column": 7
+            },
+            "end": {
+              "line": 113,
               "column": 170
             }
           }
@@ -2141,6 +2155,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Tool/Index.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Tool/PerformanceBlockHUD.ts"
           },
           "messages": []
         },
@@ -24736,7 +24757,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Player/Player.ts": {
       "mTimestamp": {
-        "mtime": 1783652968019.489,
+        "mtime": 1783666993161.6025,
         "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
       },
       "chunkId": "120cba8f856407335ad8a04347cd4d36bf752a1e",
@@ -28315,6 +28336,58 @@
           "resolved": {
             "type": "module",
             "url": "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Tool/TweenTool.ts"
+          },
+          "messages": []
+        }
+      ]
+    },
+    "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/Tool/PerformanceBlockHUD.ts": {
+      "mTimestamp": {
+        "mtime": 1783665026150.042,
+        "uuid": "5b225621-c87b-44b9-9d46-514581444692"
+      },
+      "chunkId": "b5419685ef88ca081900d26993069910bb0ee4ab",
+      "imports": [
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc",
+          "loc": {
+            "start": {
+              "line": 29,
+              "column": 7
+            },
+            "end": {
+              "line": 29,
+              "column": 11
+            }
+          }
+        }
+      ],
+      "type": "esm",
+      "resolutions": [
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
           },
           "messages": []
         }
