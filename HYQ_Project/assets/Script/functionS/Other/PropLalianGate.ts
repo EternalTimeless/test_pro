@@ -82,8 +82,8 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '拉环摆动速度倍率', tooltip: '控制拉环弹簧动作整体快慢。数值越小摆动越慢，用来让尾巴摆动节奏匹配滑块推进。' })
     public pullRingSwingSpeedScale: number = 0.55;
 
-    @property({ type: CCFloat, displayName: '拉环根部回弹强度', tooltip: '控制拉环根节点是否跟随受击回弹。0 表示根部不弹，只让尾巴摆动，避免看起来像滑块回弹。' })
-    public pullRingRootSpringRate: number = 0;
+    @property({ type: CCFloat, displayName: '拉环根部跟随强度', tooltip: '控制拉环根节点跟随尾巴摆动的幅度。0 表示根部不动，建议使用 0.2~0.5；只旋转拉环，不改变滑块位置。' })
+    public pullRingRootSpringRate: number = 0.3;
 
     @property({ type: CCFloat, displayName: '拉环弹簧强度', tooltip: '拉环回到初始角度的力度，数值越大回正越快。' })
     public pullRingSpringStiffness: number = 130;

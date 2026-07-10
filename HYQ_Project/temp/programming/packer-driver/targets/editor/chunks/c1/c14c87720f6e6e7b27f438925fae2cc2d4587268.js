@@ -204,8 +204,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '控制拉环弹簧动作整体快慢。数值越小摆动越慢，用来让尾巴摆动节奏匹配滑块推进。'
       }), _dec25 = property({
         type: CCFloat,
-        displayName: '拉环根部回弹强度',
-        tooltip: '控制拉环根节点是否跟随受击回弹。0 表示根部不弹，只让尾巴摆动，避免看起来像滑块回弹。'
+        displayName: '拉环根部跟随强度',
+        tooltip: '控制拉环根节点跟随尾巴摆动的幅度。0 表示根部不动，建议使用 0.2~0.5；只旋转拉环，不改变滑块位置。'
       }), _dec26 = property({
         type: CCFloat,
         displayName: '拉环弹簧强度',
@@ -2246,7 +2246,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function () {
-          return 0;
+          return 0.3;
         }
       }), _descriptor24 = _applyDecoratedDescriptor(_class5.prototype, "pullRingSpringStiffness", [_dec26], {
         configurable: true,
