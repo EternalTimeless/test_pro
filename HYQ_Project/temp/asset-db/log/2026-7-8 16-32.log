@@ -7734,3 +7734,13 @@
 2026-7-10 11:25:41-debug: asset-db:refresh-all-database (259ms)
 2026-7-10 11:25:41-debug: asset-db:worker-effect-data-processing (2ms)
 2026-7-10 11:25:41-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-10 11:26:34-debug: refresh db internal success
+2026-7-10 11:26:34-debug: refresh db assets success
+2026-7-10 11:26:34-debug: refresh db super-packager success
+2026-7-10 11:26:34-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-10 11:26:34-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-10 11:26:34-debug: asset-db:refresh-all-database (186ms)
+2026-7-10 11:26:34-debug: asset-db:worker-effect-data-processing (5ms)
+2026-7-10 11:26:34-debug: asset-db-hook-engine-extends-afterRefresh (6ms)
+2026-7-10 11:26:37-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-7-10 11:26:37-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (62ms)

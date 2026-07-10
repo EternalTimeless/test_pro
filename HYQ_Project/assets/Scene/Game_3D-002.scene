@@ -12523,7 +12523,7 @@
         "__id__": 760
       }
     ],
-    "smoothTotalHitCount": 550,
+    "smoothTotalHitCount": 500,
     "smoothProgressEasePower": 1.8,
     "teethPerPair": 2,
     "initialClosedPairCount": 2,
