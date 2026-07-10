@@ -76,6 +76,15 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '拉环尾巴抬起冲量', tooltip: '受击瞬间给拉环尾巴节点 X 轴的速度冲量，主要控制尾巴上下跳动。' })
     public pullRingSpringTailImpulseX: number = 360;
 
+    @property({ type: CCFloat, displayName: '拉环尾巴随机摆动强度', tooltip: '只影响拉环尾巴每次受击的随机摆动。0 为固定动作，1 为使用完整随机摆动，角度仍受最大摆角限制避免穿模。' })
+    public pullRingTailRandomSwingRate: number = 1;
+
+    @property({ type: CCFloat, displayName: '拉环摆动速度倍率', tooltip: '控制拉环弹簧动作整体快慢。数值越小摆动越慢，用来让尾巴摆动节奏匹配滑块推进。' })
+    public pullRingSwingSpeedScale: number = 0.55;
+
+    @property({ type: CCFloat, displayName: '拉环根部回弹强度', tooltip: '控制拉环根节点是否跟随受击回弹。0 表示根部不弹，只让尾巴摆动，避免看起来像滑块回弹。' })
+    public pullRingRootSpringRate: number = 0;
+
     @property({ type: CCFloat, displayName: '拉环弹簧强度', tooltip: '拉环回到初始角度的力度，数值越大回正越快。' })
     public pullRingSpringStiffness: number = 130;
 
@@ -255,6 +264,12 @@ export class PropLalianGate extends BattleTarget3D {
     private pullRingSpringTailVelY: number = 0;
     private tempPullRingRootEuler: Vec3 = new Vec3();
     private tempPullRingTailEuler: Vec3 = new Vec3();
+    private sliderLastTargetPos: Vec3 = new Vec3();
+    private tempForwardSliderTargetPos: Vec3 = new Vec3();
+    private sliderForwardZSign: number = 0;
+    private pullRingTailTweenRandomPhase: number = 0;
+    private pullRingTailTweenRandomSwingScale: number = 1;
+    private pullRingTailTweenRandomLiftScale: number = 1;
     private runtimeSliderOffsetZ: number = 0;
     private tempLockAimPos: Vec3 = new Vec3();
     private tempCollisionWorldPos: Vec3 = new Vec3();
@@ -445,7 +460,8 @@ export class PropLalianGate extends BattleTarget3D {
         this.smoothHitCount = Math.min(totalHits, this.smoothHitCount + 1);
         const linearProgress = totalHits > 0 ? this.smoothHitCount / totalHits : 1;
         const smoothProgress = this.getSmoothWholeProgress(linearProgress);
-        const targetPos = this.getSmoothSliderTargetPos(smoothProgress);
+        const sliderTarget = this.getSmoothSliderTargetPos(smoothProgress);
+        const targetPos = sliderTarget ? this.getForwardOnlySliderTargetPos(sliderTarget) : null;
 
         if (!targetPos) {
             this.completeGate();
@@ -469,7 +485,7 @@ export class PropLalianGate extends BattleTarget3D {
         if (this.cube) {
             Tween.stopAllByTarget(this.cube);
             tween(this.cube)
-                .to(animDuration, { position: targetPos }, { easing: 'sineOut' })
+                .to(animDuration, { position: targetPos }, { easing: 'linear' })
                 .call(() => {
                     this.finishHitStep();
                 })
@@ -498,6 +514,7 @@ export class PropLalianGate extends BattleTarget3D {
         this.isDestroy = true;
         this.unregisterTarget();
         this.updateHpLabel(0);
+        this.resetPullRingTailToStart();
 
         const emitFinish = () => {
             const info = { moveCount: this.moveCount };
@@ -657,8 +674,26 @@ export class PropLalianGate extends BattleTarget3D {
         this.stepHitCount = 0;
         const targetPos = this.getSmoothSliderTargetPos(0);
         if (this.cube && targetPos) {
-            this.cube.setPosition(targetPos);
+            const startX = targetPos.x;
+            const startY = targetPos.y;
+            const startZ = targetPos.z;
+            const endTargetPos = this.getSmoothSliderTargetPos(1);
+            this.sliderForwardZSign = endTargetPos ? Math.sign(endTargetPos.z - startZ) : 0;
+            this.sliderLastTargetPos.set(startX, startY, startZ);
+            this.cube.setPosition(this.sliderLastTargetPos);
         }
+    }
+
+    private getForwardOnlySliderTargetPos(targetPos: Vec3): Vec3 {
+        this.tempForwardSliderTargetPos.set(targetPos);
+        if (this.sliderForwardZSign !== 0) {
+            const zDelta = this.tempForwardSliderTargetPos.z - this.sliderLastTargetPos.z;
+            if (zDelta * this.sliderForwardZSign < 0) {
+                this.tempForwardSliderTargetPos.z = this.sliderLastTargetPos.z;
+            }
+        }
+        this.sliderLastTargetPos.set(this.tempForwardSliderTargetPos);
+        return this.tempForwardSliderTargetPos;
     }
 
     private applyWholeSmoothProgress(progress: number, useTween: boolean, duration: number = this.getHitAnimDuration()): void {
@@ -684,7 +719,10 @@ export class PropLalianGate extends BattleTarget3D {
             } else if (i === currentPairIndex + 2) {
                 pairProgress = nextNextProgress * pairT;
             }
-            this.applyPairProgress(i, this.getClampedProgress(pairProgress), useTween && i >= currentPairIndex && i <= currentPairIndex + 2, duration);
+            const clampedPairProgress = this.getClampedProgress(pairProgress);
+            const previousPairProgress = this.pairProgressList[i] ?? 0;
+            const shouldTweenPair = useTween && clampedPairProgress > previousPairProgress + 0.0001;
+            this.applyPairProgress(i, clampedPairProgress, shouldTweenPair, duration);
         }
         this.pairIndex = Math.max(0, Math.min(this.pairCount - 1, Math.floor(wholePairProgress)));
         this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
@@ -867,6 +905,16 @@ export class PropLalianGate extends BattleTarget3D {
         }
     }
 
+    private resetPullRingTailToStart(): void {
+        this.cachePullRingStartData();
+        this.resetPullRingSpring();
+        if (!this.pullRingTail) {
+            return;
+        }
+        Tween.stopAllByTarget(this.pullRingTail);
+        this.pullRingTail.eulerAngles = this.pullRingTailStartEuler;
+    }
+
     private playPullRingSwing(): void {
         this.cachePullRingStartData();
         if (!this.pullRingRoot) {
@@ -874,6 +922,7 @@ export class PropLalianGate extends BattleTarget3D {
         }
 
         if (this.usePullRingSpringFeedback) {
+            this.freezePullRingRootIfNeeded();
             this.kickPullRingSpring();
             return;
         }
@@ -888,12 +937,16 @@ export class PropLalianGate extends BattleTarget3D {
         }
         this.pullRingLoopStepIndex = targetSteps[targetSteps.length - 1];
 
-        Tween.stopAllByTarget(this.pullRingRoot);
-        let rootTween = tween(this.pullRingRoot);
-        for (let i = 0; i < targetSteps.length; i++) {
-            rootTween = rootTween.to(stepTime, { eulerAngles: this.getPullRingRootStepEuler(targetSteps[i]) }, { easing: 'sineInOut' });
+        if (this.isPullRingRootSpringEnabled()) {
+            Tween.stopAllByTarget(this.pullRingRoot);
+            let rootTween = tween(this.pullRingRoot);
+            for (let i = 0; i < targetSteps.length; i++) {
+                rootTween = rootTween.to(stepTime, { eulerAngles: this.getPullRingRootStepEuler(targetSteps[i]) }, { easing: 'sineInOut' });
+            }
+            rootTween.start();
+        } else {
+            this.freezePullRingRootIfNeeded();
         }
-        rootTween.start();
 
         this.playPullRingTailJoint(targetSteps, stepTime);
     }
@@ -903,11 +956,26 @@ export class PropLalianGate extends BattleTarget3D {
             return;
         }
         Tween.stopAllByTarget(this.pullRingTail);
+        this.randomizePullRingTailTweenSwing();
         let tailTween = tween(this.pullRingTail);
         for (let i = 0; i < targetSteps.length; i++) {
-            tailTween = tailTween.to(stepTime, { eulerAngles: this.getPullRingTailStepEuler(targetSteps[i]) }, { easing: 'sineInOut' });
+            tailTween = tailTween.to(stepTime, { eulerAngles: this.getPullRingTailStepEuler(targetSteps[i], true) }, { easing: 'sineInOut' });
         }
         tailTween.start();
+    }
+
+    private randomizePullRingTailTweenSwing(): void {
+        const randomRate = this.getPullRingTailRandomSwingRate();
+        if (randomRate <= 0) {
+            this.pullRingTailTweenRandomPhase = 0;
+            this.pullRingTailTweenRandomSwingScale = 1;
+            this.pullRingTailTweenRandomLiftScale = 1;
+            return;
+        }
+
+        this.pullRingTailTweenRandomPhase = this.randomRange(-Math.PI, Math.PI) * randomRate;
+        this.pullRingTailTweenRandomSwingScale = this.randomRange(0, 1 + randomRate);
+        this.pullRingTailTweenRandomLiftScale = this.randomRange(0.25, 1 + randomRate);
     }
 
     private kickPullRingSpring(): void {
@@ -922,10 +990,12 @@ export class PropLalianGate extends BattleTarget3D {
 
         this.pullRingSpringHitDirection *= -1;
         const direction = this.pullRingSpringHitDirection;
-        this.pullRingSpringRootVelY += direction * this.getPullRingSpringRootImpulseY();
-        this.pullRingSpringRootVelX += this.getPullRingSpringRootImpulseX();
-        this.pullRingSpringTailVelY += -direction * this.getPullRingSpringTailImpulseY();
-        this.pullRingSpringTailVelX += this.getPullRingSpringTailImpulseX();
+        if (this.isPullRingRootSpringEnabled()) {
+            this.pullRingSpringRootVelY += direction * this.getPullRingSpringRootImpulseY() * this.getPullRingRootSpringRate();
+            this.pullRingSpringRootVelX += this.getPullRingSpringRootImpulseX() * this.getPullRingRootSpringRate();
+        }
+        this.pullRingSpringTailVelY += this.getRandomPullRingTailSpringSwingImpulse();
+        this.pullRingSpringTailVelX += this.getRandomPullRingTailSpringLiftImpulse();
         this.pullRingSpringActive = true;
         this.applyPullRingSpringEuler();
     }
@@ -942,7 +1012,7 @@ export class PropLalianGate extends BattleTarget3D {
             return;
         }
 
-        const stepDt = Math.max(0, Math.min(0.033, dt));
+        const stepDt = Math.max(0, Math.min(0.033, dt)) * this.getPullRingSwingSpeedScale();
         if (stepDt <= 0) {
             return;
         }
@@ -974,15 +1044,19 @@ export class PropLalianGate extends BattleTarget3D {
     private applyPullRingSpringEuler(): void {
         this.cachePullRingStartData();
         if (this.pullRingRoot) {
-            const rootMaxX = this.getPullRingSpringRootMaxX();
-            const rootSideLift = this.getPullRingSpringSideLift(this.pullRingSpringRootAngleY, this.getPullRingSpringRootMaxY(), rootMaxX);
-            const rootAngleX = this.clampRange(this.pullRingSpringRootAngleX + rootSideLift, -this.getPullRingSpringRootUpMaxAngle(), rootMaxX);
-            this.tempPullRingRootEuler.set(
-                this.pullRingRootStartEuler.x + rootAngleX,
-                this.pullRingRootStartEuler.y + this.pullRingSpringRootAngleY,
-                this.pullRingRootStartEuler.z,
-            );
-            this.pullRingRoot.eulerAngles = this.tempPullRingRootEuler;
+            if (this.isPullRingRootSpringEnabled()) {
+                const rootMaxX = this.getPullRingSpringRootMaxX();
+                const rootSideLift = this.getPullRingSpringSideLift(this.pullRingSpringRootAngleY, this.getPullRingSpringRootMaxY(), rootMaxX);
+                const rootAngleX = this.clampRange(this.pullRingSpringRootAngleX + rootSideLift, -this.getPullRingSpringRootUpMaxAngle(), rootMaxX);
+                this.tempPullRingRootEuler.set(
+                    this.pullRingRootStartEuler.x + rootAngleX,
+                    this.pullRingRootStartEuler.y + this.pullRingSpringRootAngleY,
+                    this.pullRingRootStartEuler.z,
+                );
+                this.pullRingRoot.eulerAngles = this.tempPullRingRootEuler;
+            } else {
+                this.freezePullRingRootIfNeeded();
+            }
         }
         if (this.pullRingTail) {
             const tailMaxX = this.getPullRingSpringTailMaxX();
@@ -1064,13 +1138,15 @@ export class PropLalianGate extends BattleTarget3D {
         return v3(this.pullRingRootStartWorldPos.x, this.pullRingRootStartWorldPos.y + this.pullRingRootLiftY, this.pullRingRootStartWorldPos.z);
     }
 
-    private getPullRingTailStepEuler(stepIndex: number): Vec3 {
-        const phase = this.getPullRingPhase(stepIndex);
+    private getPullRingTailStepEuler(stepIndex: number, useRandom: boolean = false): Vec3 {
+        const phase = this.getPullRingPhase(stepIndex) + (useRandom ? this.pullRingTailTweenRandomPhase : 0);
         const wave = Math.sin(phase);
         const liftCurve = (1 - Math.cos(phase)) * 0.5;
         const downAngleScale = 1 - (1 - this.getPullRingTailDownAngleScale()) * liftCurve;
-        const swingY = wave * this.pullRingTailSwingY;
-        const liftX = liftCurve * this.pullRingTailLiftX * downAngleScale;
+        const swingScale = useRandom ? this.pullRingTailTweenRandomSwingScale : 1;
+        const liftScale = useRandom ? this.pullRingTailTweenRandomLiftScale : 1;
+        const swingY = this.clampSigned(wave * this.pullRingTailSwingY * swingScale, this.getPullRingSpringTailMaxY());
+        const liftX = this.clampRange(liftCurve * this.pullRingTailLiftX * downAngleScale * liftScale, -this.getPullRingSpringTailUpMaxAngle(), this.getPullRingSpringTailMaxX());
         return v3(this.pullRingTailStartEuler.x + liftX, this.pullRingTailStartEuler.y + swingY, this.pullRingTailStartEuler.z);
     }
 
@@ -1092,6 +1168,55 @@ export class PropLalianGate extends BattleTarget3D {
 
     private getPullRingTailDownAngleScale(): number {
         return Math.max(0.1, Math.min(1, this.pullRingTailDownAngleScale));
+    }
+
+    private getPullRingTailRandomSwingRate(): number {
+        return Math.max(0, Math.min(3, this.pullRingTailRandomSwingRate));
+    }
+
+    private getPullRingSwingSpeedScale(): number {
+        return Math.max(0.15, Math.min(2, this.pullRingSwingSpeedScale));
+    }
+
+    private getPullRingRootSpringRate(): number {
+        return Math.max(0, Math.min(1, this.pullRingRootSpringRate));
+    }
+
+    private isPullRingRootSpringEnabled(): boolean {
+        return this.getPullRingRootSpringRate() > 0.001;
+    }
+
+    private freezePullRingRootIfNeeded(): void {
+        if (!this.pullRingRoot || this.isPullRingRootSpringEnabled()) {
+            return;
+        }
+        Tween.stopAllByTarget(this.pullRingRoot);
+        this.pullRingSpringRootAngleX = 0;
+        this.pullRingSpringRootAngleY = 0;
+        this.pullRingSpringRootVelX = 0;
+        this.pullRingSpringRootVelY = 0;
+        this.pullRingRoot.eulerAngles = this.pullRingRootStartEuler;
+    }
+
+    private getRandomPullRingTailSpringSwingImpulse(): number {
+        const baseImpulse = this.getPullRingSpringTailImpulseY();
+        const randomRate = this.getPullRingTailRandomSwingRate();
+        if (randomRate <= 0) {
+            return -this.pullRingSpringHitDirection * baseImpulse;
+        }
+
+        const direction = Math.random() < 0.5 ? -1 : 1;
+        return direction * baseImpulse * this.randomRange(0, 1 + randomRate);
+    }
+
+    private getRandomPullRingTailSpringLiftImpulse(): number {
+        const baseImpulse = this.getPullRingSpringTailImpulseX();
+        const randomRate = this.getPullRingTailRandomSwingRate();
+        if (randomRate <= 0) {
+            return baseImpulse;
+        }
+
+        return baseImpulse * this.randomRange(0.25, 1 + randomRate);
     }
 
     private getPullRingSpringRootImpulseY(): number {
@@ -1184,6 +1309,10 @@ export class PropLalianGate extends BattleTarget3D {
         return Math.max(min, Math.min(max, value));
     }
 
+    private randomRange(min: number, max: number): number {
+        return min + (max - min) * Math.random();
+    }
+
     private prepareSliderOffset(): void {
         this.runtimeSliderOffsetZ = this.sliderOffsetZ;
         if (this.startFromMaxZ) {
@@ -1236,7 +1365,7 @@ export class PropLalianGate extends BattleTarget3D {
         Tween.stopAllByTarget(tooth);
         if (useTween) {
             tween(tooth)
-                .to(duration, { position: targetPos }, { easing: 'sineOut' })
+                .to(duration, { position: targetPos }, { easing: 'linear' })
                 .start();
         } else {
             tooth.setPosition(targetPos);

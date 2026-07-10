@@ -546,7 +546,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1783592568631.765,
+      "time": 1783650263484.8472,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -4422,7 +4422,7 @@
       "time": 1781689576517.3992
     },
     "Script\\functionS\\Other\\PropLalianGate.ts": {
-      "time": 1783592379862.567,
+      "time": 1783651052906.4788,
       "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts.meta": {
