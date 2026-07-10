@@ -12843,6 +12843,8 @@
     "__prefab": null,
     "monsterCount": 800,
     "maxSpawnPerFrame": 5,
+    "viewportSpawnTriggerDistance": 10,
+    "viewportSpawnBufferDistance": 55,
     "monsterCreateQueue": {
       "__id__": 774
     },
@@ -14440,6 +14442,7 @@
     "shrinkAfterRoleLossDelay": 2,
     "maxShootingRoleCount": 32,
     "maxMuzzleEffectCount": 10,
+    "mergeJtl2MultiBulletLogic": true,
     "staggerShotWeaponConfigIndex": 0,
     "staggerShotWindowRatio": 0.85,
     "defaultWeaponConfigIndex": 3,
@@ -14498,8 +14501,8 @@
     "armsType": 3,
     "weaponModel": -1,
     "bulletPower": 0.8,
-    "bulletType": 0,
-    "randomizeShotOrder": false,
+    "bulletType": 3,
+    "randomizeShotOrder": true,
     "randomShotDelayWindowRatio": 0.75,
     "initialBulletRandomX": 0
   },
@@ -14508,8 +14511,8 @@
     "armsType": 3,
     "weaponModel": -1,
     "bulletPower": 1.5,
-    "bulletType": 4,
-    "randomizeShotOrder": false,
+    "bulletType": 3,
+    "randomizeShotOrder": true,
     "randomShotDelayWindowRatio": 0.75,
     "initialBulletRandomX": 0
   },

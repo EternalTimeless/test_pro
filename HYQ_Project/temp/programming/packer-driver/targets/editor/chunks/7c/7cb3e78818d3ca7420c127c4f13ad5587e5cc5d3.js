@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15", "__unresolved_16", "__unresolved_17", "__unresolved_18"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, director, instantiate, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, Role, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, BulletMonsterCollisionManager, PropLalianGate, FbxManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _dec12, _dec13, _class4, _class5, _descriptor11, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _class7, _class8, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, director, instantiate, screen, tween, Vec3, PoolManager, EventType, MonsterType, PoolEnum, PrefabsEnum, MonsterBattleTaerget, PrefabsManager, MoveModEnum, Player, Role, EventManager, UnityUpComponent, GameOverPanel, JumpManager, FlashRedManager, CameraMove, PropArms, CreatePropBrand, BulletMonsterCollisionManager, PropLalianGate, FbxManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _dec12, _dec13, _class4, _class5, _descriptor11, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _dec41, _dec42, _class7, _class8, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35, _descriptor36, _descriptor37, _descriptor38, _descriptor39, _class9, _crd, ccclass, property, tempV3, MonsterCreateInfo, MonsterCreateQueue, MonsterCreate;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -106,6 +106,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCInteger = _cc.CCInteger;
       director = _cc.director;
       instantiate = _cc.instantiate;
+      screen = _cc.screen;
       tween = _cc.tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -153,7 +154,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "1f73f/6fgtCdZIelyOdUt06", "MonsterCreate", undefined);
 
-      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Component', 'director', 'instantiate', 'Node', 'Pool', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'Camera', 'CCBoolean', 'CCFloat', 'CCInteger', 'Component', 'director', 'instantiate', 'Node', 'Pool', 'screen', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -318,79 +319,88 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '场景中最大怪物数量'
       }), _dec16 = property({
         type: CCInteger,
-        tooltip: '补充阶段每帧最大生成数，防止大量死怪时瞬间补怪掉帧'
-      }), _dec17 = property(MonsterCreateQueue), _dec18 = property({
+        displayName: '每帧最大生成数',
+        tooltip: '初始生成和后续按视口补充时，每帧最多创建的怪物数量。'
+      }), _dec17 = property({
+        type: CCFloat,
+        displayName: '视口外触发距离',
+        tooltip: '当前最后排怪物进入“实际视口最远位置 + 此距离”后，开始补充下一段怪物。'
+      }), _dec18 = property({
+        type: CCFloat,
+        displayName: '视口外补充距离',
+        tooltip: '每次分帧补充到“实际视口最远位置 + 此距离”后停止，建议设置为 50-60。'
+      }), _dec19 = property(MonsterCreateQueue), _dec20 = property({
         tooltip: 'ZombieBrother前后Z轴排斥范围，该范围内不能生成ZombieBaby'
-      }), _dec19 = property({
+      }), _dec21 = property({
         displayName: '生成横向散布半宽(非限位)',
         tooltip: '只控制怪物生成队列的左右散布宽度，不决定是否允许进入左右奖励区。'
-      }), _dec20 = property(CCFloat), _dec21 = property({
+      }), _dec22 = property(CCFloat), _dec23 = property({
         type: CCFloat,
         displayName: '红框中路限位半宽',
         tooltip: '怪物在红框/非蓝框区域会被限制在 -该值 到 +该值 之间，左右两边同步生效。'
-      }), _dec22 = property({
-        tooltip: '每行生成的怪物数量'
-      }), _dec23 = property({
-        tooltip: '怪物Z轴每层间距'
       }), _dec24 = property({
+        tooltip: '每行生成的怪物数量'
+      }), _dec25 = property({
+        tooltip: '怪物Z轴每层间距'
+      }), _dec26 = property({
         type: CCFloat,
         displayName: '出生X随机扰动',
         tooltip: '怪物出生时在当前列位置基础上额外随机偏移，减少队列感。'
-      }), _dec25 = property({
+      }), _dec27 = property({
         type: CCFloat,
         displayName: '出生Z随机扰动',
         tooltip: '怪物出生时在当前层位置基础上额外随机前后偏移，减少横排整齐感。'
-      }), _dec26 = property({
+      }), _dec28 = property({
         type: CCFloat,
         displayName: '出生缩放随机',
         tooltip: '怪物出生时随机缩放幅度，0.08 表示 0.92-1.08。'
-      }), _dec27 = property({
+      }), _dec29 = property({
         type: CCFloat,
         displayName: '出生朝向随机',
         tooltip: '怪物出生时 Y 轴随机旋转角度，轻微打散朝向。'
-      }), _dec28 = property({
+      }), _dec30 = property({
         type: Vec3,
         displayName: '怪物出生整体偏移',
         tooltip: '整体调整怪物初始生成位置，主要调 Z 可前后移动到指定红线位置。'
-      }), _dec29 = property({
+      }), _dec31 = property({
         type: CCFloat,
         displayName: '怪物死亡抛起基础高度',
         tooltip: '怪物被击飞死亡时的基础抛起高度，数值越大飞得越高。'
-      }), _dec30 = property({
+      }), _dec32 = property({
         type: CCFloat,
         displayName: '怪物死亡抛起随机高度',
         tooltip: '怪物被击飞死亡时额外随机增加的抛起高度，0 表示不随机。'
-      }), _dec31 = property({
+      }), _dec33 = property({
         type: CCInteger,
         displayName: '油桶大波次数量',
         tooltip: '兼容旧配置：当“油桶对应波次索引”为空时，使用这里的数量从第 0 波开始顺序生成油桶。'
-      }), _dec32 = property({
+      }), _dec34 = property({
         type: [CCInteger],
         displayName: '油桶所在怪物波次索引(0=第0波)',
         tooltip: '数组内每一项生成一个油桶。填 0 表示放在第 0 波怪物前面，填 1 表示放在第 1 波怪物前面。'
-      }), _dec33 = property({
+      }), _dec35 = property({
         type: CCFloat,
         displayName: '油桶怪物预留间距',
         tooltip: '创建怪物和初始化油桶时，油桶碰撞盒与怪物碰撞盒之间额外保留的 Z 轴距离。数值越大越不容易视觉穿模。'
-      }), _dec34 = property({
-        type: CCFloat,
-        displayName: '油桶怪物半深下限'
-      }), _dec35 = property({
-        type: CCFloat,
-        displayName: '油桶Boss半深下限'
       }), _dec36 = property({
         type: CCFloat,
-        displayName: '再来一次前排后退补偿'
+        displayName: '油桶怪物半深下限'
       }), _dec37 = property({
         type: CCFloat,
-        displayName: '再来一次波次追加间距'
+        displayName: '油桶Boss半深下限'
       }), _dec38 = property({
         type: CCFloat,
-        displayName: '再来一次站位随机X'
+        displayName: '再来一次前排后退补偿'
       }), _dec39 = property({
         type: CCFloat,
-        displayName: '再来一次站位随机Z'
+        displayName: '再来一次波次追加间距'
       }), _dec40 = property({
+        type: CCFloat,
+        displayName: '再来一次站位随机X'
+      }), _dec41 = property({
+        type: CCFloat,
+        displayName: '再来一次站位随机Z'
+      }), _dec42 = property({
         type: CCBoolean,
         displayName: '再来一次距离日志'
       }), _dec14(_class7 = (_class8 = (_class9 = class MonsterCreate extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
@@ -403,38 +413,42 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "maxSpawnPerFrame", _descriptor13, this);
 
-          _initializerDefineProperty(this, "monsterCreateQueue", _descriptor14, this);
+          _initializerDefineProperty(this, "viewportSpawnTriggerDistance", _descriptor14, this);
 
-          _initializerDefineProperty(this, "brotherExcludeZ", _descriptor15, this);
+          _initializerDefineProperty(this, "viewportSpawnBufferDistance", _descriptor15, this);
 
-          _initializerDefineProperty(this, "disX", _descriptor16, this);
+          _initializerDefineProperty(this, "monsterCreateQueue", _descriptor16, this);
 
-          _initializerDefineProperty(this, "monsterSpeed", _descriptor17, this);
+          _initializerDefineProperty(this, "brotherExcludeZ", _descriptor17, this);
 
-          _initializerDefineProperty(this, "middleLaneHalfX", _descriptor18, this);
+          _initializerDefineProperty(this, "disX", _descriptor18, this);
+
+          _initializerDefineProperty(this, "monsterSpeed", _descriptor19, this);
+
+          _initializerDefineProperty(this, "middleLaneHalfX", _descriptor20, this);
 
           /** 每列间距，由 disX*2/rowCount 计算得出 */
           this.offX = 0;
 
-          _initializerDefineProperty(this, "rowCount", _descriptor19, this);
+          _initializerDefineProperty(this, "rowCount", _descriptor21, this);
 
           this._rowCount = 0;
 
-          _initializerDefineProperty(this, "layerGapZ", _descriptor20, this);
+          _initializerDefineProperty(this, "layerGapZ", _descriptor22, this);
 
-          _initializerDefineProperty(this, "spawnRandomX", _descriptor21, this);
+          _initializerDefineProperty(this, "spawnRandomX", _descriptor23, this);
 
-          _initializerDefineProperty(this, "spawnRandomZ", _descriptor22, this);
+          _initializerDefineProperty(this, "spawnRandomZ", _descriptor24, this);
 
-          _initializerDefineProperty(this, "spawnScaleRandom", _descriptor23, this);
+          _initializerDefineProperty(this, "spawnScaleRandom", _descriptor25, this);
 
-          _initializerDefineProperty(this, "spawnYawRandom", _descriptor24, this);
+          _initializerDefineProperty(this, "spawnYawRandom", _descriptor26, this);
 
-          _initializerDefineProperty(this, "spawnPositionOffset", _descriptor25, this);
+          _initializerDefineProperty(this, "spawnPositionOffset", _descriptor27, this);
 
-          _initializerDefineProperty(this, "monsterDeathThrowBaseHeight", _descriptor26, this);
+          _initializerDefineProperty(this, "monsterDeathThrowBaseHeight", _descriptor28, this);
 
-          _initializerDefineProperty(this, "monsterDeathThrowRandomHeight", _descriptor27, this);
+          _initializerDefineProperty(this, "monsterDeathThrowRandomHeight", _descriptor29, this);
 
           this._monsterList = [];
           this.posIndex = 0;
@@ -448,12 +462,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.bossDieCount = 0;
           this.stage_0 = 26.5;
           this.stage_1 = 15;
-          this._hasInitialFilled = false;
-          this._spawnAllWavesOnStart = true;
+          this._spawnStageIndex = 0;
+          this._spawnLoopIndex = 0;
+          this._spawnWaveIndex = 0;
+          this._spawnSlotIndex = 0;
+          this._spawnSparseSlotSet = null;
+          this._isViewportSpawnFilling = false;
+          this._isConfiguredSpawnFinished = false;
+          this._cachedViewportFarWorldZ = Number.NaN;
+          this._viewportFarRefreshTime = 0;
+          this._formationTravelDistance = 0;
+          this._viewportProbeWorldPos = new Vec3();
 
-          _initializerDefineProperty(this, "waveRoleCount", _descriptor28, this);
+          _initializerDefineProperty(this, "waveRoleCount", _descriptor30, this);
 
-          _initializerDefineProperty(this, "waveRoleStageIndexList", _descriptor29, this);
+          _initializerDefineProperty(this, "waveRoleStageIndexList", _descriptor31, this);
 
           this._waveRoleNodes = [];
           this._stageStartZList = [];
@@ -468,21 +491,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._rebirthWaveInitialMaxZList = [];
           this._monsterRebirthOrderIndex = 0;
 
-          _initializerDefineProperty(this, "waveRoleMonsterGap", _descriptor30, this);
+          _initializerDefineProperty(this, "waveRoleMonsterGap", _descriptor32, this);
 
-          _initializerDefineProperty(this, "waveRoleMonsterHalfZMin", _descriptor31, this);
+          _initializerDefineProperty(this, "waveRoleMonsterHalfZMin", _descriptor33, this);
 
-          _initializerDefineProperty(this, "waveRoleBossHalfZMin", _descriptor32, this);
+          _initializerDefineProperty(this, "waveRoleBossHalfZMin", _descriptor34, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterFrontRetreatZ", _descriptor33, this);
+          _initializerDefineProperty(this, "rebirthMonsterFrontRetreatZ", _descriptor35, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterWaveExtraGapZ", _descriptor34, this);
+          _initializerDefineProperty(this, "rebirthMonsterWaveExtraGapZ", _descriptor36, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterRandomX", _descriptor35, this);
+          _initializerDefineProperty(this, "rebirthMonsterRandomX", _descriptor37, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterRandomZ", _descriptor36, this);
+          _initializerDefineProperty(this, "rebirthMonsterRandomZ", _descriptor38, this);
 
-          _initializerDefineProperty(this, "rebirthMonsterDistanceLog", _descriptor37, this);
+          _initializerDefineProperty(this, "rebirthMonsterDistanceLog", _descriptor39, this);
 
           this.waveRolePlayerHalfX = 0.35;
           this.waveRolePlayerHalfZ = 0.35;
@@ -510,7 +533,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             error: Error()
           }), EventType) : EventType).MONSTER_SKILL_XRD, this.skillXRMonster, this);
           this.refreshLalianLimitRange();
-          this.spawnAllWavesAtStart(); // this.scheduleOnce(() => {
+          this.initializeViewportDrivenSpawn(); // this.scheduleOnce(() => {
           //     this.skillXRMonster(2, 2, 2);
           // }, 2);
         }
@@ -998,7 +1021,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        spawnAllWavesAtStart() {
+        initializeViewportDrivenSpawn() {
           var _this$monsterCreateQu5, _this$monsterCreateQu6;
 
           const stageList = (_this$monsterCreateQu5 = (_this$monsterCreateQu6 = this.monsterCreateQueue) == null ? void 0 : _this$monsterCreateQu6.monsterCreateInfoList) != null ? _this$monsterCreateQu5 : [];
@@ -1007,8 +1030,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          this._spawnAllWavesOnStart = true;
-          this._hasInitialFilled = true;
           this._monsterList.length = 0;
           this._nextSpawnZ = 0;
           this._rowCount = 0;
@@ -1024,119 +1045,267 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._rebirthWaveInitialMinZList.length = 0;
           this._rebirthWaveInitialMaxZList.length = 0;
           this._monsterRebirthOrderIndex = 0;
-          let stageCursor = 0;
+          this._spawnStageIndex = 0;
+          this._spawnLoopIndex = 0;
+          this._spawnWaveIndex = 0;
+          this._spawnSlotIndex = 0;
+          this._spawnSparseSlotSet = null;
+          this._isViewportSpawnFilling = true;
+          this._isConfiguredSpawnFinished = false;
+          this._cachedViewportFarWorldZ = Number.NaN;
+          this._viewportFarRefreshTime = 0;
+          this._formationTravelDistance = 0;
+          this.monsterCreateQueue.curIndex = 0;
+          let configuredMonsterCount = 0;
 
           for (let i = 0; i < stageList.length; i++) {
             const quest = stageList[i];
             const loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
-
-            for (let loop = 0; loop < loopCount; loop++) {
-              const waveIndex = stageCursor;
-              const spawnCount = this.getQuestSpawnCount(quest);
-              const rangeCount = this.getQuestRangeCount(quest);
-
-              if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
-                error: Error()
-              }), MonsterType) : MonsterType).ZombieBrother || spawnCount >= rangeCount) {
-                for (let count = 0; count < spawnCount; count++) {
-                  if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
-                    error: Error()
-                  }), MonsterType) : MonsterType).ZombieBrother) {
-                    this.spawnBrother(quest, waveIndex);
-                  } else {
-                    this.spawnBaby(quest, waveIndex);
-                  }
-                }
-              } else {
-                const spawnSlotSet = this.buildSparseWaveSpawnSlotSet(spawnCount, rangeCount);
-                let cursorNextSpawnZ = this._nextSpawnZ;
-                let cursorRowCount = this._rowCount;
-                let cursorPosIndex = this.posIndex;
-
-                for (let slot = 0; slot < rangeCount; slot++) {
-                  if (spawnSlotSet.has(slot)) {
-                    cursorNextSpawnZ = this.spawnBabyAtCursor(quest, waveIndex, cursorNextSpawnZ, cursorPosIndex);
-                  }
-
-                  cursorPosIndex = (cursorPosIndex + 1) % this.rowCount;
-                  cursorRowCount++;
-
-                  if (cursorRowCount == this.rowCount) {
-                    cursorNextSpawnZ += this.layerGapZ;
-                    cursorRowCount = 0;
-                  }
-                }
-
-                this._nextSpawnZ = cursorNextSpawnZ;
-                this._rowCount = cursorRowCount;
-                this.posIndex = cursorPosIndex;
-              }
-
-              this._nextSpawnZ += quest.brotherExcludeZ;
-              stageCursor++;
-            }
-
+            configuredMonsterCount += this.getQuestSpawnCount(quest) * loopCount;
             quest.init();
           }
 
-          this.monsterCount = this._monsterList.length;
+          this.monsterCount = configuredMonsterCount;
+        }
+
+        updateViewportDrivenSpawn(deltaTime) {
+          if (this._isConfiguredSpawnFinished || this._isRestoringWaveRolesAfterRebirth) {
+            return;
+          }
+
+          const viewportFarWorldZ = this.getViewportFarWorldZ(deltaTime);
+
+          if (!Number.isFinite(viewportFarWorldZ)) {
+            return;
+          }
+
+          const triggerDistance = Math.max(0, this.viewportSpawnTriggerDistance);
+
+          if (!this._isViewportSpawnFilling) {
+            const rearMonsterWorldZ = this.getRearMonsterWorldZ();
+
+            if (rearMonsterWorldZ > viewportFarWorldZ + triggerDistance) {
+              return;
+            }
+
+            this._isViewportSpawnFilling = true;
+          }
+
+          const bufferDistance = Math.max(triggerDistance, this.viewportSpawnBufferDistance);
+          const stopWorldZ = viewportFarWorldZ + bufferDistance;
+          const maxPerFrame = Math.max(1, Math.floor(this.maxSpawnPerFrame));
+          let spawnedCount = 0;
+          let processedSlotCount = 0;
+
+          while (spawnedCount < maxPerFrame && processedSlotCount < 1024) {
+            const quest = this.prepareNextConfiguredSpawnSlot();
+
+            if (!quest) {
+              this.finishViewportSpawnBatch(true);
+              return;
+            }
+
+            if (this.getNextConfiguredSpawnWorldZ(quest) > stopWorldZ) {
+              this.finishViewportSpawnBatch(false);
+              return;
+            }
+
+            if (this.spawnNextConfiguredSlot(quest)) {
+              spawnedCount++;
+            }
+
+            processedSlotCount++;
+          }
+        }
+
+        prepareNextConfiguredSpawnSlot() {
+          var _this$monsterCreateQu7, _this$monsterCreateQu8;
+
+          const stageList = (_this$monsterCreateQu7 = (_this$monsterCreateQu8 = this.monsterCreateQueue) == null ? void 0 : _this$monsterCreateQu8.monsterCreateInfoList) != null ? _this$monsterCreateQu7 : [];
+
+          while (this._spawnStageIndex < stageList.length) {
+            const quest = stageList[this._spawnStageIndex];
+            const loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
+
+            if (this._spawnLoopIndex >= loopCount) {
+              quest.init();
+              this._spawnStageIndex++;
+              this._spawnLoopIndex = 0;
+              continue;
+            }
+
+            const spawnCount = this.getQuestSpawnCount(quest);
+            const rangeCount = this.getQuestRangeCount(quest);
+            const isSparseWave = quest.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+              error: Error()
+            }), MonsterType) : MonsterType).ZombieBrother && spawnCount < rangeCount;
+            const slotCount = isSparseWave ? rangeCount : spawnCount;
+
+            if (this._spawnSlotIndex < slotCount) {
+              if (isSparseWave && !this._spawnSparseSlotSet) {
+                this._spawnSparseSlotSet = this.buildSparseWaveSpawnSlotSet(spawnCount, rangeCount);
+              }
+
+              return quest;
+            }
+
+            this.completeCurrentConfiguredWave(quest);
+          }
+
+          this._isConfiguredSpawnFinished = true;
+          return null;
+        }
+
+        getNextConfiguredSpawnWorldZ(quest) {
+          const nextSpawnZ = quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother ? this._nextSpawnZ + this.brotherExcludeZ : this._nextSpawnZ;
+          return this.getSpawnWorldZ(nextSpawnZ);
+        }
+
+        spawnNextConfiguredSlot(quest) {
+          const spawnCount = this.getQuestSpawnCount(quest);
+          const rangeCount = this.getQuestRangeCount(quest);
+          const isSparseWave = quest.monsterType != (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother && spawnCount < rangeCount;
+          let didSpawn = false;
+
+          if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother) {
+            this.spawnBrother(quest, this._spawnWaveIndex);
+            didSpawn = true;
+          } else if (isSparseWave) {
+            var _this$_spawnSparseSlo;
+
+            if ((_this$_spawnSparseSlo = this._spawnSparseSlotSet) != null && _this$_spawnSparseSlo.has(this._spawnSlotIndex)) {
+              this._nextSpawnZ = this.spawnBabyAtCursor(quest, this._spawnWaveIndex, this._nextSpawnZ, this.posIndex);
+              didSpawn = true;
+            }
+
+            this.posIndex = (this.posIndex + 1) % this.rowCount;
+            this._rowCount++;
+
+            if (this._rowCount == this.rowCount) {
+              this._nextSpawnZ += this.layerGapZ;
+              this._rowCount = 0;
+            }
+          } else {
+            this.spawnBaby(quest, this._spawnWaveIndex);
+            didSpawn = true;
+          }
+
+          this._spawnSlotIndex++;
+          const slotCount = isSparseWave ? rangeCount : spawnCount;
+
+          if (this._spawnSlotIndex >= slotCount) {
+            this.completeCurrentConfiguredWave(quest);
+          }
+
+          return didSpawn;
+        }
+
+        completeCurrentConfiguredWave(quest) {
+          this._nextSpawnZ += quest.brotherExcludeZ;
+          this._spawnWaveIndex++;
+          this._spawnLoopIndex++;
+          this._spawnSlotIndex = 0;
+          this._spawnSparseSlotSet = null;
+          const loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
+
+          if (this._spawnLoopIndex >= loopCount) {
+            quest.init();
+            this._spawnStageIndex++;
+            this._spawnLoopIndex = 0;
+          }
+        }
+
+        finishViewportSpawnBatch(isFinished) {
+          this._isViewportSpawnFilling = false;
+
+          if (isFinished) {
+            this._isConfiguredSpawnFinished = true;
+          }
+
           this.snapWaveRolesToCurrentWaveFront();
         }
 
-        _update(deltaTime) {
-          if (!this._spawnAllWavesOnStart) {
-            if (!this._hasInitialFilled && this._monsterList.length >= this.monsterCount) {
-              this._hasInitialFilled = true;
+        getRearMonsterWorldZ() {
+          let rearZ = Number.NEGATIVE_INFINITY;
+
+          for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+
+            if (!monster || !monster.node || !monster.node.active || monster.isDie) {
+              continue;
             }
 
-            if (this._monsterList.length < this.monsterCount) {
-              const quest = this.monsterCreateQueue.monsterCreateInfoList[this.monsterCreateQueue.curIndex];
-              const questSpawnCount = this.getQuestSpawnCount(quest);
-              const monsterCount = questSpawnCount - quest.curMonsterCount;
-              let count = this.monsterCount - monsterCount + this._monsterList.length;
-
-              if (count >= 0) {
-                count = monsterCount;
-              } else {
-                count = this.monsterCount - this._monsterList.length;
-              }
-
-              const maxPerFrame = this._hasInitialFilled ? this.maxSpawnPerFrame : 51;
-
-              if (count > maxPerFrame) {
-                count = maxPerFrame;
-              }
-
-              for (let i = 0; i < count; i++) {
-                if (quest.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
-                  error: Error()
-                }), MonsterType) : MonsterType).ZombieBrother) {
-                  this.spawnBrother(quest);
-                } else {
-                  this.spawnBaby(quest);
-                }
-              }
-
-              quest.curMonsterCount += count;
-
-              if (quest.curMonsterCount == questSpawnCount) {
-                (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
-                  error: Error()
-                }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-                  error: Error()
-                }), EventType) : EventType).MONSTER_WAVE_STAGE);
-                quest.curLoopCount++;
-                this._nextSpawnZ += quest.brotherExcludeZ;
-
-                if (quest.loopMax != -1 && quest.curLoopCount == quest.loopMax) {
-                  this.monsterCreateQueue.curIndex++;
-                  this.monsterCreateQueue.curIndex = this.monsterCreateQueue.curIndex % this.monsterCreateQueue.monsterCreateInfoList.length;
-                }
-
-                quest.init();
-              }
-            }
+            rearZ = Math.max(rearZ, monster.node.worldPositionZ);
           }
+
+          return rearZ;
+        }
+
+        getViewportFarWorldZ(deltaTime) {
+          var _instance;
+
+          this._viewportFarRefreshTime -= Math.max(0, deltaTime);
+
+          if (this._viewportFarRefreshTime > 0 && Number.isFinite(this._cachedViewportFarWorldZ)) {
+            return this._cachedViewportFarWorldZ;
+          }
+
+          const camera = (_instance = (_crd && CameraMove === void 0 ? (_reportPossibleCrUseOfCameraMove({
+            error: Error()
+          }), CameraMove) : CameraMove).instance) == null ? void 0 : _instance.camera;
+
+          if (!(camera != null && camera.node)) {
+            return Number.NaN;
+          }
+
+          const windowSize = screen.windowSize;
+          const viewportTopY = (camera.rect.y + camera.rect.height) * windowSize.height;
+          const cameraZ = camera.node.worldPositionZ;
+          const maxProbeZ = cameraZ + Math.max(10, camera.far * 0.95);
+          const worldX = camera.node.worldPositionX;
+          const worldY = this.node.worldPositionY + this.getSpawnY();
+          let lowZ = cameraZ + Math.max(1, camera.near);
+          let highZ = Math.min(maxProbeZ, Math.max(lowZ + 32, Number.isFinite(this._cachedViewportFarWorldZ) ? this._cachedViewportFarWorldZ + 16 : lowZ + 32));
+
+          while (highZ < maxProbeZ && this.getViewportProbeScreenY(camera, worldX, worldY, highZ) <= viewportTopY) {
+            lowZ = highZ;
+            highZ = Math.min(maxProbeZ, cameraZ + (highZ - cameraZ) * 2);
+          }
+
+          if (this.getViewportProbeScreenY(camera, worldX, worldY, highZ) <= viewportTopY) {
+            this._cachedViewportFarWorldZ = highZ;
+          } else {
+            for (let i = 0; i < 14; i++) {
+              const middleZ = (lowZ + highZ) * 0.5;
+
+              if (this.getViewportProbeScreenY(camera, worldX, worldY, middleZ) <= viewportTopY) {
+                lowZ = middleZ;
+              } else {
+                highZ = middleZ;
+              }
+            }
+
+            this._cachedViewportFarWorldZ = lowZ;
+          }
+
+          this._viewportFarRefreshTime = 0.25;
+          return this._cachedViewportFarWorldZ;
+        }
+
+        getViewportProbeScreenY(camera, worldX, worldY, worldZ) {
+          this._viewportProbeWorldPos.set(worldX, worldY, worldZ);
+
+          return camera.worldToScreen(this._viewportProbeWorldPos).y;
+        }
+
+        _update(deltaTime) {
+          this.updateViewportDrivenSpawn(deltaTime);
 
           if (!this._isRestoringWaveRolesAfterRebirth) {
             this.updateWaveRoleForwardMove(deltaTime);
@@ -1209,7 +1378,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           if (MonsterCreate.isStartMove) {
-            this._nextSpawnZ -= deltaTime * this.monsterSpeed;
+            const moveDistance = Math.max(0, deltaTime * this.monsterSpeed);
+            this._nextSpawnZ -= moveDistance;
+            this._formationTravelDistance += moveDistance;
           }
         }
 
@@ -1390,7 +1561,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this._monsterSpawnLocalXMap.set(monster, monster.initX);
 
-          this._monsterSpawnLocalZMap.set(monster, monster.node.z);
+          const referenceLocalZ = monster.node.z + this._formationTravelDistance;
+
+          this._monsterSpawnLocalZMap.set(monster, referenceLocalZ);
 
           this._monsterRebirthOffsetMap.set(monster, new Vec3(monster.initX - baseX, 0, monster.node.z - baseZ));
 
@@ -1400,7 +1573,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this._monsterWaveIndexMap.set(monster, waveIndex);
 
-          this.recordRebirthWaveInitialZ(waveIndex, monster.node.z);
+          this.recordRebirthWaveInitialZ(waveIndex, referenceLocalZ);
         }
 
         recordRebirthWaveInitialZ(waveIndex, localZ) {
@@ -1555,7 +1728,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         logRebirthFrontDistance(layout) {
-          var _instance$roleList, _instance;
+          var _instance$roleList, _instance2;
 
           if (!this.rebirthMonsterDistanceLog) {
             return;
@@ -1588,9 +1761,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           let playerFrontWorldZ = Number.NEGATIVE_INFINITY;
           let playerFrontName = '';
-          const roleList = (_instance$roleList = (_instance = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+          const roleList = (_instance$roleList = (_instance2 = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
             error: Error()
-          }), Player) : Player).instance) == null ? void 0 : _instance.roleList) != null ? _instance$roleList : [];
+          }), Player) : Player).instance) == null ? void 0 : _instance2.roleList) != null ? _instance$roleList : [];
 
           for (let i = 0; i < roleList.length; i++) {
             var _role$node;
@@ -2573,168 +2746,182 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function () {
           return 5;
         }
-      }), _descriptor14 = _applyDecoratedDescriptor(_class8.prototype, "monsterCreateQueue", [_dec17], {
+      }), _descriptor14 = _applyDecoratedDescriptor(_class8.prototype, "viewportSpawnTriggerDistance", [_dec17], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 10;
+        }
+      }), _descriptor15 = _applyDecoratedDescriptor(_class8.prototype, "viewportSpawnBufferDistance", [_dec18], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return 55;
+        }
+      }), _descriptor16 = _applyDecoratedDescriptor(_class8.prototype, "monsterCreateQueue", [_dec19], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return new MonsterCreateQueue();
         }
-      }), _descriptor15 = _applyDecoratedDescriptor(_class8.prototype, "brotherExcludeZ", [_dec18], {
+      }), _descriptor17 = _applyDecoratedDescriptor(_class8.prototype, "brotherExcludeZ", [_dec20], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class8.prototype, "disX", [_dec19], {
+      }), _descriptor18 = _applyDecoratedDescriptor(_class8.prototype, "disX", [_dec21], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2.5;
         }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class8.prototype, "monsterSpeed", [_dec20], {
+      }), _descriptor19 = _applyDecoratedDescriptor(_class8.prototype, "monsterSpeed", [_dec22], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class8.prototype, "middleLaneHalfX", [_dec21], {
+      }), _descriptor20 = _applyDecoratedDescriptor(_class8.prototype, "middleLaneHalfX", [_dec23], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor19 = _applyDecoratedDescriptor(_class8.prototype, "rowCount", [_dec22], {
+      }), _descriptor21 = _applyDecoratedDescriptor(_class8.prototype, "rowCount", [_dec24], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 8;
         }
-      }), _descriptor20 = _applyDecoratedDescriptor(_class8.prototype, "layerGapZ", [_dec23], {
+      }), _descriptor22 = _applyDecoratedDescriptor(_class8.prototype, "layerGapZ", [_dec25], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.8;
         }
-      }), _descriptor21 = _applyDecoratedDescriptor(_class8.prototype, "spawnRandomX", [_dec24], {
+      }), _descriptor23 = _applyDecoratedDescriptor(_class8.prototype, "spawnRandomX", [_dec26], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.28;
         }
-      }), _descriptor22 = _applyDecoratedDescriptor(_class8.prototype, "spawnRandomZ", [_dec25], {
+      }), _descriptor24 = _applyDecoratedDescriptor(_class8.prototype, "spawnRandomZ", [_dec27], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.25;
         }
-      }), _descriptor23 = _applyDecoratedDescriptor(_class8.prototype, "spawnScaleRandom", [_dec26], {
+      }), _descriptor25 = _applyDecoratedDescriptor(_class8.prototype, "spawnScaleRandom", [_dec28], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.06;
         }
-      }), _descriptor24 = _applyDecoratedDescriptor(_class8.prototype, "spawnYawRandom", [_dec27], {
+      }), _descriptor26 = _applyDecoratedDescriptor(_class8.prototype, "spawnYawRandom", [_dec29], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 8;
         }
-      }), _descriptor25 = _applyDecoratedDescriptor(_class8.prototype, "spawnPositionOffset", [_dec28], {
+      }), _descriptor27 = _applyDecoratedDescriptor(_class8.prototype, "spawnPositionOffset", [_dec30], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return new Vec3();
         }
-      }), _descriptor26 = _applyDecoratedDescriptor(_class8.prototype, "monsterDeathThrowBaseHeight", [_dec29], {
+      }), _descriptor28 = _applyDecoratedDescriptor(_class8.prototype, "monsterDeathThrowBaseHeight", [_dec31], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.5;
         }
-      }), _descriptor27 = _applyDecoratedDescriptor(_class8.prototype, "monsterDeathThrowRandomHeight", [_dec30], {
+      }), _descriptor29 = _applyDecoratedDescriptor(_class8.prototype, "monsterDeathThrowRandomHeight", [_dec32], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.35;
         }
-      }), _descriptor28 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleCount", [_dec31], {
+      }), _descriptor30 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleCount", [_dec33], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 3;
         }
-      }), _descriptor29 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleStageIndexList", [_dec32], {
+      }), _descriptor31 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleStageIndexList", [_dec34], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return [0, 2, 5];
         }
-      }), _descriptor30 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleMonsterGap", [_dec33], {
+      }), _descriptor32 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleMonsterGap", [_dec35], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.02;
         }
-      }), _descriptor31 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleMonsterHalfZMin", [_dec34], {
+      }), _descriptor33 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleMonsterHalfZMin", [_dec36], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.8;
         }
-      }), _descriptor32 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleBossHalfZMin", [_dec35], {
+      }), _descriptor34 = _applyDecoratedDescriptor(_class8.prototype, "waveRoleBossHalfZMin", [_dec37], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2;
         }
-      }), _descriptor33 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterFrontRetreatZ", [_dec36], {
+      }), _descriptor35 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterFrontRetreatZ", [_dec38], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 2.5;
         }
-      }), _descriptor34 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterWaveExtraGapZ", [_dec37], {
+      }), _descriptor36 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterWaveExtraGapZ", [_dec39], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0;
         }
-      }), _descriptor35 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterRandomX", [_dec38], {
+      }), _descriptor37 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterRandomX", [_dec40], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.15;
         }
-      }), _descriptor36 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterRandomZ", [_dec39], {
+      }), _descriptor38 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterRandomZ", [_dec41], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return 0.25;
         }
-      }), _descriptor37 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterDistanceLog", [_dec40], {
+      }), _descriptor39 = _applyDecoratedDescriptor(_class8.prototype, "rebirthMonsterDistanceLog", [_dec42], {
         configurable: true,
         enumerable: true,
         writable: true,

@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, CCFloat, CCInteger, Component, director, instantiate, Node, Pool, tween, Vec3 } from 'cc';
+import { _decorator, Camera, CCBoolean, CCFloat, CCInteger, Component, director, instantiate, Node, Pool, screen, tween, Vec3 } from 'cc';
 import PoolManager from '../../Base/PoolManager';
 import { EffectEnum, EventType, MonsterType, PoolEnum, PrefabsEnum } from '../../Base/EnumList';
 import { MonsterBattleTaerget } from './MonsterBattleTaerget';
@@ -84,8 +84,12 @@ export class MonsterCreate extends UnityUpComponent {
 
     @property({ type: CCInteger, tooltip: '场景中最大怪物数量' })
     public monsterCount: number = 500;
-    @property({ type: CCInteger, tooltip: '补充阶段每帧最大生成数，防止大量死怪时瞬间补怪掉帧' })
+    @property({ type: CCInteger, displayName: '每帧最大生成数', tooltip: '初始生成和后续按视口补充时，每帧最多创建的怪物数量。' })
     public maxSpawnPerFrame: number = 5;
+    @property({ type: CCFloat, displayName: '视口外触发距离', tooltip: '当前最后排怪物进入“实际视口最远位置 + 此距离”后，开始补充下一段怪物。' })
+    public viewportSpawnTriggerDistance: number = 10;
+    @property({ type: CCFloat, displayName: '视口外补充距离', tooltip: '每次分帧补充到“实际视口最远位置 + 此距离”后停止，建议设置为 50-60。' })
+    public viewportSpawnBufferDistance: number = 55;
     @property(MonsterCreateQueue)
     public monsterCreateQueue: MonsterCreateQueue = new MonsterCreateQueue();
 
@@ -154,8 +158,17 @@ export class MonsterCreate extends UnityUpComponent {
 
     private stage_0: number = 26.5;
     private stage_1: number = 15;
-    private _hasInitialFilled: boolean = false;
-    private _spawnAllWavesOnStart: boolean = true;
+    private _spawnStageIndex: number = 0;
+    private _spawnLoopIndex: number = 0;
+    private _spawnWaveIndex: number = 0;
+    private _spawnSlotIndex: number = 0;
+    private _spawnSparseSlotSet: Set<number> = null;
+    private _isViewportSpawnFilling: boolean = false;
+    private _isConfiguredSpawnFinished: boolean = false;
+    private _cachedViewportFarWorldZ: number = Number.NaN;
+    private _viewportFarRefreshTime: number = 0;
+    private _formationTravelDistance: number = 0;
+    private _viewportProbeWorldPos: Vec3 = new Vec3();
     @property({ type: CCInteger, displayName: '油桶大波次数量', tooltip: '兼容旧配置：当“油桶对应波次索引”为空时，使用这里的数量从第 0 波开始顺序生成油桶。' })
     public waveRoleCount: number = 3;
     @property({ type: [CCInteger], displayName: '油桶所在怪物波次索引(0=第0波)', tooltip: '数组内每一项生成一个油桶。填 0 表示放在第 0 波怪物前面，填 1 表示放在第 1 波怪物前面。' })
@@ -204,7 +217,7 @@ export class MonsterCreate extends UnityUpComponent {
         EventManager.instance.on(EventType.PLAYER_RESURRECTION, this.TimeFlowsBackWard, this);
         EventManager.instance.on(EventType.MONSTER_SKILL_XRD, this.skillXRMonster, this);
         this.refreshLalianLimitRange();
-        this.spawnAllWavesAtStart();
+        this.initializeViewportDrivenSpawn();
         // this.scheduleOnce(() => {
         //     this.skillXRMonster(2, 2, 2);
         // }, 2);
@@ -596,14 +609,12 @@ export class MonsterCreate extends UnityUpComponent {
         }
     }
 
-    private spawnAllWavesAtStart() {
+    private initializeViewportDrivenSpawn() {
         const stageList = this.monsterCreateQueue?.monsterCreateInfoList ?? [];
         if (stageList.length <= 0) {
             return;
         }
 
-        this._spawnAllWavesOnStart = true;
-        this._hasInitialFilled = true;
         this._monsterList.length = 0;
         this._nextSpawnZ = 0;
         this._rowCount = 0;
@@ -619,98 +630,232 @@ export class MonsterCreate extends UnityUpComponent {
         this._rebirthWaveInitialMinZList.length = 0;
         this._rebirthWaveInitialMaxZList.length = 0;
         this._monsterRebirthOrderIndex = 0;
+        this._spawnStageIndex = 0;
+        this._spawnLoopIndex = 0;
+        this._spawnWaveIndex = 0;
+        this._spawnSlotIndex = 0;
+        this._spawnSparseSlotSet = null;
+        this._isViewportSpawnFilling = true;
+        this._isConfiguredSpawnFinished = false;
+        this._cachedViewportFarWorldZ = Number.NaN;
+        this._viewportFarRefreshTime = 0;
+        this._formationTravelDistance = 0;
+        this.monsterCreateQueue.curIndex = 0;
 
-        let stageCursor = 0;
-
+        let configuredMonsterCount = 0;
         for (let i = 0; i < stageList.length; i++) {
             const quest = stageList[i];
             const loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
-            for (let loop = 0; loop < loopCount; loop++) {
-                const waveIndex = stageCursor;
-                const spawnCount = this.getQuestSpawnCount(quest);
-                const rangeCount = this.getQuestRangeCount(quest);
-                if (quest.monsterType == MonsterType.ZombieBrother || spawnCount >= rangeCount) {
-                    for (let count = 0; count < spawnCount; count++) {
-                        if (quest.monsterType == MonsterType.ZombieBrother) {
-                            this.spawnBrother(quest, waveIndex);
-                        } else {
-                            this.spawnBaby(quest, waveIndex);
-                        }
-                    }
-                } else {
-                    const spawnSlotSet = this.buildSparseWaveSpawnSlotSet(spawnCount, rangeCount);
-                    let cursorNextSpawnZ = this._nextSpawnZ;
-                    let cursorRowCount = this._rowCount;
-                    let cursorPosIndex = this.posIndex;
-
-                    for (let slot = 0; slot < rangeCount; slot++) {
-                        if (spawnSlotSet.has(slot)) {
-                            cursorNextSpawnZ = this.spawnBabyAtCursor(quest, waveIndex, cursorNextSpawnZ, cursorPosIndex);
-                        }
-                        cursorPosIndex = (cursorPosIndex + 1) % this.rowCount;
-                        cursorRowCount++;
-                        if (cursorRowCount == this.rowCount) {
-                            cursorNextSpawnZ += this.layerGapZ;
-                            cursorRowCount = 0;
-                        }
-                    }
-
-                    this._nextSpawnZ = cursorNextSpawnZ;
-                    this._rowCount = cursorRowCount;
-                    this.posIndex = cursorPosIndex;
-                }
-                this._nextSpawnZ += quest.brotherExcludeZ;
-                stageCursor++;
-            }
+            configuredMonsterCount += this.getQuestSpawnCount(quest) * loopCount;
             quest.init();
         }
+        this.monsterCount = configuredMonsterCount;
+    }
 
-        this.monsterCount = this._monsterList.length;
+    private updateViewportDrivenSpawn(deltaTime: number) {
+        if (this._isConfiguredSpawnFinished || this._isRestoringWaveRolesAfterRebirth) {
+            return;
+        }
+
+        const viewportFarWorldZ = this.getViewportFarWorldZ(deltaTime);
+        if (!Number.isFinite(viewportFarWorldZ)) {
+            return;
+        }
+
+        const triggerDistance = Math.max(0, this.viewportSpawnTriggerDistance);
+        if (!this._isViewportSpawnFilling) {
+            const rearMonsterWorldZ = this.getRearMonsterWorldZ();
+            if (rearMonsterWorldZ > viewportFarWorldZ + triggerDistance) {
+                return;
+            }
+            this._isViewportSpawnFilling = true;
+        }
+
+        const bufferDistance = Math.max(triggerDistance, this.viewportSpawnBufferDistance);
+        const stopWorldZ = viewportFarWorldZ + bufferDistance;
+        const maxPerFrame = Math.max(1, Math.floor(this.maxSpawnPerFrame));
+        let spawnedCount = 0;
+        let processedSlotCount = 0;
+
+        while (spawnedCount < maxPerFrame && processedSlotCount < 1024) {
+            const quest = this.prepareNextConfiguredSpawnSlot();
+            if (!quest) {
+                this.finishViewportSpawnBatch(true);
+                return;
+            }
+            if (this.getNextConfiguredSpawnWorldZ(quest) > stopWorldZ) {
+                this.finishViewportSpawnBatch(false);
+                return;
+            }
+
+            if (this.spawnNextConfiguredSlot(quest)) {
+                spawnedCount++;
+            }
+            processedSlotCount++;
+        }
+    }
+
+    private prepareNextConfiguredSpawnSlot(): MonsterCreateInfo | null {
+        const stageList = this.monsterCreateQueue?.monsterCreateInfoList ?? [];
+        while (this._spawnStageIndex < stageList.length) {
+            const quest = stageList[this._spawnStageIndex];
+            const loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
+            if (this._spawnLoopIndex >= loopCount) {
+                quest.init();
+                this._spawnStageIndex++;
+                this._spawnLoopIndex = 0;
+                continue;
+            }
+
+            const spawnCount = this.getQuestSpawnCount(quest);
+            const rangeCount = this.getQuestRangeCount(quest);
+            const isSparseWave = quest.monsterType != MonsterType.ZombieBrother && spawnCount < rangeCount;
+            const slotCount = isSparseWave ? rangeCount : spawnCount;
+            if (this._spawnSlotIndex < slotCount) {
+                if (isSparseWave && !this._spawnSparseSlotSet) {
+                    this._spawnSparseSlotSet = this.buildSparseWaveSpawnSlotSet(spawnCount, rangeCount);
+                }
+                return quest;
+            }
+
+            this.completeCurrentConfiguredWave(quest);
+        }
+
+        this._isConfiguredSpawnFinished = true;
+        return null;
+    }
+
+    private getNextConfiguredSpawnWorldZ(quest: MonsterCreateInfo): number {
+        const nextSpawnZ = quest.monsterType == MonsterType.ZombieBrother
+            ? this._nextSpawnZ + this.brotherExcludeZ
+            : this._nextSpawnZ;
+        return this.getSpawnWorldZ(nextSpawnZ);
+    }
+
+    private spawnNextConfiguredSlot(quest: MonsterCreateInfo): boolean {
+        const spawnCount = this.getQuestSpawnCount(quest);
+        const rangeCount = this.getQuestRangeCount(quest);
+        const isSparseWave = quest.monsterType != MonsterType.ZombieBrother && spawnCount < rangeCount;
+        let didSpawn = false;
+
+        if (quest.monsterType == MonsterType.ZombieBrother) {
+            this.spawnBrother(quest, this._spawnWaveIndex);
+            didSpawn = true;
+        } else if (isSparseWave) {
+            if (this._spawnSparseSlotSet?.has(this._spawnSlotIndex)) {
+                this._nextSpawnZ = this.spawnBabyAtCursor(
+                    quest,
+                    this._spawnWaveIndex,
+                    this._nextSpawnZ,
+                    this.posIndex,
+                );
+                didSpawn = true;
+            }
+            this.posIndex = (this.posIndex + 1) % this.rowCount;
+            this._rowCount++;
+            if (this._rowCount == this.rowCount) {
+                this._nextSpawnZ += this.layerGapZ;
+                this._rowCount = 0;
+            }
+        } else {
+            this.spawnBaby(quest, this._spawnWaveIndex);
+            didSpawn = true;
+        }
+
+        this._spawnSlotIndex++;
+        const slotCount = isSparseWave ? rangeCount : spawnCount;
+        if (this._spawnSlotIndex >= slotCount) {
+            this.completeCurrentConfiguredWave(quest);
+        }
+        return didSpawn;
+    }
+
+    private completeCurrentConfiguredWave(quest: MonsterCreateInfo) {
+        this._nextSpawnZ += quest.brotherExcludeZ;
+        this._spawnWaveIndex++;
+        this._spawnLoopIndex++;
+        this._spawnSlotIndex = 0;
+        this._spawnSparseSlotSet = null;
+
+        const loopCount = quest.loopMax == -1 ? 1 : Math.max(1, quest.loopMax);
+        if (this._spawnLoopIndex >= loopCount) {
+            quest.init();
+            this._spawnStageIndex++;
+            this._spawnLoopIndex = 0;
+        }
+    }
+
+    private finishViewportSpawnBatch(isFinished: boolean) {
+        this._isViewportSpawnFilling = false;
+        if (isFinished) {
+            this._isConfiguredSpawnFinished = true;
+        }
         this.snapWaveRolesToCurrentWaveFront();
     }
 
-    _update(deltaTime: number) {
-        if (!this._spawnAllWavesOnStart) {
-            if (!this._hasInitialFilled && this._monsterList.length >= this.monsterCount) {
-                this._hasInitialFilled = true;
+    private getRearMonsterWorldZ(): number {
+        let rearZ = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+            if (!monster || !monster.node || !monster.node.active || monster.isDie) {
+                continue;
             }
-            if (this._monsterList.length < this.monsterCount) {
-                const quest = this.monsterCreateQueue.monsterCreateInfoList[this.monsterCreateQueue.curIndex];
-                const questSpawnCount = this.getQuestSpawnCount(quest);
-                const monsterCount = questSpawnCount - quest.curMonsterCount;
-                let count = this.monsterCount - monsterCount + this._monsterList.length;
-                if (count >= 0) {
-                    count = monsterCount;
-                } else {
-                    count = this.monsterCount - this._monsterList.length;
-                }
-                const maxPerFrame = this._hasInitialFilled ? this.maxSpawnPerFrame : 51;
-                if (count > maxPerFrame) {
-                    count = maxPerFrame;
-                }
-
-                for (let i = 0; i < count; i++) {
-                    if (quest.monsterType == MonsterType.ZombieBrother) {
-                        this.spawnBrother(quest);
-                    } else {
-                        this.spawnBaby(quest);
-                    }
-
-                }
-                quest.curMonsterCount += count;
-                if (quest.curMonsterCount == questSpawnCount) {
-                    EventManager.instance.emit(EventType.MONSTER_WAVE_STAGE);
-                    quest.curLoopCount++;
-                    this._nextSpawnZ += quest.brotherExcludeZ;
-                    if (quest.loopMax != -1 && quest.curLoopCount == quest.loopMax) {
-                        this.monsterCreateQueue.curIndex++;
-                        this.monsterCreateQueue.curIndex = this.monsterCreateQueue.curIndex % this.monsterCreateQueue.monsterCreateInfoList.length;
-                    }
-                    quest.init();
-                }
-
-            }
+            rearZ = Math.max(rearZ, monster.node.worldPositionZ);
         }
+        return rearZ;
+    }
+
+    private getViewportFarWorldZ(deltaTime: number): number {
+        this._viewportFarRefreshTime -= Math.max(0, deltaTime);
+        if (this._viewportFarRefreshTime > 0 && Number.isFinite(this._cachedViewportFarWorldZ)) {
+            return this._cachedViewportFarWorldZ;
+        }
+
+        const camera = CameraMove.instance?.camera;
+        if (!camera?.node) {
+            return Number.NaN;
+        }
+
+        const windowSize = screen.windowSize;
+        const viewportTopY = (camera.rect.y + camera.rect.height) * windowSize.height;
+        const cameraZ = camera.node.worldPositionZ;
+        const maxProbeZ = cameraZ + Math.max(10, camera.far * 0.95);
+        const worldX = camera.node.worldPositionX;
+        const worldY = this.node.worldPositionY + this.getSpawnY();
+        let lowZ = cameraZ + Math.max(1, camera.near);
+        let highZ = Math.min(maxProbeZ, Math.max(lowZ + 32, Number.isFinite(this._cachedViewportFarWorldZ)
+            ? this._cachedViewportFarWorldZ + 16
+            : lowZ + 32));
+
+        while (highZ < maxProbeZ && this.getViewportProbeScreenY(camera, worldX, worldY, highZ) <= viewportTopY) {
+            lowZ = highZ;
+            highZ = Math.min(maxProbeZ, cameraZ + (highZ - cameraZ) * 2);
+        }
+
+        if (this.getViewportProbeScreenY(camera, worldX, worldY, highZ) <= viewportTopY) {
+            this._cachedViewportFarWorldZ = highZ;
+        } else {
+            for (let i = 0; i < 14; i++) {
+                const middleZ = (lowZ + highZ) * 0.5;
+                if (this.getViewportProbeScreenY(camera, worldX, worldY, middleZ) <= viewportTopY) {
+                    lowZ = middleZ;
+                } else {
+                    highZ = middleZ;
+                }
+            }
+            this._cachedViewportFarWorldZ = lowZ;
+        }
+        this._viewportFarRefreshTime = 0.25;
+        return this._cachedViewportFarWorldZ;
+    }
+
+    private getViewportProbeScreenY(camera: Camera, worldX: number, worldY: number, worldZ: number): number {
+        this._viewportProbeWorldPos.set(worldX, worldY, worldZ);
+        return camera.worldToScreen(this._viewportProbeWorldPos).y;
+    }
+
+    _update(deltaTime: number) {
+        this.updateViewportDrivenSpawn(deltaTime);
         if (!this._isRestoringWaveRolesAfterRebirth) {
             this.updateWaveRoleForwardMove(deltaTime);
             this.checkWaveRolePlayerCollision();
@@ -767,7 +912,9 @@ export class MonsterCreate extends UnityUpComponent {
         }
 
         if (MonsterCreate.isStartMove) {
-            this._nextSpawnZ -= deltaTime * this.monsterSpeed;
+            const moveDistance = Math.max(0, deltaTime * this.monsterSpeed);
+            this._nextSpawnZ -= moveDistance;
+            this._formationTravelDistance += moveDistance;
         }
 
     }
@@ -917,13 +1064,14 @@ export class MonsterCreate extends UnityUpComponent {
         }
         this._monsterRebirthOrderMap.set(monster, this._monsterRebirthOrderIndex++);
         this._monsterSpawnLocalXMap.set(monster, monster.initX);
-        this._monsterSpawnLocalZMap.set(monster, monster.node.z);
+        const referenceLocalZ = monster.node.z + this._formationTravelDistance;
+        this._monsterSpawnLocalZMap.set(monster, referenceLocalZ);
         this._monsterRebirthOffsetMap.set(monster, new Vec3(monster.initX - baseX, 0, monster.node.z - baseZ));
         if (waveIndex < 0) {
             return;
         }
         this._monsterWaveIndexMap.set(monster, waveIndex);
-        this.recordRebirthWaveInitialZ(waveIndex, monster.node.z);
+        this.recordRebirthWaveInitialZ(waveIndex, referenceLocalZ);
     }
 
     private recordRebirthWaveInitialZ(waveIndex: number, localZ: number) {
