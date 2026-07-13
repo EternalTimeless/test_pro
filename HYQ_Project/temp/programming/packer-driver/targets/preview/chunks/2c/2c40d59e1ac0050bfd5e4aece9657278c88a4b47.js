@@ -315,6 +315,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.runAnimSpeed = 1;
           this.runAnimStartFrame = 0;
           this.attackTimer = 0;
+          this.attackRoleAtAnimationStart = null;
+          this.attackEventPending = false;
           this.attackDuration = 1.5;
           this.bossDesiredAttackPos = new Vec3();
           this.bossFaceVector = new Vec3();
@@ -384,6 +386,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._hlIn = false;
           this.applyNormalDeathAnimationSetup();
           this.attackTimer = 0;
+          this.attackRoleAtAnimationStart = null;
+          this.attackEventPending = false;
           this.runAnimSpeed = 0.9 + Math.random() * 0.25;
           this.runAnimStartFrame = Math.random();
           (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
@@ -412,6 +416,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         die() {
+          this.cancelPendingAttackEvent();
           this.move.autoMove = false;
           (_crd && BulletMonsterCollisionManager === void 0 ? (_reportPossibleCrUseOfBulletMonsterCollisionManager({
             error: Error()
@@ -551,7 +556,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             if (this.attackTimer <= 0) {
               this.attackTimer = 0;
-              this.attackIn = false;
+
+              if (!this.attackEventPending) {
+                this.attackIn = false;
+              }
             }
           }
 
@@ -587,8 +595,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
                 this.playAttackAnimation();
               }
             } else {
-              this.attackIn = false;
-              this.attackTimer = 0;
+              this.cancelPendingAttackEvent();
 
               if (this.monsterType == (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
                 error: Error()
@@ -626,12 +633,40 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         playAttackAnimation() {
-          var anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
+          if (this.monsterType === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother) {
+            var _anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
 
-          if (!anim) {
+            if (!_anim) {
+              return;
+            }
+
+            _anim.speed = _anim.duration / this.attackDuration;
+            this.attackTimer = this.attackDuration;
+            this.attackIn = true;
             return;
           }
 
+          if (this.attackEventPending) {
+            return;
+          }
+
+          var role = this.getAttackRole();
+
+          if (!role) {
+            return;
+          }
+
+          this.attackRoleAtAnimationStart = role;
+          var anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
+
+          if (!anim) {
+            this.attackRoleAtAnimationStart = null;
+            return;
+          }
+
+          this.attackEventPending = true;
           var animScale = anim.duration / this.attackDuration;
           anim.speed = animScale;
           this.attackTimer = this.attackDuration;
@@ -676,7 +711,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return false;
           }
 
-          var nextRole = player.getMonsterAttackTarget(this.node.worldPosition);
+          var nextRole = this.monsterType === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
+            error: Error()
+          }), MonsterType) : MonsterType).ZombieBrother ? player.getMonsterAttackTarget(this.node.worldPosition) : player.getSmallMonsterAttackTarget(this.node.worldPosition);
 
           if (!(nextRole != null && (_nextRole$node = nextRole.node) != null && _nextRole$node.activeInHierarchy)) {
             this.clearAttackTarget();
@@ -695,6 +732,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this.move.target = null;
           }
 
+          this.cancelPendingAttackEvent();
+        }
+
+        cancelPendingAttackEvent() {
+          this.attackRoleAtAnimationStart = null;
+          this.attackEventPending = false;
           this.attackIn = false;
           this.attackTimer = 0;
         }
@@ -737,7 +780,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          var nextRole = player.getMonsterAttackTarget(this.node.worldPosition);
+          var nextRole = player.getSmallMonsterAttackTarget(this.node.worldPosition);
 
           if (!(nextRole != null && (_nextRole$node2 = nextRole.node) != null && _nextRole$node2.activeInHierarchy)) {
             this.clearAttackTarget();
@@ -784,6 +827,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), Player) : Player).instance;
 
           if (!player || player.isDie || role.hp <= 0 || player.roleList.indexOf(role) === -1) {
+            return null;
+          }
+
+          return role;
+        }
+
+        getLockedAttackRole() {
+          var role = this.attackRoleAtAnimationStart;
+          var player = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance;
+
+          if (!role || !player || player.isDie || role.hp <= 0 || player.roleList.indexOf(role) === -1) {
             return null;
           }
 
@@ -993,17 +1049,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
               error: Error()
             }), EventType) : EventType).PLAYER_HIT, this.node.worldPosition, 10);
-          } else {
-            var role = this.getAttackRole();
-
-            if (role) {
-              (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
-                error: Error()
-              }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
-                error: Error()
-              }), EventType) : EventType).PLAYER_HIT_2, role, 1);
-            }
+            return;
           }
+
+          if (!this.attackEventPending) {
+            return;
+          }
+
+          var role = this.getLockedAttackRole();
+          this.attackRoleAtAnimationStart = null;
+          this.attackEventPending = false;
+
+          if (this.attackTimer <= 0) {
+            this.attackIn = false;
+          }
+
+          if (!role) {
+            return;
+          }
+
+          (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
+            error: Error()
+          }), EventManager) : EventManager).instance.emit((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
+            error: Error()
+          }), EventType) : EventType).PLAYER_HIT_2, role, 1);
         }
 
       }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "meshFlashDataList_Die", [_dec2], {

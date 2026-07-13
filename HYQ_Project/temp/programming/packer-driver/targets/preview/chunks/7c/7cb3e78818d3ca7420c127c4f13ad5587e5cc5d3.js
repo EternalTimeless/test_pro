@@ -479,6 +479,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           _initializerDefineProperty(this, "waveRoleStageIndexList", _descriptor31, this);
 
           this._waveRoleNodes = [];
+          this._waveRoleAlignedToFront = [];
           this._stageStartZList = [];
           this._waveStageStartZList = [];
           this._waveStageIndexList = [];
@@ -587,6 +588,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           this._waveRoleNodes.length = 0;
+          this._waveRoleAlignedToFront.length = 0;
 
           for (var _i = 0; _i < roleList.length; _i++) {
             var role = roleList[_i];
@@ -599,6 +601,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             this._waveRoleNodes.push(role);
+
+            this._waveRoleAlignedToFront.push(false);
           }
 
           this.bindWaveRolesToCreatePropBrand();
@@ -972,6 +976,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           for (var i = 0; i < this._waveRoleNodes.length; i++) {
             var _this$_waveStageIndex;
 
+            if (this._waveRoleAlignedToFront[i]) {
+              continue;
+            }
+
             var role = this._waveRoleNodes[i];
             var targetWaveIndex = (_this$_waveStageIndex = this._waveStageIndexList[i]) != null ? _this$_waveStageIndex : i;
             var frontMonster = this.getFrontMonsterByWave(targetWaveIndex);
@@ -986,6 +994,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGap - roleHalfZ;
             this.setCollisionCenterWorldZ(role, targetCenterZ);
             this.clampMonstersBehindWaveRole(i);
+            this._waveRoleAlignedToFront[i] = true;
           }
         }
 
@@ -1820,9 +1829,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return false;
           }
 
-          var targetRole = (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+          var targetRole = monster.monsterType === (_crd && MonsterType === void 0 ? (_reportPossibleCrUseOfMonsterType({
             error: Error()
-          }), Player) : Player).instance.getMonsterAttackTarget(monster.node.worldPosition);
+          }), MonsterType) : MonsterType).ZombieBrother ? (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance.getMonsterAttackTarget(monster.node.worldPosition) : (_crd && Player === void 0 ? (_reportPossibleCrUseOfPlayer({
+            error: Error()
+          }), Player) : Player).instance.getSmallMonsterAttackTarget(monster.node.worldPosition);
 
           if (!(targetRole != null && (_targetRole$node = targetRole.node) != null && _targetRole$node.activeInHierarchy)) {
             return false;

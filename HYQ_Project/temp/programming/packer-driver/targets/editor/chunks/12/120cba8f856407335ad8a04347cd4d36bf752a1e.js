@@ -1520,6 +1520,50 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return bestRole;
         }
 
+        getSmallMonsterAttackTarget(monsterWorldPos) {
+          var _monsterWorldPos$x2;
+
+          if (this.isDie || !this.roleList.length) {
+            return null;
+          }
+
+          let frontZ = Number.NEGATIVE_INFINITY;
+
+          for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+
+            if (this.isValidMonsterTargetRole(role)) {
+              frontZ = Math.max(frontZ, role.node.worldPosition.z);
+            }
+          }
+
+          if (!Number.isFinite(frontZ)) {
+            return null;
+          }
+
+          let bestRole = null;
+          let bestXDistance = Number.POSITIVE_INFINITY;
+          const zTolerance = Math.max(0.05, this.roleR * 0.35);
+          const targetX = (_monsterWorldPos$x2 = monsterWorldPos == null ? void 0 : monsterWorldPos.x) != null ? _monsterWorldPos$x2 : this.node.worldPosition.x;
+
+          for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+
+            if (!this.isValidMonsterTargetRole(role) || Math.abs(role.node.worldPosition.z - frontZ) > zTolerance) {
+              continue;
+            }
+
+            const xDistance = Math.abs(role.node.worldPosition.x - targetX);
+
+            if (xDistance < bestXDistance) {
+              bestRole = role;
+              bestXDistance = xDistance;
+            }
+          }
+
+          return bestRole;
+        }
+
         isValidMonsterTargetRole(role) {
           var _role$node;
 
@@ -1886,20 +1930,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         hit_2(role, power) {
-          if (role.attackIN) {
+          this.applyRoleDamage(role, power);
+        }
+
+        applyRoleDamage(role, power) {
+          var _role$node3;
+
+          if (this.isDie || !role || role.attackIN || role.hp <= 0) {
+            return;
+          }
+
+          const index = this.roleList.indexOf(role);
+
+          if (index === -1 || !((_role$node3 = role.node) != null && _role$node3.activeInHierarchy)) {
             return;
           }
 
           role.hp -= power;
 
           if (role.hp <= 0) {
-            const index = this.roleList.indexOf(role);
-
-            if (index != -1) {
-              this.roleList.splice(index, 1);
-              this.roleDie(role);
-              this.requestShrinkAfterRoleLoss();
-            }
+            this.roleList.splice(index, 1);
+            this.roleDie(role);
+            this.requestShrinkAfterRoleLoss();
           } else {
             (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
               error: Error()

@@ -57,6 +57,8 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     private runAnimSpeed: number = 1;
     private runAnimStartFrame: number = 0;
     private attackTimer: number = 0;
+    private attackRoleAtAnimationStart: Role | null = null;
+    private attackEventPending: boolean = false;
     private readonly attackDuration: number = 1.5;
     private readonly bossDesiredAttackPos: Vec3 = new Vec3();
     private readonly bossFaceVector: Vec3 = new Vec3();
@@ -196,6 +198,8 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         this._hlIn = false;
         this.applyNormalDeathAnimationSetup();
         this.attackTimer = 0;
+        this.attackRoleAtAnimationStart = null;
+        this.attackEventPending = false;
         this.runAnimSpeed = 0.9 + Math.random() * 0.25;
         this.runAnimStartFrame = Math.random();
         BulletMonsterCollisionManager.instance.registerTarget(this);
@@ -217,6 +221,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
 
     protected die(): void {
+        this.cancelPendingAttackEvent();
         this.move.autoMove = false;
         BulletMonsterCollisionManager.instance.unregisterTarget(this);
         this.stopFlashRed();
@@ -332,7 +337,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             this.attackTimer -= dt;
             if (this.attackTimer <= 0) {
                 this.attackTimer = 0;
-                this.attackIn = false;
+                if (!this.attackEventPending) {
+                    this.attackIn = false;
+                }
             }
         }
 
@@ -360,8 +367,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
                     this.playAttackAnimation();
                 }
             } else {
-                this.attackIn = false;
-                this.attackTimer = 0;
+                this.cancelPendingAttackEvent();
                 if (this.monsterType == MonsterType.ZombieBrother) {
                     this.move.target = this.attackTarget;
                 } else {
@@ -394,10 +400,30 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     }
 
     private playAttackAnimation(): void {
-        const anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
-        if (!anim) {
+        if (this.monsterType === MonsterType.ZombieBrother) {
+            const anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
+            if (!anim) {
+                return;
+            }
+            anim.speed = anim.duration / this.attackDuration;
+            this.attackTimer = this.attackDuration;
+            this.attackIn = true;
             return;
         }
+        if (this.attackEventPending) {
+            return;
+        }
+        const role = this.getAttackRole();
+        if (!role) {
+            return;
+        }
+        this.attackRoleAtAnimationStart = role;
+        const anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
+        if (!anim) {
+            this.attackRoleAtAnimationStart = null;
+            return;
+        }
+        this.attackEventPending = true;
         const animScale = anim.duration / this.attackDuration;
         anim.speed = animScale;
         this.attackTimer = this.attackDuration;
@@ -429,7 +455,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return false;
         }
 
-        const nextRole = player.getMonsterAttackTarget(this.node.worldPosition);
+        const nextRole = this.monsterType === MonsterType.ZombieBrother
+            ? player.getMonsterAttackTarget(this.node.worldPosition)
+            : player.getSmallMonsterAttackTarget(this.node.worldPosition);
         if (!nextRole?.node?.activeInHierarchy) {
             this.clearAttackTarget();
             return false;
@@ -445,6 +473,12 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         if (this.move) {
             this.move.target = null;
         }
+        this.cancelPendingAttackEvent();
+    }
+
+    private cancelPendingAttackEvent(): void {
+        this.attackRoleAtAnimationStart = null;
+        this.attackEventPending = false;
         this.attackIn = false;
         this.attackTimer = 0;
     }
@@ -473,7 +507,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return;
         }
 
-        const nextRole = player.getMonsterAttackTarget(this.node.worldPosition);
+        const nextRole = player.getSmallMonsterAttackTarget(this.node.worldPosition);
         if (!nextRole?.node?.activeInHierarchy) {
             this.clearAttackTarget();
             return;
@@ -510,6 +544,15 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return null;
         }
 
+        return role;
+    }
+
+    private getLockedAttackRole(): Role | null {
+        const role = this.attackRoleAtAnimationStart;
+        const player = Player.instance;
+        if (!role || !player || player.isDie || role.hp <= 0 || player.roleList.indexOf(role) === -1) {
+            return null;
+        }
         return role;
     }
 
@@ -661,11 +704,20 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             CameraMove.instance.Shake2(1);
             AudioManager.inst.playOneShot(SoundEnum.Sound_boss_attack, 0.6);
             EventManager.instance.emit(EventType.PLAYER_HIT, this.node.worldPosition, 10);
-        } else {
-            const role = this.getAttackRole();
-            if (role) {
-                EventManager.instance.emit(EventType.PLAYER_HIT_2, role, 1);
-            }
+            return;
         }
+        if (!this.attackEventPending) {
+            return;
+        }
+        const role = this.getLockedAttackRole();
+        this.attackRoleAtAnimationStart = null;
+        this.attackEventPending = false;
+        if (this.attackTimer <= 0) {
+            this.attackIn = false;
+        }
+        if (!role) {
+            return;
+        }
+        EventManager.instance.emit(EventType.PLAYER_HIT_2, role, 1);
     }
 }

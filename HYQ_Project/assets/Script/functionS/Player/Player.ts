@@ -1055,6 +1055,41 @@ export class Player extends UnityUpComponent {
         return bestRole;
     }
 
+    public getSmallMonsterAttackTarget(monsterWorldPos: Vec3): Role | null {
+        if (this.isDie || !this.roleList.length) {
+            return null;
+        }
+
+        let frontZ = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+            if (this.isValidMonsterTargetRole(role)) {
+                frontZ = Math.max(frontZ, role.node.worldPosition.z);
+            }
+        }
+        if (!Number.isFinite(frontZ)) {
+            return null;
+        }
+
+        let bestRole: Role = null;
+        let bestXDistance = Number.POSITIVE_INFINITY;
+        const zTolerance = Math.max(0.05, this.roleR * 0.35);
+        const targetX = monsterWorldPos?.x ?? this.node.worldPosition.x;
+        for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+            if (!this.isValidMonsterTargetRole(role)
+                || Math.abs(role.node.worldPosition.z - frontZ) > zTolerance) {
+                continue;
+            }
+            const xDistance = Math.abs(role.node.worldPosition.x - targetX);
+            if (xDistance < bestXDistance) {
+                bestRole = role;
+                bestXDistance = xDistance;
+            }
+        }
+        return bestRole;
+    }
+
     private isValidMonsterTargetRole(role: Role): boolean {
         return !!role?.node?.activeInHierarchy && !role.attackIN && role.hp > 0;
     }
@@ -1328,17 +1363,23 @@ export class Player extends UnityUpComponent {
 
 
     private hit_2(role: Role, power: number) {
-        if (role.attackIN) {
+        this.applyRoleDamage(role, power);
+    }
+
+    private applyRoleDamage(role: Role, power: number): void {
+        if (this.isDie || !role || role.attackIN || role.hp <= 0) {
             return;
         }
+        const index = this.roleList.indexOf(role);
+        if (index === -1 || !role.node?.activeInHierarchy) {
+            return;
+        }
+
         role.hp -= power;
         if (role.hp <= 0) {
-            const index = this.roleList.indexOf(role);
-            if (index != -1) {
-                this.roleList.splice(index, 1);
-                this.roleDie(role);
-                this.requestShrinkAfterRoleLoss();
-            }
+            this.roleList.splice(index, 1);
+            this.roleDie(role);
+            this.requestShrinkAfterRoleLoss();
         } else {
             FlashRedManager.instance.flashRed(role.node, role.meshRedDataList);
         }

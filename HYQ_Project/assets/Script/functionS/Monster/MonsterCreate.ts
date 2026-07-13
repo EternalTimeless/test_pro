@@ -174,6 +174,7 @@ export class MonsterCreate extends UnityUpComponent {
     @property({ type: [CCInteger], displayName: '油桶所在怪物波次索引(0=第0波)', tooltip: '数组内每一项生成一个油桶。填 0 表示放在第 0 波怪物前面，填 1 表示放在第 1 波怪物前面。' })
     public waveRoleStageIndexList: number[] = [0, 2, 5];
     private _waveRoleNodes: PropArms[] = [];
+    private _waveRoleAlignedToFront: boolean[] = [];
     private _stageStartZList: number[] = [];
     private _waveStageStartZList: number[] = [];
     private _waveStageIndexList: number[] = [];
@@ -266,6 +267,7 @@ export class MonsterCreate extends UnityUpComponent {
         }
 
         this._waveRoleNodes.length = 0;
+        this._waveRoleAlignedToFront.length = 0;
         for (let i = 0; i < roleList.length; i++) {
             const role = roleList[i];
             this.configureWaveRoleByStage(role, i);
@@ -275,6 +277,7 @@ export class MonsterCreate extends UnityUpComponent {
                 this.resetWaveRoleToStageStart(role, stageZList[i]);
             }
             this._waveRoleNodes.push(role);
+            this._waveRoleAlignedToFront.push(false);
         }
 
         this.bindWaveRolesToCreatePropBrand();
@@ -567,6 +570,9 @@ export class MonsterCreate extends UnityUpComponent {
         }
 
         for (let i = 0; i < this._waveRoleNodes.length; i++) {
+            if (this._waveRoleAlignedToFront[i]) {
+                continue;
+            }
             const role = this._waveRoleNodes[i];
             const targetWaveIndex = this._waveStageIndexList[i] ?? i;
             const frontMonster = this.getFrontMonsterByWave(targetWaveIndex);
@@ -580,6 +586,7 @@ export class MonsterCreate extends UnityUpComponent {
             const targetCenterZ = monsterCenterZ - monsterHalfZ - this.waveRolePushGap - roleHalfZ;
             this.setCollisionCenterWorldZ(role, targetCenterZ);
             this.clampMonstersBehindWaveRole(i);
+            this._waveRoleAlignedToFront[i] = true;
         }
     }
 
@@ -1245,7 +1252,9 @@ export class MonsterCreate extends UnityUpComponent {
             return false;
         }
 
-        const targetRole = Player.instance.getMonsterAttackTarget(monster.node.worldPosition);
+        const targetRole = monster.monsterType === MonsterType.ZombieBrother
+            ? Player.instance.getMonsterAttackTarget(monster.node.worldPosition)
+            : Player.instance.getSmallMonsterAttackTarget(monster.node.worldPosition);
         if (!targetRole?.node?.activeInHierarchy) {
             return false;
         }

@@ -1558,6 +1558,50 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           return bestRole;
         }
 
+        getSmallMonsterAttackTarget(monsterWorldPos) {
+          var _monsterWorldPos$x2;
+
+          if (this.isDie || !this.roleList.length) {
+            return null;
+          }
+
+          var frontZ = Number.NEGATIVE_INFINITY;
+
+          for (var i = 0; i < this.roleList.length; i++) {
+            var role = this.roleList[i];
+
+            if (this.isValidMonsterTargetRole(role)) {
+              frontZ = Math.max(frontZ, role.node.worldPosition.z);
+            }
+          }
+
+          if (!Number.isFinite(frontZ)) {
+            return null;
+          }
+
+          var bestRole = null;
+          var bestXDistance = Number.POSITIVE_INFINITY;
+          var zTolerance = Math.max(0.05, this.roleR * 0.35);
+          var targetX = (_monsterWorldPos$x2 = monsterWorldPos == null ? void 0 : monsterWorldPos.x) != null ? _monsterWorldPos$x2 : this.node.worldPosition.x;
+
+          for (var _i2 = 0; _i2 < this.roleList.length; _i2++) {
+            var _role2 = this.roleList[_i2];
+
+            if (!this.isValidMonsterTargetRole(_role2) || Math.abs(_role2.node.worldPosition.z - frontZ) > zTolerance) {
+              continue;
+            }
+
+            var xDistance = Math.abs(_role2.node.worldPosition.x - targetX);
+
+            if (xDistance < bestXDistance) {
+              bestRole = _role2;
+              bestXDistance = xDistance;
+            }
+          }
+
+          return bestRole;
+        }
+
         isValidMonsterTargetRole(role) {
           var _role$node;
 
@@ -1720,10 +1764,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           var combatRoleCount = 0;
 
-          for (var _i2 = 0; _i2 < this.roleList.length; _i2++) {
+          for (var _i3 = 0; _i3 < this.roleList.length; _i3++) {
             var _role$node2;
 
-            var role = this.roleList[_i2];
+            var role = this.roleList[_i3];
 
             if (role != null && (_role$node2 = role.node) != null && _role$node2.active && !role.attackIN) {
               combatRoleCount++;
@@ -1733,20 +1777,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var outerLayer = combatRoleCount > 0 ? this.getRoleLayer(combatRoleCount - 1) : 0;
           var combatIndex = 0;
 
-          for (var _i3 = 0; _i3 < this.roleList.length; _i3++) {
-            var _role2 = this.roleList[_i3];
+          for (var _i4 = 0; _i4 < this.roleList.length; _i4++) {
+            var _role3 = this.roleList[_i4];
 
-            if (!_role2) {
+            if (!_role3) {
               continue;
             }
 
-            if (!_role2.node.active || _role2.attackIN) {
-              _role2.setShadowCastingEnabled(true);
+            if (!_role3.node.active || _role3.attackIN) {
+              _role3.setShadowCastingEnabled(true);
 
               continue;
             }
 
-            _role2.setShadowCastingEnabled(this.getRoleLayer(combatIndex) === outerLayer);
+            _role3.setShadowCastingEnabled(this.getRoleLayer(combatIndex) === outerLayer);
 
             combatIndex++;
           }
@@ -1899,13 +1943,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var minIdx = -1;
             var minDist = 0;
 
-            for (var _i4 = 0; _i4 < total; _i4++) {
-              if (used[_i4]) continue;
-              if (dists[_i4] === Number.MAX_VALUE) continue;
+            for (var _i5 = 0; _i5 < total; _i5++) {
+              if (used[_i5]) continue;
+              if (dists[_i5] === Number.MAX_VALUE) continue;
 
-              if (minIdx < 0 || dists[_i4] < minDist) {
-                minIdx = _i4;
-                minDist = dists[_i4];
+              if (minIdx < 0 || dists[_i5] < minDist) {
+                minIdx = _i5;
+                minDist = dists[_i5];
               }
             }
 
@@ -1918,8 +1962,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           } // 从后往前删除，保证索引不错位
 
 
-          for (var _i5 = 0; _i5 < picked.length; _i5++) {
-            var role = list[picked[_i5]];
+          for (var _i6 = 0; _i6 < picked.length; _i6++) {
+            var role = list[picked[_i6]];
             role.hp -= 3;
             this.roleDie(role); // role.node.active = false;
             // PoolManager.instance.setPool(PoolEnum.role + this.roleType, role);
@@ -1929,28 +1973,36 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return b - a;
           });
 
-          for (var _i6 = 0; _i6 < picked.length; _i6++) {
-            list.splice(picked[_i6], 1);
+          for (var _i7 = 0; _i7 < picked.length; _i7++) {
+            list.splice(picked[_i7], 1);
           }
 
           this.requestShrinkAfterRoleLoss();
         }
 
         hit_2(role, power) {
-          if (role.attackIN) {
+          this.applyRoleDamage(role, power);
+        }
+
+        applyRoleDamage(role, power) {
+          var _role$node3;
+
+          if (this.isDie || !role || role.attackIN || role.hp <= 0) {
+            return;
+          }
+
+          var index = this.roleList.indexOf(role);
+
+          if (index === -1 || !((_role$node3 = role.node) != null && _role$node3.activeInHierarchy)) {
             return;
           }
 
           role.hp -= power;
 
           if (role.hp <= 0) {
-            var index = this.roleList.indexOf(role);
-
-            if (index != -1) {
-              this.roleList.splice(index, 1);
-              this.roleDie(role);
-              this.requestShrinkAfterRoleLoss();
-            }
+            this.roleList.splice(index, 1);
+            this.roleDie(role);
+            this.requestShrinkAfterRoleLoss();
           } else {
             (_crd && FlashRedManager === void 0 ? (_reportPossibleCrUseOfFlashRedManager({
               error: Error()
