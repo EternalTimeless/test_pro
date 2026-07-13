@@ -11323,7 +11323,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "showCount": 35,
+    "showCount": 30,
     "distance": 3.5,
     "height": 0,
     "count": 1,
@@ -12845,9 +12845,9 @@
     "_enabled": true,
     "__prefab": null,
     "monsterCount": 800,
-    "maxSpawnPerFrame": 5,
+    "maxSpawnPerFrame": 3,
     "viewportSpawnTriggerDistance": 10,
-    "viewportSpawnBufferDistance": 40,
+    "viewportSpawnBufferDistance": 30,
     "monsterCreateQueue": {
       "__id__": 774
     },
@@ -14443,13 +14443,16 @@
     "retryMaxRoleLayerCount": 3,
     "outerLayerRoleCount": 25,
     "shrinkAfterRoleLossDelay": 2,
-    "maxShootingRoleCount": 32,
+    "maxShootingRoleCount": 28,
     "maxMuzzleEffectCount": 10,
     "mergeJtl2MultiBulletLogic": true,
     "staggerShotWeaponConfigIndex": 0,
     "staggerShotWindowRatio": 0.85,
     "defaultWeaponConfigIndex": 3,
-    "enableRuntimeUpgradePrewarm": false,
+    "enableRuntimeUpgradePrewarm": true,
+    "rolePrewarmPerFrame": 2,
+    "roleSwitchPerFrame": 4,
+    "maxRoleShotsPerFrame": 12,
     "weaponBulletConfigList": [
       {
         "__id__": 880

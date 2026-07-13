@@ -110,8 +110,17 @@ export class Player extends UnityUpComponent {
     public staggerShotWindowRatio: number = 0.85;
     @property({ type: CCInteger, displayName: '默认武器配置索引', tooltip: '开局默认使用的“武器子弹配置”索引。-1 表示保持旧默认值：子弹 arrow、威力 1、攻击速度使用 Player.attackSpeed。' })
     public defaultWeaponConfigIndex: number = -1;
-    @property(CCBoolean)
+    @property({ type: CCBoolean, displayName: '启用升级角色预热', tooltip: '武器飞向玩家期间分帧创建目标角色模型；正式替换时只从对象池取，避免运行中集中实例化骨骼角色。' })
     public enableRuntimeUpgradePrewarm: boolean = false;
+
+    @property({ type: CCInteger, displayName: '每帧预热角色数', tooltip: '升级预热阶段每帧最多创建的角色数量。数值越低，单帧峰值越小。' })
+    public rolePrewarmPerFrame: number = 2;
+
+    @property({ type: CCInteger, displayName: '每帧替换角色数', tooltip: '升级后每帧最多替换的角色数量；开启预热时只替换对象池中已经准备好的角色。' })
+    public roleSwitchPerFrame: number = 4;
+
+    @property({ type: CCInteger, displayName: '每帧角色射击处理数', tooltip: '单帧最多执行多少名角色的实际射击。超出的射击保留到后续帧，子弹总数和伤害次数不减少。' })
+    public maxRoleShotsPerFrame: number = 12;
     @property({ type: [WeaponBulletConfig], displayName: '武器子弹配置', tooltip: '配置各武器的子弹威力和子弹模型。' })
     public weaponBulletConfigList: WeaponBulletConfig[] = [
         (() => {
@@ -155,10 +164,8 @@ export class Player extends UnityUpComponent {
     private shootRoleStartIndex: number = 0;
     private pendingRoleSwitchType: RoleEnum = null;
     private pendingRoleSwitchIndex: number = 0;
-    private readonly roleSwitchPerFrame: number = 6;
     private pendingRolePrewarmType: RoleEnum = null;
     private pendingRolePrewarmCount: number = 0;
-    private readonly rolePrewarmPerFrame: number = 4;
     private pendingBulletPrewarmType: BulletEnum = null;
     private pendingBulletPrewarmCount: number = 0;
     private pendingBulletBatchWarmType: BulletEnum = null;
@@ -172,6 +179,7 @@ export class Player extends UnityUpComponent {
     private shrinkAnimating: boolean = false;
     private shrinkDirtyDuringAnimating: boolean = false;
     private readonly roleLayoutTweenDuration: number = 0.2;
+    private currentTeamAnimName: PlayerFBXAnimName | null = null;
 
     public isLock: boolean = false;
 
@@ -238,6 +246,7 @@ export class Player extends UnityUpComponent {
             const useStaggerShot = this.shouldUseStaggerShot();
             const useRandomShot = shootCount > 1 && this.shouldUseRandomShot();
             const randomShotConfig = this.currentWeaponBulletConfig;
+            const lockWorldX = this.node.worldPosition.x;
             let effectPlayCount = 0;
             for (let i = 0; i < shootCount; i++) {
                 const roleIndex = (this.shootRoleStartIndex + i) % this.roleList.length;
@@ -253,15 +262,15 @@ export class Player extends UnityUpComponent {
                             attackTime,
                             role.visualBulletCount,
                             1,
-                            this.node.worldPosition.x,
+                            lockWorldX,
                             playEffect,
                             randomShotConfig?.randomShotDelayWindowRatio ?? 0,
                             randomShotConfig?.initialBulletRandomX ?? 0,
                         );
                     } else if (useStaggerShot) {
-                        this.enqueueStaggerShot(role, i, shootCount, attackTime, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
+                        this.enqueueStaggerShot(role, i, shootCount, attackTime, role.visualBulletCount, 1, lockWorldX, playEffect);
                     } else {
-                        role.attackEvent(0, role.visualBulletCount, 1, this.node.worldPosition.x, playEffect);
+                        this.enqueueRoleShot(role, this.staggerShotClock, role.visualBulletCount, 1, lockWorldX, playEffect, 0);
                     }
                     // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
                     // const animState = role.fbxManager.setAnimation(animIndex, false);
@@ -301,15 +310,15 @@ export class Player extends UnityUpComponent {
         }
         const windowRatio = Math.max(0, Math.min(0.95, delayWindowRatio));
         const delay = Math.random() * Math.max(0, attackTime * windowRatio);
-        this.pendingStaggerShots.push({
+        this.enqueueRoleShot(
             role,
-            fireTime: this.staggerShotClock + delay,
+            this.staggerShotClock + delay,
             visualBulletCount,
             damageScale,
             lockWorldX,
             playEffect,
-            initialBulletRandomX: Math.max(0, initialBulletRandomX),
-        });
+            initialBulletRandomX,
+        );
     }
 
     private enqueueStaggerShot(role: Role, shotIndex: number, shootCount: number, attackTime: number, visualBulletCount: number, damageScale: number, lockWorldX: number, playEffect: boolean): void {
@@ -321,19 +330,44 @@ export class Player extends UnityUpComponent {
         const windowRatio = Math.max(0, Math.min(0.95, this.staggerShotWindowRatio));
         const spreadTime = Math.max(0, attackTime * windowRatio);
         const delay = spreadTime * shotIndex / Math.max(1, shootCount - 1);
-        this.pendingStaggerShots.push({
+        this.enqueueRoleShot(
             role,
-            fireTime: this.staggerShotClock + delay,
+            this.staggerShotClock + delay,
             visualBulletCount,
             damageScale,
             lockWorldX,
             playEffect,
-            initialBulletRandomX: 0,
+            0,
+        );
+    }
+
+    private enqueueRoleShot(
+        role: Role,
+        fireTime: number,
+        visualBulletCount: number,
+        damageScale: number,
+        lockWorldX: number,
+        playEffect: boolean,
+        initialBulletRandomX: number,
+    ): void {
+        this.pendingStaggerShots.push({
+            role,
+            fireTime,
+            visualBulletCount,
+            damageScale,
+            lockWorldX,
+            playEffect,
+            initialBulletRandomX: Math.max(0, initialBulletRandomX),
         });
     }
 
     private processPendingStaggerShots(): void {
+        const maxShots = Math.max(1, Math.floor(this.maxRoleShotsPerFrame));
+        let processedCount = 0;
         for (let i = this.pendingStaggerShots.length - 1; i >= 0; i--) {
+            if (processedCount >= maxShots) {
+                break;
+            }
             const shot = this.pendingStaggerShots[i];
             if (!shot || shot.fireTime > this.staggerShotClock) {
                 continue;
@@ -344,6 +378,7 @@ export class Player extends UnityUpComponent {
                 continue;
             }
             shot.role.attackEvent(0, shot.visualBulletCount, shot.damageScale, shot.lockWorldX, shot.playEffect, shot.initialBulletRandomX);
+            processedCount++;
         }
     }
 
@@ -451,7 +486,7 @@ export class Player extends UnityUpComponent {
         if (targetRoleType === null) {
             return;
         }
-        this.startRolePrewarm(targetRoleType, this.roleList.length);
+        this.startRolePrewarm(targetRoleType, this.getRoleSwitchNeedCount(targetRoleType));
     }
 
     private clearRuntimeWarmupQueue() {
@@ -657,7 +692,7 @@ export class Player extends UnityUpComponent {
             return;
         }
 
-        let count = Math.min(this.rolePrewarmPerFrame, this.pendingRolePrewarmCount);
+        let count = Math.min(Math.max(1, Math.floor(this.rolePrewarmPerFrame)), this.pendingRolePrewarmCount);
         while (count > 0) {
             const role = this.createRoleByType(this.pendingRolePrewarmType);
             role.node.active = false;
@@ -677,11 +712,21 @@ export class Player extends UnityUpComponent {
         this.pendingRoleSwitchIndex = 0;
         this.roleLayoutDirty = false;
         if (this.enableRuntimeUpgradePrewarm) {
-            this.startRolePrewarm(roleType, this.roleList.length);
+            this.startRolePrewarm(roleType, this.getRoleSwitchNeedCount(roleType));
         } else {
             this.pendingRolePrewarmType = null;
             this.pendingRolePrewarmCount = 0;
         }
+    }
+
+    private getRoleSwitchNeedCount(roleType: RoleEnum): number {
+        let needCount = 0;
+        for (let i = 0; i < this.roleList.length; i++) {
+            if (this.roleList[i]?.type !== roleType) {
+                needCount++;
+            }
+        }
+        return needCount;
     }
 
     private processPendingRoleSwitch() {
@@ -689,7 +734,7 @@ export class Player extends UnityUpComponent {
             return;
         }
 
-        let count = this.roleSwitchPerFrame;
+        let count = Math.max(1, Math.floor(this.roleSwitchPerFrame));
         while (count > 0 && this.pendingRoleSwitchIndex < this.roleList.length) {
             const index = this.pendingRoleSwitchIndex;
             const oldRole = this.roleList[index];
@@ -704,7 +749,12 @@ export class Player extends UnityUpComponent {
                 continue;
             }
 
-            const newRole = this.getRoleByType(this.pendingRoleSwitchType);
+            const newRole = this.enableRuntimeUpgradePrewarm
+                ? this.getPooledRoleByType(this.pendingRoleSwitchType)
+                : this.getRoleByType(this.pendingRoleSwitchType);
+            if (!newRole) {
+                break;
+            }
             Tween.stopAllByTarget(oldRole.node);
             Tween.stopAllByTarget(newRole.node);
             this.roleList[index] = newRole;
@@ -712,6 +762,7 @@ export class Player extends UnityUpComponent {
             newRole.node.setPosition(oldRole.node.position);
             newRole.node.setScale(oldRole.node.scale);
             newRole.attackIN = oldRole.attackIN;
+            this.syncRoleAnimationToTeam(newRole);
             oldRole.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + oldRole.type, oldRole);
             this.roleLayoutDirty = true;
@@ -733,13 +784,14 @@ export class Player extends UnityUpComponent {
 
     private roleMove() {
         const animName = this.getCurrentRoleAnimName();
+        if (this.currentTeamAnimName === animName) {
+            return;
+        }
+        this.currentTeamAnimName = animName;
 
         for (let i = 0; i < this.roleList.length; i++) {
             const fbx = this.roleList[i].fbxManager;
-            const state = fbx.getAnimState(animName);
-            if (fbx.curState !== animName || !state?.isPlaying) {
-                fbx.setAnimation(animName, true);
-            }
+            fbx.setAnimation(animName, true);
         }
     }
 
@@ -1250,6 +1302,7 @@ export class Player extends UnityUpComponent {
         this.clearRolesForRetry();
         this.syncRespawnRoleCount();
         this.isDie = false;
+        this.currentTeamAnimName = null;
         this.pendingAddRoleCount = 0;
         this.pendingStaggerShots.length = 0;
         this._attackTime = 0.5;
@@ -1328,15 +1381,28 @@ export class Player extends UnityUpComponent {
     }
 
     private getRoleByType(roleType: RoleEnum) {
-        let role = PoolManager.instance.getPool<Role>(PoolEnum.role + roleType);
+        let role = this.getPooledRoleByType(roleType);
         if (!role) {
             role = this.createRoleByType(roleType);
+            this.prepareRoleForUse(role, roleType);
         }
+        return role;
+    }
+
+    private getPooledRoleByType(roleType: RoleEnum): Role | null {
+        const role = PoolManager.instance.getPool<Role>(PoolEnum.role + roleType);
+        if (!role) {
+            return null;
+        }
+        this.prepareRoleForUse(role, roleType);
+        return role;
+    }
+
+    private prepareRoleForUse(role: Role, roleType: RoleEnum): void {
         role.type = roleType;
         role.hp = 2;
         role.node.active = true;
         role.resetForSpawn();
-        return role;
     }
 
     private createRoleByType(roleType: RoleEnum) {
