@@ -223,6 +223,7 @@ export class PropArms extends BattleTarget3D {
     private _tireBounceTargetY: number[] = [];
     private _tireBounceH: number[] = [];
     private _tireBounceTimer: number = -1;
+    private _bottomBasePositionUpdating: boolean = false;
 
     @property({ type: Vec3, displayName: '底座/滚筒缩放', tooltip: '运行时生成的底座/滚筒资源缩放。当前临时资源是 tire.prefab。' })
     private tireScale: Vec3 = new Vec3();
@@ -388,6 +389,8 @@ export class PropArms extends BattleTarget3D {
             }
         }
         this.tireList = [];
+        this._tireBounceTimer = -1;
+        this._bottomBasePositionUpdating = false;
         this.hpLabel.string = "";
         Tween.stopAllByTarget(this.getCurrentArmsVisualRoot(this._curArms));
         // const time = this._curArms.fbx.setAnimation(AnimArms.up_out, false).duration;
@@ -713,11 +716,21 @@ export class PropArms extends BattleTarget3D {
             this._tireBounceTargetY.push(this.getBottomBaseTargetPosition(i, this.tireList[i]).y);
             this._tireBounceH.push(this.jumpHeight + i * 0.1 * this.jumpHeight);
         }
-        this._tireBounceTimer = 0;
+        this._tireBounceTimer = len > 0 ? 0 : -1;
+        this._bottomBasePositionUpdating = len > 0;
     }
 
     /** 每帧：轮胎平滑插值到目标位置，销毁时先弹跳再落下 */
     private _updateTireDrop(dt: number): void {
+        if (this.tireList.length <= 0) {
+            this._tireBounceTimer = -1;
+            this._bottomBasePositionUpdating = false;
+            return;
+        }
+        if (this._tireBounceTimer < 0 && !this._bottomBasePositionUpdating) {
+            return;
+        }
+
         if (this._tireBounceTimer >= 0) {
             // 弹跳模式：先弹跳再落到新位置
             this._tireBounceTimer += dt;
@@ -744,9 +757,11 @@ export class PropArms extends BattleTarget3D {
             }
             if (this._tireBounceTimer > perDelay * this.tireList.length + bounceUp + fallDown) {
                 this._tireBounceTimer = -1;
+                this._bottomBasePositionUpdating = false;
             }
         } else {
             // 平滑插值模式
+            let allSettled = true;
             for (let i = 0; i < this.tireList.length; i++) {
                 const tire = this.tireList[i];
                 const targetPos = this.getBottomBaseTargetPosition(i, tire);
@@ -756,11 +771,13 @@ export class PropArms extends BattleTarget3D {
                 const curY = tire.position.y;
                 const diff = targetY - curY;
                 if (Math.abs(diff) > 0.001) {
+                    allSettled = false;
                     tire.setPosition(targetX, curY + diff * Math.min(1, dt * 8), targetZ);
                 } else {
                     tire.setPosition(targetX, targetY, targetZ);
                 }
             }
+            this._bottomBasePositionUpdating = !allSettled;
         }
     }
 
@@ -852,6 +869,7 @@ export class PropArms extends BattleTarget3D {
             }
 
             this._initialTireCount = this.tireList.length;
+            this._bottomBasePositionUpdating = this.tireList.length > 0;
 
             // Phase 1: FBX从地底快速升起
             const phase1Delay = 0.05;

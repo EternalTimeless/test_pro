@@ -433,6 +433,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this._tireBounceTargetY = [];
           this._tireBounceH = [];
           this._tireBounceTimer = -1;
+          this._bottomBasePositionUpdating = false;
 
           _initializerDefineProperty(this, "tireScale", _descriptor12, this);
 
@@ -728,6 +729,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           this.tireList = [];
+          this._tireBounceTimer = -1;
+          this._bottomBasePositionUpdating = false;
           this.hpLabel.string = "";
           Tween.stopAllByTarget(this.getCurrentArmsVisualRoot(this._curArms)); // const time = this._curArms.fbx.setAnimation(AnimArms.up_out, false).duration;
           // const halfTime = time * 0.5;
@@ -1155,12 +1158,23 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             this._tireBounceH.push(this.jumpHeight + i * 0.1 * this.jumpHeight);
           }
 
-          this._tireBounceTimer = 0;
+          this._tireBounceTimer = len > 0 ? 0 : -1;
+          this._bottomBasePositionUpdating = len > 0;
         }
         /** 每帧：轮胎平滑插值到目标位置，销毁时先弹跳再落下 */
 
 
         _updateTireDrop(dt) {
+          if (this.tireList.length <= 0) {
+            this._tireBounceTimer = -1;
+            this._bottomBasePositionUpdating = false;
+            return;
+          }
+
+          if (this._tireBounceTimer < 0 && !this._bottomBasePositionUpdating) {
+            return;
+          }
+
           if (this._tireBounceTimer >= 0) {
             // 弹跳模式：先弹跳再落到新位置
             this._tireBounceTimer += dt;
@@ -1191,9 +1205,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             if (this._tireBounceTimer > perDelay * this.tireList.length + bounceUp + fallDown) {
               this._tireBounceTimer = -1;
+              this._bottomBasePositionUpdating = false;
             }
           } else {
             // 平滑插值模式
+            var allSettled = true;
+
             for (var _i3 = 0; _i3 < this.tireList.length; _i3++) {
               var _tire = this.tireList[_i3];
 
@@ -1206,11 +1223,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               var diff = targetY - curY;
 
               if (Math.abs(diff) > 0.001) {
+                allSettled = false;
+
                 _tire.setPosition(_targetX, curY + diff * Math.min(1, dt * 8), _targetZ);
               } else {
                 _tire.setPosition(_targetX, targetY, _targetZ);
               }
             }
+
+            this._bottomBasePositionUpdating = !allSettled;
           }
         }
 
@@ -1318,7 +1339,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               }
             }
 
-            this._initialTireCount = this.tireList.length; // Phase 1: FBX从地底快速升起
+            this._initialTireCount = this.tireList.length;
+            this._bottomBasePositionUpdating = this.tireList.length > 0; // Phase 1: FBX从地底快速升起
 
             var phase1Delay = 0.05;
             var phase1RiseTime = 0.05;

@@ -472,6 +472,15 @@ System.register(["cc"], function (_export, _context) {
             return cached;
           }
 
+          if (this.getBlockByNodeName(node.name) === '道具') {
+            const actorOwnerBlock = this.getActorOwnerBlock(node.parent);
+
+            if (actorOwnerBlock) {
+              this.nodeBlockCache.set(node, actorOwnerBlock);
+              return actorOwnerBlock;
+            }
+          }
+
           let current = node;
           let sawParticle = false;
           let sawUi = node.layer === Layers.Enum.UI_2D;
@@ -528,6 +537,43 @@ System.register(["cc"], function (_export, _context) {
           const result = sawParticle ? '特效' : sawUi ? 'UI' : '环境';
           this.nodeBlockCache.set(node, result);
           return result;
+        }
+
+        getActorOwnerBlock(node) {
+          let current = node;
+
+          while (current) {
+            const cached = this.nodeBlockCache.get(current);
+
+            if (cached === '玩家' || cached === '怪物' || cached === '子弹') {
+              return cached;
+            }
+
+            const components = current.components;
+
+            for (let i = 0; i < components.length; i++) {
+              var _component$constructo3;
+
+              const component = components[i];
+              const className = js.getClassName(component) || ((_component$constructo3 = component.constructor) == null ? void 0 : _component$constructo3.name) || '';
+
+              if (className === 'Player' || className === 'Role') {
+                return '玩家';
+              }
+
+              if (className === 'MonsterBattleTaerget') {
+                return '怪物';
+              }
+
+              if (className === 'BulletBattle3D') {
+                return '子弹';
+              }
+            }
+
+            current = current.parent;
+          }
+
+          return null;
         }
 
         getExplicitBlockByClassName(className) {
@@ -788,13 +834,13 @@ System.register(["cc"], function (_export, _context) {
         }
 
         collectComponentHookTargets(component) {
-          var _component$constructo3;
+          var _component$constructo4;
 
           if (!component || component === this) {
             return;
           }
 
-          const className = js.getClassName(component) || ((_component$constructo3 = component.constructor) == null ? void 0 : _component$constructo3.name) || '';
+          const className = js.getClassName(component) || ((_component$constructo4 = component.constructor) == null ? void 0 : _component$constructo4.name) || '';
 
           if (!className || className.indexOf('cc.') === 0) {
             return;
