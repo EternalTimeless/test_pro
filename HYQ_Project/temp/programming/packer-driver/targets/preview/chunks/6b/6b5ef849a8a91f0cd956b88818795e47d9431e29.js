@@ -1,7 +1,7 @@
 System.register(["cc"], function (_export, _context) {
   "use strict";
 
-  var _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, SkeletalAnimation, _dec, _class, _crd, ccclass, property, FbxManager;
+  var _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, AnimationClip, Component, SkeletalAnimation, _dec, _class, _crd, ccclass, property, FbxManager;
 
   return {
     setters: [function (_cc) {
@@ -9,6 +9,7 @@ System.register(["cc"], function (_export, _context) {
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       _decorator = _cc._decorator;
+      AnimationClip = _cc.AnimationClip;
       Component = _cc.Component;
       SkeletalAnimation = _cc.SkeletalAnimation;
     }],
@@ -17,7 +18,7 @@ System.register(["cc"], function (_export, _context) {
 
       _cclegacy._RF.push({}, "6f259WVWu5B2JBJ1xiPoeeK", "FbxManager", undefined);
 
-      __checkObsolete__(['_decorator', 'AnimationClip', 'Component', 'SkeletalAnimation']);
+      __checkObsolete__(['_decorator', 'AnimationClip', 'AnimationState', 'Component', 'SkeletalAnimation']);
 
       ({
         ccclass,
@@ -52,6 +53,19 @@ System.register(["cc"], function (_export, _context) {
           }
 
           return this._skeleta;
+        }
+
+        removeInvalidSockets() {
+          var sk = this.skeleta;
+          var validSockets = sk.sockets.filter(socket => {
+            var _socket$target;
+
+            return !!(socket != null && socket.path) && !!((_socket$target = socket.target) != null && _socket$target.isValid);
+          });
+
+          if (validSockets.length !== sk.sockets.length) {
+            sk.sockets = validSockets;
+          }
         }
 
         replaceAnimationClip(skT, clip) {
@@ -106,6 +120,12 @@ System.register(["cc"], function (_export, _context) {
           var aniName = this._animName[skT];
           var animState = sk.getState(aniName);
 
+          if (!animState) {
+            return animState;
+          }
+
+          this.applyWrapMode(animState, loop);
+
           if (this._cur == skT) {
             if (!loop || !animState.isPlaying) {
               var time = frame * animState.duration;
@@ -151,6 +171,8 @@ System.register(["cc"], function (_export, _context) {
             return animState;
           }
 
+          this.applyWrapMode(animState, loop);
+
           if (this._cur != -1 && this._cur != skT) {
             var curName = this._animName[this._cur];
             var curState = sk.getState(curName);
@@ -162,6 +184,14 @@ System.register(["cc"], function (_export, _context) {
           animState.speed = 1;
           this._cur = skT;
           return animState;
+        }
+
+        applyWrapMode(animState, loop) {
+          var wrapMode = loop ? AnimationClip.WrapMode.Loop : AnimationClip.WrapMode.Normal;
+
+          if (animState.wrapMode !== wrapMode) {
+            animState.wrapMode = wrapMode;
+          }
         }
 
         getAnimState(skT) {

@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Color, Component, Node, Quat, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, PropLalianGate, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _class3, _crd, ccclass, property, Role;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Color, Component, MeshRenderer, Node, Quat, SkinnedMeshRenderer, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, PropLalianGate, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _class3, _crd, ccclass, property, Role;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -81,8 +81,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCInteger = _cc.CCInteger;
       Color = _cc.Color;
       Component = _cc.Component;
+      MeshRenderer = _cc.MeshRenderer;
       Node = _cc.Node;
       Quat = _cc.Quat;
+      SkinnedMeshRenderer = _cc.SkinnedMeshRenderer;
       Tween = _cc.Tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -116,7 +118,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "86381loO/lKPYw+1SpcYu+c", "Role", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Color', 'Component', 'Node', 'Quat', 'Tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Color', 'Component', 'MeshRenderer', 'Node', 'Quat', 'SkinnedMeshRenderer', 'Tween', 'Vec3']);
 
       ({
         ccclass,
@@ -178,6 +180,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.initialArmsScale = new Vec3();
           this.initialArmsChildTransforms = [];
           this.hasInitialArmsTransform = false;
+          this.shadowRenderers = [];
+          this.originalShadowCastingModes = [];
+          this.shadowRenderersCached = false;
+          this.shadowCastingEnabled = null;
 
           // public attackTime: number = 0;
           // ==================== 闪红效果 ====================
@@ -193,7 +199,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         start() {
+          var _this$fbxManager;
+
           this.cacheInitialArmsTransform();
+          (_this$fbxManager = this.fbxManager) == null || _this$fbxManager.removeInvalidSockets();
 
           if (!Role.bulletLayer) {
             Role.bulletLayer = (_crd && LayerManager === void 0 ? (_reportPossibleCrUseOfLayerManager({
@@ -206,12 +215,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         resetForSpawn() {
-          var _this$fbxManager, _this$initialArmsPare;
+          var _this$fbxManager2, _this$initialArmsPare;
 
           this.cacheInitialArmsTransform();
           this.stopTweensRecursively(this.node);
 
-          if ((_this$fbxManager = this.fbxManager) != null && _this$fbxManager.node) {
+          if ((_this$fbxManager2 = this.fbxManager) != null && _this$fbxManager2.node) {
             this.fbxManager.node.active = true;
             this.fbxManager.setAnimationImmediate(Role.idleAnimIndex, true, 0);
           }
@@ -244,6 +253,41 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           this.arms.active = visible;
+        }
+
+        setShadowCastingEnabled(enabled) {
+          if (this.shadowCastingEnabled === enabled) {
+            return;
+          }
+
+          this.cacheShadowRenderers();
+
+          for (let i = 0; i < this.shadowRenderers.length; i++) {
+            const renderer = this.shadowRenderers[i];
+
+            if (!(renderer != null && renderer.isValid)) {
+              continue;
+            }
+
+            renderer.shadowCastingMode = enabled ? this.originalShadowCastingModes[i] : MeshRenderer.ShadowCastingMode.OFF;
+          }
+
+          this.shadowCastingEnabled = enabled;
+        }
+
+        cacheShadowRenderers() {
+          if (this.shadowRenderersCached) {
+            return;
+          }
+
+          this.shadowRenderersCached = true;
+          const renderers = this.node.getComponentsInChildren(SkinnedMeshRenderer);
+
+          for (let i = 0; i < renderers.length; i++) {
+            const renderer = renderers[i];
+            this.shadowRenderers.push(renderer);
+            this.originalShadowCastingModes.push(renderer.shadowCastingMode);
+          }
         }
 
         cacheInitialArmsTransform() {

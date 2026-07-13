@@ -12846,8 +12846,8 @@
     "__prefab": null,
     "monsterCount": 800,
     "maxSpawnPerFrame": 3,
-    "viewportSpawnTriggerDistance": 10,
-    "viewportSpawnBufferDistance": 30,
+    "viewportSpawnTriggerDistance": 5,
+    "viewportSpawnBufferDistance": 10,
     "monsterCreateQueue": {
       "__id__": 774
     },
@@ -14445,6 +14445,7 @@
     "shrinkAfterRoleLossDelay": 2,
     "maxShootingRoleCount": 28,
     "maxMuzzleEffectCount": 10,
+    "onlyOuterLayerCastShadow": false,
     "mergeJtl2MultiBulletLogic": true,
     "staggerShotWeaponConfigIndex": 0,
     "staggerShotWindowRatio": 0.85,

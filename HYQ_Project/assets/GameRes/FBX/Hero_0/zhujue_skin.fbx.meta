@@ -52,7 +52,7 @@
       "userData": {
         "gltfIndex": 0,
         "wrapMode": 2,
-        "sample": 120,
+        "sample": 30,
         "span": {
           "from": 0,
           "to": 0.6666666865348816
@@ -155,7 +155,7 @@
             "to": 0.6666666865348816,
             "wrapMode": 2,
             "previousId": "73b7f",
-            "fps": 120
+            "fps": 30
           }
         ]
       }

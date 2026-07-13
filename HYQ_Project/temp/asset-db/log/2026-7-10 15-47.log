@@ -3365,3 +3365,525 @@
 2026-7-13 09:21:51-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (8ms)
 2026-7-13 09:21:51-log: run build task 整理部分构建选项内数据到 settings.json success in 8 ms√, progress: 15%
 2026-7-13 09:21:51-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:283.89MB, end 283.95MB, increase: 64.95KB
+2026-7-13 09:26:59-debug: refresh db internal success
+2026-7-13 09:26:59-debug: refresh db assets success
+2026-7-13 09:26:59-debug: refresh db super-packager success
+2026-7-13 09:26:59-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 09:26:59-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 09:26:59-debug: asset-db:refresh-all-database (273ms)
+2026-7-13 09:26:59-debug: asset-db:worker-effect-data-processing (1ms)
+2026-7-13 09:26:59-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+2026-7-13 09:31:43-debug: Query all assets info in project
+2026-7-13 09:31:43-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 09:31:43-debug: Skip compress image, progress: 0%
+2026-7-13 09:31:43-debug: Init all bundles start..., progress: 0%
+2026-7-13 09:31:43-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 09:31:43-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 09:31:43-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 09:31:43-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 09:31:43-debug:   Number of all scenes: 5
+2026-7-13 09:31:43-debug:   Number of all scripts: 110
+2026-7-13 09:31:43-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 09:31:43-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 09:31:43-debug:   Number of other assets: 1158
+2026-7-13 09:31:43-debug: // ---- build task 查询 Asset Bundle ---- (29ms)
+2026-7-13 09:31:43-log: run build task 查询 Asset Bundle success in 29 ms√, progress: 5%
+2026-7-13 09:31:43-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 09:31:43-debug: [Build Memory track]: 查询 Asset Bundle start:287.06MB, end 288.61MB, increase: 1.55MB
+2026-7-13 09:31:43-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 09:31:43-debug: // ---- build task 查询 Asset Bundle ---- (5ms)
+2026-7-13 09:31:43-log: run build task 查询 Asset Bundle success in 5 ms√, progress: 10%
+2026-7-13 09:31:43-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 09:31:43-debug: [Build Memory track]: 查询 Asset Bundle start:288.64MB, end 288.87MB, increase: 233.17KB
+2026-7-13 09:31:43-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 09:31:43-log: run build task 整理部分构建选项内数据到 settings.json success in √, progress: 12%
+2026-7-13 09:31:43-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:288.90MB, end 288.92MB, increase: 18.02KB
+2026-7-13 09:31:43-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 09:31:43-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 09:31:43-debug: // ---- build task 填充脚本数据到 settings.json ---- (3ms)
+2026-7-13 09:31:43-log: run build task 填充脚本数据到 settings.json success in 3 ms√, progress: 13%
+2026-7-13 09:31:43-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 09:31:43-debug: [Build Memory track]: 填充脚本数据到 settings.json start:288.96MB, end 288.98MB, increase: 28.16KB
+2026-7-13 09:31:43-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 09:31:43-log: run build task 整理部分构建选项内数据到 settings.json success in 6 ms√, progress: 15%
+2026-7-13 09:31:43-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:289.02MB, end 289.08MB, increase: 65.00KB
+2026-7-13 09:31:43-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (6ms)
+2026-7-13 09:33:01-debug: Query all assets info in project
+2026-7-13 09:33:01-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 09:33:01-debug: Skip compress image, progress: 0%
+2026-7-13 09:33:01-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 09:33:01-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 09:33:01-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 09:33:01-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 09:33:01-debug: Init all bundles start..., progress: 0%
+2026-7-13 09:33:01-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 09:33:01-debug:   Number of other assets: 1158
+2026-7-13 09:33:01-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 09:33:01-debug:   Number of all scripts: 110
+2026-7-13 09:33:01-debug:   Number of all scenes: 5
+2026-7-13 09:33:01-log: run build task 查询 Asset Bundle success in 15 ms√, progress: 5%
+2026-7-13 09:33:01-debug: [Build Memory track]: 查询 Asset Bundle start:286.94MB, end 286.84MB, increase: -106.30KB
+2026-7-13 09:33:01-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 09:33:01-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 09:33:01-debug: // ---- build task 查询 Asset Bundle ---- (15ms)
+2026-7-13 09:33:01-log: run build task 查询 Asset Bundle success in 12 ms√, progress: 10%
+2026-7-13 09:33:01-debug: [Build Memory track]: 查询 Asset Bundle start:286.87MB, end 286.24MB, increase: -648.57KB
+2026-7-13 09:33:01-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 09:33:01-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 09:33:01-debug: // ---- build task 查询 Asset Bundle ---- (12ms)
+2026-7-13 09:33:01-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (6ms)
+2026-7-13 09:33:01-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:286.27MB, end 286.30MB, increase: 28.17KB
+2026-7-13 09:33:01-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 09:33:01-log: run build task 整理部分构建选项内数据到 settings.json success in 6 ms√, progress: 12%
+2026-7-13 09:33:01-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 09:33:01-debug: // ---- build task 填充脚本数据到 settings.json ---- (3ms)
+2026-7-13 09:33:01-log: run build task 填充脚本数据到 settings.json success in 3 ms√, progress: 13%
+2026-7-13 09:33:01-debug: [Build Memory track]: 填充脚本数据到 settings.json start:286.33MB, end 286.36MB, increase: 28.30KB
+2026-7-13 09:33:01-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 09:33:01-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 09:33:01-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (17ms)
+2026-7-13 09:33:01-log: run build task 整理部分构建选项内数据到 settings.json success in 17 ms√, progress: 15%
+2026-7-13 09:33:01-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:286.40MB, end 286.47MB, increase: 76.35KB
+2026-7-13 09:34:39-debug: Query all assets info in project
+2026-7-13 09:34:39-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 09:34:39-debug: Skip compress image, progress: 0%
+2026-7-13 09:34:39-debug: Init all bundles start..., progress: 0%
+2026-7-13 09:34:39-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 09:34:39-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 09:34:39-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 09:34:39-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 09:34:39-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 09:34:39-debug:   Number of all scenes: 5
+2026-7-13 09:34:39-debug:   Number of all scripts: 110
+2026-7-13 09:34:39-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 09:34:39-debug:   Number of other assets: 1158
+2026-7-13 09:34:39-debug: // ---- build task 查询 Asset Bundle ---- (18ms)
+2026-7-13 09:34:39-log: run build task 查询 Asset Bundle success in 18 ms√, progress: 5%
+2026-7-13 09:34:39-debug: [Build Memory track]: 查询 Asset Bundle start:286.80MB, end 286.58MB, increase: -223.08KB
+2026-7-13 09:34:39-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 09:34:39-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 09:34:39-debug: // ---- build task 查询 Asset Bundle ---- (7ms)
+2026-7-13 09:34:39-log: run build task 查询 Asset Bundle success in 7 ms√, progress: 10%
+2026-7-13 09:34:39-debug: [Build Memory track]: 查询 Asset Bundle start:286.62MB, end 286.84MB, increase: 231.39KB
+2026-7-13 09:34:39-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 09:34:39-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 09:34:39-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (1ms)
+2026-7-13 09:34:39-log: run build task 整理部分构建选项内数据到 settings.json success in 1 ms√, progress: 12%
+2026-7-13 09:34:39-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:286.88MB, end 286.91MB, increase: 29.35KB
+2026-7-13 09:34:39-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 09:34:39-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 09:34:39-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-7-13 09:34:39-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-7-13 09:34:39-debug: [Build Memory track]: 填充脚本数据到 settings.json start:286.94MB, end 286.97MB, increase: 28.96KB
+2026-7-13 09:34:39-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 09:34:39-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 09:34:39-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (9ms)
+2026-7-13 09:34:39-log: run build task 整理部分构建选项内数据到 settings.json success in 9 ms√, progress: 15%
+2026-7-13 09:34:39-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:287.00MB, end 287.07MB, increase: 64.98KB
+2026-7-13 09:37:30-debug: refresh db internal success
+2026-7-13 09:37:30-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\SkAnim\FbxManager.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-13 09:37:30-debug: refresh db assets success
+2026-7-13 09:37:30-debug: refresh db super-packager success
+2026-7-13 09:37:30-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 09:37:30-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 09:37:30-debug: asset-db:refresh-all-database (291ms)
+2026-7-13 09:37:30-debug: asset-db:worker-effect-data-processing (5ms)
+2026-7-13 09:37:30-debug: asset-db-hook-engine-extends-afterRefresh (6ms)
+2026-7-13 09:37:32-debug: Query all assets info in project
+2026-7-13 09:37:32-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 09:37:32-debug: Skip compress image, progress: 0%
+2026-7-13 09:37:32-debug: Init all bundles start..., progress: 0%
+2026-7-13 09:37:32-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 09:37:32-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 09:37:32-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 09:37:32-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 09:37:32-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 09:37:32-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 09:37:32-debug:   Number of all scenes: 5
+2026-7-13 09:37:32-debug:   Number of all scripts: 110
+2026-7-13 09:37:32-debug: [Build Memory track]: 查询 Asset Bundle start:292.60MB, end 289.26MB, increase: -3420.02KB
+2026-7-13 09:37:32-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 09:37:32-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 09:37:32-log: run build task 查询 Asset Bundle success in 16 ms√, progress: 5%
+2026-7-13 09:37:32-debug:   Number of other assets: 1158
+2026-7-13 09:37:32-debug: // ---- build task 查询 Asset Bundle ---- (16ms)
+2026-7-13 09:37:32-debug: // ---- build task 查询 Asset Bundle ---- (10ms)
+2026-7-13 09:37:32-log: run build task 查询 Asset Bundle success in 10 ms√, progress: 10%
+2026-7-13 09:37:32-debug: [Build Memory track]: 查询 Asset Bundle start:289.29MB, end 289.52MB, increase: 233.52KB
+2026-7-13 09:37:32-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 09:37:32-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 09:37:32-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (3ms)
+2026-7-13 09:37:32-log: run build task 整理部分构建选项内数据到 settings.json success in 3 ms√, progress: 12%
+2026-7-13 09:37:32-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:289.56MB, end 289.59MB, increase: 29.29KB
+2026-7-13 09:37:32-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 09:37:32-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 09:37:32-log: run build task 填充脚本数据到 settings.json success in 3 ms√, progress: 13%
+2026-7-13 09:37:32-debug: [Build Memory track]: 填充脚本数据到 settings.json start:289.62MB, end 289.65MB, increase: 28.56KB
+2026-7-13 09:37:32-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 09:37:32-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 09:37:32-debug: // ---- build task 填充脚本数据到 settings.json ---- (3ms)
+2026-7-13 09:37:32-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (7ms)
+2026-7-13 09:37:32-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:289.68MB, end 289.75MB, increase: 71.18KB
+2026-7-13 09:37:32-log: run build task 整理部分构建选项内数据到 settings.json success in 7 ms√, progress: 15%
+2026-7-13 10:03:43-debug: refresh db internal success
+2026-7-13 10:03:43-debug: refresh db assets success
+2026-7-13 10:03:43-debug: refresh db super-packager success
+2026-7-13 10:03:43-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 10:03:43-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 10:03:43-debug: asset-db:refresh-all-database (250ms)
+2026-7-13 10:03:43-debug: asset-db:worker-effect-data-processing (11ms)
+2026-7-13 10:03:43-debug: asset-db-hook-engine-extends-afterRefresh (11ms)
+2026-7-13 10:06:11-debug: Query all assets info in project
+2026-7-13 10:06:11-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 10:06:11-debug: Skip compress image, progress: 0%
+2026-7-13 10:06:11-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 10:06:11-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 10:06:11-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 10:06:11-debug: Init all bundles start..., progress: 0%
+2026-7-13 10:06:11-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 10:06:11-debug:   Number of all scenes: 5
+2026-7-13 10:06:11-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 10:06:11-debug:   Number of other assets: 1158
+2026-7-13 10:06:11-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 10:06:11-debug:   Number of all scripts: 110
+2026-7-13 10:06:11-debug: // ---- build task 查询 Asset Bundle ---- (9ms)
+2026-7-13 10:06:11-log: run build task 查询 Asset Bundle success in 9 ms√, progress: 5%
+2026-7-13 10:06:11-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 10:06:11-debug: [Build Memory track]: 查询 Asset Bundle start:293.15MB, end 294.72MB, increase: 1.56MB
+2026-7-13 10:06:11-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 10:06:11-debug: // ---- build task 查询 Asset Bundle ---- (4ms)
+2026-7-13 10:06:11-log: run build task 查询 Asset Bundle success in 4 ms√, progress: 10%
+2026-7-13 10:06:11-debug: [Build Memory track]: 查询 Asset Bundle start:294.75MB, end 294.98MB, increase: 232.33KB
+2026-7-13 10:06:11-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 10:06:11-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 10:06:11-log: run build task 整理部分构建选项内数据到 settings.json success in √, progress: 12%
+2026-7-13 10:06:11-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:295.01MB, end 295.03MB, increase: 18.94KB
+2026-7-13 10:06:11-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 10:06:11-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 10:06:11-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-7-13 10:06:11-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-7-13 10:06:11-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 10:06:11-debug: [Build Memory track]: 填充脚本数据到 settings.json start:295.06MB, end 292.05MB, increase: -3088.04KB
+2026-7-13 10:06:11-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 10:06:11-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (4ms)
+2026-7-13 10:06:11-log: run build task 整理部分构建选项内数据到 settings.json success in 4 ms√, progress: 15%
+2026-7-13 10:06:11-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:292.08MB, end 292.15MB, increase: 65.06KB
+2026-7-13 10:07:55-debug: Query all assets info in project
+2026-7-13 10:07:55-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 10:07:55-debug: Skip compress image, progress: 0%
+2026-7-13 10:07:55-debug: Init all bundles start..., progress: 0%
+2026-7-13 10:07:55-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 10:07:55-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 10:07:55-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 10:07:55-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 10:07:55-debug:   Number of all scripts: 110
+2026-7-13 10:07:55-debug:   Number of other assets: 1158
+2026-7-13 10:07:55-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 10:07:55-debug:   Number of all scenes: 5
+2026-7-13 10:07:55-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 10:07:55-debug: // ---- build task 查询 Asset Bundle ---- (18ms)
+2026-7-13 10:07:55-log: run build task 查询 Asset Bundle success in 18 ms√, progress: 5%
+2026-7-13 10:07:55-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 10:07:55-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 10:07:55-debug: [Build Memory track]: 查询 Asset Bundle start:292.18MB, end 292.11MB, increase: -71.14KB
+2026-7-13 10:07:55-debug: // ---- build task 查询 Asset Bundle ---- (4ms)
+2026-7-13 10:07:55-debug: [Build Memory track]: 查询 Asset Bundle start:292.15MB, end 292.37MB, increase: 231.07KB
+2026-7-13 10:07:55-log: run build task 查询 Asset Bundle success in 4 ms√, progress: 10%
+2026-7-13 10:07:55-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 10:07:55-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 10:07:55-log: run build task 整理部分构建选项内数据到 settings.json success in √, progress: 12%
+2026-7-13 10:07:55-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:292.41MB, end 292.43MB, increase: 18.02KB
+2026-7-13 10:07:55-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 10:07:55-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 10:07:55-log: run build task 填充脚本数据到 settings.json success in √, progress: 13%
+2026-7-13 10:07:55-debug: [Build Memory track]: 填充脚本数据到 settings.json start:292.46MB, end 292.48MB, increase: 21.37KB
+2026-7-13 10:07:55-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 10:07:55-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 10:07:55-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (5ms)
+2026-7-13 10:07:55-log: run build task 整理部分构建选项内数据到 settings.json success in 5 ms√, progress: 15%
+2026-7-13 10:07:55-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:292.51MB, end 292.59MB, increase: 73.21KB
+2026-7-13 10:53:24-debug: refresh db internal success
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\攻击.fbxbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\死亡.fbxbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\跑.fbxbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\跑攻击.fbxbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(44781d6b-42f6-43c4-8ab6-2696357c119b)}]
+2026-7-13 10:53:24-debug: Local time: [0.000000, 0.666667] [{asset(44781d6b-42f6-43c4-8ab6-2696357c119b)}]
+2026-7-13 10:53:24-debug: Reference time: [0.000000, 0.666667] [{asset(44781d6b-42f6-43c4-8ab6-2696357c119b)}]
+2026-7-13 10:53:24-debug: Take Take 001: 0.6666666666666666s [{asset(44781d6b-42f6-43c4-8ab6-2696357c119b)}]
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(44781d6b-42f6-43c4-8ab6-2696357c119b)}]
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(6db01980-304b-413d-9e3a-2474df155af7)}]
+2026-7-13 10:53:24-debug: Local time: [0.000000, 0.666667] [{asset(6db01980-304b-413d-9e3a-2474df155af7)}]
+2026-7-13 10:53:24-debug: Reference time: [0.000000, 0.666667] [{asset(6db01980-304b-413d-9e3a-2474df155af7)}]
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(6db01980-304b-413d-9e3a-2474df155af7)}]
+2026-7-13 10:53:24-debug: Take Take 001: 0.6666666666666666s [{asset(6db01980-304b-413d-9e3a-2474df155af7)}]
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\zhujue_skin.fbxbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(51d56256-92f6-45fa-b2db-367beed5cdd3)}]
+2026-7-13 10:53:24-debug: Local time: [0.000000, 0.333333] [{asset(51d56256-92f6-45fa-b2db-367beed5cdd3)}]
+2026-7-13 10:53:24-debug: Reference time: [0.000000, 0.333333] [{asset(51d56256-92f6-45fa-b2db-367beed5cdd3)}]
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(51d56256-92f6-45fa-b2db-367beed5cdd3)}]
+2026-7-13 10:53:24-debug: Take Take 001: 0.3333333333333333s [{asset(51d56256-92f6-45fa-b2db-367beed5cdd3)}]
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(00747b8e-4572-4648-8258-ebc081c7d02a)}]
+2026-7-13 10:53:24-debug: Local time: [0.000000, 0.666667] [{asset(00747b8e-4572-4648-8258-ebc081c7d02a)}]
+2026-7-13 10:53:24-debug: Reference time: [0.000000, 0.666667] [{asset(00747b8e-4572-4648-8258-ebc081c7d02a)}]
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(00747b8e-4572-4648-8258-ebc081c7d02a)}]
+2026-7-13 10:53:24-debug: Take Take 001: 0.6666666666666666s [{asset(00747b8e-4572-4648-8258-ebc081c7d02a)}]
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(f6fb758b-ca27-49a3-9074-b55054373a42)}]
+2026-7-13 10:53:24-debug: Local time: [0.000000, 0.666667] [{asset(f6fb758b-ca27-49a3-9074-b55054373a42)}]
+2026-7-13 10:53:24-debug: Reference time: [0.000000, 0.666667] [{asset(f6fb758b-ca27-49a3-9074-b55054373a42)}]
+2026-7-13 10:53:24-debug: Frame rate: 30 [{asset(f6fb758b-ca27-49a3-9074-b55054373a42)}]
+2026-7-13 10:53:24-debug: Take Take 001: 0.6666666666666666s [{asset(f6fb758b-ca27-49a3-9074-b55054373a42)}]
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\跑.fbx@73b7fbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\死亡.fbx@73b7fbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\攻击.fbx@73b7fbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\跑攻击.fbx@73b7fbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\跑.fbx@0b080background: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\死亡.fbx@1393fbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\攻击.fbx@cd076background: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\跑攻击.fbx@d7f90background: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\zhujue_skin.fbx@83767background: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-log: MeshOpt init success
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\zhujue_skin.fbx@74d97background: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:24-warn: Attribute a_joints has different format from origin, quantization may not work.
+2026-7-13 10:53:24-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\zhujue_skin.fbx@73b7fbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:25-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\zhujue_skin.fbx@438febackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:25-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\GameRes\FBX\Hero_0\zhujue_skin.fbx@16a87background: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:25-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\Player\Player.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:25-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\Player\Role.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:25-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\SkAnim\FbxManager.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:25-debug: refresh db assets success
+2026-7-13 10:53:25-debug: refresh db super-packager success
+2026-7-13 10:53:25-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 10:53:25-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 10:53:25-debug: asset-db:refresh-all-database (1082ms)
+2026-7-13 10:53:25-debug: asset-db:worker-effect-data-processing (3ms)
+2026-7-13 10:53:25-debug: asset-db-hook-engine-extends-afterRefresh (4ms)
+2026-7-13 10:53:30-debug: Query all assets info in project
+2026-7-13 10:53:30-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 10:53:30-debug: Skip compress image, progress: 0%
+2026-7-13 10:53:30-debug: Init all bundles start..., progress: 0%
+2026-7-13 10:53:30-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 10:53:30-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 10:53:30-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 10:53:30-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 10:53:30-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 10:53:30-debug:   Number of all scenes: 5
+2026-7-13 10:53:30-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 10:53:30-log: run build task 查询 Asset Bundle success in 18 ms√, progress: 5%
+2026-7-13 10:53:30-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 10:53:30-debug: [Build Memory track]: 查询 Asset Bundle start:279.13MB, end 279.14MB, increase: 10.63KB
+2026-7-13 10:53:30-debug: // ---- build task 查询 Asset Bundle ---- (18ms)
+2026-7-13 10:53:30-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 10:53:30-debug:   Number of all scripts: 110
+2026-7-13 10:53:30-debug:   Number of other assets: 1158
+2026-7-13 10:53:30-debug: // ---- build task 查询 Asset Bundle ---- (6ms)
+2026-7-13 10:53:30-log: run build task 查询 Asset Bundle success in 6 ms√, progress: 10%
+2026-7-13 10:53:30-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 10:53:30-debug: [Build Memory track]: 查询 Asset Bundle start:279.18MB, end 279.41MB, increase: 233.72KB
+2026-7-13 10:53:30-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 10:53:30-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (3ms)
+2026-7-13 10:53:30-log: run build task 整理部分构建选项内数据到 settings.json success in 3 ms√, progress: 12%
+2026-7-13 10:53:30-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:279.44MB, end 279.47MB, increase: 29.34KB
+2026-7-13 10:53:30-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 10:53:30-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 10:53:30-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-7-13 10:53:30-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-7-13 10:53:30-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 10:53:30-debug: [Build Memory track]: 填充脚本数据到 settings.json start:279.50MB, end 279.53MB, increase: 28.86KB
+2026-7-13 10:53:30-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 10:53:30-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (7ms)
+2026-7-13 10:53:30-log: run build task 整理部分构建选项内数据到 settings.json success in 7 ms√, progress: 15%
+2026-7-13 10:53:30-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:279.57MB, end 279.63MB, increase: 69.77KB
+2026-7-13 10:53:31-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-7-13 10:53:31-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (130ms)
+2026-7-13 10:53:31-debug: refresh db internal success
+2026-7-13 10:53:32-debug: refresh db assets success
+2026-7-13 10:53:32-debug: refresh db super-packager success
+2026-7-13 10:53:32-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 10:53:32-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 10:53:32-debug: asset-db:refresh-all-database (330ms)
+2026-7-13 10:53:32-debug: asset-db:worker-effect-data-processing (2ms)
+2026-7-13 10:53:32-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-13 10:53:32-debug: Query all assets info in project
+2026-7-13 10:53:32-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 10:53:32-debug: Skip compress image, progress: 0%
+2026-7-13 10:53:32-debug: Init all bundles start..., progress: 0%
+2026-7-13 10:53:32-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 10:53:32-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 10:53:32-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 10:53:32-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 10:53:32-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 10:53:32-debug:   Number of all scenes: 5
+2026-7-13 10:53:32-debug:   Number of other assets: 1158
+2026-7-13 10:53:32-debug:   Number of all scripts: 110
+2026-7-13 10:53:32-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 10:53:32-debug: // ---- build task 查询 Asset Bundle ---- (19ms)
+2026-7-13 10:53:32-log: run build task 查询 Asset Bundle success in 19 ms√, progress: 5%
+2026-7-13 10:53:32-debug: [Build Memory track]: 查询 Asset Bundle start:282.45MB, end 283.99MB, increase: 1.54MB
+2026-7-13 10:53:32-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 10:53:32-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 10:53:32-debug: // ---- build task 查询 Asset Bundle ---- (11ms)
+2026-7-13 10:53:32-log: run build task 查询 Asset Bundle success in 11 ms√, progress: 10%
+2026-7-13 10:53:32-debug: [Build Memory track]: 查询 Asset Bundle start:284.03MB, end 284.26MB, increase: 233.72KB
+2026-7-13 10:53:32-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 10:53:32-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 10:53:32-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (3ms)
+2026-7-13 10:53:32-log: run build task 整理部分构建选项内数据到 settings.json success in 3 ms√, progress: 12%
+2026-7-13 10:53:32-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:284.29MB, end 284.32MB, increase: 27.99KB
+2026-7-13 10:53:32-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 10:53:32-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 10:53:32-debug: // ---- build task 填充脚本数据到 settings.json ---- (2ms)
+2026-7-13 10:53:32-log: run build task 填充脚本数据到 settings.json success in 2 ms√, progress: 13%
+2026-7-13 10:53:32-debug: [Build Memory track]: 填充脚本数据到 settings.json start:284.35MB, end 284.38MB, increase: 30.10KB
+2026-7-13 10:53:32-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 10:53:32-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 10:53:32-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (10ms)
+2026-7-13 10:53:32-log: run build task 整理部分构建选项内数据到 settings.json success in 10 ms√, progress: 15%
+2026-7-13 10:53:32-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:284.42MB, end 284.48MB, increase: 67.23KB
+2026-7-13 10:55:07-debug: refresh db internal success
+2026-7-13 10:55:07-debug: refresh db assets success
+2026-7-13 10:55:07-debug: refresh db super-packager success
+2026-7-13 10:55:07-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 10:55:07-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 10:55:07-debug: asset-db:refresh-all-database (354ms)
+2026-7-13 10:55:07-debug: asset-db:worker-effect-data-processing (2ms)
+2026-7-13 10:55:07-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-13 10:55:14-debug: refresh db internal success
+2026-7-13 10:55:14-debug: refresh db assets success
+2026-7-13 10:55:14-debug: refresh db super-packager success
+2026-7-13 10:55:14-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 10:55:14-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 10:55:14-debug: asset-db:refresh-all-database (242ms)
+2026-7-13 10:55:14-debug: asset-db:worker-effect-data-processing (3ms)
+2026-7-13 10:55:14-debug: asset-db-hook-engine-extends-afterRefresh (4ms)
+2026-7-13 11:08:33-debug: refresh db internal success
+2026-7-13 11:08:33-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-7-13 11:08:33-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Script\functionS\Player\Player.tsbackground: #aaff85; color: #000;color: #000;
+2026-7-13 11:08:33-debug: refresh db assets success
+2026-7-13 11:08:33-debug: refresh db super-packager success
+2026-7-13 11:08:33-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 11:08:33-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 11:08:33-debug: asset-db:refresh-all-database (363ms)
+2026-7-13 11:08:33-debug: asset-db:worker-effect-data-processing (2ms)
+2026-7-13 11:08:33-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-13 11:08:35-debug: Query all assets info in project
+2026-7-13 11:08:35-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 11:08:35-debug: Skip compress image, progress: 0%
+2026-7-13 11:08:35-debug: Init all bundles start..., progress: 0%
+2026-7-13 11:08:35-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 11:08:35-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 11:08:35-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 11:08:35-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 11:08:36-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 11:08:36-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 11:08:36-debug: // ---- build task 查询 Asset Bundle ---- (16ms)
+2026-7-13 11:08:36-log: run build task 查询 Asset Bundle success in 16 ms√, progress: 5%
+2026-7-13 11:08:36-debug:   Number of all scenes: 5
+2026-7-13 11:08:36-debug: [Build Memory track]: 查询 Asset Bundle start:294.01MB, end 290.33MB, increase: -3770.19KB
+2026-7-13 11:08:36-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 11:08:36-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 11:08:36-debug:   Number of all scripts: 110
+2026-7-13 11:08:36-debug:   Number of other assets: 1158
+2026-7-13 11:08:36-debug: // ---- build task 查询 Asset Bundle ---- (4ms)
+2026-7-13 11:08:36-log: run build task 查询 Asset Bundle success in 4 ms√, progress: 10%
+2026-7-13 11:08:36-debug: [Build Memory track]: 查询 Asset Bundle start:290.37MB, end 290.60MB, increase: 234.97KB
+2026-7-13 11:08:36-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 11:08:36-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 11:08:36-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (3ms)
+2026-7-13 11:08:36-log: run build task 整理部分构建选项内数据到 settings.json success in 3 ms√, progress: 12%
+2026-7-13 11:08:36-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 11:08:36-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 11:08:36-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:290.63MB, end 290.66MB, increase: 29.88KB
+2026-7-13 11:08:36-debug: // ---- build task 填充脚本数据到 settings.json ---- (3ms)
+2026-7-13 11:08:36-log: run build task 填充脚本数据到 settings.json success in 3 ms√, progress: 13%
+2026-7-13 11:08:36-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 11:08:36-debug: [Build Memory track]: 填充脚本数据到 settings.json start:290.69MB, end 290.72MB, increase: 29.50KB
+2026-7-13 11:08:36-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 11:08:36-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (6ms)
+2026-7-13 11:08:36-log: run build task 整理部分构建选项内数据到 settings.json success in 6 ms√, progress: 15%
+2026-7-13 11:08:36-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:290.76MB, end 290.82MB, increase: 65.68KB
+2026-7-13 11:09:13-debug: refresh db internal success
+2026-7-13 11:09:13-debug: refresh db assets success
+2026-7-13 11:09:13-debug: refresh db super-packager success
+2026-7-13 11:09:13-debug: Run asset db hook engine-extends:afterRefresh ...
+2026-7-13 11:09:13-debug: Run asset db hook engine-extends:afterRefresh success!
+2026-7-13 11:09:13-debug: asset-db:refresh-all-database (232ms)
+2026-7-13 11:09:13-debug: asset-db:worker-effect-data-processing (1ms)
+2026-7-13 11:09:13-debug: asset-db-hook-engine-extends-afterRefresh (2ms)
+2026-7-13 11:09:29-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-7-13 11:09:29-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (34ms)
+2026-7-13 11:09:30-debug: Query all assets info in project
+2026-7-13 11:09:30-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 11:09:30-debug: Skip compress image, progress: 0%
+2026-7-13 11:09:30-debug: Init all bundles start..., progress: 0%
+2026-7-13 11:09:30-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 11:09:30-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 11:09:30-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 11:09:30-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 11:09:30-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 11:09:30-debug:   Number of other assets: 1158
+2026-7-13 11:09:30-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 11:09:30-debug: // ---- build task 查询 Asset Bundle ---- (15ms)
+2026-7-13 11:09:30-log: run build task 查询 Asset Bundle success in 15 ms√, progress: 5%
+2026-7-13 11:09:30-debug: [Build Memory track]: 查询 Asset Bundle start:293.59MB, end 293.57MB, increase: -14.02KB
+2026-7-13 11:09:30-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 11:09:30-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 11:09:30-debug:   Number of all scenes: 5
+2026-7-13 11:09:30-debug:   Number of all scripts: 110
+2026-7-13 11:09:30-debug: // ---- build task 查询 Asset Bundle ---- (6ms)
+2026-7-13 11:09:30-log: run build task 查询 Asset Bundle success in 6 ms√, progress: 10%
+2026-7-13 11:09:30-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 11:09:30-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 11:09:30-debug: [Build Memory track]: 查询 Asset Bundle start:293.61MB, end 293.85MB, increase: 250.62KB
+2026-7-13 11:09:30-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (4ms)
+2026-7-13 11:09:30-log: run build task 整理部分构建选项内数据到 settings.json success in 4 ms√, progress: 12%
+2026-7-13 11:09:30-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 11:09:30-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:293.89MB, end 293.92MB, increase: 30.12KB
+2026-7-13 11:09:30-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 11:09:30-debug: // ---- build task 填充脚本数据到 settings.json ---- (1ms)
+2026-7-13 11:09:30-log: run build task 填充脚本数据到 settings.json success in 1 ms√, progress: 13%
+2026-7-13 11:09:30-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 11:09:30-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 11:09:30-debug: [Build Memory track]: 填充脚本数据到 settings.json start:293.95MB, end 293.98MB, increase: 29.46KB
+2026-7-13 11:09:30-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (5ms)
+2026-7-13 11:09:30-log: run build task 整理部分构建选项内数据到 settings.json success in 5 ms√, progress: 15%
+2026-7-13 11:09:30-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:294.01MB, end 294.08MB, increase: 65.69KB
+2026-7-13 11:09:44-debug: %cImport%c: D:\工程项目\PlayableAD\Cocos\TheW\20260615_HYQ\HYQ_Project\assets\Scene\Game_3D-002.scenebackground: #aaff85; color: #000;color: #000;
+2026-7-13 11:09:44-debug: asset-db:reimport-assetb5805d3a-3b80-4a12-adf5-588e63a7d886 (32ms)
+2026-7-13 11:09:45-debug: Query all assets info in project
+2026-7-13 11:09:45-debug: Skip compress image, progress: 0%
+2026-7-13 11:09:45-debug: init custom config: keepNodeUuid: false, useCache: true
+2026-7-13 11:09:45-debug: Init all bundles start..., progress: 0%
+2026-7-13 11:09:45-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 11:09:45-debug: Num of bundles: 3..., progress: 0%
+2026-7-13 11:09:45-debug: Init bundle root assets start..., progress: 0%
+2026-7-13 11:09:45-debug: 查询 Asset Bundle start, progress: 0%
+2026-7-13 11:09:45-debug:   Number of all scripts: 110
+2026-7-13 11:09:45-debug: Query preload assets/scripts from cc.config.json: 60f7195c-ec2a-45eb-ba94-8955f60e81d0,1c02ae6f-4492-4915-b8f8-7492a3b1e4cd,810e96e4-e456-4468-9b59-f4e8f39732c0,efe8e2a3-eace-427b-b4f1-cb8a937ec77d,e9aa9a3e-5b2b-4ac7-a2c7-073de2b2b24f,8bbdbcdd-5cd4-4100-b6d5-b7c9625b6107,50f4348b-c883-4e2f-8f11-ce233b859fa1,fda095cb-831d-4601-ad94-846013963de8,f92806d7-1768-443f-afe8-12bcde84d0f0,dd3a144d-ab7f-41f0-82b8-2e43a090d496,f0416e68-0200-4b77-a926-4f9d16e494da,511d2633-09a7-4bdd-ac42-f778032124b3,5d45aa00-e064-4938-b314-4265f0c2258c,9361fd90-ba52-4f84-aa93-6e878fd576ca,970b0598-bcb0-4714-91fb-2e81440dccd8,bcd64cc6-2dd9-43f6-abbe-66318d332032,d930590d-bb92-4cc8-8bd1-23cd027f9edf,a3cd009f-0ab0-420d-9278-b9fdab939bbc,6a2d0734-bd9e-4ddf-946e-caa52498cb75,d1346436-ac96-4271-b863-1f4fdead95b0,971bdb23-3ff6-43eb-b422-1c30165a3663,17debcc3-0a6b-4b8a-b00b-dc58b885581e,711ebe11-f673-4cd9-9a83-63c60ba54c5b,c0143906-9aed-447e-9436-2ae8512d1b6e,14da1725-c4c2-42b4-ab08-ee0aeb6898b3,081cab31-dccd-428e-8652-f2404cc81c47,78e0584a-4343-4727-8f37-e14e65c2a2db,ba21476f-2866-4f81-9c4d-6e359316e448,871c3b6c-7379-419d-bda3-794b239ab90d,ff9b0199-ce04-4cfe-86cc-6c719f08d6e4,de1c2107-70c8-4021-8459-6399f24d01c6,cbf30902-517f-40dc-af90-a550bac27cf1,5c601d96-e4c7-4698-991b-7ee674b11079
+2026-7-13 11:09:45-debug:   Number of other assets: 1158
+2026-7-13 11:09:45-debug: Init bundle root assets success..., progress: 0%
+2026-7-13 11:09:45-debug:   Number of all scenes: 5
+2026-7-13 11:09:45-debug: // ---- build task 查询 Asset Bundle ---- (14ms)
+2026-7-13 11:09:45-log: run build task 查询 Asset Bundle success in 14 ms√, progress: 5%
+2026-7-13 11:09:45-debug: // ---- build task 查询 Asset Bundle ----
+2026-7-13 11:09:45-debug: 查询 Asset Bundle start, progress: 5%
+2026-7-13 11:09:45-debug: [Build Memory track]: 查询 Asset Bundle start:295.42MB, end 295.41MB, increase: -7.26KB
+2026-7-13 11:09:45-debug: // ---- build task 查询 Asset Bundle ---- (7ms)
+2026-7-13 11:09:45-debug: [Build Memory track]: 查询 Asset Bundle start:295.44MB, end 295.67MB, increase: 231.32KB
+2026-7-13 11:09:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 11:09:45-log: run build task 查询 Asset Bundle success in 7 ms√, progress: 10%
+2026-7-13 11:09:45-debug: 整理部分构建选项内数据到 settings.json start, progress: 10%
+2026-7-13 11:09:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (2ms)
+2026-7-13 11:09:45-log: run build task 整理部分构建选项内数据到 settings.json success in 2 ms√, progress: 12%
+2026-7-13 11:09:45-debug: // ---- build task 填充脚本数据到 settings.json ----
+2026-7-13 11:09:45-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:295.70MB, end 295.73MB, increase: 29.99KB
+2026-7-13 11:09:45-debug: 填充脚本数据到 settings.json start, progress: 12%
+2026-7-13 11:09:45-debug: // ---- build task 填充脚本数据到 settings.json ---- (3ms)
+2026-7-13 11:09:45-log: run build task 填充脚本数据到 settings.json success in 3 ms√, progress: 13%
+2026-7-13 11:09:45-debug: [Build Memory track]: 填充脚本数据到 settings.json start:295.77MB, end 295.80MB, increase: 29.53KB
+2026-7-13 11:09:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ----
+2026-7-13 11:09:45-debug: 整理部分构建选项内数据到 settings.json start, progress: 13%
+2026-7-13 11:09:45-debug: // ---- build task 整理部分构建选项内数据到 settings.json ---- (4ms)
+2026-7-13 11:09:45-log: run build task 整理部分构建选项内数据到 settings.json success in 4 ms√, progress: 15%
+2026-7-13 11:09:45-debug: [Build Memory track]: 整理部分构建选项内数据到 settings.json start:295.83MB, end 295.89MB, increase: 65.70KB

@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Color, Component, Node, Quat, Tween, Vec3 } from 'cc';
+import { _decorator, CCFloat, CCInteger, Color, Component, MeshRenderer, Node, Quat, SkinnedMeshRenderer, Tween, Vec3 } from 'cc';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { BulletEnum, LayerEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import BulletManager from '../Battle/BulletManager';
@@ -56,6 +56,10 @@ export class Role extends Component {
     private readonly initialArmsScale: Vec3 = new Vec3();
     private readonly initialArmsChildTransforms: { node: Node, parent: Node, position: Vec3, rotation: Quat, scale: Vec3, active: boolean }[] = [];
     private hasInitialArmsTransform: boolean = false;
+    private shadowRenderers: SkinnedMeshRenderer[] = [];
+    private originalShadowCastingModes: number[] = [];
+    private shadowRenderersCached: boolean = false;
+    private shadowCastingEnabled: boolean | null = null;
     private static readonly propSocketNodeName: string = 'Bip001 Prop1 Socket';
     private static readonly idleAnimIndex: number = 0;
 
@@ -78,6 +82,7 @@ export class Role extends Component {
 
     start() {
         this.cacheInitialArmsTransform();
+        this.fbxManager?.removeInvalidSockets();
         if (!Role.bulletLayer) {
             Role.bulletLayer = LayerManager.instance.getLayer(LayerEnum.BulletLayer);
         }
@@ -114,6 +119,36 @@ export class Role extends Component {
             socket.active = visible;
         }
         this.arms.active = visible;
+    }
+
+    public setShadowCastingEnabled(enabled: boolean): void {
+        if (this.shadowCastingEnabled === enabled) {
+            return;
+        }
+        this.cacheShadowRenderers();
+        for (let i = 0; i < this.shadowRenderers.length; i++) {
+            const renderer = this.shadowRenderers[i];
+            if (!renderer?.isValid) {
+                continue;
+            }
+            renderer.shadowCastingMode = enabled
+                ? this.originalShadowCastingModes[i]
+                : MeshRenderer.ShadowCastingMode.OFF;
+        }
+        this.shadowCastingEnabled = enabled;
+    }
+
+    private cacheShadowRenderers(): void {
+        if (this.shadowRenderersCached) {
+            return;
+        }
+        this.shadowRenderersCached = true;
+        const renderers = this.node.getComponentsInChildren(SkinnedMeshRenderer);
+        for (let i = 0; i < renderers.length; i++) {
+            const renderer = renderers[i];
+            this.shadowRenderers.push(renderer);
+            this.originalShadowCastingModes.push(renderer.shadowCastingMode);
+        }
     }
 
     private cacheInitialArmsTransform(): void {

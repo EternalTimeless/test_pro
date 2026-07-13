@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, CCFloat, CCInteger, Component, Node, Quat, Tween, tween, Vec3 } from 'cc';
+import { _decorator, CCBoolean, CCFloat, CCInteger, Component, director, Node, Quat, Tween, tween, Vec3 } from 'cc';
 import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { Role } from './Role';
@@ -101,6 +101,9 @@ export class Player extends UnityUpComponent {
     @property({ type: CCInteger, displayName: '枪口特效最大播放数', tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。' })
     public maxMuzzleEffectCount: number = 8;
 
+    @property({ type: CCBoolean, displayName: '仅最外圈角色投影', tooltip: '开启后动态计算当前阵型最外圈，只保留最外圈角色的动态阴影。Game_3D-002 默认启用，其他场景保持关闭。' })
+    public onlyOuterLayerCastShadow: boolean = false;
+
     @property({ type: CCBoolean, displayName: 'jtl2合并多发逻辑弹', tooltip: '仅对 jtl2 生效。多发子弹的视觉数量保持不变，但合并为一颗逻辑子弹参与移动和碰撞，并自动补偿总伤害。' })
     public mergeJtl2MultiBulletLogic: boolean = true;
 
@@ -195,6 +198,7 @@ export class Player extends UnityUpComponent {
         this.move = this.node.getComponent(MoveDrive);
         this.applyDefaultWeaponConfig();
         this.syncRespawnRoleCount();
+        this.refreshRoleShadowCasting();
         EventManager.instance.on(EventType.PLAYER_HIT, this.hit, this);
         EventManager.instance.on(EventType.PLAYER_HIT_2, this.hit_2, this);
     }
@@ -735,6 +739,7 @@ export class Player extends UnityUpComponent {
         }
 
         let count = Math.max(1, Math.floor(this.roleSwitchPerFrame));
+        let didSwitch = false;
         while (count > 0 && this.pendingRoleSwitchIndex < this.roleList.length) {
             const index = this.pendingRoleSwitchIndex;
             const oldRole = this.roleList[index];
@@ -766,8 +771,13 @@ export class Player extends UnityUpComponent {
             oldRole.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + oldRole.type, oldRole);
             this.roleLayoutDirty = true;
+            didSwitch = true;
             this.pendingRoleSwitchIndex++;
             count--;
+        }
+
+        if (didSwitch) {
+            this.refreshRoleShadowCasting();
         }
 
         if (this.pendingRoleSwitchIndex >= this.roleList.length) {
@@ -836,6 +846,7 @@ export class Player extends UnityUpComponent {
         this.roleList.push(role);
         this.curCount = Math.min(this.getEffectiveMaxRoleCount(), this.curCount + 1);
         this.syncRoleAnimationToTeam(role);
+        this.refreshRoleShadowCasting();
         return true;
     }
 
@@ -1063,6 +1074,7 @@ export class Player extends UnityUpComponent {
         }
         this.recycleInactiveRoles();
         this.recycleOverflowRoles();
+        this.refreshRoleShadowCasting();
         if (this.getCombatRoleCount() <= 0) {
             this.cancelDelayedShrink();
             this.handlePlayerDie();
@@ -1115,6 +1127,7 @@ export class Player extends UnityUpComponent {
         }
         this.recycleInactiveRoles();
         this.recycleOverflowRoles();
+        this.refreshRoleShadowCasting();
         if (this.getCombatRoleCount() <= 0) {
             this.cancelDelayedShrink();
             this.handlePlayerDie();
@@ -1153,6 +1166,39 @@ export class Player extends UnityUpComponent {
                 this.shrinkDirtyDuringAnimating = false;
                 this.requestShrinkAfterRoleLoss();
             }, this.roleLayoutTweenDuration);
+        }
+    }
+
+    private refreshRoleShadowCasting(): void {
+        const onlyOuterLayer = this.onlyOuterLayerCastShadow || director.getScene()?.name === 'Game_3D-002';
+        if (!onlyOuterLayer) {
+            for (let i = 0; i < this.roleList.length; i++) {
+                this.roleList[i]?.setShadowCastingEnabled(true);
+            }
+            return;
+        }
+
+        let combatRoleCount = 0;
+        for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+            if (role?.node?.active && !role.attackIN) {
+                combatRoleCount++;
+            }
+        }
+
+        const outerLayer = combatRoleCount > 0 ? this.getRoleLayer(combatRoleCount - 1) : 0;
+        let combatIndex = 0;
+        for (let i = 0; i < this.roleList.length; i++) {
+            const role = this.roleList[i];
+            if (!role) {
+                continue;
+            }
+            if (!role.node.active || role.attackIN) {
+                role.setShadowCastingEnabled(true);
+                continue;
+            }
+            role.setShadowCastingEnabled(this.getRoleLayer(combatIndex) === outerLayer);
+            combatIndex++;
         }
     }
 
@@ -1324,6 +1370,7 @@ export class Player extends UnityUpComponent {
             tween(role.node).to(0.2, { scale: Vec3.ONE }, { easing: "backOut" }).start();
             role.fbxManager.setAnimation(PlayerFBXAnimName.idle, true);
         }
+        this.refreshRoleShadowCasting();
         this.selectIndex = 0;
         this.attackIn = false;
     }

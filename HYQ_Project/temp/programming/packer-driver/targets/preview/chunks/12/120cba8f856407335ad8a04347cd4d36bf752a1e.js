@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12", "__unresolved_13", "__unresolved_14", "__unresolved_15"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _class4, _class5, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCBoolean, CCFloat, CCInteger, director, Node, Quat, Tween, tween, Vec3, MoveDrive, Role, getCirclePosition, ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, RoleEnum, SoundEnum, PoolManager, EventManager, PrefabsManager, TweenTool, GameOverPanel, UnityUpComponent, AudioManager, BulletManager, FlashRedManager, BulletBatchRenderer, LayerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _class4, _class5, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _class6, _crd, ccclass, property, WeaponBulletConfig, PlayerFBXAnimName, Player;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -108,6 +108,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       CCBoolean = _cc.CCBoolean;
       CCFloat = _cc.CCFloat;
       CCInteger = _cc.CCInteger;
+      director = _cc.director;
       Node = _cc.Node;
       Quat = _cc.Quat;
       Tween = _cc.Tween;
@@ -156,7 +157,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "b41f7vy1r5GDYGyMwUkQXm3", "Player", undefined);
 
-      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Component', 'Node', 'Quat', 'Tween', 'tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCBoolean', 'CCFloat', 'CCInteger', 'Component', 'director', 'Node', 'Quat', 'Tween', 'tween', 'Vec3']);
 
       ({
         ccclass,
@@ -311,41 +312,45 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。'
       }), _dec18 = property({
         type: CCBoolean,
+        displayName: '仅最外圈角色投影',
+        tooltip: '开启后动态计算当前阵型最外圈，只保留最外圈角色的动态阴影。Game_3D-002 默认启用，其他场景保持关闭。'
+      }), _dec19 = property({
+        type: CCBoolean,
         displayName: 'jtl2合并多发逻辑弹',
         tooltip: '仅对 jtl2 生效。多发子弹的视觉数量保持不变，但合并为一颗逻辑子弹参与移动和碰撞，并自动补偿总伤害。'
-      }), _dec19 = property({
+      }), _dec20 = property({
         type: CCInteger,
         displayName: '错峰发射武器配置索引',
         tooltip: '指定哪一个武器子弹配置使用错峰发射。0 表示第一个油桶给出的武器；负数表示关闭。'
-      }), _dec20 = property({
+      }), _dec21 = property({
         type: CCFloat,
         displayName: '错峰发射占攻击间隔比例',
         tooltip: '错峰武器每轮射击摊开的时间比例。0.85 表示在本轮攻击间隔的 85% 时间内连续发射，伤害和总弹量不变。'
-      }), _dec21 = property({
+      }), _dec22 = property({
         type: CCInteger,
         displayName: '默认武器配置索引',
         tooltip: '开局默认使用的“武器子弹配置”索引。-1 表示保持旧默认值：子弹 arrow、威力 1、攻击速度使用 Player.attackSpeed。'
-      }), _dec22 = property({
+      }), _dec23 = property({
         type: CCBoolean,
         displayName: '启用升级角色预热',
         tooltip: '武器飞向玩家期间分帧创建目标角色模型；正式替换时只从对象池取，避免运行中集中实例化骨骼角色。'
-      }), _dec23 = property({
+      }), _dec24 = property({
         type: CCInteger,
         displayName: '每帧预热角色数',
         tooltip: '升级预热阶段每帧最多创建的角色数量。数值越低，单帧峰值越小。'
-      }), _dec24 = property({
+      }), _dec25 = property({
         type: CCInteger,
         displayName: '每帧替换角色数',
         tooltip: '升级后每帧最多替换的角色数量；开启预热时只替换对象池中已经准备好的角色。'
-      }), _dec25 = property({
+      }), _dec26 = property({
         type: CCInteger,
         displayName: '每帧角色射击处理数',
         tooltip: '单帧最多执行多少名角色的实际射击。超出的射击保留到后续帧，子弹总数和伤害次数不减少。'
-      }), _dec26 = property({
+      }), _dec27 = property({
         type: [WeaponBulletConfig],
         displayName: '武器子弹配置',
         tooltip: '配置各武器的子弹威力和子弹模型。'
-      }), _dec27 = property(Node), _dec9(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
+      }), _dec28 = property(Node), _dec9(_class4 = (_class5 = (_class6 = class Player extends (_crd && UnityUpComponent === void 0 ? (_reportPossibleCrUseOfUnityUpComponent({
         error: Error()
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
@@ -377,23 +382,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "maxMuzzleEffectCount", _descriptor15, this);
 
-          _initializerDefineProperty(this, "mergeJtl2MultiBulletLogic", _descriptor16, this);
+          _initializerDefineProperty(this, "onlyOuterLayerCastShadow", _descriptor16, this);
 
-          _initializerDefineProperty(this, "staggerShotWeaponConfigIndex", _descriptor17, this);
+          _initializerDefineProperty(this, "mergeJtl2MultiBulletLogic", _descriptor17, this);
 
-          _initializerDefineProperty(this, "staggerShotWindowRatio", _descriptor18, this);
+          _initializerDefineProperty(this, "staggerShotWeaponConfigIndex", _descriptor18, this);
 
-          _initializerDefineProperty(this, "defaultWeaponConfigIndex", _descriptor19, this);
+          _initializerDefineProperty(this, "staggerShotWindowRatio", _descriptor19, this);
 
-          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor20, this);
+          _initializerDefineProperty(this, "defaultWeaponConfigIndex", _descriptor20, this);
 
-          _initializerDefineProperty(this, "rolePrewarmPerFrame", _descriptor21, this);
+          _initializerDefineProperty(this, "enableRuntimeUpgradePrewarm", _descriptor21, this);
 
-          _initializerDefineProperty(this, "roleSwitchPerFrame", _descriptor22, this);
+          _initializerDefineProperty(this, "rolePrewarmPerFrame", _descriptor22, this);
 
-          _initializerDefineProperty(this, "maxRoleShotsPerFrame", _descriptor23, this);
+          _initializerDefineProperty(this, "roleSwitchPerFrame", _descriptor23, this);
 
-          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor24, this);
+          _initializerDefineProperty(this, "maxRoleShotsPerFrame", _descriptor24, this);
+
+          _initializerDefineProperty(this, "weaponBulletConfigList", _descriptor25, this);
 
           this.shootRoleStartIndex = 0;
           this.pendingRoleSwitchType = null;
@@ -417,7 +424,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.isLock = false;
 
           // public MoveX: number = 8;
-          _initializerDefineProperty(this, "shootList", _descriptor25, this);
+          _initializerDefineProperty(this, "shootList", _descriptor26, this);
 
           this.shootIndex = 1;
           this.attackIn = false;
@@ -433,6 +440,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), MoveDrive) : MoveDrive);
           this.applyDefaultWeaponConfig();
           this.syncRespawnRoleCount();
+          this.refreshRoleShadowCasting();
           (_crd && EventManager === void 0 ? (_reportPossibleCrUseOfEventManager({
             error: Error()
           }), EventManager) : EventManager).instance.on((_crd && EventType === void 0 ? (_reportPossibleCrUseOfEventType({
@@ -1139,6 +1147,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           var count = Math.max(1, Math.floor(this.roleSwitchPerFrame));
+          var didSwitch = false;
 
           while (count > 0 && this.pendingRoleSwitchIndex < this.roleList.length) {
             var index = this.pendingRoleSwitchIndex;
@@ -1177,8 +1186,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), PoolEnum) : PoolEnum).role + oldRole.type, oldRole);
             this.roleLayoutDirty = true;
+            didSwitch = true;
             this.pendingRoleSwitchIndex++;
             count--;
+          }
+
+          if (didSwitch) {
+            this.refreshRoleShadowCasting();
           }
 
           if (this.pendingRoleSwitchIndex >= this.roleList.length) {
@@ -1256,6 +1270,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.roleList.push(role);
           this.curCount = Math.min(this.getEffectiveMaxRoleCount(), this.curCount + 1);
           this.syncRoleAnimationToTeam(role);
+          this.refreshRoleShadowCasting();
           return true;
         }
 
@@ -1566,6 +1581,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.recycleInactiveRoles();
           this.recycleOverflowRoles();
+          this.refreshRoleShadowCasting();
 
           if (this.getCombatRoleCount() <= 0) {
             this.cancelDelayedShrink();
@@ -1626,6 +1642,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this.recycleInactiveRoles();
           this.recycleOverflowRoles();
+          this.refreshRoleShadowCasting();
 
           if (this.getCombatRoleCount() <= 0) {
             this.cancelDelayedShrink();
@@ -1683,6 +1700,55 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               this.shrinkDirtyDuringAnimating = false;
               this.requestShrinkAfterRoleLoss();
             }, this.roleLayoutTweenDuration);
+          }
+        }
+
+        refreshRoleShadowCasting() {
+          var _director$getScene;
+
+          var onlyOuterLayer = this.onlyOuterLayerCastShadow || ((_director$getScene = director.getScene()) == null ? void 0 : _director$getScene.name) === 'Game_3D-002';
+
+          if (!onlyOuterLayer) {
+            for (var i = 0; i < this.roleList.length; i++) {
+              var _this$roleList$i2;
+
+              (_this$roleList$i2 = this.roleList[i]) == null || _this$roleList$i2.setShadowCastingEnabled(true);
+            }
+
+            return;
+          }
+
+          var combatRoleCount = 0;
+
+          for (var _i2 = 0; _i2 < this.roleList.length; _i2++) {
+            var _role$node2;
+
+            var role = this.roleList[_i2];
+
+            if (role != null && (_role$node2 = role.node) != null && _role$node2.active && !role.attackIN) {
+              combatRoleCount++;
+            }
+          }
+
+          var outerLayer = combatRoleCount > 0 ? this.getRoleLayer(combatRoleCount - 1) : 0;
+          var combatIndex = 0;
+
+          for (var _i3 = 0; _i3 < this.roleList.length; _i3++) {
+            var _role2 = this.roleList[_i3];
+
+            if (!_role2) {
+              continue;
+            }
+
+            if (!_role2.node.active || _role2.attackIN) {
+              _role2.setShadowCastingEnabled(true);
+
+              continue;
+            }
+
+            _role2.setShadowCastingEnabled(this.getRoleLayer(combatIndex) === outerLayer);
+
+            combatIndex++;
           }
         }
 
@@ -1833,13 +1899,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var minIdx = -1;
             var minDist = 0;
 
-            for (var _i2 = 0; _i2 < total; _i2++) {
-              if (used[_i2]) continue;
-              if (dists[_i2] === Number.MAX_VALUE) continue;
+            for (var _i4 = 0; _i4 < total; _i4++) {
+              if (used[_i4]) continue;
+              if (dists[_i4] === Number.MAX_VALUE) continue;
 
-              if (minIdx < 0 || dists[_i2] < minDist) {
-                minIdx = _i2;
-                minDist = dists[_i2];
+              if (minIdx < 0 || dists[_i4] < minDist) {
+                minIdx = _i4;
+                minDist = dists[_i4];
               }
             }
 
@@ -1852,8 +1918,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           } // 从后往前删除，保证索引不错位
 
 
-          for (var _i3 = 0; _i3 < picked.length; _i3++) {
-            var role = list[picked[_i3]];
+          for (var _i5 = 0; _i5 < picked.length; _i5++) {
+            var role = list[picked[_i5]];
             role.hp -= 3;
             this.roleDie(role); // role.node.active = false;
             // PoolManager.instance.setPool(PoolEnum.role + this.roleType, role);
@@ -1863,8 +1929,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return b - a;
           });
 
-          for (var _i4 = 0; _i4 < picked.length; _i4++) {
-            list.splice(picked[_i4], 1);
+          for (var _i6 = 0; _i6 < picked.length; _i6++) {
+            list.splice(picked[_i6], 1);
           }
 
           this.requestShrinkAfterRoleLoss();
@@ -1928,6 +1994,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             role.fbxManager.setAnimation(PlayerFBXAnimName.idle, true);
           }
 
+          this.refreshRoleShadowCasting();
           this.selectIndex = 0;
           this.attackIn = false;
         }
@@ -2143,63 +2210,70 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 8;
         }
-      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "mergeJtl2MultiBulletLogic", [_dec18], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return true;
-        }
-      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWeaponConfigIndex", [_dec19], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 0;
-        }
-      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWindowRatio", [_dec20], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return 0.85;
-        }
-      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "defaultWeaponConfigIndex", [_dec21], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return -1;
-        }
-      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec22], {
+      }), _descriptor16 = _applyDecoratedDescriptor(_class5.prototype, "onlyOuterLayerCastShadow", [_dec18], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return false;
         }
-      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "rolePrewarmPerFrame", [_dec23], {
+      }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "mergeJtl2MultiBulletLogic", [_dec19], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return true;
+        }
+      }), _descriptor18 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWeaponConfigIndex", [_dec20], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0;
+        }
+      }), _descriptor19 = _applyDecoratedDescriptor(_class5.prototype, "staggerShotWindowRatio", [_dec21], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return 0.85;
+        }
+      }), _descriptor20 = _applyDecoratedDescriptor(_class5.prototype, "defaultWeaponConfigIndex", [_dec22], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return -1;
+        }
+      }), _descriptor21 = _applyDecoratedDescriptor(_class5.prototype, "enableRuntimeUpgradePrewarm", [_dec23], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return false;
+        }
+      }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "rolePrewarmPerFrame", [_dec24], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 2;
         }
-      }), _descriptor22 = _applyDecoratedDescriptor(_class5.prototype, "roleSwitchPerFrame", [_dec24], {
+      }), _descriptor23 = _applyDecoratedDescriptor(_class5.prototype, "roleSwitchPerFrame", [_dec25], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 4;
         }
-      }), _descriptor23 = _applyDecoratedDescriptor(_class5.prototype, "maxRoleShotsPerFrame", [_dec25], {
+      }), _descriptor24 = _applyDecoratedDescriptor(_class5.prototype, "maxRoleShotsPerFrame", [_dec26], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return 12;
         }
-      }), _descriptor24 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec26], {
+      }), _descriptor25 = _applyDecoratedDescriptor(_class5.prototype, "weaponBulletConfigList", [_dec27], {
         configurable: true,
         enumerable: true,
         writable: true,
@@ -2262,7 +2336,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return config;
           })()];
         }
-      }), _descriptor25 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec27], {
+      }), _descriptor26 = _applyDecoratedDescriptor(_class5.prototype, "shootList", [_dec28], {
         configurable: true,
         enumerable: true,
         writable: true,

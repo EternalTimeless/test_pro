@@ -1,4 +1,4 @@
-import { _decorator, AnimationClip, Component, SkeletalAnimation } from 'cc';
+import { _decorator, AnimationClip, AnimationState, Component, SkeletalAnimation } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('FbxManager')
@@ -30,6 +30,14 @@ export class FbxManager extends Component {
             }
         }
         return this._skeleta;
+    }
+
+    public removeInvalidSockets(): void {
+        const sk = this.skeleta;
+        const validSockets = sk.sockets.filter((socket) => !!socket?.path && !!socket.target?.isValid);
+        if (validSockets.length !== sk.sockets.length) {
+            sk.sockets = validSockets;
+        }
     }
 
     public replaceAnimationClip(skT: number, clip: AnimationClip): boolean {
@@ -70,6 +78,10 @@ export class FbxManager extends Component {
         const sk = this.skeleta;
         let aniName = this._animName[skT];
         let animState = sk.getState(aniName);
+        if (!animState) {
+            return animState;
+        }
+        this.applyWrapMode(animState, loop);
 
         if (this._cur == skT) {
             if (!loop || !animState.isPlaying) {
@@ -101,6 +113,7 @@ export class FbxManager extends Component {
         if (!animState) {
             return animState;
         }
+        this.applyWrapMode(animState, loop);
         if (this._cur != -1 && this._cur != skT) {
             const curName = this._animName[this._cur];
             const curState = sk.getState(curName);
@@ -111,6 +124,13 @@ export class FbxManager extends Component {
         animState.speed = 1;
         this._cur = skT;
         return animState;
+    }
+
+    private applyWrapMode(animState: AnimationState, loop: boolean): void {
+        const wrapMode = loop ? AnimationClip.WrapMode.Loop : AnimationClip.WrapMode.Normal;
+        if (animState.wrapMode !== wrapMode) {
+            animState.wrapMode = wrapMode;
+        }
     }
 
     public getAnimState(skT: number) {
