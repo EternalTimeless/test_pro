@@ -313,18 +313,12 @@ export default class BulletMonsterCollisionManager extends Singleton {
                     group.targets.pop();
                     continue;
                 }
-                const z = this.getTargetFrameData(target).z;
-                const bIdx = this._getBucketIdx(z);
-                this.markTargetBucketUsed(typeStr, bIdx);
-                tBuckets[bIdx].push(target);
-                // 放入相邻桶防止边界遗漏
-                if (bIdx > 0) {
-                    this.markTargetBucketUsed(typeStr, bIdx - 1);
-                    tBuckets[bIdx - 1].push(target);
-                }
-                if (bIdx < this._bucketCount - 1) {
-                    this.markTargetBucketUsed(typeStr, bIdx + 1);
-                    tBuckets[bIdx + 1].push(target);
+                const targetData = this.getTargetFrameData(target);
+                const minTargetBucketIdx = this._getBucketIdx(targetData.z - targetData.halfZ);
+                const maxTargetBucketIdx = this._getBucketIdx(targetData.z + targetData.halfZ);
+                for (let bucketIdx = minTargetBucketIdx; bucketIdx <= maxTargetBucketIdx; bucketIdx++) {
+                    this.markTargetBucketUsed(typeStr, bucketIdx);
+                    tBuckets[bucketIdx].push(target);
                 }
             }
         }

@@ -28,17 +28,17 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 53
-      },
-      {
         "__id__": 55
       },
       {
-        "__id__": 68
+        "__id__": 57
+      },
+      {
+        "__id__": 70
       }
     ],
     "_prefab": {
-      "__id__": 70
+      "__id__": 72
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -575,6 +575,12 @@
       },
       {
         "__id__": 52
+      },
+      {
+        "__id__": 53
+      },
+      {
+        "__id__": 54
       }
     ],
     "removedComponents": []
@@ -827,6 +833,26 @@
     }
   },
   {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 45
+    },
+    "propertyPath": [
+      "_shadowCastingMode"
+    ],
+    "value": 1
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 45
+    },
+    "propertyPath": [
+      "_shadowReceivingMode"
+    ],
+    "value": 0
+  },
+  {
     "__type__": "da648v4qxRKaqR0mDLfS0Zs",
     "_name": "",
     "_objFlags": 0,
@@ -836,7 +862,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 54
+      "__id__": 56
     },
     "tag": 13,
     "_id": ""
@@ -855,13 +881,13 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 56
+      "__id__": 58
     },
     "MaxHp": 800,
     "hpC": null,
     "meshFlashDataList": [
       {
-        "__id__": 57
+        "__id__": 59
       }
     ],
     "hitEffect": 1,
@@ -870,7 +896,7 @@
     "repelEnabled": true,
     "meshFlashDataList_Die": [
       {
-        "__id__": 65
+        "__id__": 67
       }
     ],
     "fbx": {
@@ -881,7 +907,7 @@
       "__id__": 10
     },
     "move": {
-      "__id__": 68
+      "__id__": 70
     },
     "attackR": 57,
     "bossAttackLockOffsetX": 0.9,
@@ -905,15 +931,15 @@
   {
     "__type__": "MeshFlashData",
     "meshRender": {
-      "__id__": 58
+      "__id__": 60
     },
     "colorProps": [],
     "switchProps": [
       {
-        "__id__": 63
+        "__id__": 65
       },
       {
-        "__id__": 64
+        "__id__": 66
       }
     ]
   },
@@ -923,11 +949,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 59
+      "__id__": 61
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 61
+      "__id__": 63
     },
     "_materials": [
       {
@@ -937,14 +963,14 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 62
+      "__id__": 64
     },
     "_mesh": {
       "__uuid__": "f9c2dc52-d167-47a7-9c34-8d324da4b592@3f7d7",
       "__expectedType__": "cc.Mesh"
     },
     "_shadowCastingMode": 1,
-    "_shadowReceivingMode": 1,
+    "_shadowReceivingMode": 0,
     "_shadowBias": 0,
     "_shadowNormalBias": 0,
     "_reflectionProbeId": -1,
@@ -973,11 +999,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 58
+        "__id__": 60
       }
     ],
     "_prefab": {
-      "__id__": 60
+      "__id__": 62
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1066,15 +1092,15 @@
   {
     "__type__": "MeshFlashData",
     "meshRender": {
-      "__id__": 58
+      "__id__": 60
     },
     "colorProps": [],
     "switchProps": [
       {
-        "__id__": 66
+        "__id__": 68
       },
       {
-        "__id__": 67
+        "__id__": 69
       }
     ]
   },
@@ -1106,7 +1132,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 69
+      "__id__": 71
     },
     "directionalLock": {
       "__type__": "cc.Vec3",
@@ -1158,9 +1184,6 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 71
-      },
-      {
         "__id__": 73
       },
       {
@@ -1171,6 +1194,9 @@
       },
       {
         "__id__": 79
+      },
+      {
+        "__id__": 81
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -1185,33 +1211,11 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 55
+      "__id__": 57
     },
     "sourceInfo": null,
     "propertyPath": [
       "fbx"
-    ],
-    "target": {
-      "__id__": 29
-    },
-    "targetInfo": {
-      "__id__": 72
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "f9O8abJ0pPrpMndqNe8RyI"
-    ]
-  },
-  {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
-      "__id__": 68
-    },
-    "sourceInfo": null,
-    "propertyPath": [
-      "rotDrive"
     ],
     "target": {
       "__id__": 29
@@ -1223,19 +1227,17 @@
   {
     "__type__": "cc.TargetInfo",
     "localID": [
-      "951/3rQnpHg5ZN7q5RqPGv"
+      "f9O8abJ0pPrpMndqNe8RyI"
     ]
   },
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 55
+      "__id__": 70
     },
     "sourceInfo": null,
     "propertyPath": [
-      "meshFlashDataList",
-      "0",
-      "meshRender"
+      "rotDrive"
     ],
     "target": {
       "__id__": 29
@@ -1247,17 +1249,17 @@
   {
     "__type__": "cc.TargetInfo",
     "localID": [
-      "f65Kv8dIRUE4FrY1TPV6Q3"
+      "951/3rQnpHg5ZN7q5RqPGv"
     ]
   },
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 55
+      "__id__": 57
     },
     "sourceInfo": null,
     "propertyPath": [
-      "meshFlashDataList_Die",
+      "meshFlashDataList",
       "0",
       "meshRender"
     ],
@@ -1277,7 +1279,31 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 55
+      "__id__": 57
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "meshFlashDataList_Die",
+      "0",
+      "meshRender"
+    ],
+    "target": {
+      "__id__": 29
+    },
+    "targetInfo": {
+      "__id__": 80
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "f65Kv8dIRUE4FrY1TPV6Q3"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 57
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1287,7 +1313,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 80
+      "__id__": 82
     }
   },
   {

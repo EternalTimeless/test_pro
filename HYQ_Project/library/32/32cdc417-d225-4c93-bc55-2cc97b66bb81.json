@@ -444,7 +444,7 @@
     "propertyPath": [
       "_shadowReceivingMode"
     ],
-    "value": 1
+    "value": 0
   },
   {
     "__type__": "CCPropertyOverrideInfo",
@@ -577,7 +577,7 @@
       "__expectedType__": "cc.Mesh"
     },
     "_shadowCastingMode": 1,
-    "_shadowReceivingMode": 1,
+    "_shadowReceivingMode": 0,
     "_shadowBias": 0,
     "_shadowNormalBias": 0,
     "_reflectionProbeId": -1,

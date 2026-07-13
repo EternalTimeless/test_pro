@@ -1,4 +1,4 @@
-import { _decorator, AnimationClip, CCFloat, Label, Node, Quat, tween, Vec3 } from 'cc';
+import { _decorator, AnimationClip, CCBoolean, CCFloat, CCInteger, director, Label, Node, Quat, tween, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import { MoveDrive, MoveModEnum } from '../../Base/MoveRot/MoveDrive';
@@ -12,6 +12,7 @@ import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 import AudioManager from '../../Base/AudioManager';
 import { Player } from '../Player/Player';
 import { Role } from '../Player/Role';
+import { isPointInCameraView } from '../../Tool/Index';
 const { ccclass, property } = _decorator;
 
 enum MonsterAnimEnum {
@@ -23,6 +24,27 @@ enum MonsterAnimEnum {
 
 @ccclass('MonsterBattleTaerget')
 export class MonsterBattleTaerget extends BattleTarget3D {
+
+    private static readonly OPTIMIZED_SCENE_NAME = 'Game_3D-002';
+    private static nextLodPhase: number = 0;
+    private static playerFormationCacheFrame: number = -1;
+    private static playerAttackRearWorldZ: number = Number.NaN;
+    private static playerBodyFrontWorldZ: number = Number.NaN;
+
+    @property({ type: CCBoolean, displayName: '启用小怪动画分级' })
+    public enableAnimationLod: boolean = true;
+
+    @property({ type: CCFloat, displayName: '远距离动画阈值（米）', min: 1 })
+    public animationLodDistance: number = 38;
+
+    @property({ type: CCInteger, displayName: '远距离动画更新间隔（帧）', min: 1, max: 4 })
+    public farAnimationFrameInterval: number = 2;
+
+    @property({ type: CCInteger, displayName: '屏幕可见性检查间隔（帧）', min: 1, max: 30 })
+    public visibilityCheckFrameInterval: number = 8;
+
+    @property({ type: CCInteger, displayName: '目标重选间隔（帧）', min: 1, max: 12 })
+    public targetRefreshFrameInterval: number = 4;
 
     @property({ type: [MeshFlashData], tooltip: '闪红MeshRenderer配置列表，可在属性检查器中编辑' })
     public meshFlashDataList_Die: MeshFlashData[] = [];
@@ -63,6 +85,11 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     private readonly bossDesiredAttackPos: Vec3 = new Vec3();
     private readonly bossFaceVector: Vec3 = new Vec3();
     private readonly smallMonsterDesiredAttackPos: Vec3 = new Vec3();
+    private animationLodPhase: number = 0;
+    private targetRefreshPhase: number = 0;
+    private animationVisible: boolean = true;
+    private lastAnimationSamplingEnabled: boolean = true;
+    private lastAnimationSpeedMultiplier: number = 1;
 
     @property({
         type: CCFloat,
@@ -178,6 +205,8 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
     protected onLoad(): void {
         super.onLoad();
+        this.animationLodPhase = MonsterBattleTaerget.nextLodPhase++;
+        this.targetRefreshPhase = MonsterBattleTaerget.nextLodPhase++;
         this.applyNormalDeathAnimationSetup();
     }
 
@@ -202,6 +231,10 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         this.attackEventPending = false;
         this.runAnimSpeed = 0.9 + Math.random() * 0.25;
         this.runAnimStartFrame = Math.random();
+        this.animationVisible = true;
+        this.lastAnimationSamplingEnabled = true;
+        this.lastAnimationSpeedMultiplier = 1;
+        this.fbx?.setSkeletalAnimationEnabled(true);
         BulletMonsterCollisionManager.instance.registerTarget(this);
 
     }
@@ -221,6 +254,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
 
     protected die(): void {
+        this.fbx?.setSkeletalAnimationEnabled(true);
         this.cancelPendingAttackEvent();
         this.move.autoMove = false;
         BulletMonsterCollisionManager.instance.unregisterTarget(this);
@@ -329,6 +363,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         if (this.isDie) {
             return;
         }
+        this.updateRunAnimationLod();
         if (this.monsterType == MonsterType.ZombieBrother) {
             this.fixBossHpLabel();
         }
@@ -352,7 +387,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             this.move.autoMove = true;
         }
 
-        this.refreshSmallMonsterAttackTargetIfNeeded();
+        if (this.shouldRefreshTargetThisFrame()) {
+            this.refreshSmallMonsterAttackTargetIfNeeded();
+        }
 
         if (this.monsterType == MonsterType.ZombieBrother) {
             this.updateBossMoveTarget();
@@ -400,6 +437,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     }
 
     private playAttackAnimation(): void {
+        this.fbx?.setSkeletalAnimationEnabled(true);
         if (this.monsterType === MonsterType.ZombieBrother) {
             const anim = this.fbx.setAnimation(MonsterAnimEnum.attack, false);
             if (!anim) {
@@ -620,36 +658,41 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     }
 
     private getPlayerAttackRearWorldZ(defaultZ: number): number {
+        this.refreshPlayerFormationCache();
+        return Number.isFinite(MonsterBattleTaerget.playerAttackRearWorldZ)
+            ? MonsterBattleTaerget.playerAttackRearWorldZ
+            : defaultZ;
+    }
+
+    private getPlayerBodyFrontWorldZ(defaultZ: number): number {
+        this.refreshPlayerFormationCache();
+        return Number.isFinite(MonsterBattleTaerget.playerBodyFrontWorldZ)
+            ? MonsterBattleTaerget.playerBodyFrontWorldZ
+            : defaultZ;
+    }
+
+    private refreshPlayerFormationCache(): void {
+        const frame = director.getTotalFrames();
+        if (MonsterBattleTaerget.playerFormationCacheFrame === frame) {
+            return;
+        }
+        MonsterBattleTaerget.playerFormationCacheFrame = frame;
+        MonsterBattleTaerget.playerAttackRearWorldZ = Number.NaN;
+        MonsterBattleTaerget.playerBodyFrontWorldZ = Number.NaN;
         const player = Player.instance;
         if (!player || player.isDie || !player.roleList?.length) {
-            return defaultZ;
+            return;
         }
-
         let rearZ = Number.POSITIVE_INFINITY;
+        let frontZ = Number.NEGATIVE_INFINITY;
         for (let i = 0; i < player.roleList.length; i++) {
             const role = player.roleList[i];
             if (!role?.node?.activeInHierarchy || role.attackIN) {
                 continue;
             }
-            const roleAttackZ = role.shoot?.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
-            if (roleAttackZ < rearZ) {
-                rearZ = roleAttackZ;
-            }
-        }
-
-        return Number.isFinite(rearZ) ? rearZ : defaultZ;
-    }
-
-    private getPlayerBodyFrontWorldZ(defaultZ: number): number {
-        const player = Player.instance;
-        if (!player || player.isDie || !player.roleList?.length) {
-            return defaultZ;
-        }
-
-        let frontZ = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < player.roleList.length; i++) {
-            const role = player.roleList[i];
-            if (!role?.node?.activeInHierarchy || role.attackIN || role.hp <= 0) {
+            const attackZ = role.shoot?.isValid ? role.shoot.worldPosition.z : role.node.worldPosition.z;
+            rearZ = Math.min(rearZ, attackZ);
+            if (role.hp <= 0) {
                 continue;
             }
             const roleZ = role.node.worldPosition.z;
@@ -657,8 +700,73 @@ export class MonsterBattleTaerget extends BattleTarget3D {
                 frontZ = roleZ;
             }
         }
+        MonsterBattleTaerget.playerAttackRearWorldZ = Number.isFinite(rearZ) ? rearZ : Number.NaN;
+        MonsterBattleTaerget.playerBodyFrontWorldZ = Number.isFinite(frontZ) ? frontZ : Number.NaN;
+    }
 
-        return Number.isFinite(frontZ) ? frontZ : defaultZ;
+    private shouldRefreshTargetThisFrame(): boolean {
+        if (this.monsterType === MonsterType.ZombieBrother || !this.isOptimizationScene()) {
+            return true;
+        }
+        const interval = Math.max(1, Math.floor(this.targetRefreshFrameInterval));
+        return (director.getTotalFrames() + this.targetRefreshPhase) % interval === 0;
+    }
+
+    private updateRunAnimationLod(): void {
+        const isRunAnimation = !!this.fbx?.isCurAnimation(MonsterAnimEnum.run);
+        if (!this.enableAnimationLod || !this.isOptimizationScene()
+            || this.monsterType === MonsterType.ZombieBrother || this.attackIn
+            || !isRunAnimation) {
+            if (isRunAnimation) {
+                this.setRunAnimationSampling(true, 1);
+            } else {
+                this.fbx?.setSkeletalAnimationEnabled(true);
+            }
+            return;
+        }
+        const frame = director.getTotalFrames();
+        const visibilityInterval = Math.max(1, Math.floor(this.visibilityCheckFrameInterval));
+        if ((frame + this.animationLodPhase) % visibilityInterval === 0) {
+            const camera = CameraMove.instance?.camera;
+            this.animationVisible = !camera || isPointInCameraView(this.node.worldPosition, camera);
+        }
+        if (!this.animationVisible) {
+            this.fbx.setSkeletalAnimationEnabled(false);
+            return;
+        }
+        const cameraPos = CameraMove.instance?.camera?.node?.worldPosition;
+        if (!cameraPos) {
+            this.setRunAnimationSampling(true, 1);
+            return;
+        }
+        const dx = this.node.worldPositionX - cameraPos.x;
+        const dz = this.node.worldPositionZ - cameraPos.z;
+        const farDistance = Math.max(1, this.animationLodDistance);
+        if (dx * dx + dz * dz < farDistance * farDistance) {
+            this.setRunAnimationSampling(true, 1);
+            return;
+        }
+        const interval = Math.max(1, Math.floor(this.farAnimationFrameInterval));
+        this.setRunAnimationSampling((frame + this.animationLodPhase) % interval === 0, interval);
+    }
+
+    private setRunAnimationSampling(enabled: boolean, speedMultiplier: number): void {
+        const multiplier = Math.max(1, speedMultiplier);
+        if (this.lastAnimationSamplingEnabled === enabled
+            && this.lastAnimationSpeedMultiplier === multiplier) {
+            return;
+        }
+        const state = this.fbx.getAnimState(MonsterAnimEnum.run);
+        if (state) {
+            state.speed = this.runAnimSpeed * multiplier;
+        }
+        this.fbx.setSkeletalAnimationEnabled(enabled);
+        this.lastAnimationSamplingEnabled = enabled;
+        this.lastAnimationSpeedMultiplier = multiplier;
+    }
+
+    private isOptimizationScene(): boolean {
+        return director.getScene()?.name === MonsterBattleTaerget.OPTIMIZED_SCENE_NAME;
     }
 
     private isSmallMonsterInAttackPosition(): boolean {
@@ -694,6 +802,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         if (state) {
             state.speed = this.runAnimSpeed;
         }
+        this.lastAnimationSamplingEnabled = true;
+        this.lastAnimationSpeedMultiplier = 1;
+        this.fbx.setSkeletalAnimationEnabled(true);
     }
 
     private attackEvent() {

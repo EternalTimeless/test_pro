@@ -415,32 +415,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              var _z = this.getTargetFrameData(target).z;
+              var targetData = this.getTargetFrameData(target);
 
-              var _bIdx = this._getBucketIdx(_z);
+              var minTargetBucketIdx = this._getBucketIdx(targetData.z - targetData.halfZ);
 
-              this.markTargetBucketUsed(typeStr, _bIdx);
+              var maxTargetBucketIdx = this._getBucketIdx(targetData.z + targetData.halfZ);
 
-              tBuckets[_bIdx].push(target); // 放入相邻桶防止边界遗漏
-
-
-              if (_bIdx > 0) {
-                this.markTargetBucketUsed(typeStr, _bIdx - 1);
-
-                tBuckets[_bIdx - 1].push(target);
-              }
-
-              if (_bIdx < this._bucketCount - 1) {
-                this.markTargetBucketUsed(typeStr, _bIdx + 1);
-
-                tBuckets[_bIdx + 1].push(target);
+              for (var bucketIdx = minTargetBucketIdx; bucketIdx <= maxTargetBucketIdx; bucketIdx++) {
+                this.markTargetBucketUsed(typeStr, bucketIdx);
+                tBuckets[bucketIdx].push(target);
               }
             }
           } // 4. 逐桶碰撞检测
 
 
-          for (var _bIdx2 = 0; _bIdx2 < this._bucketCount; _bIdx2++) {
-            var bucketBullets = this._bulletBuckets[_bIdx2];
+          for (var _bIdx = 0; _bIdx < this._bucketCount; _bIdx++) {
+            var bucketBullets = this._bulletBuckets[_bIdx];
             if (bucketBullets.length === 0) continue;
 
             for (var bi = 0; bi < bucketBullets.length; bi++) {
@@ -502,11 +492,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                     this._targetCheckedStamp.set(_target, targetCheckId); // AABB碰撞判定
 
 
-                    var targetData = this.getTargetFrameData(_target);
-                    var tx = targetData.x;
-                    var tz = targetData.z;
-                    var tHalfX = targetData.halfX;
-                    var tHalfZ = targetData.halfZ;
+                    var _targetData = this.getTargetFrameData(_target);
+
+                    var tx = _targetData.x;
+                    var tz = _targetData.z;
+                    var tHalfX = _targetData.halfX;
+                    var tHalfZ = _targetData.halfZ;
 
                     if (this.isSweptBulletHit(prevX, prevZ, bx, bz, bHalfX, bHalfZ, tx, tz, tHalfX, tHalfZ)) {
                       // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）

@@ -177,6 +177,11 @@ export class FbxManager extends Component {
         return this._cur;
     }
 
+    /** 仅用于不含玩法事件的循环动画降频；攻击和死亡动画不要关闭。 */
+    public setSkeletalAnimationEnabled(enabled: boolean): void {
+        this.skeleta.enabled = enabled;
+    }
+
     public set Rotation_x(value: number) {
         this.node.setRotationFromEuler(value * 30, 0, 0);
     }

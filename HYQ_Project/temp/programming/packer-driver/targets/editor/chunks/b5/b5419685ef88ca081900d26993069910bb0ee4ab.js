@@ -184,6 +184,7 @@ System.register(["cc"], function (_export, _context) {
           this.hiddenVisualMap = new Map();
           this.nodeBlockCache = new WeakMap();
           this.scanStack = [];
+          this.visualHideStack = [];
           this.frameCount = 0;
           this.frameTime = 0;
           this.nextRefreshAt = 0;
@@ -363,6 +364,11 @@ System.register(["cc"], function (_export, _context) {
               this.collectComponentHookTargets(component);
               this.applyVisualHide(component, block);
               const className = js.getClassName(component) || ((_component$constructo = component.constructor) == null ? void 0 : _component$constructo.name) || 'Unknown';
+
+              if (this.hideMonster && className === 'MonsterBattleTaerget') {
+                this.applyVisualHideInSubtree(component.node, '怪物');
+              }
+
               const entityBlock = ENTITY_CLASS_BLOCK[className];
 
               if (entityBlock) {
@@ -663,6 +669,11 @@ System.register(["cc"], function (_export, _context) {
 
           if (!this.isBlockHidden(block) || component.node === this.hudNode) {
             return;
+          } // 隐藏怪物模型时保留血条、伤害文字等 UI，便于观察战斗状态。
+
+
+          if (block === '怪物' && component instanceof UIRenderer) {
+            return;
           }
 
           if (!(component instanceof ModelRenderer) && !(component instanceof UIRenderer)) {
@@ -684,8 +695,34 @@ System.register(["cc"], function (_export, _context) {
 
           if (component instanceof ModelRenderer) {
             component.visibility = 0;
+            component.enabled = false;
           } else {
             component.enabled = false;
+          }
+        }
+        /** 怪物模型可能位于嵌套预制体层级，直接从怪物组件根节点递归隐藏全部视觉组件。 */
+
+
+        applyVisualHideInSubtree(root, block) {
+          this.visualHideStack.length = 0;
+          this.visualHideStack.push(root);
+
+          while (this.visualHideStack.length > 0) {
+            const node = this.visualHideStack.pop();
+
+            if (!node || !node.isValid) {
+              continue;
+            }
+
+            const components = node.components;
+
+            for (let i = 0; i < components.length; i++) {
+              this.applyVisualHide(components[i], block);
+            }
+
+            for (let i = 0; i < node.children.length; i++) {
+              this.visualHideStack.push(node.children[i]);
+            }
           }
         }
 
@@ -694,8 +731,9 @@ System.register(["cc"], function (_export, _context) {
             var _record$component;
 
             const record = this.hiddenVisualRecords[i];
+            const shouldKeepMonsterUi = record.block === '怪物' && record.component instanceof UIRenderer;
 
-            if (!((_record$component = record.component) != null && _record$component.isValid) || !this.isBlockHidden(record.block)) {
+            if (!((_record$component = record.component) != null && _record$component.isValid) || !this.isBlockHidden(record.block) || shouldKeepMonsterUi) {
               this.restoreHiddenVisual(record);
               this.hiddenVisualMap.delete(record.component);
               this.hiddenVisualRecords.splice(i, 1);
@@ -704,6 +742,7 @@ System.register(["cc"], function (_export, _context) {
 
             if (record.component instanceof ModelRenderer) {
               record.component.visibility = 0;
+              record.component.enabled = false;
             } else {
               record.component.enabled = false;
             }
@@ -728,6 +767,7 @@ System.register(["cc"], function (_export, _context) {
 
           if (component instanceof ModelRenderer) {
             component.visibility = record.originalVisibility;
+            component.enabled = record.originalEnabled;
           } else {
             component.enabled = record.originalEnabled;
           }

@@ -407,21 +407,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 continue;
               }
 
-              const z = this.getTargetFrameData(target).z;
+              const targetData = this.getTargetFrameData(target);
 
-              const bIdx = this._getBucketIdx(z);
+              const minTargetBucketIdx = this._getBucketIdx(targetData.z - targetData.halfZ);
 
-              this.markTargetBucketUsed(typeStr, bIdx);
-              tBuckets[bIdx].push(target); // 放入相邻桶防止边界遗漏
+              const maxTargetBucketIdx = this._getBucketIdx(targetData.z + targetData.halfZ);
 
-              if (bIdx > 0) {
-                this.markTargetBucketUsed(typeStr, bIdx - 1);
-                tBuckets[bIdx - 1].push(target);
-              }
-
-              if (bIdx < this._bucketCount - 1) {
-                this.markTargetBucketUsed(typeStr, bIdx + 1);
-                tBuckets[bIdx + 1].push(target);
+              for (let bucketIdx = minTargetBucketIdx; bucketIdx <= maxTargetBucketIdx; bucketIdx++) {
+                this.markTargetBucketUsed(typeStr, bucketIdx);
+                tBuckets[bucketIdx].push(target);
               }
             }
           } // 4. 逐桶碰撞检测
