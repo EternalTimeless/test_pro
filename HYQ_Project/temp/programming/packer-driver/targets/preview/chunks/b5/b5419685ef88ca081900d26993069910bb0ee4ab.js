@@ -475,15 +475,6 @@ System.register(["cc"], function (_export, _context) {
             return cached;
           }
 
-          if (this.getBlockByNodeName(node.name) === '道具') {
-            var actorOwnerBlock = this.getActorOwnerBlock(node.parent);
-
-            if (actorOwnerBlock) {
-              this.nodeBlockCache.set(node, actorOwnerBlock);
-              return actorOwnerBlock;
-            }
-          }
-
           var current = node;
           var sawParticle = false;
           var sawUi = node.layer === Layers.Enum.UI_2D;
@@ -542,44 +533,6 @@ System.register(["cc"], function (_export, _context) {
           var result = sawParticle ? '特效' : sawUi ? 'UI' : '环境';
           this.nodeBlockCache.set(node, result);
           return result;
-        }
-
-        getActorOwnerBlock(node) {
-          var current = node;
-
-          while (current) {
-            var cached = this.nodeBlockCache.get(current);
-
-            if (cached === '玩家' || cached === '怪物' || cached === '子弹') {
-              return cached;
-            }
-
-            var components = current.components;
-
-            for (var i = 0; i < components.length; i++) {
-              var _component$constructo3;
-
-              var component = components[i];
-
-              var _className3 = js.getClassName(component) || ((_component$constructo3 = component.constructor) == null ? void 0 : _component$constructo3.name) || '';
-
-              if (_className3 === 'Player' || _className3 === 'Role') {
-                return '玩家';
-              }
-
-              if (_className3 === 'MonsterBattleTaerget') {
-                return '怪物';
-              }
-
-              if (_className3 === 'BulletBattle3D') {
-                return '子弹';
-              }
-            }
-
-            current = current.parent;
-          }
-
-          return null;
         }
 
         getExplicitBlockByClassName(className) {
@@ -840,13 +793,13 @@ System.register(["cc"], function (_export, _context) {
         }
 
         collectComponentHookTargets(component) {
-          var _component$constructo4;
+          var _component$constructo3;
 
           if (!component || component === this) {
             return;
           }
 
-          var className = js.getClassName(component) || ((_component$constructo4 = component.constructor) == null ? void 0 : _component$constructo4.name) || '';
+          var className = js.getClassName(component) || ((_component$constructo3 = component.constructor) == null ? void 0 : _component$constructo3.name) || '';
 
           if (!className || className.indexOf('cc.') === 0) {
             return;
@@ -937,11 +890,11 @@ System.register(["cc"], function (_export, _context) {
             } finally {
               var _this$constructor, _ref;
 
-              var _className4 = js.getClassName(this) || (this == null || (_this$constructor = this.constructor) == null ? void 0 : _this$constructor.name) || methodName;
+              var _className3 = js.getClassName(this) || (this == null || (_this$constructor = this.constructor) == null ? void 0 : _this$constructor.name) || methodName;
 
               var _block3 = (_ref = fixedBlock != null ? fixedBlock : hud.classifyNode(this == null ? void 0 : this.node)) != null ? _ref : '其他';
 
-              hud.recordCpu(_block3, _className4, hud.now() - start);
+              hud.recordCpu(_block3, _className3, hud.now() - start);
             }
           };
 

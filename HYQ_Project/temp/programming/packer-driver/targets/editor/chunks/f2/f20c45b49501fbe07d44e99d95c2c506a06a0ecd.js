@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, v3, Vec3, Singleton, PoolManager, _crd;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, director, Node, v3, Vec3, Singleton, PoolManager, _crd;
 
   function _reportPossibleCrUseOfSingleton(extras) {
     _reporterNs.report("Singleton", "./Singleton", _context.meta, extras);
@@ -16,6 +16,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
       _cclegacy = _cc.cclegacy;
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
+      director = _cc.director;
+      Node = _cc.Node;
       v3 = _cc.v3;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -26,7 +28,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
       _cclegacy._RF.push({}, "d7997kx1jNJkYEEUmDTQvvu", "PoolManager", undefined);
 
-      __checkObsolete__(['ccenum', 'v3', 'Vec3']);
+      __checkObsolete__(['ccenum', 'director', 'Node', 'v3', 'Vec3']);
 
       _export("default", PoolManager = class PoolManager extends (_crd && Singleton === void 0 ? (_reportPossibleCrUseOfSingleton({
         error: Error()
@@ -89,7 +91,40 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             return;
           }
 
+          const poolLimit = this.getScenePoolLimit(key);
+
+          if (arr.length >= poolLimit) {
+            this.releaseOverflowItem(node);
+            return;
+          }
+
           arr.push(node);
+        }
+
+        getScenePoolLimit(key) {
+          var _director$getScene;
+
+          if (((_director$getScene = director.getScene()) == null ? void 0 : _director$getScene.name) !== PoolManager.GAME_3D_002_SCENE) {
+            return Number.POSITIVE_INFINITY;
+          }
+
+          if (key === "EffectSq_") {
+            return PoolManager.GAME_3D_002_EFFECT_SEQUENCE_POOL_LIMIT;
+          }
+
+          if (key.startsWith("effect_")) {
+            return PoolManager.GAME_3D_002_EFFECT_NODE_POOL_LIMIT;
+          }
+
+          return Number.POSITIVE_INFINITY;
+        }
+
+        releaseOverflowItem(item) {
+          const node = item instanceof Node ? item : item == null ? void 0 : item.node;
+
+          if (node instanceof Node && node.isValid) {
+            node.destroy();
+          }
         }
 
         getPoolSize(key) {
@@ -115,6 +150,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         }
 
       });
+
+      /**
+       * Game_3D-002 的特效峰值较高，只限制已经回收、当前不可见的特效缓存。
+       * 其他对象池和其他场景维持原行为，避免影响战斗逻辑。
+       */
+      PoolManager.GAME_3D_002_SCENE = "Game_3D-002";
+      PoolManager.GAME_3D_002_EFFECT_NODE_POOL_LIMIT = 6;
+      PoolManager.GAME_3D_002_EFFECT_SEQUENCE_POOL_LIMIT = 16;
 
       _cclegacy._RF.pop();
 
