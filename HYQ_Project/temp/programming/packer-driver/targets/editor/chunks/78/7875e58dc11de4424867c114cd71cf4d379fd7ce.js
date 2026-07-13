@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Color, Component, MeshRenderer, Node, Quat, SkinnedMeshRenderer, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, PropLalianGate, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _class3, _crd, ccclass, property, Role;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, CCFloat, CCInteger, Color, Component, MeshRenderer, Node, Quat, Tween, Vec3, FbxManager, BulletEnum, LayerEnum, RoleEnum, SoundEnum, BulletManager, LayerManager, MeshFlashData, FlashRedManager, AttackParkPlay, AudioManager, BulletMonsterCollisionManager, PropLalianGate, BulletBatchRenderer, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _class3, _crd, ccclass, property, Role;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -84,7 +84,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       MeshRenderer = _cc.MeshRenderer;
       Node = _cc.Node;
       Quat = _cc.Quat;
-      SkinnedMeshRenderer = _cc.SkinnedMeshRenderer;
       Tween = _cc.Tween;
       Vec3 = _cc.Vec3;
     }, function (_unresolved_2) {
@@ -118,7 +117,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "86381loO/lKPYw+1SpcYu+c", "Role", undefined);
 
-      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Color', 'Component', 'MeshRenderer', 'Node', 'Quat', 'SkinnedMeshRenderer', 'Tween', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Color', 'Component', 'MeshRenderer', 'Node', 'Quat', 'Tween', 'Vec3']);
 
       ({
         ccclass,
@@ -280,8 +279,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return;
           }
 
-          this.shadowRenderersCached = true;
-          const renderers = this.node.getComponentsInChildren(SkinnedMeshRenderer);
+          this.shadowRenderersCached = true; // 角色除了蒙皮身体外还可能带静态武器/配件，统一纳入圈层阴影开关。
+
+          const renderers = this.node.getComponentsInChildren(MeshRenderer);
 
           for (let i = 0; i < renderers.length; i++) {
             const renderer = renderers[i];

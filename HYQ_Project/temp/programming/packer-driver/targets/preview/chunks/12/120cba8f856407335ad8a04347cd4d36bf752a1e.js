@@ -296,8 +296,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '按画面可见圈数限制。3 表示中心第1圈 + 外围第2圈 + 外围第3圈。'
       }), _dec14 = property({
         type: CCInteger,
-        displayName: '最外圈角色数',
-        tooltip: '最外圈排满需要的角色数量。填 28 时，满员阵型为 1 + 8 + 16 + 28 = 53。'
+        displayName: '满员阵型层数',
+        tooltip: '包含中心层。设为 4 时，剩余角色按各圈半径比例自动分配到外围三圈。'
       }), _dec15 = property({
         type: CCFloat,
         displayName: '减员缩圈延迟(秒)',
@@ -312,8 +312,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。'
       }), _dec18 = property({
         type: CCBoolean,
-        displayName: '仅最外圈角色投影',
-        tooltip: '开启后动态计算当前阵型最外圈，只保留最外圈角色的动态阴影。Game_3D-002 默认启用，其他场景保持关闭。'
+        displayName: '仅外圈角色投影',
+        tooltip: '开启后动态关闭内圈阴影；最外圈未排满时，同时保留相邻完整圈的阴影，避免缺口区域没有角色投影。'
       }), _dec19 = property({
         type: CCBoolean,
         displayName: 'jtl2合并多发逻辑弹',
@@ -355,7 +355,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       }), UnityUpComponent) : UnityUpComponent) {
         constructor() {
           super(...arguments);
-          this.LayerCount = 8;
           this.roleType = (_crd && RoleEnum === void 0 ? (_reportPossibleCrUseOfRoleEnum({
             error: Error()
           }), RoleEnum) : RoleEnum).underling;
@@ -374,7 +373,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           _initializerDefineProperty(this, "retryMaxRoleLayerCount", _descriptor11, this);
 
-          _initializerDefineProperty(this, "outerLayerRoleCount", _descriptor12, this);
+          _initializerDefineProperty(this, "formationLayerCount", _descriptor12, this);
 
           _initializerDefineProperty(this, "shrinkAfterRoleLossDelay", _descriptor13, this);
 
@@ -1425,9 +1424,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }), PoolManager) : PoolManager).instance.V3.set(Vec3.ZERO) : (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
             }), PoolManager) : PoolManager).instance.V3.set(this.node.worldPosition);
-          } // 列表第一个不算，用 index-1 作为有效索引
-          // 第 n 层数量 = LayerCount * 2^n，前 n 层总数 = LayerCount * (2^n - 1)
-          // layer = floor(log2(effectiveIndex / LayerCount + 1))
+          } // 列表第一个位于中心，其余角色按各圈半径权重自动分配。
 
 
           var effectiveIndex = index - 1;
@@ -1466,27 +1463,26 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         getRoleLayerCount(layer) {
-          if (layer <= 0) {
-            return this.LayerCount;
-          }
+          var ringCount = Math.max(1, Math.floor(this.formationLayerCount) - 1);
+          var ringIndex = Math.max(0, Math.floor(layer));
+          var roleCountOnRings = Math.max(ringCount, Math.floor(this.maxRoleCount) - 1);
+          var totalWeight = ringCount * (ringCount + 1) / 2;
+          var currentWeight = Math.min(ringIndex + 1, ringCount);
+          var previousWeight = Math.min(ringIndex, ringCount);
+          var currentEnd = Math.round(roleCountOnRings * currentWeight * (currentWeight + 1) / 2 / totalWeight);
+          var previousEnd = Math.round(roleCountOnRings * previousWeight * (previousWeight + 1) / 2 / totalWeight);
 
-          if (layer === 1) {
-            return this.LayerCount * 2;
-          }
+          if (ringIndex < ringCount) {
+            return Math.max(1, currentEnd - previousEnd);
+          } // 超出配置圈数时继续按最外圈容量扩展，避免异常索引造成死循环。
 
-          var outerCount = Math.max(1, Math.floor(this.outerLayerRoleCount));
 
-          if (layer === 2) {
-            return outerCount;
-          }
-
-          return outerCount << layer - 2;
+          var lastRingStart = Math.round(roleCountOnRings * (ringCount - 1) * ringCount / 2 / totalWeight);
+          return Math.max(1, roleCountOnRings - lastRingStart) << ringIndex - ringCount + 1;
         }
 
         getEffectiveMaxRoleCount() {
-          var configuredMax = Math.max(1, Math.floor(this.maxRoleCount));
-          var fourLayerMax = 1 + this.getRoleLayerCount(0) + this.getRoleLayerCount(1) + this.getRoleLayerCount(2);
-          return Math.min(configuredMax, fourLayerMax);
+          return Math.max(1, Math.floor(this.maxRoleCount));
         }
 
         get length() {
@@ -1775,6 +1771,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
 
           var outerLayer = combatRoleCount > 0 ? this.getRoleLayer(combatRoleCount - 1) : 0;
+          var shadowMinLayer = outerLayer;
+
+          if (combatRoleCount > 1 && outerLayer > 0) {
+            var outerRoleInfo = this.getRoleLayerInfo(combatRoleCount - 2);
+            var isOuterLayerFull = outerRoleInfo.indexInLayer + 1 >= outerRoleInfo.layerCount;
+
+            if (!isOuterLayerFull) {
+              // 缺口会露出紧邻的完整内圈，因此两圈都保留阴影。
+              shadowMinLayer = outerLayer - 1;
+            }
+          }
+
           var combatIndex = 0;
 
           for (var _i4 = 0; _i4 < this.roleList.length; _i4++) {
@@ -1790,7 +1798,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               continue;
             }
 
-            _role3.setShadowCastingEnabled(this.getRoleLayer(combatIndex) === outerLayer);
+            _role3.setShadowCastingEnabled(this.getRoleLayer(combatIndex) >= shadowMinLayer);
 
             combatIndex++;
           }
@@ -2225,7 +2233,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return 53;
+          return 42;
         }
       }), _descriptor11 = _applyDecoratedDescriptor(_class5.prototype, "retryMaxRoleLayerCount", [_dec13], {
         configurable: true,
@@ -2234,12 +2242,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         initializer: function initializer() {
           return 3;
         }
-      }), _descriptor12 = _applyDecoratedDescriptor(_class5.prototype, "outerLayerRoleCount", [_dec14], {
+      }), _descriptor12 = _applyDecoratedDescriptor(_class5.prototype, "formationLayerCount", [_dec14], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return 28;
+          return 4;
         }
       }), _descriptor13 = _applyDecoratedDescriptor(_class5.prototype, "shrinkAfterRoleLossDelay", [_dec15], {
         configurable: true,
@@ -2267,7 +2275,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return false;
+          return true;
         }
       }), _descriptor17 = _applyDecoratedDescriptor(_class5.prototype, "mergeJtl2MultiBulletLogic", [_dec19], {
         configurable: true,

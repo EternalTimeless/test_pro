@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Color, Component, MeshRenderer, Node, Quat, SkinnedMeshRenderer, Tween, Vec3 } from 'cc';
+import { _decorator, CCFloat, CCInteger, Color, Component, MeshRenderer, Node, Quat, Tween, Vec3 } from 'cc';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { BulletEnum, LayerEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import BulletManager from '../Battle/BulletManager';
@@ -56,7 +56,7 @@ export class Role extends Component {
     private readonly initialArmsScale: Vec3 = new Vec3();
     private readonly initialArmsChildTransforms: { node: Node, parent: Node, position: Vec3, rotation: Quat, scale: Vec3, active: boolean }[] = [];
     private hasInitialArmsTransform: boolean = false;
-    private shadowRenderers: SkinnedMeshRenderer[] = [];
+    private shadowRenderers: MeshRenderer[] = [];
     private originalShadowCastingModes: number[] = [];
     private shadowRenderersCached: boolean = false;
     private shadowCastingEnabled: boolean | null = null;
@@ -143,7 +143,8 @@ export class Role extends Component {
             return;
         }
         this.shadowRenderersCached = true;
-        const renderers = this.node.getComponentsInChildren(SkinnedMeshRenderer);
+        // 角色除了蒙皮身体外还可能带静态武器/配件，统一纳入圈层阴影开关。
+        const renderers = this.node.getComponentsInChildren(MeshRenderer);
         for (let i = 0; i < renderers.length; i++) {
             const renderer = renderers[i];
             this.shadowRenderers.push(renderer);

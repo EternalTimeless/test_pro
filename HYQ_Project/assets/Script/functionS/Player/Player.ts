@@ -67,8 +67,6 @@ export class Player extends UnityUpComponent {
 
     public static instance: Player;
 
-    protected readonly LayerCount = 8;
-
     public roleType: RoleEnum = RoleEnum.underling;
 
     @property(Role)
@@ -84,13 +82,13 @@ export class Player extends UnityUpComponent {
     private pendingAddRoleCount: number = 0;
 
     @property({ type: CCInteger, displayName: '+1人数上限', tooltip: '玩家通过 +1 最多增加到的角色数量。达到后继续吃 +1 只回收道具，不再增加角色。' })
-    public maxRoleCount: number = 53;
+    public maxRoleCount: number = 42;
 
     @property({ type: CCInteger, displayName: '再来一次补人圈数上限', tooltip: '按画面可见圈数限制。3 表示中心第1圈 + 外围第2圈 + 外围第3圈。' })
     public retryMaxRoleLayerCount: number = 3;
 
-    @property({ type: CCInteger, displayName: '最外圈角色数', tooltip: '最外圈排满需要的角色数量。填 28 时，满员阵型为 1 + 8 + 16 + 28 = 53。' })
-    public outerLayerRoleCount: number = 28;
+    @property({ type: CCInteger, displayName: '满员阵型层数', tooltip: '包含中心层。设为 4 时，剩余角色按各圈半径比例自动分配到外围三圈。' })
+    public formationLayerCount: number = 4;
 
     @property({ type: CCFloat, displayName: '减员缩圈延迟(秒)', tooltip: '角色减少后等待多久再重新排列缩圈。等待期间再次减员会重新计时。' })
     public shrinkAfterRoleLossDelay: number = 2;
@@ -101,8 +99,8 @@ export class Player extends UnityUpComponent {
     @property({ type: CCInteger, displayName: '枪口特效最大播放数', tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。' })
     public maxMuzzleEffectCount: number = 8;
 
-    @property({ type: CCBoolean, displayName: '仅最外圈角色投影', tooltip: '开启后动态计算当前阵型最外圈，只保留最外圈角色的动态阴影。Game_3D-002 默认启用，其他场景保持关闭。' })
-    public onlyOuterLayerCastShadow: boolean = false;
+    @property({ type: CCBoolean, displayName: '仅外圈角色投影', tooltip: '开启后动态关闭内圈阴影；最外圈未排满时，同时保留相邻完整圈的阴影，避免缺口区域没有角色投影。' })
+    public onlyOuterLayerCastShadow: boolean = true;
 
     @property({ type: CCBoolean, displayName: 'jtl2合并多发逻辑弹', tooltip: '仅对 jtl2 生效。多发子弹的视觉数量保持不变，但合并为一颗逻辑子弹参与移动和碰撞，并自动补偿总伤害。' })
     public mergeJtl2MultiBulletLogic: boolean = true;
@@ -951,9 +949,7 @@ export class Player extends UnityUpComponent {
         if (index <= 0) {
             return local ? PoolManager.instance.V3.set(Vec3.ZERO) : PoolManager.instance.V3.set(this.node.worldPosition);
         }
-        // 列表第一个不算，用 index-1 作为有效索引
-        // 第 n 层数量 = LayerCount * 2^n，前 n 层总数 = LayerCount * (2^n - 1)
-        // layer = floor(log2(effectiveIndex / LayerCount + 1))
+        // 列表第一个位于中心，其余角色按各圈半径权重自动分配。
         const effectiveIndex = index - 1;
         const layerInfo = this.getRoleLayerInfo(effectiveIndex);
         if (local) {
@@ -978,23 +974,24 @@ export class Player extends UnityUpComponent {
     }
 
     private getRoleLayerCount(layer: number): number {
-        if (layer <= 0) {
-            return this.LayerCount;
+        const ringCount = Math.max(1, Math.floor(this.formationLayerCount) - 1);
+        const ringIndex = Math.max(0, Math.floor(layer));
+        const roleCountOnRings = Math.max(ringCount, Math.floor(this.maxRoleCount) - 1);
+        const totalWeight = ringCount * (ringCount + 1) / 2;
+        const currentWeight = Math.min(ringIndex + 1, ringCount);
+        const previousWeight = Math.min(ringIndex, ringCount);
+        const currentEnd = Math.round(roleCountOnRings * currentWeight * (currentWeight + 1) / 2 / totalWeight);
+        const previousEnd = Math.round(roleCountOnRings * previousWeight * (previousWeight + 1) / 2 / totalWeight);
+        if (ringIndex < ringCount) {
+            return Math.max(1, currentEnd - previousEnd);
         }
-        if (layer === 1) {
-            return this.LayerCount * 2;
-        }
-        const outerCount = Math.max(1, Math.floor(this.outerLayerRoleCount));
-        if (layer === 2) {
-            return outerCount;
-        }
-        return outerCount << (layer - 2);
+        // 超出配置圈数时继续按最外圈容量扩展，避免异常索引造成死循环。
+        const lastRingStart = Math.round(roleCountOnRings * (ringCount - 1) * ringCount / 2 / totalWeight);
+        return Math.max(1, roleCountOnRings - lastRingStart) << (ringIndex - ringCount + 1);
     }
 
     public getEffectiveMaxRoleCount(): number {
-        const configuredMax = Math.max(1, Math.floor(this.maxRoleCount));
-        const fourLayerMax = 1 + this.getRoleLayerCount(0) + this.getRoleLayerCount(1) + this.getRoleLayerCount(2);
-        return Math.min(configuredMax, fourLayerMax);
+        return Math.max(1, Math.floor(this.maxRoleCount));
     }
 
     public get length() {
@@ -1222,6 +1219,15 @@ export class Player extends UnityUpComponent {
         }
 
         const outerLayer = combatRoleCount > 0 ? this.getRoleLayer(combatRoleCount - 1) : 0;
+        let shadowMinLayer = outerLayer;
+        if (combatRoleCount > 1 && outerLayer > 0) {
+            const outerRoleInfo = this.getRoleLayerInfo(combatRoleCount - 2);
+            const isOuterLayerFull = outerRoleInfo.indexInLayer + 1 >= outerRoleInfo.layerCount;
+            if (!isOuterLayerFull) {
+                // 缺口会露出紧邻的完整内圈，因此两圈都保留阴影。
+                shadowMinLayer = outerLayer - 1;
+            }
+        }
         let combatIndex = 0;
         for (let i = 0; i < this.roleList.length; i++) {
             const role = this.roleList[i];
@@ -1232,7 +1238,7 @@ export class Player extends UnityUpComponent {
                 role.setShadowCastingEnabled(true);
                 continue;
             }
-            role.setShadowCastingEnabled(this.getRoleLayer(combatIndex) === outerLayer);
+            role.setShadowCastingEnabled(this.getRoleLayer(combatIndex) >= shadowMinLayer);
             combatIndex++;
         }
     }
