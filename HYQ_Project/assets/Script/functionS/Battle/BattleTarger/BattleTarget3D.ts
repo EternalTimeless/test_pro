@@ -7,6 +7,9 @@ const { ccclass, property } = _decorator;
 @ccclass('BattleTarget3D')
 export abstract class BattleTarget3D extends BattleTargetBase {
 
+    /** 同一帧内碰撞形态不变的目标可开启，供碰撞管理器复用计算结果。 */
+    public readonly cacheCollisionBoundsPerFrame: boolean = false;
+
     @property({ type: EffectEnum })
     public hitEffect: EffectEnum = EffectEnum.Monsterhit;
 

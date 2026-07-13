@@ -20,6 +20,7 @@ type PropBrandVisualRecord = {
 export class PropBrand extends BattleTarget3D {
 
     public readonly skipBulletHitEffect: boolean = true;
+    public readonly cacheCollisionBoundsPerFrame: boolean = true;
 
     @property(Label)
     public lab: Label;

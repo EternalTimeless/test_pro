@@ -60,6 +60,8 @@ export default class BulletBattle3D extends Component {
     public batchRenderer: BulletBatchRenderer | null = null;
     public batchVisualCount: number = 1;
     private readonly _batchVisualOffsets: Vec3[] = [new Vec3()];
+    private _batchVisualMaxOffsetX: number = 0;
+    private _batchVisualMaxOffsetZ: number = 0;
 
     /** 是否已注册到碰撞管理器 */
     private _registered: boolean = false;
@@ -130,6 +132,8 @@ export default class BulletBattle3D extends Component {
         this._hasPreviousWorldPosition = false;
         this.batchVisualCount = 1;
         this._batchVisualOffsets[0].set(Vec3.ZERO);
+        this._batchVisualMaxOffsetX = 0;
+        this._batchVisualMaxOffsetZ = 0;
         const sprite = this.batchSprite && this.batchSprite.isValid
             ? this.batchSprite
             : this.node.getComponentInChildren(Sprite);
@@ -148,6 +152,8 @@ export default class BulletBattle3D extends Component {
 
     public configureBatchVisualCopies(count: number, spreadForward: boolean): void {
         this.batchVisualCount = Math.max(1, Math.floor(count));
+        this._batchVisualMaxOffsetX = 0;
+        this._batchVisualMaxOffsetZ = 0;
         for (let i = 0; i < this.batchVisualCount; i++) {
             let offset = this._batchVisualOffsets[i];
             if (!offset) {
@@ -163,11 +169,18 @@ export default class BulletBattle3D extends Component {
                 0,
                 spreadForward ? (Math.random() - 0.5) * 4 : 0,
             );
+            this._batchVisualMaxOffsetX = Math.max(this._batchVisualMaxOffsetX, Math.abs(offset.x));
+            this._batchVisualMaxOffsetZ = Math.max(this._batchVisualMaxOffsetZ, Math.abs(offset.z));
         }
     }
 
     public getBatchVisualOffset(index: number): Readonly<Vec3> {
         return this._batchVisualOffsets[index] ?? Vec3.ZERO;
+    }
+
+    /** 获取所有合批视觉副本相对逻辑子弹的最大散布范围，不产生临时对象。 */
+    public getBatchVisualMaxOffset(out: Vec3): Vec3 {
+        return out.set(this._batchVisualMaxOffsetX, 0, this._batchVisualMaxOffsetZ);
     }
 
 

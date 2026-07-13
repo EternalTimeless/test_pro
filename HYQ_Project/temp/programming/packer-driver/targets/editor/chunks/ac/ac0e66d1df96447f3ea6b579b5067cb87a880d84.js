@@ -70,6 +70,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         constructor(...args) {
           super(...args);
           this.skipBulletHitEffect = true;
+          this.cacheCollisionBoundsPerFrame = true;
 
           _initializerDefineProperty(this, "lab", _descriptor, this);
 

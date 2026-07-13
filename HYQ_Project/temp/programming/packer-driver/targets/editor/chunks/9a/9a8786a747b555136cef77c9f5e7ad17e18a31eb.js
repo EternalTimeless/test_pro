@@ -62,6 +62,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
         constructor(...args) {
           super(...args);
 
+          /** 同一帧内碰撞形态不变的目标可开启，供碰撞管理器复用计算结果。 */
+          this.cacheCollisionBoundsPerFrame = false;
+
           _initializerDefineProperty(this, "hitEffect", _descriptor, this);
 
           _initializerDefineProperty(this, "collisionHalfX", _descriptor2, this);

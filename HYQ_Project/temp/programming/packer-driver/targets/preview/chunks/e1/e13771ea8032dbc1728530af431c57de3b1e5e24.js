@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Vec3, director, Director, MeshRenderer, Singleton, CollisionTargetGroup, _dec, _class2, _crd, ccclass, property, BulletMonsterCollisionManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Vec3, director, Director, MeshRenderer, Singleton, CollisionTargetGroup, _dec, _class2, _class3, _crd, ccclass, property, BulletMonsterCollisionManager;
 
   function _reportPossibleCrUseOfSingleton(extras) {
     _reporterNs.report("Singleton", "db://assets/Script/Base/Singleton", _context.meta, extras);
@@ -89,12 +89,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         }
 
       };
+
       /**
        * 自定义碰撞管理器 - 替代物理引擎进行子弹与目标的碰撞检测
        * iOS优化：用数组而非Map，预分配Vec3，AABB判定，零GC
        */
-
-      _export("default", BulletMonsterCollisionManager = (_dec = ccclass('BulletMonsterCollisionManager'), _dec(_class2 = class BulletMonsterCollisionManager extends (_crd && Singleton === void 0 ? (_reportPossibleCrUseOfSingleton({
+      _export("default", BulletMonsterCollisionManager = (_dec = ccclass('BulletMonsterCollisionManager'), _dec(_class2 = (_class3 = class BulletMonsterCollisionManager extends (_crd && Singleton === void 0 ? (_reportPossibleCrUseOfSingleton({
         error: Error()
       }), Singleton) : Singleton) {
         static get instance() {
@@ -123,18 +123,34 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           /** 预分配临时Vec3，避免每帧new */
           this._tempVec3 = new Vec3();
           this._tempBulletPrevPos = new Vec3();
+          this._tempBulletVisualOffset = new Vec3();
           this._targetCheckedStamp = new WeakMap();
           this._wallCheckedStamp = new WeakMap();
+          this._staticTargetFrameData = new WeakMap();
+          this._tempTargetFrameData = {
+            frame: -1,
+            x: 0,
+            z: 0,
+            halfX: 0,
+            halfZ: 0
+          };
 
           /** 子弹桶 - 每帧重建 */
           this._bulletBuckets = [];
+          this._usedBulletBucketIndices = [];
+          this._bulletBucketUsed = [];
 
           /** 目标桶 - 按组ID+桶索引存储 */
           this._targetBuckets = {};
+          this._usedTargetBucketIndices = {};
+          this._targetBucketUsed = {};
           this._wallBuckets = [];
           this._wallObstacles = [];
           this._wallScene = null;
           this._nextWallRefreshFrame = 0;
+          this._gldRootFound = false;
+          this._gldSideCount = 0;
+          this._gldReadySideCount = 0;
           this._targetCheckId = 1;
           this._wallCheckId = 1;
           this._directorCallback = void 0;
@@ -142,6 +158,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           for (var i = 0; i < this._bucketCount; i++) {
             this._bulletBuckets[i] = [];
+            this._bulletBucketUsed[i] = false;
             this._wallBuckets[i] = [];
           } // 使用 director 的每帧回调驱动碰撞检测
 
@@ -232,9 +249,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             }
           }
 
-          for (var i = 0; i < this._bucketCount; i++) {
-            this._bulletBuckets[i].length = 0;
-          }
+          this.clearUsedBulletBuckets();
         }
 
         getNearestTarget(fromPos, targetTags) {
@@ -340,31 +355,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
         update(dt) {
           if (this._bullets.length === 0) {
+            if (this.isSceneOptimizationEnabled() && this._usedBulletBucketIndices.length > 0) {
+              this.clearUsedBulletBuckets();
+              this.clearUsedTargetBuckets();
+            }
+
             return;
           }
 
           this.ensureWallObstacles(); // 1. 清空桶数组（只重置length=0，不释放内存）
 
-          for (var i = 0; i < this._bucketCount; i++) {
-            this._bulletBuckets[i].length = 0;
-          } // 清空目标桶
+          this.clearFrameBuckets(); // 2. 将子弹放入桶
 
-
-          for (var _groupId in this._targetBuckets) {
-            for (var _i = 0; _i < this._bucketCount; _i++) {
-              if (this._targetBuckets[_groupId][_i]) {
-                this._targetBuckets[_groupId][_i].length = 0;
-              }
-            }
-          } // 2. 将子弹放入桶
-
-
-          for (var _i2 = this._bullets.length - 1; _i2 >= 0; _i2--) {
-            var bullet = this._bullets[_i2];
+          for (var i = this._bullets.length - 1; i >= 0; i--) {
+            var bullet = this._bullets[i];
 
             if (!bullet.node.active) {
               // 子弹已回收，移除
-              this._bullets[_i2] = this._bullets[this._bullets.length - 1];
+              this._bullets[i] = this._bullets[this._bullets.length - 1];
 
               this._bullets.pop();
 
@@ -375,6 +383,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
             var bIdx = this._getBucketIdx(z);
 
+            this.markBulletBucketUsed(bIdx);
+
             this._bulletBuckets[bIdx].push(bullet);
           } // 3. 将目标放入桶（按COLLIDE_TYPE分组）
 
@@ -384,33 +394,47 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
             if (!this._targetBuckets[typeStr]) {
               this._targetBuckets[typeStr] = [];
+              this._usedTargetBucketIndices[typeStr] = [];
+              this._targetBucketUsed[typeStr] = [];
 
-              for (var _i3 = 0; _i3 < this._bucketCount; _i3++) {
-                this._targetBuckets[typeStr][_i3] = [];
+              for (var _i = 0; _i < this._bucketCount; _i++) {
+                this._targetBuckets[typeStr][_i] = [];
+                this._targetBucketUsed[typeStr][_i] = false;
               }
             }
 
             var tBuckets = this._targetBuckets[typeStr];
 
-            for (var _i4 = group.targets.length - 1; _i4 >= 0; _i4--) {
-              var target = group.targets[_i4];
+            for (var _i2 = group.targets.length - 1; _i2 >= 0; _i2--) {
+              var target = group.targets[_i2];
 
               if (target.isDie || !target.node.active) {
                 // 已死亡目标，移除
-                group.targets[_i4] = group.targets[group.targets.length - 1];
+                group.targets[_i2] = group.targets[group.targets.length - 1];
                 group.targets.pop();
                 continue;
               }
 
-              var _z = target.getCollisionWorldPosition(this._tempVec3).z;
+              var _z = this.getTargetFrameData(target).z;
 
               var _bIdx = this._getBucketIdx(_z);
+
+              this.markTargetBucketUsed(typeStr, _bIdx);
 
               tBuckets[_bIdx].push(target); // 放入相邻桶防止边界遗漏
 
 
-              if (_bIdx > 0) tBuckets[_bIdx - 1].push(target);
-              if (_bIdx < this._bucketCount - 1) tBuckets[_bIdx + 1].push(target);
+              if (_bIdx > 0) {
+                this.markTargetBucketUsed(typeStr, _bIdx - 1);
+
+                tBuckets[_bIdx - 1].push(target);
+              }
+
+              if (_bIdx < this._bucketCount - 1) {
+                this.markTargetBucketUsed(typeStr, _bIdx + 1);
+
+                tBuckets[_bIdx + 1].push(target);
+              }
             }
           } // 4. 逐桶碰撞检测
 
@@ -438,7 +462,18 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
               var maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ);
 
-              if (this.tryRecycleBulletByWallHit(_bullet, prevX, prevZ, bx, bz, bHalfX, bHalfZ, sweptMinX, sweptMaxX, minBucketIdx, maxBucketIdx)) {
+              var visualOffset = _bullet.getBatchVisualMaxOffset(this._tempBulletVisualOffset);
+
+              var wallHalfX = bHalfX + visualOffset.x;
+              var wallHalfZ = bHalfZ + visualOffset.z;
+              var wallSweptMinX = Math.min(prevX, bx) - wallHalfX;
+              var wallSweptMaxX = Math.max(prevX, bx) + wallHalfX;
+
+              var wallMinBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - wallHalfZ);
+
+              var wallMaxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + wallHalfZ);
+
+              if (this.tryRecycleBulletByWallHit(_bullet, prevX, prevZ, bx, bz, wallHalfX, wallHalfZ, wallSweptMinX, wallSweptMaxX, wallMinBucketIdx, wallMaxBucketIdx)) {
                 continue;
               } // 遍历子弹的 attackTargetTag
 
@@ -467,12 +502,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                     this._targetCheckedStamp.set(_target, targetCheckId); // AABB碰撞判定
 
 
-                    var targetPos = _target.getCollisionWorldPosition(this._tempVec3);
-
-                    var tx = targetPos.x;
-                    var tz = targetPos.z;
-                    var tHalfX = _target.collisionHalfX;
-                    var tHalfZ = _target.collisionHalfZ;
+                    var targetData = this.getTargetFrameData(_target);
+                    var tx = targetData.x;
+                    var tz = targetData.z;
+                    var tHalfX = targetData.halfX;
+                    var tHalfZ = targetData.halfZ;
 
                     if (this.isSweptBulletHit(prevX, prevZ, bx, bz, bHalfX, bHalfZ, tx, tz, tHalfX, tHalfZ)) {
                       // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
@@ -494,6 +528,122 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this._frameCount++;
         }
 
+        isSceneOptimizationEnabled() {
+          var _director$getScene;
+
+          return ((_director$getScene = director.getScene()) == null ? void 0 : _director$getScene.name) === BulletMonsterCollisionManager.OPTIMIZED_SCENE_NAME;
+        }
+
+        getTargetFrameData(target) {
+          if (this.isSceneOptimizationEnabled() && target.cacheCollisionBoundsPerFrame) {
+            var cached = this._staticTargetFrameData.get(target);
+
+            if ((cached == null ? void 0 : cached.frame) === this._frameCount) {
+              return cached;
+            }
+
+            var _pos = target.getCollisionWorldPosition(this._tempVec3);
+
+            var data = cached != null ? cached : {
+              frame: -1,
+              x: 0,
+              z: 0,
+              halfX: 0,
+              halfZ: 0
+            };
+            this.writeTargetFrameData(data, target, _pos);
+
+            this._staticTargetFrameData.set(target, data);
+
+            return data;
+          }
+
+          var pos = target.getCollisionWorldPosition(this._tempVec3);
+          this.writeTargetFrameData(this._tempTargetFrameData, target, pos);
+          return this._tempTargetFrameData;
+        }
+
+        writeTargetFrameData(data, target, pos) {
+          data.frame = this._frameCount;
+          data.x = pos.x;
+          data.z = pos.z;
+          data.halfX = target.collisionHalfX;
+          data.halfZ = target.collisionHalfZ;
+        }
+
+        clearUsedBulletBuckets() {
+          for (var i = 0; i < this._usedBulletBucketIndices.length; i++) {
+            var index = this._usedBulletBucketIndices[i];
+            this._bulletBuckets[index].length = 0;
+            this._bulletBucketUsed[index] = false;
+          }
+
+          this._usedBulletBucketIndices.length = 0;
+        }
+
+        clearFrameBuckets() {
+          if (this.isSceneOptimizationEnabled()) {
+            this.clearUsedBulletBuckets();
+            this.clearUsedTargetBuckets();
+            return;
+          }
+
+          for (var i = 0; i < this._bucketCount; i++) {
+            this._bulletBuckets[i].length = 0;
+            this._bulletBucketUsed[i] = false;
+          }
+
+          this._usedBulletBucketIndices.length = 0;
+
+          for (var _groupId in this._targetBuckets) {
+            var buckets = this._targetBuckets[_groupId];
+            var usedFlags = this._targetBucketUsed[_groupId];
+
+            for (var _i3 = 0; _i3 < this._bucketCount; _i3++) {
+              buckets[_i3].length = 0;
+              usedFlags[_i3] = false;
+            }
+
+            this._usedTargetBucketIndices[_groupId].length = 0;
+          }
+        }
+
+        markBulletBucketUsed(index) {
+          if (this._bulletBucketUsed[index]) {
+            return;
+          }
+
+          this._bulletBucketUsed[index] = true;
+
+          this._usedBulletBucketIndices.push(index);
+        }
+
+        clearUsedTargetBuckets() {
+          for (var _groupId2 in this._usedTargetBucketIndices) {
+            var usedIndices = this._usedTargetBucketIndices[_groupId2];
+            var buckets = this._targetBuckets[_groupId2];
+            var usedFlags = this._targetBucketUsed[_groupId2];
+
+            for (var i = 0; i < usedIndices.length; i++) {
+              var index = usedIndices[i];
+              buckets[index].length = 0;
+              usedFlags[index] = false;
+            }
+
+            usedIndices.length = 0;
+          }
+        }
+
+        markTargetBucketUsed(groupId, index) {
+          if (this._targetBucketUsed[groupId][index]) {
+            return;
+          }
+
+          this._targetBucketUsed[groupId][index] = true;
+
+          this._usedTargetBucketIndices[groupId].push(index);
+        }
+
         ensureWallObstacles() {
           var scene = director.getScene();
 
@@ -506,8 +656,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           if (this._wallScene !== scene || this._frameCount >= this._nextWallRefreshFrame) {
             this.rebuildWallObstacles(scene);
             this._wallScene = scene;
-            this._nextWallRefreshFrame = this._wallObstacles.length > 0 ? Number.MAX_SAFE_INTEGER : this._frameCount + 1;
+            this._nextWallRefreshFrame = this.isSceneOptimizationEnabled() ? this.isGldWallScanComplete() ? Number.MAX_SAFE_INTEGER : this._frameCount + 1 : this._wallObstacles.length > 0 ? Number.MAX_SAFE_INTEGER : this._frameCount + 1;
           }
+        }
+        /** 动态创建或移除 SM_gelidun_* 墙体后调用，使下次碰撞帧重新扫描。 */
+
+
+        markWallObstaclesDirty() {
+          this._nextWallRefreshFrame = 0;
         }
 
         clearWallObstacles() {
@@ -520,11 +676,25 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
         rebuildWallObstacles(scene) {
           this.clearWallObstacles();
+          this._gldRootFound = false;
+          this._gldSideCount = 0;
+          this._gldReadySideCount = 0;
           this.collectWallObstacles(scene);
+        }
+
+        isGldWallScanComplete() {
+          return !this._gldRootFound || this._gldSideCount === 2 && this._gldReadySideCount === 2;
         }
 
         collectWallObstacles(node) {
           if (!node) {
+            return;
+          }
+
+          if (this.isSceneOptimizationEnabled() && node.name === 'gld') {
+            this._gldRootFound = true;
+            this.collectGldSideObstacle(node, 'left');
+            this.collectGldSideObstacle(node, 'right');
             return;
           }
 
@@ -552,6 +722,54 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             this.collectWallObstacles(node.children[i]);
           }
         }
+        /** Game_3D-002 中将 gld 左右两侧分别聚合为一个虚拟 AABB。 */
+
+
+        collectGldSideObstacle(gld, sideName) {
+          var side = gld.children.find(child => child.name === sideName);
+
+          if (!side) {
+            return;
+          }
+
+          this._gldSideCount++;
+          var obstacle = {
+            node: side,
+            renderers: [],
+            minX: 0,
+            maxX: 0,
+            minZ: 0,
+            maxZ: 0
+          };
+          this.collectGelidunMeshRenderers(side, obstacle.renderers);
+
+          if (this.updateWallObstacleBounds(obstacle, true)) {
+            this._wallObstacles.push(obstacle);
+
+            this.addWallObstacleToBuckets(obstacle);
+            this._gldReadySideCount++;
+          }
+        }
+
+        collectGelidunMeshRenderers(node, out, insideGelidun) {
+          if (insideGelidun === void 0) {
+            insideGelidun = false;
+          }
+
+          var isGelidun = insideGelidun || node.name.indexOf('SM_gelidun_') === 0;
+
+          if (isGelidun) {
+            var renderer = node.getComponent(MeshRenderer);
+
+            if (renderer) {
+              out.push(renderer);
+            }
+          }
+
+          for (var i = 0; i < node.children.length; i++) {
+            this.collectGelidunMeshRenderers(node.children[i], out, isGelidun);
+          }
+        }
 
         collectMeshRenderers(node, out) {
           var renderer = node.getComponent(MeshRenderer);
@@ -565,8 +783,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           }
         }
 
-        updateWallObstacleBounds(obstacle) {
-          if (!obstacle.node.activeInHierarchy) {
+        updateWallObstacleBounds(obstacle, requireAllRenderers) {
+          if (requireAllRenderers === void 0) {
+            requireAllRenderers = false;
+          }
+
+          if (!requireAllRenderers && !obstacle.node.activeInHierarchy) {
             return false;
           }
 
@@ -575,13 +797,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           var minZ = Number.POSITIVE_INFINITY;
           var maxZ = Number.NEGATIVE_INFINITY;
           var found = false;
+          var validRendererCount = 0;
 
           for (var i = 0; i < obstacle.renderers.length; i++) {
             var _model;
 
             var renderer = obstacle.renderers[i];
 
-            if (!renderer || !renderer.node.activeInHierarchy) {
+            if (!renderer || !requireAllRenderers && !renderer.node.activeInHierarchy) {
               continue;
             }
 
@@ -593,6 +816,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
               continue;
             }
 
+            validRendererCount++;
             minX = Math.min(minX, center.x - halfExtents.x);
             maxX = Math.max(maxX, center.x + halfExtents.x);
             minZ = Math.min(minZ, center.z - halfExtents.z);
@@ -600,7 +824,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             found = true;
           }
 
-          if (!found) {
+          if (!found || requireAllRenderers && validRendererCount !== obstacle.renderers.length) {
             return false;
           }
 
@@ -738,7 +962,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           return list;
         }
 
-      }) || _class2));
+      }, _class3.OPTIMIZED_SCENE_NAME = 'Game_3D-002', _class3)) || _class2));
 
       _cclegacy._RF.pop();
 

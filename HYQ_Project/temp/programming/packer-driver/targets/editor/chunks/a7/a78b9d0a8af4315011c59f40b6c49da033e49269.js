@@ -161,6 +161,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.batchRenderer = null;
           this.batchVisualCount = 1;
           this._batchVisualOffsets = [new Vec3()];
+          this._batchVisualMaxOffsetX = 0;
+          this._batchVisualMaxOffsetZ = 0;
 
           /** 是否已注册到碰撞管理器 */
           this._registered = false;
@@ -256,6 +258,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
           this._batchVisualOffsets[0].set(Vec3.ZERO);
 
+          this._batchVisualMaxOffsetX = 0;
+          this._batchVisualMaxOffsetZ = 0;
           const sprite = this.batchSprite && this.batchSprite.isValid ? this.batchSprite : this.node.getComponentInChildren(Sprite);
 
           if (sprite && sprite.isValid) {
@@ -275,6 +279,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
         configureBatchVisualCopies(count, spreadForward) {
           this.batchVisualCount = Math.max(1, Math.floor(count));
+          this._batchVisualMaxOffsetX = 0;
+          this._batchVisualMaxOffsetZ = 0;
 
           for (let i = 0; i < this.batchVisualCount; i++) {
             let offset = this._batchVisualOffsets[i];
@@ -290,6 +296,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             }
 
             offset.set((Math.random() - 0.5) * 2, 0, spreadForward ? (Math.random() - 0.5) * 4 : 0);
+            this._batchVisualMaxOffsetX = Math.max(this._batchVisualMaxOffsetX, Math.abs(offset.x));
+            this._batchVisualMaxOffsetZ = Math.max(this._batchVisualMaxOffsetZ, Math.abs(offset.z));
           }
         }
 
@@ -297,6 +305,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           var _this$_batchVisualOff;
 
           return (_this$_batchVisualOff = this._batchVisualOffsets[index]) != null ? _this$_batchVisualOff : Vec3.ZERO;
+        }
+        /** 获取所有合批视觉副本相对逻辑子弹的最大散布范围，不产生临时对象。 */
+
+
+        getBatchVisualMaxOffset(out) {
+          return out.set(this._batchVisualMaxOffsetX, 0, this._batchVisualMaxOffsetZ);
         }
 
         getPreviousWorldPosition(out) {
