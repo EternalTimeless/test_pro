@@ -35,6 +35,11 @@ export class PropBrand extends BattleTarget3D {
     private registered: boolean = false;
     private readonly tempCollisionWorldPos: Vec3 = new Vec3();
 
+    protected onLoad(): void {
+        super.onLoad();
+        this.enabled = false;
+    }
+
     public setVisualActive(active: boolean): void {
         if (this.visualActive === active) {
             return;
@@ -136,7 +141,6 @@ export class PropBrand extends BattleTarget3D {
     }
 
     public Hit(damage: number): number {
-        this.refreshCollisionBounds();
         return 1;
     }
 

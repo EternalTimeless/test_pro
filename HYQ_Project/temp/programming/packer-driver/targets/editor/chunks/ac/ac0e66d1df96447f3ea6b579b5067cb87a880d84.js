@@ -84,6 +84,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.tempCollisionWorldPos = new Vec3();
         }
 
+        onLoad() {
+          super.onLoad();
+          this.enabled = false;
+        }
+
         setVisualActive(active) {
           if (this.visualActive === active) {
             return;
@@ -192,7 +197,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         _update(dt) {}
 
         Hit(damage) {
-          this.refreshCollisionBounds();
           return 1;
         }
 
