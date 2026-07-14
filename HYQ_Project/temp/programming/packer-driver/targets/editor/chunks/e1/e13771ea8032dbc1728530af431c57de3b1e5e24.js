@@ -421,9 +421,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           } // 4. 逐桶碰撞检测
 
 
-          for (let bIdx = 0; bIdx < this._bucketCount; bIdx++) {
+          if (this._usedBulletBucketIndices.length > 1) {
+            this._usedBulletBucketIndices.sort((a, b) => a - b);
+          }
+
+          for (let usedIndex = 0; usedIndex < this._usedBulletBucketIndices.length; usedIndex++) {
+            const bIdx = this._usedBulletBucketIndices[usedIndex];
             const bucketBullets = this._bulletBuckets[bIdx];
-            if (bucketBullets.length === 0) continue;
 
             for (let bi = 0; bi < bucketBullets.length; bi++) {
               const bullet = bucketBullets[bi];

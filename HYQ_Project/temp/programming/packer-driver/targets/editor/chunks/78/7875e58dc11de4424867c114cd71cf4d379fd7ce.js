@@ -455,8 +455,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             Role.aimBulletToTarget(bullet, lockTarget);
             bullet.configureBatchVisualCopies(visualBulletCount, !lockTarget);
           } else {
-            const lockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
-            Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+            const lockTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
+            Role.aimBulletToTarget(bullet, lockTarget);
           }
 
           batchRenderer.registerBullet(bullet);
@@ -479,14 +479,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             bullet.node.setWorldPosition(pos);
             const x = (Math.random() - 0.5) * 2;
             bullet.node.x += x;
-            const bulletLockLalian = !!Role.getLockableLalianTarget(bullet, lockWorldX);
+            const lockTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
 
-            if (!bulletLockLalian) {
+            if (!lockTarget) {
               const z = (Math.random() - 0.5) * 4;
               bullet.node.z += z;
             }
 
-            Role.aimBulletToCurrentTarget(bullet, lockWorldX);
+            Role.aimBulletToTarget(bullet, lockTarget);
             batchRenderer.registerBullet(bullet);
           }
         }
