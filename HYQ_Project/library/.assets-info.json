@@ -94,7 +94,7 @@
       "uuid": "f2436a4c-b513-4e22-be6c-23836ea972e7"
     },
     "GameRes\\1219\\A-texiao": {
-      "time": 1781493200336.507,
+      "time": 1784012955610.5815,
       "uuid": "54bb626a-9219-4d5f-bed9-f7907f8f6cc0"
     },
     "GameRes\\1219\\FX": {
@@ -198,7 +198,7 @@
       "uuid": "44ed9999-20d4-40b3-ba03-04fce46aeca8"
     },
     "GameRes\\Image\\GameOver": {
-      "time": 1781493202415.7756,
+      "time": 1784017325849.4731,
       "uuid": "d90bf99e-8785-47fb-9693-9dbca1408fb4"
     },
     "GameRes\\Image\\Hp": {
@@ -230,7 +230,7 @@
       "uuid": "d38c02da-611e-403b-aa12-bc928efb6925"
     },
     "Script\\functionS\\Battle": {
-      "time": 1783995380495.5757,
+      "time": 1784012950938.859,
       "uuid": "52daef60-30ed-45a5-a531-a3928e83c94f"
     },
     "Script\\functionS\\Effect": {
@@ -246,15 +246,15 @@
       "uuid": "0eb60b0d-6019-42e8-8dc0-77a7212b5088"
     },
     "Script\\functionS\\Monster": {
-      "time": 1783586571418.8347,
+      "time": 1784012950940.8535,
       "uuid": "480b0da3-6475-4aa1-8e49-cfeec87991ec"
     },
     "Script\\functionS\\Other": {
-      "time": 1783672901150.1216,
+      "time": 1784012950940.8535,
       "uuid": "31a1e406-7653-4a32-9a59-655e6188e99e"
     },
     "Script\\functionS\\Player": {
-      "time": 1783669756688.3635,
+      "time": 1784012950942.8481,
       "uuid": "e19290d4-e44e-4c69-93cb-1471d99d1597"
     },
     "Script\\functionS\\Rocker": {
@@ -262,7 +262,7 @@
       "uuid": "1a847aaf-c962-4d25-8a95-4fc386fd89fc"
     },
     "Script\\functionS\\ShoppIng": {
-      "time": 1781493203494.8362,
+      "time": 1784012955611.58,
       "uuid": "f4cf1ce7-d994-4717-8212-c7f8c4535f79"
     },
     "Script\\functionS\\SkAnim": {
@@ -272,10 +272,6 @@
     "Script\\functionS\\UI": {
       "time": 1781493203526.913,
       "uuid": "79397966-c6cd-42ff-be0d-300ea928080d"
-    },
-    "GameRes\\1219\\A-texiao\\Fab": {
-      "time": 1780287686648.8335,
-      "uuid": "89cf64c4-457d-4a75-88a3-7b94c8c0086b"
     },
     "GameRes\\1219\\A-texiao\\mat": {
       "time": 1781493200319.7534,
@@ -376,10 +372,6 @@
     "Script\\functionS\\ShoppIng\\Buy": {
       "time": 1781493203490.8418,
       "uuid": "80957475-8d30-4821-bdd8-cba4b0292b00"
-    },
-    "Script\\functionS\\ShoppIng\\ShopEvent": {
-      "time": 1780287689910.4436,
-      "uuid": "70d606b0-b3ae-4d9e-bfe8-33add2df3c15"
     },
     "Script\\functionS\\SkAnim\\SequenceFrameAnim": {
       "time": 1781493203517.93,
@@ -546,7 +538,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1784001288105.4277,
+      "time": 1784018548366.6892,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1402,7 +1394,7 @@
       "uuid": "b738efa1-7a9e-4246-817e-55f76ad638a8"
     },
     "GameRes\\Image\\GameOver\\bg_top.png": {
-      "time": 1780287688179.4783,
+      "time": 1784016542995.1763,
       "uuid": "d5f2f2a6-3230-4c62-8ebb-b6e2a66167d3"
     },
     "GameRes\\Image\\GameOver\\button.png": {
@@ -1594,7 +1586,7 @@
       "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
     },
     "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
-      "time": 1783999299317.077,
+      "time": 1784012950938.859,
       "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
     },
     "Script\\functionS\\Battle\\HpComponent.ts": {
@@ -1662,7 +1654,7 @@
       "uuid": "93b74258-97e4-4fcb-bfc0-851d38430b93"
     },
     "Script\\functionS\\Monster\\MonsterCreate.ts": {
-      "time": 1783923383833.1555,
+      "time": 1784012950940.8535,
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
@@ -1670,7 +1662,7 @@
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
-      "time": 1784009044816.4624,
+      "time": 1784012950940.8535,
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
@@ -1682,7 +1674,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1784009043552.3494,
+      "time": 1784012950942.8481,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
@@ -2485,9 +2477,6 @@
     "Script\\functionS\\UI.meta": {
       "time": 1780287689992.603
     },
-    "GameRes\\1219\\A-texiao\\Fab.meta": {
-      "time": 1780287686664.4802
-    },
     "GameRes\\1219\\A-texiao\\mat.meta": {
       "time": 1780287686711.3184
     },
@@ -2562,9 +2551,6 @@
     },
     "Script\\functionS\\ShoppIng\\Buy.meta": {
       "time": 1780287689910.4436
-    },
-    "Script\\functionS\\ShoppIng\\ShopEvent.meta": {
-      "time": 1780287689914.4963
     },
     "Script\\functionS\\SkAnim\\SequenceFrameAnim.meta": {
       "time": 1780287689961.3623
@@ -4422,7 +4408,7 @@
       "time": 1781689576517.3992
     },
     "Script\\functionS\\Other\\PropLalianGate.ts": {
-      "time": 1783652132849.686,
+      "time": 1784018273328.1245,
       "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts.meta": {

@@ -160,8 +160,11 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCInteger, displayName: '整体顺滑总受击次数', tooltip: '整条拉链从初始状态推进到完成需要的总受击次数。1000 表示每次受击只推进很小一段。' })
     public smoothTotalHitCount: number = 1000;
 
-    @property({ type: CCFloat, displayName: '整体推进前快后慢强度', tooltip: '1 表示匀速；大于 1 时前期每次推进更长，后期每次推进更短。建议 1.5~3。' })
+    @property({ type: CCFloat, displayName: '整体推进前快后慢强度', tooltip: '控制前段速度回落的快慢。1 较平缓，2 会让前半段推进更快、前段回落更明显，之后持续平缓降速。建议 1~3。' })
     public smoothProgressEasePower: number = 2;
+
+    @property({ type: CCFloat, displayName: '末段推进保留比例(0-1)', tooltip: '为后半段和结尾保留的基础推进速度。值越大越不容易拖尾；0.7 表示始终保留 70% 的基础推进。为避免最后一点长时间打不掉，建议保持 0.65~0.8。' })
+    public smoothEndSpeedFloor: number = 0.7;
 
     @property({ type: CCInteger, displayName: '每对齿条数量', tooltip: '默认 2，表示每 2 个 SM_lalian 齿条算作一对，一次受击推进一对。' })
     public teethPerPair: number = 2;
@@ -1564,8 +1567,13 @@ export class PropLalianGate extends BattleTarget3D {
 
     private getSmoothWholeProgress(linearProgress: number): number {
         const clampedProgress = this.getClampedProgress(linearProgress);
-        const easePower = Math.max(0.1, this.smoothProgressEasePower);
-        return this.getClampedProgress(1 - Math.pow(1 - clampedProgress, easePower));
+        const decayStrength = Math.max(0.01, this.smoothProgressEasePower * 4);
+        const speedFloor = this.getClampedProgress(this.smoothEndSpeedFloor);
+        const earlyBoost = (1 - speedFloor)
+            * (1 - Math.exp(-decayStrength * clampedProgress))
+            * (1 - clampedProgress);
+        const progress = clampedProgress + earlyBoost;
+        return this.getClampedProgress(progress);
     }
 
     private getHitCountPerStep(): number {
