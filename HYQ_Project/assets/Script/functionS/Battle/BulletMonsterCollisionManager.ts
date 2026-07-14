@@ -271,19 +271,6 @@ export default class BulletMonsterCollisionManager extends Singleton {
             }
             return;
         }
-        // 子弹推进、生命周期和碰撞集中在同一循环入口，避免每颗子弹单独调度 update。
-        for (let i = this._bullets.length - 1; i >= 0; i--) {
-            const bullet = this._bullets[i];
-            if (!bullet?.node?.active) {
-                this._bullets[i] = this._bullets[this._bullets.length - 1];
-                this._bullets.pop();
-                continue;
-            }
-            bullet.managedUpdate(dt);
-        }
-        if (this._bullets.length === 0) {
-            return;
-        }
         this.ensureWallObstacles();
         // 1. 清空桶数组（只重置length=0，不释放内存）
         this.clearFrameBuckets();

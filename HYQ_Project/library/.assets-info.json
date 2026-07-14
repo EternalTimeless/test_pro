@@ -1594,7 +1594,7 @@
       "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
     },
     "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
-      "time": 1783937217767.1892,
+      "time": 1783932247489.469,
       "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
     },
     "Script\\functionS\\Battle\\HpComponent.ts": {
@@ -2274,7 +2274,7 @@
       "uuid": "ca0fd3d6-55e4-45ca-80e4-4c8243a063fd"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts": {
-      "time": 1783937945719.5115,
+      "time": 1783929444506.9976,
       "uuid": "aa25268b-cb3c-4c8a-8144-994c0a68b3b6"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts": {
@@ -4429,7 +4429,7 @@
       "time": 1781768620735.1758
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts": {
-      "time": 1783938415154.566,
+      "time": 1783675312292.1848,
       "uuid": "8f7ca5d8-7f0a-4d2a-aeb5-f58c8c86a5f5"
     },
     "GameRes\\Image\\img\\auto-atlas.pac.meta": {
