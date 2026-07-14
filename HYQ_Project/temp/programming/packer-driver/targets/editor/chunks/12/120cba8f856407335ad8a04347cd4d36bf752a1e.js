@@ -420,6 +420,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.shrinkDirtyDuringAnimating = false;
           this.roleLayoutTweenDuration = 0.2;
           this.currentTeamAnimName = null;
+          this.roleJoinLayoutRefreshScheduled = false;
           this.isLock = false;
 
           // public MoveX: number = 8;
@@ -1239,7 +1240,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           role.fbxManager.setAnimationImmediate(animName, true, frame);
         }
 
-        addRole(role, attackIn = true) {
+        addRole(role, attackIn = true, refreshShadow = true) {
           if (this.isDie) {
             return false;
           }
@@ -1252,7 +1253,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.roleList.push(role);
           this.curCount = Math.min(this.getEffectiveMaxRoleCount(), this.curCount + 1);
           this.syncRoleAnimationToTeam(role);
-          this.refreshRoleShadowCasting();
+
+          if (refreshShadow) {
+            this.refreshRoleShadowCasting();
+          }
+
           return true;
         }
 
@@ -1293,7 +1298,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             committedRole = this.replaceRoleWithCurrentType(role);
           }
 
-          if (!this.addRole(committedRole, false)) {
+          if (!this.addRole(committedRole, false, false)) {
             committedRole.node.active = false;
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
@@ -1303,7 +1308,29 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             return null;
           }
 
+          this.requestRoleJoinLayoutRefresh();
           return committedRole;
+        }
+
+        requestRoleJoinLayoutRefresh() {
+          if (this.roleJoinLayoutRefreshScheduled) {
+            return;
+          }
+
+          this.roleJoinLayoutRefreshScheduled = true;
+          this.scheduleOnce(this.flushRoleJoinLayoutRefresh, 0);
+        }
+
+        flushRoleJoinLayoutRefresh() {
+          var _this$node;
+
+          this.roleJoinLayoutRefreshScheduled = false;
+
+          if (this.isDie || !((_this$node = this.node) != null && _this$node.isValid)) {
+            return;
+          }
+
+          this.applyRoleLayout(false);
         }
 
         replaceRoleWithCurrentType(role) {

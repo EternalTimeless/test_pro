@@ -181,6 +181,7 @@ export class Player extends UnityUpComponent {
     private shrinkDirtyDuringAnimating: boolean = false;
     private readonly roleLayoutTweenDuration: number = 0.2;
     private currentTeamAnimName: PlayerFBXAnimName | null = null;
+    private roleJoinLayoutRefreshScheduled: boolean = false;
 
     public isLock: boolean = false;
 
@@ -833,7 +834,7 @@ export class Player extends UnityUpComponent {
     }
 
 
-    public addRole(role: Role, attackIn: boolean = true) {
+    public addRole(role: Role, attackIn: boolean = true, refreshShadow: boolean = true) {
         if (this.isDie) {
             return false;
         }
@@ -844,7 +845,9 @@ export class Player extends UnityUpComponent {
         this.roleList.push(role);
         this.curCount = Math.min(this.getEffectiveMaxRoleCount(), this.curCount + 1);
         this.syncRoleAnimationToTeam(role);
-        this.refreshRoleShadowCasting();
+        if (refreshShadow) {
+            this.refreshRoleShadowCasting();
+        }
         return true;
     }
 
@@ -882,12 +885,29 @@ export class Player extends UnityUpComponent {
             committedRole = this.replaceRoleWithCurrentType(role);
         }
 
-        if (!this.addRole(committedRole, false)) {
+        if (!this.addRole(committedRole, false, false)) {
             committedRole.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + committedRole.type, committedRole);
             return null;
         }
+        this.requestRoleJoinLayoutRefresh();
         return committedRole;
+    }
+
+    private requestRoleJoinLayoutRefresh(): void {
+        if (this.roleJoinLayoutRefreshScheduled) {
+            return;
+        }
+        this.roleJoinLayoutRefreshScheduled = true;
+        this.scheduleOnce(this.flushRoleJoinLayoutRefresh, 0);
+    }
+
+    private flushRoleJoinLayoutRefresh(): void {
+        this.roleJoinLayoutRefreshScheduled = false;
+        if (this.isDie || !this.node?.isValid) {
+            return;
+        }
+        this.applyRoleLayout(false);
     }
 
     private replaceRoleWithCurrentType(role: Role): Role {

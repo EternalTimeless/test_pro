@@ -385,7 +385,6 @@ export class CreatePropBrand extends UnityUpComponent {
             const selfPos2 = player.getNextPos(currentIndex);
             player.node.addChild(role.node);
             role.node.setWorldPosition(selfPos2);
-            player.upPos();
             role.setEntryWeaponVisible(true);
             PoolManager.instance.V3 = selfPos2;
         }).setEndPosPre((prop: Node) => {

@@ -685,7 +685,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             var selfPos2 = player.getNextPos(currentIndex);
             player.node.addChild(role.node);
             role.node.setWorldPosition(selfPos2);
-            player.upPos();
             role.setEntryWeaponVisible(true);
             (_crd && PoolManager === void 0 ? (_reportPossibleCrUseOfPoolManager({
               error: Error()
