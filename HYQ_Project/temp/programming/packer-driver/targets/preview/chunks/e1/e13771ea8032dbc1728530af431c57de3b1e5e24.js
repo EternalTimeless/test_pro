@@ -361,17 +361,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             }
 
             return;
-          }
+          } // 子弹推进、生命周期和碰撞集中在同一循环入口，避免每颗子弹单独调度 update。
 
-          this.ensureWallObstacles(); // 1. 清空桶数组（只重置length=0，不释放内存）
-
-          this.clearFrameBuckets(); // 2. 将子弹放入桶
 
           for (var i = this._bullets.length - 1; i >= 0; i--) {
+            var _bullet$node;
+
             var bullet = this._bullets[i];
 
-            if (!bullet.node.active) {
-              // 子弹已回收，移除
+            if (!(bullet != null && (_bullet$node = bullet.node) != null && _bullet$node.active)) {
               this._bullets[i] = this._bullets[this._bullets.length - 1];
 
               this._bullets.pop();
@@ -379,13 +377,36 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
               continue;
             }
 
-            var z = bullet.node.worldPosition.z;
+            bullet.managedUpdate(dt);
+          }
+
+          if (this._bullets.length === 0) {
+            return;
+          }
+
+          this.ensureWallObstacles(); // 1. 清空桶数组（只重置length=0，不释放内存）
+
+          this.clearFrameBuckets(); // 2. 将子弹放入桶
+
+          for (var _i = this._bullets.length - 1; _i >= 0; _i--) {
+            var _bullet = this._bullets[_i];
+
+            if (!_bullet.node.active) {
+              // 子弹已回收，移除
+              this._bullets[_i] = this._bullets[this._bullets.length - 1];
+
+              this._bullets.pop();
+
+              continue;
+            }
+
+            var z = _bullet.node.worldPosition.z;
 
             var bIdx = this._getBucketIdx(z);
 
             this.markBulletBucketUsed(bIdx);
 
-            this._bulletBuckets[bIdx].push(bullet);
+            this._bulletBuckets[bIdx].push(_bullet);
           } // 3. 将目标放入桶（按COLLIDE_TYPE分组）
 
 
@@ -397,20 +418,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
               this._usedTargetBucketIndices[typeStr] = [];
               this._targetBucketUsed[typeStr] = [];
 
-              for (var _i = 0; _i < this._bucketCount; _i++) {
-                this._targetBuckets[typeStr][_i] = [];
-                this._targetBucketUsed[typeStr][_i] = false;
+              for (var _i2 = 0; _i2 < this._bucketCount; _i2++) {
+                this._targetBuckets[typeStr][_i2] = [];
+                this._targetBucketUsed[typeStr][_i2] = false;
               }
             }
 
             var tBuckets = this._targetBuckets[typeStr];
 
-            for (var _i2 = group.targets.length - 1; _i2 >= 0; _i2--) {
-              var target = group.targets[_i2];
+            for (var _i3 = group.targets.length - 1; _i3 >= 0; _i3--) {
+              var target = group.targets[_i3];
 
               if (target.isDie || !target.node.active) {
                 // 已死亡目标，移除
-                group.targets[_i2] = group.targets[group.targets.length - 1];
+                group.targets[_i3] = group.targets[group.targets.length - 1];
                 group.targets.pop();
                 continue;
               }
@@ -434,17 +455,17 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             if (bucketBullets.length === 0) continue;
 
             for (var bi = 0; bi < bucketBullets.length; bi++) {
-              var _bullet = bucketBullets[bi];
-              if (!_bullet.node.active) continue;
-              var bx = _bullet.node.worldPosition.x;
-              var bz = _bullet.node.worldPosition.z;
+              var _bullet2 = bucketBullets[bi];
+              if (!_bullet2.node.active) continue;
+              var bx = _bullet2.node.worldPosition.x;
+              var bz = _bullet2.node.worldPosition.z;
 
-              var prevPos = _bullet.getPreviousWorldPosition(this._tempBulletPrevPos);
+              var prevPos = _bullet2.getPreviousWorldPosition(this._tempBulletPrevPos);
 
               var prevX = prevPos.x;
               var prevZ = prevPos.z;
-              var bHalfX = _bullet.collisionHalfX;
-              var bHalfZ = _bullet.collisionHalfZ;
+              var bHalfX = _bullet2.collisionHalfX;
+              var bHalfZ = _bullet2.collisionHalfZ;
               var sweptMinX = Math.min(prevX, bx) - bHalfX;
               var sweptMaxX = Math.max(prevX, bx) + bHalfX;
 
@@ -452,7 +473,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
               var maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ);
 
-              var visualOffset = _bullet.getBatchVisualMaxOffset(this._tempBulletVisualOffset);
+              var visualOffset = _bullet2.getBatchVisualMaxOffset(this._tempBulletVisualOffset);
 
               var wallHalfX = bHalfX + visualOffset.x;
               var wallHalfZ = bHalfZ + visualOffset.z;
@@ -463,12 +484,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
               var wallMaxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + wallHalfZ);
 
-              if (this.tryRecycleBulletByWallHit(_bullet, prevX, prevZ, bx, bz, wallHalfX, wallHalfZ, wallSweptMinX, wallSweptMaxX, wallMinBucketIdx, wallMaxBucketIdx)) {
+              if (this.tryRecycleBulletByWallHit(_bullet2, prevX, prevZ, bx, bz, wallHalfX, wallHalfZ, wallSweptMinX, wallSweptMaxX, wallMinBucketIdx, wallMaxBucketIdx)) {
                 continue;
               } // 遍历子弹的 attackTargetTag
 
 
-              var targetTags = _bullet.attackTargetTag;
+              var targetTags = _bullet2.attackTargetTag;
 
               for (var ti = 0; ti < targetTags.length; ti++) {
                 var _typeStr = String(targetTags[ti]);
@@ -481,11 +502,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 if (!_tBuckets) continue;
                 var targetCheckId = this._targetCheckId++;
 
-                for (var checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && _bullet.node.active; checkBucketIdx++) {
+                for (var checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && _bullet2.node.active; checkBucketIdx++) {
                   var bucketTargets = _tBuckets[checkBucketIdx];
                   if (!bucketTargets) continue;
 
-                  for (var mj = 0; mj < bucketTargets.length && _bullet.node.active; mj++) {
+                  for (var mj = 0; mj < bucketTargets.length && _bullet2.node.active; mj++) {
                     var _target = bucketTargets[mj];
                     if (_target.isDie || this._targetCheckedStamp.get(_target) === targetCheckId) continue;
 
@@ -501,7 +522,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
                     if (this.isSweptBulletHit(prevX, prevZ, bx, bz, bHalfX, bHalfZ, tx, tz, tHalfX, tHalfZ)) {
                       // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
-                      _bullet.onHitTarget(_target);
+                      _bullet2.onHitTarget(_target);
                     }
                   }
                 }
@@ -590,9 +611,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             var buckets = this._targetBuckets[_groupId];
             var usedFlags = this._targetBucketUsed[_groupId];
 
-            for (var _i3 = 0; _i3 < this._bucketCount; _i3++) {
-              buckets[_i3].length = 0;
-              usedFlags[_i3] = false;
+            for (var _i4 = 0; _i4 < this._bucketCount; _i4++) {
+              buckets[_i4].length = 0;
+              usedFlags[_i4] = false;
             }
 
             this._usedTargetBucketIndices[_groupId].length = 0;

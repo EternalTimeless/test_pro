@@ -1,5 +1,5 @@
-import { _decorator, ccenum, CCFloat, CCInteger, Component, math, Sprite, Vec3 } from "cc";
-import { BulletEnum, EffectEnum, PoolEnum, SceneType } from "db://assets/Script/Base/EnumList";
+import { _decorator, CCFloat, CCInteger, Component, math, Sprite, Vec3 } from "cc";
+import { BulletEnum, PoolEnum } from "db://assets/Script/Base/EnumList";
 import PoolManager from "db://assets/Script/Base/PoolManager";
 import { EffectManager } from "../../../Effect/EffectManager";
 import { MoveDrive, MoveModEnum } from "../../../../Base/MoveRot/MoveDrive";
@@ -77,6 +77,17 @@ export default class BulletBattle3D extends Component {
     }
 
     protected update(dt: number): void {
+        if (this._registered) {
+            return;
+        }
+        this.managedUpdate(dt);
+    }
+
+    /** 由碰撞管理器统一推进，减少逐子弹 Component.update 调度。 */
+    public managedUpdate(dt: number): void {
+        if (this._pooled || !this.node.active) {
+            return;
+        }
         this._previousWorldPosition.set(this.node.worldPosition);
         this._hasPreviousWorldPosition = true;
         if (this.triggerDieTime != -1 && this._isTrigger) {
@@ -91,6 +102,9 @@ export default class BulletBattle3D extends Component {
             } else {
                 this._overTime -= dt;
             }
+        }
+        if (this._pooled) {
+            return;
         }
         this.moveD.MoveEvent(dt);
     }
@@ -148,6 +162,8 @@ export default class BulletBattle3D extends Component {
             BulletMonsterCollisionManager.instance.registerBullet(this);
             this._registered = true;
         }
+        // 后续由碰撞管理器统一推进，关闭逐组件 update 调度。
+        this.enabled = false;
     }
 
     public configureBatchVisualCopies(count: number, spreadForward: boolean): void {

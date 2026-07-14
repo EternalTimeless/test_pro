@@ -82,7 +82,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
       _cclegacy._RF.push({}, "aa252aLyzxMioFEmUwKaLO2", "BulletBattle3D", undefined);
 
-      __checkObsolete__(['_decorator', 'ccenum', 'CCFloat', 'CCInteger', 'Component', 'math', 'Sprite', 'Vec3']);
+      __checkObsolete__(['_decorator', 'CCFloat', 'CCInteger', 'Component', 'math', 'Sprite', 'Vec3']);
 
       ({
         ccclass,
@@ -185,6 +185,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         update(dt) {
+          if (this._registered) {
+            return;
+          }
+
+          this.managedUpdate(dt);
+        }
+        /** 由碰撞管理器统一推进，减少逐子弹 Component.update 调度。 */
+
+
+        managedUpdate(dt) {
+          if (this._pooled || !this.node.active) {
+            return;
+          }
+
           this._previousWorldPosition.set(this.node.worldPosition);
 
           this._hasPreviousWorldPosition = true;
@@ -201,6 +215,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             } else {
               this._overTime -= dt;
             }
+          }
+
+          if (this._pooled) {
+            return;
           }
 
           this.moveD.MoveEvent(dt);
@@ -274,7 +292,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               error: Error()
             }), BulletMonsterCollisionManager) : BulletMonsterCollisionManager).instance.registerBullet(this);
             this._registered = true;
-          }
+          } // 后续由碰撞管理器统一推进，关闭逐组件 update 调度。
+
+
+          this.enabled = false;
         }
 
         configureBatchVisualCopies(count, spreadForward) {
