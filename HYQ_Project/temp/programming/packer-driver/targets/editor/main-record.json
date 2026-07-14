@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 329704155.5609,
+      "mTimestamp": 330577409.1857,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -28259,7 +28259,7 @@
     },
     "file:///D:/%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE/PlayableAD/Cocos/TheW/20260615_HYQ/HYQ_Project/assets/Script/functionS/Battle/BulletBatchRenderer.ts": {
       "mTimestamp": {
-        "mtime": 1783938415154.566,
+        "mtime": 1784000066895.0718,
         "uuid": "8f7ca5d8-7f0a-4d2a-aeb5-f58c8c86a5f5"
       },
       "chunkId": "f05038aedf4d7805ad91dbf59f1c87fe35c23bb5",

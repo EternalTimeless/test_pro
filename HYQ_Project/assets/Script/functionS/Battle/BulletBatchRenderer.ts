@@ -13,6 +13,9 @@ type BatchInfo = {
     positions: number[];
     uvs: number[];
     indices: number[];
+    uv: number[];
+    staticVisualCount: number;
+    geometry: primitives.IGeometry;
     spriteFrame: SpriteFrame | null;
     width: number;
     height: number;
@@ -103,33 +106,16 @@ export class BulletBatchRenderer extends Component {
 
         const halfWidth = batch.width * 0.5;
         const halfHeight = batch.height * 0.5;
-        const uv = this._getUV(batch.spriteFrame);
 
         batch.positions.length = 12;
-        batch.uvs.length = 8;
-        batch.indices.length = 6;
 
         this._setPosition(batch.positions, 0, -halfWidth, -halfHeight, 0);
         this._setPosition(batch.positions, 3, halfWidth, -halfHeight, 0);
         this._setPosition(batch.positions, 6, -halfWidth, halfHeight, 0);
         this._setPosition(batch.positions, 9, halfWidth, halfHeight, 0);
-        for (let i = 0; i < 8; i++) {
-            batch.uvs[i] = uv[i];
-        }
-        batch.indices[0] = 0;
-        batch.indices[1] = 1;
-        batch.indices[2] = 2;
-        batch.indices[3] = 2;
-        batch.indices[4] = 1;
-        batch.indices[5] = 3;
+        this._prepareStaticGeometry(batch, 1);
 
-        batch.mesh = utils.createMesh({
-            positions: batch.positions,
-            uvs: batch.uvs,
-            indices: batch.indices,
-            minPos: { x: -100, y: -10, z: -100 },
-            maxPos: { x: 100, y: 20, z: 200 },
-        });
+        batch.mesh = utils.createMesh(batch.geometry);
         batch.renderer.mesh = batch.mesh;
         batch.node.active = false;
     }
@@ -219,15 +205,27 @@ export class BulletBatchRenderer extends Component {
         }
         renderer.setSharedMaterial(material, 0);
 
+        const positions: number[] = [];
+        const uvs: number[] = [];
+        const indices: number[] = [];
         batch = {
             node,
             renderer,
             material,
             mesh: null,
             bullets: [],
-            positions: [],
-            uvs: [],
-            indices: [],
+            positions,
+            uvs,
+            indices,
+            uv: this._getUV(visual.spriteFrame),
+            staticVisualCount: 0,
+            geometry: {
+                positions,
+                uvs,
+                indices,
+                minPos: { x: -100, y: -10, z: -100 },
+                maxPos: { x: 100, y: 20, z: 200 },
+            },
             spriteFrame: visual.spriteFrame,
             width: visual.width,
             height: visual.height,
@@ -257,13 +255,11 @@ export class BulletBatchRenderer extends Component {
         }
 
         batch.positions.length = visualCount * 12;
-        batch.uvs.length = visualCount * 8;
-        batch.indices.length = visualCount * 6;
+        this._prepareStaticGeometry(batch, visualCount);
 
         const halfWidth = batch.width * 0.5;
         const halfHeight = batch.height * 0.5;
         const useGroundPlane = Math.abs(batch.localEulerX) > 45;
-        const uv = this._getUV(batch.spriteFrame);
 
         let visualIndex = 0;
         for (let i = 0; i < bullets.length; i++) {
@@ -299,37 +295,41 @@ export class BulletBatchRenderer extends Component {
                 this._setPosition(batch.positions, pOffset + 3, px + rx - fx, py - fy, pz + rz - fz);
                 this._setPosition(batch.positions, pOffset + 6, px - rx + fx, py + fy, pz - rz + fz);
                 this._setPosition(batch.positions, pOffset + 9, px + rx + fx, py + fy, pz + rz + fz);
-
-                const uvOffset = visualIndex * 8;
-                batch.uvs[uvOffset] = uv[0];
-                batch.uvs[uvOffset + 1] = uv[1];
-                batch.uvs[uvOffset + 2] = uv[2];
-                batch.uvs[uvOffset + 3] = uv[3];
-                batch.uvs[uvOffset + 4] = uv[4];
-                batch.uvs[uvOffset + 5] = uv[5];
-                batch.uvs[uvOffset + 6] = uv[6];
-                batch.uvs[uvOffset + 7] = uv[7];
-
-                const vertexOffset = visualIndex * 4;
-                const indexOffset = visualIndex * 6;
-                batch.indices[indexOffset] = vertexOffset;
-                batch.indices[indexOffset + 1] = vertexOffset + 1;
-                batch.indices[indexOffset + 2] = vertexOffset + 2;
-                batch.indices[indexOffset + 3] = vertexOffset + 2;
-                batch.indices[indexOffset + 4] = vertexOffset + 1;
-                batch.indices[indexOffset + 5] = vertexOffset + 3;
             }
         }
 
-        const geometry: primitives.IGeometry = {
-            positions: batch.positions,
-            uvs: batch.uvs,
-            indices: batch.indices,
-            minPos: { x: -100, y: -10, z: -100 },
-            maxPos: { x: 100, y: 20, z: 200 },
-        };
-        batch.mesh = utils.createMesh(geometry, batch.mesh || undefined);
+        batch.mesh = utils.createMesh(batch.geometry, batch.mesh || undefined);
         batch.renderer.mesh = batch.mesh;
+    }
+
+    private _prepareStaticGeometry(batch: BatchInfo, visualCount: number): void {
+        if (batch.staticVisualCount === visualCount) {
+            return;
+        }
+        batch.staticVisualCount = visualCount;
+        batch.uvs.length = visualCount * 8;
+        batch.indices.length = visualCount * 6;
+        const uv = batch.uv;
+        for (let visualIndex = 0; visualIndex < visualCount; visualIndex++) {
+            const uvOffset = visualIndex * 8;
+            batch.uvs[uvOffset] = uv[0];
+            batch.uvs[uvOffset + 1] = uv[1];
+            batch.uvs[uvOffset + 2] = uv[2];
+            batch.uvs[uvOffset + 3] = uv[3];
+            batch.uvs[uvOffset + 4] = uv[4];
+            batch.uvs[uvOffset + 5] = uv[5];
+            batch.uvs[uvOffset + 6] = uv[6];
+            batch.uvs[uvOffset + 7] = uv[7];
+
+            const vertexOffset = visualIndex * 4;
+            const indexOffset = visualIndex * 6;
+            batch.indices[indexOffset] = vertexOffset;
+            batch.indices[indexOffset + 1] = vertexOffset + 1;
+            batch.indices[indexOffset + 2] = vertexOffset + 2;
+            batch.indices[indexOffset + 3] = vertexOffset + 2;
+            batch.indices[indexOffset + 4] = vertexOffset + 1;
+            batch.indices[indexOffset + 5] = vertexOffset + 3;
+        }
     }
 
     private _setPosition(out: number[], offset: number, x: number, y: number, z: number): void {
