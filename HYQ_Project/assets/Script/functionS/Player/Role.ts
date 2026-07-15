@@ -43,7 +43,6 @@ export class Role extends Component {
     public static soundType: SoundEnum = SoundEnum.Sound_Gun;
     public static bulletType: BulletEnum = BulletEnum.arrow;
     public static power: number = 1;
-    public static mergeVisualBullets: boolean = false;
     public static repelPower: number = 0;
     public static bulletLayer: Node;
 
@@ -265,47 +264,37 @@ export class Role extends Component {
     //     }
     // }
 
-    public get visualBulletCount() {
+    public get bulletCount() {
         return 1 + this.attackNum;
     }
 
-    public attackEvent(num: number, visualBulletCount: number = this.visualBulletCount, damageScale: number = 1, lockWorldX: number = this.node.worldPosition.x, playEffect: boolean = true, initialBulletRandomX: number = 0) {
-        if (visualBulletCount <= 0) {
+    public attackEvent(num: number, bulletCount: number = this.bulletCount, damageScale: number = 1, lockWorldX: number = this.node.worldPosition.x, playEffect: boolean = true, initialBulletRandomX: number = 0, playSound: boolean = true, spawnAdvanceTime: number = 0, bulletType: BulletEnum = Role.bulletType) {
+        if (bulletCount <= 0) {
             return;
         }
-        AudioManager.inst.playOneShot(Role.soundType, 0.3, 0.08);
+        if (playSound) {
+            AudioManager.inst.playOneShot(Role.soundType, 0.3, 0.08);
+        }
         const shootPos = this.shoot.worldPosition;
         const pos = Role.bulletSpawnPos.set(shootPos.x, shootPos.y + this.bulletSpawnOffsetY, shootPos.z);
-        const mergeVisualBullets = Role.mergeVisualBullets && visualBulletCount > 1;
-        const damage = Role.power * damageScale * (mergeVisualBullets ? visualBulletCount : 1);
-        const batchRenderer = BulletBatchRenderer.getOrCreate(Role.bulletLayer);
-
-        const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
+        const damage = Role.power * damageScale;
+        const bullet = BulletManager.instance.shootBullet3D(bulletType, Quat.IDENTITY, damage, Role.repelPower);
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
         const firstBulletRandomX = Math.max(0, initialBulletRandomX);
         if (firstBulletRandomX > 0) {
             bullet.node.x += (Math.random() - 0.5) * 2 * firstBulletRandomX;
         }
-        if (mergeVisualBullets) {
-            const lockTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
-            Role.aimBulletToTarget(bullet, lockTarget);
-            bullet.configureBatchVisualCopies(visualBulletCount, !lockTarget);
-        } else {
-            const lockTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
-            Role.aimBulletToTarget(bullet, lockTarget);
-        }
-        batchRenderer.registerBullet(bullet);
+        const lockTarget = Role.getLockableLalianTarget(bullet, lockWorldX);
+        Role.aimBulletToTarget(bullet, lockTarget);
+        bullet.advanceSpawnTime(spawnAdvanceTime);
+        BulletBatchRenderer.register(Role.bulletLayer, bullet);
         if (playEffect) {
             this.effect?.play();
         }
 
-        if (mergeVisualBullets) {
-            return;
-        }
-
-        for (let i = 1; i < visualBulletCount; i++) {
-            const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, damage, Role.repelPower);
+        for (let i = 1; i < bulletCount; i++) {
+            const bullet = BulletManager.instance.shootBullet3D(bulletType, Quat.IDENTITY, damage, Role.repelPower);
             Role.bulletLayer.addChild(bullet.node);
             bullet.node.setWorldPosition(pos);
             const x = (Math.random() - 0.5) * 2;
@@ -316,7 +305,8 @@ export class Role extends Component {
                 bullet.node.z += z;
             }
             Role.aimBulletToTarget(bullet, lockTarget);
-            batchRenderer.registerBullet(bullet);
+            bullet.advanceSpawnTime(spawnAdvanceTime);
+            BulletBatchRenderer.register(Role.bulletLayer, bullet);
         }
 
     }

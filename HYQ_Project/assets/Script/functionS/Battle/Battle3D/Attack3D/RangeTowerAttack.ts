@@ -37,12 +37,11 @@ export class RangeTowerAttack extends AttackTargetBase {
             this.attackParkPlay && attackParkPlay.play();
             attackAnimation.play();
             let Layer = LayerManager.instance.getLayer(LayerEnum.Layer_2_sky);
-            const batchRenderer = BulletBatchRenderer.getOrCreate(Layer);
             // for (let i = 0; i < this.shootCount; i++) {
             let bullet = BulletManager.instance.shootBullet3D(this.bulletEnum, this.gunNode.worldRotation, power, reoel);
             Layer.addChild(bullet.node);
             bullet.node.setWorldPosition(bulletShootPos.worldPosition);
-            batchRenderer.registerBullet(bullet);
+            BulletBatchRenderer.register(Layer, bullet);
             // }
             this._index++;
             if (this._index >= this.bulletShootPos.length) {

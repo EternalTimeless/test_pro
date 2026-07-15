@@ -10,12 +10,15 @@ type BatchInfo = {
     material: Material;
     mesh: Mesh | null;
     bullets: BulletBattle3D[];
-    positions: number[];
-    uvs: number[];
-    indices: number[];
+    positions: Float32Array;
+    uvs: Float32Array;
+    indices: Uint16Array;
     uv: number[];
-    staticVisualCount: number;
-    geometry: primitives.IGeometry;
+    capacity: number;
+    geometry: primitives.IDynamicGeometry;
+    updateGeometry: primitives.IDynamicGeometry;
+    positionViews: Float32Array[];
+    indexViews: Uint16Array[];
     spriteFrame: SpriteFrame | null;
     width: number;
     height: number;
@@ -33,11 +36,25 @@ type BulletVisualInfo = {
 @ccclass("BulletBatchRenderer")
 export class BulletBatchRenderer extends Component {
     public static instance: BulletBatchRenderer | null = null;
+    public static useDynamicBatching: boolean = true;
     private static readonly _instances: WeakMap<Node, BulletBatchRenderer> = new WeakMap();
 
     private readonly _batches: BatchInfo[] = [];
     private readonly _tempForward: Vec3 = new Vec3();
-    private readonly _tempRight: Vec3 = new Vec3();
+
+    public static register(parent: Node, bullet: BulletBattle3D): void {
+        if (!BulletBatchRenderer.useDynamicBatching || !parent || !bullet) {
+            return;
+        }
+        BulletBatchRenderer.getOrCreate(parent).registerBullet(bullet);
+    }
+
+    public static prewarm(parent: Node, bullet: BulletBattle3D): void {
+        if (!BulletBatchRenderer.useDynamicBatching || !parent || !bullet) {
+            return;
+        }
+        BulletBatchRenderer.getOrCreate(parent).prewarmBullet(bullet);
+    }
 
     public static getOrCreate(parent: Node): BulletBatchRenderer {
         let renderer = BulletBatchRenderer._instances.get(parent);
@@ -72,52 +89,55 @@ export class BulletBatchRenderer extends Component {
     }
 
     public registerBullet(bullet: BulletBattle3D): void {
+        if (!BulletBatchRenderer.useDynamicBatching || !this._supportsDynamicMesh()) {
+            return;
+        }
         const visual = this._prepareBulletVisual(bullet);
         if (!visual.spriteFrame) {
             return;
-        }
-        if (visual.sprite) {
-            visual.sprite.enabled = false;
         }
         if (bullet.batchRenderer && bullet.batchRenderer !== this) {
             bullet.batchRenderer.unregisterBullet(bullet);
         }
 
         const index = bullet.bulletEnum as number;
-        const batch = this._getBatch(index, visual);
-        if (batch.bullets.indexOf(bullet) !== -1) {
+        let batch: BatchInfo;
+        try {
+            batch = this._getBatch(index, visual);
+            this._ensureBatchCapacity(batch, 1);
+        } catch (error) {
+            this._fallbackToSprites(error);
+            return;
+        }
+        if (bullet.batchRenderer === this && bullet.batchListIndex >= 0
+            && batch.bullets[bullet.batchListIndex] === bullet) {
             return;
         }
 
+        if (visual.sprite) {
+            visual.sprite.enabled = false;
+        }
+        bullet.batchListIndex = batch.bullets.length;
         batch.bullets.push(bullet);
         bullet.batchRenderer = this;
     }
 
     public prewarmBullet(bullet: BulletBattle3D): void {
+        if (!BulletBatchRenderer.useDynamicBatching || !this._supportsDynamicMesh()) {
+            return;
+        }
         const visual = this._prepareBulletVisual(bullet);
         if (!visual.spriteFrame) {
             return;
         }
 
-        const batch = this._getBatch(bullet.bulletEnum as number, visual);
-        if (batch.mesh) {
-            return;
+        try {
+            const batch = this._getBatch(bullet.bulletEnum as number, visual);
+            this._ensureBatchCapacity(batch, 1);
+            batch.node.active = false;
+        } catch (error) {
+            this._fallbackToSprites(error);
         }
-
-        const halfWidth = batch.width * 0.5;
-        const halfHeight = batch.height * 0.5;
-
-        batch.positions.length = 12;
-
-        this._setPosition(batch.positions, 0, -halfWidth, -halfHeight, 0);
-        this._setPosition(batch.positions, 3, halfWidth, -halfHeight, 0);
-        this._setPosition(batch.positions, 6, -halfWidth, halfHeight, 0);
-        this._setPosition(batch.positions, 9, halfWidth, halfHeight, 0);
-        this._prepareStaticGeometry(batch, 1);
-
-        batch.mesh = utils.createMesh(batch.geometry);
-        batch.renderer.mesh = batch.mesh;
-        batch.node.active = false;
     }
 
     public unregisterBullet(bullet: BulletBattle3D): void {
@@ -126,13 +146,28 @@ export class BulletBatchRenderer extends Component {
             return;
         }
 
-        const index = batch.bullets.indexOf(bullet);
+        let index = bullet.batchListIndex;
+        if (index < 0 || batch.bullets[index] !== bullet) {
+            index = batch.bullets.indexOf(bullet);
+        }
         if (index !== -1) {
-            batch.bullets[index] = batch.bullets[batch.bullets.length - 1];
+            const lastBullet = batch.bullets[batch.bullets.length - 1];
+            batch.bullets[index] = lastBullet;
             batch.bullets.pop();
+            if (lastBullet && lastBullet !== bullet) {
+                lastBullet.batchListIndex = index;
+            }
             if (bullet.batchRenderer === this) {
                 bullet.batchRenderer = null;
             }
+            bullet.batchListIndex = -1;
+        }
+        const sprite = bullet.batchSprite && bullet.batchSprite.isValid
+            ? bullet.batchSprite
+            : bullet.node.getComponentInChildren(Sprite);
+        if (sprite?.isValid) {
+            sprite.enabled = true;
+            bullet.batchSprite = sprite;
         }
     }
 
@@ -173,6 +208,22 @@ export class BulletBatchRenderer extends Component {
             bullet.batchLocalEulerX = localEulerX;
         }
 
+        Vec3.transformQuat(this._tempForward, Vec3.FORWARD, bullet.node.rotation);
+        let forwardX = -this._tempForward.x;
+        const forwardY = -this._tempForward.y;
+        let forwardZ = -this._tempForward.z;
+        const forwardLength = Math.sqrt(forwardX * forwardX + forwardZ * forwardZ);
+        if (forwardLength <= 0.0001) {
+            forwardX = 0;
+            forwardZ = 1;
+        } else {
+            forwardX /= forwardLength;
+            forwardZ /= forwardLength;
+        }
+        bullet.batchForwardX = forwardX;
+        bullet.batchForwardY = forwardY;
+        bullet.batchForwardZ = forwardZ;
+
         return {
             sprite,
             spriteFrame,
@@ -205,9 +256,9 @@ export class BulletBatchRenderer extends Component {
         }
         renderer.setSharedMaterial(material, 0);
 
-        const positions: number[] = [];
-        const uvs: number[] = [];
-        const indices: number[] = [];
+        const positions = new Float32Array(0);
+        const uvs = new Float32Array(0);
+        const indices = new Uint16Array(0);
         batch = {
             node,
             renderer,
@@ -218,14 +269,20 @@ export class BulletBatchRenderer extends Component {
             uvs,
             indices,
             uv: this._getUV(visual.spriteFrame),
-            staticVisualCount: 0,
+            capacity: 0,
             geometry: {
                 positions,
                 uvs,
-                indices,
+                indices16: indices,
                 minPos: { x: -100, y: -10, z: -100 },
                 maxPos: { x: 100, y: 20, z: 200 },
             },
+            updateGeometry: {
+                positions,
+                indices16: indices,
+            },
+            positionViews: [],
+            indexViews: [],
             spriteFrame: visual.spriteFrame,
             width: visual.width,
             height: visual.height,
@@ -240,22 +297,33 @@ export class BulletBatchRenderer extends Component {
         for (let i = bullets.length - 1; i >= 0; i--) {
             const bullet = bullets[i];
             if (!bullet || !bullet.isValid || !bullet.node.activeInHierarchy) {
-                bullets[i] = bullets[bullets.length - 1];
+                const lastBullet = bullets[bullets.length - 1];
+                bullets[i] = lastBullet;
                 bullets.pop();
+                if (lastBullet && lastBullet !== bullet) {
+                    lastBullet.batchListIndex = i;
+                }
+                if (bullet) {
+                    bullet.batchListIndex = -1;
+                    if (bullet.batchRenderer === this) {
+                        bullet.batchRenderer = null;
+                    }
+                }
             }
         }
 
-        let visualCount = 0;
-        for (let i = 0; i < bullets.length; i++) {
-            visualCount += Math.max(1, bullets[i].batchVisualCount);
-        }
+        const visualCount = bullets.length;
         batch.node.active = visualCount > 0;
         if (visualCount <= 0) {
             return;
         }
 
-        batch.positions.length = visualCount * 12;
-        this._prepareStaticGeometry(batch, visualCount);
+        try {
+            this._ensureBatchCapacity(batch, visualCount);
+        } catch (error) {
+            this._fallbackToSprites(error);
+            return;
+        }
 
         const halfWidth = batch.width * 0.5;
         const halfHeight = batch.height * 0.5;
@@ -266,51 +334,62 @@ export class BulletBatchRenderer extends Component {
             const bullet = bullets[i];
             const pos = bullet.node.position;
 
-            Vec3.transformQuat(this._tempForward, Vec3.FORWARD, bullet.node.rotation);
-            this._tempForward.set(-this._tempForward.x, -this._tempForward.y, -this._tempForward.z);
-            if (useGroundPlane) {
-                this._tempRight.set(this._tempForward.z, 0, -this._tempForward.x);
-            } else {
-                this._tempRight.set(this._tempForward.z, 0, -this._tempForward.x);
-            }
-            if (this._tempRight.lengthSqr() <= 0.0001) {
-                this._tempRight.set(1, 0, 0);
-            } else {
-                this._tempRight.normalize();
-            }
-
-            const fx = this._tempForward.x * halfHeight;
-            const fy = useGroundPlane ? this._tempForward.y * halfHeight : halfHeight;
-            const fz = this._tempForward.z * halfHeight;
-            const rx = this._tempRight.x * halfWidth;
-            const rz = this._tempRight.z * halfWidth;
-            const copyCount = Math.max(1, bullet.batchVisualCount);
-            for (let copyIndex = 0; copyIndex < copyCount; copyIndex++, visualIndex++) {
-                const copyOffset = bullet.getBatchVisualOffset(copyIndex);
-                const px = pos.x + copyOffset.x;
-                const py = pos.y + copyOffset.y;
-                const pz = pos.z + copyOffset.z;
-                const pOffset = visualIndex * 12;
-                this._setPosition(batch.positions, pOffset, px - rx - fx, py - fy, pz - rz - fz);
-                this._setPosition(batch.positions, pOffset + 3, px + rx - fx, py - fy, pz + rz - fz);
-                this._setPosition(batch.positions, pOffset + 6, px - rx + fx, py + fy, pz - rz + fz);
-                this._setPosition(batch.positions, pOffset + 9, px + rx + fx, py + fy, pz + rz + fz);
-            }
+            const forwardX = bullet.batchForwardX;
+            const forwardY = bullet.batchForwardY;
+            const forwardZ = bullet.batchForwardZ;
+            const fx = forwardX * halfHeight;
+            const fy = useGroundPlane ? forwardY * halfHeight : halfHeight;
+            const fz = forwardZ * halfHeight;
+            const rx = forwardZ * halfWidth;
+            const rz = -forwardX * halfWidth;
+            const pOffset = visualIndex * 12;
+            this._setPosition(batch.positions, pOffset, pos.x - rx - fx, pos.y - fy, pos.z - rz - fz);
+            this._setPosition(batch.positions, pOffset + 3, pos.x + rx - fx, pos.y - fy, pos.z + rz - fz);
+            this._setPosition(batch.positions, pOffset + 6, pos.x - rx + fx, pos.y + fy, pos.z - rz + fz);
+            this._setPosition(batch.positions, pOffset + 9, pos.x + rx + fx, pos.y + fy, pos.z + rz + fz);
+            visualIndex++;
         }
 
-        batch.mesh = utils.createMesh(batch.geometry, batch.mesh || undefined);
-        batch.renderer.mesh = batch.mesh;
+        let positionView = batch.positionViews[visualCount];
+        if (!positionView) {
+            positionView = batch.positions.subarray(0, visualCount * 12);
+            batch.positionViews[visualCount] = positionView;
+        }
+        let indexView = batch.indexViews[visualCount];
+        if (!indexView) {
+            indexView = batch.indices.subarray(0, visualCount * 6);
+            batch.indexViews[visualCount] = indexView;
+        }
+        batch.updateGeometry.positions = positionView;
+        batch.updateGeometry.indices16 = indexView;
+        try {
+            batch.mesh?.updateSubMesh(0, batch.updateGeometry);
+        } catch (error) {
+            this._fallbackToSprites(error);
+        }
     }
 
-    private _prepareStaticGeometry(batch: BatchInfo, visualCount: number): void {
-        if (batch.staticVisualCount === visualCount) {
+    private _ensureBatchCapacity(batch: BatchInfo, visualCount: number): void {
+        if (batch.mesh && batch.capacity >= visualCount) {
             return;
         }
-        batch.staticVisualCount = visualCount;
-        batch.uvs.length = visualCount * 8;
-        batch.indices.length = visualCount * 6;
+        let capacity = Math.max(16, batch.capacity);
+        while (capacity < visualCount) {
+            capacity *= 2;
+        }
+        capacity = Math.min(16383, capacity);
+        if (visualCount > capacity) {
+            throw new Error(`[BulletBatchRenderer] visual count ${visualCount} exceeds supported capacity ${capacity}`);
+        }
+
+        batch.capacity = capacity;
+        batch.positions = new Float32Array(capacity * 12);
+        batch.uvs = new Float32Array(capacity * 8);
+        batch.indices = new Uint16Array(capacity * 6);
+        batch.positionViews.length = 0;
+        batch.indexViews.length = 0;
         const uv = batch.uv;
-        for (let visualIndex = 0; visualIndex < visualCount; visualIndex++) {
+        for (let visualIndex = 0; visualIndex < capacity; visualIndex++) {
             const uvOffset = visualIndex * 8;
             batch.uvs[uvOffset] = uv[0];
             batch.uvs[uvOffset + 1] = uv[1];
@@ -330,9 +409,64 @@ export class BulletBatchRenderer extends Component {
             batch.indices[indexOffset + 4] = vertexOffset + 1;
             batch.indices[indexOffset + 5] = vertexOffset + 3;
         }
+
+        batch.geometry = {
+            positions: batch.positions,
+            uvs: batch.uvs,
+            indices16: batch.indices,
+            minPos: { x: -100, y: -10, z: -100 },
+            maxPos: { x: 100, y: 20, z: 200 },
+        };
+        batch.updateGeometry = {
+            positions: batch.positions.subarray(0, 12),
+            indices16: batch.indices.subarray(0, 6),
+        };
+        const oldMesh = batch.mesh;
+        const createDynamicMesh = (utils as any).createDynamicMesh as Function;
+        batch.mesh = createDynamicMesh.call(utils, 0, batch.geometry, undefined, {
+            maxSubMeshes: 1,
+            maxSubMeshVertices: capacity * 4,
+            maxSubMeshIndices: capacity * 6,
+        });
+        batch.renderer.mesh = batch.mesh;
+        oldMesh?.destroy();
     }
 
-    private _setPosition(out: number[], offset: number, x: number, y: number, z: number): void {
+    private _supportsDynamicMesh(): boolean {
+        return typeof (utils as any).createDynamicMesh === 'function';
+    }
+
+    private _fallbackToSprites(error: unknown): void {
+        console.warn('[BulletBatchRenderer] dynamic batching disabled; restored Sprite rendering.', error);
+        BulletBatchRenderer.useDynamicBatching = false;
+        for (let i = 0; i < this._batches.length; i++) {
+            const batch = this._batches[i];
+            if (!batch) {
+                continue;
+            }
+            batch.node.active = false;
+            for (let j = 0; j < batch.bullets.length; j++) {
+                const bullet = batch.bullets[j];
+                if (!bullet?.isValid) {
+                    continue;
+                }
+                const sprite = bullet.batchSprite && bullet.batchSprite.isValid
+                    ? bullet.batchSprite
+                    : bullet.node.getComponentInChildren(Sprite);
+                if (sprite?.isValid) {
+                    sprite.enabled = true;
+                    bullet.batchSprite = sprite;
+                }
+                if (bullet.batchRenderer === this) {
+                    bullet.batchRenderer = null;
+                }
+                bullet.batchListIndex = -1;
+            }
+            batch.bullets.length = 0;
+        }
+    }
+
+    private _setPosition(out: Float32Array, offset: number, x: number, y: number, z: number): void {
         out[offset] = x;
         out[offset + 1] = y;
         out[offset + 2] = z;

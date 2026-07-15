@@ -33,6 +33,18 @@ class WeaponBulletConfig {
     @property({ type: BulletEnum, displayName: '子弹模型', tooltip: '该武器使用的子弹预制体类型。' })
     public bulletType: BulletEnum = BulletEnum.arrow;
 
+    @property({ type: CCFloat, displayName: '每秒射击轮数', min: 0.1, tooltip: '该武器每秒触发多少轮射击。直接决定真实子弹生成速率；填 0 时使用对应武器的安全默认值。' })
+    public shotsPerSecond: number = 0;
+
+    @property({ type: CCInteger, displayName: '每轮射击人数上限', min: 1, tooltip: '该武器每轮最多允许多少名角色射击。队伍人数更多时会轮换开火；填 0 时使用对应武器的安全默认值。' })
+    public shootingRoleLimit: number = 0;
+
+    @property({ type: CCInteger, displayName: '单角色每轮子弹上限', min: 1, tooltip: '每名角色单轮产生的真实子弹上限。显示、碰撞和伤害都与实际生成的子弹一一对应。' })
+    public bulletsPerRoleLimit: number = 1;
+
+    @property({ type: CCBoolean, displayName: '持续射击', tooltip: '开启后把一轮内的子弹均匀分布到整个攻击间隔，适合加特林类武器，避免子弹一波一波出现。' })
+    public continuousFire: boolean = false;
+
     @property({ type: CCBoolean, displayName: '打乱发射顺序', tooltip: '复数角色时随机打乱该武器的发射时机，不改变子弹方向。' })
     public randomizeShotOrder: boolean = false;
 
@@ -46,11 +58,12 @@ class WeaponBulletConfig {
 type PendingRoleShot = {
     role: Role;
     fireTime: number;
-    visualBulletCount: number;
+    bulletCount: number;
     damageScale: number;
     lockWorldX: number;
     playEffect: boolean;
     initialBulletRandomX: number;
+    bulletType: BulletEnum;
 };
 
 
@@ -73,6 +86,9 @@ export class Player extends UnityUpComponent {
     public roleList: Role[] = [];
 
     public move: MoveDrive;
+
+    @property({ type: CCInteger, displayName: '初始玩家数量', min: 1, tooltip: '开局时玩家队伍拥有的角色总数。会保留场景中已有角色并自动补足，最大不超过“+1人数上限”。' })
+    public initialRoleCount: number = 1;
 
     @property({ type: CCFloat, displayName: '初始武器射速(次/秒)', tooltip: '开局默认武器每秒攻击次数。武器升级后会使用对应武器自己的射速配置。' })
     public attackSpeed: number = 3;
@@ -102,8 +118,8 @@ export class Player extends UnityUpComponent {
     @property({ type: CCBoolean, displayName: '仅外圈角色投影', tooltip: '开启后动态关闭内圈阴影；最外圈未排满时，同时保留相邻完整圈的阴影，避免缺口区域没有角色投影。' })
     public onlyOuterLayerCastShadow: boolean = true;
 
-    @property({ type: CCBoolean, displayName: 'jtl2合并多发逻辑弹', tooltip: '仅对 jtl2 生效。多发子弹的视觉数量保持不变，但合并为一颗逻辑子弹参与移动和碰撞，并自动补偿总伤害。' })
-    public mergeJtl2MultiBulletLogic: boolean = true;
+    @property({ type: CCBoolean, displayName: '启用子弹动态合批', tooltip: '开启时每帧更新动态 Mesh 以减少 DrawCall；关闭时使用子弹原始 Sprite 渲染，避免动态 Mesh 更新导致的帧时间开销。' })
+    public enableBulletDynamicBatching: boolean = true;
 
     @property({ type: CCInteger, displayName: '错峰发射武器配置索引', tooltip: '指定哪一个武器子弹配置使用错峰发射。0 表示第一个油桶给出的武器；负数表示关闭。' })
     public staggerShotWeaponConfigIndex: number = 0;
@@ -162,7 +178,6 @@ export class Player extends UnityUpComponent {
         })(),
     ];
 
-    private shootRoleStartIndex: number = 0;
     private pendingRoleSwitchType: RoleEnum = null;
     private pendingRoleSwitchIndex: number = 0;
     private pendingRolePrewarmType: RoleEnum = null;
@@ -173,8 +188,13 @@ export class Player extends UnityUpComponent {
     private readonly bulletPrewarmPerFrame: number = 2;
     private currentWeaponBulletConfig: WeaponBulletConfig | null = null;
     private currentWeaponBulletConfigIndex: number = -1;
+    private currentShootingRoleLimit: number = 0;
+    private currentBulletsPerRoleLimit: number = 1;
+    private readonly frontShootingRoleIndices: number[] = [];
     private staggerShotClock: number = 0;
     private pendingStaggerShots: PendingRoleShot[] = [];
+    private continuousShotAccumulator: number = 0;
+    private continuousRoleCursor: number = 0;
     private roleLayoutDirty: boolean = false;
     private shrinkDelayTimer: number = -1;
     private shrinkAnimating: boolean = false;
@@ -194,12 +214,47 @@ export class Player extends UnityUpComponent {
 
     start() {
         Player.instance = this;
+        BulletBatchRenderer.useDynamicBatching = this.enableBulletDynamicBatching;
         this.move = this.node.getComponent(MoveDrive);
         this.applyDefaultWeaponConfig();
+        this.initializeStartingRoles();
         this.syncRespawnRoleCount();
         this.refreshRoleShadowCasting();
         EventManager.instance.on(EventType.PLAYER_HIT, this.hit, this);
         EventManager.instance.on(EventType.PLAYER_HIT_2, this.hit_2, this);
+    }
+
+    private initializeStartingRoles(): void {
+        const targetCount = Math.min(
+            this.getEffectiveMaxRoleCount(),
+            Math.max(1, Math.floor(this.initialRoleCount)),
+        );
+        while (this.roleList.length > targetCount) {
+            const role = this.roleList.pop();
+            if (!role) {
+                continue;
+            }
+            role.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+        }
+        while (this.roleList.length < targetCount) {
+            const role = this.role;
+            this.node.addChild(role.node);
+            if (!this.addRole(role, false, false)) {
+                role.node.active = false;
+                PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+                break;
+            }
+            const roleIndex = this.roleList.length - 1;
+            const pos = this.getNextPos(roleIndex, true);
+            role.node.setPosition(pos);
+            PoolManager.instance.V3 = pos;
+        }
+        this.curCount = Math.min(
+            this.getEffectiveMaxRoleCount(),
+            Math.max(1, this.roleList.length),
+        );
+        this.upMoveBoundary();
     }
 
     protected _update(dt: number): void {
@@ -234,6 +289,11 @@ export class Player extends UnityUpComponent {
 
     private roleAttack(dt: number) {
 
+        if (this.shouldUseContinuousFire()) {
+            this.roleAttackContinuous(dt);
+            return;
+        }
+
         if (this._attackTime <= 0) {
             // this.attackIn = true;
             const attackTime = 1 / this.attackSpeed;
@@ -244,15 +304,16 @@ export class Player extends UnityUpComponent {
             //     this.attackEvent(i);
             // }
 
-            const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
-            const outerLayer = this.getShootingOuterLayer(shootCount);
+            const shootCount = Math.min(this.roleList.length, this.getCurrentShootingRoleLimit());
+            this.collectFrontShootingRoleIndices(shootCount);
+            const outerLayer = this.getShootingOuterLayer();
             const useStaggerShot = this.shouldUseStaggerShot();
             const useRandomShot = shootCount > 1 && this.shouldUseRandomShot();
             const randomShotConfig = this.currentWeaponBulletConfig;
             const lockWorldX = this.node.worldPosition.x;
             let effectPlayCount = 0;
-            for (let i = 0; i < shootCount; i++) {
-                const roleIndex = (this.shootRoleStartIndex + i) % this.roleList.length;
+            for (let i = 0; i < this.frontShootingRoleIndices.length; i++) {
+                const roleIndex = this.frontShootingRoleIndices[i];
                 const role = this.roleList[roleIndex];
                 if (!role.attackIN) {
                     const playEffect = this.shouldPlayMuzzleEffect(roleIndex, outerLayer, effectPlayCount);
@@ -263,7 +324,7 @@ export class Player extends UnityUpComponent {
                         this.enqueueRandomShot(
                             role,
                             attackTime,
-                            role.visualBulletCount,
+                            this.getRealBulletCountPerRole(role),
                             1,
                             lockWorldX,
                             playEffect,
@@ -271,9 +332,9 @@ export class Player extends UnityUpComponent {
                             randomShotConfig?.initialBulletRandomX ?? 0,
                         );
                     } else if (useStaggerShot) {
-                        this.enqueueStaggerShot(role, i, shootCount, attackTime, role.visualBulletCount, 1, lockWorldX, playEffect);
+                        this.enqueueStaggerShot(role, i, this.frontShootingRoleIndices.length, attackTime, this.getRealBulletCountPerRole(role), 1, lockWorldX, playEffect);
                     } else {
-                        this.enqueueRoleShot(role, this.staggerShotClock, role.visualBulletCount, 1, lockWorldX, playEffect, 0);
+                        this.enqueueRoleShot(role, this.staggerShotClock, this.getRealBulletCountPerRole(role), 1, lockWorldX, playEffect, 0);
                     }
                     // const animIndex = isMove ? PlayerFBXAnimName.run_attack : PlayerFBXAnimName.attack;
                     // const animState = role.fbxManager.setAnimation(animIndex, false);
@@ -282,9 +343,6 @@ export class Player extends UnityUpComponent {
                     // animState.speed = animScale;
 
                 }
-            }
-            if (this.roleList.length > 0) {
-                this.shootRoleStartIndex = (this.shootRoleStartIndex + shootCount) % this.roleList.length;
             }
             // this.scheduleOnce(() => {
             //     this.attackIn = false;
@@ -307,7 +365,88 @@ export class Player extends UnityUpComponent {
         return !!this.currentWeaponBulletConfig?.randomizeShotOrder;
     }
 
-    private enqueueRandomShot(role: Role, attackTime: number, visualBulletCount: number, damageScale: number, lockWorldX: number, playEffect: boolean, delayWindowRatio: number, initialBulletRandomX: number): void {
+    private shouldUseContinuousFire(): boolean {
+        return !!this.currentWeaponBulletConfig?.continuousFire;
+    }
+
+    private shuffleFrontShootingRoles(): void {
+        for (let i = this.frontShootingRoleIndices.length - 1; i > 0; i--) {
+            const swapIndex = Math.floor(Math.random() * (i + 1));
+            const temp = this.frontShootingRoleIndices[i];
+            this.frontShootingRoleIndices[i] = this.frontShootingRoleIndices[swapIndex];
+            this.frontShootingRoleIndices[swapIndex] = temp;
+        }
+    }
+
+    private roleAttackContinuous(dt: number): void {
+        const shootCount = Math.min(this.roleList.length, this.getCurrentShootingRoleLimit());
+        if (shootCount <= 0 || this.attackSpeed <= 0) {
+            this.continuousShotAccumulator = 0;
+            return;
+        }
+
+        this.collectFrontShootingRoleIndices(shootCount);
+        const activeRoleCount = this.frontShootingRoleIndices.length;
+        if (activeRoleCount <= 0) {
+            this.continuousShotAccumulator = 0;
+            return;
+        }
+
+        const roleShotsPerSecond = this.attackSpeed * activeRoleCount;
+        const frameTime = Math.max(0, dt);
+        const accumulatorBeforeFrame = this.continuousShotAccumulator;
+        const accumulatedShots = accumulatorBeforeFrame + frameTime * roleShotsPerSecond;
+        const dueShotCount = Math.floor(accumulatedShots);
+        if (dueShotCount <= 0) {
+            this.continuousShotAccumulator = accumulatedShots;
+            return;
+        }
+
+        // 到期子弹全部在当前帧生成，不积压历史任务；按本帧内理论发射时刻预推进，避免同排成团。
+        this.continuousShotAccumulator = accumulatedShots - dueShotCount;
+        const outerLayer = this.getShootingOuterLayer();
+        const lockWorldX = this.node.worldPosition.x;
+        const config = this.currentWeaponBulletConfig;
+        const bulletType = this.getCurrentBulletType();
+        const randomizeRole = !!config?.randomizeShotOrder;
+        const initialBulletRandomX = Math.max(0, config?.initialBulletRandomX ?? 0);
+        let effectPlayCount = 0;
+        let soundPlayed = false;
+
+        for (let shotIndex = 0; shotIndex < dueShotCount; shotIndex++) {
+            if (randomizeRole && shotIndex % activeRoleCount === 0) {
+                this.shuffleFrontShootingRoles();
+            }
+            const frontIndex = randomizeRole
+                ? shotIndex % activeRoleCount
+                : this.continuousRoleCursor++ % activeRoleCount;
+            const roleIndex = this.frontShootingRoleIndices[frontIndex];
+            const role = this.roleList[roleIndex];
+            if (!role || role.attackIN || !role.node.activeInHierarchy) {
+                continue;
+            }
+            const playEffect = this.shouldPlayMuzzleEffect(roleIndex, outerLayer, effectPlayCount);
+            if (playEffect) {
+                effectPlayCount++;
+            }
+            const emissionTimeInFrame = (1 - accumulatorBeforeFrame + shotIndex) / roleShotsPerSecond;
+            const spawnAdvanceTime = Math.max(0, frameTime - emissionTimeInFrame);
+            role.attackEvent(
+                0,
+                this.getRealBulletCountPerRole(role),
+                1,
+                lockWorldX,
+                playEffect,
+                initialBulletRandomX,
+                !soundPlayed,
+                spawnAdvanceTime,
+                bulletType,
+            );
+            soundPlayed = true;
+        }
+    }
+
+    private enqueueRandomShot(role: Role, attackTime: number, bulletCount: number, damageScale: number, lockWorldX: number, playEffect: boolean, delayWindowRatio: number, initialBulletRandomX: number): void {
         if (!role) {
             return;
         }
@@ -316,7 +455,7 @@ export class Player extends UnityUpComponent {
         this.enqueueRoleShot(
             role,
             this.staggerShotClock + delay,
-            visualBulletCount,
+            bulletCount,
             damageScale,
             lockWorldX,
             playEffect,
@@ -324,9 +463,9 @@ export class Player extends UnityUpComponent {
         );
     }
 
-    private enqueueStaggerShot(role: Role, shotIndex: number, shootCount: number, attackTime: number, visualBulletCount: number, damageScale: number, lockWorldX: number, playEffect: boolean): void {
+    private enqueueStaggerShot(role: Role, shotIndex: number, shootCount: number, attackTime: number, bulletCount: number, damageScale: number, lockWorldX: number, playEffect: boolean): void {
         if (!role || shootCount <= 1) {
-            role?.attackEvent(0, visualBulletCount, damageScale, lockWorldX, playEffect);
+            role?.attackEvent(0, bulletCount, damageScale, lockWorldX, playEffect, 0, true, 0, this.getCurrentBulletType());
             return;
         }
 
@@ -336,7 +475,7 @@ export class Player extends UnityUpComponent {
         this.enqueueRoleShot(
             role,
             this.staggerShotClock + delay,
-            visualBulletCount,
+            bulletCount,
             damageScale,
             lockWorldX,
             playEffect,
@@ -347,25 +486,34 @@ export class Player extends UnityUpComponent {
     private enqueueRoleShot(
         role: Role,
         fireTime: number,
-        visualBulletCount: number,
+        bulletCount: number,
         damageScale: number,
         lockWorldX: number,
         playEffect: boolean,
         initialBulletRandomX: number,
     ): void {
+        const maxPendingShots = Math.max(
+            Math.max(1, Math.floor(this.maxRoleShotsPerFrame)),
+            this.getCurrentShootingRoleLimit() * 2,
+        );
+        if (this.pendingStaggerShots.length >= maxPendingShots) {
+            return;
+        }
         this.pendingStaggerShots.push({
             role,
             fireTime,
-            visualBulletCount,
+            bulletCount,
             damageScale,
             lockWorldX,
             playEffect,
             initialBulletRandomX: Math.max(0, initialBulletRandomX),
+            bulletType: this.getCurrentBulletType(),
         });
     }
 
     private processPendingStaggerShots(): void {
         const maxShots = Math.max(1, Math.floor(this.maxRoleShotsPerFrame));
+        const staleBefore = this.staggerShotClock - Math.max(0.05, 1 / Math.max(0.1, this.attackSpeed));
         let processedCount = 0;
         for (let i = this.pendingStaggerShots.length - 1; i >= 0; i--) {
             if (processedCount >= maxShots) {
@@ -377,18 +525,69 @@ export class Player extends UnityUpComponent {
             }
             this.pendingStaggerShots[i] = this.pendingStaggerShots[this.pendingStaggerShots.length - 1];
             this.pendingStaggerShots.pop();
+            if (shot.fireTime < staleBefore) {
+                continue;
+            }
             if (!shot.role || !shot.role.node || !shot.role.node.activeInHierarchy || shot.role.attackIN) {
                 continue;
             }
-            shot.role.attackEvent(0, shot.visualBulletCount, shot.damageScale, shot.lockWorldX, shot.playEffect, shot.initialBulletRandomX);
+            shot.role.attackEvent(
+                0,
+                shot.bulletCount,
+                shot.damageScale,
+                shot.lockWorldX,
+                shot.playEffect,
+                shot.initialBulletRandomX,
+                true,
+                0,
+                shot.bulletType,
+            );
             processedCount++;
         }
     }
 
-    private getShootingOuterLayer(shootCount: number): number {
+    private collectFrontShootingRoleIndices(limit: number): void {
+        this.frontShootingRoleIndices.length = 0;
+        const safeLimit = Math.max(0, Math.min(limit, this.roleList.length));
+        for (let roleIndex = 0; roleIndex < this.roleList.length; roleIndex++) {
+            const role = this.roleList[roleIndex];
+            if (!role?.node?.activeInHierarchy) {
+                continue;
+            }
+            let insertAt = this.frontShootingRoleIndices.length;
+            for (let i = 0; i < this.frontShootingRoleIndices.length; i++) {
+                if (this.isRoleMoreFrontAndCentered(roleIndex, this.frontShootingRoleIndices[i])) {
+                    insertAt = i;
+                    break;
+                }
+            }
+            this.frontShootingRoleIndices.splice(insertAt, 0, roleIndex);
+            if (this.frontShootingRoleIndices.length > safeLimit) {
+                this.frontShootingRoleIndices.pop();
+            }
+        }
+    }
+
+    private isRoleMoreFrontAndCentered(roleIndex: number, otherRoleIndex: number): boolean {
+        const rolePos = this.roleList[roleIndex].node.worldPosition;
+        const otherPos = this.roleList[otherRoleIndex].node.worldPosition;
+        const zDiff = rolePos.z - otherPos.z;
+        if (Math.abs(zDiff) > 0.01) {
+            return zDiff > 0;
+        }
+        const centerX = this.node.worldPosition.x;
+        const roleAbsX = Math.abs(rolePos.x - centerX);
+        const otherAbsX = Math.abs(otherPos.x - centerX);
+        if (Math.abs(roleAbsX - otherAbsX) > 0.01) {
+            return roleAbsX < otherAbsX;
+        }
+        return rolePos.x < otherPos.x;
+    }
+
+    private getShootingOuterLayer(): number {
         let outerLayer = 0;
-        for (let i = 0; i < shootCount; i++) {
-            const roleIndex = (this.shootRoleStartIndex + i) % this.roleList.length;
+        for (let i = 0; i < this.frontShootingRoleIndices.length; i++) {
+            const roleIndex = this.frontShootingRoleIndices[i];
             const layer = this.getRoleLayer(roleIndex);
             if (layer > outerLayer) {
                 outerLayer = layer;
@@ -423,26 +622,27 @@ export class Player extends UnityUpComponent {
     public upArms(armwType: ArmsTypeEnum, weaponBulletConfigIndex: number = -1) {
         const weaponBulletConfig = this.getWeaponBulletConfig(armwType, weaponBulletConfigIndex);
         const upgradeArmsType = weaponBulletConfig?.armsType ?? armwType;
-        Role.mergeVisualBullets = this.mergeJtl2MultiBulletLogic && upgradeArmsType === ArmsTypeEnum.jtl2;
         this.pendingStaggerShots.length = 0;
+        this.continuousShotAccumulator = 0;
+        this.continuousRoleCursor = 0;
         this.currentWeaponBulletConfig = weaponBulletConfig;
         this.currentWeaponBulletConfigIndex = weaponBulletConfig ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex) : -1;
         let shouldApplyRoleModel = false;
         switch (upgradeArmsType) {
             case ArmsTypeEnum.bq:
                 this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.applyWeaponAttackSpeed(upgradeArmsType);
+                this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
                 shouldApplyRoleModel = true;
                 break;
             case ArmsTypeEnum.jq:
                 this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.applyWeaponAttackSpeed(upgradeArmsType);
+                this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
                 shouldApplyRoleModel = true;
                 break;
 
             case ArmsTypeEnum.jtl:
                 this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.applyWeaponAttackSpeed(upgradeArmsType);
+                this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
@@ -450,7 +650,7 @@ export class Player extends UnityUpComponent {
                 break;
             case ArmsTypeEnum.jtl2: {
                 this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.applyWeaponAttackSpeed(upgradeArmsType);
+                this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
                 TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
@@ -564,13 +764,11 @@ export class Player extends UnityUpComponent {
         if (!config) {
             this.currentWeaponBulletConfig = null;
             this.currentWeaponBulletConfigIndex = -1;
-            Role.mergeVisualBullets = false;
             return;
         }
         this.applyWeaponBulletConfig(config);
         const armsType = config.armsType;
-        Role.mergeVisualBullets = this.mergeJtl2MultiBulletLogic && armsType === ArmsTypeEnum.jtl2;
-        this.applyWeaponAttackSpeed(armsType);
+        this.applyWeaponFireLimits(config, armsType);
         const soundType = this.getSoundTypeByArms(armsType);
         if (soundType !== null) {
             Role.soundType = soundType;
@@ -594,21 +792,50 @@ export class Player extends UnityUpComponent {
         Role.bulletType = config.bulletType;
     }
 
-    private applyWeaponAttackSpeed(armwType: ArmsTypeEnum): void {
-        switch (armwType) {
+    private getCurrentBulletType(): BulletEnum {
+        return this.currentWeaponBulletConfig?.bulletType ?? Role.bulletType;
+    }
+
+    private applyWeaponFireLimits(config: WeaponBulletConfig | null, armwType: ArmsTypeEnum): void {
+        const resolvedArmsType = armwType === ArmsTypeEnum.none
+            ? (config?.weaponModel ?? ArmsTypeEnum.bq)
+            : armwType;
+        let safeShotsPerSecond = 2;
+        let safeShootingRoleLimit = 10;
+        switch (resolvedArmsType) {
             case ArmsTypeEnum.bq:
-                this.attackSpeed = 4;
+                safeShotsPerSecond = 2;
+                safeShootingRoleLimit = 10;
                 break;
             case ArmsTypeEnum.jq:
-                this.attackSpeed = 6;
+                safeShotsPerSecond = 2.5;
+                safeShootingRoleLimit = 12;
                 break;
             case ArmsTypeEnum.jtl:
-                this.attackSpeed = 10;
+                safeShotsPerSecond = 3;
+                safeShootingRoleLimit = 14;
                 break;
             case ArmsTypeEnum.jtl2:
-                this.attackSpeed = 20;
+                safeShotsPerSecond = 4;
+                safeShootingRoleLimit = 16;
                 break;
         }
+        this.attackSpeed = config?.shotsPerSecond > 0 ? config.shotsPerSecond : safeShotsPerSecond;
+        this.currentShootingRoleLimit = config?.shootingRoleLimit > 0
+            ? Math.floor(config.shootingRoleLimit)
+            : safeShootingRoleLimit;
+        this.currentBulletsPerRoleLimit = Math.max(1, Math.floor(config?.bulletsPerRoleLimit ?? 1));
+    }
+
+    private getCurrentShootingRoleLimit(): number {
+        const weaponLimit = this.currentShootingRoleLimit > 0
+            ? this.currentShootingRoleLimit
+            : this.maxShootingRoleCount;
+        return Math.max(1, Math.min(this.maxShootingRoleCount, weaponLimit));
+    }
+
+    private getRealBulletCountPerRole(role: Role): number {
+        return Math.max(1, Math.min(role.bulletCount, this.currentBulletsPerRoleLimit));
     }
 
     private getSoundTypeByArms(armwType: ArmsTypeEnum): SoundEnum | null {
@@ -621,11 +848,11 @@ export class Player extends UnityUpComponent {
     }
 
     private getWeaponPrewarmBulletCount(): number {
-        const shootCount = Math.min(this.roleList.length, this.maxShootingRoleCount);
+        const shootCount = Math.min(this.roleList.length, this.getCurrentShootingRoleLimit());
         let count = 0;
         for (let i = 0; i < shootCount; i++) {
             const role = this.roleList[i];
-            count += role ? role.visualBulletCount : 1;
+            count += role ? this.getRealBulletCountPerRole(role) : 1;
         }
         return Math.max(1, Math.min(count, 8));
     }
@@ -650,7 +877,7 @@ export class Player extends UnityUpComponent {
         let count = this.bulletPrewarmPerFrame;
         while (count > 0 && this.pendingBulletPrewarmType !== null && this.pendingBulletPrewarmCount > 0) {
             const bullet = BulletManager.instance.prewarmBullet3D(this.pendingBulletPrewarmType, bulletLayer, true);
-            BulletBatchRenderer.getOrCreate(bulletLayer).prewarmBullet(bullet);
+            BulletBatchRenderer.prewarm(bulletLayer, bullet);
             this.pendingBulletPrewarmCount--;
             count--;
         }
@@ -661,7 +888,7 @@ export class Player extends UnityUpComponent {
 
         if (this.pendingBulletBatchWarmType !== null) {
             const bullet = BulletManager.instance.prewarmBullet3D(this.pendingBulletBatchWarmType, bulletLayer, false);
-            BulletBatchRenderer.getOrCreate(bulletLayer).prewarmBullet(bullet);
+            BulletBatchRenderer.prewarm(bulletLayer, bullet);
             this.pendingBulletBatchWarmType = null;
         }
     }
@@ -1240,14 +1467,6 @@ export class Player extends UnityUpComponent {
 
         const outerLayer = combatRoleCount > 0 ? this.getRoleLayer(combatRoleCount - 1) : 0;
         let shadowMinLayer = outerLayer;
-        if (combatRoleCount > 1 && outerLayer > 0) {
-            const outerRoleInfo = this.getRoleLayerInfo(combatRoleCount - 2);
-            const isOuterLayerFull = outerRoleInfo.indexInLayer + 1 >= outerRoleInfo.layerCount;
-            if (!isOuterLayerFull) {
-                // 缺口会露出紧邻的完整内圈，因此两圈都保留阴影。
-                shadowMinLayer = outerLayer - 1;
-            }
-        }
         let combatIndex = 0;
         for (let i = 0; i < this.roleList.length; i++) {
             const role = this.roleList[i];
@@ -1418,8 +1637,9 @@ export class Player extends UnityUpComponent {
         this.currentTeamAnimName = null;
         this.pendingAddRoleCount = 0;
         this.pendingStaggerShots.length = 0;
+        this.continuousShotAccumulator = 0;
+        this.continuousRoleCursor = 0;
         this._attackTime = 0.5;
-        this.shootRoleStartIndex = 0;
         const retryRoleCount = Math.min(this.curCount, this.getRetryMaxRoleCount());
         for (let i = 0; i < retryRoleCount; i++) {
             const role = this.role;
@@ -1531,11 +1751,11 @@ export class Player extends UnityUpComponent {
         AudioManager.inst.playOneShot(Role.soundType, 0.3, 0.08);
         // console.log("攻击", index);
         const pos = this.shootList[index].worldPosition;
-        const bullet = BulletManager.instance.shootBullet3D(Role.bulletType, Quat.IDENTITY, Role.power, Role.repelPower);
+        const bullet = BulletManager.instance.shootBullet3D(this.getCurrentBulletType(), Quat.IDENTITY, Role.power, Role.repelPower);
         Role.bulletLayer.addChild(bullet.node);
         bullet.node.setWorldPosition(pos);
         Role.aimBulletToCurrentTarget(bullet, this.node.worldPosition.x);
-        BulletBatchRenderer.getOrCreate(Role.bulletLayer).registerBullet(bullet);
+        BulletBatchRenderer.register(Role.bulletLayer, bullet);
         // this.effect?.play();
     }
 

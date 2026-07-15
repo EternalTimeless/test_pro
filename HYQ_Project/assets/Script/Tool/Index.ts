@@ -294,9 +294,10 @@ export const distanceSquared = (v1: Vec3, v2: Vec3) => {
 }  /**
 * 判断一个点是否在摄像机视口范围内
 * @param worldPos 世界坐标系中的点（Vec3）
-* @param camera 目标摄像机
-*/
-export const isPointInCameraView = (worldPos: Vec3, camera: Camera): boolean => {
+ * @param camera 目标摄像机
+ * @param paddingPixels 视口四周额外保留的像素范围，避免对象在屏幕边缘突然出现
+ */
+export const isPointInCameraView = (worldPos: Vec3, camera: Camera, paddingPixels: number = 0): boolean => {
     // 将世界坐标转换为屏幕坐标
     const screenPos = camera.worldToScreen(worldPos);
 
@@ -313,17 +314,18 @@ export const isPointInCameraView = (worldPos: Vec3, camera: Camera): boolean => 
     const viewportHeight = viewport.height * screenSize.height;
 
     // 判断屏幕坐标是否在视口范围内
+    const padding = Math.max(0, paddingPixels);
     const isInViewport = (
-        screenPos.x >= viewportX &&
-        screenPos.x <= viewportX + viewportWidth &&
-        screenPos.y >= viewportY && // 坐标系原点在左下角，直接比较
-        screenPos.y <= viewportY + viewportHeight
+        screenPos.x >= viewportX - padding &&
+        screenPos.x <= viewportX + viewportWidth + padding &&
+        screenPos.y >= viewportY - padding && // 坐标系原点在左下角，直接比较
+        screenPos.y <= viewportY + viewportHeight + padding
     );
 
-    // 深度检测（如果是2D项目，可跳过此检查）
-    // const isInDepth = worldPos.z >= camera.near && worldPos.z <= camera.far;
+    // worldToScreen 的 z 已归一化到 0-1；超出范围表示在近/远裁剪面外或相机后方。
+    const isInDepth = screenPos.z >= 0 && screenPos.z <= 1;
 
-    return isInViewport;
+    return isInViewport && isInDepth;
 }
 
 // LCG 伪随机数生成器种子（全局变量）

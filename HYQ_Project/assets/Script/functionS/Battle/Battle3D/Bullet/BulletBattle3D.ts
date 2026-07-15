@@ -57,28 +57,35 @@ export default class BulletBattle3D extends Component {
     public batchWidth: number = 0;
     public batchHeight: number = 0;
     public batchLocalEulerX: number = 0;
+    public batchForwardX: number = 0;
+    public batchForwardY: number = 0;
+    public batchForwardZ: number = 1;
+    public batchListIndex: number = -1;
     public batchRenderer: BulletBatchRenderer | null = null;
-    public batchVisualCount: number = 1;
-    private readonly _batchVisualOffsets: Vec3[] = [new Vec3()];
-    private _batchVisualMaxOffsetX: number = 0;
-    private _batchVisualMaxOffsetZ: number = 0;
 
     /** 是否已注册到碰撞管理器 */
     private _registered: boolean = false;
     private _pooled: boolean = false;
     private _previousWorldPosition: Vec3 = new Vec3();
     private _hasPreviousWorldPosition: boolean = false;
+    private _preserveSpawnPreviousPosition: boolean = false;
 
     protected start(): void {
         this.moveD = this.node.getComponent(MoveDrive);
         if (!this.moveD) {
             this.moveD = this.node.addComponent(MoveDrive);
         }
+        // 子弹生命周期已主动调用 MoveEvent，关闭 MoveDrive 自身的空 update 调度。
+        this.moveD.enabled = false;
     }
 
     protected update(dt: number): void {
-        this._previousWorldPosition.set(this.node.worldPosition);
-        this._hasPreviousWorldPosition = true;
+        if (this._preserveSpawnPreviousPosition) {
+            this._preserveSpawnPreviousPosition = false;
+        } else {
+            this._previousWorldPosition.set(this.node.worldPosition);
+            this._hasPreviousWorldPosition = true;
+        }
         if (this.triggerDieTime != -1 && this._isTrigger) {
             if (this._triggerDieTime <= 0) {
                 this.over();
@@ -91,6 +98,19 @@ export default class BulletBattle3D extends Component {
             } else {
                 this._overTime -= dt;
             }
+        }
+        this.moveD.MoveEvent(dt);
+    }
+
+    public advanceSpawnTime(dt: number): void {
+        if (dt <= 0 || !this.moveD) {
+            return;
+        }
+        this._previousWorldPosition.set(this.node.worldPosition);
+        this._hasPreviousWorldPosition = true;
+        this._preserveSpawnPreviousPosition = true;
+        if (this.overTime !== -1) {
+            this._overTime = Math.max(0, this._overTime - dt);
         }
         this.moveD.MoveEvent(dt);
     }
@@ -121,6 +141,9 @@ export default class BulletBattle3D extends Component {
      */
     public setBulletInfo(rot: math.Quat, damage: number, repelPower: number) {
         this._pooled = false;
+        if (this.moveD) {
+            this.moveD.enabled = false;
+        }
         this.node.setWorldRotation(rot);
         this.moveD.moveMod = MoveModEnum.forwardMove;
         this._damage = damage;
@@ -130,10 +153,7 @@ export default class BulletBattle3D extends Component {
         this._triggerDieTime = this.triggerDieTime;
         this._isTrigger = false;
         this._hasPreviousWorldPosition = false;
-        this.batchVisualCount = 1;
-        this._batchVisualOffsets[0].set(Vec3.ZERO);
-        this._batchVisualMaxOffsetX = 0;
-        this._batchVisualMaxOffsetZ = 0;
+        this._preserveSpawnPreviousPosition = false;
         const sprite = this.batchSprite && this.batchSprite.isValid
             ? this.batchSprite
             : this.node.getComponentInChildren(Sprite);
@@ -149,40 +169,6 @@ export default class BulletBattle3D extends Component {
             this._registered = true;
         }
     }
-
-    public configureBatchVisualCopies(count: number, spreadForward: boolean): void {
-        this.batchVisualCount = Math.max(1, Math.floor(count));
-        this._batchVisualMaxOffsetX = 0;
-        this._batchVisualMaxOffsetZ = 0;
-        for (let i = 0; i < this.batchVisualCount; i++) {
-            let offset = this._batchVisualOffsets[i];
-            if (!offset) {
-                offset = new Vec3();
-                this._batchVisualOffsets[i] = offset;
-            }
-            if (i === 0) {
-                offset.set(Vec3.ZERO);
-                continue;
-            }
-            offset.set(
-                (Math.random() - 0.5) * 2,
-                0,
-                spreadForward ? (Math.random() - 0.5) * 4 : 0,
-            );
-            this._batchVisualMaxOffsetX = Math.max(this._batchVisualMaxOffsetX, Math.abs(offset.x));
-            this._batchVisualMaxOffsetZ = Math.max(this._batchVisualMaxOffsetZ, Math.abs(offset.z));
-        }
-    }
-
-    public getBatchVisualOffset(index: number): Readonly<Vec3> {
-        return this._batchVisualOffsets[index] ?? Vec3.ZERO;
-    }
-
-    /** 获取所有合批视觉副本相对逻辑子弹的最大散布范围，不产生临时对象。 */
-    public getBatchVisualMaxOffset(out: Vec3): Vec3 {
-        return out.set(this._batchVisualMaxOffsetX, 0, this._batchVisualMaxOffsetZ);
-    }
-
 
     public temp: Vec3 = new Vec3();
 

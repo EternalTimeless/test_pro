@@ -86,6 +86,8 @@ export class MonsterCreate extends UnityUpComponent {
     public monsterCount: number = 500;
     @property({ type: CCInteger, displayName: '每帧最大生成数', tooltip: '初始生成和后续按视口补充时，每帧最多创建的怪物数量。' })
     public maxSpawnPerFrame: number = 5;
+    @property({ type: CCBoolean, displayName: '统一调度怪物移动', tooltip: '开启后由怪物生成器统一执行怪物移动，结果与原 MoveDrive 自动移动一致，但减少大量组件 update 调度。' })
+    public enableManagedMonsterMovement: boolean = true;
     @property({ type: CCFloat, displayName: '视口外触发距离', tooltip: '当前最后排怪物进入“实际视口最远位置 + 此距离”后，开始补充下一段怪物。' })
     public viewportSpawnTriggerDistance: number = 10;
     @property({ type: CCFloat, displayName: '视口外补充距离', tooltip: '每次分帧补充到“实际视口最远位置 + 此距离”后停止，建议设置为 50-60。' })
@@ -163,6 +165,10 @@ export class MonsterCreate extends UnityUpComponent {
     private _spawnWaveIndex: number = 0;
     private _spawnSlotIndex: number = 0;
     private _spawnSparseSlotSet: Set<number> = null;
+    private _viewportSpawnInitialized: boolean = false;
+    private _initialViewportSpawnCompleted: boolean = false;
+    private _initialViewportSpawnProcessedSlots: number = 0;
+    private _initialViewportSpawnEstimatedSlots: number = 1;
     private _isViewportSpawnFilling: boolean = false;
     private _isConfiguredSpawnFinished: boolean = false;
     private _cachedViewportFarWorldZ: number = Number.NaN;
@@ -617,8 +623,13 @@ export class MonsterCreate extends UnityUpComponent {
     }
 
     private initializeViewportDrivenSpawn() {
+        this._viewportSpawnInitialized = true;
+        this._initialViewportSpawnCompleted = false;
+        this._initialViewportSpawnProcessedSlots = 0;
+        this._initialViewportSpawnEstimatedSlots = 1;
         const stageList = this.monsterCreateQueue?.monsterCreateInfoList ?? [];
         if (stageList.length <= 0) {
+            this._initialViewportSpawnCompleted = true;
             return;
         }
 
@@ -659,6 +670,21 @@ export class MonsterCreate extends UnityUpComponent {
         this.monsterCount = configuredMonsterCount;
     }
 
+    public isInitialViewportSpawnReady(): boolean {
+        return this._viewportSpawnInitialized && this._initialViewportSpawnCompleted;
+    }
+
+    public getInitialViewportSpawnWorkTotal(): number {
+        return Math.max(1, this._initialViewportSpawnEstimatedSlots);
+    }
+
+    public getInitialViewportSpawnCompletedWork(): number {
+        if (this._initialViewportSpawnCompleted) {
+            return this.getInitialViewportSpawnWorkTotal();
+        }
+        return Math.min(this.getInitialViewportSpawnWorkTotal(), this._initialViewportSpawnProcessedSlots);
+    }
+
     private updateViewportDrivenSpawn(deltaTime: number) {
         if (this._isConfiguredSpawnFinished || this._isRestoringWaveRolesAfterRebirth) {
             return;
@@ -680,6 +706,12 @@ export class MonsterCreate extends UnityUpComponent {
 
         const bufferDistance = Math.max(triggerDistance, this.viewportSpawnBufferDistance);
         const stopWorldZ = viewportFarWorldZ + bufferDistance;
+        if (!this._initialViewportSpawnCompleted && this._initialViewportSpawnProcessedSlots <= 0) {
+            const startWorldZ = this.getSpawnWorldZ(0);
+            const rowGap = Math.max(0.01, this.layerGapZ);
+            const estimatedRows = Math.max(1, Math.ceil(Math.max(0, stopWorldZ - startWorldZ) / rowGap));
+            this._initialViewportSpawnEstimatedSlots = Math.max(1, estimatedRows * Math.max(1, this.rowCount));
+        }
         const maxPerFrame = Math.max(1, Math.floor(this.maxSpawnPerFrame));
         let spawnedCount = 0;
         let processedSlotCount = 0;
@@ -699,6 +731,9 @@ export class MonsterCreate extends UnityUpComponent {
                 spawnedCount++;
             }
             processedSlotCount++;
+            if (!this._initialViewportSpawnCompleted) {
+                this._initialViewportSpawnProcessedSlots++;
+            }
         }
     }
 
@@ -794,6 +829,10 @@ export class MonsterCreate extends UnityUpComponent {
 
     private finishViewportSpawnBatch(isFinished: boolean) {
         this._isViewportSpawnFilling = false;
+        if (!this._initialViewportSpawnCompleted) {
+            this._initialViewportSpawnCompleted = true;
+            this._initialViewportSpawnEstimatedSlots = Math.max(1, this._initialViewportSpawnProcessedSlots);
+        }
         if (isFinished) {
             this._isConfiguredSpawnFinished = true;
         }
@@ -872,6 +911,11 @@ export class MonsterCreate extends UnityUpComponent {
             const monster = this._monsterList[i];
             if (monster?.move) {
                 monster.move.speed = Math.max(0, this.monsterSpeed);
+                if (this.enableManagedMonsterMovement && monster.move.enabled) {
+                    monster.move.enabled = false;
+                } else if (!this.enableManagedMonsterMovement && !monster.move.enabled) {
+                    monster.move.enabled = true;
+                }
             }
 
             if (monster.isDie) {
@@ -929,6 +973,15 @@ export class MonsterCreate extends UnityUpComponent {
     protected lateUpdate(deltaTime: number): void {
         if (UnityUpComponent.isStop) {
             return;
+        }
+        if (this.enableManagedMonsterMovement) {
+            for (let i = 0; i < this._monsterList.length; i++) {
+                const monster = this._monsterList[i];
+                if (!monster || monster.isDie || !monster.node.activeInHierarchy || !monster.move?.autoMove) {
+                    continue;
+                }
+                monster.move.MoveEvent(deltaTime);
+            }
         }
         if (this.lalianLimitRanges.length <= 0 || this._monsterList.length <= 0) {
             return;
@@ -1809,6 +1862,7 @@ export class MonsterCreate extends UnityUpComponent {
         }
         this.scheduleOnce(() => {
             this.restoreWaveRolesAfterRebirth(rebirthLayout);
+            this.syncViewportSpawnAfterRebirth();
             this.resumeMonstersAfterRebirth();
         }, 0.45);
         // this.scheduleOnce(() => {
@@ -1892,6 +1946,25 @@ export class MonsterCreate extends UnityUpComponent {
             BulletMonsterCollisionManager.instance.registerTarget(monster);
         }
     }
+
+    private syncViewportSpawnAfterRebirth() {
+        let rearLocalZ = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < this._monsterList.length; i++) {
+            const monster = this._monsterList[i];
+            if (!monster || monster.isDie || !monster.node?.active) {
+                continue;
+            }
+            rearLocalZ = Math.max(rearLocalZ, monster.node.z);
+        }
+        if (Number.isFinite(rearLocalZ)) {
+            const rearSpawnCursorZ = rearLocalZ - this.getSpawnOffsetZ() + Math.max(0.01, this.layerGapZ);
+            this._nextSpawnZ = Math.max(this._nextSpawnZ, rearSpawnCursorZ);
+        }
+        this._isViewportSpawnFilling = false;
+        this._cachedViewportFarWorldZ = Number.NaN;
+        this._viewportFarRefreshTime = 0;
+    }
+
     private skillXRMonster(x: number, r: number, delay: number = 0) {
 
         const monsterList = this._monsterList;

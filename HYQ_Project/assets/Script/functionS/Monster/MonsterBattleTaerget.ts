@@ -1,4 +1,4 @@
-import { _decorator, AnimationClip, CCBoolean, CCFloat, CCInteger, director, Label, Node, Quat, tween, Vec3 } from 'cc';
+import { _decorator, AnimationClip, CCBoolean, CCFloat, CCInteger, director, Label, MeshRenderer, Node, Quat, tween, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import { MoveDrive, MoveModEnum } from '../../Base/MoveRot/MoveDrive';
@@ -42,6 +42,18 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
     @property({ type: CCInteger, displayName: '屏幕可见性检查间隔（帧）', min: 1, max: 30 })
     public visibilityCheckFrameInterval: number = 8;
+
+    @property({ type: CCBoolean, displayName: '启用屏幕外渲染裁剪' })
+    public enableRenderCulling: boolean = true;
+
+    @property({ type: CCFloat, displayName: '屏幕裁剪缓冲（像素）', min: 0 })
+    public renderCullPaddingPixels: number = 80;
+
+    @property({ type: CCBoolean, displayName: '启用怪物阴影分级' })
+    public enableShadowLod: boolean = true;
+
+    @property({ type: CCFloat, displayName: '怪物投影距离（米）', min: 1 })
+    public shadowLodDistance: number = 24;
 
     @property({ type: CCInteger, displayName: '目标重选间隔（帧）', min: 1, max: 12 })
     public targetRefreshFrameInterval: number = 4;
@@ -90,6 +102,11 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     private animationVisible: boolean = true;
     private lastAnimationSamplingEnabled: boolean = true;
     private lastAnimationSpeedMultiplier: number = 1;
+    private visualRenderers: MeshRenderer[] = [];
+    private visualRendererEnabledStates: boolean[] = [];
+    private visualRendererShadowModes: number[] = [];
+    private renderersVisible: boolean = true;
+    private shadowsEnabled: boolean = true;
 
     @property({
         type: CCFloat,
@@ -207,6 +224,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         super.onLoad();
         this.animationLodPhase = MonsterBattleTaerget.nextLodPhase++;
         this.targetRefreshPhase = MonsterBattleTaerget.nextLodPhase++;
+        this.cacheVisualRenderers();
         this.applyNormalDeathAnimationSetup();
     }
 
@@ -234,6 +252,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         this.animationVisible = true;
         this.lastAnimationSamplingEnabled = true;
         this.lastAnimationSpeedMultiplier = 1;
+        this.restoreVisualRendererStates();
         this.fbx?.setSkeletalAnimationEnabled(true);
         BulletMonsterCollisionManager.instance.registerTarget(this);
 
@@ -363,6 +382,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         if (this.isDie) {
             return;
         }
+        this.updateVisualLod();
         this.updateRunAnimationLod();
         if (this.monsterType == MonsterType.ZombieBrother) {
             this.fixBossHpLabel();
@@ -712,6 +732,98 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         return (director.getTotalFrames() + this.targetRefreshPhase) % interval === 0;
     }
 
+    private cacheVisualRenderers(): void {
+        this.visualRenderers = this.node.getComponentsInChildren(MeshRenderer);
+        this.visualRendererEnabledStates.length = 0;
+        this.visualRendererShadowModes.length = 0;
+        for (let i = 0; i < this.visualRenderers.length; i++) {
+            const renderer = this.visualRenderers[i];
+            this.visualRendererEnabledStates.push(renderer.enabled);
+            this.visualRendererShadowModes.push(renderer.shadowCastingMode as number);
+        }
+    }
+
+    private restoreVisualRendererStates(): void {
+        if (this.visualRenderers.length <= 0) {
+            this.cacheVisualRenderers();
+        }
+        for (let i = 0; i < this.visualRenderers.length; i++) {
+            const renderer = this.visualRenderers[i];
+            if (!renderer?.isValid) {
+                continue;
+            }
+            renderer.enabled = this.visualRendererEnabledStates[i] ?? true;
+            (renderer as any).shadowCastingMode = this.visualRendererShadowModes[i]
+                ?? MeshRenderer.ShadowCastingMode.OFF;
+        }
+        this.renderersVisible = true;
+        this.shadowsEnabled = true;
+    }
+
+    private updateVisualLod(): void {
+        if (!this.isOptimizationScene() || this.monsterType === MonsterType.ZombieBrother) {
+            this.animationVisible = true;
+            this.setVisualRenderersEnabled(true);
+            this.setVisualShadowsEnabled(true);
+            return;
+        }
+
+        const frame = director.getTotalFrames();
+        const interval = Math.max(1, Math.floor(this.visibilityCheckFrameInterval));
+        if ((frame + this.animationLodPhase) % interval !== 0) {
+            return;
+        }
+
+        const camera = CameraMove.instance?.camera;
+        this.animationVisible = !camera
+            || isPointInCameraView(this.node.worldPosition, camera, this.renderCullPaddingPixels);
+        this.setVisualRenderersEnabled(!this.enableRenderCulling || this.animationVisible);
+
+        if (!this.enableShadowLod) {
+            this.setVisualShadowsEnabled(true);
+            return;
+        }
+
+        const cameraPos = camera?.node?.worldPosition;
+        if (!this.animationVisible || !cameraPos) {
+            this.setVisualShadowsEnabled(false);
+            return;
+        }
+        const dx = this.node.worldPositionX - cameraPos.x;
+        const dz = this.node.worldPositionZ - cameraPos.z;
+        const shadowDistance = Math.max(1, this.shadowLodDistance);
+        this.setVisualShadowsEnabled(dx * dx + dz * dz <= shadowDistance * shadowDistance);
+    }
+
+    private setVisualRenderersEnabled(visible: boolean): void {
+        if (this.renderersVisible === visible) {
+            return;
+        }
+        this.renderersVisible = visible;
+        for (let i = 0; i < this.visualRenderers.length; i++) {
+            const renderer = this.visualRenderers[i];
+            if (renderer?.isValid) {
+                renderer.enabled = visible && (this.visualRendererEnabledStates[i] ?? true);
+            }
+        }
+    }
+
+    private setVisualShadowsEnabled(enabled: boolean): void {
+        if (this.shadowsEnabled === enabled) {
+            return;
+        }
+        this.shadowsEnabled = enabled;
+        for (let i = 0; i < this.visualRenderers.length; i++) {
+            const renderer = this.visualRenderers[i];
+            if (!renderer?.isValid) {
+                continue;
+            }
+            (renderer as any).shadowCastingMode = enabled
+                ? (this.visualRendererShadowModes[i] ?? MeshRenderer.ShadowCastingMode.OFF)
+                : MeshRenderer.ShadowCastingMode.OFF;
+        }
+    }
+
     private updateRunAnimationLod(): void {
         const isRunAnimation = !!this.fbx?.isCurAnimation(MonsterAnimEnum.run);
         if (!this.enableAnimationLod || !this.isOptimizationScene()
@@ -725,11 +837,6 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return;
         }
         const frame = director.getTotalFrames();
-        const visibilityInterval = Math.max(1, Math.floor(this.visibilityCheckFrameInterval));
-        if ((frame + this.animationLodPhase) % visibilityInterval === 0) {
-            const camera = CameraMove.instance?.camera;
-            this.animationVisible = !camera || isPointInCameraView(this.node.worldPosition, camera);
-        }
         if (!this.animationVisible) {
             this.fbx.setSkeletalAnimationEnabled(false);
             return;

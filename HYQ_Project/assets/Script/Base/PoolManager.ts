@@ -1,16 +1,7 @@
-import { ccenum, director, Node, v3, Vec3 } from "cc";
+import { v3, Vec3 } from "cc";
 import Singleton from "./Singleton";
 
 export default class PoolManager extends Singleton {
-
-    /**
-     * Game_3D-002 的特效峰值较高，只限制已经回收、当前不可见的特效缓存。
-     * 其他对象池和其他场景维持原行为，避免影响战斗逻辑。
-     */
-    private static readonly GAME_3D_002_SCENE = "Game_3D-002";
-    private static readonly GAME_3D_002_EFFECT_NODE_POOL_LIMIT = 6;
-    private static readonly GAME_3D_002_EFFECT_SEQUENCE_POOL_LIMIT = 16;
-
 
     public static get instance() {
         return this.getInstance<PoolManager>();
@@ -59,32 +50,7 @@ export default class PoolManager extends Singleton {
         if (arr.indexOf(node) !== -1) {
             return;
         }
-        const poolLimit = this.getScenePoolLimit(key);
-        if (arr.length >= poolLimit) {
-            this.releaseOverflowItem(node);
-            return;
-        }
         arr.push(node);
-    }
-
-    private getScenePoolLimit(key: string): number {
-        if (director.getScene()?.name !== PoolManager.GAME_3D_002_SCENE) {
-            return Number.POSITIVE_INFINITY;
-        }
-        if (key === "EffectSq_") {
-            return PoolManager.GAME_3D_002_EFFECT_SEQUENCE_POOL_LIMIT;
-        }
-        if (key.startsWith("effect_")) {
-            return PoolManager.GAME_3D_002_EFFECT_NODE_POOL_LIMIT;
-        }
-        return Number.POSITIVE_INFINITY;
-    }
-
-    private releaseOverflowItem(item: any): void {
-        const node = item instanceof Node ? item : item?.node;
-        if (node instanceof Node && node.isValid) {
-            node.destroy();
-        }
     }
 
     public getPoolSize(key: string): number {

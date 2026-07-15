@@ -10,7 +10,7 @@
       "uuid": "caffc481-8e86-4f96-8867-9213f3a378f4"
     },
     "Scene": {
-      "time": 1783669756683.3804,
+      "time": 1784097271740.7385,
       "uuid": "e72949cf-3923-4906-b42c-4ca5bc00f29a"
     },
     "Script": {
@@ -78,7 +78,7 @@
       "uuid": "c876c6c5-e04c-4641-b7f8-444b82eb5b19"
     },
     "Script\\Base": {
-      "time": 1781504389336.7354,
+      "time": 1784081422877.712,
       "uuid": "ff42d022-3c11-4c4e-9d78-5ab16c1517d9"
     },
     "Script\\functionS": {
@@ -254,7 +254,7 @@
       "uuid": "31a1e406-7653-4a32-9a59-655e6188e99e"
     },
     "Script\\functionS\\Player": {
-      "time": 1784012950942.8481,
+      "time": 1784097271742.7334,
       "uuid": "e19290d4-e44e-4c69-93cb-1471d99d1597"
     },
     "Script\\functionS\\Rocker": {
@@ -538,7 +538,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1784019801119.2122,
+      "time": 1784273875489.344,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -614,11 +614,11 @@
       "uuid": "d16848b5-18b3-400e-8cad-f629e5124e7c"
     },
     "GameRes\\Prefab\\Prop_Brand.prefab": {
-      "time": 1783500251064.9622,
+      "time": 1784182301677.5916,
       "uuid": "0138029d-bfaa-4d43-aa1c-63b3be01e8e5"
     },
     "GameRes\\Prefab\\Prop_Brand_2.prefab": {
-      "time": 1783500235468.8767,
+      "time": 1784182303038.507,
       "uuid": "09f7d7d0-5529-499d-8bbb-e3e6a9394677"
     },
     "GameRes\\Prefab\\Role.prefab": {
@@ -634,7 +634,7 @@
       "uuid": "f96153eb-6f89-4aad-b84b-808954761c02"
     },
     "GameRes\\Prefab\\Role_2.prefab": {
-      "time": 1783673110188.68,
+      "time": 1784270462435.2202,
       "uuid": "799add5f-4370-4ee6-b0a4-aca1ebcd06a3"
     },
     "GameRes\\Prefab\\tire.prefab": {
@@ -650,7 +650,7 @@
       "uuid": "30cd7eb3-1c98-49b9-bf05-884296181ef8"
     },
     "GameRes\\Prefabs\\loading.prefab": {
-      "time": 1781231241065.9792,
+      "time": 1784270319645.6196,
       "uuid": "85451143-4e29-4add-aec1-eec95efd2b0e"
     },
     "GameRes\\Rocker\\img_rocker_0.png": {
@@ -754,11 +754,11 @@
       "uuid": "766e78e8-765f-4dbc-90f5-35508a4641ff"
     },
     "Script\\Base\\LayerManager.ts": {
-      "time": 1780287689070.6526,
+      "time": 1784082839701.8762,
       "uuid": "d0985bd0-e138-4615-b805-a38923e6194b"
     },
     "Script\\Base\\PoolManager.ts": {
-      "time": 1783927492981.102,
+      "time": 1784081422877.712,
       "uuid": "d7997931-d633-4991-8104-5260d342fbee"
     },
     "Script\\Base\\PrefabsManager.ts": {
@@ -774,7 +774,7 @@
       "uuid": "f0f4e5a3-06ce-4d64-8b9c-dde813391bac"
     },
     "Script\\Tool\\Index.ts": {
-      "time": 1780287689195.1619,
+      "time": 1784193760918.4834,
       "uuid": "e175eb12-8615-4c57-9375-71a331ab92d9"
     },
     "Script\\Tool\\TweenTool.ts": {
@@ -1118,7 +1118,7 @@
       "uuid": "8879c864-8ca1-4cda-9717-1c4ca76c4e49"
     },
     "GameRes\\FBX\\Hero_0\\zhujue.mtl": {
-      "time": 1780287687808.8318,
+      "time": 1784270588644.424,
       "uuid": "86121299-c6f8-40dc-9d7a-506ce7650f00"
     },
     "GameRes\\FBX\\Hero_0\\zhujue_D.jpg": {
@@ -1158,7 +1158,7 @@
       "uuid": "03189dd5-73dd-4e52-8644-1ff1a122b972"
     },
     "GameRes\\FBX\\Hero_1\\dazhuang.mtl": {
-      "time": 1781231240167.8757,
+      "time": 1784270419626.2559,
       "uuid": "97875736-18f9-4cef-9a33-541d0698780f"
     },
     "GameRes\\FBX\\Hero_1\\dazhuang_D.jpg": {
@@ -1186,7 +1186,7 @@
       "uuid": "9f192ab3-942d-4cdc-916e-ca4ca8ce0c38"
     },
     "GameRes\\FBX\\Hero_2\\big_dazhuang_0.mtl": {
-      "time": 1781231240316.7502,
+      "time": 1784270575645.4265,
       "uuid": "11ec8ab1-b6a8-4a61-8013-e4c9eb94e965"
     },
     "GameRes\\FBX\\Hero_2\\big_dazhuang_01_idle1.fbx": {
@@ -1194,7 +1194,7 @@
       "uuid": "4d091a41-1051-4aa3-899b-6c614c37f3f1"
     },
     "GameRes\\FBX\\Hero_2\\big_dazhuang_1.mtl": {
-      "time": 1781231240320.9521,
+      "time": 1784270569519.2954,
       "uuid": "33158a4f-83b9-4f1c-baca-8c16a8fb8f6d"
     },
     "GameRes\\FBX\\Hero_2\\big_dazhuang_2.mtl": {
@@ -1586,7 +1586,7 @@
       "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
     },
     "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
-      "time": 1784012950938.859,
+      "time": 1784189615539.6367,
       "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
     },
     "Script\\functionS\\Battle\\HpComponent.ts": {
@@ -1614,7 +1614,7 @@
       "uuid": "3b47f7bf-91d0-40e1-8f86-30832c9f6191"
     },
     "Script\\functionS\\Guide\\GuideManager.ts": {
-      "time": 1783066737554.1316,
+      "time": 1784274539998.2231,
       "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
     },
     "Script\\functionS\\Jump\\BezierCurve.ts": {
@@ -1650,11 +1650,11 @@
       "uuid": "d8070158-7b59-48fe-b8e4-5b2009ffa4e2"
     },
     "Script\\functionS\\Monster\\MonsterBattleTaerget.ts": {
-      "time": 1783932602756.5457,
+      "time": 1784099092957.1687,
       "uuid": "93b74258-97e4-4fcb-bfc0-851d38430b93"
     },
     "Script\\functionS\\Monster\\MonsterCreate.ts": {
-      "time": 1784012950940.8535,
+      "time": 1784273205880.4875,
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
@@ -1674,11 +1674,11 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1784012950942.8481,
+      "time": 1784256530219.4988,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
-      "time": 1783999298023.5686,
+      "time": 1784256528816.8604,
       "uuid": "86381968-3bf9-4a3d-8c3e-d52a5c62ef9c"
     },
     "Script\\functionS\\Rocker\\RockerLogic.ts": {
@@ -2258,15 +2258,15 @@
       "uuid": "2ca63bff-3aee-4d3f-b7ff-3446caf025e8"
     },
     "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangedAttack_Shrapnel.ts": {
-      "time": 1781769178111.125,
+      "time": 1784088809383.2908,
       "uuid": "e7536043-22db-4827-9640-644dfc670a71"
     },
     "Script\\functionS\\Battle\\Battle3D\\Attack3D\\RangeTowerAttack.ts": {
-      "time": 1781769111019.4248,
+      "time": 1784088808236.3584,
       "uuid": "ca0fd3d6-55e4-45ca-80e4-4c8243a063fd"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts": {
-      "time": 1783998523107.1262,
+      "time": 1784196780034.5393,
       "uuid": "aa25268b-cb3c-4c8a-8144-994c0a68b3b6"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts": {
@@ -4415,7 +4415,7 @@
       "time": 1781768620735.1758
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts": {
-      "time": 1784000066895.0718,
+      "time": 1784192915191.2605,
       "uuid": "8f7ca5d8-7f0a-4d2a-aeb5-f58c8c86a5f5"
     },
     "GameRes\\Image\\img\\auto-atlas.pac.meta": {
