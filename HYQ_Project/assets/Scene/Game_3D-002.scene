@@ -11406,7 +11406,7 @@
     "addRoleMaxCount": 0,
     "winPropCountThreshold": 99,
     "releaseCountLimit": 0,
-    "moveSpeed": 14,
+    "moveSpeed": 12,
     "lalianGate": {
       "__id__": 740
     },
@@ -12576,7 +12576,7 @@
     "_enabled": true,
     "__prefab": null,
     "showCount": 35,
-    "distance": 3.5,
+    "distance": 3,
     "height": 0,
     "count": 99,
     "addRoleMaxCount": 0,
@@ -12935,7 +12935,7 @@
     "disX": 4,
     "monsterSpeed": 4,
     "middleLaneHalfX": 4,
-    "rowCount": 13,
+    "rowCount": 10,
     "layerGapZ": 6,
     "spawnRandomX": 0.28,
     "spawnRandomZ": 0.5,
@@ -13013,8 +13013,8 @@
     "mixBaby01": true,
     "baby1Ratio": 0.5,
     "monsterCountMax": 80,
-    "actualSpawnCount": 0,
-    "zRangeCountBase": 0,
+    "actualSpawnCount": 70,
+    "zRangeCountBase": 70,
     "monsterHp": 0,
     "difficulty": 1,
     "brotherExcludeZ": 0
@@ -13027,7 +13027,7 @@
     "baby1Ratio": 0.5,
     "monsterCountMax": 90,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 0,
+    "zRangeCountBase": 110,
     "monsterHp": 0,
     "difficulty": 1,
     "brotherExcludeZ": 0
@@ -13053,7 +13053,7 @@
     "baby1Ratio": 0.5,
     "monsterCountMax": 130,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 0,
+    "zRangeCountBase": 150,
     "monsterHp": 0,
     "difficulty": 2,
     "brotherExcludeZ": 0
@@ -13066,7 +13066,7 @@
     "baby1Ratio": 0.5,
     "monsterCountMax": 180,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 0,
+    "zRangeCountBase": 200,
     "monsterHp": 0,
     "difficulty": 3,
     "brotherExcludeZ": 0
@@ -13092,7 +13092,7 @@
     "baby1Ratio": 0.5,
     "monsterCountMax": 280,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 0,
+    "zRangeCountBase": 320,
     "monsterHp": 0,
     "difficulty": 3,
     "brotherExcludeZ": 0

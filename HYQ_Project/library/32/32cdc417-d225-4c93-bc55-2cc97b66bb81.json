@@ -515,14 +515,17 @@
         "__id__": 43
       }
     ],
-    "deathRedTransitionDuration": 0.5,
+    "deathRedTransitionDuration": 0.8,
     "smallMonsterDeathRedColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 80,
-      "b": 60,
+      "r": 232,
+      "g": 117,
+      "b": 96,
       "a": 255
     },
+    "smallMonsterDeathRedStrength": 1,
+    "smallMonsterDeathGlowBrightness": 1.5,
+    "smallMonsterDeathGlowSaturation": 1.5,
     "fbx": {
       "__id__": 7
     },

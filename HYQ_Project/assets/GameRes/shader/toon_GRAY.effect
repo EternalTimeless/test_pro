@@ -44,8 +44,10 @@ CCEffect %{
         grayScaleFactor:      { value: 1.0,  editor: {  slide: true, range: [0, 1.0], step: 0.001 } }
         flashRedColor:       { value: [1.0, 0.4, 0.1, 1.0], linear: true, editor: { displayName: 闪红颜色, type: color } }
         flashRedIntensity:   { value: 0.0, editor: { displayName: 闪红强度, slide: true, range: [0, 1.0], step: 0.001 } }
-        deathRedColor:       { value: [1.0, 0.31, 0.23, 1.0], linear: true, editor: { displayName: 小怪死亡泛红颜色, type: color } }
+        deathRedColor:       { value: [0.910, 0.459, 0.376, 1.0], linear: true, editor: { displayName: 小怪死亡泛红颜色, type: color } }
         deathRedFactor:      { value: 0.0, editor: { displayName: 小怪死亡泛红强度, slide: true, range: [0, 1.0], step: 0.001 } }
+        deathRedBrightness:  { value: 1.5, editor: { displayName: 小怪死亡红光亮度, slide: true, range: [0.5, 2.0], step: 0.01 } }
+        deathRedSaturation:  { value: 1.5, editor: { displayName: 小怪死亡红光饱和度, slide: true, range: [0.5, 2.0], step: 0.01 } }
     - vert: toon-vs:vert
       frag: toon-fs:frag
       phase: forward-add
@@ -135,6 +137,8 @@ CCProgram shared-ubos %{
     float grayScaleFactor;
     float flashRedIntensity;
     float deathRedFactor;
+    float deathRedBrightness;
+    float deathRedSaturation;
   };
 }%
 
@@ -330,15 +334,6 @@ CCProgram toon-fs %{
     // 火焰高光增强
     s.specular.rgb += redColor * flashRedIntensity * 0.5;
 
-    // 小怪死亡专用的全身泛红。与受击闪红完全独立，默认强度为 0 时不改变任何原有表现。
-    float deathTint = clamp(deathRedFactor, 0.0, 1.0);
-    vec3 deathTintColor = deathRedColor.rgb;
-    s.baseColor.rgb = mix(s.baseColor.rgb, deathTintColor, deathTint);
-    s.shade1 = mix(s.shade1, deathTintColor * 0.72, deathTint);
-    s.shade2 = mix(s.shade2, deathTintColor * 0.5, deathTint);
-    s.emissive = mix(s.emissive, deathTintColor * 0.18, deathTint);
-    s.specular.rgb = mix(s.specular.rgb, vec3(1.0), deathTint * 0.25);
-
     // vec3 grayColor = vec3(0.299, 0.587, 0.114);
     vec3 grayColor = vec3(1, 1, 1);
 
@@ -368,6 +363,55 @@ CCProgram toon-fs %{
   vec4 frag () {
     ToonSurface s; surf(s);
     vec4 color = CCToonShading(s);
+    #if !CC_FORWARD_ADD
+      float deathRedStrength = clamp(deathRedFactor, 0.0, 1.0);
+      if (deathRedStrength > 0.001) {
+        // 保留原模型细节，在其上叠加半透明红色高光；不再把模型替换成纯色剪影。
+        float deathGrayProgress = clamp(grayScaleFactor, 0.0, 1.0);
+        float deathRedFade = 1.0 - smoothstep(0.35, 1.0, deathGrayProgress);
+        float deathRedOverlay = deathRedStrength * deathRedFade;
+        vec3 configuredDeathRed = SRGBToLinear(deathRedColor.rgb);
+        float configuredDeathRedLuma = dot(configuredDeathRed, GRAY_VECTOR);
+        float clampedDeathRedSaturation = clamp(deathRedSaturation, 0.0, 2.0);
+        if (clampedDeathRedSaturation <= 1.0) {
+          configuredDeathRed = mix(
+            vec3(configuredDeathRedLuma),
+            configuredDeathRed,
+            clampedDeathRedSaturation
+          );
+        } else {
+          float deathRedDepth = clampedDeathRedSaturation - 1.0;
+          configuredDeathRed *= vec3(
+            1.0 + deathRedDepth * 0.20,
+            1.0 / (1.0 + deathRedDepth * 1.80),
+            1.0 / (1.0 + deathRedDepth * 0.70)
+          );
+        }
+
+        vec3 viewDir = normalize(cc_cameraPos.xyz - v_position);
+        float deathRim = pow(1.0 - max(dot(normalize(v_normal), viewDir), 0.0), 1.7);
+        float deathLight = clamp(dot(color.rgb, GRAY_VECTOR), 0.0, 1.0);
+
+        float deathRedMaxChannel = max(max(configuredDeathRed.r, configuredDeathRed.g), configuredDeathRed.b);
+        vec3 deathRedTintScale = configuredDeathRed / max(deathRedMaxChannel, 0.001);
+        vec3 deathTintedBase = color.rgb * mix(vec3(1.0), deathRedTintScale, 0.65);
+        vec3 deathRedHighlight = configuredDeathRed * mix(0.38, 0.90, deathLight);
+        deathRedHighlight += configuredDeathRed * deathRim * 0.42;
+        float deathHotMask = clamp(
+          pow(deathLight, 4.0) * 0.60
+          + smoothstep(0.60, 0.95, deathRim) * 0.50,
+          0.0,
+          1.0
+        );
+        vec3 deathHotColor = mix(configuredDeathRed, vec3(1.0, 0.38, 0.40), 0.35);
+        vec3 deathHotHighlight = deathHotColor
+          * deathHotMask * deathRedBrightness * 0.55;
+        vec3 deathRedAppearance = (deathTintedBase + deathRedHighlight)
+          * max(deathRedBrightness, 0.0)
+          + deathHotHighlight;
+        color.rgb = mix(color.rgb, deathRedAppearance, deathRedOverlay);
+      }
+    #endif
     return CCFragOutput(color);
   }
 }%
