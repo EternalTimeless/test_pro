@@ -85,6 +85,8 @@ export class CreatePropBrand extends UnityUpComponent {
 
     private tempPropBrandList: PropBrand[] = [];
 
+    private activeBulletTarget: PropBrand = null;
+
     private isMove: boolean = false;
 
     private pendingReleaseCount: number = 0;
@@ -132,8 +134,8 @@ export class CreatePropBrand extends UnityUpComponent {
             p.node.y = this.getSpawnHeight();
             p.node.z = startZ + i * this.distance;
             this.bindPropBrandVisuals(p);
-            p.activateBulletTarget();
         }
+        this.refreshFrontBulletTarget();
 
         const gate = this.activeLalianGate;
         if (gate) {
@@ -201,6 +203,8 @@ export class CreatePropBrand extends UnityUpComponent {
                 this.recyclePropBrand(p);
             }
         }
+
+        this.refreshFrontBulletTarget();
     }
 
     private refreshGroundHeight(): void {
@@ -228,9 +232,28 @@ export class CreatePropBrand extends UnityUpComponent {
             p.node.y = this.getSpawnHeight();
             p.node.z = appendStartZ + i * this.distance;
             this.bindPropBrandVisuals(p);
-            p.activateBulletTarget();
             this.propBrandList.push(p);
         }
+    }
+
+    private refreshFrontBulletTarget(): void {
+        let nextTarget: PropBrand = null;
+        // releaseFrontProp uses local Z=0 as the player boundary.
+        for (let i = 0; i < this.propBrandList.length; i++) {
+            const candidate = this.propBrandList[i];
+            if (candidate?.node?.active && candidate.node.z > 0) {
+                nextTarget = candidate;
+                break;
+            }
+        }
+
+        if (this.activeBulletTarget === nextTarget) {
+            return;
+        }
+
+        this.activeBulletTarget?.deactivateBulletTarget();
+        this.activeBulletTarget = nextTarget;
+        this.activeBulletTarget?.activateBulletTarget();
     }
 
     private releaseFrontProp(): boolean {
@@ -536,6 +559,9 @@ export class CreatePropBrand extends UnityUpComponent {
             this.propBrandList.splice(propBrandIndex, 1);
         }
 
+        if (this.activeBulletTarget === propBrand) {
+            this.activeBulletTarget = null;
+        }
         propBrand.deactivateBulletTarget();
         propBrand.setVisualActive(false);
         propBrand.node.active = false;
@@ -549,5 +575,6 @@ export class CreatePropBrand extends UnityUpComponent {
             propBrand?.deactivateBulletTarget();
             propBrand?.collide?.off("onTriggerEnter", this.onTriggerEnter, this);
         }
+        this.activeBulletTarget = null;
     }
 }
