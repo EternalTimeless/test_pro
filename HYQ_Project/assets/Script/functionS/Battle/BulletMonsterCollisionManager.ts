@@ -3,6 +3,7 @@ import Singleton from 'db://assets/Script/Base/Singleton';
 import { COLLIDE_TYPE } from './CollectBattleTarger/ColliderTag';
 import BulletBattle3D from './Battle3D/Bullet/BulletBattle3D';
 import { BattleTarget3D } from './BattleTarger/BattleTarget3D';
+import { BulletBatchRenderer } from './BulletBatchRenderer';
 
 const { ccclass, property, executionOrder } = _decorator;
 
@@ -325,9 +326,16 @@ export default class BulletMonsterCollisionManager extends Singleton {
         }
 
         // 生命周期、移动和碰撞在同一活动子弹循环内完成。
+        const renderFrame = director.getTotalFrames();
         for (let bi = this._bullets.length - 1; bi >= 0; bi--) {
             const bullet = this._bullets[bi];
-            if (!bullet || !bullet.node.active) {
+            if (!bullet || !bullet.isValid) {
+                bullet?.batchRenderer?.unregisterBullet(bullet);
+                this.removeBulletAt(bi);
+                continue;
+            }
+            if (!bullet.node.active) {
+                bullet.batchRenderer?.unregisterBullet(bullet);
                 this.removeBulletAt(bi);
                 continue;
             }
@@ -393,6 +401,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
                     }
                 }
             }
+            BulletBatchRenderer.writeBullet(bullet, renderFrame);
         }
         // 5. 更新各组x范围（低频更新即可，每10帧更新一次）
         if (this._frameCount % 10 === 0) {
