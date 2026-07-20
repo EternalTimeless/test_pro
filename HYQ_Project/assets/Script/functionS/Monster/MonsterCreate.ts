@@ -1433,7 +1433,7 @@ export class MonsterCreate extends UnityUpComponent {
         this.node.addChild(monster.node);
         if (!monsterIns) {
             this.monsterMatIns[type] = 1;
-            monster.flashDie(0.01);
+            monster.prewarmDeathVisualMaterials();
         }
 
         const baseLocalZ = this.getSpawnZ(baseNextSpawnZ);
@@ -1646,7 +1646,7 @@ export class MonsterCreate extends UnityUpComponent {
         this.node.addChild(monster.node);
         if (!monsterIns) {
             this.monsterMatIns[type] = 1;
-            monster.flashDie(0.01);
+            monster.prewarmDeathVisualMaterials();
         }
         // const layer = Math.floor(this._babyCountSinceLastBrother / this.rowCount);
         // const l = this.brotherInterval / this.rowCount;

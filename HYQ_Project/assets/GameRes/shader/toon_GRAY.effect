@@ -44,6 +44,8 @@ CCEffect %{
         grayScaleFactor:      { value: 1.0,  editor: {  slide: true, range: [0, 1.0], step: 0.001 } }
         flashRedColor:       { value: [1.0, 0.4, 0.1, 1.0], linear: true, editor: { displayName: 闪红颜色, type: color } }
         flashRedIntensity:   { value: 0.0, editor: { displayName: 闪红强度, slide: true, range: [0, 1.0], step: 0.001 } }
+        deathRedColor:       { value: [1.0, 0.31, 0.23, 1.0], linear: true, editor: { displayName: 小怪死亡泛红颜色, type: color } }
+        deathRedFactor:      { value: 0.0, editor: { displayName: 小怪死亡泛红强度, slide: true, range: [0, 1.0], step: 0.001 } }
     - vert: toon-vs:vert
       frag: toon-fs:frag
       phase: forward-add
@@ -129,8 +131,10 @@ CCProgram shared-ubos %{
     vec4 emissive;
     vec4 emissiveScaleAndStrenth;
     vec4 flashRedColor;
+    vec4 deathRedColor;
     float grayScaleFactor;
     float flashRedIntensity;
+    float deathRedFactor;
   };
 }%
 
@@ -325,6 +329,15 @@ CCProgram toon-fs %{
 
     // 火焰高光增强
     s.specular.rgb += redColor * flashRedIntensity * 0.5;
+
+    // 小怪死亡专用的全身泛红。与受击闪红完全独立，默认强度为 0 时不改变任何原有表现。
+    float deathTint = clamp(deathRedFactor, 0.0, 1.0);
+    vec3 deathTintColor = deathRedColor.rgb;
+    s.baseColor.rgb = mix(s.baseColor.rgb, deathTintColor, deathTint);
+    s.shade1 = mix(s.shade1, deathTintColor * 0.72, deathTint);
+    s.shade2 = mix(s.shade2, deathTintColor * 0.5, deathTint);
+    s.emissive = mix(s.emissive, deathTintColor * 0.18, deathTint);
+    s.specular.rgb = mix(s.specular.rgb, vec3(1.0), deathTint * 0.25);
 
     // vec3 grayColor = vec3(0.299, 0.587, 0.114);
     vec3 grayColor = vec3(1, 1, 1);

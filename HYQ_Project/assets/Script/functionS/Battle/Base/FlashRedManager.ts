@@ -62,6 +62,10 @@ class FlashEntry {
     public savedMats: { renderer: MeshRenderer; originalMats: (Material | null)[] }[] = [];
     /** 分组缓存key（有值=走分组快速通道，跳过逐属性设置） */
     public groupKey: string | null = null;
+    /** flashRedIntensity 覆盖值；NaN 表示使用配置中的 flashValue */
+    public flashRedIntensityOverride: number = Number.NaN;
+    /** grayScaleFactor 覆盖值；NaN 表示使用配置中的 flashValue */
+    public grayScaleFactorOverride: number = Number.NaN;
 
     public reset(): void {
         this.node = null;
@@ -69,6 +73,8 @@ class FlashEntry {
         this.remainingTime = 0;
         this.savedMats.length = 0;
         this.groupKey = null;
+        this.flashRedIntensityOverride = Number.NaN;
+        this.grayScaleFactorOverride = Number.NaN;
     }
 }
 
@@ -193,7 +199,7 @@ export class FlashRedManager {
      *                 跳过所有 pass.setUniform 调用，大幅降低批量闪红的材质修改开销。
      *                 典型用法：同类型敌人传同一个 key，如 'enemy_hit'。
      */
-    public flashRed(node: Node, flashDataList: IFlashData[], duration: number = 0.15, flashColor: Color | null = null, groupKey?: string): void {
+    public flashRed(node: Node, flashDataList: IFlashData[], duration: number = 0.15, flashColor: Color | null = null, groupKey?: string, flashRedIntensityOverride: number = Number.NaN, grayScaleFactorOverride: number = Number.NaN): void {
         if (!node || !node.isValid) return;
         if (!flashDataList || flashDataList.length === 0) return;
 
@@ -206,6 +212,8 @@ export class FlashRedManager {
         entry.flashDataList = flashDataList;
         entry.remainingTime = duration;
         entry.groupKey = groupKey ?? null;
+        entry.flashRedIntensityOverride = flashRedIntensityOverride;
+        entry.grayScaleFactorOverride = grayScaleFactorOverride;
 
         if (flashColor) {
             entry.flashColor.set(flashColor);
@@ -220,9 +228,67 @@ export class FlashRedManager {
     }
 
     /**
+     * 原地替换节点当前闪色模板，用于分档过渡。
+     * 复用已有 FlashEntry，避免每个过渡档重复创建对象或等待队列。
+     */
+    public replaceFlash(
+        node: Node,
+        flashDataList: IFlashData[],
+        duration: number,
+        flashColor: Color | null,
+        groupKey: string,
+        flashRedIntensityOverride: number = Number.NaN,
+        grayScaleFactorOverride: number = Number.NaN,
+    ): void {
+        if (!node || !node.isValid || !flashDataList || flashDataList.length === 0) {
+            return;
+        }
+
+        const uuid = node.uuid;
+        const entry = this._activeFlashes.get(uuid);
+        if (!entry) {
+            // 同帧批量死亡时条目可能仍在待处理队列，直接更新该条目，
+            // 避免后续过渡档因 pending uuid 去重而丢失。
+            for (let i = 0; i < this._pendingQueue.length; i++) {
+                const pendingEntry = this._pendingQueue[i];
+                if (pendingEntry.node?.uuid !== uuid) {
+                    continue;
+                }
+                pendingEntry.flashDataList = flashDataList;
+                pendingEntry.remainingTime = duration;
+                pendingEntry.groupKey = groupKey;
+                pendingEntry.flashRedIntensityOverride = flashRedIntensityOverride;
+                pendingEntry.grayScaleFactorOverride = grayScaleFactorOverride;
+                if (flashColor) {
+                    pendingEntry.flashColor.set(flashColor);
+                } else {
+                    pendingEntry.flashColor.set(FlashRedManager.DEFAULT_COLOR);
+                }
+                return;
+            }
+            this.flashRed(node, flashDataList, duration, flashColor, groupKey, flashRedIntensityOverride, grayScaleFactorOverride);
+            return;
+        }
+
+        this._restoreEntry(entry);
+        entry.savedMats.length = 0;
+        entry.flashDataList = flashDataList;
+        entry.remainingTime = duration;
+        entry.groupKey = groupKey;
+        entry.flashRedIntensityOverride = flashRedIntensityOverride;
+        entry.grayScaleFactorOverride = grayScaleFactorOverride;
+        if (flashColor) {
+            entry.flashColor.set(flashColor);
+        } else {
+            entry.flashColor.set(FlashRedManager.DEFAULT_COLOR);
+        }
+        this._applyFlash(entry);
+    }
+
+    /**
      * 同步预热一次闪红材质实例化与恢复流程，用于加载阶段消化首次材质改写开销。
      */
-    public prewarm(node: Node, flashDataList: IFlashData[], flashColor: Color | null = null, groupKey?: string): void {
+    public prewarm(node: Node, flashDataList: IFlashData[], flashColor: Color | null = null, groupKey?: string, flashRedIntensityOverride: number = Number.NaN, grayScaleFactorOverride: number = Number.NaN): void {
         if (!node || !node.isValid) return;
         if (!flashDataList || flashDataList.length === 0) return;
 
@@ -230,6 +296,8 @@ export class FlashRedManager {
         entry.node = node;
         entry.flashDataList = flashDataList;
         entry.groupKey = groupKey ?? null;
+        entry.flashRedIntensityOverride = flashRedIntensityOverride;
+        entry.grayScaleFactorOverride = grayScaleFactorOverride;
         if (flashColor) {
             entry.flashColor.set(flashColor);
         } else {
@@ -313,6 +381,20 @@ export class FlashRedManager {
         return undefined;
     }
 
+    private _resolveSwitchFlashValue(
+        switchProp: IFlashSwitchData,
+        flashRedIntensityOverride: number,
+        grayScaleFactorOverride: number,
+    ): number {
+        if (switchProp.propName === 'flashRedIntensity' && Number.isFinite(flashRedIntensityOverride)) {
+            return flashRedIntensityOverride;
+        }
+        if (switchProp.propName === 'grayScaleFactor' && Number.isFinite(grayScaleFactorOverride)) {
+            return grayScaleFactorOverride;
+        }
+        return switchProp.flashValue;
+    }
+
     /** 应用闪红效果 */
     private _applyFlash(entry: FlashEntry): void {
         const color = entry.flashColor;
@@ -371,15 +453,20 @@ export class FlashRedManager {
                     if (!switchProp.propName) continue;
                     const targetMatIdx = switchProp.matIndex ?? -1;
                     if (targetMatIdx >= 0 && targetMatIdx !== i) continue;
+                    const flashValue = this._resolveSwitchFlashValue(
+                        switchProp,
+                        entry.flashRedIntensityOverride,
+                        entry.grayScaleFactorOverride,
+                    );
                     if (switchProp.useMaterialProp) {
-                        mat.setProperty(switchProp.propName, switchProp.flashValue);
+                        mat.setProperty(switchProp.propName, flashValue);
                     } else {
                         const passIdx = switchProp.passIndex;
                         const pass = mat.passes[passIdx];
                         if (!pass) continue;
                         const handle = FlashRedManager._getCachedHandle(pass, switchProp.propName);
                         if (handle !== undefined) {
-                            pass.setUniform(handle, switchProp.flashValue);
+                            pass.setUniform(handle, flashValue);
                         }
                     }
                 }
@@ -390,7 +477,16 @@ export class FlashRedManager {
             // 而是从原始共享材质出发，把闪红属性直接设置到独立模板上。
             if (groupKey && !FlashRedManager._groupCache.has(groupKey)) {
                 FlashRedManager._groupCache.set(groupKey,
-                    this._buildGroupTemplates(mr, originalMats, data, color, needAll, neededSet));
+                    this._buildGroupTemplates(
+                        mr,
+                        originalMats,
+                        data,
+                        color,
+                        needAll,
+                        neededSet,
+                        entry.flashRedIntensityOverride,
+                        entry.grayScaleFactorOverride,
+                    ));
             }
         }
     }
@@ -407,6 +503,8 @@ export class FlashRedManager {
         color: Color,
         needAll: boolean,
         neededSet: Set<number>,
+        flashRedIntensityOverride: number,
+        grayScaleFactorOverride: number,
     ): (Material | null)[] {
         const templates: (Material | null)[] = [];
         for (let i = 0; i < mr.sharedMaterials.length; i++) {
@@ -442,14 +540,19 @@ export class FlashRedManager {
                 if (!switchProp.propName) continue;
                 const targetMatIdx = switchProp.matIndex ?? -1;
                 if (targetMatIdx >= 0 && targetMatIdx !== i) continue;
+                const flashValue = this._resolveSwitchFlashValue(
+                    switchProp,
+                    flashRedIntensityOverride,
+                    grayScaleFactorOverride,
+                );
                 if (switchProp.useMaterialProp) {
-                    tpl.setProperty(switchProp.propName, switchProp.flashValue);
+                    tpl.setProperty(switchProp.propName, flashValue);
                 } else {
                     const pass = tpl.passes[switchProp.passIndex];
                     if (!pass) continue;
                     const handle = pass.getHandle(switchProp.propName);
                     if (handle !== undefined && handle >= 0) {
-                        pass.setUniform(handle, switchProp.flashValue);
+                        pass.setUniform(handle, flashValue);
                     }
                 }
             }

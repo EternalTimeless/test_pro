@@ -1,4 +1,4 @@
-import { _decorator, AnimationClip, CCBoolean, CCFloat, CCInteger, director, Label, MeshRenderer, Node, Quat, tween, Vec3 } from 'cc';
+import { _decorator, AnimationClip, CCBoolean, CCFloat, CCInteger, Color, director, Label, MeshRenderer, Node, Quat, tween, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import { MoveDrive, MoveModEnum } from '../../Base/MoveRot/MoveDrive';
@@ -7,7 +7,7 @@ import PoolManager from '../../Base/PoolManager';
 import EventManager from '../../Base/EventManager';
 import { FbxManager } from '../SkAnim/FbxManager';
 import { CameraMove } from '../../Base/CameraMove';
-import { MeshFlashData } from '../Battle/Base/BattleTargetBase';
+import { MeshFlashData, MeshFlashPropData, MeshFlashSwitchData } from '../Battle/Base/BattleTargetBase';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 import AudioManager from '../../Base/AudioManager';
 import { Player } from '../Player/Player';
@@ -26,6 +26,7 @@ enum MonsterAnimEnum {
 export class MonsterBattleTaerget extends BattleTarget3D {
 
     private static readonly OPTIMIZED_SCENE_NAME = 'Game_3D-002';
+    private static readonly DEATH_RED_TRANSITION_STEPS = 8;
     private static nextLodPhase: number = 0;
     private static playerFormationCacheFrame: number = -1;
     private static playerAttackRearWorldZ: number = Number.NaN;
@@ -60,6 +61,27 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
     @property({ type: [MeshFlashData], tooltip: '闪红MeshRenderer配置列表，可在属性检查器中编辑' })
     public meshFlashDataList_Die: MeshFlashData[] = [];
+
+    @property({
+        type: CCFloat,
+        displayName: '小怪死亡红到灰时间（秒）',
+        min: 0,
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        },
+        tooltip: '仅修改小怪死亡表现：先全身泛红，再过渡到原有置灰。设为 0 时保持原来的直接置灰。',
+    })
+    public deathRedTransitionDuration: number = 0.5;
+
+    @property({
+        type: Color,
+        displayName: '小怪死亡泛红颜色',
+        visible(this: MonsterBattleTaerget) {
+            return this.monsterType != MonsterType.ZombieBrother;
+        },
+        tooltip: '小怪死亡第一阶段的全身颜色，仅作用于死亡效果，不影响普通受击和 Boss。',
+    })
+    public smallMonsterDeathRedColor: Color = new Color(255, 80, 60, 255);
 
 
     @property(FbxManager)
@@ -107,6 +129,14 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     private visualRendererShadowModes: number[] = [];
     private renderersVisible: boolean = true;
     private shadowsEnabled: boolean = true;
+    private deathVisualTransitionTimer: number = -1;
+    private deathVisualTransitionDuration: number = 0;
+    private deathVisualTransitionElapsed: number = 0;
+    private deathVisualTransitionStep: number = -1;
+    private deathVisualStartGrayScaleFactor: number = 0;
+    private deathVisualEndGrayScaleFactor: number = 1;
+    private deathWhiteFlashDuration: number = 0;
+    private smallMonsterDeathTintDataList: MeshFlashData[] = [];
 
     @property({
         type: CCFloat,
@@ -247,6 +277,12 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         this.attackTimer = 0;
         this.attackRoleAtAnimationStart = null;
         this.attackEventPending = false;
+        this.deathVisualTransitionTimer = -1;
+        this.deathVisualTransitionDuration = 0;
+        this.deathVisualTransitionElapsed = 0;
+        this.deathVisualTransitionStep = -1;
+        this.deathWhiteFlashDuration = 0;
+        FlashRedManager.instance.stopFlashRed(this.node);
         this.runAnimSpeed = 0.9 + Math.random() * 0.25;
         this.runAnimStartFrame = Math.random();
         this.animationVisible = true;
@@ -263,7 +299,19 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
 
     protected damage(power: number): void {
-        this.flashRed(0.15, null, "monster_Hit" + this.monsterType);
+        if (this.monsterType == MonsterType.ZombieBrother) {
+            FlashRedManager.instance.flashRed(
+                this.node,
+                this.meshFlashDataList,
+                0.15,
+                null,
+                "monster_BossHitRed",
+                Number.NaN,
+                0,
+            );
+        } else {
+            this.flashRed(0.15, null, "monster_Hit" + this.monsterType);
+        }
         AudioManager.inst.playOneShot(SoundEnum.Sound_Monster_Hit, 0.25, 0.08);
         if (this.monsterType == MonsterType.ZombieBrother) {
             this.fixBossHpLabel();
@@ -318,10 +366,194 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     }
 
     public flashDie(endtime: number) {
-        if (this.isDieD) {
-            FlashRedManager.instance.flashRed(this.node, this.meshFlashDataList_Die, endtime * 1.1, null, "monster_Die" + this.monsterType);
-        } else {
-            FlashRedManager.instance.flashRed(this.node, this.meshFlashDataList_Die, endtime * 10, null, "monster_Die" + this.monsterType);
+        const totalDuration = this.isDieD ? endtime * 1.1 : endtime * 10;
+        if (!this.isDie || this.monsterType == MonsterType.ZombieBrother) {
+            FlashRedManager.instance.flashRed(this.node, this.meshFlashDataList_Die, totalDuration, null, "monster_Die" + this.monsterType);
+            return;
+        }
+
+        const redDuration = Math.min(
+            Math.max(0, this.deathRedTransitionDuration),
+            Math.max(0, totalDuration - 0.05),
+        );
+        this.deathWhiteFlashDuration = Math.max(0, totalDuration - redDuration);
+        const deathTintDataList = this.getSmallMonsterDeathTintDataList();
+        if (redDuration <= 0 || deathTintDataList.length <= 0) {
+            this.startDeathWhiteFlash(this.deathWhiteFlashDuration);
+            return;
+        }
+
+        this.deathVisualTransitionTimer = redDuration;
+        this.deathVisualTransitionDuration = redDuration;
+        this.deathVisualTransitionElapsed = 0;
+        this.deathVisualTransitionStep = -1;
+        this.deathVisualStartGrayScaleFactor = 0;
+        this.deathVisualEndGrayScaleFactor = this.getConfiguredGrayScaleFactor(this.meshFlashDataList_Die, 1);
+        this.applyDeathVisualTransitionStep(0);
+    }
+
+    private updateDeathVisualTransition(dt: number): void {
+        if (this.deathVisualTransitionTimer < 0) {
+            return;
+        }
+
+        this.deathVisualTransitionElapsed = Math.min(
+            this.deathVisualTransitionDuration,
+            this.deathVisualTransitionElapsed + Math.max(0, dt),
+        );
+        this.deathVisualTransitionTimer = Math.max(
+            0,
+            this.deathVisualTransitionDuration - this.deathVisualTransitionElapsed,
+        );
+        const progress = this.deathVisualTransitionDuration <= 0
+            ? 1
+            : this.deathVisualTransitionElapsed / this.deathVisualTransitionDuration;
+        if (progress < 1) {
+            this.applyDeathVisualTransitionStep(progress);
+            return;
+        }
+
+        this.deathVisualTransitionTimer = -1;
+        this.startDeathWhiteFlash(this.deathWhiteFlashDuration);
+        this.deathWhiteFlashDuration = 0;
+    }
+
+    private applyDeathVisualTransitionStep(progress: number): void {
+        const stepCount = MonsterBattleTaerget.DEATH_RED_TRANSITION_STEPS;
+        const step = Math.min(stepCount - 1, Math.floor(Math.max(0, Math.min(0.9999, progress)) * stepCount));
+        if (step === this.deathVisualTransitionStep) {
+            return;
+        }
+        this.deathVisualTransitionStep = step;
+        const stepProgress = step / stepCount;
+        const grayScaleFactor = this.deathVisualStartGrayScaleFactor
+            + (this.deathVisualEndGrayScaleFactor - this.deathVisualStartGrayScaleFactor) * stepProgress;
+        const remainingDuration = Math.max(0.1, this.deathVisualTransitionDuration - this.deathVisualTransitionElapsed + 0.1);
+        FlashRedManager.instance.replaceFlash(
+            this.node,
+            this.getSmallMonsterDeathTintDataList(),
+            remainingDuration,
+            this.smallMonsterDeathRedColor,
+            this.getDeathTransitionGroupKey(step),
+            Number.NaN,
+            grayScaleFactor,
+        );
+    }
+
+    private startDeathWhiteFlash(duration: number): void {
+        if (!this.node?.isValid) {
+            return;
+        }
+        if (duration <= 0) {
+            FlashRedManager.instance.stopFlashRed(this.node);
+            return;
+        }
+        FlashRedManager.instance.replaceFlash(
+            this.node,
+            this.meshFlashDataList_Die,
+            duration,
+            null,
+            "monster_Die" + this.monsterType,
+        );
+    }
+
+    private getConfiguredGrayScaleFactor(dataList: MeshFlashData[], fallback: number): number {
+        return this.getConfiguredSwitchValue(dataList, 'grayScaleFactor', fallback);
+    }
+
+    private getConfiguredSwitchValue(dataList: MeshFlashData[], propName: string, fallback: number): number {
+        for (let i = 0; i < dataList.length; i++) {
+            const switchProps = dataList[i]?.switchProps ?? [];
+            for (let j = 0; j < switchProps.length; j++) {
+                if (switchProps[j].propName === propName) {
+                    return switchProps[j].flashValue;
+                }
+            }
+        }
+        return fallback;
+    }
+
+    /**
+     * 从死亡置灰配置派生小怪专用的全身泛红模板。
+     * 不读取、不修改 meshFlashDataList，避免死亡效果与普通受击闪色产生耦合。
+     */
+    private getSmallMonsterDeathTintDataList(): MeshFlashData[] {
+        if (this.smallMonsterDeathTintDataList.length > 0) {
+            return this.smallMonsterDeathTintDataList;
+        }
+
+        for (let i = 0; i < this.meshFlashDataList_Die.length; i++) {
+            const source = this.meshFlashDataList_Die[i];
+            if (!source?.meshRender) {
+                continue;
+            }
+
+            const graySwitch = (source.switchProps ?? []).find(prop => prop.propName === 'grayScaleFactor');
+            const passIndex = graySwitch?.passIndex ?? 0;
+            const matIndex = graySwitch?.matIndex ?? -1;
+
+            const deathColorProp = new MeshFlashPropData();
+            deathColorProp.propName = 'deathRedColor';
+            deathColorProp.passIndex = passIndex;
+            deathColorProp.matIndex = matIndex;
+
+            const deathFactorProp = new MeshFlashSwitchData();
+            deathFactorProp.propName = 'deathRedFactor';
+            deathFactorProp.passIndex = passIndex;
+            deathFactorProp.matIndex = matIndex;
+            deathFactorProp.flashValue = 1;
+            deathFactorProp.restoreValue = 0;
+            deathFactorProp.useMaterialProp = false;
+
+            const transitionData = new MeshFlashData();
+            transitionData.meshRender = source.meshRender;
+            transitionData.colorProps = [...(source.colorProps ?? []), deathColorProp];
+            transitionData.switchProps = [...(source.switchProps ?? []), deathFactorProp];
+            this.smallMonsterDeathTintDataList.push(transitionData);
+        }
+
+        return this.smallMonsterDeathTintDataList;
+    }
+
+    private getDeathTransitionGroupKey(step: number): string {
+        const color = this.smallMonsterDeathRedColor;
+        return "monster_SmallDieTintToGrayV3_" + this.monsterType
+            + "_" + color.r + "_" + color.g + "_" + color.b + "_" + color.a
+            + "_" + step;
+    }
+
+    public prewarmDeathVisualMaterials(): void {
+        FlashRedManager.instance.prewarm(
+            this.node,
+            this.meshFlashDataList_Die,
+            null,
+            "monster_Die" + this.monsterType,
+        );
+        if (this.monsterType == MonsterType.ZombieBrother) {
+            FlashRedManager.instance.prewarm(
+                this.node,
+                this.meshFlashDataList,
+                null,
+                "monster_BossHitRed",
+                Number.NaN,
+                0,
+            );
+            return;
+        }
+
+        const deathTintDataList = this.getSmallMonsterDeathTintDataList();
+        const stepCount = MonsterBattleTaerget.DEATH_RED_TRANSITION_STEPS;
+        const endGrayScaleFactor = this.getConfiguredGrayScaleFactor(this.meshFlashDataList_Die, 1);
+        for (let step = 0; step < stepCount; step++) {
+            const grayScaleFactor = endGrayScaleFactor * (step / stepCount);
+            FlashRedManager.instance.prewarm(
+                this.node,
+                deathTintDataList,
+                this.smallMonsterDeathRedColor,
+                this.getDeathTransitionGroupKey(step),
+                Number.NaN,
+                grayScaleFactor,
+            );
         }
     }
 
@@ -378,6 +610,7 @@ export class MonsterBattleTaerget extends BattleTarget3D {
     }
 
     protected _update(dt: number): void {
+        this.updateDeathVisualTransition(dt);
 
         if (this.isDie) {
             return;

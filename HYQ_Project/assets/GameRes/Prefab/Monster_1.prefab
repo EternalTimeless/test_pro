@@ -547,11 +547,28 @@
     "collisionHalfX": 0.32,
     "collisionHalfZ": 0.28,
     "repelEnabled": true,
+    "enableAnimationLod": true,
+    "animationLodDistance": 38,
+    "farAnimationFrameInterval": 2,
+    "visibilityCheckFrameInterval": 8,
+    "enableRenderCulling": true,
+    "renderCullPaddingPixels": 80,
+    "enableShadowLod": true,
+    "shadowLodDistance": 24,
+    "targetRefreshFrameInterval": 4,
     "meshFlashDataList_Die": [
       {
         "__id__": 53
       }
     ],
+    "deathRedTransitionDuration": 0.5,
+    "smallMonsterDeathRedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 80,
+      "b": 60,
+      "a": 255
+    },
     "fbx": {
       "__id__": 7
     },
@@ -572,7 +589,7 @@
       "__uuid__": "991d4abd-74e7-4fd3-ae59-7c26c0a7bb84@73b7f",
       "__expectedType__": "cc.AnimationClip"
     },
-    "smallMonsterDeathThrowHeight": 0.8,
+    "smallMonsterDeathThrowHeight": 1,
     "smallMonsterDeathThrowDistanceZ": 6,
     "smallMonsterDeathThrowDurationRate": 0.5,
     "_id": ""

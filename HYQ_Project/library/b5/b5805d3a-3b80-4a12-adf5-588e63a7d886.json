@@ -12945,7 +12945,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": -15
+      "z": -10
     },
     "monsterDeathThrowBaseHeight": 0.8,
     "monsterDeathThrowRandomHeight": 0.35,
@@ -14578,7 +14578,7 @@
     "__type__": "WeaponBulletConfig",
     "armsType": 2,
     "weaponModel": 1,
-    "bulletPower": 1.5,
+    "bulletPower": 1.8,
     "bulletType": 0,
     "shotsPerSecond": 4,
     "shootingRoleLimit": 24,
@@ -14592,7 +14592,7 @@
     "__type__": "WeaponBulletConfig",
     "armsType": 3,
     "weaponModel": -1,
-    "bulletPower": 1.8,
+    "bulletPower": 2.5,
     "bulletType": 3,
     "shotsPerSecond": 9,
     "shootingRoleLimit": 36,

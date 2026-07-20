@@ -653,9 +653,7 @@ export class GuideManager extends Component {
         if (!monster) {
             return;
         }
-        if (monster.meshFlashDataList_Die?.length > 0) {
-            FlashRedManager.instance.prewarm(monster.node, monster.meshFlashDataList_Die);
-        }
+        monster.prewarmDeathVisualMaterials();
     }
 
     private findNodeByName(root: Node, name: string): Node | null {
