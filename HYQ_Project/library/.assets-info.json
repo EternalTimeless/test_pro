@@ -758,7 +758,7 @@
       "uuid": "d0985bd0-e138-4615-b805-a38923e6194b"
     },
     "Script\\Base\\PoolManager.ts": {
-      "time": 1784081422877.712,
+      "time": 1784513817709.3494,
       "uuid": "d7997931-d633-4991-8104-5260d342fbee"
     },
     "Script\\Base\\PrefabsManager.ts": {
@@ -1582,11 +1582,11 @@
       "uuid": "78192de4-419d-473e-b57d-fd8f4fc5361b"
     },
     "Script\\functionS\\Battle\\BulletManager.ts": {
-      "time": 1782208311214.8738,
+      "time": 1784513819131.3848,
       "uuid": "7705517b-9aac-464c-ac53-e53869faccdf"
     },
     "Script\\functionS\\Battle\\BulletMonsterCollisionManager.ts": {
-      "time": 1784189615539.6367,
+      "time": 1784513472295.0369,
       "uuid": "e603c56a-9945-4574-a9e0-b49f1212c385"
     },
     "Script\\functionS\\Battle\\HpComponent.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1784256530219.4988,
+      "time": 1784513756947.9265,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
@@ -2266,7 +2266,7 @@
       "uuid": "ca0fd3d6-55e4-45ca-80e4-4c8243a063fd"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts": {
-      "time": 1784196780034.5393,
+      "time": 1784513263824.3828,
       "uuid": "aa25268b-cb3c-4c8a-8144-994c0a68b3b6"
     },
     "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts": {

@@ -37,6 +37,11 @@ export default class PoolManager extends Singleton {
         }
         return null;
     }
+
+    public getPoolFast<T>(key: string): T {
+        const arr = this._pool[key];
+        return arr && arr.length ? arr.pop() : null;
+    }
     /**
      * 将对象添加的缓存池
      * @param key key=PoolEnum+当前Pool类型枚举     举例道具Key：PoolEnum.prop+PropEnum.gold
@@ -49,6 +54,14 @@ export default class PoolManager extends Singleton {
         }
         if (arr.indexOf(node) !== -1) {
             return;
+        }
+        arr.push(node);
+    }
+
+    public setPoolFast(key: string, node: any) {
+        let arr = this._pool[key];
+        if (!arr) {
+            arr = this._pool[key] = [];
         }
         arr.push(node);
     }

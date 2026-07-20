@@ -191,6 +191,11 @@ export class Player extends UnityUpComponent {
     private currentShootingRoleLimit: number = 0;
     private currentBulletsPerRoleLimit: number = 1;
     private readonly frontShootingRoleIndices: number[] = [];
+    private readonly sortedFrontShootingRoleIndices: number[] = [];
+    private readonly cachedShootingRoles: (Role | null)[] = [];
+    private readonly cachedShootingRoleActive: boolean[] = [];
+    private readonly cachedShootingRoleX: number[] = [];
+    private readonly cachedShootingRoleZ: number[] = [];
     private staggerShotClock: number = 0;
     private pendingStaggerShots: PendingRoleShot[] = [];
     private continuousShotAccumulator: number = 0;
@@ -549,39 +554,82 @@ export class Player extends UnityUpComponent {
     private collectFrontShootingRoleIndices(limit: number): void {
         this.frontShootingRoleIndices.length = 0;
         const safeLimit = Math.max(0, Math.min(limit, this.roleList.length));
-        for (let roleIndex = 0; roleIndex < this.roleList.length; roleIndex++) {
+        if (safeLimit <= 0) {
+            return;
+        }
+        this.refreshFrontShootingRoleCache();
+        const count = Math.min(safeLimit, this.sortedFrontShootingRoleIndices.length);
+        for (let i = 0; i < count; i++) {
+            this.frontShootingRoleIndices.push(this.sortedFrontShootingRoleIndices[i]);
+        }
+    }
+
+    private refreshFrontShootingRoleCache(): void {
+        const roleCount = this.roleList.length;
+        const centerPos = this.node.worldPosition;
+        const centerX = centerPos.x;
+        const centerZ = centerPos.z;
+        let dirty = this.cachedShootingRoles.length !== roleCount;
+        for (let roleIndex = 0; roleIndex < roleCount; roleIndex++) {
             const role = this.roleList[roleIndex];
-            if (!role?.node?.activeInHierarchy) {
+            const active = !!role?.node?.isValid && role.node.activeInHierarchy;
+            let relativeX = 0;
+            let relativeZ = 0;
+            if (active) {
+                const rolePos = role.node.worldPosition;
+                relativeX = rolePos.x - centerX;
+                relativeZ = rolePos.z - centerZ;
+            }
+            if (this.cachedShootingRoles[roleIndex] !== role
+                || this.cachedShootingRoleActive[roleIndex] !== active
+                || this.cachedShootingRoleX[roleIndex] !== relativeX
+                || this.cachedShootingRoleZ[roleIndex] !== relativeZ) {
+                dirty = true;
+            }
+            this.cachedShootingRoles[roleIndex] = role;
+            this.cachedShootingRoleActive[roleIndex] = active;
+            this.cachedShootingRoleX[roleIndex] = relativeX;
+            this.cachedShootingRoleZ[roleIndex] = relativeZ;
+        }
+        this.cachedShootingRoles.length = roleCount;
+        this.cachedShootingRoleActive.length = roleCount;
+        this.cachedShootingRoleX.length = roleCount;
+        this.cachedShootingRoleZ.length = roleCount;
+        if (!dirty) {
+            return;
+        }
+
+        this.sortedFrontShootingRoleIndices.length = 0;
+        for (let roleIndex = 0; roleIndex < roleCount; roleIndex++) {
+            if (!this.cachedShootingRoleActive[roleIndex]) {
                 continue;
             }
-            let insertAt = this.frontShootingRoleIndices.length;
-            for (let i = 0; i < this.frontShootingRoleIndices.length; i++) {
-                if (this.isRoleMoreFrontAndCentered(roleIndex, this.frontShootingRoleIndices[i])) {
+            let insertAt = this.sortedFrontShootingRoleIndices.length;
+            for (let i = 0; i < this.sortedFrontShootingRoleIndices.length; i++) {
+                if (this.isCachedRoleMoreFrontAndCentered(roleIndex, this.sortedFrontShootingRoleIndices[i])) {
                     insertAt = i;
                     break;
                 }
             }
-            this.frontShootingRoleIndices.splice(insertAt, 0, roleIndex);
-            if (this.frontShootingRoleIndices.length > safeLimit) {
-                this.frontShootingRoleIndices.pop();
-            }
+            this.sortedFrontShootingRoleIndices.splice(insertAt, 0, roleIndex);
         }
     }
 
-    private isRoleMoreFrontAndCentered(roleIndex: number, otherRoleIndex: number): boolean {
-        const rolePos = this.roleList[roleIndex].node.worldPosition;
-        const otherPos = this.roleList[otherRoleIndex].node.worldPosition;
-        const zDiff = rolePos.z - otherPos.z;
+    private isCachedRoleMoreFrontAndCentered(roleIndex: number, otherRoleIndex: number): boolean {
+        const roleX = this.cachedShootingRoleX[roleIndex];
+        const roleZ = this.cachedShootingRoleZ[roleIndex];
+        const otherX = this.cachedShootingRoleX[otherRoleIndex];
+        const otherZ = this.cachedShootingRoleZ[otherRoleIndex];
+        const zDiff = roleZ - otherZ;
         if (Math.abs(zDiff) > 0.01) {
             return zDiff > 0;
         }
-        const centerX = this.node.worldPosition.x;
-        const roleAbsX = Math.abs(rolePos.x - centerX);
-        const otherAbsX = Math.abs(otherPos.x - centerX);
+        const roleAbsX = Math.abs(roleX);
+        const otherAbsX = Math.abs(otherX);
         if (Math.abs(roleAbsX - otherAbsX) > 0.01) {
             return roleAbsX < otherAbsX;
         }
-        return rolePos.x < otherPos.x;
+        return roleX < otherX;
     }
 
     private getShootingOuterLayer(): number {

@@ -44,7 +44,7 @@ export default class BulletManager extends Singleton {
     */
     public shootBullet3D(bulletEnum: BulletEnum, rot: math.Quat, damage: number, repelPower: number) {
 
-        let bullet = PoolManager.instance.getPool<BulletBattle3D>(PoolEnum.bullet + bulletEnum);
+        let bullet = PoolManager.instance.getPoolFast<BulletBattle3D>(PoolEnum.bullet + bulletEnum);
         if (!bullet) {
             let node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.bullet, bulletEnum);
             bullet = node.getComponent(BulletBattle3D);
@@ -58,7 +58,7 @@ export default class BulletManager extends Singleton {
         const poolKey = PoolEnum.bullet + bulletEnum;
         let bullet: BulletBattle3D = null;
         if (!forceCreate) {
-            bullet = PoolManager.instance.getPool<BulletBattle3D>(poolKey);
+            bullet = PoolManager.instance.getPoolFast<BulletBattle3D>(poolKey);
         }
         if (!bullet) {
             const node = PrefabsManager.instance.GetPrefabsIns(PrefabsEnum.bullet, bulletEnum);

@@ -62,6 +62,7 @@ export default class BulletBattle3D extends Component {
     public batchForwardZ: number = 1;
     public batchListIndex: number = -1;
     public batchRenderer: BulletBatchRenderer | null = null;
+    public collisionListIndex: number = -1;
 
     /** 是否已注册到碰撞管理器 */
     private _registered: boolean = false;
@@ -122,7 +123,7 @@ export default class BulletBattle3D extends Component {
         this._pooled = true;
         this.node.active = false;
         this.batchRenderer?.unregisterBullet(this);
-        PoolManager.instance.setPool(PoolEnum.bullet + this.bulletEnum, this);
+        PoolManager.instance.setPoolFast(PoolEnum.bullet + this.bulletEnum, this);
         if (this._registered) {
             BulletMonsterCollisionManager.instance.unregisterBullet(this);
             this._registered = false;
