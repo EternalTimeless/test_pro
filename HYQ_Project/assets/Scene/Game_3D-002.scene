@@ -14533,8 +14533,8 @@
     "defaultWeaponConfigIndex": 3,
     "enableRuntimeUpgradePrewarm": true,
     "rolePrewarmPerFrame": 2,
-    "roleSwitchPerFrame": 4,
-    "maxRoleShotsPerFrame": 12,
+    "roleSwitchPerFrame": 2,
+    "maxRoleShotsPerFrame": 10,
     "weaponBulletConfigList": [
       {
         "__id__": 887

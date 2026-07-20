@@ -1,11 +1,11 @@
-import { CCFloat, _decorator, Vec3, director, Component, MeshRenderer, Node } from 'cc';
+import { _decorator, Vec3, director, Component, MeshRenderer, Node } from 'cc';
 import Singleton from 'db://assets/Script/Base/Singleton';
 import { COLLIDE_TYPE } from './CollectBattleTarger/ColliderTag';
 import BulletBattle3D from './Battle3D/Bullet/BulletBattle3D';
 import { BattleTarget3D } from './BattleTarger/BattleTarget3D';
 import { BulletBatchRenderer } from './BulletBatchRenderer';
 
-const { ccclass, property, executionOrder } = _decorator;
+const { ccclass, executionOrder } = _decorator;
 
 @ccclass('BulletRuntimeDriver')
 @executionOrder(1000)
@@ -22,9 +22,6 @@ class BulletRuntimeDriver extends Component {
 class CollisionTargetGroup {
     /** 对应 COLLIDE_TYPE 枚举值 */
     public targetType: COLLIDE_TYPE;
-    /** 该组目标的x范围，用于预过滤 */
-    public xMin: number = -9999;
-    public xMax: number = 9999;
     /** 该组所有活跃目标 */
     public targets: BattleTarget3D[] = [];
 
@@ -32,26 +29,6 @@ class CollisionTargetGroup {
         this.targetType = targetType;
     }
 
-    /** 更新x范围（添加/移除目标时调用） */
-    public updateXRange(): void {
-        let minX = 9999;
-        let maxX = -9999;
-        for (let i = 0; i < this.targets.length; i++) {
-            const t = this.targets[i];
-            if (t.isDie) continue;
-            const x = t.getCollisionWorldPosition().x;
-            if (x < minX) minX = x - t.collisionHalfX;
-            if (x > maxX) maxX = x + t.collisionHalfX;
-        }
-        // 扩展半个碰撞体宽度作为预过滤容差
-        this.xMin = minX - 0.5;
-        this.xMax = maxX + 0.5;
-    }
-
-    public invalidateXRange(): void {
-        this.xMin = -9999;
-        this.xMax = 9999;
-    }
 }
 
 interface CollisionFrameData {
@@ -60,6 +37,30 @@ interface CollisionFrameData {
     z: number;
     halfX: number;
     halfZ: number;
+}
+
+interface CollisionGrid<T> {
+    buckets: T[][];
+    usedCellIndices: number[];
+    usedCellFlags: boolean[];
+    minCellX: number;
+    minCellZ: number;
+    xCellCount: number;
+    zCellCount: number;
+    active: boolean;
+}
+
+function createCollisionGrid<T>(): CollisionGrid<T> {
+    return {
+        buckets: [],
+        usedCellIndices: [],
+        usedCellFlags: [],
+        minCellX: 0,
+        minCellZ: 0,
+        xCellCount: 0,
+        zCellCount: 0,
+        active: false,
+    };
 }
 
 /**
@@ -76,14 +77,8 @@ export default class BulletMonsterCollisionManager extends Singleton {
         return this.getInstance<BulletMonsterCollisionManager>();
     }
 
-    /** z轴分桶桶宽 */
-    private _bucketSize: number = 0.8;
-
-    /** z轴最小值（用于计算桶索引） */
-    private _zMin: number = -10;
-
-    /** 桶数量 */
-    private _bucketCount: number = 100;
+    /** X/Z spatial-grid cell size. */
+    private readonly _gridCellSize: number = 0.8;
 
     /** 所有活跃子弹 */
     private _bullets: BulletBattle3D[] = [];
@@ -95,33 +90,32 @@ export default class BulletMonsterCollisionManager extends Singleton {
     /** 预分配临时Vec3，避免每帧new */
     private _tempVec3: Vec3 = new Vec3();
     private _tempBulletPrevPos: Vec3 = new Vec3();
-    private _targetCheckedStamp: WeakMap<BattleTarget3D, number> = new WeakMap();
-    private _wallCheckedStamp: WeakMap<WallObstacleRange, number> = new WeakMap();
+    private _targetCheckedStamps: number[] = [];
+    private _wallCheckedStamps: number[] = [];
     private _staticTargetFrameData: WeakMap<BattleTarget3D, CollisionFrameData> = new WeakMap();
     private _tempTargetFrameData: CollisionFrameData = { frame: -1, x: 0, z: 0, halfX: 0, halfZ: 0 };
 
-    /** 目标桶 - 按组ID+桶索引存储 */
-    private _targetBuckets: { [groupId: string]: BattleTarget3D[][] } = {};
-    private _usedTargetBucketIndices: { [groupId: string]: number[] } = {};
-    private _targetBucketUsed: { [groupId: string]: boolean[] } = {};
+    /** Sparse X/Z grids keyed by collision target type. */
+    private _targetGrids: { [groupId: string]: CollisionGrid<BattleTarget3D> } = {};
+    private _targetMinCellX: number[] = [];
+    private _targetMaxCellX: number[] = [];
+    private _targetMinCellZ: number[] = [];
+    private _targetMaxCellZ: number[] = [];
     private _activeBulletTargetTypeCounts: { [groupId: string]: number } = {};
-    private _wallBuckets: WallObstacleRange[][] = [];
+    private _wallGrid: CollisionGrid<WallObstacleRange> = createCollisionGrid<WallObstacleRange>();
     private _wallObstacles: WallObstacleRange[] = [];
     private _wallScene: Node | null = null;
     private _nextWallRefreshFrame: number = 0;
     private _gldRootFound: boolean = false;
     private _gldSideCount: number = 0;
     private _gldReadySideCount: number = 0;
+    private _nextTargetRuntimeId: number = 0;
     private _targetCheckId: number = 1;
     private _wallCheckId: number = 1;
     private _sceneOptimizationEnabled: boolean = false;
 
     protected constructor() {
         super();
-        // 预分配桶数组
-        for (let i = 0; i < this._bucketCount; i++) {
-            this._wallBuckets[i] = [];
-        }
         // 驱动组件在怪物 lateUpdate 后、子弹批渲染前执行。
         this.ensureRuntimeDriver();
     }
@@ -169,9 +163,9 @@ export default class BulletMonsterCollisionManager extends Singleton {
         if (this._targetGroups[type].targets.indexOf(target) !== -1) {
             return;
         }
+        this.ensureTargetRuntimeId(target);
         this._targetGroups[type].targets.push(target);
         this.registerLockableTarget(type, target);
-        this._targetGroups[type].invalidateXRange();
     }
 
     /** 注销目标 */
@@ -188,7 +182,6 @@ export default class BulletMonsterCollisionManager extends Singleton {
             group.targets.pop();
         }
         this.unregisterLockableTarget(type, target);
-        group.invalidateXRange();
     }
 
     public clearBullets(): void {
@@ -270,59 +263,32 @@ export default class BulletMonsterCollisionManager extends Singleton {
         return nearest;
     }
 
-    private _getBucketIdx(z: number): number {
-        const idx = ((z - this._zMin) / this._bucketSize) | 0;
-        if (idx < 0) return 0;
-        if (idx >= this._bucketCount) return this._bucketCount - 1;
-        return idx;
+    private getGridCell(value: number): number {
+        return Math.floor(value / this._gridCellSize);
     }
 
     /** 每帧碰撞检测 */
     public update(dt: number): void {
         this._sceneOptimizationEnabled = director.getScene()?.name === BulletMonsterCollisionManager.OPTIMIZED_SCENE_NAME;
         if (this._bullets.length === 0) {
-            this.clearUsedTargetBuckets();
+            this.clearFrameBuckets();
             return;
         }
         this.ensureWallObstacles();
         // 1. 清空桶数组（只重置length=0，不释放内存）
         this.clearFrameBuckets();
 
-        // 目标桶每帧构建一次，子弹直接查询扫掠范围覆盖的目标桶。
+        // Build sparse X/Z cells only for target types used by active bullets.
         for (const typeStr in this._targetGroups) {
             if ((this._activeBulletTargetTypeCounts[typeStr] ?? 0) <= 0) {
                 continue;
             }
             const group = this._targetGroups[typeStr];
-            // 确保目标桶存在
-            if (!this._targetBuckets[typeStr]) {
-                this._targetBuckets[typeStr] = [];
-                this._usedTargetBucketIndices[typeStr] = [];
-                this._targetBucketUsed[typeStr] = [];
-                for (let i = 0; i < this._bucketCount; i++) {
-                    this._targetBuckets[typeStr][i] = [];
-                    this._targetBucketUsed[typeStr][i] = false;
-                }
+            let targetGrid = this._targetGrids[typeStr];
+            if (!targetGrid) {
+                targetGrid = this._targetGrids[typeStr] = createCollisionGrid<BattleTarget3D>();
             }
-            const tBuckets = this._targetBuckets[typeStr];
-
-            for (let i = group.targets.length - 1; i >= 0; i--) {
-                const target = group.targets[i];
-                if (target.isDie || !target.node.active) {
-                    this.unregisterLockableTarget(group.targetType, target);
-                    // 已死亡目标，移除
-                    group.targets[i] = group.targets[group.targets.length - 1];
-                    group.targets.pop();
-                    continue;
-                }
-                const targetData = this.getTargetFrameData(target);
-                const minTargetBucketIdx = this._getBucketIdx(targetData.z - targetData.halfZ);
-                const maxTargetBucketIdx = this._getBucketIdx(targetData.z + targetData.halfZ);
-                for (let bucketIdx = minTargetBucketIdx; bucketIdx <= maxTargetBucketIdx; bucketIdx++) {
-                    this.markTargetBucketUsed(typeStr, bucketIdx);
-                    tBuckets[bucketIdx].push(target);
-                }
-            }
+            this.buildTargetGrid(group, targetGrid);
         }
 
         // 生命周期、移动和碰撞在同一活动子弹循环内完成。
@@ -353,61 +319,51 @@ export default class BulletMonsterCollisionManager extends Singleton {
             const bHalfZ = bullet.collisionHalfZ;
             const sweptMinX = Math.min(prevX, bx) - bHalfX;
             const sweptMaxX = Math.max(prevX, bx) + bHalfX;
-            const minBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - bHalfZ);
-            const maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ);
-            if (this.tryRecycleBulletByWallHit(bullet, prevX, prevZ, bx, bz, bHalfX, bHalfZ, sweptMinX, sweptMaxX, minBucketIdx, maxBucketIdx)) {
+            const sweptMinZ = Math.min(prevZ, bz) - bHalfZ;
+            const sweptMaxZ = Math.max(prevZ, bz) + bHalfZ;
+            const minCellX = this.getGridCell(sweptMinX);
+            const maxCellX = this.getGridCell(sweptMaxX);
+            const minCellZ = this.getGridCell(sweptMinZ);
+            const maxCellZ = this.getGridCell(sweptMaxZ);
+            if (this.tryRecycleBulletByWallHit(
+                bullet,
+                prevX,
+                prevZ,
+                bx,
+                bz,
+                bHalfX,
+                bHalfZ,
+                minCellX,
+                maxCellX,
+                minCellZ,
+                maxCellZ,
+            )) {
                 continue;
             }
 
             const targetTags = bullet.attackTargetTag;
             for (let ti = 0; ti < targetTags.length; ti++) {
                 const typeStr = String(targetTags[ti]);
-                const group = this._targetGroups[typeStr];
-                if (!group || sweptMaxX < group.xMin || sweptMinX > group.xMax) {
+                const targetGrid = this._targetGrids[typeStr];
+                if (!targetGrid?.active) {
                     continue;
                 }
-
-                const tBuckets = this._targetBuckets[typeStr];
-                if (!tBuckets) {
-                    continue;
-                }
-                const targetCheckId = this._targetCheckId++;
-                for (let checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && bullet.node.active; checkBucketIdx++) {
-                    const bucketTargets = tBuckets[checkBucketIdx];
-                    if (!bucketTargets) {
-                        continue;
-                    }
-                    for (let mj = 0; mj < bucketTargets.length && bullet.node.active; mj++) {
-                        const target = bucketTargets[mj];
-                        if (target.isDie || this._targetCheckedStamp.get(target) === targetCheckId) {
-                            continue;
-                        }
-                        this._targetCheckedStamp.set(target, targetCheckId);
-                        const targetData = this.getTargetFrameData(target);
-                        if (this.isSweptBulletHit(
-                            prevX,
-                            prevZ,
-                            bx,
-                            bz,
-                            bHalfX,
-                            bHalfZ,
-                            targetData.x,
-                            targetData.z,
-                            targetData.halfX,
-                            targetData.halfZ,
-                        )) {
-                            bullet.onHitTarget(target);
-                        }
-                    }
-                }
+                this.checkBulletTargetGrid(
+                    bullet,
+                    targetGrid,
+                    prevX,
+                    prevZ,
+                    bx,
+                    bz,
+                    bHalfX,
+                    bHalfZ,
+                    minCellX,
+                    maxCellX,
+                    minCellZ,
+                    maxCellZ,
+                );
             }
             BulletBatchRenderer.writeBullet(bullet, renderFrame);
-        }
-        // 5. 更新各组x范围（低频更新即可，每10帧更新一次）
-        if (this._frameCount % 10 === 0) {
-            for (const typeStr in this._targetGroups) {
-                this._targetGroups[typeStr].updateXRange();
-            }
         }
         this._frameCount++;
     }
@@ -523,42 +479,175 @@ export default class BulletMonsterCollisionManager extends Singleton {
         data.halfZ = target.collisionHalfZ;
     }
 
+    private buildTargetGrid(group: CollisionTargetGroup, grid: CollisionGrid<BattleTarget3D>): void {
+        let gridMinCellX = Number.POSITIVE_INFINITY;
+        let gridMaxCellX = Number.NEGATIVE_INFINITY;
+        let gridMinCellZ = Number.POSITIVE_INFINITY;
+        let gridMaxCellZ = Number.NEGATIVE_INFINITY;
+
+        for (let i = group.targets.length - 1; i >= 0; i--) {
+            const target = group.targets[i];
+            if (!target || target.isDie || !target.node.active) {
+                if (target) {
+                    this.unregisterLockableTarget(group.targetType, target);
+                }
+                group.targets[i] = group.targets[group.targets.length - 1];
+                group.targets.pop();
+                continue;
+            }
+
+            const targetId = this.ensureTargetRuntimeId(target);
+            const targetData = this.getTargetFrameData(target);
+            const minCellX = this.getGridCell(targetData.x - targetData.halfX);
+            const maxCellX = this.getGridCell(targetData.x + targetData.halfX);
+            const minCellZ = this.getGridCell(targetData.z - targetData.halfZ);
+            const maxCellZ = this.getGridCell(targetData.z + targetData.halfZ);
+            this._targetMinCellX[targetId] = minCellX;
+            this._targetMaxCellX[targetId] = maxCellX;
+            this._targetMinCellZ[targetId] = minCellZ;
+            this._targetMaxCellZ[targetId] = maxCellZ;
+            gridMinCellX = Math.min(gridMinCellX, minCellX);
+            gridMaxCellX = Math.max(gridMaxCellX, maxCellX);
+            gridMinCellZ = Math.min(gridMinCellZ, minCellZ);
+            gridMaxCellZ = Math.max(gridMaxCellZ, maxCellZ);
+        }
+
+        if (gridMinCellX === Number.POSITIVE_INFINITY) {
+            return;
+        }
+
+        this.configureGrid(grid, gridMinCellX, gridMaxCellX, gridMinCellZ, gridMaxCellZ);
+        for (let i = 0; i < group.targets.length; i++) {
+            const target = group.targets[i];
+            const targetId = target.collisionRuntimeId;
+            const minCellX = this._targetMinCellX[targetId];
+            const maxCellX = this._targetMaxCellX[targetId];
+            const minCellZ = this._targetMinCellZ[targetId];
+            const maxCellZ = this._targetMaxCellZ[targetId];
+            for (let cellZ = minCellZ; cellZ <= maxCellZ; cellZ++) {
+                const rowStart = (cellZ - grid.minCellZ) * grid.xCellCount;
+                for (let cellX = minCellX; cellX <= maxCellX; cellX++) {
+                    const cellIndex = rowStart + cellX - grid.minCellX;
+                    this.addGridEntry(grid, cellIndex, target);
+                }
+            }
+        }
+    }
+
+    private checkBulletTargetGrid(
+        bullet: BulletBattle3D,
+        grid: CollisionGrid<BattleTarget3D>,
+        prevX: number,
+        prevZ: number,
+        curX: number,
+        curZ: number,
+        bHalfX: number,
+        bHalfZ: number,
+        minCellX: number,
+        maxCellX: number,
+        minCellZ: number,
+        maxCellZ: number,
+    ): void {
+        const queryMinCellX = Math.max(minCellX, grid.minCellX);
+        const queryMaxCellX = Math.min(maxCellX, grid.minCellX + grid.xCellCount - 1);
+        const queryMinCellZ = Math.max(minCellZ, grid.minCellZ);
+        const queryMaxCellZ = Math.min(maxCellZ, grid.minCellZ + grid.zCellCount - 1);
+        if (queryMinCellX > queryMaxCellX || queryMinCellZ > queryMaxCellZ) {
+            return;
+        }
+
+        const targetCheckId = this.nextTargetCheckId();
+        for (let cellZ = queryMinCellZ; cellZ <= queryMaxCellZ && bullet.node.active; cellZ++) {
+            const rowStart = (cellZ - grid.minCellZ) * grid.xCellCount;
+            const startIndex = rowStart + queryMinCellX - grid.minCellX;
+            const endIndex = rowStart + queryMaxCellX - grid.minCellX;
+            for (let cellIndex = startIndex; cellIndex <= endIndex && bullet.node.active; cellIndex++) {
+                const bucketTargets = grid.buckets[cellIndex];
+                if (!bucketTargets) {
+                    continue;
+                }
+                for (let i = 0; i < bucketTargets.length && bullet.node.active; i++) {
+                    const target = bucketTargets[i];
+                    const targetId = target.collisionRuntimeId;
+                    if (target.isDie || targetId < 0 || this._targetCheckedStamps[targetId] === targetCheckId) {
+                        continue;
+                    }
+                    this._targetCheckedStamps[targetId] = targetCheckId;
+                    const targetData = this.getTargetFrameData(target);
+                    if (this.isSweptBulletHit(
+                        prevX,
+                        prevZ,
+                        curX,
+                        curZ,
+                        bHalfX,
+                        bHalfZ,
+                        targetData.x,
+                        targetData.z,
+                        targetData.halfX,
+                        targetData.halfZ,
+                    )) {
+                        bullet.onHitTarget(target);
+                    }
+                }
+            }
+        }
+    }
+
+    private ensureTargetRuntimeId(target: BattleTarget3D): number {
+        if (target.collisionRuntimeId < 0) {
+            target.collisionRuntimeId = this._nextTargetRuntimeId++;
+        } else if (target.collisionRuntimeId >= this._nextTargetRuntimeId) {
+            this._nextTargetRuntimeId = target.collisionRuntimeId + 1;
+        }
+        return target.collisionRuntimeId;
+    }
+
+    private nextTargetCheckId(): number {
+        const checkId = this._targetCheckId++;
+        if (this._targetCheckId > 0x7fffffff) {
+            this._targetCheckedStamps.fill(0);
+            this._targetCheckId = 1;
+        }
+        return checkId;
+    }
+
+    private configureGrid<T>(grid: CollisionGrid<T>, minCellX: number, maxCellX: number, minCellZ: number, maxCellZ: number): void {
+        grid.minCellX = minCellX;
+        grid.minCellZ = minCellZ;
+        grid.xCellCount = maxCellX - minCellX + 1;
+        grid.zCellCount = maxCellZ - minCellZ + 1;
+        grid.active = true;
+    }
+
+    private addGridEntry<T>(grid: CollisionGrid<T>, cellIndex: number, entry: T): void {
+        let bucket = grid.buckets[cellIndex];
+        if (!bucket) {
+            bucket = grid.buckets[cellIndex] = [];
+        }
+        if (!grid.usedCellFlags[cellIndex]) {
+            grid.usedCellFlags[cellIndex] = true;
+            grid.usedCellIndices.push(cellIndex);
+        }
+        bucket.push(entry);
+    }
+
+    private clearGrid<T>(grid: CollisionGrid<T>): void {
+        const usedIndices = grid.usedCellIndices;
+        for (let i = 0; i < usedIndices.length; i++) {
+            const cellIndex = usedIndices[i];
+            grid.buckets[cellIndex].length = 0;
+            grid.usedCellFlags[cellIndex] = false;
+        }
+        usedIndices.length = 0;
+        grid.active = false;
+        grid.xCellCount = 0;
+        grid.zCellCount = 0;
+    }
+
     private clearFrameBuckets(): void {
-        if (this.isSceneOptimizationEnabled()) {
-            this.clearUsedTargetBuckets();
-            return;
+        for (const groupId in this._targetGrids) {
+            this.clearGrid(this._targetGrids[groupId]);
         }
-        for (const groupId in this._targetBuckets) {
-            const buckets = this._targetBuckets[groupId];
-            const usedFlags = this._targetBucketUsed[groupId];
-            for (let i = 0; i < this._bucketCount; i++) {
-                buckets[i].length = 0;
-                usedFlags[i] = false;
-            }
-            this._usedTargetBucketIndices[groupId].length = 0;
-        }
-    }
-
-    private clearUsedTargetBuckets(): void {
-        for (const groupId in this._usedTargetBucketIndices) {
-            const usedIndices = this._usedTargetBucketIndices[groupId];
-            const buckets = this._targetBuckets[groupId];
-            const usedFlags = this._targetBucketUsed[groupId];
-            for (let i = 0; i < usedIndices.length; i++) {
-                const index = usedIndices[i];
-                buckets[index].length = 0;
-                usedFlags[index] = false;
-            }
-            usedIndices.length = 0;
-        }
-    }
-
-    private markTargetBucketUsed(groupId: string, index: number): void {
-        if (this._targetBucketUsed[groupId][index]) {
-            return;
-        }
-        this._targetBucketUsed[groupId][index] = true;
-        this._usedTargetBucketIndices[groupId].push(index);
     }
 
     private ensureWallObstacles(): void {
@@ -584,9 +673,9 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
     private clearWallObstacles(): void {
         this._wallObstacles.length = 0;
-        for (let i = 0; i < this._bucketCount; i++) {
-            this._wallBuckets[i].length = 0;
-        }
+        this.clearGrid(this._wallGrid);
+        this._wallCheckedStamps.length = 0;
+        this._wallCheckId = 1;
     }
 
     private rebuildWallObstacles(scene: Node): void {
@@ -595,6 +684,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
         this._gldSideCount = 0;
         this._gldReadySideCount = 0;
         this.collectWallObstacles(scene);
+        this.buildWallGrid();
     }
 
     private isGldWallScanComplete(): boolean {
@@ -613,6 +703,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
         }
         if (node.name.indexOf('SM_gelidun_') === 0) {
             const obstacle: WallObstacleRange = {
+                runtimeId: -1,
                 node,
                 renderers: [],
                 minX: 0,
@@ -622,8 +713,8 @@ export default class BulletMonsterCollisionManager extends Singleton {
             };
             this.collectMeshRenderers(node, obstacle.renderers);
             if (this.updateWallObstacleBounds(obstacle)) {
+                obstacle.runtimeId = this._wallObstacles.length;
                 this._wallObstacles.push(obstacle);
-                this.addWallObstacleToBuckets(obstacle);
             }
             return;
         }
@@ -640,6 +731,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
         }
         this._gldSideCount++;
         const obstacle: WallObstacleRange = {
+            runtimeId: -1,
             node: side,
             renderers: [],
             minX: 0,
@@ -649,8 +741,8 @@ export default class BulletMonsterCollisionManager extends Singleton {
         };
         this.collectGelidunMeshRenderers(side, obstacle.renderers);
         if (this.updateWallObstacleBounds(obstacle, true)) {
+            obstacle.runtimeId = this._wallObstacles.length;
             this._wallObstacles.push(obstacle);
-            this.addWallObstacleToBuckets(obstacle);
             this._gldReadySideCount++;
         }
     }
@@ -716,12 +808,47 @@ export default class BulletMonsterCollisionManager extends Singleton {
         return true;
     }
 
-    private addWallObstacleToBuckets(obstacle: WallObstacleRange): void {
-        const minIdx = this._getBucketIdx(obstacle.minZ);
-        const maxIdx = this._getBucketIdx(obstacle.maxZ);
-        for (let i = minIdx; i <= maxIdx; i++) {
-            this._wallBuckets[i].push(obstacle);
+    private buildWallGrid(): void {
+        if (this._wallObstacles.length <= 0) {
+            return;
         }
+
+        let gridMinCellX = Number.POSITIVE_INFINITY;
+        let gridMaxCellX = Number.NEGATIVE_INFINITY;
+        let gridMinCellZ = Number.POSITIVE_INFINITY;
+        let gridMaxCellZ = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < this._wallObstacles.length; i++) {
+            const obstacle = this._wallObstacles[i];
+            gridMinCellX = Math.min(gridMinCellX, this.getGridCell(obstacle.minX));
+            gridMaxCellX = Math.max(gridMaxCellX, this.getGridCell(obstacle.maxX));
+            gridMinCellZ = Math.min(gridMinCellZ, this.getGridCell(obstacle.minZ));
+            gridMaxCellZ = Math.max(gridMaxCellZ, this.getGridCell(obstacle.maxZ));
+        }
+        this.configureGrid(this._wallGrid, gridMinCellX, gridMaxCellX, gridMinCellZ, gridMaxCellZ);
+
+        for (let i = 0; i < this._wallObstacles.length; i++) {
+            const obstacle = this._wallObstacles[i];
+            const minCellX = this.getGridCell(obstacle.minX);
+            const maxCellX = this.getGridCell(obstacle.maxX);
+            const minCellZ = this.getGridCell(obstacle.minZ);
+            const maxCellZ = this.getGridCell(obstacle.maxZ);
+            for (let cellZ = minCellZ; cellZ <= maxCellZ; cellZ++) {
+                const rowStart = (cellZ - this._wallGrid.minCellZ) * this._wallGrid.xCellCount;
+                for (let cellX = minCellX; cellX <= maxCellX; cellX++) {
+                    const cellIndex = rowStart + cellX - this._wallGrid.minCellX;
+                    this.addGridEntry(this._wallGrid, cellIndex, obstacle);
+                }
+            }
+        }
+    }
+
+    private nextWallCheckId(): number {
+        const checkId = this._wallCheckId++;
+        if (this._wallCheckId > 0x7fffffff) {
+            this._wallCheckedStamps.fill(0);
+            this._wallCheckId = 1;
+        }
+        return checkId;
     }
 
     private tryRecycleBulletByWallHit(
@@ -732,35 +859,47 @@ export default class BulletMonsterCollisionManager extends Singleton {
         curZ: number,
         bHalfX: number,
         bHalfZ: number,
-        sweptMinX: number,
-        sweptMaxX: number,
-        minBucketIdx: number,
-        maxBucketIdx: number,
+        minCellX: number,
+        maxCellX: number,
+        minCellZ: number,
+        maxCellZ: number,
     ): boolean {
-        if (this._wallObstacles.length <= 0) {
+        const grid = this._wallGrid;
+        if (!grid.active) {
             return false;
         }
-        const wallCheckId = this._wallCheckId++;
-        for (let bucketIdx = minBucketIdx; bucketIdx <= maxBucketIdx; bucketIdx++) {
-            const walls = this._wallBuckets[bucketIdx];
-            if (!walls || walls.length <= 0) {
-                continue;
-            }
-            for (let i = 0; i < walls.length; i++) {
-                const wall = walls[i];
-                if (!wall || this._wallCheckedStamp.get(wall) === wallCheckId) {
+
+        const queryMinCellX = Math.max(minCellX, grid.minCellX);
+        const queryMaxCellX = Math.min(maxCellX, grid.minCellX + grid.xCellCount - 1);
+        const queryMinCellZ = Math.max(minCellZ, grid.minCellZ);
+        const queryMaxCellZ = Math.min(maxCellZ, grid.minCellZ + grid.zCellCount - 1);
+        if (queryMinCellX > queryMaxCellX || queryMinCellZ > queryMaxCellZ) {
+            return false;
+        }
+
+        const wallCheckId = this.nextWallCheckId();
+        for (let cellZ = queryMinCellZ; cellZ <= queryMaxCellZ; cellZ++) {
+            const rowStart = (cellZ - grid.minCellZ) * grid.xCellCount;
+            const startIndex = rowStart + queryMinCellX - grid.minCellX;
+            const endIndex = rowStart + queryMaxCellX - grid.minCellX;
+            for (let cellIndex = startIndex; cellIndex <= endIndex; cellIndex++) {
+                const walls = grid.buckets[cellIndex];
+                if (!walls) {
                     continue;
                 }
-                this._wallCheckedStamp.set(wall, wallCheckId);
-                if (!wall.node.activeInHierarchy) {
-                    continue;
-                }
-                if (sweptMaxX < wall.minX || sweptMinX > wall.maxX) {
-                    continue;
-                }
-                if (this.isSweptBulletHitBounds(prevX, prevZ, curX, curZ, bHalfX, bHalfZ, wall.minX, wall.maxX, wall.minZ, wall.maxZ)) {
-                    bullet.forceRecycle();
-                    return true;
+                for (let i = 0; i < walls.length; i++) {
+                    const wall = walls[i];
+                    if (!wall || this._wallCheckedStamps[wall.runtimeId] === wallCheckId) {
+                        continue;
+                    }
+                    this._wallCheckedStamps[wall.runtimeId] = wallCheckId;
+                    if (!wall.node.activeInHierarchy) {
+                        continue;
+                    }
+                    if (this.isSweptBulletHitBounds(prevX, prevZ, curX, curZ, bHalfX, bHalfZ, wall.minX, wall.maxX, wall.minZ, wall.maxZ)) {
+                        bullet.forceRecycle();
+                        return true;
+                    }
                 }
             }
         }
@@ -844,6 +983,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
 }
 
 interface WallObstacleRange {
+    runtimeId: number;
     node: Node;
     renderers: MeshRenderer[];
     minX: number;
