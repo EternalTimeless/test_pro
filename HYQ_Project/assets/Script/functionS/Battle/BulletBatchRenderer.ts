@@ -2,7 +2,7 @@ import { Color, Component, Material, Mesh, MeshRenderer, Node, Sprite, SpriteFra
 import { BulletEnum } from "db://assets/Script/Base/EnumList";
 import type BulletBattle3D from "./Battle3D/Bullet/BulletBattle3D";
 
-const { ccclass } = _decorator;
+const { ccclass, executionOrder } = _decorator;
 
 type BatchInfo = {
     node: Node;
@@ -34,6 +34,7 @@ type BulletVisualInfo = {
 };
 
 @ccclass("BulletBatchRenderer")
+@executionOrder(1100)
 export class BulletBatchRenderer extends Component {
     public static instance: BulletBatchRenderer | null = null;
     public static useDynamicBatching: boolean = true;

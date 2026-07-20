@@ -1,10 +1,18 @@
-import { CCFloat, _decorator, Vec3, director, Director, MeshRenderer, Node } from 'cc';
+import { CCFloat, _decorator, Vec3, director, Component, MeshRenderer, Node } from 'cc';
 import Singleton from 'db://assets/Script/Base/Singleton';
 import { COLLIDE_TYPE } from './CollectBattleTarger/ColliderTag';
 import BulletBattle3D from './Battle3D/Bullet/BulletBattle3D';
 import { BattleTarget3D } from './BattleTarger/BattleTarget3D';
 
-const { ccclass, property } = _decorator;
+const { ccclass, property, executionOrder } = _decorator;
+
+@ccclass('BulletRuntimeDriver')
+@executionOrder(1000)
+class BulletRuntimeDriver extends Component {
+    protected lateUpdate(dt: number): void {
+        BulletMonsterCollisionManager.instance.update(dt);
+    }
+}
 
 /**
  * 碰撞目标组 - 按 COLLIDE_TYPE 分组管理目标
@@ -61,6 +69,7 @@ interface CollisionFrameData {
 export default class BulletMonsterCollisionManager extends Singleton {
 
     private static readonly OPTIMIZED_SCENE_NAME = 'Game_3D-002';
+    private static readonly RUNTIME_DRIVER_NODE_NAME = '__BulletRuntimeDriver';
 
     public static get instance() {
         return this.getInstance<BulletMonsterCollisionManager>();
@@ -90,17 +99,11 @@ export default class BulletMonsterCollisionManager extends Singleton {
     private _staticTargetFrameData: WeakMap<BattleTarget3D, CollisionFrameData> = new WeakMap();
     private _tempTargetFrameData: CollisionFrameData = { frame: -1, x: 0, z: 0, halfX: 0, halfZ: 0 };
 
-    /** 子弹桶 - 每帧重建 */
-    private _bulletBuckets: BulletBattle3D[][] = [];
-    private _usedBulletBucketIndices: number[] = [];
-    private _bulletBucketUsed: boolean[] = [];
-
     /** 目标桶 - 按组ID+桶索引存储 */
     private _targetBuckets: { [groupId: string]: BattleTarget3D[][] } = {};
     private _usedTargetBucketIndices: { [groupId: string]: number[] } = {};
     private _targetBucketUsed: { [groupId: string]: boolean[] } = {};
-    private _activeBulletTargetTypes: { [groupId: string]: boolean } = {};
-    private _usedActiveBulletTargetTypes: string[] = [];
+    private _activeBulletTargetTypeCounts: { [groupId: string]: number } = {};
     private _wallBuckets: WallObstacleRange[][] = [];
     private _wallObstacles: WallObstacleRange[] = [];
     private _wallScene: Node | null = null;
@@ -112,25 +115,19 @@ export default class BulletMonsterCollisionManager extends Singleton {
     private _wallCheckId: number = 1;
     private _sceneOptimizationEnabled: boolean = false;
 
-    private _directorCallback: (dt: number) => void;
-
     protected constructor() {
         super();
         // 预分配桶数组
         for (let i = 0; i < this._bucketCount; i++) {
-            this._bulletBuckets[i] = [];
-            this._bulletBucketUsed[i] = false;
             this._wallBuckets[i] = [];
         }
-        // 使用 director 的每帧回调驱动碰撞检测
-        this._directorCallback = (dt: number) => {
-            this.update(dt);
-        };
-        director.on(Director.EVENT_AFTER_UPDATE, this._directorCallback);
+        // 驱动组件在怪物 lateUpdate 后、子弹批渲染前执行。
+        this.ensureRuntimeDriver();
     }
 
     /** 注册子弹 */
     public registerBullet(bullet: BulletBattle3D): void {
+        this.ensureRuntimeDriver();
         const registeredIndex = bullet.collisionListIndex;
         if (registeredIndex >= 0 && this._bullets[registeredIndex] === bullet) {
             return;
@@ -142,6 +139,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
         }
         bullet.collisionListIndex = this._bullets.length;
         this._bullets.push(bullet);
+        this.addBulletTargetTypes(bullet);
     }
 
     /** 注销子弹 */
@@ -160,6 +158,7 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
     /** 注册目标 */
     public registerTarget(target: BattleTarget3D): void {
+        this.ensureRuntimeDriver();
         const tag = target.getComponent('ColliderTag') as any;
         if (!tag) return;
         const type: COLLIDE_TYPE = tag.tag;
@@ -203,7 +202,6 @@ export default class BulletMonsterCollisionManager extends Singleton {
                 this.removeBulletAt(this._bullets.length - 1);
             }
         }
-        this.clearUsedBulletBuckets();
     }
 
     public getNearestTarget(fromPos: Vec3, targetTags: COLLIDE_TYPE[] = []): BattleTarget3D | null {
@@ -282,40 +280,16 @@ export default class BulletMonsterCollisionManager extends Singleton {
     public update(dt: number): void {
         this._sceneOptimizationEnabled = director.getScene()?.name === BulletMonsterCollisionManager.OPTIMIZED_SCENE_NAME;
         if (this._bullets.length === 0) {
-            if (this.isSceneOptimizationEnabled() && this._usedBulletBucketIndices.length > 0) {
-                this.clearUsedBulletBuckets();
-                this.clearUsedTargetBuckets();
-            }
+            this.clearUsedTargetBuckets();
             return;
         }
         this.ensureWallObstacles();
         // 1. 清空桶数组（只重置length=0，不释放内存）
         this.clearFrameBuckets();
 
-        // 2. 将子弹放入桶
-        for (let i = this._bullets.length - 1; i >= 0; i--) {
-            const bullet = this._bullets[i];
-            if (!bullet.node.active) {
-                this.removeBulletAt(i);
-                continue;
-            }
-            const z = bullet.node.worldPosition.z;
-            const bIdx = this._getBucketIdx(z);
-            this.markBulletBucketUsed(bIdx);
-            this._bulletBuckets[bIdx].push(bullet);
-            const targetTags = bullet.attackTargetTag;
-            for (let tagIndex = 0; tagIndex < targetTags.length; tagIndex++) {
-                const typeStr = String(targetTags[tagIndex]);
-                if (!this._activeBulletTargetTypes[typeStr]) {
-                    this._activeBulletTargetTypes[typeStr] = true;
-                    this._usedActiveBulletTargetTypes.push(typeStr);
-                }
-            }
-        }
-
-        // 3. 将目标放入桶（按COLLIDE_TYPE分组）
+        // 目标桶每帧构建一次，子弹直接查询扫掠范围覆盖的目标桶。
         for (const typeStr in this._targetGroups) {
-            if (!this._activeBulletTargetTypes[typeStr]) {
+            if ((this._activeBulletTargetTypeCounts[typeStr] ?? 0) <= 0) {
                 continue;
             }
             const group = this._targetGroups[typeStr];
@@ -350,79 +324,77 @@ export default class BulletMonsterCollisionManager extends Singleton {
             }
         }
 
-        // 4. 逐桶碰撞检测
-        if (this._usedBulletBucketIndices.length > 1) {
-            this._usedBulletBucketIndices.sort((a, b) => a - b);
-        }
-        for (let usedIndex = 0; usedIndex < this._usedBulletBucketIndices.length; usedIndex++) {
-            const bIdx = this._usedBulletBucketIndices[usedIndex];
-            const bucketBullets = this._bulletBuckets[bIdx];
+        // 生命周期、移动和碰撞在同一活动子弹循环内完成。
+        for (let bi = this._bullets.length - 1; bi >= 0; bi--) {
+            const bullet = this._bullets[bi];
+            if (!bullet || !bullet.node.active) {
+                this.removeBulletAt(bi);
+                continue;
+            }
+            if (!bullet.stepRuntime(dt)) {
+                continue;
+            }
 
-            for (let bi = 0; bi < bucketBullets.length; bi++) {
-                const bullet = bucketBullets[bi];
-                if (!bullet.node.active) continue;
+            const currentPos = bullet.node.worldPosition;
+            const bx = currentPos.x;
+            const bz = currentPos.z;
+            const prevPos = bullet.getPreviousWorldPosition(this._tempBulletPrevPos);
+            const prevX = prevPos.x;
+            const prevZ = prevPos.z;
+            const bHalfX = bullet.collisionHalfX;
+            const bHalfZ = bullet.collisionHalfZ;
+            const sweptMinX = Math.min(prevX, bx) - bHalfX;
+            const sweptMaxX = Math.max(prevX, bx) + bHalfX;
+            const minBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - bHalfZ);
+            const maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ);
+            if (this.tryRecycleBulletByWallHit(bullet, prevX, prevZ, bx, bz, bHalfX, bHalfZ, sweptMinX, sweptMaxX, minBucketIdx, maxBucketIdx)) {
+                continue;
+            }
 
-                const bx = bullet.node.worldPosition.x;
-                const bz = bullet.node.worldPosition.z;
-                const prevPos = bullet.getPreviousWorldPosition(this._tempBulletPrevPos);
-                const prevX = prevPos.x;
-                const prevZ = prevPos.z;
-                const bHalfX = bullet.collisionHalfX;
-                const bHalfZ = bullet.collisionHalfZ;
-                const sweptMinX = Math.min(prevX, bx) - bHalfX;
-                const sweptMaxX = Math.max(prevX, bx) + bHalfX;
-                const minBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - bHalfZ);
-                const maxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + bHalfZ);
-                const wallHalfX = bHalfX;
-                const wallHalfZ = bHalfZ;
-                const wallSweptMinX = Math.min(prevX, bx) - wallHalfX;
-                const wallSweptMaxX = Math.max(prevX, bx) + wallHalfX;
-                const wallMinBucketIdx = this._getBucketIdx(Math.min(prevZ, bz) - wallHalfZ);
-                const wallMaxBucketIdx = this._getBucketIdx(Math.max(prevZ, bz) + wallHalfZ);
-                if (this.tryRecycleBulletByWallHit(bullet, prevX, prevZ, bx, bz, wallHalfX, wallHalfZ, wallSweptMinX, wallSweptMaxX, wallMinBucketIdx, wallMaxBucketIdx)) {
+            const targetTags = bullet.attackTargetTag;
+            for (let ti = 0; ti < targetTags.length; ti++) {
+                const typeStr = String(targetTags[ti]);
+                const group = this._targetGroups[typeStr];
+                if (!group || sweptMaxX < group.xMin || sweptMinX > group.xMax) {
                     continue;
                 }
 
-                // 遍历子弹的 attackTargetTag
-                const targetTags = bullet.attackTargetTag;
-                for (let ti = 0; ti < targetTags.length; ti++) {
-                    const typeStr = String(targetTags[ti]);
-                    const group = this._targetGroups[typeStr];
-                    if (!group) continue;
-
-                    // x范围预过滤
-                    if (sweptMaxX < group.xMin || sweptMinX > group.xMax) continue;
-
-                    const tBuckets = this._targetBuckets[typeStr];
-                    if (!tBuckets) continue;
-                    const targetCheckId = this._targetCheckId++;
-                    for (let checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && bullet.node.active; checkBucketIdx++) {
-                        const bucketTargets = tBuckets[checkBucketIdx];
-                        if (!bucketTargets) continue;
-
-                        for (let mj = 0; mj < bucketTargets.length && bullet.node.active; mj++) {
-                            const target = bucketTargets[mj];
-                            if (target.isDie || this._targetCheckedStamp.get(target) === targetCheckId) continue;
-                            this._targetCheckedStamp.set(target, targetCheckId);
-
-                            // AABB碰撞判定
-                            const targetData = this.getTargetFrameData(target);
-                            const tx = targetData.x;
-                            const tz = targetData.z;
-                            const tHalfX = targetData.halfX;
-                            const tHalfZ = targetData.halfZ;
-
-                            if (this.isSweptBulletHit(prevX, prevZ, bx, bz, bHalfX, bHalfZ, tx, tz, tHalfX, tHalfZ)) {
-                                // 碰撞命中！调用子弹的命中处理（迁移自原 _startCollide）
-                                bullet.onHitTarget(target);
-                            }
+                const tBuckets = this._targetBuckets[typeStr];
+                if (!tBuckets) {
+                    continue;
+                }
+                const targetCheckId = this._targetCheckId++;
+                for (let checkBucketIdx = minBucketIdx; checkBucketIdx <= maxBucketIdx && bullet.node.active; checkBucketIdx++) {
+                    const bucketTargets = tBuckets[checkBucketIdx];
+                    if (!bucketTargets) {
+                        continue;
+                    }
+                    for (let mj = 0; mj < bucketTargets.length && bullet.node.active; mj++) {
+                        const target = bucketTargets[mj];
+                        if (target.isDie || this._targetCheckedStamp.get(target) === targetCheckId) {
+                            continue;
+                        }
+                        this._targetCheckedStamp.set(target, targetCheckId);
+                        const targetData = this.getTargetFrameData(target);
+                        if (this.isSweptBulletHit(
+                            prevX,
+                            prevZ,
+                            bx,
+                            bz,
+                            bHalfX,
+                            bHalfZ,
+                            targetData.x,
+                            targetData.z,
+                            targetData.halfX,
+                            targetData.halfZ,
+                        )) {
+                            bullet.onHitTarget(target);
                         }
                     }
                 }
             }
         }
         // 5. 更新各组x范围（低频更新即可，每10帧更新一次）
-        this.clearActiveBulletTargetTypes();
         if (this._frameCount % 10 === 0) {
             for (const typeStr in this._targetGroups) {
                 this._targetGroups[typeStr].updateXRange();
@@ -433,15 +405,23 @@ export default class BulletMonsterCollisionManager extends Singleton {
 
     private _frameCount: number = 0;
 
-    private clearActiveBulletTargetTypes(): void {
-        for (let i = 0; i < this._usedActiveBulletTargetTypes.length; i++) {
-            this._activeBulletTargetTypes[this._usedActiveBulletTargetTypes[i]] = false;
-        }
-        this._usedActiveBulletTargetTypes.length = 0;
-    }
-
     private isSceneOptimizationEnabled(): boolean {
         return this._sceneOptimizationEnabled;
+    }
+
+    private ensureRuntimeDriver(): void {
+        const scene = director.getScene();
+        if (!scene) {
+            return;
+        }
+        let node = scene.getChildByName(BulletMonsterCollisionManager.RUNTIME_DRIVER_NODE_NAME);
+        if (!node) {
+            node = new Node(BulletMonsterCollisionManager.RUNTIME_DRIVER_NODE_NAME);
+            scene.addChild(node);
+        }
+        if (!node.getComponent(BulletRuntimeDriver)) {
+            node.addComponent(BulletRuntimeDriver);
+        }
     }
 
     private removeBulletAt(index: number): void {
@@ -451,6 +431,9 @@ export default class BulletMonsterCollisionManager extends Singleton {
         }
         const bullet = this._bullets[index];
         const lastBullet = this._bullets[lastIndex];
+        if (bullet) {
+            this.removeBulletTargetTypes(bullet);
+        }
         if (index !== lastIndex) {
             this._bullets[index] = lastBullet;
             if (lastBullet) {
@@ -460,6 +443,23 @@ export default class BulletMonsterCollisionManager extends Singleton {
         this._bullets.pop();
         if (bullet) {
             bullet.collisionListIndex = -1;
+        }
+    }
+
+    private addBulletTargetTypes(bullet: BulletBattle3D): void {
+        const targetTags = bullet.attackTargetTag;
+        for (let i = 0; i < targetTags.length; i++) {
+            const typeStr = String(targetTags[i]);
+            this._activeBulletTargetTypeCounts[typeStr] = (this._activeBulletTargetTypeCounts[typeStr] ?? 0) + 1;
+        }
+    }
+
+    private removeBulletTargetTypes(bullet: BulletBattle3D): void {
+        const targetTags = bullet.attackTargetTag;
+        for (let i = 0; i < targetTags.length; i++) {
+            const typeStr = String(targetTags[i]);
+            const nextCount = (this._activeBulletTargetTypeCounts[typeStr] ?? 0) - 1;
+            this._activeBulletTargetTypeCounts[typeStr] = nextCount > 0 ? nextCount : 0;
         }
     }
 
@@ -514,26 +514,11 @@ export default class BulletMonsterCollisionManager extends Singleton {
         data.halfZ = target.collisionHalfZ;
     }
 
-    private clearUsedBulletBuckets(): void {
-        for (let i = 0; i < this._usedBulletBucketIndices.length; i++) {
-            const index = this._usedBulletBucketIndices[i];
-            this._bulletBuckets[index].length = 0;
-            this._bulletBucketUsed[index] = false;
-        }
-        this._usedBulletBucketIndices.length = 0;
-    }
-
     private clearFrameBuckets(): void {
         if (this.isSceneOptimizationEnabled()) {
-            this.clearUsedBulletBuckets();
             this.clearUsedTargetBuckets();
             return;
         }
-        for (let i = 0; i < this._bucketCount; i++) {
-            this._bulletBuckets[i].length = 0;
-            this._bulletBucketUsed[i] = false;
-        }
-        this._usedBulletBucketIndices.length = 0;
         for (const groupId in this._targetBuckets) {
             const buckets = this._targetBuckets[groupId];
             const usedFlags = this._targetBucketUsed[groupId];
@@ -543,14 +528,6 @@ export default class BulletMonsterCollisionManager extends Singleton {
             }
             this._usedTargetBucketIndices[groupId].length = 0;
         }
-    }
-
-    private markBulletBucketUsed(index: number): void {
-        if (this._bulletBucketUsed[index]) {
-            return;
-        }
-        this._bulletBucketUsed[index] = true;
-        this._usedBulletBucketIndices.push(index);
     }
 
     private clearUsedTargetBuckets(): void {

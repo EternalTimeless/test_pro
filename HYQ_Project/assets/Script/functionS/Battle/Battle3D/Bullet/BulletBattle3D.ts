@@ -1,4 +1,4 @@
-import { _decorator, ccenum, CCFloat, CCInteger, Component, math, Sprite, Vec3 } from "cc";
+import { _decorator, ccenum, CCFloat, CCInteger, Component, director, math, Sprite, Vec3 } from "cc";
 import { BulletEnum, EffectEnum, PoolEnum, SceneType } from "db://assets/Script/Base/EnumList";
 import PoolManager from "db://assets/Script/Base/PoolManager";
 import { EffectManager } from "../../../Effect/EffectManager";
@@ -70,6 +70,7 @@ export default class BulletBattle3D extends Component {
     private _previousWorldPosition: Vec3 = new Vec3();
     private _hasPreviousWorldPosition: boolean = false;
     private _preserveSpawnPreviousPosition: boolean = false;
+    private _spawnFrame: number = -1;
 
     protected start(): void {
         this.moveD = this.node.getComponent(MoveDrive);
@@ -80,7 +81,14 @@ export default class BulletBattle3D extends Component {
         this.moveD.enabled = false;
     }
 
-    protected update(dt: number): void {
+    public stepRuntime(dt: number): boolean {
+        if (this._pooled || !this.node.active) {
+            return false;
+        }
+        if (this._spawnFrame === director.getTotalFrames()) {
+            this._preserveSpawnPreviousPosition = false;
+            return true;
+        }
         if (this._preserveSpawnPreviousPosition) {
             this._preserveSpawnPreviousPosition = false;
         } else {
@@ -90,17 +98,20 @@ export default class BulletBattle3D extends Component {
         if (this.triggerDieTime != -1 && this._isTrigger) {
             if (this._triggerDieTime <= 0) {
                 this.over();
+                return false;
             } else {
                 this._triggerDieTime -= dt;
             }
         } else if (this.overTime != -1) {
             if (this._overTime <= 0) {
                 this.over();
+                return false;
             } else {
                 this._overTime -= dt;
             }
         }
         this.moveD.MoveEvent(dt);
+        return this.node.active;
     }
 
     public advanceSpawnTime(dt: number): void {
@@ -155,6 +166,7 @@ export default class BulletBattle3D extends Component {
         this._isTrigger = false;
         this._hasPreviousWorldPosition = false;
         this._preserveSpawnPreviousPosition = false;
+        this._spawnFrame = director.getTotalFrames();
         const sprite = this.batchSprite && this.batchSprite.isValid
             ? this.batchSprite
             : this.node.getComponentInChildren(Sprite);
