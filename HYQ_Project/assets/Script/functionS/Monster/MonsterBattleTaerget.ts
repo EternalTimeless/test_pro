@@ -1088,13 +1088,14 @@ export class MonsterBattleTaerget extends BattleTarget3D {
             return;
         }
 
-        const cameraPos = camera?.node?.worldPosition;
-        if (!this.animationVisible || !cameraPos) {
+        const shadowReferencePos = Player.instance?.node?.worldPosition
+            ?? camera?.node?.worldPosition;
+        if (!this.animationVisible || !shadowReferencePos) {
             this.setVisualShadowsEnabled(false);
             return;
         }
-        const dx = this.node.worldPositionX - cameraPos.x;
-        const dz = this.node.worldPositionZ - cameraPos.z;
+        const dx = this.node.worldPositionX - shadowReferencePos.x;
+        const dz = this.node.worldPositionZ - shadowReferencePos.z;
         const shadowDistance = Math.max(1, this.shadowLodDistance);
         this.setVisualShadowsEnabled(dx * dx + dz * dz <= shadowDistance * shadowDistance);
     }

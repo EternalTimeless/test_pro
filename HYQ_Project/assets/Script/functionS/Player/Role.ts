@@ -57,7 +57,6 @@ export class Role extends Component {
     private hasInitialArmsTransform: boolean = false;
     private shadowRenderers: MeshRenderer[] = [];
     private originalShadowCastingModes: number[] = [];
-    private shadowRenderersCached: boolean = false;
     private shadowCastingEnabled: boolean | null = null;
     private static readonly propSocketNodeName: string = 'Bip001 Prop1 Socket';
     private readonly propSocketNodes: Node[] = [];
@@ -131,9 +130,6 @@ export class Role extends Component {
     }
 
     public setShadowCastingEnabled(enabled: boolean): void {
-        if (this.shadowCastingEnabled === enabled) {
-            return;
-        }
         this.cacheShadowRenderers();
         for (let i = 0; i < this.shadowRenderers.length; i++) {
             const renderer = this.shadowRenderers[i];
@@ -148,16 +144,34 @@ export class Role extends Component {
     }
 
     private cacheShadowRenderers(): void {
-        if (this.shadowRenderersCached) {
-            return;
-        }
-        this.shadowRenderersCached = true;
         // 角色除了蒙皮身体外还可能带静态武器/配件，统一纳入圈层阴影开关。
         const renderers = this.node.getComponentsInChildren(MeshRenderer);
         for (let i = 0; i < renderers.length; i++) {
             const renderer = renderers[i];
+            if (this.shadowRenderers.indexOf(renderer) >= 0) {
+                continue;
+            }
             this.shadowRenderers.push(renderer);
             this.originalShadowCastingModes.push(renderer.shadowCastingMode);
+        }
+        const stack: Node[] = [...this.node.children];
+        while (stack.length > 0) {
+            const node = stack.pop();
+            if (!node) {
+                continue;
+            }
+            const nodeRenderers = node.getComponents(MeshRenderer);
+            for (let i = 0; i < nodeRenderers.length; i++) {
+                const renderer = nodeRenderers[i];
+                if (this.shadowRenderers.indexOf(renderer) >= 0) {
+                    continue;
+                }
+                this.shadowRenderers.push(renderer);
+                this.originalShadowCastingModes.push(renderer.shadowCastingMode);
+            }
+            for (let i = 0; i < node.children.length; i++) {
+                stack.push(node.children[i]);
+            }
         }
     }
 

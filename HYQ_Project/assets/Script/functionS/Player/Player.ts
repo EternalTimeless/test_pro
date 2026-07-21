@@ -1624,6 +1624,16 @@ export class Player extends UnityUpComponent {
 
         const outerLayer = combatRoleCount > 0 ? this.getRoleLayer(combatRoleCount - 1) : 0;
         let shadowMinLayer = outerLayer;
+        if (outerLayer > 0) {
+            let rolesBeforeOuterLayer = 1;
+            for (let layer = 0; layer < outerLayer; layer++) {
+                rolesBeforeOuterLayer += this.getRoleLayerCount(layer);
+            }
+            const rolesInOuterLayer = Math.max(0, combatRoleCount - rolesBeforeOuterLayer);
+            if (rolesInOuterLayer < this.getRoleLayerCount(outerLayer)) {
+                shadowMinLayer = outerLayer - 1;
+            }
+        }
         let combatIndex = 0;
         for (let i = 0; i < this.roleList.length; i++) {
             const role = this.roleList[i];
