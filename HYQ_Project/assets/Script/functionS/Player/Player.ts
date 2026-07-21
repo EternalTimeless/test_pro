@@ -223,6 +223,7 @@ export class Player extends UnityUpComponent {
     private shrinkAnimating: boolean = false;
     private shrinkDirtyDuringAnimating: boolean = false;
     private readonly roleLayoutTweenDuration: number = 0.2;
+    private readonly roleLayoutTweens: WeakMap<Role, Tween<Node>> = new WeakMap();
     private currentTeamAnimName: PlayerFBXAnimName | null = null;
     private roleJoinLayoutRefreshScheduled: boolean = false;
 
@@ -1565,14 +1566,29 @@ export class Player extends UnityUpComponent {
             if (role.attackIN) {
                 continue;
             }
+            this.roleLayoutTweens.get(role)?.stop();
+            let layoutTween: Tween<Node>;
             if (!layoutIndex) {
-                tween(role.node).to(this.roleLayoutTweenDuration, { position: Vec3.ZERO }).start();
+                layoutTween = tween(role.node)
+                    .to(this.roleLayoutTweenDuration, { position: Vec3.ZERO })
+                    .call(() => {
+                        if (this.roleLayoutTweens.get(role) === layoutTween) {
+                            this.roleLayoutTweens.delete(role);
+                        }
+                    });
             } else {
                 const pos = this.getNextPos(layoutIndex, true);
-                tween(role.node).to(this.roleLayoutTweenDuration, { position: pos }).call(() => {
-                    PoolManager.instance.V3 = pos;
-                }).start();
+                layoutTween = tween(role.node)
+                    .to(this.roleLayoutTweenDuration, { position: pos })
+                    .call(() => {
+                        if (this.roleLayoutTweens.get(role) === layoutTween) {
+                            this.roleLayoutTweens.delete(role);
+                        }
+                        PoolManager.instance.V3 = pos;
+                    });
             }
+            this.roleLayoutTweens.set(role, layoutTween);
+            layoutTween.start();
             layoutIndex++;
         }
         this.upMoveBoundary();
