@@ -206,8 +206,6 @@ export class MonsterCreate extends UnityUpComponent {
     public rebirthMonsterRandomX: number = 0.15;
     @property({ type: CCFloat, displayName: '再来一次站位随机Z' })
     public rebirthMonsterRandomZ: number = 0.25;
-    @property({ type: CCBoolean, displayName: '再来一次距离日志' })
-    public rebirthMonsterDistanceLog: boolean = false;
     private readonly waveRolePlayerHalfX: number = 0.35;
     private readonly waveRolePlayerHalfZ: number = 0.35;
     private _isRestoringWaveRolesAfterRebirth: boolean = false;
@@ -1253,53 +1251,6 @@ export class MonsterCreate extends UnityUpComponent {
         return layout;
     }
 
-    private logRebirthFrontDistance(layout: WeakMap<MonsterBattleTaerget, Vec3>) {
-        if (!this.rebirthMonsterDistanceLog) {
-            return;
-        }
-
-        let frontMonsterWorldZ = Number.POSITIVE_INFINITY;
-        let frontMonsterName = '';
-        for (let i = 0; i < this._monsterList.length; i++) {
-            const monster = this._monsterList[i];
-            const targetPos = layout.get(monster);
-            if (!targetPos) {
-                continue;
-            }
-            const targetWorldZ = this.node.worldPositionZ + targetPos.z;
-            if (targetWorldZ < frontMonsterWorldZ) {
-                frontMonsterWorldZ = targetWorldZ;
-                frontMonsterName = monster.node?.name ?? '';
-            }
-        }
-
-        if (!Number.isFinite(frontMonsterWorldZ)) {
-            return;
-        }
-
-        let playerFrontWorldZ = Number.NEGATIVE_INFINITY;
-        let playerFrontName = '';
-        const roleList = Player.instance?.roleList ?? [];
-        for (let i = 0; i < roleList.length; i++) {
-            const role = roleList[i];
-            if (!role?.node?.activeInHierarchy) {
-                continue;
-            }
-            const roleWorldZ = role.node.worldPositionZ;
-            if (roleWorldZ > playerFrontWorldZ) {
-                playerFrontWorldZ = roleWorldZ;
-                playerFrontName = role.node.name;
-            }
-        }
-
-        const stageLineWorldZ = this.node.worldPositionZ + this.stage_1;
-        const distanceToStageLine = frontMonsterWorldZ - stageLineWorldZ;
-        const distanceToPlayerFront = Number.isFinite(playerFrontWorldZ) ? frontMonsterWorldZ - playerFrontWorldZ : Number.NaN;
-        console.log(
-            `[MonsterCreate] 再来一次距离: frontMonster=${frontMonsterName}, frontMonsterWorldZ=${frontMonsterWorldZ.toFixed(3)}, stageLineWorldZ=${stageLineWorldZ.toFixed(3)}, distanceToStageLine=${distanceToStageLine.toFixed(3)}, playerFront=${playerFrontName}, playerFrontWorldZ=${Number.isFinite(playerFrontWorldZ) ? playerFrontWorldZ.toFixed(3) : 'NaN'}, distanceToPlayerFront=${Number.isFinite(distanceToPlayerFront) ? distanceToPlayerFront.toFixed(3) : 'NaN'}`,
-        );
-    }
-
     private tryAssignMonsterAttackTarget(monster: MonsterBattleTaerget): boolean {
         if (!monster?.move || !Player.instance || Player.instance.isDie || Player.instance.roleList.length <= 0) {
             return false;
@@ -1845,7 +1796,6 @@ export class MonsterCreate extends UnityUpComponent {
         // this.isFlowIN = true;
         this._isRestoringWaveRolesAfterRebirth = true;
         const rebirthLayout = this.buildRebirthMonsterLayout();
-        this.logRebirthFrontDistance(rebirthLayout);
         this.hideWaveRolesDuringRebirth();
         for (let i = 0; i < this._monsterList.length; i++) {
             const monster = this._monsterList[i];
