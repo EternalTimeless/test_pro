@@ -60,6 +60,11 @@ export class Role extends Component {
     private shadowRenderersCached: boolean = false;
     private shadowCastingEnabled: boolean | null = null;
     private static readonly propSocketNodeName: string = 'Bip001 Prop1 Socket';
+    private readonly propSocketNodes: Node[] = [];
+    private readonly propSocketVisibleStates: boolean[] = [];
+    private readonly propSocketAncestorIndices: number[] = [];
+    private propSocketsCached: boolean = false;
+    private currentWeaponSocket: Node = null;
     private static readonly idleAnimIndex: number = 0;
 
     private static aimVector: Vec3 = new Vec3();
@@ -77,10 +82,12 @@ export class Role extends Component {
 
     protected onLoad(): void {
         this.cacheInitialArmsTransform();
+        this.cachePropSockets();
     }
 
     start() {
         this.cacheInitialArmsTransform();
+        this.cachePropSockets();
         this.fbxManager?.removeInvalidSockets();
         if (!Role.bulletLayer) {
             Role.bulletLayer = LayerManager.instance.getLayer(LayerEnum.BulletLayer);
@@ -113,7 +120,10 @@ export class Role extends Component {
         if (!this.arms) {
             return;
         }
-        const socket = this.findAncestorByName(this.arms, Role.propSocketNodeName);
+        this.cachePropSockets();
+        const socket = this.currentWeaponSocket?.isValid
+            ? this.currentWeaponSocket
+            : this.findAncestorByName(this.arms, Role.propSocketNodeName);
         if (socket) {
             socket.active = visible;
         }
@@ -205,21 +215,42 @@ export class Role extends Component {
     }
 
     private hideDetachedPropSockets(): void {
-        this.hideDetachedPropSocketsRecursively(this.node);
+        this.cachePropSockets();
+        for (let i = 0; i < this.propSocketNodes.length; i++) {
+            const socket = this.propSocketNodes[i];
+            if (!socket?.isValid) {
+                continue;
+            }
+            const ancestorIndex = this.propSocketAncestorIndices[i];
+            if (ancestorIndex >= 0 && !this.propSocketNodes[ancestorIndex]?.active) {
+                continue;
+            }
+            socket.active = this.propSocketVisibleStates[i];
+        }
     }
 
-    private hideDetachedPropSocketsRecursively(node: Node): void {
+    private cachePropSockets(): void {
+        if (this.propSocketsCached || !this.node || !this.arms || !this.shoot) {
+            return;
+        }
+        this.propSocketsCached = true;
+        this.currentWeaponSocket = this.findAncestorByName(this.arms, Role.propSocketNodeName);
+        this.collectPropSockets(this.node, -1);
+    }
+
+    private collectPropSockets(node: Node, ancestorSocketIndex: number): void {
         if (!node) {
             return;
         }
+        let currentAncestorIndex = ancestorSocketIndex;
         if (node.name === Role.propSocketNodeName) {
-            node.active = this.isCurrentWeaponSocket(node);
-            if (!node.active) {
-                return;
-            }
+            currentAncestorIndex = this.propSocketNodes.length;
+            this.propSocketNodes.push(node);
+            this.propSocketVisibleStates.push(this.isCurrentWeaponSocket(node));
+            this.propSocketAncestorIndices.push(ancestorSocketIndex);
         }
         for (let i = 0; i < node.children.length; i++) {
-            this.hideDetachedPropSocketsRecursively(node.children[i]);
+            this.collectPropSockets(node.children[i], currentAncestorIndex);
         }
     }
 

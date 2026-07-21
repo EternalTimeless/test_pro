@@ -196,6 +196,24 @@ export class Player extends UnityUpComponent {
     private readonly cachedShootingRoleActive: boolean[] = [];
     private readonly cachedShootingRoleX: number[] = [];
     private readonly cachedShootingRoleZ: number[] = [];
+    private frontShootingRoleCacheDirty: boolean = true;
+    private frontShootingRoleCacheDynamicUntil: number = -1;
+    private readonly cachedFormationRotation: Quat = new Quat();
+    private readonly cachedFormationScale: Vec3 = new Vec3();
+    private hasCachedFormationTransform: boolean = false;
+    private readonly cachedRoleLayers: number[] = [];
+    private cachedRoleLayerMaxCount: number = -1;
+    private cachedRoleLayerFormationCount: number = -1;
+    private monsterTargetCacheFrame: number = -1;
+    private monsterTargetCacheDirty: boolean = true;
+    private readonly cachedMonsterRoleValid: boolean[] = [];
+    private readonly cachedMonsterRoleAttackZ: number[] = [];
+    private readonly cachedMonsterRoleBodyZ: number[] = [];
+    private readonly cachedMonsterRearRoleIndices: number[] = [];
+    private readonly cachedSmallMonsterFrontRoleIndices: number[] = [];
+    private readonly hitDistances: number[] = [];
+    private readonly hitPickedIndices: number[] = [];
+    private readonly hitUsedIndices: boolean[] = [];
     private staggerShotClock: number = 0;
     private pendingStaggerShots: PendingRoleShot[] = [];
     private continuousShotAccumulator: number = 0;
@@ -259,6 +277,7 @@ export class Player extends UnityUpComponent {
             this.getEffectiveMaxRoleCount(),
             Math.max(1, this.roleList.length),
         );
+        this.invalidateRoleFormationCaches();
         this.upMoveBoundary();
     }
 
@@ -564,12 +583,50 @@ export class Player extends UnityUpComponent {
         }
     }
 
+    private invalidateRoleFormationCaches(): void {
+        this.frontShootingRoleCacheDirty = true;
+        this.monsterTargetCacheDirty = true;
+    }
+
+    private markRoleFormationAnimating(duration: number): void {
+        this.invalidateRoleFormationCaches();
+        this.frontShootingRoleCacheDynamicUntil = Math.max(
+            this.frontShootingRoleCacheDynamicUntil,
+            this.staggerShotClock + Math.max(0, duration) + 0.05,
+        );
+    }
+
+    private refreshFormationTransformState(): void {
+        const rotation = this.node.worldRotation;
+        const scale = this.node.worldScale;
+        if (!this.hasCachedFormationTransform
+            || this.cachedFormationRotation.x !== rotation.x
+            || this.cachedFormationRotation.y !== rotation.y
+            || this.cachedFormationRotation.z !== rotation.z
+            || this.cachedFormationRotation.w !== rotation.w
+            || this.cachedFormationScale.x !== scale.x
+            || this.cachedFormationScale.y !== scale.y
+            || this.cachedFormationScale.z !== scale.z) {
+            Quat.copy(this.cachedFormationRotation, rotation);
+            this.cachedFormationScale.set(scale);
+            this.hasCachedFormationTransform = true;
+            this.invalidateRoleFormationCaches();
+        }
+    }
+
     private refreshFrontShootingRoleCache(): void {
+        this.refreshFormationTransformState();
         const roleCount = this.roleList.length;
+        const isFormationAnimating = this.staggerShotClock <= this.frontShootingRoleCacheDynamicUntil;
+        if (!this.frontShootingRoleCacheDirty
+            && !isFormationAnimating
+            && this.cachedShootingRoles.length === roleCount) {
+            return;
+        }
+
         const centerPos = this.node.worldPosition;
         const centerX = centerPos.x;
         const centerZ = centerPos.z;
-        let dirty = this.cachedShootingRoles.length !== roleCount;
         for (let roleIndex = 0; roleIndex < roleCount; roleIndex++) {
             const role = this.roleList[roleIndex];
             const active = !!role?.node?.isValid && role.node.activeInHierarchy;
@@ -580,12 +637,6 @@ export class Player extends UnityUpComponent {
                 relativeX = rolePos.x - centerX;
                 relativeZ = rolePos.z - centerZ;
             }
-            if (this.cachedShootingRoles[roleIndex] !== role
-                || this.cachedShootingRoleActive[roleIndex] !== active
-                || this.cachedShootingRoleX[roleIndex] !== relativeX
-                || this.cachedShootingRoleZ[roleIndex] !== relativeZ) {
-                dirty = true;
-            }
             this.cachedShootingRoles[roleIndex] = role;
             this.cachedShootingRoleActive[roleIndex] = active;
             this.cachedShootingRoleX[roleIndex] = relativeX;
@@ -595,9 +646,6 @@ export class Player extends UnityUpComponent {
         this.cachedShootingRoleActive.length = roleCount;
         this.cachedShootingRoleX.length = roleCount;
         this.cachedShootingRoleZ.length = roleCount;
-        if (!dirty) {
-            return;
-        }
 
         this.sortedFrontShootingRoleIndices.length = 0;
         for (let roleIndex = 0; roleIndex < roleCount; roleIndex++) {
@@ -613,6 +661,7 @@ export class Player extends UnityUpComponent {
             }
             this.sortedFrontShootingRoleIndices.splice(insertAt, 0, roleIndex);
         }
+        this.frontShootingRoleCacheDirty = isFormationAnimating;
     }
 
     private isCachedRoleMoreFrontAndCentered(roleIndex: number, otherRoleIndex: number): boolean {
@@ -652,6 +701,31 @@ export class Player extends UnityUpComponent {
     }
 
     private getRoleLayer(index: number): number {
+        this.ensureRoleLayerCache();
+        const safeIndex = Math.max(0, Math.floor(index));
+        if (safeIndex < this.cachedRoleLayers.length) {
+            return this.cachedRoleLayers[safeIndex];
+        }
+        return this.calculateRoleLayer(safeIndex);
+    }
+
+    private ensureRoleLayerCache(): void {
+        const maxCount = Math.max(1, Math.floor(this.maxRoleCount));
+        const formationCount = Math.max(1, Math.floor(this.formationLayerCount));
+        if (this.cachedRoleLayerMaxCount === maxCount
+            && this.cachedRoleLayerFormationCount === formationCount) {
+            return;
+        }
+
+        this.cachedRoleLayerMaxCount = maxCount;
+        this.cachedRoleLayerFormationCount = formationCount;
+        this.cachedRoleLayers.length = maxCount;
+        for (let i = 0; i < maxCount; i++) {
+            this.cachedRoleLayers[i] = this.calculateRoleLayer(i);
+        }
+    }
+
+    private calculateRoleLayer(index: number): number {
         if (index <= 0) {
             return 0;
         }
@@ -1051,6 +1125,7 @@ export class Player extends UnityUpComponent {
         }
 
         if (didSwitch) {
+            this.invalidateRoleFormationCaches();
             this.refreshRoleShadowCasting();
         }
 
@@ -1118,6 +1193,7 @@ export class Player extends UnityUpComponent {
         }
         role.attackIN = attackIn;
         this.roleList.push(role);
+        this.invalidateRoleFormationCaches();
         this.curCount = Math.min(this.getEffectiveMaxRoleCount(), this.curCount + 1);
         this.syncRoleAnimationToTeam(role);
         if (refreshShadow) {
@@ -1300,43 +1376,72 @@ export class Player extends UnityUpComponent {
         return role;
     }
 
+    private refreshMonsterTargetFormationCache(): void {
+        const frame = director.getTotalFrames();
+        if (!this.monsterTargetCacheDirty && this.monsterTargetCacheFrame === frame) {
+            return;
+        }
+
+        this.monsterTargetCacheDirty = false;
+        this.monsterTargetCacheFrame = frame;
+        this.cachedMonsterRearRoleIndices.length = 0;
+        this.cachedSmallMonsterFrontRoleIndices.length = 0;
+
+        const roleCount = this.roleList.length;
+        let attackRearZ = Number.POSITIVE_INFINITY;
+        let bodyFrontZ = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < roleCount; i++) {
+            const role = this.roleList[i];
+            const valid = this.isValidMonsterTargetRole(role);
+            this.cachedMonsterRoleValid[i] = valid;
+            if (!valid) {
+                this.cachedMonsterRoleAttackZ[i] = Number.NaN;
+                this.cachedMonsterRoleBodyZ[i] = Number.NaN;
+                continue;
+            }
+
+            const roleAttackZ = this.getRoleAttackWorldZ(role);
+            const roleBodyZ = role.node.worldPosition.z;
+            this.cachedMonsterRoleAttackZ[i] = roleAttackZ;
+            this.cachedMonsterRoleBodyZ[i] = roleBodyZ;
+            attackRearZ = Math.min(attackRearZ, roleAttackZ);
+            bodyFrontZ = Math.max(bodyFrontZ, roleBodyZ);
+        }
+        this.cachedMonsterRoleValid.length = roleCount;
+        this.cachedMonsterRoleAttackZ.length = roleCount;
+        this.cachedMonsterRoleBodyZ.length = roleCount;
+
+        const zTolerance = Math.max(0.05, this.roleR * 0.35);
+        for (let i = 0; i < roleCount; i++) {
+            if (!this.cachedMonsterRoleValid[i]) {
+                continue;
+            }
+            if (Number.isFinite(attackRearZ)
+                && Math.abs(this.cachedMonsterRoleAttackZ[i] - attackRearZ) <= zTolerance) {
+                this.cachedMonsterRearRoleIndices.push(i);
+            }
+            if (Number.isFinite(bodyFrontZ)
+                && Math.abs(this.cachedMonsterRoleBodyZ[i] - bodyFrontZ) <= zTolerance) {
+                this.cachedSmallMonsterFrontRoleIndices.push(i);
+            }
+        }
+    }
+
     public getMonsterAttackTarget(monsterWorldPos: Vec3): Role | null {
         if (this.isDie || !this.roleList.length) {
             return null;
         }
 
-        let attackRearZ = Number.POSITIVE_INFINITY;
-        for (let i = 0; i < this.roleList.length; i++) {
-            const role = this.roleList[i];
-            if (!this.isValidMonsterTargetRole(role)) {
-                continue;
-            }
-            const roleAttackZ = this.getRoleAttackWorldZ(role);
-            if (roleAttackZ < attackRearZ) {
-                attackRearZ = roleAttackZ;
-            }
-        }
-
-        if (!Number.isFinite(attackRearZ)) {
-            return null;
-        }
-
+        this.refreshMonsterTargetFormationCache();
         let bestRole: Role = null;
         let bestXDistance = Number.POSITIVE_INFINITY;
         let bestLayer = -1;
-        const zTolerance = Math.max(0.05, this.roleR * 0.35);
         const targetX = monsterWorldPos?.x ?? this.node.worldPosition.x;
-        for (let i = 0; i < this.roleList.length; i++) {
-            const role = this.roleList[i];
-            if (!this.isValidMonsterTargetRole(role)) {
-                continue;
-            }
-            const roleAttackZ = this.getRoleAttackWorldZ(role);
-            if (Math.abs(roleAttackZ - attackRearZ) > zTolerance) {
-                continue;
-            }
+        for (let i = 0; i < this.cachedMonsterRearRoleIndices.length; i++) {
+            const roleIndex = this.cachedMonsterRearRoleIndices[i];
+            const role = this.roleList[roleIndex];
             const xDistance = Math.abs(role.node.worldPosition.x - targetX);
-            const layer = this.getRoleLayer(i);
+            const layer = this.getRoleLayer(roleIndex);
             if (xDistance < bestXDistance || (Math.abs(xDistance - bestXDistance) <= 0.001 && layer > bestLayer)) {
                 bestRole = role;
                 bestXDistance = xDistance;
@@ -1352,27 +1457,13 @@ export class Player extends UnityUpComponent {
             return null;
         }
 
-        let frontZ = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < this.roleList.length; i++) {
-            const role = this.roleList[i];
-            if (this.isValidMonsterTargetRole(role)) {
-                frontZ = Math.max(frontZ, role.node.worldPosition.z);
-            }
-        }
-        if (!Number.isFinite(frontZ)) {
-            return null;
-        }
-
+        this.refreshMonsterTargetFormationCache();
         let bestRole: Role = null;
         let bestXDistance = Number.POSITIVE_INFINITY;
-        const zTolerance = Math.max(0.05, this.roleR * 0.35);
         const targetX = monsterWorldPos?.x ?? this.node.worldPosition.x;
-        for (let i = 0; i < this.roleList.length; i++) {
-            const role = this.roleList[i];
-            if (!this.isValidMonsterTargetRole(role)
-                || Math.abs(role.node.worldPosition.z - frontZ) > zTolerance) {
-                continue;
-            }
+        for (let i = 0; i < this.cachedSmallMonsterFrontRoleIndices.length; i++) {
+            const roleIndex = this.cachedSmallMonsterFrontRoleIndices[i];
+            const role = this.roleList[roleIndex];
             const xDistance = Math.abs(role.node.worldPosition.x - targetX);
             if (xDistance < bestXDistance) {
                 bestRole = role;
@@ -1399,6 +1490,7 @@ export class Player extends UnityUpComponent {
         if (this.isDie) {
             return;
         }
+        this.invalidateRoleFormationCaches();
         this.recycleInactiveRoles();
         this.recycleOverflowRoles();
         this.refreshRoleShadowCasting();
@@ -1466,6 +1558,7 @@ export class Player extends UnityUpComponent {
             this.shrinkDirtyDuringAnimating = false;
         }
 
+        this.markRoleFormationAnimating(this.roleLayoutTweenDuration);
         let layoutIndex = 0;
         for (let i = 0; i < this.roleList.length; i++) {
             const role = this.roleList[i];
@@ -1542,22 +1635,29 @@ export class Player extends UnityUpComponent {
     }
 
     private recycleInactiveRoles(): void {
+        let changed = false;
         for (let i = this.roleList.length - 1; i >= 0; i--) {
             const role = this.roleList[i];
             if (!role || !role.node.active) {
                 this.roleList.splice(i, 1);
+                changed = true;
                 if (role) {
                     PoolManager.instance.setPool(PoolEnum.role + role.type, role);
                 }
             }
         }
+        if (changed) {
+            this.invalidateRoleFormationCaches();
+        }
     }
 
     private recycleOverflowRoles(): void {
         const maxCount = this.getEffectiveMaxRoleCount();
+        let changed = false;
         for (let i = this.roleList.length - 1; i >= maxCount; i--) {
             const role = this.roleList[i];
             this.roleList.splice(i, 1);
+            changed = true;
             if (!role) {
                 continue;
             }
@@ -1568,9 +1668,13 @@ export class Player extends UnityUpComponent {
             role.node.active = false;
             PoolManager.instance.setPool(PoolEnum.role + role.type, role);
         }
+        if (changed) {
+            this.invalidateRoleFormationCaches();
+        }
     }
 
     private recyclePendingAttackRoles(): void {
+        let changed = false;
         for (let i = this.roleList.length - 1; i >= 0; i--) {
             const role = this.roleList[i];
             if (!role || !role.attackIN) {
@@ -1582,7 +1686,11 @@ export class Player extends UnityUpComponent {
             }
             role.node.active = false;
             this.roleList.splice(i, 1);
+            changed = true;
             PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+        }
+        if (changed) {
+            this.invalidateRoleFormationCaches();
         }
     }
 
@@ -1603,8 +1711,14 @@ export class Player extends UnityUpComponent {
         const total = list.length;
         let candidateCount = 0;
         // 预分配距离数组，避免临时对象
-        const dists: number[] = [];
+        const dists = this.hitDistances;
+        const picked = this.hitPickedIndices;
+        const used = this.hitUsedIndices;
+        dists.length = total;
+        used.length = total;
+        picked.length = 0;
         for (let i = 0; i < total; i++) {
+            used[i] = false;
             if (list[i].attackIN) {
                 dists[i] = Number.MAX_VALUE;
                 continue;
@@ -1620,8 +1734,6 @@ export class Player extends UnityUpComponent {
         if (len <= 0) {
             return;
         }
-        const picked: number[] = [];
-        const used: boolean[] = [];
         for (let n = 0; n < len; n++) {
             let minIdx = -1;
             let minDist = 0;
@@ -1636,7 +1748,7 @@ export class Player extends UnityUpComponent {
             if (minIdx < 0) {
                 break;
             }
-            picked[n] = minIdx;
+            picked.push(minIdx);
             used[minIdx] = true;
         }
         // 从后往前删除，保证索引不错位
@@ -1727,6 +1839,7 @@ export class Player extends UnityUpComponent {
     private clearRolesForRetry(): void {
         this.cancelDelayedShrink();
         this.pendingAddRoleCount = 0;
+        this.invalidateRoleFormationCaches();
         if (!this.roleList?.length) {
             return;
         }
