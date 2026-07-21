@@ -908,7 +908,10 @@ export class MonsterCreate extends UnityUpComponent {
 
             const monster = this._monsterList[i];
             if (monster?.move) {
-                monster.move.speed = Math.max(0, this.monsterSpeed);
+                const moveSpeed = Math.max(0, this.monsterSpeed);
+                if (monster.move.speed !== moveSpeed) {
+                    monster.move.speed = moveSpeed;
+                }
                 if (this.enableManagedMonsterMovement && monster.move.enabled) {
                     monster.move.enabled = false;
                 } else if (!this.enableManagedMonsterMovement && !monster.move.enabled) {
@@ -957,7 +960,9 @@ export class MonsterCreate extends UnityUpComponent {
             if (!this._isRestoringWaveRolesAfterRebirth) {
                 this.clampMonsterBehindWaveRole(monster);
             }
-            this.limitMonsterToMiddleLane(monster);
+            if (!this.enableManagedMonsterMovement) {
+                this.limitMonsterToMiddleLane(monster);
+            }
         }
 
         if (MonsterCreate.isStartMove) {

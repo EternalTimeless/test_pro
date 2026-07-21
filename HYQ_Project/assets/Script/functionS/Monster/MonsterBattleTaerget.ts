@@ -685,8 +685,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         if (this.isDie) {
             return;
         }
-        this.updateVisualLod();
-        this.updateRunAnimationLod();
+        const isOptimizationScene = this.isOptimizationScene();
+        this.updateVisualLod(isOptimizationScene);
+        this.updateRunAnimationLod(isOptimizationScene);
         if (this.monsterType == MonsterType.ZombieBrother) {
             this.fixBossHpLabel();
         }
@@ -1063,8 +1064,8 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         this.shadowsEnabled = true;
     }
 
-    private updateVisualLod(): void {
-        if (!this.isOptimizationScene() || this.monsterType === MonsterType.ZombieBrother) {
+    private updateVisualLod(isOptimizationScene: boolean): void {
+        if (!isOptimizationScene || this.monsterType === MonsterType.ZombieBrother) {
             this.animationVisible = true;
             this.setVisualRenderersEnabled(true);
             this.setVisualShadowsEnabled(true);
@@ -1127,9 +1128,9 @@ export class MonsterBattleTaerget extends BattleTarget3D {
         }
     }
 
-    private updateRunAnimationLod(): void {
+    private updateRunAnimationLod(isOptimizationScene: boolean): void {
         const isRunAnimation = !!this.fbx?.isCurAnimation(MonsterAnimEnum.run);
-        if (!this.enableAnimationLod || !this.isOptimizationScene()
+        if (!this.enableAnimationLod || !isOptimizationScene
             || this.monsterType === MonsterType.ZombieBrother || this.attackIn
             || !isRunAnimation) {
             if (isRunAnimation) {
