@@ -14531,9 +14531,9 @@
     "staggerShotWindowRatio": 0.85,
     "defaultWeaponConfigIndex": 3,
     "enableRuntimeUpgradePrewarm": true,
-    "rolePrewarmPerFrame": 2,
+    "rolePrewarmPerFrame": 1,
     "roleSwitchPerFrame": 2,
-    "maxRoleShotsPerFrame": 10,
+    "maxRoleShotsPerFrame": 8,
     "weaponBulletConfigList": [
       {
         "__id__": 887
