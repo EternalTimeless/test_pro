@@ -553,7 +553,7 @@
     "visibilityCheckFrameInterval": 8,
     "enableRenderCulling": true,
     "renderCullPaddingPixels": 80,
-    "enableShadowLod": true,
+    "enableShadowLod": false,
     "shadowLodDistance": 24,
     "targetRefreshFrameInterval": 4,
     "meshFlashDataList_Die": [
@@ -594,7 +594,7 @@
     },
     "smallMonsterDeathThrowHeight": 2,
     "smallMonsterDeathThrowDistanceZ": 6,
-    "smallMonsterDeathThrowDurationRate": 0.8,
+    "smallMonsterDeathThrowDurationRate": 0.5,
     "_id": ""
   },
   {

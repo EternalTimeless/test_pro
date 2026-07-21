@@ -12996,7 +12996,7 @@
     "__type__": "MonsterCreateInfo",
     "loopMax": 1,
     "monsterType": 0,
-    "mixBaby01": false,
+    "mixBaby01": true,
     "baby1Ratio": 0.5,
     "monsterCountMax": 80,
     "actualSpawnCount": 40,

@@ -363,13 +363,13 @@ export class MonsterBattleTaerget extends BattleTarget3D {
 
         let endtime = 0;
         if (!this.isDieD) {
-            const t = this.fbx.setAnimation(MonsterAnimEnum.die2, true);
+            const t = this.fbx.setAnimation(MonsterAnimEnum.die2, false);
             const scale = 0.3 + Math.random() * 0.5;
             t.speed = scale;
             endtime = t.duration * (1 / scale);
 
         } else {
-            const t = this.fbx.setAnimation(MonsterAnimEnum.die, true);
+            const t = this.fbx.setAnimation(MonsterAnimEnum.die, false);
 
             endtime = t.duration;
             this.playSmallMonsterDeathThrow(endtime);
