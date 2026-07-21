@@ -133,6 +133,7 @@ export class CreatePropBrand extends UnityUpComponent {
             p.node.x = 0;
             p.node.y = this.getSpawnHeight();
             p.node.z = startZ + i * this.distance;
+            p.mergeModelRenderers(String(this.type));
             this.bindPropBrandVisuals(p);
         }
         this.refreshFrontBulletTarget();
@@ -231,6 +232,7 @@ export class CreatePropBrand extends UnityUpComponent {
             p.node.x = 0;
             p.node.y = this.getSpawnHeight();
             p.node.z = appendStartZ + i * this.distance;
+            p.mergeModelRenderers(String(this.type));
             this.bindPropBrandVisuals(p);
             this.propBrandList.push(p);
         }
