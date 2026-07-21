@@ -248,6 +248,8 @@ export class PropLalianGate extends BattleTarget3D {
     private toothIndex: number = 0;
     private pairIndex: number = 0;
     private pairCount: number = 0;
+    /** 上一次整体推进所在的齿对，用于只刷新可能发生变化的连续区间。 */
+    private lastSmoothCurrentPairIndex: number = -1;
     private stepHitCount: number = 0;
     private smoothHitCount: number = 0;
     private cubeStartScale: Vec3 = new Vec3(1, 1, 1);
@@ -295,6 +297,9 @@ export class PropLalianGate extends BattleTarget3D {
     public get hitNode() {
         return this.cube ?? super.hitNode;
     }
+
+    /** 拉链滑块在同一碰撞帧内只有平移，复用该帧的 AABB 结果。 */
+    public readonly cacheCollisionBoundsPerFrame: boolean = true;
 
     public getCollisionWorldPosition(out: Vec3 = this.tempCollisionWorldPos): Vec3 {
         this.refreshCollisionSizeFromBounds();
@@ -551,6 +556,7 @@ export class PropLalianGate extends BattleTarget3D {
         this.toothIndex = 0;
         this.pairIndex = 0;
         this.pairCount = 0;
+        this.lastSmoothCurrentPairIndex = -1;
         this.stepHitCount = 0;
         this.smoothHitCount = 0;
         this.pullRingLoopStepIndex = 0;
@@ -713,7 +719,17 @@ export class PropLalianGate extends BattleTarget3D {
         const pairT = clampedProgress >= 1 ? 1 : this.getClampedProgress(wholePairProgress - currentPairIndex);
         const nextProgress = this.getClampedProgress(this.nextPairInitialProgress);
         const nextNextProgress = this.getClampedProgress(this.nextNextPairInitialProgress);
-        for (let i = 0; i < this.pairCount; i++) {
+        const previousCurrentPairIndex = this.lastSmoothCurrentPairIndex;
+        const updateStartPairIndex = previousCurrentPairIndex < 0
+            ? 0
+            : Math.max(0, Math.min(previousCurrentPairIndex, currentPairIndex));
+        const updateEndPairIndex = Math.min(
+            this.pairCount - 1,
+            Math.max(previousCurrentPairIndex, currentPairIndex) + 2,
+        );
+
+        // 只有当前齿对及其后两对会连续推进；跨段时补齐中间齿对，其他齿保持原状态。
+        for (let i = updateStartPairIndex; i <= updateEndPairIndex; i++) {
             let pairProgress = 0;
             if (clampedProgress >= 1 || i < currentPairIndex) {
                 pairProgress = 1;
@@ -726,9 +742,13 @@ export class PropLalianGate extends BattleTarget3D {
             }
             const clampedPairProgress = this.getClampedProgress(pairProgress);
             const previousPairProgress = this.pairProgressList[i] ?? 0;
+            if (clampedPairProgress === previousPairProgress) {
+                continue;
+            }
             const shouldTweenPair = useTween && clampedPairProgress > previousPairProgress + 0.0001;
             this.applyPairProgress(i, clampedPairProgress, shouldTweenPair, duration);
         }
+        this.lastSmoothCurrentPairIndex = currentPairIndex;
         this.pairIndex = Math.max(0, Math.min(this.pairCount - 1, Math.floor(wholePairProgress)));
         this.toothIndex = this.getPairStartToothIndex(this.pairIndex);
     }
