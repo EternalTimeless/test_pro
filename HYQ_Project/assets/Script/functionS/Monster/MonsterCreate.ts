@@ -1409,7 +1409,7 @@ export class MonsterCreate extends UnityUpComponent {
 
         tempV3.set(monster.node.worldPosition);
         tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
-        tempV3.z = this.stage_0;
+        tempV3.z = worldZ > this.stage_0 ? this.stage_0 : this.stage_1;
         monster.move.pos = tempV3;
         this.registerMonsterRebirthLayoutData(monster, waveIndex, this.getSpawnX(baseRawX), baseLocalZ);
         return z > rawZ ? z : baseNextSpawnZ;
@@ -1585,7 +1585,7 @@ export class MonsterCreate extends UnityUpComponent {
         this.applySpawnVariation(monster);
         tempV3.set(monster.node.worldPosition);
         tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
-        tempV3.z = this.stage_0;
+        tempV3.z = worldZ > this.stage_0 ? this.stage_0 : this.stage_1;
         monster.move.pos = tempV3;
         this.registerMonsterRebirthLayoutData(monster, waveIndex, this.getSpawnX(0), baseLocalZ);
         // this._brotherZPositions.push(z);
@@ -1644,7 +1644,7 @@ export class MonsterCreate extends UnityUpComponent {
         tempV3.set(monster.node.worldPosition);
 
         tempV3.x = this.getMonsterMoveTargetX(monster, worldZ);
-        tempV3.z = this.stage_0;
+        tempV3.z = worldZ > this.stage_0 ? this.stage_0 : this.stage_1;
 
         monster.move.pos = tempV3;
         this.registerMonsterRebirthLayoutData(monster, waveIndex, this.getSpawnX(baseRawX), baseLocalZ);
