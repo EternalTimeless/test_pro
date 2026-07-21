@@ -14594,7 +14594,7 @@
     "bulletPower": 2.5,
     "bulletType": 3,
     "shotsPerSecond": 9,
-    "shootingRoleLimit": 36,
+    "shootingRoleLimit": 32,
     "bulletsPerRoleLimit": 1,
     "continuousFire": true,
     "randomizeShotOrder": true,
