@@ -546,9 +546,9 @@
       "__uuid__": "991d4abd-74e7-4fd3-ae59-7c26c0a7bb84@73b7f",
       "__expectedType__": "cc.AnimationClip"
     },
-    "smallMonsterDeathThrowHeight": 1,
+    "smallMonsterDeathThrowHeight": 2,
     "smallMonsterDeathThrowDistanceZ": 6,
-    "smallMonsterDeathThrowDurationRate": 0.5,
+    "smallMonsterDeathThrowDurationRate": 0.8,
     "_id": ""
   },
   {
