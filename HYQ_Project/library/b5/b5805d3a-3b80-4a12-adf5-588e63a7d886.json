@@ -11521,38 +11521,21 @@
     "moveCount": 0,
     "hitAnimTime": 0.3,
     "cubeHideTime": 0.08,
-    "enableFinishLightCurtain": true,
-    "finishLightCurtainDuration": 1.2,
-    "finishLightCurtainColor": {
-      "__type__": "cc.Color",
-      "r": 30,
-      "g": 185,
-      "b": 255,
-      "a": 193
+    "enableFinishEffect": true,
+    "finishEffectPrefab": null,
+    "finishEffectDuration": 1.2,
+    "finishEffectReferenceWidth": 1,
+    "finishEffectReferenceHeight": 1,
+    "finishEffectReferenceLength": 1,
+    "finishEffectTargetHeight": 3.2,
+    "finishEffectWidthPadding": 0.65,
+    "finishEffectLengthPadding": 0.4,
+    "finishEffectLocalOffset": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
-    "finishLightCurtainOuterColor": {
-      "__type__": "cc.Color",
-      "r": 20,
-      "g": 80,
-      "b": 255,
-      "a": 115
-    },
-    "finishLightCurtainHighlightColor": {
-      "__type__": "cc.Color",
-      "r": 185,
-      "g": 245,
-      "b": 255,
-      "a": 210
-    },
-    "finishLightCurtainThickness": 0.12,
-    "finishLightCurtainDensity": 0.9,
-    "finishLightCurtainWidthPadding": 1.5,
-    "finishLightCurtainHeight": 3.2,
-    "finishLightCurtainGroundOffset": 0.05,
-    "finishLightBandCount": 6,
-    "finishLightBandSpeed": 2.8,
-    "finishLightParticleCount": 12,
-    "finishLightStreakCount": 5,
     "finishAudioClip": {
       "__uuid__": "e8305cd2-ff6f-4d66-87b6-d20ad664cf8d",
       "__expectedType__": "cc.AudioClip"
@@ -12589,38 +12572,21 @@
     "moveCount": 0,
     "hitAnimTime": 0.12,
     "cubeHideTime": 0.08,
-    "enableFinishLightCurtain": true,
-    "finishLightCurtainDuration": 1.2,
-    "finishLightCurtainColor": {
-      "__type__": "cc.Color",
-      "r": 30,
-      "g": 185,
-      "b": 255,
-      "a": 150
+    "enableFinishEffect": true,
+    "finishEffectPrefab": null,
+    "finishEffectDuration": 1.2,
+    "finishEffectReferenceWidth": 1,
+    "finishEffectReferenceHeight": 1,
+    "finishEffectReferenceLength": 1,
+    "finishEffectTargetHeight": 3.2,
+    "finishEffectWidthPadding": 0.65,
+    "finishEffectLengthPadding": 0.4,
+    "finishEffectLocalOffset": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
-    "finishLightCurtainOuterColor": {
-      "__type__": "cc.Color",
-      "r": 20,
-      "g": 80,
-      "b": 255,
-      "a": 115
-    },
-    "finishLightCurtainHighlightColor": {
-      "__type__": "cc.Color",
-      "r": 185,
-      "g": 245,
-      "b": 255,
-      "a": 210
-    },
-    "finishLightCurtainThickness": 0.12,
-    "finishLightCurtainDensity": 0.9,
-    "finishLightCurtainWidthPadding": 0.65,
-    "finishLightCurtainHeight": 3.2,
-    "finishLightCurtainGroundOffset": 0.05,
-    "finishLightBandCount": 6,
-    "finishLightBandSpeed": 2.8,
-    "finishLightParticleCount": 12,
-    "finishLightStreakCount": 5,
     "finishAudioClip": null,
     "finishAudioVolume": 0.8,
     "keepSliderZOffset": true,
@@ -12776,38 +12742,21 @@
     "moveCount": 0,
     "hitAnimTime": 0.1,
     "cubeHideTime": 0.08,
-    "enableFinishLightCurtain": true,
-    "finishLightCurtainDuration": 1.2,
-    "finishLightCurtainColor": {
-      "__type__": "cc.Color",
-      "r": 30,
-      "g": 185,
-      "b": 255,
-      "a": 150
+    "enableFinishEffect": true,
+    "finishEffectPrefab": null,
+    "finishEffectDuration": 1.2,
+    "finishEffectReferenceWidth": 1,
+    "finishEffectReferenceHeight": 1,
+    "finishEffectReferenceLength": 1,
+    "finishEffectTargetHeight": 3.2,
+    "finishEffectWidthPadding": 0.65,
+    "finishEffectLengthPadding": 0.4,
+    "finishEffectLocalOffset": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
-    "finishLightCurtainOuterColor": {
-      "__type__": "cc.Color",
-      "r": 20,
-      "g": 80,
-      "b": 255,
-      "a": 115
-    },
-    "finishLightCurtainHighlightColor": {
-      "__type__": "cc.Color",
-      "r": 185,
-      "g": 245,
-      "b": 255,
-      "a": 210
-    },
-    "finishLightCurtainThickness": 0.12,
-    "finishLightCurtainDensity": 0.9,
-    "finishLightCurtainWidthPadding": 0.65,
-    "finishLightCurtainHeight": 3.2,
-    "finishLightCurtainGroundOffset": 0.05,
-    "finishLightBandCount": 6,
-    "finishLightBandSpeed": 2.8,
-    "finishLightParticleCount": 12,
-    "finishLightStreakCount": 5,
     "finishAudioClip": {
       "__uuid__": "e8305cd2-ff6f-4d66-87b6-d20ad664cf8d",
       "__expectedType__": "cc.AudioClip"
@@ -14610,6 +14559,27 @@
     "player": {
       "__id__": 886
     },
+    "dazhuangPickupZoomShake": 1.1,
+    "dazhuangPickupPositionShake": 3.5,
+    "dazhuangPickupEffectScale": 4,
+    "dazhuangGhostRoleCount": 8,
+    "dazhuangAttackText": "ATK +150%",
+    "dazhuangAttackTextHeight": 4.8,
+    "dazhuangAttackTextDuration": 1.15,
+    "dazhuangAttackTextColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 202,
+      "b": 0,
+      "a": 255
+    },
+    "dazhuangAttackOutlineColor": {
+      "__type__": "cc.Color",
+      "r": 58,
+      "g": 36,
+      "b": 2,
+      "a": 255
+    },
     "_id": "ceoglaxE9MfoQoGGrRlBxr"
   },
   {
@@ -14640,7 +14610,7 @@
     "staggerShotWindowRatio": 0.85,
     "defaultWeaponConfigIndex": 3,
     "enableRuntimeUpgradePrewarm": true,
-    "rolePrewarmPerFrame": 1,
+    "rolePrewarmPerFrame": 3,
     "roleSwitchPerFrame": 2,
     "maxRoleShotsPerFrame": 8,
     "weaponBulletConfigList": [
@@ -19838,7 +19808,7 @@
     "enableStartGuide": true,
     "startGuideReachX": 0.35,
     "enableFirstOilGuide": true,
-    "firstOilGuideTriggerDistance": 45,
+    "firstOilGuideTriggerDistance": 50,
     "firstOilGuideAlignRange": 2.5,
     "firstOilGuideMarkerHeight": 4.5,
     "firstOilGuideMarkerScale": 1.5,

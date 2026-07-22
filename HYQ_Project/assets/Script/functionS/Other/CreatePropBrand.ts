@@ -21,6 +21,8 @@ type LalianDoneInfo = {
 @ccclass('CreatePropBrand')
 export class CreatePropBrand extends UnityUpComponent {
 
+    private static feedbackHost: CreatePropBrand = null;
+
     @property({ type: CCInteger, displayName: '展示数量', tooltip: '开局先摆出来的 +1/+99 道具数量，只影响初始队列长度。' })
     public showCount: number = 15;
 
@@ -122,6 +124,9 @@ export class CreatePropBrand extends UnityUpComponent {
     }
 
     start() {
+        if (!CreatePropBrand.feedbackHost?.node?.isValid) {
+            CreatePropBrand.feedbackHost = this;
+        }
         const startZ = this.activePropStartZ;
         this.ensureVisualGroups();
         this.refreshGroundHeight();
@@ -454,7 +459,17 @@ export class CreatePropBrand extends UnityUpComponent {
         propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
     }
 
-    private showFloatingFeedback(propBrand: PropBrand, text: string, worldPos: Vec3, color: Color | null = null, fontScale: number = 1): void {
+    public static showSharedFloatingFeedback(text: string, worldPos: Vec3, color: Color, fontScale: number = 1, duration: number = 0): boolean {
+        const host = CreatePropBrand.feedbackHost;
+        const template = host?.propBrandList?.[0];
+        if (!host?.node?.isValid || !template) {
+            return false;
+        }
+        host.showFloatingFeedback(template, text, worldPos, color, fontScale, duration);
+        return true;
+    }
+
+    private showFloatingFeedback(propBrand: PropBrand, text: string, worldPos: Vec3, color: Color | null = null, fontScale: number = 1, duration: number = 0): void {
         const templateNode = propBrand?.lab?.node;
         if (!templateNode || !this.labelVisualGroup) {
             return;
@@ -486,7 +501,7 @@ export class CreatePropBrand extends UnityUpComponent {
         opacity.opacity = 255;
 
         const startY = worldPos.y + this.feedbackStartYOffset;
-        const totalDuration = Math.max(0.001, this.feedbackFloatDuration);
+        const totalDuration = Math.max(0.001, duration > 0 ? duration : this.feedbackFloatDuration);
         const fadeDelay = Math.max(0, Math.min(this.feedbackFadeDelay, totalDuration));
         const fadeDuration = Math.max(0.001, totalDuration - fadeDelay);
         const fadeStartRatio = fadeDelay / totalDuration;

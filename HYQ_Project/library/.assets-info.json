@@ -538,7 +538,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1784709154166.8857,
+      "time": 1784713440683.5237,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -1594,7 +1594,7 @@
       "uuid": "f320b7fd-4bce-4185-8a9f-e6542c401465"
     },
     "Script\\functionS\\Effect\\EffectManager.ts": {
-      "time": 1782724081880.0735,
+      "time": 1784713136505.242,
       "uuid": "779f7a27-3852-4bb6-8e5e-1d7c5e17016c"
     },
     "Script\\functionS\\Effect\\EffectRemoveBase.ts": {
@@ -1658,11 +1658,11 @@
       "uuid": "1f73fffa-7e0b-4275-921e-97239d52dd3a"
     },
     "Script\\functionS\\Other\\ArmsUp.ts": {
-      "time": 1783072161850.7524,
+      "time": 1784714128252.3486,
       "uuid": "5d8f11e3-4395-4f07-8f13-c42cb8dc9db0"
     },
     "Script\\functionS\\Other\\CreatePropBrand.ts": {
-      "time": 1784543535682.0234,
+      "time": 1784713541720.3606,
       "uuid": "7ab0ec49-7b52-4369-a342-a29db05785c6"
     },
     "Script\\functionS\\Other\\PropArms.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1784704994297.6023,
+      "time": 1784712856052.9258,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {

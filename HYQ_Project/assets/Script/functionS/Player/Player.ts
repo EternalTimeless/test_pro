@@ -7,7 +7,6 @@ import { ArmsTypeEnum, BulletEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, 
 import PoolManager from '../../Base/PoolManager';
 import EventManager from '../../Base/EventManager';
 import { PrefabsManager } from '../../Base/PrefabsManager';
-import TweenTool from '../../Tool/TweenTool';
 import { GameOverPanel } from '../UI/GameOver/GameOverPanel';
 import { UnityUpComponent } from '../../Base/UnityUpComponent';
 import RockerManager from '../Rocker/RockerManager';
@@ -783,7 +782,6 @@ export class Player extends UnityUpComponent {
             case ArmsTypeEnum.jtl:
                 this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
-                TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
                 shouldApplyRoleModel = true;
@@ -791,7 +789,6 @@ export class Player extends UnityUpComponent {
             case ArmsTypeEnum.jtl2: {
                 this.applyWeaponBulletConfig(weaponBulletConfig);
                 this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
-                TweenTool.scaleShake(this.node);
                 this.roleR = 1;
                 Role.soundType = SoundEnum.Sound_FireGun;
                 shouldApplyRoleModel = true;

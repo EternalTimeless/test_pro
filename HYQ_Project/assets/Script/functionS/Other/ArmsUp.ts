@@ -1,14 +1,16 @@
-import { _decorator, Node, Quat, Tween, Vec3 } from 'cc';
+import { _decorator, CCFloat, CCString, Color, Node, Quat, tween, Tween, Vec3 } from 'cc';
 import { Player } from '../Player/Player';
 import { ArmsInfo } from './PropArms';
 import EventManager from '../../Base/EventManager';
-import { EffectEnum, EventType, LayerEnum, SoundEnum } from '../../Base/EnumList';
+import { ArmsTypeEnum, EffectEnum, EventType, LayerEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import { CameraMove } from '../../Base/CameraMove';
 import { MonsterBattleTaerget } from '../Monster/MonsterBattleTaerget';
 import { UnityUpComponent } from '../../Base/UnityUpComponent';
 import { EffectManager } from '../Effect/EffectManager';
 import AudioManager from '../../Base/AudioManager';
 import LayerManager from '../../Base/LayerManager';
+import { FlashRedManager } from '../Battle/Base/FlashRedManager';
+import { CreatePropBrand } from './CreatePropBrand';
 const { ccclass, property } = _decorator;
 
 type WeaponFlyNodeInfo = {
@@ -26,9 +28,32 @@ export class ArmsUp extends UnityUpComponent {
     @property(Player)
     public player: Player;
 
+    @property({ type: CCFloat, displayName: '大壮落点镜头缩放震动', tooltip: '大壮武器吸入玩家完成时的镜头 FOV 冲击强度。' })
+    public dazhuangPickupZoomShake: number = 0.55;
+
+    @property({ type: CCFloat, displayName: '大壮落点镜头位移震动', tooltip: '大壮武器吸入玩家完成时的镜头位移震动强度。' })
+    public dazhuangPickupPositionShake: number = 1.8;
+
+    @property({ type: CCFloat, displayName: '大壮虚影特效倍率', tooltip: '复用吃到 +1 时的虚影升级特效；数值越大，虚影扩散范围越大。' })
+    public dazhuangPickupEffectScale: number = 1.06;
+
+    @property({ type: CCString, displayName: '大壮攻击力提示文字', tooltip: '吃到大壮时显示在角色群上方的大号攻击力提示。' })
+    public dazhuangAttackText: string = 'ATK+150%';
+
+    @property({ type: CCFloat, displayName: '攻击力提示高度', tooltip: 'ATK +150% 相对玩家中心的显示高度（世界坐标单位）。' })
+    public dazhuangAttackTextHeight: number = 5.8;
+
+    @property({ type: CCFloat, displayName: '攻击力提示持续时间（秒）', tooltip: '大号攻击力文字从弹出到完全淡出的总时长。' })
+    public dazhuangAttackTextDuration: number = 1.6;
+
+    @property({ type: Color, displayName: '攻击力提示金黄色', tooltip: 'ATK +150% 主体颜色，默认按参考图使用偏橙的亮金黄色。' })
+    public dazhuangAttackTextColor: Color = new Color(255, 202, 0, 255);
+
     private _monsterList: MonsterBattleTaerget[] = [];
     private flyingWeaponNodes: Set<Node> = new Set();
     private flyingWeaponStateMap: Map<Node, WeaponFlyState> = new Map();
+    private pendingDazhuangFeedbackFrames: number = 0;
+    private pendingDazhuangRoleType: RoleEnum = null;
     private static readonly tempForward: Vec3 = new Vec3();
     private static readonly tempQuat: Quat = new Quat();
     private static readonly tempFlightPos: Vec3 = new Vec3();
@@ -130,11 +155,59 @@ export class ArmsUp extends UnityUpComponent {
             return;
         }
         const pos = this.player.node.worldPosition;
-        CameraMove.instance.Shake2(0.5);
+        const isDazhuang = armsInfo.armsType === ArmsTypeEnum.jtl || armsInfo.armsType === ArmsTypeEnum.jtl2;
+        CameraMove.instance.Shake2(isDazhuang ? this.dazhuangPickupZoomShake : 0.5);
         AudioManager.inst.playOneShot(SoundEnum.Sound_Ship_UpLevel);
         this.applyArmsUpgrade(armsInfo);
-        EffectManager.instance.addShowEffect(pos, EffectEnum.up, 3)
-        CameraMove.instance.Shake1(1.5);
+        if (isDazhuang) {
+            this.pendingDazhuangRoleType = armsInfo.armsType === ArmsTypeEnum.jtl2 ? RoleEnum.dazhuangPlus : RoleEnum.dazhuang;
+            this.pendingDazhuangFeedbackFrames = 30;
+        } else {
+            EffectManager.instance.addShowEffect(pos, EffectEnum.up, 3);
+        }
+        CameraMove.instance.Shake1(isDazhuang ? this.dazhuangPickupPositionShake : 1.5);
+    }
+
+    private showDazhuangRoleGhosts(): void {
+        const roles = this.player?.roleList;
+        if (!roles?.length) {
+            return;
+        }
+        const role = roles.find((item) => item?.type === this.pendingDazhuangRoleType);
+        if (!role) {
+            return;
+        }
+        const roleNode = role?.node;
+        if (!roleNode?.isValid) {
+            return;
+        }
+        FlashRedManager.instance.flashRed(roleNode, role.meshCreateDataList, 0.42, this.dazhuangAttackTextColor, 'dazhuang_pickup');
+        const visualNode = role.fbxManager?.node;
+        if (!visualNode?.isValid) {
+            return;
+        }
+        Tween.stopAllByTarget(visualNode);
+        const originalScale = visualNode.scale.clone();
+        const ghostScale = originalScale.clone().multiplyScalar(Math.max(1, Math.min(1.08, this.dazhuangPickupEffectScale)));
+        tween(visualNode)
+            .to(0.18, { scale: ghostScale }, { easing: 'sineOut' })
+            .to(0.22, { scale: originalScale }, { easing: 'backOut' })
+            .start();
+    }
+
+    private showDazhuangAttackText(): void {
+        if (!this.player?.node?.isValid || !this.dazhuangAttackText) {
+            return;
+        }
+        const playerPos = this.player.node.worldPosition.clone();
+        playerPos.y += this.dazhuangAttackTextHeight;
+        CreatePropBrand.showSharedFloatingFeedback(
+            this.dazhuangAttackText,
+            playerPos,
+            this.dazhuangAttackTextColor,
+            1.7,
+            this.dazhuangAttackTextDuration,
+        );
     }
 
     private applyArmsUpgrade(armsInfo: ArmsInfo): void {
@@ -216,7 +289,26 @@ export class ArmsUp extends UnityUpComponent {
 
     protected _update(dt: number): void {
         this.updateFlyingWeapons(dt);
+        this.updatePendingDazhuangFeedback();
         // this.checkPlayerAndMonsterCollide();
+    }
+
+    private updatePendingDazhuangFeedback(): void {
+        if (this.pendingDazhuangFeedbackFrames <= 0 || this.pendingDazhuangRoleType === null) {
+            return;
+        }
+        const hasTargetRole = this.player?.roleList?.some((role) => role?.type === this.pendingDazhuangRoleType);
+        if (!hasTargetRole) {
+            this.pendingDazhuangFeedbackFrames--;
+            if (this.pendingDazhuangFeedbackFrames <= 0) {
+                this.pendingDazhuangRoleType = null;
+            }
+            return;
+        }
+        this.showDazhuangRoleGhosts();
+        this.showDazhuangAttackText();
+        this.pendingDazhuangFeedbackFrames = 0;
+        this.pendingDazhuangRoleType = null;
     }
 
     private checkPlayerAndMonsterCollide() {
