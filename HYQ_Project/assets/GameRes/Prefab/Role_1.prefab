@@ -265,7 +265,7 @@
       "y": -0.000007256484270365266,
       "z": 0.0000025896322730886367
     },
-    "_id": "aag0972RpNSoT1PdAJwn+i"
+    "_id": "fdZxIWBtxBpYrH/Oictxx0"
   },
   {
     "__type__": "cc.Node",
@@ -315,7 +315,7 @@
       "y": 0.7610783198933897,
       "z": 53.95054119369081
     },
-    "_id": "b93zJtHDlHA7AyfRt0B+t7"
+    "_id": "800LoQHOJLa5+LIqgKZGJs"
   },
   {
     "__type__": "cc.Node",
@@ -362,7 +362,7 @@
       "y": 89.99991789555972,
       "z": -5.1065841857232966e-15
     },
-    "_id": "1bdwYHSAFDv5b/dHsMN3gT"
+    "_id": "71aGOylcZHUod0LlHlZmpP"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -399,7 +399,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "44UlHjnxVL446EU4f1wRpJ"
+    "_id": "0buKs8VzFC76U738op2lbp"
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -651,7 +651,7 @@
       "__expectedType__": "cc.Mesh"
     },
     "_shadowCastingMode": 0,
-    "_shadowReceivingMode": 1,
+    "_shadowReceivingMode": 0,
     "_shadowBias": 0,
     "_shadowNormalBias": 0,
     "_reflectionProbeId": -1,
@@ -1471,6 +1471,7 @@
     "shoot": {
       "__id__": 25
     },
+    "bulletSpawnOffsetY": -1.1,
     "arms": {
       "__id__": 20
     },

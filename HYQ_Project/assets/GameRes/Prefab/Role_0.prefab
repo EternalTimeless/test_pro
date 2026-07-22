@@ -25,11 +25,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 53
+        "__id__": 57
       }
     ],
     "_prefab": {
-      "__id__": 69
+      "__id__": 73
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -150,6 +150,15 @@
       },
       {
         "__id__": 52
+      },
+      {
+        "__id__": 53
+      },
+      {
+        "__id__": 55
+      },
+      {
+        "__id__": 56
       }
     ],
     "removedComponents": []
@@ -346,7 +355,7 @@
       "__expectedType__": "cc.Mesh"
     },
     "_shadowCastingMode": 0,
-    "_shadowReceivingMode": 1,
+    "_shadowReceivingMode": 0,
     "_shadowBias": 0,
     "_shadowNormalBias": 0,
     "_reflectionProbeId": -1,
@@ -864,6 +873,48 @@
     "value": true
   },
   {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 54
+    },
+    "propertyPath": [
+      "_active"
+    ],
+    "value": true
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "9eL/4dOqtSyKsaLNvjaiff"
+    ]
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 54
+    },
+    "propertyPath": [
+      "_lrot"
+    ],
+    "value": {
+      "__type__": "cc.Quat",
+      "x": 0.5083052900460029,
+      "y": 0.39788439666852365,
+      "z": 0.3844878327805011,
+      "w": 0.6599112405791608
+    }
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 49
+    },
+    "propertyPath": [
+      "_shadowReceivingMode"
+    ],
+    "value": 0
+  },
+  {
     "__type__": "86381loO/lKPYw+1SpcYu+c",
     "_name": "",
     "_objFlags": 0,
@@ -873,7 +924,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 54
+      "__id__": 58
     },
     "type": 0,
     "fbxManager": {
@@ -889,20 +940,20 @@
     },
     "meshFlashDataList": [
       {
-        "__id__": 55
+        "__id__": 59
       },
       {
-        "__id__": 62
+        "__id__": 66
       }
     ],
     "meshRedDataList": [
       {
-        "__id__": 65
+        "__id__": 69
       }
     ],
     "meshCreateDataList": [
       {
-        "__id__": 67
+        "__id__": 71
       }
     ],
     "_id": ""
@@ -914,12 +965,12 @@
   {
     "__type__": "MeshFlashData",
     "meshRender": {
-      "__id__": 56
+      "__id__": 60
     },
     "colorProps": [],
     "switchProps": [
       {
-        "__id__": 61
+        "__id__": 65
       }
     ]
   },
@@ -929,11 +980,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 57
+      "__id__": 61
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 59
+      "__id__": 63
     },
     "_materials": [
       {
@@ -943,7 +994,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 60
+      "__id__": 64
     },
     "_mesh": {
       "__uuid__": "f6fb758b-ca27-49a3-9074-b55054373a42@74d97",
@@ -979,11 +1030,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 56
+        "__id__": 60
       }
     ],
     "_prefab": {
-      "__id__": 58
+      "__id__": 62
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1068,10 +1119,10 @@
     "colorProps": [],
     "switchProps": [
       {
-        "__id__": 63
+        "__id__": 67
       },
       {
-        "__id__": 64
+        "__id__": 68
       }
     ]
   },
@@ -1096,11 +1147,11 @@
   {
     "__type__": "MeshFlashData",
     "meshRender": {
-      "__id__": 56
+      "__id__": 60
     },
     "colorProps": [
       {
-        "__id__": 66
+        "__id__": 70
       }
     ],
     "switchProps": []
@@ -1114,12 +1165,12 @@
   {
     "__type__": "MeshFlashData",
     "meshRender": {
-      "__id__": 56
+      "__id__": 60
     },
     "colorProps": [],
     "switchProps": [
       {
-        "__id__": 68
+        "__id__": 72
       }
     ]
   },
@@ -1144,12 +1195,6 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 70
-      },
-      {
-        "__id__": 72
-      },
-      {
         "__id__": 74
       },
       {
@@ -1162,10 +1207,16 @@
         "__id__": 80
       },
       {
-        "__id__": 83
+        "__id__": 82
       },
       {
-        "__id__": 85
+        "__id__": 84
+      },
+      {
+        "__id__": 87
+      },
+      {
+        "__id__": 89
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -1180,7 +1231,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 53
+      "__id__": 57
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1188,7 +1239,7 @@
     ],
     "target": null,
     "targetInfo": {
-      "__id__": 71
+      "__id__": 75
     }
   },
   {
@@ -1200,59 +1251,11 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 53
+      "__id__": 57
     },
     "sourceInfo": null,
     "propertyPath": [
       "fbxManager"
-    ],
-    "target": {
-      "__id__": 2
-    },
-    "targetInfo": {
-      "__id__": 73
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "53S6d7XoFIwrD5L8CeIU+G"
-    ]
-  },
-  {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
-      "__id__": 53
-    },
-    "sourceInfo": null,
-    "propertyPath": [
-      "meshFlashDataList",
-      "0",
-      "meshRender"
-    ],
-    "target": {
-      "__id__": 2
-    },
-    "targetInfo": {
-      "__id__": 75
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "28K6176Phd65eigxEQKZQZ"
-    ]
-  },
-  {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
-      "__id__": 53
-    },
-    "sourceInfo": null,
-    "propertyPath": [
-      "meshFlashDataList",
-      "1",
-      "meshRender"
     ],
     "target": {
       "__id__": 2
@@ -1264,13 +1267,61 @@
   {
     "__type__": "cc.TargetInfo",
     "localID": [
+      "53S6d7XoFIwrD5L8CeIU+G"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 57
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "meshFlashDataList",
+      "0",
+      "meshRender"
+    ],
+    "target": {
+      "__id__": 2
+    },
+    "targetInfo": {
+      "__id__": 79
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "28K6176Phd65eigxEQKZQZ"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 57
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "meshFlashDataList",
+      "1",
+      "meshRender"
+    ],
+    "target": {
+      "__id__": 2
+    },
+    "targetInfo": {
+      "__id__": 81
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
       "839/S37ClX75tanmMd0RBo"
     ]
   },
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 53
+      "__id__": 57
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1280,7 +1331,7 @@
       "__id__": 15
     },
     "targetInfo": {
-      "__id__": 79
+      "__id__": 83
     }
   },
   {
@@ -1296,7 +1347,7 @@
       "__id__": 2
     },
     "sourceInfo": {
-      "__id__": 81
+      "__id__": 85
     },
     "propertyPath": [
       "_sockets",
@@ -1307,7 +1358,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 82
+      "__id__": 86
     }
   },
   {
@@ -1325,7 +1376,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 53
+      "__id__": 57
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1337,7 +1388,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 84
+      "__id__": 88
     }
   },
   {
@@ -1349,7 +1400,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 53
+      "__id__": 57
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -1361,7 +1412,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 86
+      "__id__": 90
     }
   },
   {
