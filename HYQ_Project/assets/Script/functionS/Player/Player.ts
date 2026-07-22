@@ -112,6 +112,9 @@ export class Player extends UnityUpComponent {
     @property({ type: CCInteger, displayName: '同时发射子弹人数上限', tooltip: '每轮最多允许多少个角色同时发射子弹。只限制射击人数，不影响 +1 总人数。' })
     public maxShootingRoleCount: number = 30;
 
+    @property({ type: CCBoolean, displayName: '子弹同步玩家队形', tooltip: '开启后，发射区域内的角色同一帧从各自枪口齐射，子弹初始 X/Z 轮廓与玩家站位弧度一致；关闭后继续使用武器的随机或错峰发射顺序。' })
+    public syncBulletFormation: boolean = true;
+
     @property({ type: CCInteger, displayName: '枪口特效最大播放数', tooltip: '每轮射击最多允许多少个角色播放枪口特效。只影响特效，不影响子弹数量。' })
     public maxMuzzleEffectCount: number = 8;
 
@@ -337,6 +340,7 @@ export class Player extends UnityUpComponent {
             const randomShotConfig = this.currentWeaponBulletConfig;
             const lockWorldX = this.node.worldPosition.x;
             let effectPlayCount = 0;
+            let soundPlayed = false;
             for (let i = 0; i < this.frontShootingRoleIndices.length; i++) {
                 const roleIndex = this.frontShootingRoleIndices[i];
                 const role = this.roleList[roleIndex];
@@ -345,7 +349,20 @@ export class Player extends UnityUpComponent {
                     if (playEffect) {
                         effectPlayCount++;
                     }
-                    if (useRandomShot) {
+                    if (this.syncBulletFormation) {
+                        role.attackEvent(
+                            0,
+                            this.getRealBulletCountPerRole(role),
+                            1,
+                            lockWorldX,
+                            playEffect,
+                            0,
+                            !soundPlayed,
+                            0,
+                            this.getCurrentBulletType(),
+                        );
+                        soundPlayed = true;
+                    } else if (useRandomShot) {
                         this.enqueueRandomShot(
                             role,
                             attackTime,
