@@ -6,7 +6,7 @@
       "uuid": "5f69c6c0-cb55-40e6-9ce8-7bb74031024e"
     },
     "resources": {
-      "time": 1782193902110.0073,
+      "time": 1784708302660.1833,
       "uuid": "caffc481-8e86-4f96-8867-9213f3a378f4"
     },
     "Scene": {
@@ -74,7 +74,7 @@
       "uuid": "284060d3-3d91-41b4-b0b4-d96fd6cdede2"
     },
     "resources\\Sound": {
-      "time": 1781493202893.534,
+      "time": 1784708810469.3965,
       "uuid": "c876c6c5-e04c-4641-b7f8-444b82eb5b19"
     },
     "Script\\Base": {
@@ -538,7 +538,7 @@
       "uuid": "afa2a40d-444f-40e5-af06-275865a4c858"
     },
     "Scene\\Game_3D-002.scene": {
-      "time": 1784690913147.3987,
+      "time": 1784709154166.8857,
       "uuid": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
     },
     "Scene\\Game_3D-003.scene": {
@@ -614,11 +614,11 @@
       "uuid": "d16848b5-18b3-400e-8cad-f629e5124e7c"
     },
     "GameRes\\Prefab\\Prop_Brand.prefab": {
-      "time": 1784182301677.5916,
+      "time": 1784702812927.9102,
       "uuid": "0138029d-bfaa-4d43-aa1c-63b3be01e8e5"
     },
     "GameRes\\Prefab\\Prop_Brand_2.prefab": {
-      "time": 1784182303038.507,
+      "time": 1784702806990.3093,
       "uuid": "09f7d7d0-5529-499d-8bbb-e3e6a9394677"
     },
     "GameRes\\Prefab\\Role.prefab": {
@@ -1610,11 +1610,11 @@
       "uuid": "bbccb099-9876-4172-aeaf-c85274b1d133"
     },
     "Script\\functionS\\Guide\\GuideLine.ts": {
-      "time": 1780287689689.2458,
+      "time": 1784702236672.1523,
       "uuid": "3b47f7bf-91d0-40e1-8f86-30832c9f6191"
     },
     "Script\\functionS\\Guide\\GuideManager.ts": {
-      "time": 1784278897333.4153,
+      "time": 1784708586509.1633,
       "uuid": "3062c3b5-61c9-4397-8133-819b63aea95e"
     },
     "Script\\functionS\\Jump\\BezierCurve.ts": {
@@ -1674,7 +1674,7 @@
       "uuid": "6cd5a37d-1269-49c3-93f4-7e00acf980bf"
     },
     "Script\\functionS\\Player\\Player.ts": {
-      "time": 1784688012137.9602,
+      "time": 1784704994297.6023,
       "uuid": "b41f7bf2-d6be-460d-81b2-3305244179b7"
     },
     "Script\\functionS\\Player\\Role.ts": {
@@ -4408,7 +4408,7 @@
       "time": 1781689576517.3992
     },
     "Script\\functionS\\Other\\PropLalianGate.ts": {
-      "time": 1784602287302.601,
+      "time": 1784708424307.9966,
       "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts.meta": {
@@ -5146,6 +5146,27 @@
     "Script\\Tool\\PerformanceBlockHUD.ts": {
       "time": 1783930405799.9575,
       "uuid": "5b225621-c87b-44b9-9d46-514581444692"
+    },
+    "resources\\Effect.meta": {
+      "time": 1784708302769.1736
+    },
+    "resources\\Effect\\LalianWaterCurtain.effect.meta": {
+      "time": 1784708302768.1758
+    },
+    "resources\\Effect\\LalianWaterCurtain.effect": {
+      "time": 1784708426150.9248,
+      "uuid": "78bef212-0f4f-4eba-a2f6-81d4b6a58538"
+    },
+    "resources\\Effect": {
+      "time": 1784708302662.1782,
+      "uuid": "d372a205-3ec0-4700-b163-99bbfdbbe58c"
+    },
+    "resources\\Sound\\升级铲子.mp3.meta": {
+      "time": 1784708810603.0818
+    },
+    "resources\\Sound\\升级铲子.mp3": {
+      "time": 1784708803961.2773,
+      "uuid": "e8305cd2-ff6f-4d66-87b6-d20ad664cf8d"
     }
   },
   "missing": {}

@@ -1,4 +1,4 @@
-import { _decorator, Animation, CCBoolean, CCFloat, CCInteger, Component, Node, Sprite, UIOpacity } from 'cc';
+import { _decorator, Animation, CCBoolean, CCFloat, CCInteger, Component, director, Node, Sprite, UIOpacity, v3, Vec3 } from 'cc';
 import { GuideLine } from './GuideLine';
 import { Player } from '../Player/Player';
 import { MoveDrive } from '../../Base/MoveRot/MoveDrive';
@@ -19,6 +19,8 @@ import AudioManager from '../../Base/AudioManager';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 import { EffectTimePartRemove } from '../Effect/EffectTimePartRemove';
 import { MonsterBattleTaerget } from '../Monster/MonsterBattleTaerget';
+import { PropArms } from '../Other/PropArms';
+import { CameraMove } from '../../Base/CameraMove';
 const { ccclass, property } = _decorator;
 
 type WarmupTask = {
@@ -45,6 +47,13 @@ enum StartupPhase {
     Complete,
 }
 
+enum FirstOilGuidePhase {
+    Waiting,
+    Moving,
+    Marking,
+    Finished,
+}
+
 @ccclass('GuideManager')
 export class GuideManager extends Component {
 
@@ -63,6 +72,21 @@ export class GuideManager extends Component {
 
     @property(CCFloat)
     public startGuideReachX: number = 0.35;
+
+    @property({ type: CCBoolean, displayName: '启用首个油桶引导', tooltip: '非强制引导：先提示玩家横向移动并对准首个油桶，再用手势标记油桶；不锁定移动和战斗。' })
+    public enableFirstOilGuide: boolean = true;
+
+    @property({ type: CCFloat, displayName: '首个油桶引导触发距离', min: 0.1 })
+    public firstOilGuideTriggerDistance: number = 45;
+
+    @property({ type: CCFloat, displayName: '首个油桶移动对齐范围', min: 0.1, tooltip: '玩家中心与油桶中心的横向距离小于该值后，移动提示切换为油桶标记。' })
+    public firstOilGuideAlignRange: number = 2.5;
+
+    @property({ type: CCFloat, displayName: '首个油桶标记高度', min: 0, tooltip: '油桶标记相对油桶根节点向上的世界坐标高度。' })
+    public firstOilGuideMarkerHeight: number = 4.5;
+
+    @property({ type: CCFloat, displayName: '首个油桶标记缩放', min: 0.1, tooltip: '油桶上方手势标记的基础缩放。' })
+    public firstOilGuideMarkerScale: number = 1.5;
 
     private loadingNode: Node = null;
     private loadingProgress: Sprite = null;
@@ -94,6 +118,19 @@ export class GuideManager extends Component {
     private loadingReadyFrameCount: number = 0;
     private startGuideReadyFrameCount: number = 0;
     private displayedLoadingProgress: number = 0;
+    private firstOilGuideTarget: PropArms | null = null;
+    private firstOilGuidePhase: FirstOilGuidePhase = FirstOilGuidePhase.Waiting;
+    private firstOilGuideSearchTimer: number = 0;
+    private firstOilGuideMoveTarget: Node | null = null;
+    private firstOilGuideHandDirectionRoot: Node | null = null;
+    private firstOilGuideMoveHandActive: boolean = false;
+    private firstOilGuideSwipeDirection: number = 0;
+    private firstOilGuideMoveHandTime: number = 0;
+    private firstOilGuideMarkerActive: boolean = false;
+    private firstOilGuideMarkerTime: number = 0;
+    private firstOilGuideMoveTargetPos: Vec3 = v3();
+    private firstOilGuideMarkerWorldPos: Vec3 = v3();
+    private firstOilGuideMarkerUIPos: Vec3 = v3();
 
     protected onLoad(): void {
         GuideManager.instance = this;
@@ -153,16 +190,16 @@ export class GuideManager extends Component {
         if (!this.warmupInitialized) {
             this.initWarmupTasks();
         }
-        if (this.isLock) {
-            return;
-        }
-
-        if (!this.loadingNode) {
-            return;
-        }
-
         if (this.startupPhase === StartupPhase.Complete) {
+            this.updateFirstOilGuide(dt);
+            if (this.isLock) {
+                return;
+            }
             this.checkStartGuideReached();
+            return;
+        }
+
+        if (this.isLock || !this.loadingNode) {
             return;
         }
 
@@ -267,6 +304,287 @@ export class GuideManager extends Component {
             this.loadingNode.active = false;
         }
         this.startupPhase = StartupPhase.Complete;
+    }
+
+    private updateFirstOilGuide(dt: number): void {
+        if (!this.enableFirstOilGuide) {
+            if (this.firstOilGuidePhase === FirstOilGuidePhase.Moving
+                || this.firstOilGuidePhase === FirstOilGuidePhase.Marking) {
+                this.finishFirstOilGuide();
+            }
+            return;
+        }
+
+        if (this.firstOilGuidePhase === FirstOilGuidePhase.Finished) {
+            return;
+        }
+
+        if (this.firstOilGuidePhase !== FirstOilGuidePhase.Waiting) {
+            if (this.isFirstOilGuideTargetFinished()) {
+                this.finishFirstOilGuide();
+                return;
+            }
+        }
+
+        if (this.firstOilGuidePhase === FirstOilGuidePhase.Waiting) {
+            this.firstOilGuideSearchTimer -= Math.max(0, dt);
+            if (!this.firstOilGuideTarget || !this.firstOilGuideTarget.node?.isValid || this.firstOilGuideSearchTimer <= 0) {
+                this.firstOilGuideSearchTimer = 0.25;
+                this.firstOilGuideTarget = this.findFirstOilGuideTarget();
+            }
+            const playerNode = this.getGuidePlayerNode();
+            const oilNode = this.firstOilGuideTarget?.node;
+            if (!playerNode?.isValid || !oilNode?.activeInHierarchy) {
+                return;
+            }
+            const distanceZ = oilNode.worldPosition.z - playerNode.worldPosition.z;
+            if (distanceZ > Math.max(0.1, this.firstOilGuideTriggerDistance)) {
+                return;
+            }
+            this.firstOilGuidePhase = FirstOilGuidePhase.Moving;
+        }
+
+        if (this.firstOilGuidePhase === FirstOilGuidePhase.Moving) {
+            if (this.isFirstOilGuidePlayerAligned()) {
+                this.firstOilGuidePhase = FirstOilGuidePhase.Marking;
+                this.hideFirstOilMoveGuide();
+            } else {
+                this.refreshFirstOilMoveGuide(dt);
+                return;
+            }
+        }
+
+        if (this.firstOilGuidePhase === FirstOilGuidePhase.Marking) {
+            this.refreshFirstOilMarker(dt);
+        }
+    }
+
+    private isFirstOilGuidePlayerAligned(): boolean {
+        const playerNode = this.getGuidePlayerNode();
+        const target = this.firstOilGuideTarget;
+        if (!playerNode?.isValid || !target?.node?.isValid) {
+            return false;
+        }
+        const targetHalfX = Math.max(0.1, target.collisionHalfX ?? 0.1);
+        const alignRange = Math.min(targetHalfX, Math.max(0.1, this.firstOilGuideAlignRange));
+        return Math.abs(playerNode.worldPosition.x - target.node.worldPosition.x) <= alignRange;
+    }
+
+    private refreshFirstOilMoveGuide(dt: number): void {
+        const playerNode = this.getGuidePlayerNode();
+        const oilNode = this.firstOilGuideTarget?.node;
+        if (!playerNode?.isValid || !oilNode?.isValid) {
+            return;
+        }
+
+        const moveTarget = this.getOrCreateFirstOilGuideMoveTarget();
+        if (moveTarget?.isValid) {
+            this.firstOilGuideMoveTargetPos.set(
+                oilNode.worldPosition.x,
+                playerNode.worldPosition.y,
+                playerNode.worldPosition.z,
+            );
+            moveTarget.setWorldPosition(this.firstOilGuideMoveTargetPos);
+            GuideLine.instance?.setLineNode(playerNode, moveTarget);
+        }
+
+        this.updateFirstOilMoveHand(playerNode.worldPosition.x, oilNode.worldPosition.x, dt);
+    }
+
+    private getOrCreateFirstOilGuideMoveTarget(): Node | null {
+        if (this.firstOilGuideMoveTarget?.isValid) {
+            return this.firstOilGuideMoveTarget;
+        }
+        this.firstOilGuideMoveTarget = new Node('首个油桶移动引导目标');
+        this.node.addChild(this.firstOilGuideMoveTarget);
+        return this.firstOilGuideMoveTarget;
+    }
+
+    private updateFirstOilMoveHand(playerX: number, targetX: number, dt: number): void {
+        if (!this.handAnim?.node?.isValid) {
+            return;
+        }
+        // 角色横移在 MoveDrive 中使用 -rocker.x：目标在玩家右侧时需要向左滑，反之向右滑。
+        const playerMoveDirection = targetX > playerX ? 1 : -1;
+        const swipeDirection = -playerMoveDirection;
+        const directionRoot = this.getOrCreateFirstOilGuideHandDirectionRoot();
+        if (!directionRoot?.isValid) {
+            return;
+        }
+        if (!Number.isFinite(this.firstOilGuideMoveHandTime)) {
+            this.firstOilGuideMoveHandTime = 0;
+        }
+        const directionChanged = this.firstOilGuideSwipeDirection !== swipeDirection;
+        if (!this.firstOilGuideMoveHandActive) {
+            this.firstOilGuideMoveHandActive = true;
+            this.firstOilGuideMoveHandTime = 0;
+        } else if (directionChanged) {
+            this.firstOilGuideMoveHandTime = 0;
+        } else {
+            this.firstOilGuideMoveHandTime = (this.firstOilGuideMoveHandTime + Math.max(0, dt)) % 1;
+        }
+        this.firstOilGuideSwipeDirection = swipeDirection;
+        this.firstOilGuideMarkerActive = false;
+
+        // 油桶引导不再播放 Anim_hand，直接按实际方向复现原 1 秒手势轨迹，避免动画系统覆盖方向。
+        this.handAnim.stop();
+        this.handAnim.node.active = true;
+        directionRoot.setPosition(0, 0, 0);
+        directionRoot.setScale(1, 1, 1);
+        const time = this.firstOilGuideMoveHandTime;
+        const moveProgress = time <= 1 / 3 ? 0 : Math.min(1, (time - 1 / 3) / (2 / 3));
+        const handX = swipeDirection * 300 * moveProgress;
+        this.handAnim.node.setPosition(handX, -231.5, 0);
+
+        const opacity = this.handAnim.node.getComponent(UIOpacity);
+        if (opacity) {
+            if (time <= 1 / 3) {
+                opacity.opacity = 255 * time / (1 / 3);
+            } else if (time <= 5 / 6) {
+                opacity.opacity = 255;
+            } else {
+                opacity.opacity = 255 * (1 - time) / (1 / 6);
+            }
+        }
+
+        let handScale = 1;
+        if (time <= 1 / 3) {
+            handScale = 2 + (0.9 - 2) * time / (1 / 3);
+        } else if (time <= 0.4) {
+            handScale = 0.9 + (1.1 - 0.9) * (time - 1 / 3) / (0.4 - 1 / 3);
+        } else if (time <= 13 / 30) {
+            handScale = 1.1 + (1 - 1.1) * (time - 0.4) / (13 / 30 - 0.4);
+        }
+        this.handAnim.node.setScale(handScale, handScale, handScale);
+    }
+
+    private getOrCreateFirstOilGuideHandDirectionRoot(): Node | null {
+        if (this.firstOilGuideHandDirectionRoot?.isValid) {
+            return this.firstOilGuideHandDirectionRoot;
+        }
+        const handNode = this.handAnim?.node;
+        const handParent = handNode?.parent;
+        if (!handNode?.isValid || !handParent?.isValid) {
+            return null;
+        }
+        if (handParent.name === '首个油桶手势方向节点') {
+            this.firstOilGuideHandDirectionRoot = handParent;
+            return this.firstOilGuideHandDirectionRoot;
+        }
+        this.firstOilGuideHandDirectionRoot = new Node('首个油桶手势方向节点');
+        this.firstOilGuideHandDirectionRoot.layer = handNode.layer;
+        handParent.addChild(this.firstOilGuideHandDirectionRoot);
+        this.firstOilGuideHandDirectionRoot.setPosition(0, 0, 0);
+        handNode.parent = this.firstOilGuideHandDirectionRoot;
+        return this.firstOilGuideHandDirectionRoot;
+    }
+
+    private hideFirstOilMoveGuide(): void {
+        GuideLine.instance?.setLineNode();
+        this.firstOilGuideMoveHandActive = false;
+        this.firstOilGuideSwipeDirection = 0;
+        this.firstOilGuideMoveHandTime = 0;
+        if (this.handAnim?.node?.isValid) {
+            this.handAnim.stop();
+            this.handAnim.node.active = false;
+        }
+    }
+
+    private refreshFirstOilMarker(dt: number): void {
+        const oilNode = this.firstOilGuideTarget?.node;
+        const handNode = this.handAnim?.node;
+        const directionRoot = this.getOrCreateFirstOilGuideHandDirectionRoot();
+        const handParent = directionRoot?.parent;
+        const camera = CameraMove.instance?.camera;
+        if (!oilNode?.isValid || !handNode?.isValid || !directionRoot?.isValid || !handParent?.isValid || !camera) {
+            return;
+        }
+
+        if (!this.firstOilGuideMarkerActive) {
+            this.firstOilGuideMarkerActive = true;
+            this.firstOilGuideMoveHandActive = false;
+            this.firstOilGuideMarkerTime = 0;
+            GuideLine.instance?.setLineNode();
+            this.handAnim.stop();
+            handNode.active = true;
+            const opacity = handNode.getComponent(UIOpacity);
+            if (opacity) {
+                opacity.opacity = 255;
+            }
+            directionRoot.setScale(1, 1, 1);
+            handNode.setPosition(0, 0, 0);
+        }
+
+        this.firstOilGuideMarkerTime += Math.max(0, dt);
+        this.firstOilGuideMarkerWorldPos.set(oilNode.worldPosition);
+        this.firstOilGuideMarkerWorldPos.y += Math.max(0, this.firstOilGuideMarkerHeight);
+        camera.convertToUINode(this.firstOilGuideMarkerWorldPos, handParent, this.firstOilGuideMarkerUIPos);
+        directionRoot.setPosition(this.firstOilGuideMarkerUIPos);
+
+        const pulse = 1 + Math.sin(this.firstOilGuideMarkerTime * 5) * 0.1;
+        const markerScale = Math.max(0.1, this.firstOilGuideMarkerScale) * pulse;
+        handNode.setScale(markerScale, markerScale, markerScale);
+    }
+
+    private findFirstOilGuideTarget(): PropArms | null {
+        const scene = director.getScene();
+        if (!scene) {
+            return null;
+        }
+        const candidates = scene.getComponentsInChildren(PropArms);
+        const playerNode = this.getGuidePlayerNode();
+        const playerZ = playerNode?.worldPosition.z ?? Number.NEGATIVE_INFINITY;
+        let best: PropArms | null = null;
+        let bestDistance = Number.POSITIVE_INFINITY;
+        for (let i = 0; i < candidates.length; i++) {
+            const candidate = candidates[i];
+            if (!candidate?.node?.activeInHierarchy || candidate.isDie) {
+                continue;
+            }
+            const distance = candidate.node.worldPosition.z - playerZ;
+            if (distance < 0 || distance >= bestDistance) {
+                continue;
+            }
+            best = candidate;
+            bestDistance = distance;
+        }
+        return best;
+    }
+
+    private isFirstOilGuideTargetFinished(): boolean {
+        const target = this.firstOilGuideTarget;
+        if (!target?.node?.isValid || !target.node.activeInHierarchy || target.isDie) {
+            return true;
+        }
+        const playerNode = this.getGuidePlayerNode();
+        if (!playerNode?.isValid) {
+            return false;
+        }
+        const playerZ = playerNode.worldPosition.z;
+        const targetZ = target.node.worldPosition.z;
+        const targetHalfZ = Math.max(0, target.collisionHalfZ ?? 0);
+        return targetZ - targetHalfZ <= playerZ;
+    }
+
+    private finishFirstOilGuide(): void {
+        this.firstOilGuidePhase = FirstOilGuidePhase.Finished;
+        this.firstOilGuideTarget = null;
+        this.firstOilGuideMoveHandActive = false;
+        this.firstOilGuideSwipeDirection = 0;
+        this.firstOilGuideMoveHandTime = 0;
+        this.firstOilGuideMarkerActive = false;
+        GuideLine.instance?.setLineNode();
+        if (this.handAnim?.node?.isValid) {
+            this.handAnim.stop();
+            this.handAnim.node.active = false;
+        }
+        if (this.firstOilGuideHandDirectionRoot?.isValid) {
+            this.firstOilGuideHandDirectionRoot.setScale(1, 1, 1);
+        }
+        if (this.firstOilGuideMoveTarget?.isValid) {
+            this.firstOilGuideMoveTarget.destroy();
+        }
+        this.firstOilGuideMoveTarget = null;
     }
 
     private cacheStartGuidePosition() {

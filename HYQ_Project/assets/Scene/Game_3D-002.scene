@@ -72,7 +72,7 @@
     },
     "autoReleaseAssets": true,
     "_globals": {
-      "__id__": 1243
+      "__id__": 1247
     },
     "_id": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
   },
@@ -11521,6 +11521,43 @@
     "moveCount": 0,
     "hitAnimTime": 0.3,
     "cubeHideTime": 0.08,
+    "enableFinishLightCurtain": true,
+    "finishLightCurtainDuration": 1.2,
+    "finishLightCurtainColor": {
+      "__type__": "cc.Color",
+      "r": 30,
+      "g": 185,
+      "b": 255,
+      "a": 193
+    },
+    "finishLightCurtainOuterColor": {
+      "__type__": "cc.Color",
+      "r": 20,
+      "g": 80,
+      "b": 255,
+      "a": 115
+    },
+    "finishLightCurtainHighlightColor": {
+      "__type__": "cc.Color",
+      "r": 185,
+      "g": 245,
+      "b": 255,
+      "a": 210
+    },
+    "finishLightCurtainThickness": 0.12,
+    "finishLightCurtainDensity": 0.9,
+    "finishLightCurtainWidthPadding": 1.5,
+    "finishLightCurtainHeight": 3.2,
+    "finishLightCurtainGroundOffset": 0.05,
+    "finishLightBandCount": 6,
+    "finishLightBandSpeed": 2.8,
+    "finishLightParticleCount": 12,
+    "finishLightStreakCount": 5,
+    "finishAudioClip": {
+      "__uuid__": "e8305cd2-ff6f-4d66-87b6-d20ad664cf8d",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "finishAudioVolume": 0.8,
     "keepSliderZOffset": true,
     "sliderOffsetZ": 0,
     "reverseSliderMoveZ": true,
@@ -12552,6 +12589,40 @@
     "moveCount": 0,
     "hitAnimTime": 0.12,
     "cubeHideTime": 0.08,
+    "enableFinishLightCurtain": true,
+    "finishLightCurtainDuration": 1.2,
+    "finishLightCurtainColor": {
+      "__type__": "cc.Color",
+      "r": 30,
+      "g": 185,
+      "b": 255,
+      "a": 150
+    },
+    "finishLightCurtainOuterColor": {
+      "__type__": "cc.Color",
+      "r": 20,
+      "g": 80,
+      "b": 255,
+      "a": 115
+    },
+    "finishLightCurtainHighlightColor": {
+      "__type__": "cc.Color",
+      "r": 185,
+      "g": 245,
+      "b": 255,
+      "a": 210
+    },
+    "finishLightCurtainThickness": 0.12,
+    "finishLightCurtainDensity": 0.9,
+    "finishLightCurtainWidthPadding": 0.65,
+    "finishLightCurtainHeight": 3.2,
+    "finishLightCurtainGroundOffset": 0.05,
+    "finishLightBandCount": 6,
+    "finishLightBandSpeed": 2.8,
+    "finishLightParticleCount": 12,
+    "finishLightStreakCount": 5,
+    "finishAudioClip": null,
+    "finishAudioVolume": 0.8,
     "keepSliderZOffset": true,
     "sliderOffsetZ": 0,
     "reverseSliderMoveZ": true,
@@ -12705,6 +12776,43 @@
     "moveCount": 0,
     "hitAnimTime": 0.1,
     "cubeHideTime": 0.08,
+    "enableFinishLightCurtain": true,
+    "finishLightCurtainDuration": 1.2,
+    "finishLightCurtainColor": {
+      "__type__": "cc.Color",
+      "r": 30,
+      "g": 185,
+      "b": 255,
+      "a": 150
+    },
+    "finishLightCurtainOuterColor": {
+      "__type__": "cc.Color",
+      "r": 20,
+      "g": 80,
+      "b": 255,
+      "a": 115
+    },
+    "finishLightCurtainHighlightColor": {
+      "__type__": "cc.Color",
+      "r": 185,
+      "g": 245,
+      "b": 255,
+      "a": 210
+    },
+    "finishLightCurtainThickness": 0.12,
+    "finishLightCurtainDensity": 0.9,
+    "finishLightCurtainWidthPadding": 0.65,
+    "finishLightCurtainHeight": 3.2,
+    "finishLightCurtainGroundOffset": 0.05,
+    "finishLightBandCount": 6,
+    "finishLightBandSpeed": 2.8,
+    "finishLightParticleCount": 12,
+    "finishLightStreakCount": 5,
+    "finishAudioClip": {
+      "__uuid__": "e8305cd2-ff6f-4d66-87b6-d20ad664cf8d",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "finishAudioVolume": 0.8,
     "keepSliderZOffset": false,
     "sliderOffsetZ": 0,
     "reverseSliderMoveZ": false,
@@ -13089,9 +13197,9 @@
     "monsterType": 1,
     "mixBaby01": true,
     "baby1Ratio": 0.5,
-    "monsterCountMax": 280,
+    "monsterCountMax": 200,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 320,
+    "zRangeCountBase": 220,
     "monsterHp": 0,
     "difficulty": 3,
     "brotherExcludeZ": 0
@@ -14524,6 +14632,7 @@
     "formationLayerCount": 4,
     "shrinkAfterRoleLossDelay": 2,
     "maxShootingRoleCount": 28,
+    "syncBulletFormation": true,
     "maxMuzzleEffectCount": 10,
     "onlyOuterLayerCastShadow": true,
     "enableBulletDynamicBatching": true,
@@ -14622,7 +14731,7 @@
     "bulletPower": 1,
     "bulletType": 1,
     "shotsPerSecond": 2.5,
-    "shootingRoleLimit": 18,
+    "shootingRoleLimit": 28,
     "bulletsPerRoleLimit": 1,
     "continuousFire": false,
     "randomizeShotOrder": false,
@@ -19728,6 +19837,11 @@
     },
     "enableStartGuide": true,
     "startGuideReachX": 0.35,
+    "enableFirstOilGuide": true,
+    "firstOilGuideTriggerDistance": 45,
+    "firstOilGuideAlignRange": 2.5,
+    "firstOilGuideMarkerHeight": 4.5,
+    "firstOilGuideMarkerScale": 1.5,
     "warmupPerFrame": 4,
     "warmupRenderFrames": 1,
     "startupSettleFrames": 3,
@@ -19811,6 +19925,12 @@
       },
       {
         "__id__": 1240
+      },
+      {
+        "__id__": 1243
+      },
+      {
+        "__id__": 1245
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -20679,30 +20799,76 @@
     ]
   },
   {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 740
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "finishLightCurtain"
+    ],
+    "target": {
+      "__id__": 12
+    },
+    "targetInfo": {
+      "__id__": 1244
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "4e0CzTL4ZFxpmvddPFyZQV",
+      "94hzmBwNlDGZCHB0W7Zrxw"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 769
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "finishLightCurtain"
+    ],
+    "target": {
+      "__id__": 12
+    },
+    "targetInfo": {
+      "__id__": 1246
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "46BlOTIdtBFrZI58/wLHMq",
+      "a0XpEfvLlMA6rL8Fh7WgXE"
+    ]
+  },
+  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 1244
-    },
-    "shadows": {
-      "__id__": 1245
-    },
-    "_skybox": {
-      "__id__": 1246
-    },
-    "fog": {
-      "__id__": 1247
-    },
-    "octree": {
       "__id__": 1248
     },
-    "skin": {
+    "shadows": {
       "__id__": 1249
     },
-    "lightProbeInfo": {
+    "_skybox": {
       "__id__": 1250
     },
-    "postSettings": {
+    "fog": {
       "__id__": 1251
+    },
+    "octree": {
+      "__id__": 1252
+    },
+    "skin": {
+      "__id__": 1253
+    },
+    "lightProbeInfo": {
+      "__id__": 1254
+    },
+    "postSettings": {
+      "__id__": 1255
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

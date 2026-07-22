@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, CCFloat, CCInteger, Label, MeshRenderer, Node, Tween, tween, v3, Vec3 } from 'cc';
+import { _decorator, AudioClip, CCBoolean, CCFloat, CCInteger, Color, EffectAsset, Label, Material, Mesh, MeshRenderer, Node, resources, Tween, tween, utils, v3, Vec3 } from 'cc';
 import { BattleTarget3D } from '../Battle/BattleTarger/BattleTarget3D';
 import BulletMonsterCollisionManager from '../Battle/BulletMonsterCollisionManager';
 import ColliderTag, { COLLIDE_TYPE } from '../Battle/CollectBattleTarger/ColliderTag';
@@ -208,6 +208,54 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCFloat, displayName: '滑块消失时长', tooltip: '所有齿条完成后，滑块缩小消失动画的持续时间。' })
     public cubeHideTime: number = 0.08;
 
+    @property({ type: CCBoolean, displayName: '启用拉链完成光幕' })
+    public enableFinishLightCurtain: boolean = true;
+
+    @property({ type: CCFloat, displayName: '光幕持续时间（秒）', min: 0.1 })
+    public finishLightCurtainDuration: number = 1.2;
+
+    @property({ type: Color, displayName: '光幕颜色' })
+    public finishLightCurtainColor: Color = new Color(20, 175, 255, 225);
+
+    @property({ type: Color, displayName: '光幕外层深色' })
+    public finishLightCurtainOuterColor: Color = new Color(10, 55, 235, 190);
+
+    @property({ type: Color, displayName: '光幕内层高光色' })
+    public finishLightCurtainHighlightColor: Color = new Color(190, 250, 255, 245);
+
+    @property({ type: CCFloat, displayName: '光幕厚度', min: 0.01, max: 0.5 })
+    public finishLightCurtainThickness: number = 0.22;
+
+    @property({ type: CCFloat, displayName: '水幕浓度（0-1）', min: 0.1, max: 1 })
+    public finishLightCurtainDensity: number = 0.9;
+
+    @property({ type: CCFloat, displayName: '光幕左右扩展宽度', min: 0 })
+    public finishLightCurtainWidthPadding: number = 0.65;
+
+    @property({ type: CCFloat, displayName: '光幕高度', min: 0.1 })
+    public finishLightCurtainHeight: number = 3.2;
+
+    @property({ type: CCFloat, displayName: '光幕离地高度', min: 0 })
+    public finishLightCurtainGroundOffset: number = 0.05;
+
+    @property({ type: CCInteger, displayName: '光幕流光数量', min: 1, max: 12 })
+    public finishLightBandCount: number = 6;
+
+    @property({ type: CCFloat, displayName: '光幕流光速度', min: 0.1 })
+    public finishLightBandSpeed: number = 2.8;
+
+    @property({ type: CCInteger, displayName: '光幕漂浮光点数量', min: 0, max: 24 })
+    public finishLightParticleCount: number = 12;
+
+    @property({ type: CCInteger, displayName: '每面纵向亮纹数量', min: 0, max: 12 })
+    public finishLightStreakCount: number = 5;
+
+    @property({ type: AudioClip, displayName: '完成音效（为空时播放升级音效）' })
+    public finishAudioClip: AudioClip = null;
+
+    @property({ type: CCFloat, displayName: '完成音效音量（0-1）', min: 0, max: 1 })
+    public finishAudioVolume: number = 0.8;
+
     @property({ type: CCBoolean, displayName: '保留滑块Z偏移', tooltip: '开启后，初始化时会保留资源里滑块相对起始齿条的 Z 轴偏移。当前默认关闭，滑块直接放到齿条前沿。' })
     public keepSliderZOffset: boolean = false;
 
@@ -287,6 +335,17 @@ export class PropLalianGate extends BattleTarget3D {
     private tempSliderVisualCenterParentPos: Vec3 = new Vec3();
     private tempCubeBoundsHalfExtents: Vec3 = new Vec3();
     private cubeMeshRenderers: MeshRenderer[] = [];
+    private finishLightCurtainRoot: Node = null;
+    private finishLightCurtainMesh: Mesh = null;
+    private finishLightCurtainMaterials: { material: Material, alpha: number, tint: Color, water: boolean }[] = [];
+    private finishLightCurtainEffect: EffectAsset = null;
+    private finishLightCurtainEffectLoading: boolean = false;
+    private finishLightBandNodes: Node[] = [];
+    private finishLightParticleNodes: { node: Node, phase: number, speed: number, size: number, x: number, z: number }[] = [];
+    private finishLightCurtainTime: number = 0;
+    private finishLightCurtainLength: number = 0;
+    private finishLightCurtainWidth: number = 0;
+    private finishLightCurtainHeightRuntime: number = 0;
     private originalToothPositions: Map<Node, Vec3> = new Map();
     private closeCenter: number = 0;
     private animating: boolean = false;
@@ -404,13 +463,22 @@ export class PropLalianGate extends BattleTarget3D {
 
     protected onDestroy(): void {
         this.unregisterTarget();
+        for (let i = 0; i < this.finishLightCurtainMaterials.length; i++) {
+            this.finishLightCurtainMaterials[i].material.destroy();
+        }
+        this.finishLightCurtainMaterials.length = 0;
+        this.finishLightCurtainMesh?.destroy();
+        this.finishLightCurtainMesh = null;
     }
 
     protected _update(dt: number): void {
         this.updatePullRingSpring(dt);
+        this.updateFinishLightCurtain(dt);
     }
 
     public initGate(): void {
+        this.preloadFinishLightCurtainEffect();
+        this.resetFinishFeedback();
         this.setupColliderTag();
         this.prepareLalian();
         if (this.teeth.length <= 0 || !this.cube) {
@@ -520,6 +588,7 @@ export class PropLalianGate extends BattleTarget3D {
         this.unregisterTarget();
         this.updateHpLabel(0);
         this.resetPullRingTailToStart();
+        this.playFinishFeedback();
 
         const emitFinish = () => {
             const info = { moveCount: this.moveCount };
@@ -541,6 +610,267 @@ export class PropLalianGate extends BattleTarget3D {
                 emitFinish();
             })
             .start();
+    }
+
+    private resetFinishFeedback(): void {
+        this.finishLightCurtainTime = 0;
+        if (this.finishLightCurtainRoot) {
+            Tween.stopAllByTarget(this.finishLightCurtainRoot);
+            this.finishLightCurtainRoot.active = false;
+        }
+    }
+
+    private playFinishFeedback(): void {
+        const volume = Math.max(0, Math.min(1, this.finishAudioVolume));
+        AudioManager.inst.playOneShot(this.finishAudioClip ?? SoundEnum.Sound_Ship_UpLevel, volume);
+
+        if (!this.enableFinishLightCurtain) {
+            return;
+        }
+
+        this.playFinishLightCurtainVisual();
+    }
+
+    private playFinishLightCurtainVisual(): void {
+        if (this.finishLightCurtainEffectLoading) {
+            return;
+        }
+
+        this.ensureFinishLightCurtain();
+        if (!this.finishLightCurtainRoot) {
+            return;
+        }
+        this.finishLightCurtainTime = 0;
+        this.finishLightCurtainRoot.active = true;
+        this.finishLightCurtainRoot.setScale(1, 0.05, 1);
+        Tween.stopAllByTarget(this.finishLightCurtainRoot);
+        tween(this.finishLightCurtainRoot)
+            .to(0.16, { scale: Vec3.ONE }, { easing: 'quadOut' })
+            .start();
+    }
+
+    private ensureFinishLightCurtain(): void {
+        if (this.finishLightCurtainRoot || !this.lalianRoot) {
+            return;
+        }
+
+        let minX = Number.POSITIVE_INFINITY;
+        let maxX = Number.NEGATIVE_INFINITY;
+        let minZ = Number.POSITIVE_INFINITY;
+        let maxZ = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < this.teeth.length; i++) {
+            const pos = this.teeth[i].position;
+            minX = Math.min(minX, pos.x);
+            maxX = Math.max(maxX, pos.x);
+            minZ = Math.min(minZ, pos.z);
+            maxZ = Math.max(maxZ, pos.z);
+        }
+        if (!Number.isFinite(minX) || !Number.isFinite(minZ)) {
+            return;
+        }
+
+        const width = Math.max(1, maxX - minX + Math.max(0, this.finishLightCurtainWidthPadding) * 2);
+        const length = Math.max(1, maxZ - minZ + this.nodeSpacingZ);
+        const height = Math.max(0.1, this.finishLightCurtainHeight);
+        const centerX = (minX + maxX) * 0.5;
+        const centerZ = (minZ + maxZ) * 0.5;
+        const groundY = (this.cube?.position.y ?? 0) + Math.max(0, this.finishLightCurtainGroundOffset);
+
+        this.finishLightCurtainLength = length;
+        this.finishLightCurtainWidth = width;
+        this.finishLightCurtainHeightRuntime = height;
+        this.finishLightCurtainMesh = utils.createMesh({
+            positions: [-0.5, -0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, 0],
+            normals: [0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+            uvs: [0, 0, 1, 0, 1, 1, 0, 1],
+            indices: [0, 1, 2, 0, 2, 3],
+        });
+
+        const root = new Node('LalianFinishLightCurtain_Runtime');
+        root.layer = this.lalianRoot.layer;
+        this.lalianRoot.addChild(root);
+        root.setPosition(centerX, groundY, centerZ);
+        this.finishLightCurtainRoot = root;
+
+        const thickness = Math.max(0.01, Math.min(0.5, this.finishLightCurtainThickness));
+        const mainColor = this.finishLightCurtainColor;
+        const outerColor = this.finishLightCurtainOuterColor;
+        const highlightColor = this.finishLightCurtainHighlightColor;
+
+        this.createFinishLightPlane(root, '光幕左墙中层', new Vec3(-width * 0.5, height * 0.5, 0), new Vec3(0, 90, 0), new Vec3(length, height, 1), 82, mainColor, true);
+        this.createFinishLightPlane(root, '光幕左墙外层', new Vec3(-width * 0.5 - thickness, height * 0.5, 0), new Vec3(0, 90, 0), new Vec3(length, height * 0.96, 1), 62, outerColor);
+        this.createFinishLightPlane(root, '光幕左墙内层', new Vec3(-width * 0.5 + thickness * 0.48, height * 0.5, 0), new Vec3(0, 90, 0), new Vec3(length * 0.98, height * 0.9, 1), 42, highlightColor);
+        this.createFinishLightPlane(root, '光幕右墙中层', new Vec3(width * 0.5, height * 0.5, 0), new Vec3(0, 90, 0), new Vec3(length, height, 1), 82, mainColor, true);
+        this.createFinishLightPlane(root, '光幕右墙外层', new Vec3(width * 0.5 + thickness, height * 0.5, 0), new Vec3(0, 90, 0), new Vec3(length, height * 0.96, 1), 62, outerColor);
+        this.createFinishLightPlane(root, '光幕右墙内层', new Vec3(width * 0.5 - thickness * 0.48, height * 0.5, 0), new Vec3(0, 90, 0), new Vec3(length * 0.98, height * 0.9, 1), 42, highlightColor);
+        this.createFinishLightPlane(root, '光幕末端中层', new Vec3(0, height * 0.5, length * 0.5), Vec3.ZERO, new Vec3(width, height, 1), 58, mainColor, true);
+        this.createFinishLightPlane(root, '光幕末端外层', new Vec3(0, height * 0.5, length * 0.5 + thickness), Vec3.ZERO, new Vec3(width * 1.04, height * 0.96, 1), 46, outerColor);
+        this.createFinishLightPlane(root, '光幕末端内层', new Vec3(0, height * 0.5, length * 0.5 - thickness * 0.48), Vec3.ZERO, new Vec3(width * 0.96, height * 0.9, 1), 34, highlightColor);
+        this.createFinishLightPlane(root, '光幕前端中层', new Vec3(0, height * 0.5, -length * 0.5), Vec3.ZERO, new Vec3(width, height, 1), 58, mainColor, true);
+        this.createFinishLightPlane(root, '光幕前端外层', new Vec3(0, height * 0.5, -length * 0.5 - thickness), Vec3.ZERO, new Vec3(width * 1.04, height * 0.96, 1), 46, outerColor);
+        this.createFinishLightPlane(root, '光幕前端内层', new Vec3(0, height * 0.5, -length * 0.5 + thickness * 0.48), Vec3.ZERO, new Vec3(width * 0.96, height * 0.9, 1), 34, highlightColor);
+
+        const baseGlowHeight = Math.max(0.22, height * 0.13);
+        this.createFinishLightPlane(root, '左墙底部浓光', new Vec3(-width * 0.5 + 0.008, baseGlowHeight * 0.5, 0), new Vec3(0, 90, 0), new Vec3(length, baseGlowHeight, 1), 215, highlightColor);
+        this.createFinishLightPlane(root, '右墙底部浓光', new Vec3(width * 0.5 - 0.008, baseGlowHeight * 0.5, 0), new Vec3(0, 90, 0), new Vec3(length, baseGlowHeight, 1), 215, highlightColor);
+        this.createFinishLightPlane(root, '末端底部浓光', new Vec3(0, baseGlowHeight * 0.5, length * 0.5 - 0.008), Vec3.ZERO, new Vec3(width, baseGlowHeight, 1), 205, highlightColor);
+        this.createFinishLightPlane(root, '前端底部浓光', new Vec3(0, baseGlowHeight * 0.5, -length * 0.5 + 0.008), Vec3.ZERO, new Vec3(width, baseGlowHeight, 1), 205, highlightColor);
+
+        const borderWidth = Math.max(0.035, Math.min(0.1, width * 0.035));
+        this.createFinishLightPlane(root, '地面左边框', new Vec3(-width * 0.5, 0.018, 0), new Vec3(90, 0, 0), new Vec3(borderWidth, length, 1), 230);
+        this.createFinishLightPlane(root, '地面右边框', new Vec3(width * 0.5, 0.018, 0), new Vec3(90, 0, 0), new Vec3(borderWidth, length, 1), 230);
+        this.createFinishLightPlane(root, '地面前边框', new Vec3(0, 0.018, -length * 0.5), new Vec3(90, 0, 0), new Vec3(width, borderWidth, 1), 230);
+        this.createFinishLightPlane(root, '地面后边框', new Vec3(0, 0.018, length * 0.5), new Vec3(90, 0, 0), new Vec3(width, borderWidth, 1), 230);
+
+        const cornerWidth = Math.max(0.025, borderWidth * 0.55);
+        for (let xIndex = -1; xIndex <= 1; xIndex += 2) {
+            for (let zIndex = -1; zIndex <= 1; zIndex += 2) {
+                this.createFinishLightPlane(
+                    root,
+                    `转角光柱_${xIndex}_${zIndex}`,
+                    new Vec3(width * 0.5 * xIndex, height * 0.5, length * 0.5 * zIndex),
+                    Vec3.ZERO,
+                    new Vec3(cornerWidth, height, 1),
+                    235
+                );
+            }
+        }
+
+        const streakCount = Math.max(0, Math.min(12, Math.floor(this.finishLightStreakCount)));
+        for (let i = 0; i < streakCount; i++) {
+            const z = length * ((i + 1) / (streakCount + 1) - 0.5);
+            const streakHeight = height * (0.42 + this.finishLightRandom01(i * 3.17 + 1) * 0.48);
+            const streakWidth = 0.018 + this.finishLightRandom01(i * 5.31 + 2) * 0.045;
+            const y = streakHeight * 0.5 + this.finishLightRandom01(i * 7.73 + 3) * height * 0.08;
+            this.createFinishLightPlane(root, `左墙亮纹_${i + 1}`, new Vec3(-width * 0.5 - 0.006, y, z), new Vec3(0, 90, 0), new Vec3(streakWidth, streakHeight, 1), 150);
+            this.createFinishLightPlane(root, `右墙亮纹_${i + 1}`, new Vec3(width * 0.5 + 0.006, y, z), new Vec3(0, 90, 0), new Vec3(streakWidth, streakHeight, 1), 150);
+
+            const x = width * ((i + 1) / (streakCount + 1) - 0.5);
+            this.createFinishLightPlane(root, `末端亮纹_${i + 1}`, new Vec3(x, y, length * 0.5 + 0.006), Vec3.ZERO, new Vec3(streakWidth, streakHeight, 1), 135);
+        }
+
+        const bandCount = Math.max(1, Math.min(12, Math.floor(this.finishLightBandCount)));
+        for (let i = 0; i < bandCount; i++) {
+            const band = this.createFinishLightPlane(root, `流光_${i + 1}`, Vec3.ZERO, new Vec3(90, 0, 0), new Vec3(width * 0.92, 0.07 + (i % 2) * 0.035, 1), 210);
+            this.finishLightBandNodes.push(band);
+        }
+
+        const particleCount = Math.max(0, Math.min(24, Math.floor(this.finishLightParticleCount)));
+        for (let i = 0; i < particleCount; i++) {
+            const x = (this.finishLightRandom01(i * 11.41 + 4) - 0.5) * width * 0.86;
+            const z = (this.finishLightRandom01(i * 13.37 + 5) - 0.5) * length * 0.92;
+            const size = 0.045 + this.finishLightRandom01(i * 17.13 + 6) * 0.085;
+            const particle = this.createFinishLightPlane(root, `漂浮光点_${i + 1}`, new Vec3(x, 0, z), Vec3.ZERO, new Vec3(size, size, 1), 235);
+            this.finishLightParticleNodes.push({
+                node: particle,
+                phase: this.finishLightRandom01(i * 19.91 + 7),
+                speed: 0.55 + this.finishLightRandom01(i * 23.17 + 8) * 0.9,
+                size,
+                x,
+                z,
+            });
+        }
+        root.active = false;
+    }
+
+    private finishLightRandom01(seed: number): number {
+        const value = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
+        return value - Math.floor(value);
+    }
+
+    private preloadFinishLightCurtainEffect(): void {
+        if (this.finishLightCurtainEffect || this.finishLightCurtainEffectLoading) {
+            return;
+        }
+        this.finishLightCurtainEffectLoading = true;
+        resources.load('Effect/LalianWaterCurtain', EffectAsset, (error, asset) => {
+            this.finishLightCurtainEffectLoading = false;
+            if (!error && asset?.isValid) {
+                this.finishLightCurtainEffect = asset;
+            }
+            if (this.finished && this.enableFinishLightCurtain && !this.finishLightCurtainRoot) {
+                this.playFinishLightCurtainVisual();
+            }
+        });
+    }
+
+    private createFinishLightPlane(parent: Node, name: string, position: Vec3, euler: Vec3, scale: Vec3, alpha: number, tint: Color = null, useWater: boolean = false): Node {
+        const plane = new Node(name);
+        plane.layer = parent.layer;
+        parent.addChild(plane);
+        plane.setPosition(position);
+        plane.setRotationFromEuler(euler);
+        plane.setScale(scale);
+
+        const renderer = plane.addComponent(MeshRenderer);
+        renderer.mesh = this.finishLightCurtainMesh;
+        renderer.shadowCastingMode = MeshRenderer.ShadowCastingMode.OFF;
+        const material = new Material();
+        const color = tint ?? this.finishLightCurtainColor;
+        const water = useWater && !!this.finishLightCurtainEffect;
+        if (water) {
+            material.initialize({ effectAsset: this.finishLightCurtainEffect });
+            material.setProperty('mainColor', this.finishLightCurtainColor);
+            material.setProperty('deepColor', this.finishLightCurtainOuterColor);
+            material.setProperty('highlightColor', this.finishLightCurtainHighlightColor);
+            material.setProperty('flowSpeed', Math.max(0.1, this.finishLightBandSpeed) * 0.62);
+            material.setProperty('flowDensity', 7);
+            material.setProperty('opacity', Math.max(0.1, Math.min(1, this.finishLightCurtainDensity)));
+        } else {
+            material.initialize({ effectName: 'builtin-unlit', technique: 3 });
+            material.setProperty('mainColor', new Color(color.r, color.g, color.b, Math.round(alpha * color.a / 255)));
+        }
+        renderer.setSharedMaterial(material, 0);
+        this.finishLightCurtainMaterials.push({ material, alpha, tint: color.clone(), water });
+        return plane;
+    }
+
+    private updateFinishLightCurtain(dt: number): void {
+        const root = this.finishLightCurtainRoot;
+        if (!root?.active) {
+            return;
+        }
+        this.finishLightCurtainTime += Math.max(0, dt);
+        const duration = Math.max(0.1, this.finishLightCurtainDuration);
+        const progress = this.finishLightCurtainTime / duration;
+        if (progress >= 1) {
+            root.active = false;
+            return;
+        }
+
+        const fade = progress < 0.72 ? 1 : Math.max(0, (1 - progress) / 0.28);
+        const pulse = 0.88 + Math.sin(this.finishLightCurtainTime * 13) * 0.12;
+        const density = Math.max(0.1, Math.min(1, this.finishLightCurtainDensity));
+        for (let i = 0; i < this.finishLightCurtainMaterials.length; i++) {
+            const entry = this.finishLightCurtainMaterials[i];
+            const tint = entry.tint;
+            if (entry.water) {
+                entry.material.setProperty('opacity', density * fade * pulse);
+            } else {
+                const thicknessBoost = 0.8 + density * 0.55;
+                const alpha = Math.round(Math.min(255, entry.alpha * (tint.a / 255) * fade * pulse * thicknessBoost));
+                entry.material.setProperty('mainColor', new Color(tint.r, tint.g, tint.b, alpha));
+            }
+        }
+
+        const speed = Math.max(0.1, this.finishLightBandSpeed);
+        const length = Math.max(0.1, this.finishLightCurtainLength);
+        for (let i = 0; i < this.finishLightBandNodes.length; i++) {
+            const phase = (this.finishLightCurtainTime * speed / length + i / this.finishLightBandNodes.length) % 1;
+            this.finishLightBandNodes[i].setPosition(0, 0.025 + (i % 2) * 0.018, length * (0.5 - phase));
+        }
+
+        const height = Math.max(0.1, this.finishLightCurtainHeightRuntime);
+        const width = Math.max(0.1, this.finishLightCurtainWidth);
+        for (let i = 0; i < this.finishLightParticleNodes.length; i++) {
+            const particle = this.finishLightParticleNodes[i];
+            const rise = (particle.phase + this.finishLightCurtainTime * particle.speed / height) % 1;
+            const sway = Math.sin(this.finishLightCurtainTime * (2.5 + particle.speed) + i * 1.71) * width * 0.025;
+            particle.node.setPosition(particle.x + sway, height * (0.08 + rise * 0.84), particle.z);
+            const sparkle = 0.65 + Math.sin(this.finishLightCurtainTime * 9 + i * 2.13) * 0.35;
+            const scale = particle.size * (0.65 + sparkle * 0.55);
+            particle.node.setScale(scale, scale, 1);
+        }
     }
 
     private prepareLalian(): void {
