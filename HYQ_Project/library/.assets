@@ -736,7 +736,6 @@
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts",
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts",
             "resources\\Effect",
-            "resources\\Effect\\LalianWaterCurtain.effect",
             "resources\\Sound\\升级铲子.mp3"
         ]
     }

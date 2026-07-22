@@ -4408,7 +4408,7 @@
       "time": 1781689576517.3992
     },
     "Script\\functionS\\Other\\PropLalianGate.ts": {
-      "time": 1784708424307.9966,
+      "time": 1784711161689.8801,
       "uuid": "1bf3438b-1da7-4434-930b-814432d521fc"
     },
     "Script\\functionS\\Battle\\BulletBatchRenderer.ts.meta": {
@@ -5150,15 +5150,8 @@
     "resources\\Effect.meta": {
       "time": 1784708302769.1736
     },
-    "resources\\Effect\\LalianWaterCurtain.effect.meta": {
-      "time": 1784708302768.1758
-    },
-    "resources\\Effect\\LalianWaterCurtain.effect": {
-      "time": 1784708426150.9248,
-      "uuid": "78bef212-0f4f-4eba-a2f6-81d4b6a58538"
-    },
     "resources\\Effect": {
-      "time": 1784708302662.1782,
+      "time": 1784711295956.1384,
       "uuid": "d372a205-3ec0-4700-b163-99bbfdbbe58c"
     },
     "resources\\Sound\\升级铲子.mp3.meta": {
