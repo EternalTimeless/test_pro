@@ -57,6 +57,7 @@ export class Role extends Component {
     private hasInitialArmsTransform: boolean = false;
     private shadowRenderers: MeshRenderer[] = [];
     private originalShadowCastingModes: number[] = [];
+    private shadowRendererIsWeapon: boolean[] = [];
     private shadowCastingEnabled: boolean | null = null;
     private static readonly propSocketNodeName: string = 'Bip001 Prop1 Socket';
     private readonly propSocketNodes: Node[] = [];
@@ -130,29 +131,28 @@ export class Role extends Component {
     }
 
     public setShadowCastingEnabled(enabled: boolean): void {
-        this.cacheShadowRenderers();
+        const hasNewRenderer = this.cacheShadowRenderers();
+        if (!hasNewRenderer && this.shadowCastingEnabled === enabled) {
+            return;
+        }
         for (let i = 0; i < this.shadowRenderers.length; i++) {
             const renderer = this.shadowRenderers[i];
             if (!renderer?.isValid) {
                 continue;
             }
-            renderer.shadowCastingMode = enabled
+            renderer.shadowCastingMode = enabled && !this.shadowRendererIsWeapon[i]
                 ? this.originalShadowCastingModes[i]
                 : MeshRenderer.ShadowCastingMode.OFF;
         }
         this.shadowCastingEnabled = enabled;
     }
 
-    private cacheShadowRenderers(): void {
-        // 角色除了蒙皮身体外还可能带静态武器/配件，统一纳入圈层阴影开关。
+    private cacheShadowRenderers(): boolean {
+        let hasNewRenderer = false;
+        // 扫描全部模型以处理对象池/换装；武器子树只记录，不参与实时投影。
         const renderers = this.node.getComponentsInChildren(MeshRenderer);
         for (let i = 0; i < renderers.length; i++) {
-            const renderer = renderers[i];
-            if (this.shadowRenderers.indexOf(renderer) >= 0) {
-                continue;
-            }
-            this.shadowRenderers.push(renderer);
-            this.originalShadowCastingModes.push(renderer.shadowCastingMode);
+            hasNewRenderer = this.addShadowRenderer(renderers[i]) || hasNewRenderer;
         }
         const stack: Node[] = [...this.node.children];
         while (stack.length > 0) {
@@ -162,17 +162,37 @@ export class Role extends Component {
             }
             const nodeRenderers = node.getComponents(MeshRenderer);
             for (let i = 0; i < nodeRenderers.length; i++) {
-                const renderer = nodeRenderers[i];
-                if (this.shadowRenderers.indexOf(renderer) >= 0) {
-                    continue;
-                }
-                this.shadowRenderers.push(renderer);
-                this.originalShadowCastingModes.push(renderer.shadowCastingMode);
+                hasNewRenderer = this.addShadowRenderer(nodeRenderers[i]) || hasNewRenderer;
             }
             for (let i = 0; i < node.children.length; i++) {
                 stack.push(node.children[i]);
             }
         }
+        return hasNewRenderer;
+    }
+
+    private addShadowRenderer(renderer: MeshRenderer): boolean {
+        if (!renderer || this.shadowRenderers.indexOf(renderer) >= 0) {
+            return false;
+        }
+        this.shadowRenderers.push(renderer);
+        this.originalShadowCastingModes.push(renderer.shadowCastingMode);
+        this.shadowRendererIsWeapon.push(this.isNodeInArmsTree(renderer.node));
+        return true;
+    }
+
+    private isNodeInArmsTree(node: Node | null): boolean {
+        if (!this.arms || !node) {
+            return false;
+        }
+        let current: Node | null = node;
+        while (current) {
+            if (current === this.arms) {
+                return true;
+            }
+            current = current.parent;
+        }
+        return false;
     }
 
     private cacheInitialArmsTransform(): void {
