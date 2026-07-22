@@ -13024,9 +13024,9 @@
     "monsterType": 1,
     "mixBaby01": true,
     "baby1Ratio": 0.5,
-    "monsterCountMax": 90,
+    "monsterCountMax": 60,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 110,
+    "zRangeCountBase": 80,
     "monsterHp": 0,
     "difficulty": 1,
     "brotherExcludeZ": 0
@@ -13050,9 +13050,9 @@
     "monsterType": 1,
     "mixBaby01": true,
     "baby1Ratio": 0.5,
-    "monsterCountMax": 130,
+    "monsterCountMax": 100,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 150,
+    "zRangeCountBase": 120,
     "monsterHp": 0,
     "difficulty": 2,
     "brotherExcludeZ": 0
@@ -13063,11 +13063,11 @@
     "monsterType": 1,
     "mixBaby01": true,
     "baby1Ratio": 0.5,
-    "monsterCountMax": 180,
+    "monsterCountMax": 160,
     "actualSpawnCount": 0,
     "zRangeCountBase": 200,
     "monsterHp": 0,
-    "difficulty": 3,
+    "difficulty": 2.5,
     "brotherExcludeZ": 0
   },
   {
@@ -13080,7 +13080,7 @@
     "actualSpawnCount": 0,
     "zRangeCountBase": 0,
     "monsterHp": 0,
-    "difficulty": 5,
+    "difficulty": 4,
     "brotherExcludeZ": 0
   },
   {
