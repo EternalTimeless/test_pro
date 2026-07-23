@@ -465,6 +465,7 @@ export class CreatePropBrand extends UnityUpComponent {
             return false;
         }
         const feedbackNode = new Node('Dazhuang_ATK_Top_Feedback');
+        feedbackNode.layer = canvas.node.layer;
         canvas.node.addChild(feedbackNode);
         feedbackNode.setSiblingIndex(canvas.node.children.length - 1);
         feedbackNode.setPosition(0, 70, 0);

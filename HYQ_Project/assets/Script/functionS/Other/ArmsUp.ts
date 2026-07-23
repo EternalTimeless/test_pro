@@ -35,7 +35,10 @@ export class ArmsUp extends UnityUpComponent {
     public dazhuangPickupPositionShake: number = 1.8;
 
     @property({ type: CCFloat, displayName: '大壮落点缩放倍率（1-1.35）', min: 1, max: 1.35, step: 0.01, tooltip: '大壮全队替换完成时的模型弹性放大倍率。' })
-    public dazhuangPickupEffectScale: number = 1.25;
+    public dazhuangPickupEffectScale: number = 1.3;
+
+    @property({ type: CCFloat, displayName: '大壮整队缩放时长（秒）', min: 0.1, tooltip: '整队大壮从放大、短暂停留到回弹结束的总时间。' })
+    public dazhuangPickupScaleDuration: number = 0.8;
 
     @property({ type: Color, displayName: '大壮落点金身颜色', tooltip: '缩放期间角色边缘光与金身高亮的颜色。' })
     public dazhuangPickupGlowColor: Color = new Color(255, 190, 20, 255);
@@ -50,7 +53,7 @@ export class ArmsUp extends UnityUpComponent {
     public dazhuangAttackTextHeight: number = 5.8;
 
     @property({ type: CCFloat, displayName: '攻击力提示持续时间（秒）', tooltip: '大号攻击力文字从弹出到完全淡出的总时长。' })
-    public dazhuangAttackTextDuration: number = 1.6;
+    public dazhuangAttackTextDuration: number = 1.5;
 
     @property({ type: Color, displayName: '攻击力提示金黄色', tooltip: 'ATK +150% 主体颜色，默认按参考图使用偏橙的亮金黄色。' })
     public dazhuangAttackTextColor: Color = new Color(255, 202, 0, 255);
@@ -192,9 +195,9 @@ export class ArmsUp extends UnityUpComponent {
             }
             Tween.stopAllByTarget(visualNode);
             const originalScale = visualNode.scale.clone();
-            const pickupScale = Math.max(1, Math.min(1.35, this.dazhuangPickupEffectScale));
+            const pickupScale = Math.max(1, Math.min(1.4, this.dazhuangPickupEffectScale));
             const ghostScale = originalScale.clone().multiplyScalar(pickupScale);
-            const glowDuration = 0.32 + 0.18 + 0.35;
+            const glowDuration = Math.max(0.1, this.dazhuangPickupScaleDuration);
             FlashRedManager.instance.flashRed(
                 roleNode,
                 role.getUpgradeGoldGlowData(),
@@ -205,9 +208,9 @@ export class ArmsUp extends UnityUpComponent {
                 0,
             );
             tween(visualNode)
-                .to(0.32, { scale: ghostScale }, { easing: 'sineOut' })
-                .delay(0.18)
-                .to(0.35, { scale: originalScale }, { easing: 'backOut' })
+                .to(glowDuration * 0.35, { scale: ghostScale }, { easing: 'sineOut' })
+                .delay(glowDuration * 0.2)
+                .to(glowDuration * 0.45, { scale: originalScale }, { easing: 'backOut' })
                 .start();
         }
     }
