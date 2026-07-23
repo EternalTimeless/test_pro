@@ -9,7 +9,6 @@ import { UnityUpComponent } from '../../Base/UnityUpComponent';
 import { EffectManager } from '../Effect/EffectManager';
 import AudioManager from '../../Base/AudioManager';
 import LayerManager from '../../Base/LayerManager';
-import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 import { CreatePropBrand } from './CreatePropBrand';
 const { ccclass, property } = _decorator;
 
@@ -34,8 +33,8 @@ export class ArmsUp extends UnityUpComponent {
     @property({ type: CCFloat, displayName: '大壮落点镜头位移震动', tooltip: '大壮武器吸入玩家完成时的镜头位移震动强度。' })
     public dazhuangPickupPositionShake: number = 1.8;
 
-    @property({ type: CCFloat, displayName: '大壮虚影特效倍率', tooltip: '复用吃到 +1 时的虚影升级特效；数值越大，虚影扩散范围越大。' })
-    public dazhuangPickupEffectScale: number = 1.06;
+    @property({ type: CCFloat, displayName: '大壮落点缩放倍率（1-1.35）', min: 1, max: 1.35, step: 0.01, tooltip: '大壮全队替换完成时的模型弹性放大倍率。' })
+    public dazhuangPickupEffectScale: number = 1.25;
 
     @property({ type: CCString, displayName: '大壮攻击力提示文字', tooltip: '吃到大壮时显示在角色群上方的大号攻击力提示。' })
     public dazhuangAttackText: string = 'ATK+150%';
@@ -161,7 +160,7 @@ export class ArmsUp extends UnityUpComponent {
         this.applyArmsUpgrade(armsInfo);
         if (isDazhuang) {
             this.pendingDazhuangRoleType = armsInfo.armsType === ArmsTypeEnum.jtl2 ? RoleEnum.dazhuangPlus : RoleEnum.dazhuang;
-            this.pendingDazhuangFeedbackFrames = 30;
+            this.pendingDazhuangFeedbackFrames = 120;
         } else {
             EffectManager.instance.addShowEffect(pos, EffectEnum.up, 3);
         }
@@ -173,26 +172,27 @@ export class ArmsUp extends UnityUpComponent {
         if (!roles?.length) {
             return;
         }
-        const role = roles.find((item) => item?.type === this.pendingDazhuangRoleType);
-        if (!role) {
+        const dazhuangRoles = roles.filter((item) => item?.type === this.pendingDazhuangRoleType);
+        if (!dazhuangRoles.length) {
             return;
         }
-        const roleNode = role?.node;
-        if (!roleNode?.isValid) {
-            return;
+        for (let i = 0; i < dazhuangRoles.length; i++) {
+            const role = dazhuangRoles[i];
+            const roleNode = role?.node;
+            const visualNode = role?.fbxManager?.node;
+            if (!roleNode?.isValid || !visualNode?.isValid) {
+                continue;
+            }
+            Tween.stopAllByTarget(visualNode);
+            const originalScale = visualNode.scale.clone();
+            const pickupScale = Math.max(1, Math.min(1.35, this.dazhuangPickupEffectScale));
+            const ghostScale = originalScale.clone().multiplyScalar(pickupScale);
+            tween(visualNode)
+                .to(0.32, { scale: ghostScale }, { easing: 'sineOut' })
+                .delay(0.18)
+                .to(0.35, { scale: originalScale }, { easing: 'backOut' })
+                .start();
         }
-        FlashRedManager.instance.flashRed(roleNode, role.meshCreateDataList, 0.42, this.dazhuangAttackTextColor, 'dazhuang_pickup');
-        const visualNode = role.fbxManager?.node;
-        if (!visualNode?.isValid) {
-            return;
-        }
-        Tween.stopAllByTarget(visualNode);
-        const originalScale = visualNode.scale.clone();
-        const ghostScale = originalScale.clone().multiplyScalar(Math.max(1, Math.min(1.08, this.dazhuangPickupEffectScale)));
-        tween(visualNode)
-            .to(0.18, { scale: ghostScale }, { easing: 'sineOut' })
-            .to(0.22, { scale: originalScale }, { easing: 'backOut' })
-            .start();
     }
 
     private showDazhuangAttackText(): void {
@@ -205,7 +205,7 @@ export class ArmsUp extends UnityUpComponent {
             this.dazhuangAttackText,
             playerPos,
             this.dazhuangAttackTextColor,
-            1.7,
+            1.4,
             this.dazhuangAttackTextDuration,
         );
     }
@@ -297,8 +297,9 @@ export class ArmsUp extends UnityUpComponent {
         if (this.pendingDazhuangFeedbackFrames <= 0 || this.pendingDazhuangRoleType === null) {
             return;
         }
-        const hasTargetRole = this.player?.roleList?.some((role) => role?.type === this.pendingDazhuangRoleType);
-        if (!hasTargetRole) {
+        const matchingRoleCount = this.player?.roleList?.filter((role) => role?.type === this.pendingDazhuangRoleType).length ?? 0;
+        const requiredRoleCount = this.player?.roleList?.length ?? 1;
+        if (matchingRoleCount < requiredRoleCount) {
             this.pendingDazhuangFeedbackFrames--;
             if (this.pendingDazhuangFeedbackFrames <= 0) {
                 this.pendingDazhuangRoleType = null;

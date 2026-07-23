@@ -59,6 +59,8 @@ export class Role extends Component {
     private originalShadowCastingModes: number[] = [];
     private shadowRendererIsWeapon: boolean[] = [];
     private shadowCastingEnabled: boolean | null = null;
+    private stagedRendererEnabledStates: boolean[] = [];
+    private renderingStaged: boolean = false;
     private static readonly propSocketNodeName: string = 'Bip001 Prop1 Socket';
     private readonly propSocketNodes: Node[] = [];
     private readonly propSocketVisibleStates: boolean[] = [];
@@ -145,6 +147,37 @@ export class Role extends Component {
                 : MeshRenderer.ShadowCastingMode.OFF;
         }
         this.shadowCastingEnabled = enabled;
+    }
+
+    /** 升级换模准备期间保持节点和动画激活，但暂时禁止模型提交到渲染管线。 */
+    public setUpgradeRenderingStaged(staged: boolean): void {
+        this.cacheShadowRenderers();
+        if (staged) {
+            if (this.renderingStaged) {
+                return;
+            }
+            this.stagedRendererEnabledStates.length = this.shadowRenderers.length;
+            for (let i = 0; i < this.shadowRenderers.length; i++) {
+                const renderer = this.shadowRenderers[i];
+                this.stagedRendererEnabledStates[i] = !!renderer?.enabled;
+                if (renderer?.isValid) {
+                    renderer.enabled = false;
+                }
+            }
+            this.renderingStaged = true;
+            return;
+        }
+        if (!this.renderingStaged) {
+            return;
+        }
+        for (let i = 0; i < this.shadowRenderers.length; i++) {
+            const renderer = this.shadowRenderers[i];
+            if (renderer?.isValid) {
+                renderer.enabled = this.stagedRendererEnabledStates[i] ?? true;
+            }
+        }
+        this.stagedRendererEnabledStates.length = 0;
+        this.renderingStaged = false;
     }
 
     private cacheShadowRenderers(): boolean {

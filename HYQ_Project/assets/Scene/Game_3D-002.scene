@@ -14561,8 +14561,7 @@
     },
     "dazhuangPickupZoomShake": 1.1,
     "dazhuangPickupPositionShake": 3.5,
-    "dazhuangPickupEffectScale": 4,
-    "dazhuangGhostRoleCount": 8,
+    "dazhuangPickupEffectScale": 1.25,
     "dazhuangAttackText": "ATK +150%",
     "dazhuangAttackTextHeight": 4.8,
     "dazhuangAttackTextDuration": 1.15,
@@ -14571,13 +14570,6 @@
       "r": 255,
       "g": 202,
       "b": 0,
-      "a": 255
-    },
-    "dazhuangAttackOutlineColor": {
-      "__type__": "cc.Color",
-      "r": 58,
-      "g": 36,
-      "b": 2,
       "a": 255
     },
     "_id": "ceoglaxE9MfoQoGGrRlBxr"
@@ -14611,7 +14603,7 @@
     "defaultWeaponConfigIndex": 3,
     "enableRuntimeUpgradePrewarm": true,
     "rolePrewarmPerFrame": 3,
-    "roleSwitchPerFrame": 2,
+    "roleSwitchPerFrame": 8,
     "maxRoleShotsPerFrame": 8,
     "weaponBulletConfigList": [
       {

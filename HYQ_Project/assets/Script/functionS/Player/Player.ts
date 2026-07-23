@@ -182,6 +182,8 @@ export class Player extends UnityUpComponent {
 
     private pendingRoleSwitchType: RoleEnum = null;
     private pendingRoleSwitchIndex: number = 0;
+    private pendingRoleSwitchCommitRequested: boolean = false;
+    private readonly stagedRoleSwitchRoles: (Role | null)[] = [];
     private pendingRolePrewarmType: RoleEnum = null;
     private pendingRolePrewarmCount: number = 0;
     private pendingBulletPrewarmType: BulletEnum = null;
@@ -190,6 +192,9 @@ export class Player extends UnityUpComponent {
     private readonly bulletPrewarmPerFrame: number = 2;
     private currentWeaponBulletConfig: WeaponBulletConfig | null = null;
     private currentWeaponBulletConfigIndex: number = -1;
+    private pendingWeaponBulletConfig: WeaponBulletConfig | null = null;
+    private pendingWeaponBulletConfigIndex: number = -1;
+    private pendingWeaponArmsType: ArmsTypeEnum | null = null;
     private currentShootingRoleLimit: number = 0;
     private currentBulletsPerRoleLimit: number = 1;
     private readonly frontShootingRoleIndices: number[] = [];
@@ -764,33 +769,19 @@ export class Player extends UnityUpComponent {
         this.pendingStaggerShots.length = 0;
         this.continuousShotAccumulator = 0;
         this.continuousRoleCursor = 0;
-        this.currentWeaponBulletConfig = weaponBulletConfig;
-        this.currentWeaponBulletConfigIndex = weaponBulletConfig ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex) : -1;
         let shouldApplyRoleModel = false;
         switch (upgradeArmsType) {
             case ArmsTypeEnum.bq:
-                this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
                 shouldApplyRoleModel = true;
                 break;
             case ArmsTypeEnum.jq:
-                this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
                 shouldApplyRoleModel = true;
                 break;
 
             case ArmsTypeEnum.jtl:
-                this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
-                this.roleR = 1;
-                Role.soundType = SoundEnum.Sound_FireGun;
                 shouldApplyRoleModel = true;
                 break;
             case ArmsTypeEnum.jtl2: {
-                this.applyWeaponBulletConfig(weaponBulletConfig);
-                this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
-                this.roleR = 1;
-                Role.soundType = SoundEnum.Sound_FireGun;
                 shouldApplyRoleModel = true;
                 break;
             }
@@ -800,8 +791,49 @@ export class Player extends UnityUpComponent {
                 break;
         }
         if (shouldApplyRoleModel) {
+            if (this.enableRuntimeUpgradePrewarm) {
+                this.pendingWeaponBulletConfig = weaponBulletConfig;
+                this.pendingWeaponBulletConfigIndex = weaponBulletConfig
+                    ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex)
+                    : -1;
+                this.pendingWeaponArmsType = upgradeArmsType;
+                this.applyWeaponRoleModel(weaponBulletConfig, upgradeArmsType);
+                return;
+            }
+            this.applyWeaponUpgradeCombatConfig(weaponBulletConfig, upgradeArmsType, weaponBulletConfigIndex);
             this.applyWeaponRoleModel(weaponBulletConfig, upgradeArmsType);
         }
+    }
+
+    private applyWeaponUpgradeCombatConfig(
+        weaponBulletConfig: WeaponBulletConfig | null,
+        upgradeArmsType: ArmsTypeEnum,
+        weaponBulletConfigIndex: number,
+    ): void {
+        this.currentWeaponBulletConfig = weaponBulletConfig;
+        this.currentWeaponBulletConfigIndex = weaponBulletConfig
+            ? this.getWeaponBulletConfigResolvedIndex(weaponBulletConfig, weaponBulletConfigIndex)
+            : -1;
+        this.applyWeaponBulletConfig(weaponBulletConfig);
+        this.applyWeaponFireLimits(weaponBulletConfig, upgradeArmsType);
+        if (upgradeArmsType === ArmsTypeEnum.jtl || upgradeArmsType === ArmsTypeEnum.jtl2) {
+            this.roleR = 1;
+            Role.soundType = SoundEnum.Sound_FireGun;
+        }
+    }
+
+    private applyPendingWeaponUpgradeCombatConfig(): void {
+        if (this.pendingWeaponArmsType === null) {
+            return;
+        }
+        this.applyWeaponUpgradeCombatConfig(
+            this.pendingWeaponBulletConfig,
+            this.pendingWeaponArmsType,
+            this.pendingWeaponBulletConfigIndex,
+        );
+        this.pendingWeaponBulletConfig = null;
+        this.pendingWeaponBulletConfigIndex = -1;
+        this.pendingWeaponArmsType = null;
     }
 
     public prepareArmsUpgrade(armwType: ArmsTypeEnum, weaponBulletConfigIndex: number = -1) {
@@ -826,7 +858,7 @@ export class Player extends UnityUpComponent {
         if (targetRoleType === null) {
             return;
         }
-        this.startRolePrewarm(targetRoleType, this.getRoleSwitchNeedCount(targetRoleType));
+        this.startRoleSwitchPreparation(targetRoleType);
     }
 
     private clearRuntimeWarmupQueue() {
@@ -1075,8 +1107,23 @@ export class Player extends UnityUpComponent {
 
     private startRoleSwitch(roleType: RoleEnum) {
         this.roleType = roleType;
+        if (this.pendingRoleSwitchType === roleType) {
+            this.pendingRoleSwitchCommitRequested = true;
+            return;
+        }
+        this.startRoleSwitchPreparation(roleType);
+        this.pendingRoleSwitchCommitRequested = true;
+    }
+
+    /** 油桶飞行期间开始隐藏准备角色，但在油桶真正到达前不改变可见模型和战斗配置。 */
+    private startRoleSwitchPreparation(roleType: RoleEnum): void {
+        if (this.pendingRoleSwitchType === roleType) {
+            return;
+        }
+        this.recycleStagedRoleSwitchRoles();
         this.pendingRoleSwitchType = roleType;
         this.pendingRoleSwitchIndex = 0;
+        this.pendingRoleSwitchCommitRequested = false;
         this.roleLayoutDirty = false;
         if (this.enableRuntimeUpgradePrewarm) {
             this.startRolePrewarm(roleType, this.getRoleSwitchNeedCount(roleType));
@@ -1098,6 +1145,11 @@ export class Player extends UnityUpComponent {
 
     private processPendingRoleSwitch() {
         if (this.pendingRoleSwitchType === null) {
+            return;
+        }
+
+        if (this.enableRuntimeUpgradePrewarm) {
+            this.processStagedRoleSwitch();
             return;
         }
 
@@ -1152,6 +1204,97 @@ export class Player extends UnityUpComponent {
                 this.upPos();
             }
         }
+    }
+
+    /**
+     * 先分帧完成新角色激活、挂接和动画同步，同时关闭其 Renderer；全部准备好后只在
+     * 一个提交点切换可见性，兼顾视觉完整性与帧时间稳定性。
+     */
+    private processStagedRoleSwitch(): void {
+        if (this.pendingRoleSwitchIndex === 0 && this.stagedRoleSwitchRoles.length === 0) {
+            this.stagedRoleSwitchRoles.length = this.roleList.length;
+        }
+
+        let count = Math.max(1, Math.floor(this.roleSwitchPerFrame));
+        while (count > 0 && this.pendingRoleSwitchIndex < this.roleList.length) {
+            const index = this.pendingRoleSwitchIndex;
+            const oldRole = this.roleList[index];
+            if (!oldRole || oldRole.type === this.pendingRoleSwitchType) {
+                this.stagedRoleSwitchRoles[index] = oldRole ?? null;
+                this.pendingRoleSwitchIndex++;
+                count--;
+                continue;
+            }
+
+            const newRole = this.getPooledRoleByType(this.pendingRoleSwitchType);
+            if (!newRole) {
+                // 预热与隐藏挂接采用流水线：本帧池内角色已消费完就等待下一帧预热，
+                // 只有预热队列也结束时才补建缺失角色。
+                if (this.pendingRolePrewarmType === null) {
+                    this.startRolePrewarm(this.pendingRoleSwitchType, 1);
+                }
+                return;
+            }
+            Tween.stopAllByTarget(newRole.node);
+            this.node.addChild(newRole.node);
+            newRole.node.setPosition(oldRole.node.position);
+            newRole.node.setScale(oldRole.node.scale);
+            newRole.attackIN = oldRole.attackIN;
+            this.syncRoleAnimationToTeam(newRole);
+            newRole.setUpgradeRenderingStaged(true);
+            this.stagedRoleSwitchRoles[index] = newRole;
+            this.pendingRoleSwitchIndex++;
+            count--;
+        }
+
+        if (this.pendingRoleSwitchIndex < this.roleList.length) {
+            return;
+        }
+
+        // 油桶仍在飞行时只保持全部新角色隐藏待命；到达事件发出提交信号后再统一显示。
+        if (!this.pendingRoleSwitchCommitRequested) {
+            return;
+        }
+
+        for (let i = 0; i < this.roleList.length; i++) {
+            const oldRole = this.roleList[i];
+            const newRole = this.stagedRoleSwitchRoles[i];
+            if (!newRole || newRole === oldRole) {
+                continue;
+            }
+            newRole.node.setPosition(oldRole.node.position);
+            newRole.node.setScale(oldRole.node.scale);
+            newRole.attackIN = oldRole.attackIN;
+            this.roleList[i] = newRole;
+            oldRole.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + oldRole.type, oldRole);
+            newRole.setUpgradeRenderingStaged(false);
+        }
+
+        // 模型可见性与子弹、伤害、射速和声音配置在同一提交点生效。
+        this.applyPendingWeaponUpgradeCombatConfig();
+        this.stagedRoleSwitchRoles.length = 0;
+        this.pendingRoleSwitchType = null;
+        this.pendingRoleSwitchIndex = 0;
+        this.pendingRoleSwitchCommitRequested = false;
+        this.invalidateRoleFormationCaches();
+        this.refreshRoleShadowCasting();
+        this.upPos();
+    }
+
+    private recycleStagedRoleSwitchRoles(): void {
+        for (let i = 0; i < this.stagedRoleSwitchRoles.length; i++) {
+            const role = this.stagedRoleSwitchRoles[i];
+            if (!role || role === this.roleList[i]) {
+                continue;
+            }
+            role.setUpgradeRenderingStaged(false);
+            role.node.active = false;
+            PoolManager.instance.setPool(PoolEnum.role + role.type, role);
+        }
+        this.stagedRoleSwitchRoles.length = 0;
+        this.pendingRoleSwitchIndex = 0;
+        this.pendingRoleSwitchCommitRequested = false;
     }
 
     //7.003 2.329

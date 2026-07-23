@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Color, instantiate, ITriggerEvent, Label, Node, tween, Tween, UIOpacity, Vec3 } from 'cc';
+import { _decorator, Canvas, CCFloat, CCInteger, Color, director, instantiate, ITriggerEvent, Label, LabelOutline, Node, tween, Tween, UIOpacity, UITransform, Vec3 } from 'cc';
 import PoolManager from '../../Base/PoolManager';
 import { PropBrand } from './PropBrand';
 import { EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum } from '../../Base/EnumList';
@@ -459,17 +459,48 @@ export class CreatePropBrand extends UnityUpComponent {
         propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
     }
 
-    public static showSharedFloatingFeedback(text: string, worldPos: Vec3, color: Color, fontScale: number = 1, duration: number = 0): boolean {
-        const host = CreatePropBrand.feedbackHost;
-        const template = host?.propBrandList?.[0];
-        if (!host?.node?.isValid || !template) {
+    public static showSharedFloatingFeedback(text: string, _worldPos: Vec3, color: Color, fontScale: number = 1, duration: number = 0): boolean {
+        const canvas = director.getScene()?.getComponentInChildren(Canvas);
+        if (!canvas?.node?.isValid) {
             return false;
         }
-        host.showFloatingFeedback(template, text, worldPos, color, fontScale, duration);
+        const feedbackNode = new Node('Dazhuang_ATK_Top_Feedback');
+        canvas.node.addChild(feedbackNode);
+        feedbackNode.setSiblingIndex(canvas.node.children.length - 1);
+        feedbackNode.setPosition(0, 70, 0);
+
+        const transform = feedbackNode.addComponent(UITransform);
+        transform.setContentSize(900, 180);
+        const label = feedbackNode.addComponent(Label);
+        label.string = text;
+        label.fontSize = Math.round(72 * Math.max(0.1, fontScale));
+        label.lineHeight = Math.round(82 * Math.max(0.1, fontScale));
+        label.color = color.clone();
+        label.horizontalAlign = 1;
+        label.verticalAlign = 1;
+        const outline = feedbackNode.addComponent(LabelOutline);
+        outline.color = new Color(58, 36, 2, 255);
+        outline.width = 7;
+        const opacity = feedbackNode.addComponent(UIOpacity);
+        opacity.opacity = 255;
+
+        const totalDuration = Math.max(0.6, duration);
+        feedbackNode.setScale(0.65, 0.65, 1);
+        tween(feedbackNode)
+            .to(0.18, { scale: new Vec3(1.08, 1.08, 1) }, { easing: 'backOut' })
+            .to(0.1, { scale: Vec3.ONE })
+            .delay(Math.max(0, totalDuration - 0.68))
+            .by(0.4, { position: new Vec3(0, 45, 0) }, { easing: 'sineOut' })
+            .call(() => feedbackNode.destroy())
+            .start();
+        tween(opacity)
+            .delay(Math.max(0.2, totalDuration - 0.4))
+            .to(0.4, { opacity: 0 }, { easing: 'sineOut' })
+            .start();
         return true;
     }
 
-    private showFloatingFeedback(propBrand: PropBrand, text: string, worldPos: Vec3, color: Color | null = null, fontScale: number = 1, duration: number = 0): void {
+    private showFloatingFeedback(propBrand: PropBrand, text: string, worldPos: Vec3, color: Color | null = null, fontScale: number = 1, duration: number = 0, parentOverride: Node | null = null, keepTemplateMaterial: boolean = false): void {
         const templateNode = propBrand?.lab?.node;
         if (!templateNode || !this.labelVisualGroup) {
             return;
@@ -480,9 +511,11 @@ export class CreatePropBrand extends UnityUpComponent {
             feedbackNode.destroy();
             return;
         }
-        label.customMaterial = null;
+        if (!keepTemplateMaterial) {
+            label.customMaterial = null;
+        }
 
-        this.labelVisualGroup.addChild(feedbackNode);
+        (parentOverride ?? this.labelVisualGroup).addChild(feedbackNode);
         feedbackNode.active = true;
         feedbackNode.setWorldPosition(worldPos.x, worldPos.y + this.feedbackStartYOffset, worldPos.z);
         feedbackNode.setScale(templateNode.scale);
