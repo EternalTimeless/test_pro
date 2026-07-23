@@ -58,7 +58,6 @@ export class ArmsUp extends UnityUpComponent {
     private _monsterList: MonsterBattleTaerget[] = [];
     private flyingWeaponNodes: Set<Node> = new Set();
     private flyingWeaponStateMap: Map<Node, WeaponFlyState> = new Map();
-    private pendingDazhuangFeedbackFrames: number = 0;
     private pendingDazhuangRoleType: RoleEnum = null;
     private static readonly tempForward: Vec3 = new Vec3();
     private static readonly tempQuat: Quat = new Quat();
@@ -68,6 +67,7 @@ export class ArmsUp extends UnityUpComponent {
 
     start() {
         EventManager.instance.on(EventType.PROP_ARMS_DIE, this.armsUPEvent, this);
+        EventManager.instance.on(EventType.PLAYER_ROLE_UPGRADE_COMMITTED, this.onRoleUpgradeCommitted, this);
         // EventManager.instance.on(EventType.Monster_Attack_Player_ADD, this.addMonster, this);
         EventManager.instance.on(EventType.PLAYER_RESURRECTION, this.TimeFlowsBackWard, this);
     }
@@ -164,11 +164,11 @@ export class ArmsUp extends UnityUpComponent {
         const isDazhuang = armsInfo.armsType === ArmsTypeEnum.jtl || armsInfo.armsType === ArmsTypeEnum.jtl2;
         CameraMove.instance.Shake2(isDazhuang ? this.dazhuangPickupZoomShake : 0.5);
         AudioManager.inst.playOneShot(SoundEnum.Sound_Ship_UpLevel);
-        this.applyArmsUpgrade(armsInfo);
         if (isDazhuang) {
             this.pendingDazhuangRoleType = armsInfo.armsType === ArmsTypeEnum.jtl2 ? RoleEnum.dazhuangPlus : RoleEnum.dazhuang;
-            this.pendingDazhuangFeedbackFrames = 120;
-        } else {
+        }
+        this.applyArmsUpgrade(armsInfo);
+        if (!isDazhuang) {
             EffectManager.instance.addShowEffect(pos, EffectEnum.up, 3);
         }
         CameraMove.instance.Shake1(isDazhuang ? this.dazhuangPickupPositionShake : 1.5);
@@ -197,10 +197,10 @@ export class ArmsUp extends UnityUpComponent {
             const glowDuration = 0.32 + 0.18 + 0.35;
             FlashRedManager.instance.flashRed(
                 roleNode,
-                role.meshCreateDataList,
+                role.getUpgradeGoldGlowData(),
                 glowDuration,
                 this.dazhuangPickupGlowColor,
-                'dazhuang_pickup_glow',
+                `dazhuang_pickup_gold_${role.type}`,
                 Math.max(0, Math.min(1, this.dazhuangPickupGlowIntensity)),
                 0,
             );
@@ -210,6 +210,15 @@ export class ArmsUp extends UnityUpComponent {
                 .to(0.35, { scale: originalScale }, { easing: 'backOut' })
                 .start();
         }
+    }
+
+    private onRoleUpgradeCommitted(roleType: RoleEnum): void {
+        if (roleType !== this.pendingDazhuangRoleType) {
+            return;
+        }
+        this.showDazhuangRoleGhosts();
+        this.showDazhuangAttackText();
+        this.pendingDazhuangRoleType = null;
     }
 
     private showDazhuangAttackText(): void {
@@ -306,27 +315,7 @@ export class ArmsUp extends UnityUpComponent {
 
     protected _update(dt: number): void {
         this.updateFlyingWeapons(dt);
-        this.updatePendingDazhuangFeedback();
         // this.checkPlayerAndMonsterCollide();
-    }
-
-    private updatePendingDazhuangFeedback(): void {
-        if (this.pendingDazhuangFeedbackFrames <= 0 || this.pendingDazhuangRoleType === null) {
-            return;
-        }
-        const matchingRoleCount = this.player?.roleList?.filter((role) => role?.type === this.pendingDazhuangRoleType).length ?? 0;
-        const requiredRoleCount = this.player?.roleList?.length ?? 1;
-        if (matchingRoleCount < requiredRoleCount) {
-            this.pendingDazhuangFeedbackFrames--;
-            if (this.pendingDazhuangFeedbackFrames <= 0) {
-                this.pendingDazhuangRoleType = null;
-            }
-            return;
-        }
-        this.showDazhuangRoleGhosts();
-        this.showDazhuangAttackText();
-        this.pendingDazhuangFeedbackFrames = 0;
-        this.pendingDazhuangRoleType = null;
     }
 
     private checkPlayerAndMonsterCollide() {

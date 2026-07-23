@@ -774,6 +774,7 @@
         "195a1b86-f57e-4d07-af1b-3f836083249a",
         "9a96fc79-fcf2-4e2d-946e-0dca53a468fb@6016b",
         "85075bb1-7df0-491d-bece-017584a8240e",
+        "e45ad251-66cf-4236-892e-4e19fcb8fc79",
         "e8305cd2-ff6f-4d66-87b6-d20ad664cf8d",
         "ac9ad6bb-eec4-4420-9650-717c4a7d5140",
         "8f687ae9-f5b3-4c5d-9170-5014aa2c3c84",
@@ -10219,6 +10220,274 @@
     "url": "db://assets/resources/Sound/升级铲子.mp3",
     "value": {
       "depends": []
+    },
+    "versionCode": 1
+  },
+  "ac3aa96a-489e-44b3-b54b-583a096a60b3": {
+    "url": "db://assets/GameRes/Effect/lalian/FX",
+    "value": {},
+    "versionCode": 1
+  },
+  "a2333acd-e14f-49f5-823a-edd6e3a2529b": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx",
+    "value": {},
+    "versionCode": 1
+  },
+  "eee0de15-632b-4f92-8d92-d406a21c1cca": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao",
+    "value": {},
+    "versionCode": 1
+  },
+  "b6a29a2e-60f6-4080-99bf-cf8cb515ba22": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/fab",
+    "value": {},
+    "versionCode": 1
+  },
+  "4371569c-afe4-444e-a499-5a830b643a83": {
+    "url": "db://assets/GameRes/Effect/lalian",
+    "value": {},
+    "versionCode": 1
+  },
+  "c3cac480-3d2b-4dd2-a614-3fe4bfbb9487": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mat",
+    "value": {},
+    "versionCode": 1
+  },
+  "8f31d893-723c-477b-96e1-ee54ee91078a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mech",
+    "value": {},
+    "versionCode": 1
+  },
+  "6d22ae12-8d8c-4581-828a-f7d810820472": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex",
+    "value": {},
+    "versionCode": 1
+  },
+  "e45ad251-66cf-4236-892e-4e19fcb8fc79": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/fab/jianzhujieshuo.prefab",
+    "value": {
+      "depends": [
+        "66c7f3d3-7224-4b41-b638-6601961747fb",
+        "1263d74c-8167-4928-91a6-4e2672411f47@fc873",
+        "29d64d0b-f075-4749-ae14-140918030f0a@6c48a",
+        "1652b28a-10dd-4b1c-937c-7a1d212200bc",
+        "3a4e40dd-f5af-4f48-a05a-36be138543e6@46540",
+        "b976aade-38ac-4ded-8e39-29280281e0ca@6c48a",
+        "54a999d4-4cb8-4745-acf6-f881683f44e0",
+        "df7eadf0-ecc1-4a8f-b652-3b8f0774874b@6c48a",
+        "1ee732da-7390-44e8-ad5f-28c0a7ad163f",
+        "b7860061-93cd-4b84-a9ae-af97ae16965e@6c48a",
+        "c81b1f52-7c47-4830-a5fc-27b41d1d1d9f",
+        "80c0ab8e-5cd3-4d1b-98ea-0e0b37e6318a@6c48a",
+        "afae95f9-936d-434a-a80d-d4c8ee1be097",
+        "835d3e4b-7d10-46f6-86f6-21e0ee0d4c29@6c48a",
+        "661aa1c3-9ee5-4fe0-abaa-2f8e8791775a",
+        "b11eae9f-ce2b-4c93-b11f-b86af64fe4cc@6c48a"
+      ],
+      "dependScripts": []
+    },
+    "versionCode": 1
+  },
+  "e8347825-112c-4cbf-b419-03260d5de685": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mat/jiantou-add.mtl",
+    "value": {
+      "depends": [
+        "d1346436-ac96-4271-b863-1f4fdead95b0",
+        "835d3e4b-7d10-46f6-86f6-21e0ee0d4c29@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "66c7f3d3-7224-4b41-b638-6601961747fb": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mat/kuang-001.mtl",
+    "value": {
+      "depends": [
+        "d1346436-ac96-4271-b863-1f4fdead95b0",
+        "29d64d0b-f075-4749-ae14-140918030f0a@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "1652b28a-10dd-4b1c-937c-7a1d212200bc": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mat/kuang-002.mtl",
+    "value": {
+      "depends": [
+        "d1346436-ac96-4271-b863-1f4fdead95b0",
+        "b976aade-38ac-4ded-8e39-29280281e0ca@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "54a999d4-4cb8-4745-acf6-f881683f44e0": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mat/kuang-003.mtl",
+    "value": {
+      "depends": [
+        "d1346436-ac96-4271-b863-1f4fdead95b0",
+        "df7eadf0-ecc1-4a8f-b652-3b8f0774874b@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "661aa1c3-9ee5-4fe0-abaa-2f8e8791775a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mat/kuang.mtl",
+    "value": {
+      "depends": [
+        "d1346436-ac96-4271-b863-1f4fdead95b0",
+        "b11eae9f-ce2b-4c93-b11f-b86af64fe4cc@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "3b69a72b-6067-4f30-a1f4-fe2655997baa": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mat/spark-add.mtl",
+    "value": {
+      "depends": [
+        "d1346436-ac96-4271-b863-1f4fdead95b0",
+        "80c0ab8e-5cd3-4d1b-98ea-0e0b37e6318a@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "cfea6be0-7043-4596-ba29-fc177bb74a69": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mat/star-add.mtl",
+    "value": {
+      "depends": [
+        "d1346436-ac96-4271-b863-1f4fdead95b0",
+        "b7860061-93cd-4b84-a9ae-af97ae16965e@6c48a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "3a4e40dd-f5af-4f48-a05a-36be138543e6": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mech/box5.FBX",
+    "value": {},
+    "versionCode": 3
+  },
+  "b976aade-38ac-4ded-8e39-29280281e0ca": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/10661515f1f2aaff68627416472181ee144991b391fb-rSuvcE.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "b11eae9f-ce2b-4c93-b11f-b86af64fe4cc": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/fk-mask.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "67d48de9-1be6-4830-ace3-1823637b954c": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/glow_wjf_014.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "832f5b3f-bf3e-4f6a-a5d1-767203878011": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/jiantou_key_001.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "b976aade-38ac-4ded-8e39-29280281e0ca@6c48a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/10661515f1f2aaff68627416472181ee144991b391fb-rSuvcE.png@6c48a",
+    "value": {
+      "depends": [
+        "b976aade-38ac-4ded-8e39-29280281e0ca"
+      ]
+    },
+    "versionCode": 1
+  },
+  "29d64d0b-f075-4749-ae14-140918030f0a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/mask_CPgt_zt_010.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "67d48de9-1be6-4830-ace3-1823637b954c@6c48a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/glow_wjf_014.png@6c48a",
+    "value": {
+      "depends": [
+        "67d48de9-1be6-4830-ace3-1823637b954c"
+      ]
+    },
+    "versionCode": 1
+  },
+  "df7eadf0-ecc1-4a8f-b652-3b8f0774874b": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/mask_CPgt_zw_00999.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "832f5b3f-bf3e-4f6a-a5d1-767203878011@6c48a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/jiantou_key_001.png@6c48a",
+    "value": {
+      "depends": [
+        "832f5b3f-bf3e-4f6a-a5d1-767203878011"
+      ]
+    },
+    "versionCode": 1
+  },
+  "161307dc-3ab6-41ba-9c67-80422c1a5cdf": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/star.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "29d64d0b-f075-4749-ae14-140918030f0a@6c48a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/mask_CPgt_zt_010.png@6c48a",
+    "value": {
+      "depends": [
+        "29d64d0b-f075-4749-ae14-140918030f0a"
+      ]
+    },
+    "versionCode": 1
+  },
+  "df7eadf0-ecc1-4a8f-b652-3b8f0774874b@6c48a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/mask_CPgt_zw_00999.png@6c48a",
+    "value": {
+      "depends": [
+        "df7eadf0-ecc1-4a8f-b652-3b8f0774874b"
+      ]
+    },
+    "versionCode": 1
+  },
+  "b11eae9f-ce2b-4c93-b11f-b86af64fe4cc@6c48a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/fk-mask.png@6c48a",
+    "value": {
+      "depends": [
+        "b11eae9f-ce2b-4c93-b11f-b86af64fe4cc"
+      ]
+    },
+    "versionCode": 1
+  },
+  "161307dc-3ab6-41ba-9c67-80422c1a5cdf@6c48a": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/tex/star.png@6c48a",
+    "value": {
+      "depends": [
+        "161307dc-3ab6-41ba-9c67-80422c1a5cdf"
+      ]
+    },
+    "versionCode": 1
+  },
+  "3a4e40dd-f5af-4f48-a05a-36be138543e6@46540": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mech/box5.FBX@46540",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "3a4e40dd-f5af-4f48-a05a-36be138543e6@7cb06": {
+    "url": "db://assets/GameRes/Effect/lalian/FX/fx/A-texiao/mech/box5.FBX@7cb06",
+    "value": {
+      "depends": [
+        "3a4e40dd-f5af-4f48-a05a-36be138543e6@46540"
+      ]
     },
     "versionCode": 1
   }

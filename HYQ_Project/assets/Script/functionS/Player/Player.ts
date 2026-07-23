@@ -1280,6 +1280,7 @@ export class Player extends UnityUpComponent {
         this.invalidateRoleFormationCaches();
         this.refreshRoleShadowCasting();
         this.upPos();
+        EventManager.instance.emit(EventType.PLAYER_ROLE_UPGRADE_COMMITTED, this.roleType);
     }
 
     private recycleStagedRoleSwitchRoles(): void {

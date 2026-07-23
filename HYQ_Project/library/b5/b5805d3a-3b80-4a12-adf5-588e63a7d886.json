@@ -72,7 +72,7 @@
     },
     "autoReleaseAssets": true,
     "_globals": {
-      "__id__": 1247
+      "__id__": 1243
     },
     "_id": "b5805d3a-3b80-4a12-adf5-588e63a7d886"
   },
@@ -11522,20 +11522,18 @@
     "hitAnimTime": 0.3,
     "cubeHideTime": 0.08,
     "enableFinishEffect": true,
-    "finishEffectPrefab": null,
-    "finishEffectDuration": 1.2,
-    "finishEffectReferenceWidth": 1,
-    "finishEffectReferenceHeight": 1,
-    "finishEffectReferenceLength": 1,
-    "finishEffectTargetHeight": 3.2,
-    "finishEffectWidthPadding": 0.65,
-    "finishEffectLengthPadding": 0.4,
-    "finishEffectLocalOffset": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
+    "finishEffectSceneNode": null,
+    "finishEffectPrefab": {
+      "__uuid__": "e45ad251-66cf-4236-892e-4e19fcb8fc79",
+      "__expectedType__": "cc.Prefab"
     },
+    "finishEffectScenePositionX": 0.24,
+    "finishEffectScenePositionY": 0,
+    "finishEffectScenePositionZ": -0.2,
+    "finishEffectSceneScaleX": 1,
+    "finishEffectSceneScaleY": 1.4,
+    "finishEffectSceneScaleZ": 1,
+    "finishEffectDuration": 1.2,
     "finishAudioClip": {
       "__uuid__": "e8305cd2-ff6f-4d66-87b6-d20ad664cf8d",
       "__expectedType__": "cc.AudioClip"
@@ -12573,20 +12571,15 @@
     "hitAnimTime": 0.12,
     "cubeHideTime": 0.08,
     "enableFinishEffect": true,
+    "finishEffectSceneNode": null,
     "finishEffectPrefab": null,
+    "finishEffectScenePositionX": 0,
+    "finishEffectScenePositionY": 0,
+    "finishEffectScenePositionZ": 0,
+    "finishEffectSceneScaleX": 1,
+    "finishEffectSceneScaleY": 1,
+    "finishEffectSceneScaleZ": 1,
     "finishEffectDuration": 1.2,
-    "finishEffectReferenceWidth": 1,
-    "finishEffectReferenceHeight": 1,
-    "finishEffectReferenceLength": 1,
-    "finishEffectTargetHeight": 3.2,
-    "finishEffectWidthPadding": 0.65,
-    "finishEffectLengthPadding": 0.4,
-    "finishEffectLocalOffset": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
     "finishAudioClip": null,
     "finishAudioVolume": 0.8,
     "keepSliderZOffset": true,
@@ -12725,7 +12718,7 @@
         "__id__": 775
       }
     ],
-    "smoothTotalHitCount": 300,
+    "smoothTotalHitCount": 280,
     "smoothProgressEasePower": 2,
     "smoothEndSpeedFloor": 0.75,
     "teethPerPair": 2,
@@ -12743,20 +12736,18 @@
     "hitAnimTime": 0.1,
     "cubeHideTime": 0.08,
     "enableFinishEffect": true,
-    "finishEffectPrefab": null,
-    "finishEffectDuration": 1.2,
-    "finishEffectReferenceWidth": 1,
-    "finishEffectReferenceHeight": 1,
-    "finishEffectReferenceLength": 1,
-    "finishEffectTargetHeight": 3.2,
-    "finishEffectWidthPadding": 0.65,
-    "finishEffectLengthPadding": 0.4,
-    "finishEffectLocalOffset": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
+    "finishEffectSceneNode": null,
+    "finishEffectPrefab": {
+      "__uuid__": "e45ad251-66cf-4236-892e-4e19fcb8fc79",
+      "__expectedType__": "cc.Prefab"
     },
+    "finishEffectScenePositionX": 0.2,
+    "finishEffectScenePositionY": 0,
+    "finishEffectScenePositionZ": -4.5,
+    "finishEffectSceneScaleX": 1.1,
+    "finishEffectSceneScaleY": 2.6,
+    "finishEffectSceneScaleZ": 1,
+    "finishEffectDuration": 1.2,
     "finishAudioClip": {
       "__uuid__": "e8305cd2-ff6f-4d66-87b6-d20ad664cf8d",
       "__expectedType__": "cc.AudioClip"
@@ -13068,9 +13059,9 @@
     "monsterType": 0,
     "mixBaby01": true,
     "baby1Ratio": 0.5,
-    "monsterCountMax": 80,
-    "actualSpawnCount": 70,
-    "zRangeCountBase": 70,
+    "monsterCountMax": 60,
+    "actualSpawnCount": 60,
+    "zRangeCountBase": 60,
     "monsterHp": 0,
     "difficulty": 1,
     "brotherExcludeZ": 0
@@ -13081,9 +13072,9 @@
     "monsterType": 1,
     "mixBaby01": true,
     "baby1Ratio": 0.5,
-    "monsterCountMax": 60,
+    "monsterCountMax": 50,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 80,
+    "zRangeCountBase": 70,
     "monsterHp": 0,
     "difficulty": 1,
     "brotherExcludeZ": 0
@@ -13107,9 +13098,9 @@
     "monsterType": 1,
     "mixBaby01": true,
     "baby1Ratio": 0.5,
-    "monsterCountMax": 100,
+    "monsterCountMax": 90,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 120,
+    "zRangeCountBase": 110,
     "monsterHp": 0,
     "difficulty": 2,
     "brotherExcludeZ": 0
@@ -13120,9 +13111,9 @@
     "monsterType": 1,
     "mixBaby01": true,
     "baby1Ratio": 0.5,
-    "monsterCountMax": 160,
+    "monsterCountMax": 150,
     "actualSpawnCount": 0,
-    "zRangeCountBase": 200,
+    "zRangeCountBase": 180,
     "monsterHp": 0,
     "difficulty": 2.5,
     "brotherExcludeZ": 0
@@ -19895,12 +19886,6 @@
       },
       {
         "__id__": 1240
-      },
-      {
-        "__id__": 1243
-      },
-      {
-        "__id__": 1245
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -20769,76 +20754,30 @@
     ]
   },
   {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
-      "__id__": 740
-    },
-    "sourceInfo": null,
-    "propertyPath": [
-      "finishLightCurtain"
-    ],
-    "target": {
-      "__id__": 12
-    },
-    "targetInfo": {
-      "__id__": 1244
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "4e0CzTL4ZFxpmvddPFyZQV",
-      "94hzmBwNlDGZCHB0W7Zrxw"
-    ]
-  },
-  {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
-      "__id__": 769
-    },
-    "sourceInfo": null,
-    "propertyPath": [
-      "finishLightCurtain"
-    ],
-    "target": {
-      "__id__": 12
-    },
-    "targetInfo": {
-      "__id__": 1246
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "46BlOTIdtBFrZI58/wLHMq",
-      "a0XpEfvLlMA6rL8Fh7WgXE"
-    ]
-  },
-  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 1248
+      "__id__": 1244
     },
     "shadows": {
-      "__id__": 1249
+      "__id__": 1245
     },
     "_skybox": {
-      "__id__": 1250
+      "__id__": 1246
     },
     "fog": {
-      "__id__": 1251
+      "__id__": 1247
     },
     "octree": {
-      "__id__": 1252
+      "__id__": 1248
     },
     "skin": {
-      "__id__": 1253
+      "__id__": 1249
     },
     "lightProbeInfo": {
-      "__id__": 1254
+      "__id__": 1250
     },
     "postSettings": {
-      "__id__": 1255
+      "__id__": 1251
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

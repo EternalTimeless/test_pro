@@ -736,7 +736,31 @@
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletBattle3D.ts",
             "Script\\functionS\\Battle\\Battle3D\\Bullet\\BulletCollideBase3D.ts",
             "resources\\Effect",
-            "resources\\Sound\\升级铲子.mp3"
+            "resources\\Sound\\升级铲子.mp3",
+            "GameRes\\Effect\\lalian",
+            "GameRes\\Effect\\lalian\\FX",
+            "GameRes\\Effect\\lalian\\FX\\fx",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao",
+            "GameRes\\Effect\\lalian\\FX\\fx\\fab",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mat",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mech",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\tex",
+            "GameRes\\Effect\\lalian\\FX\\fx\\fab\\jianzhujieshuo.prefab",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mat\\jiantou-add.mtl",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mat\\kuang-001.mtl",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mat\\kuang-002.mtl",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mat\\kuang-003.mtl",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mat\\kuang.mtl",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mat\\spark-add.mtl",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mat\\star-add.mtl",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\mech\\box5.FBX",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\tex\\10661515f1f2aaff68627416472181ee144991b391fb-rSuvcE.png",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\tex\\fk-mask.png",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\tex\\glow_wjf_014.png",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\tex\\jiantou_key_001.png",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\tex\\mask_CPgt_zt_010.png",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\tex\\mask_CPgt_zw_00999.png",
+            "GameRes\\Effect\\lalian\\FX\\fx\\A-texiao\\tex\\star.png"
         ]
     }
 }

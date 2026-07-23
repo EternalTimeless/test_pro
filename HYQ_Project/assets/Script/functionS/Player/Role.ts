@@ -3,7 +3,7 @@ import { FbxManager } from '../SkAnim/FbxManager';
 import { BulletEnum, LayerEnum, RoleEnum, SoundEnum } from '../../Base/EnumList';
 import BulletManager from '../Battle/BulletManager';
 import LayerManager from '../../Base/LayerManager';
-import { MeshFlashData } from '../Battle/Base/BattleTargetBase';
+import { MeshFlashData, MeshFlashPropData, MeshFlashSwitchData } from '../Battle/Base/BattleTargetBase';
 import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 import { AttackParkPlay } from '../Battle/Battle3D/AttackParkPlay';
 import AudioManager from '../../Base/AudioManager';
@@ -80,6 +80,7 @@ export class Role extends Component {
     public meshRedDataList: MeshFlashData[] = [];
     @property({ type: [MeshFlashData], tooltip: '闪红MeshRenderer配置列表，可在属性检查器中编辑' })
     public meshCreateDataList: MeshFlashData[] = [];
+    private upgradeGoldGlowData: MeshFlashData[] | null = null;
 
 
     protected onLoad(): void {
@@ -178,6 +179,43 @@ export class Role extends Component {
         }
         this.stagedRendererEnabledStates.length = 0;
         this.renderingStaged = false;
+    }
+
+    /** 仅使用 Shader 的金色边缘光参数，避开 meshCreateDataList 中原有的蓝色 emissive 通道。 */
+    public getUpgradeGoldGlowData(): MeshFlashData[] {
+        if (this.upgradeGoldGlowData) {
+            return this.upgradeGoldGlowData;
+        }
+        const result: MeshFlashData[] = [];
+        const renderers = new Set<MeshRenderer>();
+        for (let i = 0; i < this.meshCreateDataList.length; i++) {
+            const source = this.meshCreateDataList[i];
+            if (!source?.meshRender?.isValid) {
+                continue;
+            }
+            const supportsEdgeGlow = source.switchProps?.some((item) => item?.propName === 'flashRedIntensity');
+            if (!supportsEdgeGlow || renderers.has(source.meshRender)) {
+                continue;
+            }
+            renderers.add(source.meshRender);
+            const colorProp = new MeshFlashPropData();
+            colorProp.propName = 'flashRedColor';
+            colorProp.passIndex = 0;
+            colorProp.matIndex = -1;
+            const intensitySwitch = new MeshFlashSwitchData();
+            intensitySwitch.propName = 'flashRedIntensity';
+            intensitySwitch.passIndex = 0;
+            intensitySwitch.matIndex = -1;
+            intensitySwitch.flashValue = 1;
+            intensitySwitch.restoreValue = 0;
+            const data = new MeshFlashData();
+            data.meshRender = source.meshRender;
+            data.colorProps = [colorProp];
+            data.switchProps = [intensitySwitch];
+            result.push(data);
+        }
+        this.upgradeGoldGlowData = result;
+        return result;
     }
 
     private cacheShadowRenderers(): boolean {

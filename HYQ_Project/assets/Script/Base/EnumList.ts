@@ -9,6 +9,7 @@ export class EventType {
     public static readonly Monster_Attack_Player_ADD = "Monster_Attack_Player_ADD";
     public static readonly PLAYER_HIT = "Player_Hit";
     public static readonly PLAYER_RESURRECTION = "Player_Resurrection";
+    public static readonly PLAYER_ROLE_UPGRADE_COMMITTED = "Player_Role_Upgrade_Committed";
     public static readonly PLAYER_DIE = "Player_Die";
     public static readonly MONSTER_SKILL_XRD = "Monster_Skill_XRD";
     public static readonly PLAYER_HIT_2 = "Player_Hit_2";

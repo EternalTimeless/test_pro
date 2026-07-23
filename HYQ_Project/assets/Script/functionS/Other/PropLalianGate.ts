@@ -211,32 +211,32 @@ export class PropLalianGate extends BattleTarget3D {
     @property({ type: CCBoolean, displayName: '启用拉链完成特效' })
     public enableFinishEffect: boolean = true;
 
-    @property({ type: Prefab, displayName: '完成特效预制体（等待美术资源）' })
+    @property({ type: Node, displayName: '完成特效场景节点（用于可视化调试）' })
+    public finishEffectSceneNode: Node = null;
+
+    @property({ type: Prefab, displayName: '完成特效预制体（场景节点为空时使用）' })
     public finishEffectPrefab: Prefab = null;
+
+    @property({ type: CCFloat, displayName: '场景特效位置X' })
+    public finishEffectScenePositionX: number = 0;
+
+    @property({ type: CCFloat, displayName: '场景特效位置Y（美术值）' })
+    public finishEffectScenePositionY: number = 0;
+
+    @property({ type: CCFloat, displayName: '场景特效位置Z' })
+    public finishEffectScenePositionZ: number = 0;
+
+    @property({ type: CCFloat, displayName: '场景特效缩放X', min: 0.01 })
+    public finishEffectSceneScaleX: number = 1;
+
+    @property({ type: CCFloat, displayName: '场景特效缩放Y（美术值）', min: 0.01 })
+    public finishEffectSceneScaleY: number = 1;
+
+    @property({ type: CCFloat, displayName: '场景特效缩放Z', min: 0.01 })
+    public finishEffectSceneScaleZ: number = 1;
 
     @property({ type: CCFloat, displayName: '特效播放时长（秒，0=不自动关闭）', min: 0 })
     public finishEffectDuration: number = 1.2;
-
-    @property({ type: CCFloat, displayName: '美术资源参考宽度X', min: 0.01 })
-    public finishEffectReferenceWidth: number = 1;
-
-    @property({ type: CCFloat, displayName: '美术资源参考高度Y', min: 0.01 })
-    public finishEffectReferenceHeight: number = 1;
-
-    @property({ type: CCFloat, displayName: '美术资源参考长度Z', min: 0.01 })
-    public finishEffectReferenceLength: number = 1;
-
-    @property({ type: CCFloat, displayName: '目标特效高度Y', min: 0.01 })
-    public finishEffectTargetHeight: number = 3.2;
-
-    @property({ type: CCFloat, displayName: '特效区域左右扩展宽度', min: 0 })
-    public finishEffectWidthPadding: number = 0.65;
-
-    @property({ type: CCFloat, displayName: '特效区域前后扩展长度', min: 0 })
-    public finishEffectLengthPadding: number = 0.4;
-
-    @property({ type: Vec3, displayName: '特效本地位置微调' })
-    public finishEffectLocalOffset: Vec3 = new Vec3();
 
     @property({ type: AudioClip, displayName: '完成音效（为空时播放升级音效）' })
     public finishAudioClip: AudioClip = null;
@@ -325,6 +325,7 @@ export class PropLalianGate extends BattleTarget3D {
     private cubeMeshRenderers: MeshRenderer[] = [];
     private finishEffectNode: Node = null;
     private finishEffectBaseScale: Vec3 = new Vec3(1, 1, 1);
+    private finishEffectAdapted: boolean = false;
     private originalToothPositions: Map<Node, Vec3> = new Map();
     private closeCenter: number = 0;
     private animating: boolean = false;
@@ -585,6 +586,9 @@ export class PropLalianGate extends BattleTarget3D {
 
     private resetFinishFeedback(): void {
         this.unschedule(this.hideFinishEffect);
+        if (!this.finishEffectNode && this.finishEffectSceneNode) {
+            this.finishEffectNode = this.finishEffectSceneNode;
+        }
         if (this.finishEffectNode) {
             this.finishEffectNode.active = false;
         }
@@ -594,7 +598,7 @@ export class PropLalianGate extends BattleTarget3D {
         const volume = Math.max(0, Math.min(1, this.finishAudioVolume));
         AudioManager.inst.playOneShot(this.finishAudioClip ?? SoundEnum.Sound_Ship_UpLevel, volume);
 
-        if (!this.enableFinishEffect || !this.finishEffectPrefab) {
+        if (!this.enableFinishEffect || (!this.finishEffectSceneNode && !this.finishEffectPrefab)) {
             return;
         }
         this.ensureFinishEffectNode();
@@ -619,47 +623,36 @@ export class PropLalianGate extends BattleTarget3D {
     }
 
     private ensureFinishEffectNode(): void {
-        if (this.finishEffectNode || !this.finishEffectPrefab || !this.lalianRoot) {
+        if (!this.lalianRoot) {
             return;
         }
-        let minX = Number.POSITIVE_INFINITY;
-        let maxX = Number.NEGATIVE_INFINITY;
-        let minZ = Number.POSITIVE_INFINITY;
-        let maxZ = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < this.teeth.length; i++) {
-            const pos = this.teeth[i].position;
-            minX = Math.min(minX, pos.x);
-            maxX = Math.max(maxX, pos.x);
-            minZ = Math.min(minZ, pos.z);
-            maxZ = Math.max(maxZ, pos.z);
+        if (!this.finishEffectNode) {
+            this.finishEffectNode = this.finishEffectSceneNode ?? (this.finishEffectPrefab ? instantiate(this.finishEffectPrefab) : null);
         }
-        if (!Number.isFinite(minX) || !Number.isFinite(minZ)) {
+        const node = this.finishEffectNode;
+        if (!node) {
             return;
         }
-
-        const node = instantiate(this.finishEffectPrefab);
+        if (this.finishEffectAdapted) {
+            return;
+        }
+        if (node.parent !== this.lalianRoot) {
+            node.setParent(this.lalianRoot, false);
+        }
         node.layer = this.lalianRoot.layer;
-        this.lalianRoot.addChild(node);
         this.finishEffectBaseScale.set(node.scale);
-
-        const targetWidth = Math.max(0.01, maxX - minX + Math.max(0, this.finishEffectWidthPadding) * 2);
-        const targetLength = Math.max(0.01, maxZ - minZ + Math.max(0, this.finishEffectLengthPadding) * 2);
-        const targetHeight = Math.max(0.01, this.finishEffectTargetHeight);
-        const scaleX = targetWidth / Math.max(0.01, this.finishEffectReferenceWidth);
-        const scaleY = targetHeight / Math.max(0.01, this.finishEffectReferenceHeight);
-        const scaleZ = targetLength / Math.max(0.01, this.finishEffectReferenceLength);
         node.setScale(
-            this.finishEffectBaseScale.x * scaleX,
-            this.finishEffectBaseScale.y * scaleY,
-            this.finishEffectBaseScale.z * scaleZ
+            this.finishEffectSceneScaleX,
+            this.finishEffectSceneScaleY,
+            this.finishEffectSceneScaleZ
         );
         node.setPosition(
-            (minX + maxX) * 0.5 + this.finishEffectLocalOffset.x,
-            (this.cube?.position.y ?? 0) + this.finishEffectLocalOffset.y,
-            (minZ + maxZ) * 0.5 + this.finishEffectLocalOffset.z
+            this.finishEffectScenePositionX,
+            this.finishEffectScenePositionY,
+            this.finishEffectScenePositionZ
         );
         node.active = false;
-        this.finishEffectNode = node;
+        this.finishEffectAdapted = true;
     }
 
     private hideFinishEffect = (): void => {
