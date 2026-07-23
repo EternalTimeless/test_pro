@@ -1,4 +1,4 @@
-import { _decorator, Canvas, CCFloat, CCInteger, Color, director, instantiate, ITriggerEvent, Label, LabelOutline, Node, screen, tween, Tween, UIOpacity, UITransform, Vec3 } from 'cc';
+import { _decorator, Canvas, CCFloat, CCInteger, Color, director, instantiate, ITriggerEvent, Label, LabelOutline, Node, tween, Tween, UIOpacity, UITransform, Vec3 } from 'cc';
 import PoolManager from '../../Base/PoolManager';
 import { PropBrand } from './PropBrand';
 import { EffectEnum, EventType, LayerEnum, PoolEnum, PrefabsEnum, SoundEnum } from '../../Base/EnumList';
@@ -459,7 +459,7 @@ export class CreatePropBrand extends UnityUpComponent {
         propBrand.bindVisualGroups(this.modelVisualGroup, this.spriteVisualGroup, this.labelVisualGroup);
     }
 
-    public static showSharedFloatingFeedback(text: string, worldPos: Vec3, color: Color, fontScale: number = 1, duration: number = 0): boolean {
+    public static showSharedFloatingFeedback(text: string, _worldPos: Vec3, color: Color, fontScale: number = 1, duration: number = 0): boolean {
         const canvas = director.getScene()?.getComponentInChildren(Canvas);
         if (!canvas?.node?.isValid) {
             return false;
@@ -468,15 +468,10 @@ export class CreatePropBrand extends UnityUpComponent {
         feedbackNode.layer = canvas.node.layer;
         canvas.node.addChild(feedbackNode);
         feedbackNode.setSiblingIndex(canvas.node.children.length - 1);
-        const screenPos = CameraMove.instance.camera.worldToScreen(worldPos);
-        const visibleSize = screen.windowSize;
         const canvasTransform = canvas.node.getComponent(UITransform);
         const canvasSize = canvasTransform.contentSize;
-        feedbackNode.setPosition(
-            (screenPos.x / visibleSize.width - 0.5) * canvasSize.width,
-            (screenPos.y / visibleSize.height - 0.5) * canvasSize.height,
-            0,
-        );
+        // 玩家队伍固定处于画面下半区；使用 Canvas 自身尺寸布局，避免 3D viewport 与 UI 适配不一致导致文字出屏。
+        feedbackNode.setPosition(0, -canvasSize.height * 0.17, 0);
 
         const transform = feedbackNode.addComponent(UITransform);
         transform.setContentSize(900, 180);
