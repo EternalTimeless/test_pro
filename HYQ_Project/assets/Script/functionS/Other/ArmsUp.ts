@@ -49,9 +49,6 @@ export class ArmsUp extends UnityUpComponent {
     @property({ type: CCString, displayName: '大壮攻击力提示文字', tooltip: '吃到大壮时显示在角色群上方的大号攻击力提示。' })
     public dazhuangAttackText: string = 'ATK+150%';
 
-    @property({ type: CCFloat, displayName: '攻击力提示高度', tooltip: 'ATK +150% 相对玩家中心的显示高度（世界坐标单位）。' })
-    public dazhuangAttackTextHeight: number = 5.8;
-
     @property({ type: CCFloat, displayName: '攻击力提示持续时间（秒）', tooltip: '大号攻击力文字从弹出到完全淡出的总时长。' })
     public dazhuangAttackTextDuration: number = 1.5;
 
@@ -178,40 +175,37 @@ export class ArmsUp extends UnityUpComponent {
     }
 
     private showDazhuangRoleGhosts(): void {
-        const roles = this.player?.roleList;
-        if (!roles?.length) {
+        const playerNode = this.player?.node;
+        if (!playerNode?.isValid || !this.player.roleList?.length) {
             return;
         }
-        const dazhuangRoles = roles.filter((item) => item?.type === this.pendingDazhuangRoleType);
-        if (!dazhuangRoles.length) {
+        if (!this.player.roleList.every((item) => item?.type === this.pendingDazhuangRoleType)) {
             return;
         }
-        for (let i = 0; i < dazhuangRoles.length; i++) {
-            const role = dazhuangRoles[i];
-            const roleNode = role?.node;
-            const visualNode = role?.fbxManager?.node;
-            if (!roleNode?.isValid || !visualNode?.isValid) {
+        Tween.stopAllByTarget(playerNode);
+        const originalScale = playerNode.scale.clone();
+        const pickupScale = Math.max(1, Math.min(1.4, this.dazhuangPickupEffectScale));
+        const targetScale = originalScale.clone().multiplyScalar(pickupScale);
+        const duration = Math.max(0.1, this.dazhuangPickupScaleDuration);
+        tween(playerNode)
+            .to(duration * 0.5, { scale: targetScale }, { easing: 'sineInOut' })
+            .delay(duration * 0.1)
+            .to(duration * 0.4, { scale: originalScale }, { easing: 'sineInOut' })
+            .start();
+        for (let i = 0; i < this.player.roleList.length; i++) {
+            const role = this.player.roleList[i];
+            if (!role?.node?.isValid) {
                 continue;
             }
-            Tween.stopAllByTarget(visualNode);
-            const originalScale = visualNode.scale.clone();
-            const pickupScale = Math.max(1, Math.min(1.4, this.dazhuangPickupEffectScale));
-            const ghostScale = originalScale.clone().multiplyScalar(pickupScale);
-            const glowDuration = Math.max(0.1, this.dazhuangPickupScaleDuration);
             FlashRedManager.instance.flashRed(
-                roleNode,
+                role.node,
                 role.getUpgradeGoldGlowData(),
-                glowDuration,
+                duration,
                 this.dazhuangPickupGlowColor,
                 `dazhuang_pickup_gold_${role.type}`,
                 Math.max(0, Math.min(1, this.dazhuangPickupGlowIntensity)),
                 0,
             );
-            tween(visualNode)
-                .to(glowDuration * 0.35, { scale: ghostScale }, { easing: 'sineOut' })
-                .delay(glowDuration * 0.2)
-                .to(glowDuration * 0.45, { scale: originalScale }, { easing: 'backOut' })
-                .start();
         }
     }
 
@@ -229,12 +223,11 @@ export class ArmsUp extends UnityUpComponent {
             return;
         }
         const playerPos = this.player.node.worldPosition.clone();
-        playerPos.y += this.dazhuangAttackTextHeight;
         CreatePropBrand.showSharedFloatingFeedback(
             this.dazhuangAttackText,
             playerPos,
             this.dazhuangAttackTextColor,
-            1.4,
+            0.85,
             this.dazhuangAttackTextDuration,
         );
     }
