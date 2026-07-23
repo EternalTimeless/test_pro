@@ -10,6 +10,7 @@ import { EffectManager } from '../Effect/EffectManager';
 import AudioManager from '../../Base/AudioManager';
 import LayerManager from '../../Base/LayerManager';
 import { CreatePropBrand } from './CreatePropBrand';
+import { FlashRedManager } from '../Battle/Base/FlashRedManager';
 const { ccclass, property } = _decorator;
 
 type WeaponFlyNodeInfo = {
@@ -35,6 +36,12 @@ export class ArmsUp extends UnityUpComponent {
 
     @property({ type: CCFloat, displayName: '大壮落点缩放倍率（1-1.35）', min: 1, max: 1.35, step: 0.01, tooltip: '大壮全队替换完成时的模型弹性放大倍率。' })
     public dazhuangPickupEffectScale: number = 1.25;
+
+    @property({ type: Color, displayName: '大壮落点金身颜色', tooltip: '缩放期间角色边缘光与金身高亮的颜色。' })
+    public dazhuangPickupGlowColor: Color = new Color(255, 190, 20, 255);
+
+    @property({ type: CCFloat, displayName: '大壮落点金身强度（0-1）', min: 0, max: 1, step: 0.05, tooltip: '缩放期间角色金色边缘光的亮度。' })
+    public dazhuangPickupGlowIntensity: number = 0.9;
 
     @property({ type: CCString, displayName: '大壮攻击力提示文字', tooltip: '吃到大壮时显示在角色群上方的大号攻击力提示。' })
     public dazhuangAttackText: string = 'ATK+150%';
@@ -187,6 +194,16 @@ export class ArmsUp extends UnityUpComponent {
             const originalScale = visualNode.scale.clone();
             const pickupScale = Math.max(1, Math.min(1.35, this.dazhuangPickupEffectScale));
             const ghostScale = originalScale.clone().multiplyScalar(pickupScale);
+            const glowDuration = 0.32 + 0.18 + 0.35;
+            FlashRedManager.instance.flashRed(
+                roleNode,
+                role.meshCreateDataList,
+                glowDuration,
+                this.dazhuangPickupGlowColor,
+                'dazhuang_pickup_glow',
+                Math.max(0, Math.min(1, this.dazhuangPickupGlowIntensity)),
+                0,
+            );
             tween(visualNode)
                 .to(0.32, { scale: ghostScale }, { easing: 'sineOut' })
                 .delay(0.18)

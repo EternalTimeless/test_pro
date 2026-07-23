@@ -14562,6 +14562,14 @@
     "dazhuangPickupZoomShake": 1.1,
     "dazhuangPickupPositionShake": 3.5,
     "dazhuangPickupEffectScale": 1.25,
+    "dazhuangPickupGlowColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 190,
+      "b": 20,
+      "a": 255
+    },
+    "dazhuangPickupGlowIntensity": 0.9,
     "dazhuangAttackText": "ATK +150%",
     "dazhuangAttackTextHeight": 4.8,
     "dazhuangAttackTextDuration": 1.15,
